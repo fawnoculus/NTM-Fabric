@@ -1,0 +1,22 @@
+{
+  "item.ntm.uranium_ingot": "Uranium Ingot",
+  "item.ntm.steel_ingot": "Steel Ingot",
+  "item.ntm.steel_sword": "Steel Sword",
+  "item.ntm.steel_pickaxe": "Steel Pickaxe",
+  "item.ntm.steel_axe": "Steel Axe",
+  "item.ntm.steel_shovel": "Steel Shovel",
+  "item.ntm.steel_hoe": "Steel Hoe",
+
+  "block.ntm.uranium_ore": "Uranium  Ore",
+  "item.ntm.uranium_ore": "Uranium  Ore",
+
+  "itemGroup.ntm.resources_and_parts": "NTM Resources and Parts",
+  "itemGroup.ntm.machine_items_and_fuel": "NTM Machine Items and Fuel",
+  "itemGroup.ntm.templates": "NTM Templates",
+  "itemGroup.ntm.ores_and_blocks": "NTM Ores and Blocks",
+  "itemGroup.ntm.machines": "NTM Machines",
+  "itemGroup.ntm.bombs": "NTM Bombs",
+  "itemGroup.ntm.missiles_and_satellites": "NTM Missiles and Satellites",
+  "itemGroup.ntm.weapons_and_turrets": "NTM Weapons and Turrets",
+  "itemGroup.ntm.consumables_and_gear": "NTM Consumables and Gear"
+}

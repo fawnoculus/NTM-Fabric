@@ -1,0 +1,60 @@
+# NTM-Fabric
+## What is NTM-Fabric?
+NTM-Fabric is an Attempt to recreate [HBM's NTM](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT) (a mod for 1.7.10) on modern Versions of Minecraft in Fabric.
+Depending on how development plays out features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
+## Installing NTM-Fabric
+In the Future there may be a Release on Modrinth & CurseForge (or GitHub Releases).
+For now the only way to install it is to download the Repository and build it from Source:
+
+## Building it from Source
+1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
+2. Open PowerShell
+   -- Or Bash if you are using Linux
+3. Navigate to the Directory you wish to copy the Sources to
+```bash
+cd $HOME/Downloads/
+```
+4. Download the Sources
+```bash
+git clone https://github.com/fawnoculus/NTM-Fabric
+```
+5. enter the sources directory
+```bash
+cd NTM-Fabric
+```
+5. build the Mod
+```bash
+./gradlew build
+```
+6. If the Command Returns with saying **BUILD SUCCESSFUL** then you should be able to find the mod file at ==Downloads/NTM-Fabric/build/libs/ntm-fabric-VERSION.jar==
+
+## Contributing
+1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
+2. clone the Repository to where you would like to have it
+```bash
+git clone https://github.com/fawnoculus/NTM-Fabric
+```
+- If you are using IntelliJ you can simply choose **Clone Repository** on the Projects Screen
+4. Set up the Dev-Environment
+```bash
+    ./gradlew genSources
+```
+
+* For Eclipse also run
+```bash
+    ./gradlew eclipse
+    ./gradlew genEclipseRuns
+```
+* For Vscode also run
+```bash
+    ./gradlew vscode
+```
+5. Make the Code Changes you with to make
+6. Make sure that the Code works
+```bash
+    ./gradlew runClient
+```
+7. Open a Pull request on [GitHub](https://github.com/fawnoculus/NTM-Fabric)
+
+## Licence
+This software is licensed under the GNU Public License version 3. In short: This software is free, you may run the software freely, create modified versions, distribute this software and distribute modified versions, as long as the modified software too has a free software license. The full license can be found in the `LICENSE.txt` file.
