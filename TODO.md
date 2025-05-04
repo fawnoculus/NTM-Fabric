@@ -8,6 +8,7 @@
 - Working Config File(s)
 - Working Ores and Deposits
 - Advanced Tools (Abilities, Weapon modifiers, ...)
+- Special Text Box in the Top Left
 - Item Help (aka: [Press F1 for Help])
 - Conveyor Belts, Pneumatic Tubes & Drones
 
@@ -104,7 +105,9 @@
 
 # Optional Features
 - Old NTM Features aka: stuff that will likely be removed from the Original Mod (like the old Bedrock Ore System as a Gamerule, The old Particle Accelerator, Joke Blocks/Items/Entitys)
-- Custom Machines from the Original Mod
+- ReaSim RBMK
+- Custom Machine Features from the Original Mod
+- Add Config for the Position of the "Special Text Box"
 - Stuff from NTM-Space
 - Custom Recipes with Datapacks
 - More RecipeViewer Stuff (DRC with Tungsten Crate & stuff like that)

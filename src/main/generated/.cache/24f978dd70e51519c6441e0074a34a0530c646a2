@@ -2,6 +2,7 @@
 3519a79ce40162116a249dbaf059e44c8fa07cb0 assets/ntm/blockstates/lead_ore.json
 cb9fb8ad05c99f7bb47de8dc892252be41eae163 assets/ntm/blockstates/uranium_ore.json
 63eebab20683d6628fe5b9d39e14fd9b03fcbc7e assets/ntm/items/lead_ore.json
+778245d68a615d6a49fb38dc82ea35da4854003f assets/ntm/items/null.json
 7b9c308b627394638cbf6cdac77ab2ce0132871d assets/ntm/items/steel_axe.json
 f8d5751da78d98e174f3d1b1ef7b734f7c804395 assets/ntm/items/steel_hoe.json
 3dacd4d30c936bacb3692f83ad63a74c9caafc91 assets/ntm/items/steel_ingot.json
@@ -12,6 +13,7 @@ b67e4396bce074eaa806ba4664ee0cb9b1bf3849 assets/ntm/items/steel_pickaxe.json
 09268eeceb83b165d1015ec5de2ee71d50ccac41 assets/ntm/items/uranium_ore.json
 eb99ac451b69053675642151c5a39e14095c0290 assets/ntm/models/block/lead_ore.json
 b2d33d8d310f7ca86a39e9493efa04d25801d3e1 assets/ntm/models/block/uranium_ore.json
+36f027342e00768f9d0b355874defd345daf0338 assets/ntm/models/item/null.json
 5c667d9eb3c7550b5d07754cd0495531e132415b assets/ntm/models/item/steel_axe.json
 a8f63d0ba470a08f0e3ae8ea09c0ba325b7adae8 assets/ntm/models/item/steel_hoe.json
 78ad150fadca25256c35fcbd8b32ab0883955182 assets/ntm/models/item/steel_ingot.json

@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.main;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fawnoculus.ntm.datagen.AdvancementProvider;
+import net.fawnoculus.ntm.datagen.EnchantmentProvider;
 import net.fawnoculus.ntm.datagen.ModelProvider;
 import net.fawnoculus.ntm.datagen.loot.BlockLootProvider;
 import net.fawnoculus.ntm.datagen.loot.ChestLootProvider;
@@ -33,5 +34,7 @@ public class NTMDataGenerator implements DataGeneratorEntrypoint {
     
     pack.addProvider(CraftingRecipeProvider::new);
     pack.addProvider(SmeltingRecipeProvider::new);
+    
+    pack.addProvider(EnchantmentProvider::new);
   }
 }

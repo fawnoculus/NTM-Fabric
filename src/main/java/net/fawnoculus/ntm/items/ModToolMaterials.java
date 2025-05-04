@@ -8,7 +8,7 @@ public class ModToolMaterials {
   public static final ToolMaterial STEEL_TOOL_MATERIAL = new ToolMaterial(
       BlockTags.INCORRECT_FOR_IRON_TOOL,
       500,
-      7.5f,
+      2.0f,
       2.0f,
       10,
       ModItemTags.STEEL_TOOL_MATERIALS

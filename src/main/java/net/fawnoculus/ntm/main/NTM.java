@@ -2,9 +2,7 @@ package net.fawnoculus.ntm.main;
 
 import net.fabricmc.api.ModInitializer;
 import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.fawnoculus.ntm.items.ModItemGroups;
-import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.items.ModToolMaterials;
+import net.fawnoculus.ntm.items.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,12 +14,14 @@ public class NTM implements ModInitializer {
   
   @Override
   public void onInitialize() {
-    LOGGER.info("Initializing NTM-Fabric");
+    LOGGER.info("Initializing NTM-Fabric ...");
     
     ModToolMaterials.initialize();
     ModItems.initialize();
     ModBlocks.initialize();
     ModItemGroups.initialize();
+    ModDataComponentTypes.initialize();
+    ModEnchantmentEffects.initialize();
     
     
     LOGGER.info("Initialized NTM-Fabric Successfully");

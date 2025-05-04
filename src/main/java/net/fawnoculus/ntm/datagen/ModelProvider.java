@@ -27,6 +27,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.STEEL_SHOVEL, Models.HANDHELD);
     itemModelGenerator.register(ModItems.STEEL_HOE, Models.HANDHELD);
     
+    itemModelGenerator.register(ModItems.NULL, Models.GENERATED);
     itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_INGOT, Models.GENERATED);
   }
