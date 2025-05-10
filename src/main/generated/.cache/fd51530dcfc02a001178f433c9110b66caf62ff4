@@ -1,0 +1,26 @@
+// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/ntm Model Provider
+6ddd6b5a6c09e6fad13488403bcede4a3d5586e0 assets/ntm/blockstates/alloy_furnace.json
+3519a79ce40162116a249dbaf059e44c8fa07cb0 assets/ntm/blockstates/lead_ore.json
+cb9fb8ad05c99f7bb47de8dc892252be41eae163 assets/ntm/blockstates/uranium_ore.json
+800d34c0dd54d9246bbf69bdb96d21fcb47886ee assets/ntm/items/alloy_furnace.json
+63eebab20683d6628fe5b9d39e14fd9b03fcbc7e assets/ntm/items/lead_ore.json
+778245d68a615d6a49fb38dc82ea35da4854003f assets/ntm/items/null.json
+7b9c308b627394638cbf6cdac77ab2ce0132871d assets/ntm/items/steel_axe.json
+f8d5751da78d98e174f3d1b1ef7b734f7c804395 assets/ntm/items/steel_hoe.json
+3dacd4d30c936bacb3692f83ad63a74c9caafc91 assets/ntm/items/steel_ingot.json
+b67e4396bce074eaa806ba4664ee0cb9b1bf3849 assets/ntm/items/steel_pickaxe.json
+214c21bab42ced05fe6bb8a202bd568daf7a9f80 assets/ntm/items/steel_shovel.json
+5c5564950ff1d2d9f3c430a204a11df1ce39243d assets/ntm/items/steel_sword.json
+76eb82a45b43533ea99742559e9f34896a48690a assets/ntm/items/uranium_ingot.json
+09268eeceb83b165d1015ec5de2ee71d50ccac41 assets/ntm/items/uranium_ore.json
+f09da73d9ac377ffb13236e8795abdd762c55b35 assets/ntm/models/block/alloy_furnace.json
+eb99ac451b69053675642151c5a39e14095c0290 assets/ntm/models/block/lead_ore.json
+b2d33d8d310f7ca86a39e9493efa04d25801d3e1 assets/ntm/models/block/uranium_ore.json
+36f027342e00768f9d0b355874defd345daf0338 assets/ntm/models/item/null.json
+5c667d9eb3c7550b5d07754cd0495531e132415b assets/ntm/models/item/steel_axe.json
+a8f63d0ba470a08f0e3ae8ea09c0ba325b7adae8 assets/ntm/models/item/steel_hoe.json
+78ad150fadca25256c35fcbd8b32ab0883955182 assets/ntm/models/item/steel_ingot.json
+ed3c86baefb56d18b9fa20642cf9bfec102e8a70 assets/ntm/models/item/steel_pickaxe.json
+620629d2a765bbaa391d8dde2f19ca9d91887994 assets/ntm/models/item/steel_shovel.json
+96149735e991f703480f6091476ddc018603a96f assets/ntm/models/item/steel_sword.json
+abc3093ddf03ff02bd25bea0e71c22605d6030a2 assets/ntm/models/item/uranium_ingot.json
