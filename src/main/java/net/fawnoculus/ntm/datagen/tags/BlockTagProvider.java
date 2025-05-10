@@ -3,7 +3,8 @@ package net.fawnoculus.ntm.datagen.tags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.fawnoculus.ntm.util.ModBlockTags;
+import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.util.tags.ModBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -140,5 +141,10 @@ public class BlockTagProvider extends FabricTagProvider<Block> {
         .addTag(ModBlockTags.COLTAN_ORES)
         .addTag(ModBlockTags.LANTHANIUM_ORES)
         .setReplace(false);
+  }
+  
+  @Override
+  public String getName() {
+    return NTM.MOD_ID + " Block-Tag Provider";
   }
 }

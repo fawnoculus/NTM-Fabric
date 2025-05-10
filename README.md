@@ -26,7 +26,7 @@ cd NTM-Fabric
 ```bash
 ./gradlew build
 ```
-6. If the Command Returns with saying **BUILD SUCCESSFUL** then you should be able to find the mod file at ==Downloads/NTM-Fabric/build/libs/ntm-fabric-VERSION.jar==
+6. If the Command Returns with saying **BUILD SUCCESSFUL** then you should be able to find the mod file at "Downloads/NTM-Fabric/build/libs/ntm-fabric-VERSION.jar"
 
 ## Contributing
 1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed

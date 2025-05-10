@@ -72,8 +72,14 @@
   "tag.item.ntm.coltan_ores": "Coltan Ores",
   "tag.item.ntm.sulfur_ores": "Sulfur Ores",
 
+  "container.ntm.alloy_furnace": "Alloy Furnace",
+
   "block.ntm.uranium_ore": "Uranium  Ore",
   "item.ntm.uranium_ore": "Uranium  Ore",
+  "block.ntm.lead_ore": "Lead  Ore",
+  "item.ntm.lead_ore": "Lead  Ore",
+  "block.ntm.alloy_furnace": "Alloy Furnace",
+  "item.ntm.alloy_furnace": "Alloy Furnace",
 
 
   "item.ntm.uranium_ingot": "Uranium Ingot",

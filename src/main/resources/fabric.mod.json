@@ -3,20 +3,94 @@
   "id": "ntm",
   "version": "${version}",
   "name": "NTM-Fabric",
-  "description": "Recreation of HBM's Nuclear Tech Mod from 1.7.10 to Modern Fabric",
+  "description": "NTM-Fabric (short for Nuclear Tech Mod Fabric) is a Recreation of HBM's Nuclear Tech Mod (a mod made for 1.7.10), but made for Modern Minecraft in Fabric",
   "authors": [
-    "fawnoculus"
+    "fawnoculus",
+    "HbMinecraft [Original]"
+  ],
+  "contributors": [
+    "rodolphito [Original] (explosion algorithms)",
+    "grangerave [Original] (explosion algorithms)",
+    "Hoboy [Original] (textures, models)",
+    "Drillgon200 [Original] (effects, models, porting)",
+    "MartinTheDragon [Original] (calculator, chunk-based fallout, bendable cranes, pipe improvements, PWR sounds)",
+    "Alcater [Original] (GUI textures, porting)",
+    "MellowArpeggiation [Original] (new animation system, turbine sounds, sound fixes, industrial lights, better particle diodes)",
+    "Pheo [Original] (textures, various machines, models, weapons)",
+    "Vær [Original] (gas centrifuges, better worldgen, ZIRNOX, CP-1 parts, starter guide, new cyclotron, weapon animations)",
+    "UFFR [Original] (RTG pellets, guns, casings, euphemium capacitor, nucleartech.wiki)",
+    "LePeep [Original] (coilgun model, BDCL QC)",
+    "Adam29 [Original] (liquid petroleum, ethanol, electric furnace)",
+    "Pvndols [Original] (thorium fuel recipe, gas turbine)",
+    "JamesH2 [Original] (blood mechanics, nitric acid, particle emitter)",
+    "Lazzzycat [Original] (structures)",
+    "PastaBaguette [Original] (coal horse decal)",
+    "Doctor17 [Original] (russian localization))",
+    "Pashtet [Original] (russian localization)",
+    "Bismarck [Original] (chinese localization)",
+    "Creeper-banner [Original] (chinese localization)",
+    "5467864  [Original] (chinese localization)",
+    "eeeeee0a [Original] (chinese localization)",
+    "hz0909adc [Original] (chinese localization)",
+    "LSKLW [Original] (chinese localization)",
+    "R-Kaenbyou [Original] (chinese localization)",
+    "scp-000000000 [Original] (chinese localization)",
+    "UnnameTokiko [Original] (chinese localization)",
+    "Herobrine 457985 [Original] (chinese localization)",
+    "xxwinhere [Original] (chinese localization)",
+    "Maksymisio [Original] (polish localization",
+    "el3ctro4ndre [Original] (italian localization)",
+    "Pu-238 [Original] (Tom impact effects)",
+    "Frooz [Original] (gun models)",
+    "VT-6/24 [Original] (models, textures)",
+    "Nos [Original] (models)",
+    "WushiThe [Original] (models)",
+    "Minecreep [Original] (models)",
+    "70k [Original] (textures, glyphid AI, strand caster, electrolyzer changes, cryolite)",
+    "instantnootles [Original] (concept artist)",
+    "haru315 [Original] (spiral point algorithm)",
+    "Sten89 [Original] (models)",
+    "Pixelguru26 [Original] (textures)",
+    "TheBlueHat [Original] (textures)",
+    "Burningwater202 [Original] (laminate glass)",
+    "TehTemmie [Original] (reacher radiation function)",
+    "Silly541 [Original] (config for safe ME drives)",
+    "Voxelstice [Original] (OpenComputers integration, turbine spinup)",
+    "BallOfEnergy1 [Original] (OpenComputers integration, RBMK and packet optimization, crate backpacks)",
+    "sdddddf80 [Original] (recipe configs, chinese localization, custom machine holograms)",
+    "Abel1502 [Original] (optimization, crate upgrade recipes, strand caster improvements, varous tweaks)",
+    "Darek505 [Original] (armor rendering compatibility fix)",
+    "SuperCraftAlex [Original] (tooltips",
+    "Ice-Arrow [Original] (research reactor tweaks)",
+    "245tt [Original] (anvil GUI improvements)",
+    "KoblizekXD [Original] (doors)",
+    "FOlkvangrField [Original] (custom machine parts)",
+    "RosaTryp [Original] (centrifuge config)",
+    "Toshayo [Original] (satellite loot system, project settings, gradle curse task)",
+    "icomet [Original] (refactoring)",
+    "martemen [Original] (project settings)",
+    "OvermindDL1 [Original] (project settings)",
+    "impbk2002 [Original] (project settings)"
   ],
   "contact": {
+    "homepage": "https://github.com/fawnoculus/NTM-Fabric",
     "sources": "https://github.com/fawnoculus/NTM-Fabric",
     "issues": "https://github.com/fawnoculus/NTM-Fabric/issues"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.github_releases": "https://github.com/fawnoculus/NTM-Fabric/releases"
+      }
+    }
   },
   "license": "GPL-3.0",
   "icon": "assets/ntm/icon.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "net.fawnoculus.ntm.main.NTMDataGenerator"
+      "net.fawnoculus.ntm.main.NTMCommonDataGenerator",
+      "net.fawnoculus.ntm.main.NTMClientDataGenerator"
     ],
     "client": [
       "net.fawnoculus.ntm.main.NTMClient"

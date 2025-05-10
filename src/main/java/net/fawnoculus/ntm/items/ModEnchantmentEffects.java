@@ -9,15 +9,14 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 
 public class ModEnchantmentEffects {
   private static RegistryKey<Enchantment> of(String path) {
-    return RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(NTM.MOD_ID, path));
+    return RegistryKey.of(RegistryKeys.ENCHANTMENT, NTM.id(path));
   }
   
   private static <T extends EnchantmentEntityEffect> MapCodec<T> register(String id, MapCodec<T> codec) {
-    return Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, Identifier.of(NTM.MOD_ID, id), codec);
+    return Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, NTM.id(id), codec);
   }
   
   public static final RegistryKey<Enchantment> THUNDERING_KEY = of("thundering");

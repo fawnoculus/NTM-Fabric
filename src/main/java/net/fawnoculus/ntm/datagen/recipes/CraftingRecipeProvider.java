@@ -20,11 +20,6 @@ public class CraftingRecipeProvider extends FabricRecipeProvider{
   }
   
   @Override
-  public String getName() {
-    return NTM.MOD_ID + " Shaped Recipes";
-  }
-  
-  @Override
   public RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
     return new RecipeGenerator(registryLookup, exporter) {
       @Override
@@ -49,5 +44,10 @@ public class CraftingRecipeProvider extends FabricRecipeProvider{
             .offerTo(exporter);
       }
     };
+  }
+  
+  @Override
+  public String getName() {
+    return NTM.MOD_ID + " Crafting-Recipe Provider";
   }
 }

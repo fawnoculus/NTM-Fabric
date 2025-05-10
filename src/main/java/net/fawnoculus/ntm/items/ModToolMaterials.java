@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items;
 
-import net.fawnoculus.ntm.util.ModItemTags;
+import net.fawnoculus.ntm.util.tags.ModItemTags;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.BlockTags;
 

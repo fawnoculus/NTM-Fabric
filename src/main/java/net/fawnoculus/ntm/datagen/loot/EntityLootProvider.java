@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.datagen.loot;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider;
+import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.registry.RegistryWrapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,5 +16,10 @@ public class EntityLootProvider extends FabricEntityLootTableProvider {
   @Override
   public void generate() {
   
+  }
+  
+  @Override
+  public String getName() {
+    return NTM.MOD_ID + " Entity-Loot Provider";
   }
 }

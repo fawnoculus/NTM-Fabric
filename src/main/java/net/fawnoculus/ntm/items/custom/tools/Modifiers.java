@@ -1,6 +1,5 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
-import net.minecraft.block.Portal;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -46,7 +45,7 @@ public class Modifiers {
     public Stunning(int seconds){
       this.seconds = seconds;
     }
-    public Integer seconds;
+    public final Integer seconds;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.stunning";}
     @Override
@@ -66,7 +65,7 @@ public class Modifiers {
     public Flaming(int seconds){
       this.seconds = seconds;
     }
-    public Integer seconds;
+    public final Integer seconds;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.flaming";}
     @Override
@@ -88,7 +87,7 @@ public class Modifiers {
     public PhosphorusTip(int seconds){
       this.seconds = seconds;
     }
-    public Integer seconds;
+    public final Integer seconds;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.phosphorustip";}
     @Override
@@ -109,7 +108,7 @@ public class Modifiers {
     public Vampire(float percentage){
       this.percentage = percentage;
     }
-    public Float percentage;
+    public final Float percentage;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.vampire";}
     @Override
@@ -127,7 +126,7 @@ public class Modifiers {
     public RadioactiveBlade(float radiation){
       this.radiation = radiation;
     }
-    public Float radiation;
+    public final Float radiation;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.radioactiveblade";}
     @Override
@@ -150,7 +149,7 @@ public class Modifiers {
     public PainSaw(int seconds){
       this.seconds = seconds;
     }
-    public Integer seconds;
+    public final Integer seconds;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.painsaw";}
     @Override

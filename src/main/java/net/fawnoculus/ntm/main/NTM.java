@@ -1,8 +1,10 @@
 package net.fawnoculus.ntm.main;
 
 import net.fabricmc.api.ModInitializer;
+import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.items.*;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +12,7 @@ public class NTM implements ModInitializer {
   
   public static final String MOD_ID = "ntm";
   public static final String Mod_Name = "NTM-Fabric";
-  public static Logger LOGGER = LoggerFactory.getLogger(Mod_Name);
+  public static final Logger LOGGER = LoggerFactory.getLogger(Mod_Name);
   
   @Override
   public void onInitialize() {
@@ -18,12 +20,17 @@ public class NTM implements ModInitializer {
     
     ModToolMaterials.initialize();
     ModItems.initialize();
-    ModBlocks.initialize();
     ModItemGroups.initialize();
     ModDataComponentTypes.initialize();
     ModEnchantmentEffects.initialize();
     
+    ModBlocks.initialize();
+    ModBlockEntities.initialize();
     
-    LOGGER.info("Initialized NTM-Fabric Successfully");
+    LOGGER.info("NTM-Fabric is now initialized");
+  }
+  
+  public static Identifier id(String name){
+    return Identifier.of(MOD_ID, name);
   }
 }

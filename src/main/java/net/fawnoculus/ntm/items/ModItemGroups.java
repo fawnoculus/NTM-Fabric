@@ -11,52 +11,51 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 
 public class ModItemGroups {
   
-  public static final RegistryKey<ItemGroup> RESOURCES_AND_PARTS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "resources_and_parts"));
+  public static final RegistryKey<ItemGroup> RESOURCES_AND_PARTS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("resources_and_parts"));
   public static final ItemGroup RESOURCES_AND_PARTS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.URANIUM_INGOT))
       .displayName(Text.translatable("itemGroup.ntm.resources_and_parts"))
       .build();
-  public static final RegistryKey<ItemGroup> MACHINE_ITEMS_AND_FUEL_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "machine_items_and_fuel"));
+  public static final RegistryKey<ItemGroup> MACHINE_ITEMS_AND_FUEL_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machine_items_and_fuel"));
   public static final ItemGroup MACHINE_ITEMS_AND_FUEL = FabricItemGroup.builder()
-      .icon(() -> new ItemStack(ModItems.NULL))
+      .icon(() -> new ItemStack(ModBlocks.ALLOY_FURNACE))
       .displayName(Text.translatable("itemGroup.ntm.machine_items_and_fuel"))
       .build();
-  public static final RegistryKey<ItemGroup> TEMPLATES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "templates"));
+  public static final RegistryKey<ItemGroup> TEMPLATES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("templates"));
   public static final ItemGroup TEMPLATES = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.templates"))
       .build();
-  public static final RegistryKey<ItemGroup> ORES_AND_BLOCKS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "ores_and_blocks"));
+  public static final RegistryKey<ItemGroup> ORES_AND_BLOCKS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("ores_and_blocks"));
   public static final ItemGroup ORES_AND_BLOCKS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModBlocks.URANIUM_ORE))
       .displayName(Text.translatable("itemGroup.ntm.ores_and_blocks"))
       .build();
-  public static final RegistryKey<ItemGroup> MACHINES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "machines"));
+  public static final RegistryKey<ItemGroup> MACHINES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machines"));
   public static final ItemGroup MACHINES = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.machines"))
       .build();
-  public static final RegistryKey<ItemGroup> BOMBS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "bombs"));
+  public static final RegistryKey<ItemGroup> BOMBS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("bombs"));
   public static final ItemGroup BOMBS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.bombs"))
       .build();
-  public static final RegistryKey<ItemGroup> MISSILES_AND_SATELLITES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "missiles_and_satellites"));
+  public static final RegistryKey<ItemGroup> MISSILES_AND_SATELLITES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("missiles_and_satellites"));
   public static final ItemGroup MISSILES_AND_SATELLITES = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.missiles_and_satellites"))
       .build();
-  public static final RegistryKey<ItemGroup> WEAPONS_AND_TURRETS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "weapons_and_turrets"));
+  public static final RegistryKey<ItemGroup> WEAPONS_AND_TURRETS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("weapons_and_turrets"));
   public static final ItemGroup WEAPONS_AND_TURRETS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.weapons_and_turrets"))
       .build();
-  public static final RegistryKey<ItemGroup> CONSUMABLES_AND_GEAR_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(NTM.MOD_ID, "consumables_and_gear"));
+  public static final RegistryKey<ItemGroup> CONSUMABLES_AND_GEAR_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("consumables_and_gear"));
   public static final ItemGroup CONSUMABLES_AND_GEAR = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.consumables_and_gear"))
@@ -78,7 +77,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.URANIUM_INGOT);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINE_ITEMS_AND_FUEL_KEY).register(ItemGroup -> {
-      ItemGroup.add(ModItems.NULL);
+      ItemGroup.add(ModBlocks.ALLOY_FURNACE);
     });
     ItemGroupEvents.modifyEntriesEvent(TEMPLATES_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);

@@ -20,10 +20,6 @@ public class SmeltingRecipeProvider extends FabricRecipeProvider {
   
   private static final List<ItemConvertible> URANIUM_ORES = List.of();
   
-  @Override
-  public String getName() {
-    return NTM.MOD_ID + " Smelting Recipes";
-  }
   
   @Override
   public RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
@@ -48,5 +44,10 @@ public class SmeltingRecipeProvider extends FabricRecipeProvider {
         );
       }
     };
+  }
+  
+  @Override
+  public String getName() {
+    return NTM.MOD_ID + " Smelting-Recipe Provider";
   }
 }

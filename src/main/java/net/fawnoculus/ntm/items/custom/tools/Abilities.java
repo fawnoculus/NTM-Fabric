@@ -29,7 +29,7 @@ public class Abilities {
       this.MaxBlocks = MaxBlocks;
     }
     
-    public Integer MaxBlocks;
+    public final Integer MaxBlocks;
     
     @Override
     public String getTranslationKey() {
@@ -41,7 +41,7 @@ public class Abilities {
       return this.MaxBlocks.toString();
     }
     
-    private List<Block> excludedBlocks = List.of(Blocks.STONE, Blocks.NETHERRACK);
+    private final List<Block> excludedBlocks = List.of(Blocks.STONE, Blocks.NETHERRACK);
     
     @Override
     public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
@@ -114,7 +114,7 @@ public class Abilities {
     public AoE(int blockAmount){
       this.blockAmount = blockAmount;
     }
-    public Integer blockAmount;
+    public final Integer blockAmount;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.ability.aoe";}
     @Override
@@ -222,7 +222,7 @@ public class Abilities {
     public Fortune(int level){
       this.level = level;
     }
-    public Integer level;
+    public final Integer level;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.ability.fortune";}
     @Override
@@ -242,7 +242,7 @@ public class Abilities {
     public Explosion(float explosionStrength){
       this.explosionStrength = explosionStrength;
     }
-    public Float explosionStrength;
+    public final Float explosionStrength;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.ability.explosion";}
     @Override

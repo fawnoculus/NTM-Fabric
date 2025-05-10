@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.datagen.loot;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fawnoculus.ntm.blocks.ModBlocks;
+import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -26,6 +27,7 @@ public class BlockLootProvider extends FabricBlockLootTableProvider {
   public void generate() {
     addDrop(ModBlocks.URANIUM_ORE);
     addDrop(ModBlocks.LEAD_ORE);
+    addDrop(ModBlocks.ALLOY_FURNACE);
   }
   
   public LootTable.Builder multioreDrops(Block drop, Item item, float minDrops, float maxDrops) {
@@ -37,5 +39,10 @@ public class BlockLootProvider extends FabricBlockLootTableProvider {
             ItemEntry.builder(item)
                 .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(minDrops, maxDrops))))
                 .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE))));
+  }
+  
+  @Override
+  public String getName() {
+    return NTM.MOD_ID + " Block-Loot Provider";
   }
 }

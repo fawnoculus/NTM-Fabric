@@ -26,7 +26,7 @@ public class SpecialTool extends Item implements SpecialItemInterface {
     super(settings.component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1));
   }
   
-  public boolean canBreakDepthRock = false;
+  public final boolean canBreakDepthRock = false;
   public final List<ItemAbility> abilities = new ArrayList<>();
   public final List<ItemModifier> modifiers = new ArrayList<>();
   
@@ -64,7 +64,6 @@ public class SpecialTool extends Item implements SpecialItemInterface {
     super.postHit(stack, target, attacker);
   }
   
-  // Why the hell is this deprecated?
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     
