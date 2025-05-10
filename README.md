@@ -2,6 +2,7 @@
 ## What is NTM-Fabric?
 NTM-Fabric is an Attempt to recreate [HBM's NTM](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT) (a mod for 1.7.10) on modern Versions of Minecraft in Fabric.
 Depending on how development plays out features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
+As of right now it is HEAVILY incomplete & will likely not be in a complete State for a long time due to the amount of features in HBM's NTM
 ## Installing NTM-Fabric
 In the Future there may be a Release on Modrinth & CurseForge (or GitHub Releases).
 For now the only way to install it is to download the Repository and build it from Source:
