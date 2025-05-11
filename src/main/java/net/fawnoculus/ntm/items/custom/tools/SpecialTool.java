@@ -26,7 +26,7 @@ public class SpecialTool extends Item implements SpecialItemInterface {
     super(settings.component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1));
   }
   
-  public final boolean canBreakDepthRock = false;
+  public boolean canBreakDepthRock = false;
   public final List<ItemAbility> abilities = new ArrayList<>();
   public final List<ItemModifier> modifiers = new ArrayList<>();
   
@@ -40,6 +40,12 @@ public class SpecialTool extends Item implements SpecialItemInterface {
     return this;
   }
   
+  @Override
+  public SpecialTool canBreakDepthRock() {
+    canBreakDepthRock = true;
+    return this;
+  }
+  
   public ItemAbility getSelectedAbility(ItemStack stack) {
     int selectedAbility = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
     if(selectedAbility < 0){return null;}
@@ -47,13 +53,14 @@ public class SpecialTool extends Item implements SpecialItemInterface {
   }
   
   @Override
-  public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+  public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
     if(world.isClient()){
-      return super.postMine(stack, world, state, pos, miner);
+      return;
     }
-    getSelectedAbility(stack).postMine(stack, world, state, pos, miner);
-    
-    return super.postMine(stack, world, state, pos, miner);
+    if(!(miner instanceof PlayerEntity player)){
+      return;
+    }
+    getSelectedAbility(stack).preMine(stack, world, state, pos, player);
   }
   
   @Override

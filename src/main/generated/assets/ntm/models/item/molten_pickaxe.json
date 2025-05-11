@@ -1,0 +1,6 @@
+{
+  "parent": "ntm:item/handheld_large",
+  "textures": {
+    "layer0": "ntm:item/molten_pickaxe"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "ntm:item/advanced_alloy_shovel"
+  }
+}

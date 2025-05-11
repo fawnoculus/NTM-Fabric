@@ -19,6 +19,8 @@
   "custom": {
     "modmenu": {
       "links": {
+        "modmenu.modrinth": "TODO:Dont_forget_to_add_this_link",
+        "modmenu.curseforge": "TODO:Dont_forget_to_add_this_link",
         "modmenu.wiki": "https://nucleartech.wiki/wiki/Main_Page",
         "modmenu.github_releases": "https://github.com/fawnoculus/NTM-Fabric/releases",
         "modmenu.ntm.original_mod.discord": "https://discord.gg/ZFJDFBN",

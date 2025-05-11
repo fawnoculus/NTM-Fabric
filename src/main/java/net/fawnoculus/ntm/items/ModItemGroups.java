@@ -102,12 +102,56 @@ public class ModItemGroups {
     });
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ItemGroup -> {
       ItemGroup.add(ModItems.STEEL_SWORD);
+      ItemGroup.add(ModItems.TITANIUM_SWORD);
+      ItemGroup.add(ModItems.COBALT_SWORD);
+      ItemGroup.add(ModItems.DECORATED_COBALT_SWORD);
+      ItemGroup.add(ModItems.STARMETAL_SWORD);
+      ItemGroup.add(ModItems.ADVANCED_ALLOY_SWORD);
+      ItemGroup.add(ModItems.CMB_STEEL_SWORD);
+      ItemGroup.add(ModItems.DESH_SWORD);
     });
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ItemGroup -> {
+      ItemGroup.add(ModItems.STEEL_SWORD);
       ItemGroup.add(ModItems.STEEL_PICKAXE);
       ItemGroup.add(ModItems.STEEL_AXE);
       ItemGroup.add(ModItems.STEEL_SHOVEL);
       ItemGroup.add(ModItems.STEEL_HOE);
+      ItemGroup.add(ModItems.TITANIUM_PICKAXE);
+      ItemGroup.add(ModItems.TITANIUM_AXE);
+      ItemGroup.add(ModItems.TITANIUM_SHOVEL);
+      ItemGroup.add(ModItems.TITANIUM_HOE);
+      ItemGroup.add(ModItems.COBALT_PICKAXE);
+      ItemGroup.add(ModItems.COBALT_AXE);
+      ItemGroup.add(ModItems.COBALT_SHOVEL);
+      ItemGroup.add(ModItems.COBALT_HOE);
+      ItemGroup.add(ModItems.DECORATED_COBALT_PICKAXE);
+      ItemGroup.add(ModItems.DECORATED_COBALT_AXE);
+      ItemGroup.add(ModItems.DECORATED_COBALT_SHOVEL);
+      ItemGroup.add(ModItems.DECORATED_COBALT_HOE);
+      ItemGroup.add(ModItems.STARMETAL_PICKAXE);
+      ItemGroup.add(ModItems.STARMETAL_AXE);
+      ItemGroup.add(ModItems.STARMETAL_SHOVEL);
+      ItemGroup.add(ModItems.STARMETAL_HOE);
+      ItemGroup.add(ModItems.ADVANCED_ALLOY_PICKAXE);
+      ItemGroup.add(ModItems.ADVANCED_ALLOY_AXE);
+      ItemGroup.add(ModItems.ADVANCED_ALLOY_SHOVEL);
+      ItemGroup.add(ModItems.ADVANCED_ALLOY_HOE);
+      ItemGroup.add(ModItems.CMB_STEEL_PICKAXE);
+      ItemGroup.add(ModItems.CMB_STEEL_AXE);
+      ItemGroup.add(ModItems.CMB_STEEL_SHOVEL);
+      ItemGroup.add(ModItems.CMB_STEEL_HOE);
+      ItemGroup.add(ModItems.DESH_PICKAXE);
+      ItemGroup.add(ModItems.DESH_AXE);
+      ItemGroup.add(ModItems.DESH_SHOVEL);
+      ItemGroup.add(ModItems.DESH_HOE);
+      ItemGroup.add(ModItems.BISMUTH_PICKAXE);
+      ItemGroup.add(ModItems.BISMUTH_AXE);
+      ItemGroup.add(ModItems.MOLTEN_PICKAXE);
+      ItemGroup.add(ModItems.MOLTEN_AXE);
+      ItemGroup.add(ModItems.CHLOROPHYTE_PICKAXE);
+      ItemGroup.add(ModItems.CHLOROPHYTE_AXE);
+      ItemGroup.add(ModItems.MESE_PICKAXE);
+      ItemGroup.add(ModItems.MESE_AXE);
     });
   }
 }

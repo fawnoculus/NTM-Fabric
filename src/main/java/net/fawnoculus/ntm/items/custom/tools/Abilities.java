@@ -2,20 +2,32 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.util.EnchantmentHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ToolComponent;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.SmeltingRecipe;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Abilities {
   // Abilities that can be used are bellow
@@ -44,7 +56,7 @@ public class Abilities {
     private final List<Block> excludedBlocks = List.of(Blocks.STONE, Blocks.NETHERRACK);
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       if (!isCorrectForDrops(stack, state)) {
         return;
       }
@@ -121,7 +133,7 @@ public class Abilities {
     public String getValue() {return this.blockAmount.toString();}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       if(isCorrectForDrops(stack, state)){
         
         for (int x = pos.getX()-this.blockAmount; x <= pos.getX()+this.blockAmount; x++) {
@@ -131,7 +143,7 @@ public class Abilities {
               BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
               
               if(isCorrectForDrops(stack, checkBlock)){
-                world.breakBlock(new BlockPos(x, y, z), true, miner);
+                world.breakBlock(new BlockPos(x, y, z), !miner.isCreative(), miner);
               }
             }
           }
@@ -150,8 +162,34 @@ public class Abilities {
     public String getValue() {return null;}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-      //TODO: this
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+      if(miner.isCreative()) return;
+      if(!isCorrectForDrops(stack, state)) return;
+      if(!(world instanceof ServerWorld serverWorld)) return;
+      
+      LootWorldContext.Builder builder = new LootWorldContext.Builder(serverWorld)
+          .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
+          .add(LootContextParameters.BLOCK_STATE, state)
+          .addOptional(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos))
+          .addOptional(LootContextParameters.THIS_ENTITY, miner)
+          .add(LootContextParameters.TOOL, stack);
+      
+      List<ItemStack> list = state.getDroppedStacks(builder);
+      for(ItemStack checkedStack : list){
+        SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(checkedStack);
+        
+        Optional<RecipeEntry<SmeltingRecipe>> optional = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
+        if(optional.isEmpty()) return;
+        
+        RecipeEntry<SmeltingRecipe> recipeEntry = optional.get();
+        
+        ItemStack output = recipeEntry.value().craft(recipeInput, serverWorld.getRegistryManager());
+        output.setCount(checkedStack.getCount());
+        
+        world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), output));
+      }
+      
+      world.breakBlock(pos, false, miner);
     }
   }
   /**
@@ -165,7 +203,7 @@ public class Abilities {
     public String getValue() {return null;}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       //TODO: this
     }
   }
@@ -180,7 +218,7 @@ public class Abilities {
     public String getValue() {return null;}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       //TODO: this
     }
   }
@@ -195,7 +233,7 @@ public class Abilities {
     public String getValue() {return null;}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       //TODO: this
     }
   }
@@ -209,8 +247,17 @@ public class Abilities {
     public String getValue() {return null;}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-      //TODO: this
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+      if(miner.isCreative()){
+        return;
+      }
+      // I hate this
+      if(EnchantmentHelper.hasEnchantment(stack, Enchantments.SILK_TOUCH)){
+        return;
+      }
+      EnchantmentHelper.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
+      world.breakBlock(pos, true, miner);
+      EnchantmentHelper.removeEnchantment(stack, Enchantments.SILK_TOUCH);
     }
   }
   /**
@@ -229,8 +276,17 @@ public class Abilities {
     public String getValue() {return this.level.toString();}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-      //TODO: this
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+      if(miner.isCreative()){
+        return;
+      }
+      // I hate this
+      if(EnchantmentHelper.hasEnchantment(stack, Enchantments.FORTUNE)){
+        return;
+      }
+      EnchantmentHelper.addEnchantment(stack, Enchantments.FORTUNE, level);
+      world.breakBlock(pos, true, miner);
+      EnchantmentHelper.removeEnchantment(stack, Enchantments.FORTUNE);
     }
   }
   /**
@@ -249,8 +305,8 @@ public class Abilities {
     public String getValue() {return this.explosionStrength.toString();}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-      if(!isCorrectForDrops(stack, state)){return;}
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+      if(!isCorrectForDrops(stack, state)) return;
       //TODO: this
     }
   }
@@ -264,7 +320,10 @@ public class Abilities {
     public String getValue() {return null;}
     
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+      if(miner.isCreative()){
+        return;
+      }
       
       int mercury = 0;
       if(state.getBlock() == Blocks.REDSTONE_ORE || state.getBlock() == Blocks.DEEPSLATE_REDSTONE_ORE)
@@ -275,16 +334,12 @@ public class Abilities {
       if(mercury > 0) {
         world.breakBlock(pos, false);
         world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(ModItems.NULL, mercury))); //TODO: replace this with Mercury Drops once they are implemented
-        try {
-          stack.damage(1, (PlayerEntity) miner);
-        }catch (ClassCastException exception){
-          NTM.LOGGER.warn("WTF: \n" + exception);
-        }
+        
+        stack.damage(1, miner);
       }
     }
   }
   
-  // Copied from net.minecraft.item.Item
   private static boolean isCorrectForDrops(ItemStack stack, BlockState state) {
     ToolComponent toolComponent = stack.get(DataComponentTypes.TOOL);
     return toolComponent != null && toolComponent.isCorrectForDrops(state);

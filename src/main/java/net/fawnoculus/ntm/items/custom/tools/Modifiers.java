@@ -102,7 +102,7 @@ public class Modifiers {
   /**
    * I'm assuming this will heal you based on the damage you did to the entity
    * <p>
-   * The assumption i have is that the float represents a percentage of the damage you did (but i really don't know)
+   * The assumption I have is that the float represents a percentage of the damage you did (but I really don't know)
    */
   public static class Vampire implements ItemModifier{
     public Vampire(float percentage){
