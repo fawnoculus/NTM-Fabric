@@ -1,19 +1,15 @@
 package net.fawnoculus.ntm.render.blockentity;
 
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
 public class AlloyFurnaceRenderer implements BlockEntityRenderer<AlloyFurnaceBE> {
-  private final TextRenderer textRenderer;
   
   public AlloyFurnaceRenderer(BlockEntityRendererFactory.Context context) {
-    textRenderer =  context.getTextRenderer();
   }
   
   @Override

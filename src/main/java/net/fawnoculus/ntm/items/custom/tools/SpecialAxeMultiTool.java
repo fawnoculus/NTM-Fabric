@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
@@ -23,28 +23,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-
-public class SpecialSword extends Item implements SpecialTool {
-  public SpecialSword(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    super(settings.sword(material, attackDamage, attackSpeed).component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1));
+/**
+ * Serves as both an Axe & a Hoe
+ */
+public class SpecialAxeMultiTool extends AxeItem implements SpecialTool {
+  public SpecialAxeMultiTool(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
+    super(material, attackDamage, attackSpeed, settings
+        .hoe(material, attackDamage, attackSpeed)
+        .component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1));
   }
   
   public boolean canBreakDepthRock = false;
   public final List<ItemAbility> abilities = new ArrayList<>();
   public final List<ItemModifier> modifiers = new ArrayList<>();
   
-  public SpecialSword addAbility(ItemAbility ability) {
+  public SpecialAxeMultiTool addAbility(ItemAbility ability) {
     abilities.add(ability);
     return this;
   }
   
-  public SpecialSword addModifier(ItemModifier modifier) {
+  public SpecialAxeMultiTool addModifier(ItemModifier modifier) {
     modifiers.add(modifier);
     return this;
   }
   
   @Override
-  public SpecialSword canBreakDepthRock() {
+  public SpecialAxeMultiTool canBreakDepthRock() {
     canBreakDepthRock = true;
     return this;
   }

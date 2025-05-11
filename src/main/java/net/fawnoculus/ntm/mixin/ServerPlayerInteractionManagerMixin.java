@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.items.custom.tools.SpecialItemInterface;
+import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.OperatorBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ServerPlayerInteractionManager.class)
-public final class ServerPlayerInteractionManagerMixin {
+public class ServerPlayerInteractionManagerMixin {
   @Shadow @Final protected ServerPlayerEntity player;
   
   @Shadow protected ServerWorld world;
@@ -32,7 +32,7 @@ public final class ServerPlayerInteractionManagerMixin {
     if(stack.canMine(state, world, pos, player)
         && !(world.getBlockState(pos).getBlock() instanceof OperatorBlock && !player.isCreativeLevelTwoOp())){
       
-      if (player.getMainHandStack().getItem() instanceof SpecialItemInterface specialItem){
+      if (player.getMainHandStack().getItem() instanceof SpecialTool specialItem){
         specialItem.preMine(stack, world, state, pos, player);
       }
     }

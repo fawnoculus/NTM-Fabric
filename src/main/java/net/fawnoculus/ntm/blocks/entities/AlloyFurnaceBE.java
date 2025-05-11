@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory {
+public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
     super(ModBlockEntities.AlloyFurnaceBE, pos, state);
   }
@@ -141,7 +141,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   @Override
-  public Object getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
+  public BlockPosPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
     return new BlockPosPayload(this.pos);
   }
   

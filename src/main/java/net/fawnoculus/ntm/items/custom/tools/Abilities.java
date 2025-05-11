@@ -26,7 +26,6 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Abilities {
@@ -333,7 +332,7 @@ public class Abilities {
       
       if(mercury > 0) {
         world.breakBlock(pos, false);
-        world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(ModItems.NULL, mercury))); //TODO: replace this with Mercury Drops once they are implemented
+        world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(ModItems.NULL, mercury))); //TODO: replace this with Mercury Drops once they exist
         
         stack.damage(1, miner);
       }

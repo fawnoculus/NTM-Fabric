@@ -39,7 +39,7 @@ public class Modifiers {
   /**
    * Inflicts a high slowness effect
    * <p>
-   * Time is given in seconds
+   * Time is given in ticks
    */
   public static class Stunning implements ItemModifier{
     public Stunning(int seconds){
@@ -59,29 +59,29 @@ public class Modifiers {
   /**
    * Sets target on fire
    * <p>
-   * Time is given in seconds
+   * Time is given in ticks
    */
   public static class Flaming implements ItemModifier{
     public Flaming(int seconds){
-      this.seconds = seconds;
+      this.ticks = seconds * 20;
     }
-    public final Integer seconds;
+    public final Integer ticks;
     @Override
     public String getTranslationKey() {return "tooltip.ntm.modifier.flaming";}
     @Override
-    public String getValue() {return this.seconds.toString();}
+    public String getValue() {return this.ticks.toString();}
     
     @Override
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-      if(target.getFireTicks() < seconds){
-        target.setFireTicks(seconds);
+      if(target.getFireTicks() < ticks){
+        target.setFireTicks(ticks);
       }
     }
   }
   /**
    * Sets the Target on fire but with Phosphorus Flames, which cant be extinguished before the time runs out
    * <p>
-   * Time is given in seconds
+   * Time is given in ticks
    */
   public static class PhosphorusTip implements ItemModifier{
     public PhosphorusTip(int seconds){

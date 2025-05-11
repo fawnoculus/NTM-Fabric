@@ -48,7 +48,8 @@ public class ModItems {
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3)));
+      .addAbility(new Abilities.Fortune(3))
+      );
   public static final Item DECORATED_COBALT_AXE = register("decorated_cobalt_axe", new Item.Settings(), settings -> new SpecialAxe(settings, STEEL_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AoE(1))

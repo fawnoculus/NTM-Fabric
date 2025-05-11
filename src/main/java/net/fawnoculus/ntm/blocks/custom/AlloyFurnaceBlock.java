@@ -24,6 +24,8 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 
 public class AlloyFurnaceBlock extends BlockWithEntity {
   public AlloyFurnaceBlock(Settings settings) {
@@ -76,7 +78,8 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   
   @Override
   public BlockState getPlacementState(ItemPlacementContext context) {
-    return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
+    PlayerEntity player = Objects.requireNonNull(context.getPlayer());
+    return this.getDefaultState().with(FACING, player.getHorizontalFacing().getOpposite());
   }
   
   @Override

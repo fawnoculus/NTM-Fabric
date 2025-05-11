@@ -23,7 +23,7 @@ public class NTMClient implements ClientModInitializer {
 //    int targetColor = 0xFF00FF00; // Green
 //
 //    // You can use the Util.getMeasuringTimeMs() function to get the current time in milliseconds.
-//    // Divide by 1000 to get seconds.
+//    // Divide by 1000 to get ticks.
 //    double currentTime = Util.getMeasuringTimeMs() / 1000.0;
 //
 //    // "lerp" simply means "linear interpolation", which is a fancy way of saying "blend".

@@ -5,8 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.SoundCategory;
@@ -23,44 +23,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-
-public class SpecialSword extends Item implements SpecialTool {
-  public SpecialSword(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    super(settings.sword(material, attackDamage, attackSpeed).component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1));
+/**
+ * Serves as both a Pickaxe & a Shovel
+ */
+public class SpecialPickaxeMultiTool extends ShovelItem implements SpecialTool {
+  public SpecialPickaxeMultiTool(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
+    super(material, attackDamage, attackSpeed, settings
+        .pickaxe(material, attackDamage, attackSpeed)
+        .component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1));
   }
   
   public boolean canBreakDepthRock = false;
   public final List<ItemAbility> abilities = new ArrayList<>();
   public final List<ItemModifier> modifiers = new ArrayList<>();
   
-  public SpecialSword addAbility(ItemAbility ability) {
+  public SpecialPickaxeMultiTool addAbility(ItemAbility ability) {
     abilities.add(ability);
     return this;
   }
   
-  public SpecialSword addModifier(ItemModifier modifier) {
+  public SpecialPickaxeMultiTool addModifier(ItemModifier modifier) {
     modifiers.add(modifier);
     return this;
   }
   
   @Override
-  public SpecialSword canBreakDepthRock() {
+  public SpecialPickaxeMultiTool canBreakDepthRock() {
     canBreakDepthRock = true;
     return this;
   }
   
   public ItemAbility getSelectedAbility(ItemStack stack) {
     int selectedAbility = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
-    if(selectedAbility < 0){return null;}
+    if (selectedAbility < 0) {
+      return null;
+    }
     return this.abilities.get(selectedAbility);
   }
   
   @Override
   public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-    if(world.isClient()){
+    if (world.isClient()) {
       return;
     }
-    if(!(miner instanceof PlayerEntity player)){
+    if (!(miner instanceof PlayerEntity player)) {
       return;
     }
     
@@ -72,7 +78,7 @@ public class SpecialSword extends Item implements SpecialTool {
   
   @Override
   public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-    for (ItemModifier modifier :modifiers){
+    for (ItemModifier modifier : modifiers) {
       modifier.postHit(stack, target, attacker);
     }
     super.postHit(stack, target, attacker);
@@ -81,7 +87,7 @@ public class SpecialSword extends Item implements SpecialTool {
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     
-    if(!abilities.isEmpty()) {
+    if (!abilities.isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.ability.start").formatted(Formatting.GRAY));
       for (int i = 0; i < abilities.size(); i++) {
         ItemAbility ability = abilities.get(i);
@@ -103,22 +109,22 @@ public class SpecialSword extends Item implements SpecialTool {
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
     }
     
-    if(!modifiers.isEmpty()) {
+    if (!modifiers.isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.modifier.start").formatted(Formatting.GRAY));
       for (ItemModifier modifier : modifiers) {
         MutableText prefix = Text.literal("  ");
         
         String translationKey = modifier.getTranslationKey();
         String value = modifier.getValue();
-        if (value != null){
+        if (value != null) {
           tooltip.accept(prefix.append(Text.translatable(translationKey, value).formatted(Formatting.RED)));
-        }else {
+        } else {
           tooltip.accept(prefix.append(Text.translatable(translationKey).formatted(Formatting.RED)));
         }
       }
     }
     
-    if (this.canBreakDepthRock){
+    if (this.canBreakDepthRock) {
       tooltip.accept(Text.of(""));
       tooltip.accept(Text.translatable("tooltip.ntm.canbreakdepthrock").formatted(Formatting.RED));
     }
@@ -143,7 +149,7 @@ public class SpecialSword extends Item implements SpecialTool {
     
     int PreviousAbility = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
     
-    int NewAbility = (PreviousAbility + 1) % (AbilityAmount+1);
+    int NewAbility = (PreviousAbility + 1) % (AbilityAmount + 1);
     if (NewAbility >= AbilityAmount || player.isSneaking()) {
       // Ability Unselected
       stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
@@ -157,12 +163,11 @@ public class SpecialSword extends Item implements SpecialTool {
       
       String translationKey = getSelectedAbility(stack).getTranslationKey();
       String value = getSelectedAbility(stack).getValue();
-      if (value != null){
+      if (value != null) {
         player.sendMessage(Text.translatable("info.ntm.ability.select", Text.translatable(translationKey, value)).formatted(Formatting.YELLOW), true);
-      }else {
+      } else {
         player.sendMessage(Text.translatable("info.ntm.ability.select", Text.translatable(translationKey)).formatted(Formatting.YELLOW), true);
       }
     }
-    
   }
 }

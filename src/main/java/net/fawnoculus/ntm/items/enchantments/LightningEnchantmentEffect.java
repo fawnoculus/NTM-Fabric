@@ -24,7 +24,7 @@ public record LightningEnchantmentEffect(EnchantmentLevelBasedValue amount) impl
   
   @Override
   public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
-    if (target instanceof LivingEntity victim && context.owner() instanceof PlayerEntity player) {
+    if (target instanceof LivingEntity victim && context.owner() instanceof @SuppressWarnings("unused")PlayerEntity player) {
       float numStrikes = this.amount.getValue(level);
       
       BlockPos position = victim.getBlockPos();
