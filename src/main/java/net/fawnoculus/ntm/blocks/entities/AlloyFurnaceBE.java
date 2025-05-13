@@ -4,9 +4,10 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
+import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.BlockPosPayload;
-import net.fawnoculus.ntm.render.screen.AlloyFurnaceScreenHandler;
+import net.fawnoculus.ntm.screen.handlers.AlloyFurnaceScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,6 +16,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.FuelRegistry;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -35,11 +38,12 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     super(ModBlockEntities.AlloyFurnaceBE, pos, state);
   }
   
-  // max fuel is consistent with original, but translated to burn ticks
-  public final int MAX_FUEL = 102400;
-  // fuel buffer (aka: vanilla burn ticks)
+  // max fuel is consistent with original, but translated to fuel burn ticks for consistency
+  public static final int MAX_FUEL = 102400;
+  private static final int FUEL_PER_TICK = 8;
   public int fuel = 0;
-  public final int MAX_PROGESS = 102400;
+  
+  public static final int MAX_PROGESS = 400;
   public int progress = 0;
   
   private final SimpleInventory inventory = new SimpleInventory(4){
@@ -50,52 +54,90 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     }
   };
   
+  public static final int OUTPUT_SLOT_INDEX = 0;
+  public static final int FUEL_SLOT_INDEX = 1;
+  public static final int INPUT_TOP_SLOT_INDEX = 2;
+  public static final int INPUT_BOTTOM_SLOT_INDEX = 3;
+  
   private final InventoryStorage inventoryStorage = InventoryStorage.of(inventory, null);
   
   public static void tick(World world, BlockPos pos, BlockState state, AlloyFurnaceBE entity) {
     entity.processFuelInput();
-    if(!entity.hasValidRecipe()){
-      entity.resetProgress();
+    if(entity.canCraft()) {
+      entity.addProgress();
       entity.update();
+      if(entity.progressFinished()) {
+        entity.craftOutput();
+        entity.resetProgress();
+        entity.update();
+      }
       return;
     }
-    if (entity.progressFinished()){
-      entity.craftOutput();
-      entity.resetProgress();
-      entity.update();
-      return;
-    }
-    entity.addProgress();
+    entity.resetProgress();
     entity.update();
     
   }
   
+  public boolean canCraft(){
+    return this.hasValidRecipe()
+        && this.canInsertIntoSlot(this.getRecipeOutput() , OUTPUT_SLOT_INDEX)
+        && this.hasEnoughFuel();
+  }
+  
+  public boolean hasEnoughFuel(){
+    return fuel >= FUEL_PER_TICK;
+  }
+  
   public boolean hasValidRecipe(){
-    //TODO: this
+    return getRecipeOutput() != null; //TODO: recipes
+  }
+  private boolean inputsContain(Item check){
+    return inventory.getStack(INPUT_TOP_SLOT_INDEX).getItem() == check || inventory.getStack(INPUT_BOTTOM_SLOT_INDEX).getItem() == check;
+  }
+  
+  public boolean canInsertIntoSlot(ItemStack stack, int slotIndex){
+    ItemStack switchStack = this.inventory.getStack(slotIndex);
+    if(switchStack.isEmpty()) return true;
+    
+    if(switchStack.getItem() == stack.getItem()){
+      return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
+    }
+    
     return false;
   }
   
   public float getFuel(){
-    return ((float) this.fuel) / ((float) this.MAX_FUEL);
+    return ((float) this.fuel) / ((float) MAX_FUEL);
+  }
+  
+  public ItemStack getRecipeOutput(){
+    return new ItemStack(ModItems.STEEL_INGOT, 1); //TODO: recipes
   }
   
   public float getProgress(){
-    return ((float) this.progress) / ((float) this.MAX_PROGESS);
+    return ((float) this.progress) / ((float) MAX_PROGESS);
   }
   
   private boolean progressFinished(){
-    return getProgress() >= 1;
+    return this.progress >= MAX_PROGESS;
   }
   
-  private void craftOutput(){
-    //TODO: this
+  private void craftOutput(){  //TODO: recipes !!!!!!!!!!
+    ItemStack recipeOutput = getRecipeOutput();
+    recipeOutput.setCount(inventory.getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
+    
+    inventory.setStack(OUTPUT_SLOT_INDEX, recipeOutput);
+    
+    inventory.removeStack(INPUT_BOTTOM_SLOT_INDEX, 1);
+    inventory.removeStack(INPUT_TOP_SLOT_INDEX, 1);
   }
   
   private void addProgress(){
-    this.fuel--;
+    this.fuel -= FUEL_PER_TICK;
     this.progress++;
     
     if(hasExtention()){
+      this.progress++;
       this.progress++;
     }
     
@@ -114,12 +156,19 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   
   private void processFuelInput(){
     FuelRegistry fuelRegistry = Objects.requireNonNull(this.getWorld()).getFuelRegistry();
-    // TODO: do the rest of this lol
+    if(!fuelRegistry.isFuel(inventory.getStack(FUEL_SLOT_INDEX))) return;
+    
+    int fuelTicks = fuelRegistry.getFuelTicks(inventory.getStack(FUEL_SLOT_INDEX));
+    if(fuelTicks > MAX_FUEL - this.fuel) return;
+    this.fuel += fuelTicks;
+    
+    // TODO: set fuel remainder if posible (aka: bucket of lava -> bucket)
+    inventory.removeStack(FUEL_SLOT_INDEX, 1);
   }
   
   private boolean hasExtention(){
     assert this.world != null;
-    return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.HAS_EXTENTION);
+    return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
   }
   
   private void update(){

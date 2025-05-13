@@ -23,6 +23,7 @@ public class ModItemGroups {
   public static final RegistryKey<ItemGroup> MACHINE_ITEMS_AND_FUEL_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machine_items_and_fuel"));
   public static final ItemGroup MACHINE_ITEMS_AND_FUEL = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModBlocks.ALLOY_FURNACE))
+      .icon(() -> new ItemStack(ModBlocks.ALLOY_FURNACE_EXTENSION))
       .displayName(Text.translatable("itemGroup.ntm.machine_items_and_fuel"))
       .build();
   public static final RegistryKey<ItemGroup> TEMPLATES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("templates"));
@@ -33,6 +34,7 @@ public class ModItemGroups {
   public static final RegistryKey<ItemGroup> ORES_AND_BLOCKS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("ores_and_blocks"));
   public static final ItemGroup ORES_AND_BLOCKS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModBlocks.URANIUM_ORE))
+      .icon(() -> new ItemStack(ModBlocks.LEAD_ORE))
       .displayName(Text.translatable("itemGroup.ntm.ores_and_blocks"))
       .build();
   public static final RegistryKey<ItemGroup> MACHINES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machines"));

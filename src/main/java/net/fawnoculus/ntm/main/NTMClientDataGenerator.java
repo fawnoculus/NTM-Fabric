@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.main;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fawnoculus.ntm.datagen.ModelProvider;
+import net.fawnoculus.ntm.datagen.model.ModelProvider;
 
 public class NTMClientDataGenerator implements DataGeneratorEntrypoint {
   

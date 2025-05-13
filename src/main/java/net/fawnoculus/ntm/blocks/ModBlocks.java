@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.blocks;
 
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
+import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceExtensionBlock;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -26,6 +27,9 @@ public class ModBlocks {
           .mapColor(MapColor.TERRACOTTA_ORANGE)
           .requiresTool()
   , true);
+  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create(), true);
+  
+  
   
   private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean registerItem){
     RegistryKey<Block> blockKey = keyOfBlock(name);

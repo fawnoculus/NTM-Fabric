@@ -1,10 +1,10 @@
-package net.fawnoculus.ntm.render;
+package net.fawnoculus.ntm.screen;
 
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.BlockPosPayload;
-import net.fawnoculus.ntm.render.screen.AlloyFurnaceScreenHandler;
+import net.fawnoculus.ntm.screen.handlers.AlloyFurnaceScreenHandler;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;

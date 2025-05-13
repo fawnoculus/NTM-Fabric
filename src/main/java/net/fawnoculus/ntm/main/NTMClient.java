@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.main;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fawnoculus.ntm.render.ModBlockEntityRenderer;
-import net.fawnoculus.ntm.render.ModHandledScreens;
-import net.fawnoculus.ntm.render.ModScreenHandlerType;
+import net.fawnoculus.ntm.screen.ModHandledScreens;
+import net.fawnoculus.ntm.screen.ModScreenHandlerType;
 import net.minecraft.util.Identifier;
 
 public class NTMClient implements ClientModInitializer {

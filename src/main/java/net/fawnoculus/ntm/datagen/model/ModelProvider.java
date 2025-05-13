@@ -1,13 +1,22 @@
-package net.fawnoculus.ntm.datagen;
+package net.fawnoculus.ntm.datagen.model;
 
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
-import net.minecraft.client.data.*;
+import net.minecraft.block.Block;
+import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.ModelIds;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
+import net.minecraft.client.data.TexturedModel;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.Models;
 
 import java.util.Optional;
+
 
 
 public class ModelProvider extends FabricModelProvider {
@@ -20,7 +29,7 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.URANIUM_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LEAD_ORE);
 //    TODO: Make this shit work
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ALLOY_FURNACE);
+    blockStateModelGenerator.registerSingleton(ModBlocks.ALLOY_FURNACE, TexturedModel.ORIENTABLE_WITH_BOTTOM);
 //    TexturedModel alloyFurnaceIdentifier = TexturedModel.CUBE_ALL.get(ModBlocks.ALLOY_FURNACE);
 //    Identifier alloyFurnaceLitIdentifier = blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "_lit", Models.ORIENTABLE_WITH_BOTTOM, TextureMap::all);
 //    Identifier alloyFurnaceLongIdentifier = blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "_tall", Models.ORIENTABLE_WITH_BOTTOM, TextureMap::all);
@@ -28,6 +37,13 @@ public class ModelProvider extends FabricModelProvider {
 //
 //    blockStateModelGenerator.blockStateCollector.accept(VariantsBlockModelDefinitionCreator.of(ModBlocks.ALLOY_FURNACE)
 //        .with(BlockStateModelGenerator.createBooleanModelMap(AlloyFurnaceBlock.LIT, alloyFurnaceIdentifier, alloyFurnaceLitIdentifier)));
+  }
+  private static TextureMap blockFurnaceLike(Block block) {
+    return new TextureMap()
+        .put(TextureKey.TOP, ModelIds.getBlockSubModelId(block, "_top"))
+        .put(TextureKey.BOTTOM, ModelIds.getBlockSubModelId(block, "_bottom"))
+        .put(TextureKey.FRONT, ModelIds.getBlockSubModelId(block, "_front"))
+        .put(TextureKey.SIDE, ModelIds.getBlockSubModelId(block, "_side"));
   }
   
   @Override

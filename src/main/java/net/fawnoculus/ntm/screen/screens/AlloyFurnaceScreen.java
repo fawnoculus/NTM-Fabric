@@ -1,7 +1,8 @@
-package net.fawnoculus.ntm.render.screen;
+package net.fawnoculus.ntm.screen.screens;
 
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.screen.handlers.AlloyFurnaceScreenHandler;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;

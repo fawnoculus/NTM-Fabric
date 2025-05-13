@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModDataComponentTypes;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -141,18 +142,20 @@ public class SpecialShovel extends ShovelItem implements SpecialTool {
       return;
     }
     
-    int PreviousAbility = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
+    int NewAbilityIndex = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
+    NewAbilityIndex++;
     
-    int NewAbility = (PreviousAbility + 1) % (AbilityAmount+1);
-    if (NewAbility >= AbilityAmount || player.isSneaking()) {
+    if (NewAbilityIndex >= AbilityAmount || player.isSneaking()) {
       // Ability Unselected
       stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
+      stack.remove(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
       
       player.sendMessage(Text.translatable("info.ntm.ability.unselect").formatted(Formatting.GOLD), true);
     } else {
       // Ability switched
-      stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, NewAbility);
+      stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, NewAbilityIndex);
+      stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
       
       String translationKey = getSelectedAbility(stack).getTranslationKey();
@@ -163,6 +166,5 @@ public class SpecialShovel extends ShovelItem implements SpecialTool {
         player.sendMessage(Text.translatable("info.ntm.ability.select", Text.translatable(translationKey)).formatted(Formatting.YELLOW), true);
       }
     }
-    
   }
 }

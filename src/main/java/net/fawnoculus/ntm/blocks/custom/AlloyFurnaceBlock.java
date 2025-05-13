@@ -12,11 +12,13 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -32,12 +34,12 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
     super(settings);
     setDefaultState(this.getDefaultState()
         .with(LIT, false)
-        .with(HAS_EXTENTION, false)
+        .with(EXTENSION, false)
         .with(FACING, Direction.NORTH));
   }
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final BooleanProperty LIT = Properties.LIT;
-  public static final BooleanProperty HAS_EXTENTION = BooleanProperty.of("has_extension");
+  public static final BooleanProperty EXTENSION = BooleanProperty.of("extension");
   
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {
@@ -50,7 +52,19 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   }
   
   @Override
+  protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+    if(state.getBlock() == this || !(world.getBlockEntity(pos) instanceof AlloyFurnaceBE alloyFurnaceBE)) {
+      super.onStateReplaced(state, world, pos, moved);
+      return;
+    }
+    ItemScatterer.spawn(world, pos, alloyFurnaceBE.getInventory());
+    world.updateComparators(pos, this);
+    super.onStateReplaced(state, world, pos, moved);
+  }
+  
+  @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+    if(world.isClient) return null;
     return validateTicker(type, ModBlockEntities.AlloyFurnaceBE, AlloyFurnaceBE::tick);
   }
   
@@ -73,7 +87,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     builder.add(FACING);
     builder.add(LIT);
-    builder.add(HAS_EXTENTION);
+    builder.add(EXTENSION);
   }
   
   @Override

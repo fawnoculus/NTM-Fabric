@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.util.EnchantmentHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,9 +19,12 @@ import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.AdvancedExplosionBehavior;
+import net.minecraft.world.explosion.ExplosionBehavior;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +38,12 @@ public class Abilities {
    * MaxBlocks is the max Distance that a block can have from the originally broken block before it will no longer be harvested by VeinMiner
    */
   public static class VeinMiner implements ItemAbility {
+    public final Integer MaxDistance;
+    
     public VeinMiner(int MaxBlocks) {
-      this.MaxBlocks = MaxBlocks;
+      this.MaxDistance = MaxBlocks;
     }
     
-    public final Integer MaxBlocks;
     
     @Override
     public String getTranslationKey() {
@@ -49,7 +52,7 @@ public class Abilities {
     
     @Override
     public String getValue() {
-      return this.MaxBlocks.toString();
+      return this.MaxDistance.toString();
     }
     
     private final List<Block> excludedBlocks = List.of(Blocks.STONE, Blocks.NETHERRACK);
@@ -59,61 +62,38 @@ public class Abilities {
       if (!isCorrectForDrops(stack, state)) {
         return;
       }
-      
-      //TODO: make this work
       Block compareBlock = state.getBlock();
       
       if (excludedBlocks.contains(compareBlock)) {
         return;
       }
       
-      List<BlockPos> allBlocks = new ArrayList<>();
-      List<BlockPos> toBeScannedBlocks = new ArrayList<>();
-      int previousSize = 0;
-      allBlocks.add(pos);
-      toBeScannedBlocks.add(pos);
+      List<BlockPos> scannedBlocks = new ArrayList<>();
+      scannedBlocks.add(pos);
+      try {
+        scanNeighbours(world, compareBlock, pos, pos, scannedBlocks);
+      } catch (StackOverflowError ignored) {}
       
-      BlockPos comparedPos;
-      NTM.LOGGER.info("AllBlocks Initial: " + allBlocks);
-      NTM.LOGGER.info("Scanning Blocks Initial: " + toBeScannedBlocks);
-      
-      while (allBlocks.size() != previousSize) {
-        for (BlockPos blockpos : toBeScannedBlocks) {
-          comparedPos = blockpos.north();
-          if ((!allBlocks.contains(comparedPos)) && world.getBlockState(comparedPos).getBlock() == compareBlock) {
-            allBlocks.add(comparedPos);
-            toBeScannedBlocks.add(comparedPos);
-          }
-          comparedPos = blockpos.east();
-          if ((!allBlocks.contains(comparedPos)) && world.getBlockState(comparedPos).getBlock() == compareBlock) {
-            allBlocks.add(comparedPos);
-            toBeScannedBlocks.add(comparedPos);
-          }
-          comparedPos = blockpos.south();
-          if ((!allBlocks.contains(comparedPos)) && world.getBlockState(comparedPos).getBlock() == compareBlock) {
-            allBlocks.add(comparedPos);
-            toBeScannedBlocks.add(comparedPos);
-          }
-          comparedPos = blockpos.west();
-          if ((!allBlocks.contains(comparedPos)) && world.getBlockState(comparedPos).getBlock() == compareBlock) {
-            allBlocks.add(comparedPos);
-            toBeScannedBlocks.add(comparedPos);
-          }
-          comparedPos = blockpos.up();
-          if ((!allBlocks.contains(comparedPos)) && world.getBlockState(comparedPos).getBlock() == compareBlock) {
-            allBlocks.add(comparedPos);
-            toBeScannedBlocks.add(comparedPos);
-          }
-          comparedPos = blockpos.down();
-          if ((!allBlocks.contains(comparedPos)) && world.getBlockState(comparedPos).getBlock() == compareBlock) {
-            allBlocks.add(comparedPos);
-            toBeScannedBlocks.add(comparedPos);
-          }
-          toBeScannedBlocks.remove(blockpos);
-          NTM.LOGGER.info("BlockSet: " + allBlocks);
-          NTM.LOGGER.info("Scanning Blocks: " + toBeScannedBlocks);
-        }
+      for(BlockPos breakingPos : scannedBlocks){
+        world.breakBlock(breakingPos, !miner.isCreative(), miner);
       }
+      
+    }
+    // These updates the List scannedBlocks
+    private void scanNeighbours(World world, Block compareBlock, BlockPos originPos, BlockPos scanningPos, List<BlockPos> scannedBlocks){
+      scanBlock(world, compareBlock, originPos, scanningPos.up(), scannedBlocks);
+      scanBlock(world, compareBlock, originPos, scanningPos.down(), scannedBlocks);
+      scanBlock(world, compareBlock, originPos, scanningPos.north(), scannedBlocks);
+      scanBlock(world, compareBlock, originPos, scanningPos.east(), scannedBlocks);
+      scanBlock(world, compareBlock, originPos, scanningPos.south(), scannedBlocks);
+      scanBlock(world, compareBlock, originPos, scanningPos.west(), scannedBlocks);
+    }
+    private void scanBlock(World world, Block compareBlock, BlockPos originPos, BlockPos scanningPos, List<BlockPos> scannedBlocks){
+      if (scannedBlocks.contains(scanningPos)) return;
+      if(world.getBlockState(scanningPos).getBlock() != compareBlock) return;
+      if(!originPos.isWithinDistance(scanningPos, this.MaxDistance)) return;
+      scannedBlocks.add(scanningPos);
+      scanNeighbours(world, compareBlock, originPos, scanningPos, scannedBlocks);
     }
   }
   /**
@@ -185,7 +165,7 @@ public class Abilities {
         ItemStack output = recipeEntry.value().craft(recipeInput, serverWorld.getRegistryManager());
         output.setCount(checkedStack.getCount());
         
-        world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), output));
+        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output);
       }
       
       world.breakBlock(pos, false, miner);
@@ -203,7 +183,7 @@ public class Abilities {
     
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-      //TODO: this
+      //TODO: Do this once you have Shreader Recipes
     }
   }
   /**
@@ -218,7 +198,7 @@ public class Abilities {
     
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-      //TODO: this
+      //TODO: Do this once you have Centrifuge Recipes
     }
   }
   /**
@@ -233,7 +213,7 @@ public class Abilities {
     
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-      //TODO: this
+      //TODO: Do this once you have Crystallizer Recipes
     }
   }
   /**
@@ -250,7 +230,6 @@ public class Abilities {
       if(miner.isCreative()){
         return;
       }
-      // I hate this
       if(EnchantmentHelper.hasEnchantment(stack, Enchantments.SILK_TOUCH)){
         return;
       }
@@ -279,7 +258,6 @@ public class Abilities {
       if(miner.isCreative()){
         return;
       }
-      // I hate this
       if(EnchantmentHelper.hasEnchantment(stack, Enchantments.FORTUNE)){
         return;
       }
@@ -306,7 +284,8 @@ public class Abilities {
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       if(!isCorrectForDrops(stack, state)) return;
-      //TODO: this
+      ExplosionBehavior explosionBehavior = new AdvancedExplosionBehavior(true, false, Optional.empty(), Optional.empty());
+      world.createExplosion(null, null, explosionBehavior, Vec3d.of(pos), explosionStrength, false, World.ExplosionSourceType.TNT);
     }
   }
   /**
@@ -332,7 +311,7 @@ public class Abilities {
       
       if(mercury > 0) {
         world.breakBlock(pos, false);
-        world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(ModItems.NULL, mercury))); //TODO: replace this with Mercury Drops once they exist
+        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
         
         stack.damage(1, miner);
       }

@@ -11,6 +11,31 @@ base {
 }
 
 repositories {
+    // REI
+    maven {
+        name = "Shedaniel's Maven"
+        url = "https://maven.shedaniel.me/"
+    }
+    // JEI
+    maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+    // JEI Backup
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+    // EMI & Modmenu
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+    // Jade
+    maven {
+        name = "Modrinth Maven"
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 // Splitting Client & main Sources
@@ -41,8 +66,26 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    //Fabric API
+    // Fabric API
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Libraries required by other mods
+    modApi "dev.architectury:architectury-fabric:${project.architectury_version}"
+    modApi "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+
+    // Compatibility Tests
+    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"             // Modmenu
+    modLocalRuntime "maven.modrinth:jade:${project.jade_version}"                       // Jade
+    modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"                   // Sodium (gotta be sodium compatible after all)
+    modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"     // REI
+    //modLocalRuntime "dev.emi:emi-fabric:${emi_version}+${emi_mc_version}"               // EMI (there is no version for 1.21.5 yet)
+    //modLocalRuntime "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"              // JEI (there is no version for 1.21.5 yet)
+
+    // CompileTime Stuff
+    modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"           //REI
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"   // REI default Plugin
+    modCompileOnlyApi "dev.emi:emi-fabric:${emi_version}+${emi_mc_version}:api"                     // EMI
+    modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-fabric-api:${jei_version}"                    // JEI
 }
 
 processResources {

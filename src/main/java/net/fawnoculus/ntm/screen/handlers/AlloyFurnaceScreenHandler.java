@@ -1,9 +1,11 @@
-package net.fawnoculus.ntm.render.screen;
+package net.fawnoculus.ntm.screen.handlers;
 
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.network.BlockPosPayload;
-import net.fawnoculus.ntm.render.ModScreenHandlerType;
+import net.fawnoculus.ntm.screen.ModScreenHandlerType;
+import net.fawnoculus.ntm.screen.slots.ItemFuelSlot;
+import net.fawnoculus.ntm.screen.slots.OutputSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -11,6 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.World;
+
+import java.util.Objects;
 
 public class AlloyFurnaceScreenHandler extends ScreenHandler {
   private final AlloyFurnaceBE blockEntity;
@@ -36,10 +41,10 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
   }
   
   private void addBlockInventory(SimpleInventory inventory) {
-    addSlot(new Slot(inventory, 0, 8, 36));
-    addSlot(new Slot(inventory, 1, 80, 18));
-    addSlot(new Slot(inventory, 2, 80, 54));
-    addSlot(new Slot(inventory, 3, 134, 36));
+    addSlot(new ItemFuelSlot(Objects.requireNonNull(blockEntity.getWorld()).getFuelRegistry(), inventory, AlloyFurnaceBE.FUEL_SLOT_INDEX, 8, 36));
+    addSlot(new Slot(inventory, AlloyFurnaceBE.INPUT_TOP_SLOT_INDEX, 80, 18));
+    addSlot(new Slot(inventory, AlloyFurnaceBE.INPUT_BOTTOM_SLOT_INDEX, 80, 54));
+    addSlot(new OutputSlot(inventory, AlloyFurnaceBE.OUTPUT_SLOT_INDEX, 134, 36));
   }
   
   private void addPlayerInventory(PlayerInventory playerInventory){
@@ -67,6 +72,12 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
   
   @Override
   public ItemStack quickMove(PlayerEntity player, int slotIndex) {
+    ItemStack clickedStack = player.getInventory().getStack(slotIndex);
+    if (clickedStack.isEmpty()) return ItemStack.EMPTY;
+    
+    World world = Objects.requireNonNull(blockEntity.getWorld());
+    //if(world.getFuelRegistry().isFuel(clickedStack) && blockEntity.getInventory().getStack(AlloyFurnaceBE.FUEL_SLOT_INDEX)
+    
     return ItemStack.EMPTY;
     /* TODO: fix this
     ItemStack stack = ItemStack.EMPTY;

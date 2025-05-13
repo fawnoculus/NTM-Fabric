@@ -4,6 +4,8 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Datagen will be used for advancements, loot-tables, recipes & tags (where possible)
 - A lot of Models will be done with Datagen, but obviously custom/advanced Models will remain as Json/Blender Files
 - Translation will be done with lang files, not with Datagen
+
+- Don't forget to add EMI & JEI compatability once they port beyond 1.21.1
 #
 ### Some Stuff will be changed to fit into modern Versions:
 #### Textures:
