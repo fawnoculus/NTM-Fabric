@@ -7,7 +7,7 @@ import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.BlockPosPayload;
-import net.fawnoculus.ntm.screen.handlers.AlloyFurnaceScreenHandler;
+import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

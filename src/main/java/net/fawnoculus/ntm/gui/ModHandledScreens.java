@@ -1,6 +1,6 @@
-package net.fawnoculus.ntm.screen;
+package net.fawnoculus.ntm.gui;
 
-import net.fawnoculus.ntm.screen.screens.AlloyFurnaceScreen;
+import net.fawnoculus.ntm.gui.handled_screens.AlloyFurnaceScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 public class ModHandledScreens {

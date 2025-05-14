@@ -1,11 +1,11 @@
-package net.fawnoculus.ntm.screen.handlers;
+package net.fawnoculus.ntm.gui.handlers;
 
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.network.BlockPosPayload;
-import net.fawnoculus.ntm.screen.ModScreenHandlerType;
-import net.fawnoculus.ntm.screen.slots.ItemFuelSlot;
-import net.fawnoculus.ntm.screen.slots.OutputSlot;
+import net.fawnoculus.ntm.gui.ModScreenHandlerType;
+import net.fawnoculus.ntm.gui.slots.ItemFuelSlot;
+import net.fawnoculus.ntm.gui.slots.OutputSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;

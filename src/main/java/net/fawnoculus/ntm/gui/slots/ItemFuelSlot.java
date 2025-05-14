@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.screen.slots;
+package net.fawnoculus.ntm.gui.slots;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.FuelRegistry;
