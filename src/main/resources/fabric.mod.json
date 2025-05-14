@@ -19,15 +19,10 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.modrinth": "TODO:Dont_forget_to_add_this_link",
-        "modmenu.curseforge": "TODO:Dont_forget_to_add_this_link",
+        "modmenu.modrinth": "TODO:Don't_forget_to_add_this_link",
+        "modmenu.curseforge": "TODO:Don't_forget_to_add_this_link",
         "modmenu.wiki": "https://nucleartech.wiki/wiki/Main_Page",
-        "modmenu.github_releases": "https://github.com/fawnoculus/NTM-Fabric/releases",
-        "modmenu.ntm.original_mod.discord": "https://discord.gg/ZFJDFBN",
-        "modmenu.ntm.original_mod.blog": "https://hbmmods.github.io/",
-        "modmenu.ntm.original_mod.github": "https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT/",
-        "modmenu.ntm.original_mod.modrinth": "https://modrinth.com/mod/ntm",
-        "modmenu.ntm.original_mod.curseforge": "https://www.curseforge.com/minecraft/mc-mods/hbms-nuclear-tech-mod"
+        "modmenu.github_releases": "https://github.com/fawnoculus/NTM-Fabric/releases"
       }
     }
   },
@@ -35,15 +30,33 @@
   "icon": "assets/ntm/icon.png",
   "environment": "*",
   "entrypoints": {
-    "fabric-datagen": [
-      "net.fawnoculus.ntm.main.NTMCommonDataGenerator",
-      "net.fawnoculus.ntm.main.NTMClientDataGenerator"
+    "main": [
+      "net.fawnoculus.ntm.main.NTM"
     ],
     "client": [
       "net.fawnoculus.ntm.main.NTMClient"
     ],
-    "main": [
-      "net.fawnoculus.ntm.main.NTM"
+    "fabric-datagen": [
+      "net.fawnoculus.ntm.main.NTMCommonDataGenerator",
+      "net.fawnoculus.ntm.main.NTMClientDataGenerator"
+    ],
+    "jade": [
+      "net.fawnoculus.ntm.compat.jade.NTMJadePlugin"
+    ],
+    "modmenu": [
+      "net.fawnoculus.ntm.compat.modmenu.NTMModmenuPlugin"
+    ],
+    "emi": [
+      "net.fawnoculus.ntm.compat.emi.NTMEmiPlugin"
+    ],
+    "rei_client": [
+      "net.fawnoculus.ntm.compat.rei.NTMReiClientPlugin"
+    ],
+    "rei_common": [
+      "net.fawnoculus.ntm.compat.rei.NTMReiCommonPlugin"
+    ],
+    "jei_mod_plugin": [
+      "net.fawnoculus.ntm.compat.jei.NTMJeiPlugin"
     ]
   },
   "mixins": [
@@ -56,6 +69,5 @@
     "minecraft": "${minecraft_version}"
   },
   "suggests": {
-    "rei": "*"
   }
 }

@@ -1,10 +1,4 @@
 {
-  "modmenu.ntm.original_mod.discord": "HBM's NTM Discord",
-  "modmenu.ntm.original_mod.blog": "HBM's Blog",
-  "modmenu.ntm.original_mod.github": "Original Mod (Sources)",
-  "modmenu.ntm.original_mod.modrinth": "Original Mod (Modrinth)",
-  "modmenu.ntm.original_mod.curseforge": "Original Mod (Curseforge)",
-
   "info.ntm.ability.unselect": "[Tool ability deactivated]",
   "info.ntm.ability.select": "[Enabled %1$s]",
 
