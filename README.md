@@ -9,8 +9,7 @@ For now the only way to install it is to download the Repository and build it fr
 
 ## Building it from Source
 1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
-2. Open PowerShell
-   -- Or Bash if you are using Linux
+2. Open PowerShell (or Bash if you are using Linux)
 3. Navigate to the Directory you wish to copy the Sources to
 ```bash
 cd $HOME/Downloads/
