@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.util.config;
 
 
-import net.fawnoculus.ntm.util.config.options.Option;
+import org.slf4j.Logger;
 
 import java.io.Writer;
 import java.util.List;
@@ -11,6 +11,6 @@ public interface ConfigFileType {
   
   String getFileExtention();
   
-  List<Option<?>> readFile(Scanner reader, List<Option<?>> expectedOptions);
-  void writeFile(Writer writer, List<Option<?>> options);
+  List<Option<?>> readFile(Scanner reader, Logger LOGGER, List<Option<?>> expectedOptions);
+  void writeFile(Writer writer, Logger LOGGER, List<Option<?>> options);
 }

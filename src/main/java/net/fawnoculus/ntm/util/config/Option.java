@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.config.options;
+package net.fawnoculus.ntm.util.config;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +19,7 @@ public abstract class Option<T> {
    * @param comment Optional Comment (use "null" for no Comment)
    * @param validator Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  Option(String name, T defaultValue, @Nullable String comment, Function<T, Boolean> validator) {
+  public Option(String name, T defaultValue, @Nullable String comment, Function<T, Boolean> validator) {
     this.NAME = name;
     this.DEFAULT_VALUE = defaultValue;
     this.COMMENT = comment;
@@ -29,17 +29,17 @@ public abstract class Option<T> {
   /**
    * @return the current value of the option
    */
-  T getValue() {
+  public T getValue() {
     return this.value != null ? this.value : this.DEFAULT_VALUE;
   }
   
-  void setValue(T value) {
+  public void setValue(T value) {
     if(!isValidValue(value)){
       return;
     }
   }
   
-  boolean isValidValue(T value) {
+  public boolean isValidValue(T value) {
     return VALIDATOR.apply(value);
   }
 }
