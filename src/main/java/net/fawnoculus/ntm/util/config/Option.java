@@ -10,6 +10,7 @@ public abstract class Option<T> {
   public final T DEFAULT_VALUE;
   
   private final Function<T, Boolean> VALIDATOR;
+  private final ConfigFile PARENT;
   
   public  T value;
   
@@ -19,7 +20,12 @@ public abstract class Option<T> {
    * @param comment Optional Comment (use "null" for no Comment)
    * @param validator Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  public Option(String name, T defaultValue, @Nullable String comment, Function<T, Boolean> validator) {
+  public Option(ConfigFile parent, String name, T defaultValue, @Nullable String comment, Function<T, Boolean> validator) {
+    if(!isValidValue(defaultValue)){
+      throw new IllegalArgumentException("Default Value is not valid you idiot");
+    }
+    
+    this.PARENT = parent;
     this.NAME = name;
     this.DEFAULT_VALUE = defaultValue;
     this.COMMENT = comment;
@@ -37,9 +43,12 @@ public abstract class Option<T> {
     if(!isValidValue(value)){
       return;
     }
+    this.value = value;
   }
   
   public boolean isValidValue(T value) {
-    return VALIDATOR.apply(value);
+    assert VALIDATOR != null;
+    assert PARENT != null;
+    return VALIDATOR.apply(value) && PARENT.CONFIG_FILE_TYPE.isValidValue(value);
   }
 }

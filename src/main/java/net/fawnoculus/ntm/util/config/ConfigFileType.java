@@ -3,14 +3,18 @@ package net.fawnoculus.ntm.util.config;
 
 import org.slf4j.Logger;
 
-import java.io.Writer;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 public interface ConfigFileType {
   
-  String getFileExtention();
+  String getFileExtension();
   
-  List<Option<?>> readFile(Scanner reader, Logger LOGGER, List<Option<?>> expectedOptions);
-  void writeFile(Writer writer, Logger LOGGER, List<Option<?>> options);
+  Boolean isValidOption(Option<?> option);
+  Boolean isValidValue(Object value);
+  
+  List<Option<?>> readFile(File configFile, Logger LOGGER, List<Option<?>> expectedOptions) throws FileNotFoundException;
+  void writeFile(File configFile, Logger LOGGER, List<Option<?>> options) throws IOException;
 }

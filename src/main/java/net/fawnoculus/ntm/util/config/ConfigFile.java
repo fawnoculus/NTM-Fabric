@@ -7,62 +7,54 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.function.Function;
 
 public class ConfigFile {
-  private List<Option<?>> options;
+  private List<Option<?>> options = new ArrayList<>();
   private Boolean initialized = false;
   
   public final ConfigFileType CONFIG_FILE_TYPE;
   
   private final File CONFIG_FILE;
-  private final Scanner CONFIG_READER;
-  private final Writer CONFIG_WRITER;
   private final Logger LOGGER;
+  private final List<String> optionNames = new ArrayList<>();
   
   ConfigFile(String path, ConfigFileType configFileType, @Nullable Logger logger){
     this.CONFIG_FILE_TYPE = configFileType;
     this.LOGGER = logger != null ? logger : LoggerFactory.getLogger("FawnConfigUtil");
     
-    if(path.endsWith(configFileType.getFileExtention())){
+    if(path.endsWith(configFileType.getFileExtension())){
       this.CONFIG_FILE = new File(path);
     }else {
-      this.CONFIG_FILE = new File(path + configFileType.getFileExtention());
+      this.CONFIG_FILE = new File(path + configFileType.getFileExtension());
     }
-    
-    // Get Reader
-    Scanner configScanner = null;
-    try {
-      configScanner = new Scanner(CONFIG_FILE);
-    } catch(Exception exception){
-      LOGGER.error("Failed to get Config File Reader: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
-    }
-    this.CONFIG_READER = configScanner;
-    
-    // Get Writer
-    Writer configWriter = null;
-    try {
-      configWriter = new FileWriter(CONFIG_FILE);
-    } catch(Exception exception){
-      LOGGER.error("Failed to get Config File Writer: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
-    }
-    this.CONFIG_WRITER = configWriter;
   }
   
-  public void readFile(){
+  /**
+   * @return whether the Config is Missing any Options (aka whether to rewrite the Config)
+   */
+  public boolean readFile(){
     List<Option<?>> readOptions = this.options;
     
     try {
-      readOptions = this.CONFIG_FILE_TYPE.readFile(CONFIG_READER, this.LOGGER, this.options);
+      readOptions = this.CONFIG_FILE_TYPE.readFile(CONFIG_FILE, this.LOGGER, this.options);
     } catch(Exception exception) {
       LOGGER.error("Failed to read from Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
     }
     
+    boolean valuesChanged = false;
+    
+    for (int i = 0; i < this.options.size(); i++) {
+      Option<?> previousOption = this.options.get(i);
+      Option<?> newOption = readOptions.get(i);
+      
+      if(previousOption.getValue() != newOption.getValue()) valuesChanged = true;
+    }
+    
     this.options = readOptions;
+    return valuesChanged;
   }
   
   public void writeFile(){
@@ -82,7 +74,7 @@ public class ConfigFile {
         }
       }
       
-      this.CONFIG_FILE_TYPE.writeFile(CONFIG_WRITER, this.LOGGER, this.options);
+      this.CONFIG_FILE_TYPE.writeFile(CONFIG_FILE, this.LOGGER, this.options);
     } catch(Exception exception) {
       LOGGER.error("Failed to write to Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
     }
@@ -92,16 +84,25 @@ public class ConfigFile {
     if(initialized){
       throw new RuntimeException("Config File already Initialized");
     }
+    if(!CONFIG_FILE.exists()) writeFile();
     
-    if(CONFIG_FILE.exists()){
-      readFile();
-    }
-    writeFile();
+    boolean shouldWrite = readFile();
+    if(shouldWrite) writeFile();
     
     initialized = true;
   }
   
   // Everything bellow is just for getting new Options for a Config File //
+  
+  private void addAndValidateOption(Option<?> option){
+    String name = option.NAME;
+    
+    if(CONFIG_FILE_TYPE.isValidOption(option)) throw new IllegalArgumentException("Option with name '" + name + "' is not valid for Config Type '"+ CONFIG_FILE_TYPE.getClass() +"'");
+    if(optionNames.contains(name)) throw new IllegalArgumentException("Option with name '" + name + "' already exist in Config File '"+ CONFIG_FILE.getPath() +"'");
+    
+    this.optionNames.add(name);
+    this.options.add(option);
+  }
   
   /**
    * @param name         Name of the Option
@@ -110,8 +111,8 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Function<Boolean, Boolean> validator) {
-    BooleanOption option = new BooleanOption(name, defaultValue, comment, validator);
-    this.options.add(option);
+    BooleanOption option = new BooleanOption(this, name, defaultValue, comment, validator);
+    addAndValidateOption(option);
     return option;
   }
   /**
@@ -129,8 +130,8 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Function<Double, Boolean> validator) {
-    DoubleOption option = new DoubleOption(name, defaultValue, comment, validator);
-    this.options.add(option);
+    DoubleOption option = new DoubleOption(this, name, defaultValue, comment, validator);
+    addAndValidateOption(option);
     return option;
   }
   /**
@@ -158,8 +159,8 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Function<Float, Boolean> validator) {
-    FloatOption option = new FloatOption(name, defaultValue, comment, validator);
-    this.options.add(option);
+    FloatOption option = new FloatOption(this, name, defaultValue, comment, validator);
+    addAndValidateOption(option);
     return option;
   }
   /**
@@ -187,8 +188,8 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Function<Integer, Boolean> validator) {
-    IntegerOption option = new IntegerOption(name, defaultValue, comment, validator);
-    this.options.add(option);
+    IntegerOption option = new IntegerOption(this, name, defaultValue, comment, validator);
+    addAndValidateOption(option);
     return option;
   }
   /**
@@ -216,8 +217,8 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, Function<String, Boolean> validator) {
-    StringOption option = new StringOption(name, defaultValue, comment, validator);
-    this.options.add(option);
+    StringOption option = new StringOption(this, name, defaultValue, comment, validator);
+    addAndValidateOption(option);
     return option;
   }
   /**
@@ -244,8 +245,8 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Function<List<String>, Boolean> validator) {
-    StringListOption option = new StringListOption(name, defaultValue, comment, validator);
-    this.options.add(option);
+    StringListOption option = new StringListOption(this, name, defaultValue, comment, validator);
+    addAndValidateOption(option);
     return option;
   }
   /**
