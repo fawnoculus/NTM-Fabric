@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
 
 public class PropertiesConfigFile implements ConfigFileType {
   @Override
@@ -65,9 +62,13 @@ public class PropertiesConfigFile implements ConfigFileType {
           for(String string : stringListOption.getValue()){
             writer.write(String.format(",%s", string));
           }
+          
+          writer.write("]\n");
         }
-        default -> writer.write(String.format("%s=%s", option.NAME, option.getValue()));
+        default -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
       }
     }
+    writer.flush();
+    writer.close();
   }
 }

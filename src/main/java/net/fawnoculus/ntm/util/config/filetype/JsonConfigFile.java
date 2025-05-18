@@ -141,6 +141,7 @@ public class JsonConfigFile implements ConfigFileType {
       writeOption(writer, LOGGER, option, i == options.size() - 1);
     }
     writer.write("\n}");
+    writer.flush();
     writer.close();
   }
   private void writeOption(FileWriter writer, Logger LOGGER, Option<?> option, boolean lastOption) throws IOException {

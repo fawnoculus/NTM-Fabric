@@ -111,6 +111,9 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Function<Boolean, Boolean> validator) {
+    comment = comment != null ? comment : "";
+    comment += " (Default: " + defaultValue + ")";
+    
     BooleanOption option = new BooleanOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
@@ -130,6 +133,9 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Function<Double, Boolean> validator) {
+    comment = comment != null ? comment : "";
+    comment += " (Default: " + defaultValue + ")";
+    
     DoubleOption option = new DoubleOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
@@ -142,6 +148,9 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Double min, Double max) {
+    comment = comment != null ? comment : "";
+    comment += "(Default: " + defaultValue + ")";
+    
     return newDoubleOption(name, defaultValue, comment, value -> value >= min && value <= max);
   }
   /**
@@ -159,6 +168,9 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Function<Float, Boolean> validator) {
+    comment = comment != null ? comment : "";
+    comment += " (Default: " + defaultValue + ")";
+    
     FloatOption option = new FloatOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
@@ -171,6 +183,9 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Float min, Float max) {
+    comment = comment != null ? comment : "";
+    comment += "(Default: " + defaultValue + ")";
+    
     return newFloatOption(name, defaultValue, comment, value -> value >= min && value <= max);
   }
   /**
@@ -188,6 +203,9 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Function<Integer, Boolean> validator) {
+    comment = comment != null ? comment : "";
+    comment += " (Default: " + defaultValue + ")";
+    
     IntegerOption option = new IntegerOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
@@ -200,6 +218,9 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Integer min, Integer max) {
+    comment = comment != null ? comment : "";
+    comment += "(Default: " + defaultValue + ")";
+    
     return newIntegerOption(name, defaultValue, comment, value -> value >= min && value <= max);
   }
   /**
@@ -217,7 +238,10 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, Function<String, Boolean> validator) {
+    comment = comment != null ? comment : "";
+    comment += " (Default: " + defaultValue + ")";
     StringOption option = new StringOption(this, name, defaultValue, comment, validator);
+    
     addAndValidateOption(option);
     return option;
   }
@@ -228,6 +252,15 @@ public class ConfigFile {
    * @param allowedValues All Allowed Values
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, String... allowedValues) {
+    StringBuilder commentBuilder = new StringBuilder(comment != null ? comment : "");
+    commentBuilder.append(" ");
+    for (int i = 0; i < allowedValues.length-1; i++) {
+      commentBuilder.append(allowedValues[i]).append(",");
+    }
+    comment = commentBuilder.toString();
+    comment += allowedValues[allowedValues.length-1];
+    comment += "]";
+    
     return newStringOption(name, defaultValue, comment, value -> List.of(allowedValues).contains(value));
   }
   /**
@@ -245,6 +278,9 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Function<List<String>, Boolean> validator) {
+    comment = comment != null ? comment : "";
+    comment += " (Default: " + defaultValue + ")";
+    
     StringListOption option = new StringListOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
