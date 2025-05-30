@@ -21,15 +21,15 @@ public abstract class Option<T> {
    * @param validator Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public Option(ConfigFile parent, String name, T defaultValue, @Nullable String comment, Function<T, Boolean> validator) {
-    if(!isValidValue(defaultValue)){
-      throw new IllegalArgumentException("Default Value is not valid you idiot");
-    }
-    
     this.PARENT = parent;
     this.NAME = name;
     this.DEFAULT_VALUE = defaultValue;
     this.COMMENT = comment;
     this.VALIDATOR = validator;
+    
+    if(!isValidValue(defaultValue)){
+      throw new IllegalArgumentException("Default Value is not valid you idiot");
+    }
   }
   
   /**

@@ -21,53 +21,39 @@ public class ConfigFile {
   private final Logger LOGGER;
   private final List<String> optionNames = new ArrayList<>();
   
-  ConfigFile(String path, ConfigFileType configFileType, @Nullable Logger logger){
+  public ConfigFile(String path, ConfigFileType configFileType, @Nullable Logger logger) {
     this.CONFIG_FILE_TYPE = configFileType;
-    this.LOGGER = logger != null ? logger : LoggerFactory.getLogger("FawnConfigUtil");
+    this.LOGGER = logger != null ? logger : LoggerFactory.getLogger("FawnoculusConfigUtil");
     
-    if(path.endsWith(configFileType.getFileExtension())){
+    if (path.endsWith(configFileType.getFileExtension())) {
       this.CONFIG_FILE = new File(path);
-    }else {
+    } else {
       this.CONFIG_FILE = new File(path + configFileType.getFileExtension());
     }
   }
-  
-  /**
-   * @return whether the Config is Missing any Options (aka whether to rewrite the Config)
-   */
-  public boolean readFile(){
+  public void readFile() {
     List<Option<?>> readOptions = this.options;
     
     try {
       readOptions = this.CONFIG_FILE_TYPE.readFile(CONFIG_FILE, this.LOGGER, this.options);
-    } catch(Exception exception) {
+    } catch (Exception exception) {
       LOGGER.error("Failed to read from Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
     }
     
-    boolean valuesChanged = false;
-    
-    for (int i = 0; i < this.options.size(); i++) {
-      Option<?> previousOption = this.options.get(i);
-      Option<?> newOption = readOptions.get(i);
-      
-      if(previousOption.getValue() != newOption.getValue()) valuesChanged = true;
-    }
-    
     this.options = readOptions;
-    return valuesChanged;
   }
   
-  public void writeFile(){
+  public void writeFile() {
     try {
-      if(!CONFIG_FILE.exists()) {
+      if (!CONFIG_FILE.exists()) {
         boolean ignored = CONFIG_FILE.getParentFile().mkdirs();
         boolean newFile = CONFIG_FILE.createNewFile();
-        if(newFile) {
+        if (newFile) {
           LOGGER.info("Created new Config File: {}", CONFIG_FILE.getPath());
-        }else {
+        } else {
           LOGGER.info("Failed to create Config File: {}", CONFIG_FILE.getPath());
         }
-      }else {
+      } else {
         boolean delete = CONFIG_FILE.delete();
         if (!delete) {
           LOGGER.warn("Failed to delete old Config File: {}", CONFIG_FILE.getPath());
@@ -75,30 +61,30 @@ public class ConfigFile {
       }
       
       this.CONFIG_FILE_TYPE.writeFile(CONFIG_FILE, this.LOGGER, this.options);
-    } catch(Exception exception) {
+    } catch (Exception exception) {
       LOGGER.error("Failed to write to Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
     }
   }
   
-  public void initialize(){
-    if(initialized){
-      throw new RuntimeException("Config File already Initialized");
+  public void initialize() {
+    if (initialized) {
+      throw new IllegalStateException("Config File already Initialized");
     }
-    if(!CONFIG_FILE.exists()) writeFile();
-    
-    boolean shouldWrite = readFile();
-    if(shouldWrite) writeFile();
+    if(CONFIG_FILE.exists()) readFile();
+    writeFile();
     
     initialized = true;
   }
   
-  // Everything bellow is just for getting new Options for a Config File //
+  // Everything bellow is just for getting new Options from a Config File //
   
-  private void addAndValidateOption(Option<?> option){
+  private void addAndValidateOption(Option<?> option) {
     String name = option.NAME;
     
-    if(CONFIG_FILE_TYPE.isValidOption(option)) throw new IllegalArgumentException("Option with name '" + name + "' is not valid for Config Type '"+ CONFIG_FILE_TYPE.getClass() +"'");
-    if(optionNames.contains(name)) throw new IllegalArgumentException("Option with name '" + name + "' already exist in Config File '"+ CONFIG_FILE.getPath() +"'");
+    if (!CONFIG_FILE_TYPE.isValidOption(option))
+      throw new IllegalArgumentException("Option with name '" + name + "' is not valid for Config Type '" + CONFIG_FILE_TYPE.getClass() + "'");
+    if (optionNames.contains(name))
+      throw new IllegalArgumentException("Option with name '" + name + "' already exist in Config File '" + CONFIG_FILE.getPath() + "'");
     
     this.optionNames.add(name);
     this.options.add(option);
@@ -111,13 +97,13 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Function<Boolean, Boolean> validator) {
-    comment = comment != null ? comment : "";
-    comment += " (Default: " + defaultValue + ")";
+    if(comment != null) comment += " (Default: " + defaultValue + ")";
     
     BooleanOption option = new BooleanOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -126,6 +112,7 @@ public class ConfigFile {
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment) {
     return newBooleanOption(name, defaultValue, comment, value -> true);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -133,13 +120,13 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Function<Double, Boolean> validator) {
-    comment = comment != null ? comment : "";
-    comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " (Default: " + defaultValue + ")";
     
     DoubleOption option = new DoubleOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -148,11 +135,11 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Double min, Double max) {
-    comment = comment != null ? comment : "";
-    comment += "(Default: " + defaultValue + ")";
+    if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
     
     return newDoubleOption(name, defaultValue, comment, value -> value >= min && value <= max);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -161,6 +148,7 @@ public class ConfigFile {
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment) {
     return newDoubleOption(name, defaultValue, comment, value -> true);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -168,13 +156,13 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Function<Float, Boolean> validator) {
-    comment = comment != null ? comment : "";
-    comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " (Default: " + defaultValue + ")";
     
     FloatOption option = new FloatOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -183,11 +171,11 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Float min, Float max) {
-    comment = comment != null ? comment : "";
-    comment += "(Default: " + defaultValue + ")";
+    if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
     
     return newFloatOption(name, defaultValue, comment, value -> value >= min && value <= max);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -196,6 +184,7 @@ public class ConfigFile {
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment) {
     return newFloatOption(name, defaultValue, comment, value -> true);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -203,13 +192,13 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Function<Integer, Boolean> validator) {
-    comment = comment != null ? comment : "";
-    comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " (Default: " + defaultValue + ")";
     
     IntegerOption option = new IntegerOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -218,11 +207,11 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Integer min, Integer max) {
-    comment = comment != null ? comment : "";
-    comment += "(Default: " + defaultValue + ")";
+    if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
     
     return newIntegerOption(name, defaultValue, comment, value -> value >= min && value <= max);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -231,6 +220,7 @@ public class ConfigFile {
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment) {
     return newIntegerOption(name, defaultValue, comment, value -> true);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -238,13 +228,13 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, Function<String, Boolean> validator) {
-    comment = comment != null ? comment : "";
-    comment += " (Default: " + defaultValue + ")";
-    StringOption option = new StringOption(this, name, defaultValue, comment, validator);
+    if (comment != null) comment += " (Default: " + defaultValue + ")";
     
+    StringOption option = new StringOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
   }
+  
   /**
    * @param name          Name of the Option
    * @param defaultValue  the Value that the Option will default to
@@ -252,17 +242,20 @@ public class ConfigFile {
    * @param allowedValues All Allowed Values
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, String... allowedValues) {
-    StringBuilder commentBuilder = new StringBuilder(comment != null ? comment : "");
-    commentBuilder.append(" ");
-    for (int i = 0; i < allowedValues.length-1; i++) {
-      commentBuilder.append(allowedValues[i]).append(",");
+    if (comment != null) {
+      StringBuilder commentBuilder = new StringBuilder(comment);
+      commentBuilder.append(" ");
+      for (int i = 0; i < allowedValues.length - 1; i++) {
+        commentBuilder.append(allowedValues[i]).append(",");
+      }
+      comment = commentBuilder.toString();
+      comment += allowedValues[allowedValues.length - 1];
+      comment += "]";
     }
-    comment = commentBuilder.toString();
-    comment += allowedValues[allowedValues.length-1];
-    comment += "]";
     
     return newStringOption(name, defaultValue, comment, value -> List.of(allowedValues).contains(value));
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -271,6 +264,7 @@ public class ConfigFile {
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment) {
     return newStringOption(name, defaultValue, comment, value -> true);
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -278,13 +272,13 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Function<List<String>, Boolean> validator) {
-    comment = comment != null ? comment : "";
-    comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " (Default: " + defaultValue + ")";
     
     StringListOption option = new StringListOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
     return option;
   }
+  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to

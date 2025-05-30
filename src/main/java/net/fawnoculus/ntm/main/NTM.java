@@ -27,6 +27,12 @@ public class NTM implements ModInitializer {
     ModBlocks.initialize();
     ModBlockEntities.initialize();
     
+    NTMConfig.initialize();
+    LOGGER.warn("VALUE: {}", NTMConfig.test.getValue());
+    LOGGER.warn("LIST_VALUE: {}", NTMConfig.testList.getValue());
+    
+    LOGGER.warn("TestInt: {}", NTMConfig.testInt.getValue());
+    
     LOGGER.info("NTM-Fabric is now initialized");
   }
   

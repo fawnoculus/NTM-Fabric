@@ -2,13 +2,13 @@ package net.fawnoculus.ntm.util.config.filetype;
 
 import net.fawnoculus.ntm.util.config.ConfigFileType;
 import net.fawnoculus.ntm.util.config.Option;
-import net.fawnoculus.ntm.util.config.options.StringListOption;
+import net.fawnoculus.ntm.util.config.options.*;
 import org.slf4j.Logger;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class PropertiesConfigFile implements ConfigFileType {
   @Override
@@ -46,8 +46,78 @@ public class PropertiesConfigFile implements ConfigFileType {
   }
   
   @Override
-  public List<Option<?>> readFile(File configFile, Logger LOGGER, List<Option<?>> expectedOptions) {
-    return List.of();
+  public List<Option<?>> readFile(File configFile, Logger LOGGER, List<Option<?>> expectedOptions){
+    Properties properties = new Properties();
+    try {
+      properties.load(new FileReader(configFile));
+    } catch (Exception exception){
+      LOGGER.error("Failed to parse Properties Config File '{}' \n Exception: {}", configFile.getPath(), exception);
+      return expectedOptions;
+    }
+    
+    for(Option<?> expectedOption : expectedOptions){
+      String readValue = properties.getProperty(expectedOption.NAME);
+      if(readValue == null) {
+        LOGGER.warn("Didn't find option '{}' of type '{}' in Config File '{}', using default value", expectedOption.NAME, expectedOption.getClass().getName(), configFile.getPath());
+        continue;
+      }
+      
+      switch (expectedOption){
+        case BooleanOption booleanOption -> booleanOption.setValue(Boolean.parseBoolean(readValue));
+        case DoubleOption doubleOption -> {
+          try {
+            doubleOption.setValue(Double.parseDouble(readValue));
+          } catch (Exception exception){
+            LOGGER.error("Failed to parse Double Option '{}' in Config File '{}' Exception: {}", doubleOption.NAME ,configFile.getPath(), exception);
+          }
+        }
+        case FloatOption floatOption -> {
+          try {
+            floatOption.setValue(Float.parseFloat(readValue));
+          } catch (Exception exception){
+            LOGGER.error("Failed to parse Float Option '{}' in Config File '{}' Exception: {}", floatOption.NAME ,configFile.getPath(), exception);
+          }
+        }
+        case IntegerOption integerOption -> {
+          try {
+            integerOption.setValue(Integer.parseInt(readValue));
+          } catch (Exception exception){
+            LOGGER.error("Failed to parse Integer Option '{}' in Config File '{}' Exception: {}", integerOption.NAME ,configFile.getPath(), exception);
+          }
+        
+        }
+        case StringOption stringOption -> stringOption.setValue(readValue);
+        case StringListOption stringListOption -> {
+          char[] Chars = readValue.toCharArray();
+          
+          List<String> stringList = new ArrayList<>();
+          StringBuilder currentString = new StringBuilder();
+          for (char currentChar : Chars) {
+            if (currentChar == ';' && currentString.isEmpty()) {
+              LOGGER.error("Failed to parse String List Option '{}' in Config File '{}'", stringListOption.NAME, configFile.getPath());
+              stringList = new ArrayList<>(stringListOption.DEFAULT_VALUE);
+              break;
+            }
+            if (currentChar != ';') {
+              currentString.append(currentChar);
+              continue;
+            }
+            
+            stringList.add(currentString.toString());
+            currentString = new StringBuilder();
+          }
+          //Add the Last Element
+          if(!currentString.isEmpty()) stringList.add(currentString.toString());
+          stringListOption.setValue(stringList);
+        }
+        default -> {
+          LOGGER.error("Tried to read Option with unknown Option Type: {}", expectedOption.getClass());
+          LOGGER.error("To whichever Developer did this, don't forget to add write & read methods for your option types to all filetypes when you add option types when you add them!");
+        }
+      }
+    }
+    
+    return expectedOptions;
   }
   
   @Override
@@ -55,17 +125,29 @@ public class PropertiesConfigFile implements ConfigFileType {
     FileWriter writer = new FileWriter(configFile);
     
     for(Option<?> option : options){
+      if(option.COMMENT != null) writer.write(String.format("#%s\n", option.COMMENT));
+      
       switch (option){
         case StringListOption stringListOption ->{
-          writer.write(String.format("%s=[%s", option.NAME, stringListOption.getValue().getFirst()));
+          List<String> stringList = stringListOption.getValue();
           
-          for(String string : stringListOption.getValue()){
-            writer.write(String.format(",%s", string));
+          writer.write(String.format("%s=%s", option.NAME, stringList.getFirst()));
+          
+          for (int i = 1; i < stringList.size(); i++) {
+            writer.write(String.format(";%s", stringList.get(i)));
           }
           
-          writer.write("]\n");
+          writer.write("\n");
         }
-        default -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
+        case BooleanOption ignored -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
+        case DoubleOption ignored -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
+        case FloatOption ignored -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
+        case IntegerOption ignored -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
+        case StringOption ignored -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));
+        default -> {
+          LOGGER.error("Tried to write Option with unknown Option Type: {}", option.getClass());
+          LOGGER.error("To whichever Developer did this, don't forget to add write & read methods for your option types to all filetypes when you add option types when you add them!");
+        }
       }
     }
     writer.flush();
