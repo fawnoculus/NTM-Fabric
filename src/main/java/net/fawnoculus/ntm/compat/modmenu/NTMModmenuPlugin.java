@@ -8,6 +8,6 @@ public class NTMModmenuPlugin implements ModMenuApi {
   @Override
   public ConfigScreenFactory<?> getModConfigScreenFactory() {
     // TODO: make a config Screen (or at least make a Config File)
-    return ModMenuApi.super.getModConfigScreenFactory();
+    return screen -> null;
   }
 }

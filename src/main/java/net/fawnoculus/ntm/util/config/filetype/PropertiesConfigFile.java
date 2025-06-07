@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.util.config.filetype;
 
 import net.fawnoculus.ntm.util.config.ConfigFileType;
-import net.fawnoculus.ntm.util.config.Option;
+import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.*;
 import org.slf4j.Logger;
 
@@ -94,7 +94,7 @@ public class PropertiesConfigFile implements ConfigFileType {
           StringBuilder currentString = new StringBuilder();
           for (char currentChar : Chars) {
             if (currentChar == ';' && currentString.isEmpty()) {
-              LOGGER.error("Failed to parse String List Option '{}' in Config File '{}'", stringListOption.NAME, configFile.getPath());
+              LOGGER.error("Failed to parse String List Option '{}' in Config File '{}': Unexpected ';' after empty String", stringListOption.NAME, configFile.getPath());
               stringList = new ArrayList<>(stringListOption.DEFAULT_VALUE);
               break;
             }
@@ -103,7 +103,10 @@ public class PropertiesConfigFile implements ConfigFileType {
               continue;
             }
             
-            stringList.add(currentString.toString());
+            // Only allow valid Entries
+            if(stringListOption.IsEntryValid(currentString.toString())) {
+              stringList.add(currentString.toString());
+            }
             currentString = new StringBuilder();
           }
           //Add the Last Element

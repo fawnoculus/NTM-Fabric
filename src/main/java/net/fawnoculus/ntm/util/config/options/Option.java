@@ -1,5 +1,6 @@
-package net.fawnoculus.ntm.util.config;
+package net.fawnoculus.ntm.util.config.options;
 
+import net.fawnoculus.ntm.util.config.ConfigFile;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
@@ -27,7 +28,7 @@ public abstract class Option<T> {
     this.COMMENT = comment;
     this.VALIDATOR = validator;
     
-    if(!isValidValue(defaultValue)){
+    if(isInvalidValue(defaultValue)){
       throw new IllegalArgumentException("Default Value is not valid you idiot");
     }
   }
@@ -40,15 +41,15 @@ public abstract class Option<T> {
   }
   
   public void setValue(T value) {
-    if(!isValidValue(value)){
+    if(isInvalidValue(value)){
       return;
     }
     this.value = value;
   }
   
-  public boolean isValidValue(T value) {
+  public boolean isInvalidValue(T value) {
     assert VALIDATOR != null;
     assert PARENT != null;
-    return VALIDATOR.apply(value) && PARENT.CONFIG_FILE_TYPE.isValidValue(value);
+    return !VALIDATOR.apply(value) || !PARENT.CONFIG_FILE_TYPE.isValidValue(value);
   }
 }

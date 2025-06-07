@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.main.NTMConfig;
 import net.fawnoculus.ntm.util.EnchantmentHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -8,7 +10,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ToolComponent;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameters;
@@ -18,7 +19,9 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -55,14 +58,18 @@ public class Abilities {
       return this.MaxDistance.toString();
     }
     
-    private final List<Block> excludedBlocks = List.of(Blocks.STONE, Blocks.NETHERRACK);
-    
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
       if (!isCorrectForDrops(stack, state)) {
         return;
       }
       Block compareBlock = state.getBlock();
+      
+      //Update the exclusion List every time the ability is used, just in case
+      List<Block> excludedBlocks = new ArrayList<>();
+      for(String id : NTMConfig.VeinMinerAbilityExclude.getValue()){
+        excludedBlocks.add(Registries.BLOCK.get(Identifier.of(id)));
+      }
       
       if (excludedBlocks.contains(compareBlock)) {
         return;
@@ -113,7 +120,13 @@ public class Abilities {
     
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-      if(isCorrectForDrops(stack, state)){
+      //Update the exclusion List every time the ability is used, just in case
+      List<Block> excludedBlocks = new ArrayList<>();
+      for(String id : NTMConfig.AoeAbilityExclude.getValue()){
+        excludedBlocks.add(Registries.BLOCK.get(Identifier.of(id)));
+      }
+      
+      if(isCorrectForDrops(stack, state) && !excludedBlocks.contains(state.getBlock())){
         
         for (int x = pos.getX()-this.blockAmount; x <= pos.getX()+this.blockAmount; x++) {
           for (int y = pos.getY()-this.blockAmount; y <= pos.getY()+this.blockAmount; y++) {
@@ -121,7 +134,7 @@ public class Abilities {
               
               BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
               
-              if(isCorrectForDrops(stack, checkBlock)){
+              if(isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())){
                 world.breakBlock(new BlockPos(x, y, z), !miner.isCreative(), miner);
               }
             }

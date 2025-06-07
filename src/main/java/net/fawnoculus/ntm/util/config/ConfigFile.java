@@ -97,7 +97,7 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Function<Boolean, Boolean> validator) {
-    if(comment != null) comment += " (Default: " + defaultValue + ")";
+    if(comment != null) comment += " [Default: " + defaultValue + "]";
     
     BooleanOption option = new BooleanOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
@@ -120,7 +120,7 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Function<Double, Boolean> validator) {
-    if (comment != null) comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
     
     DoubleOption option = new DoubleOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
@@ -156,7 +156,7 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Function<Float, Boolean> validator) {
-    if (comment != null) comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
     
     FloatOption option = new FloatOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
@@ -192,7 +192,7 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Function<Integer, Boolean> validator) {
-    if (comment != null) comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
     
     IntegerOption option = new IntegerOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
@@ -228,7 +228,7 @@ public class ConfigFile {
    * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, Function<String, Boolean> validator) {
-    if (comment != null) comment += " (Default: " + defaultValue + ")";
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
     
     StringOption option = new StringOption(this, name, defaultValue, comment, validator);
     addAndValidateOption(option);
@@ -264,27 +264,39 @@ public class ConfigFile {
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment) {
     return newStringOption(name, defaultValue, comment, value -> true);
   }
-  
+  /**
+   * @param name Name of the Option
+   * @param defaultValue the Value that the Option will default to
+   * @param comment Optional Comment (use "null" for no Comment)
+   * @param listValidator Function for additional Validation of the List (like: list.size() < 100)
+   * @param entryValidator Function for additional Validation of all Values (like: String.endsWith("abc"))
+   */
+  public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Function<List<String>, Boolean> listValidator, Function<String, Boolean> entryValidator) {
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
+    
+    StringListOption option = new StringListOption(this, name, defaultValue, comment, listValidator, entryValidator);
+    addAndValidateOption(option);
+    return option;
+  }
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
-   * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
+   * @param type         Option Type for Special Things
    */
-  public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Function<List<String>, Boolean> validator) {
-    if (comment != null) comment += " (Default: " + defaultValue + ")";
+  public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, StringListOption.Type type) {
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
     
-    StringListOption option = new StringListOption(this, name, defaultValue, comment, validator);
+    StringListOption option = new StringListOption(this, name, defaultValue, comment, list -> true, type.ENTRY_VALIDATOR);
     addAndValidateOption(option);
     return option;
   }
-  
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment) {
-    return newStringListOption(name, defaultValue, comment, value -> true);
+    return newStringListOption(name, defaultValue, comment, StringListOption.Type.GENERIC);
   }
 }

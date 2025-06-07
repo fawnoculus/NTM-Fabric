@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.main;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fawnoculus.ntm.commands.ModClientCommands;
 import net.fawnoculus.ntm.render.ModBlockEntityRenderer;
 import net.fawnoculus.ntm.gui.ModHandledScreens;
 import net.fawnoculus.ntm.gui.ModScreenHandlerType;
@@ -11,6 +12,8 @@ public class NTMClient implements ClientModInitializer {
   
   @Override
   public void onInitializeClient() {
+    ModClientCommands.initialize();
+    
     ModBlockEntityRenderer.initialize();
     ModScreenHandlerType.initialize();
     ModHandledScreens.initialize();

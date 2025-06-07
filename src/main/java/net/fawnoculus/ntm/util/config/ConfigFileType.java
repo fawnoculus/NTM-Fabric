@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.util.config;
 
 
+import net.fawnoculus.ntm.util.config.options.Option;
 import org.slf4j.Logger;
 
 import java.io.File;

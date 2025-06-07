@@ -7,7 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.JsonElement;
 import com.google.gson.stream.JsonReader;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
-import net.fawnoculus.ntm.util.config.Option;
+import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.*;
 import org.slf4j.Logger;
 
@@ -70,7 +70,7 @@ public class JsonConfigFile implements ConfigFileType {
     // Setting Option Values to the read Values
     for (Option<?> option : expectedOptions) {
       JsonElement readValue = jsonObject.get(option.NAME);
-      if (readValue == null || !readValue.isJsonPrimitive()) {
+      if (readValue == null || !(readValue.isJsonPrimitive() || readValue.isJsonArray())) {
         LOGGER.warn("Didn't find option '{}' of type '{}' in Config File '{}', using default value", option.NAME, option.getClass().getName(), configFile.getPath());
         continue;
       }
@@ -115,7 +115,11 @@ public class JsonConfigFile implements ConfigFileType {
             JsonArray jsonArray = readValue.getAsJsonArray();
             List<String> strings = new LinkedList<>();
             for (JsonElement object : jsonArray) {
-              strings.add(object.getAsString());
+              String str = object.getAsString();
+              // Only allow valid Entries
+              if(stringListOption.IsEntryValid(str)) {
+                strings.add(str);
+              }
             }
             stringListOption.setValue(strings);
           } catch (Exception ignored) {

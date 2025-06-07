@@ -17,10 +17,108 @@ import net.minecraft.sound.BlockSoundGroup;
 import java.util.function.Function;
 
 public class ModBlocks {
-  private static final AbstractBlock.Settings OreSettings = AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).mapColor(MapColor.GRAY);
+  private static final AbstractBlock.Settings OreSettings = AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).mapColor(MapColor.GRAY).requiresTool();
+  private static final AbstractBlock.Settings DirtSettings = AbstractBlock.Settings.create().sounds(BlockSoundGroup.GRASS).mapColor(MapColor.GRAY).requiresTool();
   
   public static final Block URANIUM_ORE = register("uranium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCORCHED_URANIUM_ORE = register("scorched_uranium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block TITANIUM_ORE = register("titanium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SULFUR_ORE = register("sulfur_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block THORIUM_ORE = register("thorium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NITER_ORE = register("niter_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block TUNGSTEN_ORE = register("tungsten_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block ALUMINIUM_ORE = register("aluminium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block FLUORITE_ORE = register("fluorite_ore", Block::new, OreSettings.hardness(10f), true);
   public static final Block LEAD_ORE = register("lead_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHRABIDIUM_ORE = register("schrabidium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block BERYLLIUM_ORE = register("beryllium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block AUSTRALIUM_ORE = register("australium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block RARE_EARTH_ORE = register("rare_earth_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block COBALT_ORE = register("cobalt_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block CINNEBAR_ORE = register("cinnebar_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block COLTAN_ORE = register("coltan_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block LIGNITE_ORE = register("lignite_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block ASBESTOS_ORE = register("asbestos_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block OIL_DEPOSIT = register("oil_deposit", Block::new, OreSettings.hardness(10f), true);
+  public static final Block EMPTY_OIL_DEPOSIT = register("empty_oil_deposit", Block::new, OreSettings.hardness(10f), true);
+  public static final Block ALUMINIUM_ORE_CLUSTER = register("aluminium_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  public static final Block COPPER_ORE_CLUSTER = register("copper_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  public static final Block IRON_ORE_CLUSTER = register("iron_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  public static final Block TITANIUM_ORE_CLUSTER = register("titanium_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DirtSettings.hardness(2f), true);
+  public static final Block OILY_DIRT = register("oily_dirt", Block::new, DirtSettings.hardness(2f), true);
+  public static final Block OILY_SAND = register("oily_sand", Block::new, DirtSettings.hardness(2f).sounds(BlockSoundGroup.SAND), true);
+  
+  public static final Block DEPTH_ROCK = register("depth_rock", Block::new, OreSettings.hardness(10f), true);
+  public static final Block DEPTH_CINNABAR_ORE = register("depth_cinnabar_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block DEPTH_ZIRCONIUM_ORE = register("depth_zirconium", Block::new, OreSettings.hardness(10f), true);
+  public static final Block DEPTH_BORAX_ORE = register("depth_borax_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block DEPTH_IRON_ORE_CLUSTER = register("depth_iron_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  public static final Block DEPTH_TITANIUM_ORE_CLUSTER = register("depth_titanium_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  public static final Block DEPTH_TUNGSTEN_ORE_CLUSTER = register("depth_tungsten_ore_cluster", Block::new, OreSettings.hardness(10f), true);
+  public static final Block ALEXANDRITE_ORE = register("alexandrite_ore", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block VOLCANIC_BASALT = register("volcanic_basalt", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SULFUR_RICH_VOLCANIC_BASALT = register("sulfur_rich_volcanic_basalt", Block::new, OreSettings.hardness(10f), true);
+  public static final Block FLUORITE_RICH_VOLCANIC_BASALT = register("fluorite_rich_volcanic_basalt", Block::new, OreSettings.hardness(10f), true);
+  public static final Block ASBESTOS_RICH_VOLCANIC_BASALT = register("asbestos_rich_volcanic_basalt", Block::new, OreSettings.hardness(10f), true);
+  public static final Block GEM_RICH_VOLCANIC_BASALT = register("gem_rich_volcanic_basalt", Block::new, OreSettings.hardness(10f), true);
+  public static final Block MOLYSITE_RICH_VOLCANIC_BASALT = register("molysite_rich_volcanic_basalt", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block SMOLDERING_NETHERRACK = register("smoldering_netherrack", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_COAL_ORE = register("nether_coal_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_URANIUM_ORE = register("nether_uranium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCORCHED_NETHER_URANIUM_ORE = register("scorched_nether_uranium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_PLUTONIUM_ORE = register("nether_plutonium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_TUNGSTEN_ORE = register("nether_tungsten_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_SULFUR_ORE = register("nether_sulfur_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_PHOSPHORUS_ORE = register("nether_phosphorus_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_COBALT_ORE = register("nether_cobalt_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_SCHRABIDIUM_ORE = register("nether_schrabidium_ore", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block NETHER_DEPTH_ROCK = register("nether_depth_rock", Block::new, OreSettings.hardness(10f), true);
+  public static final Block NETHER_DEPTH_NEODYMIUM_ORE = register("nether_depth_neodymium_ore", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block METEORITE_BLOCK = register("meteorite_block", Block::new, OreSettings.hardness(10f), true);
+  public static final Block BROKEN_METEORITE_BLOCK = register("broken_meteorite_block", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEORITE_COBBLESTONE = register("meteorite_cobblestone", Block::new, OreSettings.hardness(10f), true);
+  public static final Block HOT_METEORITE_COBBLESTONE = register("hot_meteorite_cobblestone", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEORITE_TREASURE_BLOCK = register("meteorite_treasure_block", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEOR_IRON_ORE = register("meteor_iron_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEOR_COPPER_ORE = register("meteor_copper_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEOR_ALUMINIUM_ORE = register("meteor_aluminium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEOR_RARE_EARTH_ORE = register("meteor_rare_earth_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block METEOR_COBALT_ORE = register("meteor_cobalt_ore", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block GRAPHITIC_SCHIST = register("graphitic_schist", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_IRON_ORE = register("schist_iron_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_GOLD_ORE = register("schist_gold_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_URANIUM_ORE = register("schist_uranium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCORCHED_SCHIST_URANIUM_ORE = register("scorched_schist_uranium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_COPPER_ORE = register("schist_copper_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_ASBESTOS_ORE = register("schist_asbestos_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_LITHIUM_ORE = register("schist_lithium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_SCHRABIDIUM_ORE = register("schist_schrabidium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SCHIST_RARE_EARTH_ORE = register("schist_rare_earth_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block GAS_SHALE = register("gas_shale", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block BAUXITE = register("bauxite", Block::new, OreSettings.hardness(10f), true);
+  public static final Block CHRYSOTILE = register("chrysotile", Block::new, OreSettings.hardness(10f), true);
+  public static final Block HEMATITE = register("hematite", Block::new, OreSettings.hardness(10f), true);
+  public static final Block LIMESTONE = register("limestone", Block::new, OreSettings.hardness(10f), true);
+  public static final Block MALACHITE = register("malachite", Block::new, OreSettings.hardness(10f), true);
+  public static final Block SULFUROUS_STONE = register("sulfurous_stone", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, OreSettings.hardness(10f), true);
+  public static final Block BEDROCK_OIL_DEPOSIT = register("bedrock_oil_deposit", Block::new, OreSettings.hardness(10f), true);
+  public static final Block BEDROCK_ORE = register("bedrock_ore", Block::new, OreSettings.hardness(10f), true);
+  
+  public static final Block TEKITE = register("tekite", Block::new, OreSettings.hardness(10f), true);
+  public static final Block TEKITE_OSMIRIDIUM_ORE = register("tekite_osmiridium_ore", Block::new, OreSettings.hardness(10f), true);
+  public static final Block TRIXITE_ORE = register("trixite_ore", Block::new, OreSettings.hardness(10f), true);
+  
+  
   public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new, AbstractBlock.Settings.create()
           .strength(1.5F, 6.0F)
           .sounds(BlockSoundGroup.STONE)

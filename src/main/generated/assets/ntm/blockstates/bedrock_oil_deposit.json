@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ntm:block/bedrock_oil_deposit"
+    }
+  }
+}
