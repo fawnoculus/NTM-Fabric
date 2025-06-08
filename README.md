@@ -2,10 +2,20 @@
 ## What is NTM-Fabric?
 NTM-Fabric is an Attempt to recreate [HBM's NTM](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT) (a mod for 1.7.10) on modern Versions of Minecraft in Fabric.
 Depending on how development plays out features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
-As of right now it is HEAVILY incomplete & will likely not be in a complete State for a long time due to the amount of features in HBM's NTM
+
+## **DISCLAIMER !!!!!!!**
+**NTM-Fabric is not even remotely finished!** 
+There is a Reason that have to download the Mod from GitHub if you want to play it! 
+Most Features are still missing, unfinished or barely functioning. I won't be publishing the mod in any official capacity (aka: Modrinth / CurseForge) until I feel like the mod is at least in a *playable* State
+
 ## Installing NTM-Fabric
-In the Future there may be a Release on Modrinth & CurseForge (or GitHub Releases).
-For now the only way to install it is to download the Repository and build it from Source:
+In the future there may also be Releases on Modrinth & CurseForge (refer to the Disclaimer).
+For now your Options for getting the mod are:
+- ~~Modrinth~~ (maybe someday)
+- ~~CurseForge~~ (maybe someday)
+- [Github Releases](https://github.com/fawnoculus/NTM-Fabric/releases/latest)
+- Building it from Source (refer to the Section Below)
+
 
 ## Building it from Source
 1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
@@ -45,7 +55,7 @@ git clone https://github.com/fawnoculus/NTM-Fabric
     ./gradlew eclipse
     ./gradlew genEclipseRuns
 ```
-* For Vscode also run
+* For VS Code also run
 ```bash
     ./gradlew vscode
 ```
