@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ntm:block/tekite_osmiridium_ore"
+    "model": "ntm:block/osmiridium_infused_tekite"
   }
 }

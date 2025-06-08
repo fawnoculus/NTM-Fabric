@@ -61,6 +61,7 @@ bfbe0976ec55523640beb2e77fb6adb361ce3e59 assets/ntm/blockstates/nether_tungsten_
 70a46c1f7d24a8564eb6f8e3ec86bdf52f58f0e5 assets/ntm/blockstates/oil_deposit.json
 deb9391b88dd96ae9bbdaffa0c0a4b71d8ac4b63 assets/ntm/blockstates/oily_dirt.json
 911fcf011243a47c763eac0504f00c0dbe65ca3c assets/ntm/blockstates/oily_sand.json
+46d0d7dc3f9b1b7b7676dc89b3a0916082d0e5d7 assets/ntm/blockstates/osmiridium_infused_tekite.json
 1baea9b3da51401e0e82bffcc570ae888f68fd3d assets/ntm/blockstates/rare_earth_ore.json
 3462091a141d5b668a420b4a4550c9b7afe7c517 assets/ntm/blockstates/schist_asbestos_ore.json
 8851dd5f04f22a2c4e8e62784cf411cd3fc4cf75 assets/ntm/blockstates/schist_copper_ore.json
@@ -79,7 +80,6 @@ d63d1b8752beffe4d5ae1ec50363cbdbed60d9ba assets/ntm/blockstates/smoldering_nethe
 ba4b52e5029e270e891a764b8360c8c2e841ac25 assets/ntm/blockstates/sulfur_rich_volcanic_basalt.json
 8288daa228944549d6a6daa9461f4ece4d7cae79 assets/ntm/blockstates/sulfurous_stone.json
 19f8e2c557a06bb81ed12b290c01fc9deb867f7c assets/ntm/blockstates/tekite.json
-ee9fdf8001ccb5d6072c94e4007ad933184df43e assets/ntm/blockstates/tekite_osmiridium_ore.json
 7bf01855ab92963a139c6a53cf4cae34002fb169 assets/ntm/blockstates/thorium_ore.json
 b1619a556a475d9961c6aa55d8976f2b1121c621 assets/ntm/blockstates/titanium_ore.json
 ed058c618f3c2b286ce17f9df714e8a8441e676c assets/ntm/blockstates/titanium_ore_cluster.json
@@ -183,6 +183,7 @@ cc19aa50867ca9b3ad096ea96f7634370cc5ab0e assets/ntm/items/niter_ore.json
 d42f206108d28492ee26d7d9da571ebe1661a61a assets/ntm/items/oil_deposit.json
 e4b6000bc954a6657afb95da44da5e00e1a41709 assets/ntm/items/oily_dirt.json
 893d60953869784d7b9b3731677264a0c621c80f assets/ntm/items/oily_sand.json
+4224eb475a374531b3d0cd932377699b1835468c assets/ntm/items/osmiridium_infused_tekite.json
 83ce2753348402ab911a4640b2f994b99618a058 assets/ntm/items/rare_earth_ore.json
 248fdb493670b969904bc3cd3b27da91d95b53d4 assets/ntm/items/schist_asbestos_ore.json
 71e3ea7d2a437a7f62308a5a0a1db71eb749fe7f assets/ntm/items/schist_copper_ore.json
@@ -212,7 +213,6 @@ d2bb32eba27521905b5fa26874e204a65d656b40 assets/ntm/items/sulfur_ore.json
 e378454554778d61c9bdb10224572c1c533fa5b5 assets/ntm/items/sulfur_rich_volcanic_basalt.json
 8cfe5cc5e4660340c129f8abace54fb309ebcdeb assets/ntm/items/sulfurous_stone.json
 f5ba24e52c975d2df7eb286580ffaa2622b3a29f assets/ntm/items/tekite.json
-7142ff99101b7bc63c93f432a02dea7ba0c18f12 assets/ntm/items/tekite_osmiridium_ore.json
 e6865026544132b66e71948778c9e04d7a206df3 assets/ntm/items/thorium_ore.json
 5d79444ab37f56fba0cc70ebf365ad8f778e5434 assets/ntm/items/titanium_axe.json
 501b11b5482f5430dd4f5427e23cc82c7ce6b69e assets/ntm/items/titanium_hoe.json
@@ -288,6 +288,7 @@ dbae2d79f2a23f9fe05be67a46959ffba8591524 assets/ntm/models/block/nether_plutoniu
 3c97bd05d5e0900f86b7a2ac07142fce7a4c70b1 assets/ntm/models/block/oil_deposit.json
 b8d8795b87b491891db5e071bd93a308b67dbbbd assets/ntm/models/block/oily_dirt.json
 e63f8eb4db02f619966edf7e6317c66f18fdbc61 assets/ntm/models/block/oily_sand.json
+62cc1dc9019100a397ff8b78ac2e57a026d581b9 assets/ntm/models/block/osmiridium_infused_tekite.json
 f169794f14188dc77de0a2b6c966ca5598a81cb1 assets/ntm/models/block/rare_earth_ore.json
 ec3a02f9e53a68b7136a33cdbf88eb21b7b4b46b assets/ntm/models/block/schist_asbestos_ore.json
 e82c94f5f795ede2c7fb5c99175a5082b2698c96 assets/ntm/models/block/schist_copper_ore.json
@@ -306,7 +307,6 @@ bb041bcba92c2a0212f159e7921674f49327e141 assets/ntm/models/block/sulfur_ore.json
 616783da2fc202b69d19bb7648c7359c28b62a8e assets/ntm/models/block/sulfur_rich_volcanic_basalt.json
 375753b2fd1784c35630beb027fce3ef363bd89e assets/ntm/models/block/sulfurous_stone.json
 2f2d2eb52fc0ae3b8a2ed12db91ae7ae56d2e36f assets/ntm/models/block/tekite.json
-649663a577a7e6bcb4aaae5adc4187d54a773943 assets/ntm/models/block/tekite_osmiridium_ore.json
 6cc9abdcdb5a9325c33d0e4646cda2ec1101f84e assets/ntm/models/block/thorium_ore.json
 38012ec7c515a41aee991b7f5eba75890277c7a9 assets/ntm/models/block/titanium_ore.json
 9a07b9916d71de334f2c1a859cd87f8f93a701c9 assets/ntm/models/block/titanium_ore_cluster.json

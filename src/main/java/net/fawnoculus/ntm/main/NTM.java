@@ -6,6 +6,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.ModBlocks;
+import net.fawnoculus.ntm.commands.ModCommandArguments;
 import net.fawnoculus.ntm.commands.ModCommands;
 import net.fawnoculus.ntm.items.*;
 import net.minecraft.util.Identifier;
@@ -35,6 +36,7 @@ public class NTM implements ModInitializer {
     ModBlocks.initialize();
     ModBlockEntities.initialize();
     
+    ModCommandArguments.initialize();
     ModCommands.initialize();
     
     LOGGER.info("NTM-Fabric is now initialized");

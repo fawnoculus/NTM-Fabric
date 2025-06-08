@@ -59,7 +59,6 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
     }
     ItemScatterer.spawn(world, pos, alloyFurnaceBE.getInventory());
     world.updateComparators(pos, this);
-    super.onStateReplaced(state, world, pos, moved);
   }
   
   @Override
@@ -79,7 +78,6 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
     
     player.openHandledScreen(alloyFurnaceBE);
     
-    
     return ActionResult.SUCCESS_SERVER;
   }
   
@@ -93,6 +91,11 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   @Override
   public BlockState getPlacementState(ItemPlacementContext context) {
     PlayerEntity player = Objects.requireNonNull(context.getPlayer());
+    if(context.getWorld().getBlockState(context.getBlockPos().up()).getBlock() instanceof AlloyFurnaceExtensionBlock){
+      return this.getDefaultState()
+          .with(FACING, player.getHorizontalFacing().getOpposite())
+          .with(EXTENSION, true);
+    }
     return this.getDefaultState().with(FACING, player.getHorizontalFacing().getOpposite());
   }
   

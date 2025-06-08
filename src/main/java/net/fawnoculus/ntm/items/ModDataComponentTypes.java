@@ -14,7 +14,7 @@ public class ModDataComponentTypes {
     return Registry.register(Registries.DATA_COMPONENT_TYPE, NTM.id(name), builderUnaryOperator.apply(ComponentType.builder()).build());
   }
   
-  public static final ComponentType<Integer> SELECTED_ABILITY_COMPONENT = register("integer", integerBuilder -> integerBuilder.codec(Codec.INT));
+  public static final ComponentType<Integer> SELECTED_ABILITY_COMPONENT = register("ability_index", integerBuilder -> integerBuilder.codec(Codec.INT));
   
   public static void initialize() {}
 }

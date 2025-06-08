@@ -9,16 +9,17 @@ import net.minecraft.text.Text;
 
 public class ModClientCommands {
   
-  public static void initialize(){
+  public static void initialize() {
     ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(
         ClientCommandManager.literal("ntm_client")
             .then(ClientCommandManager.literal("config"))
             .then(ClientCommandManager.literal("version")
                 .executes(ModClientCommands::version))
-            .then(ClientCommandManager.literal("force_quit")
-                .executes(ModClientCommands::forceQuit))
-            .then(ClientCommandManager.literal("force_disconnect")
-                .executes(ModClientCommands::forceDisconnect))
+            .then(ClientCommandManager.literal("dev")
+                .then(ClientCommandManager.literal("force_quit")
+                    .executes(ModClientCommands::forceQuit))
+                .then(ClientCommandManager.literal("force_disconnect")
+                    .executes(ModClientCommands::forceDisconnect)))
     ));
   }
   private static int version(CommandContext<FabricClientCommandSource> context){

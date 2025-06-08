@@ -170,12 +170,11 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.LIMESTONE);
       ItemGroup.add(ModBlocks.MALACHITE);
       ItemGroup.add(ModBlocks.SULFUROUS_STONE);
+      ItemGroup.add(ModBlocks.TEKITE);
+      ItemGroup.add(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE);
       ItemGroup.add(ModBlocks.GEOTHERMAL_VENT);
       ItemGroup.add(ModBlocks.BEDROCK_OIL_DEPOSIT);
       ItemGroup.add(ModBlocks.BEDROCK_ORE);
-      ItemGroup.add(ModBlocks.TEKITE);
-      ItemGroup.add(ModBlocks.TEKITE_OSMIRIDIUM_ORE);
-      ItemGroup.add(ModBlocks.TRIXITE_ORE);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINES_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);

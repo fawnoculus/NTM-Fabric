@@ -3,19 +3,13 @@ package net.fawnoculus.ntm.datagen.model;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
-import net.minecraft.block.PillarBlock;
 import net.minecraft.client.data.*;
-import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
-
-import static net.minecraft.client.data.BlockStateModelGenerator.*;
 
 
 public class ModelProvider extends FabricModelProvider {
@@ -112,12 +106,12 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LIMESTONE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MALACHITE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SULFUROUS_STONE);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TEKITE);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRIXITE_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GEOTHERMAL_VENT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_OIL_DEPOSIT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_ORE);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TEKITE);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TEKITE_OSMIRIDIUM_ORE);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRIXITE_ORE);
     
     blockStateModelGenerator.registerSingleton(ModBlocks.ALLOY_FURNACE, TexturedModel.ORIENTABLE_WITH_BOTTOM);
     

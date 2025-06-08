@@ -145,7 +145,7 @@ public class SpecialHoe extends HoeItem implements SpecialTool {
     int NewAbilityIndex = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
     NewAbilityIndex++;
     
-    if (NewAbilityIndex >= AbilityAmount || player.isSneaking()) {
+    if (NewAbilityIndex >= AbilityAmount || player.isSneaking() || NewAbilityIndex < -1) {
       // Ability Unselected
       stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT, -1);
       stack.remove(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
