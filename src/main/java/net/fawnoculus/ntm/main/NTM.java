@@ -9,17 +9,21 @@ import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.commands.ModCommandArguments;
 import net.fawnoculus.ntm.commands.ModCommands;
 import net.fawnoculus.ntm.items.*;
+import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+
 public class NTM implements ModInitializer {
   
   public static final String MOD_ID = "ntm";
-  public static final String Mod_Name = "NTM-Fabric";
   public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).get().getMetadata();
-  public static final Logger LOGGER = LoggerFactory.getLogger(Mod_Name);
   public static final EnvType ENVIRONMENT = FabricLoader.getInstance().getEnvironmentType();
+  public static final Path CONFIG_DIR = FabricLoader.getInstance().getConfigDir();
+  public static final String MOD_NAME = METADATA.getName();
+  public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
   
   @Override
   public void onInitialize() {
@@ -39,7 +43,9 @@ public class NTM implements ModInitializer {
     ModCommandArguments.initialize();
     ModCommands.initialize();
     
-    LOGGER.info("NTM-Fabric is now initialized");
+    ModWorldGeneration.initialize();
+    
+    LOGGER.info("Initialization finished");
   }
   
   public static Identifier id(String name){

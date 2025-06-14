@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -21,12 +22,16 @@ public class ConfigFile {
   private final Logger LOGGER;
   private final List<String> optionNames = new ArrayList<>();
   
-  public ConfigFile(String path, ConfigFileType configFileType, @Nullable Logger logger) {
+  public ConfigFile(String path, ConfigFileType configFileType, @Nullable Logger logger){
+    this(Path.of(path), configFileType, logger);
+  }
+  
+  public ConfigFile(Path path, ConfigFileType configFileType, @Nullable Logger logger) {
     this.CONFIG_FILE_TYPE = configFileType;
     this.LOGGER = logger != null ? logger : LoggerFactory.getLogger("FawnoculusConfigUtil");
     
     if (path.endsWith(configFileType.getFileExtension())) {
-      this.CONFIG_FILE = new File(path);
+      this.CONFIG_FILE = new File(path.toUri());
     } else {
       this.CONFIG_FILE = new File(path + configFileType.getFileExtension());
     }

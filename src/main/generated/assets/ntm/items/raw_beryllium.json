@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ntm:block/aluminium_ore"
+    "model": "ntm:item/raw_beryllium"
   }
 }

@@ -3,12 +3,15 @@
   "id": "ntm",
   "version": "${version}",
   "name": "NTM-Fabric",
-  "description": "NTM-Fabric is a Recreation of HBM's Nuclear Tech Mod for Modern Minecraft made in Fabric",
+  "description": "NTM-Fabric is a Recreation of 'HBM's Nuclear Tech Mod' in Modern Minecraft made for Fabric/Quilt",
   "authors": [
     "fawnoculus",
     "HbMinecraft [Original]"
   ],
   "contributors": [
+    "Elo3000 [Code]",
+    "gvriDD [Code]",
+    "OrdenEnderman [Textures]",
     "All Contributors of the Original"
   ],
   "contact": {

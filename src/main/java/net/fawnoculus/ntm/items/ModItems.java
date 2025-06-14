@@ -14,13 +14,35 @@ import static net.fawnoculus.ntm.items.ModToolMaterials.STEEL_TOOL_MATERIAL;
 
 
 public class ModItems {
-  // BASIC ITEMS START
+  // BASIC ITEMS
   public static final Item NULL = register("null", Item::new, new Item.Settings());
+  
+  // Raw Ores & Ore based Resources
+  public static final Item RAW_URANIUM = register("raw_uranium", Item::new, new Item.Settings());
+  public static final Item RAW_SCORCHED_URANIUM = register("raw_scorched_uranium", Item::new, new Item.Settings());
+  public static final Item RAW_PLUTONIUM = register("raw_plutonium", Item::new, new Item.Settings());
+  public static final Item RAW_THORIUM = register("raw_thorium", Item::new, new Item.Settings());
+  public static final Item RAW_TITANIUM = register("raw_titanium", Item::new, new Item.Settings());
+  public static final Item RAW_TUNGSTEN = register("raw_tungsten", Item::new, new Item.Settings());
+  public static final Item RAW_CRYOLITE = register("raw_cryolite", Item::new, new Item.Settings());
+  public static final Item RAW_BERYLLIUM = register("raw_beryllium", Item::new, new Item.Settings());
+  public static final Item RAW_LEAD = register("raw_lead", Item::new, new Item.Settings());
+  public static final Item RAW_ASBESTOS = register("raw_asbestos", Item::new, new Item.Settings());
+  public static final Item RAW_SCHRABIDIUM = register("raw_schrabidium", Item::new, new Item.Settings());
+  public static final Item RAW_AUSTRALIUM = register("raw_australium", Item::new, new Item.Settings());
+  public static final Item RAW_COLTAN = register("raw_coltan", Item::new, new Item.Settings());
+  public static final Item RAW_METEORIC_IRON = register("raw_meteoric_iron", Item::new, new Item.Settings());
+  public static final Item RAW_METEORIC_COPPER = register("raw_meteoric_copper", Item::new, new Item.Settings());
+  public static final Item RAW_METEORIC_ALUMINIUM = register("raw_meteoric_aluminium", Item::new, new Item.Settings());
+  public static final Item RAW_METEORIC_RARE_EARTH = register("raw_meteoric_rare_earth", Item::new, new Item.Settings());
+  public static final Item RAW_METEORIC_COBALT = register("raw_meteoric_cobalt", Item::new, new Item.Settings());
+  public static final Item RAW_TRIXITE = register("raw_trixite", Item::new, new Item.Settings());
+  public static final Item RAW_OSMIRIDIUM = register("raw_osmiridium", Item::new, new Item.Settings());
+  
   public static final Item URANIUM_INGOT = register("uranium_ingot", Item::new, new Item.Settings());
   public static final Item STEEL_INGOT = register("steel_ingot", Item::new, new Item.Settings());
-  // BASIC ITEMS END
   
-  // TOOLS & WEAPONS START
+  // TOOLS & WEAPONS
   public static final Item STEEL_SWORD = register("steel_sword",new Item.Settings(), settings -> new SpecialSword(settings, STEEL_TOOL_MATERIAL, 1f, 1f));
   public static final Item STEEL_PICKAXE = register("steel_pickaxe",new Item.Settings(), settings -> new SpecialPickaxe(settings, STEEL_TOOL_MATERIAL, 1f, 1f));
   public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxe(settings, STEEL_TOOL_MATERIAL, 1f, 1f)
@@ -222,7 +244,6 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(10))
       .addModifier(new Modifiers.PhosphorusTip(60))
       .addModifier(new Modifiers.Decapitator()));
-  // TOOLS & WEAPONS END
   
   public static Item register(String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings) {
     RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));

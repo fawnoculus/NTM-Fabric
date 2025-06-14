@@ -32,7 +32,7 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.THORIUM_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.NITER_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TUNGSTEN_ORE);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ALUMINIUM_ORE);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ALUMINIUM_BEARING_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FLUORITE_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LEAD_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SCHRABIDIUM_ORE);
@@ -191,11 +191,33 @@ public class ModelProvider extends FabricModelProvider {
   @Override
   public void generateItemModels(ItemModelGenerator itemModelGenerator) {
     ItemModelCollector = itemModelGenerator.modelCollector;
-    // BASIC ITEMS START
+    // BASIC ITEMS
     itemModelGenerator.register(ModItems.NULL, Models.GENERATED);
+    
+    // Raw Ores & Ore based Resources
+    itemModelGenerator.register(ModItems.RAW_URANIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_SCORCHED_URANIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_PLUTONIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_THORIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_TITANIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_TUNGSTEN, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_CRYOLITE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_BERYLLIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_LEAD, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_ASBESTOS, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_SCHRABIDIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_AUSTRALIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_COLTAN, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_METEORIC_IRON, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_METEORIC_COPPER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_METEORIC_ALUMINIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_METEORIC_RARE_EARTH, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_METEORIC_COBALT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_TRIXITE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_OSMIRIDIUM, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_INGOT, Models.GENERATED);
-    // BASIC ITEMS END
     
     // TOOLS & WEAPONS START
     itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);

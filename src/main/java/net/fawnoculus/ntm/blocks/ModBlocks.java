@@ -43,7 +43,7 @@ public class ModBlocks {
   public static final Block THORIUM_ORE = register("thorium_ore", Block::new, STONE_SETTINGS, true);
   public static final Block NITER_ORE = register("niter_ore", Block::new, STONE_SETTINGS, true);
   public static final Block TUNGSTEN_ORE = register("tungsten_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block ALUMINIUM_ORE = register("aluminium_ore", Block::new, STONE_SETTINGS, true);
+  public static final Block ALUMINIUM_BEARING_ORE = register("aluminium_bearing_ore", Block::new, STONE_SETTINGS, true);
   public static final Block FLUORITE_ORE = register("fluorite_ore", Block::new, STONE_SETTINGS, true);
   public static final Block LEAD_ORE = register("lead_ore", Block::new, STONE_SETTINGS, true);
   public static final Block SCHRABIDIUM_ORE = register("schrabidium_ore", Block::new, STONE_SETTINGS, true);

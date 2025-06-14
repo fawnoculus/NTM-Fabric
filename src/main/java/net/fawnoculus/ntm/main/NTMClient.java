@@ -9,10 +9,12 @@ import net.fawnoculus.ntm.gui.ModScreenHandlerType;
 public class NTMClient implements ClientModInitializer {
   @Override
   public void onInitializeClient() {
+    NTM.LOGGER.info("Initializing Client Components");
     ModClientCommands.initialize();
     
     ModBlockEntityRenderer.initialize();
     ModScreenHandlerType.initialize();
     ModHandledScreens.initialize();
+    NTM.LOGGER.info("Finished Client Initialization");
   }
 }

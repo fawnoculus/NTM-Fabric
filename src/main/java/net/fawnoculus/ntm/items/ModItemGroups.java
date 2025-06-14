@@ -97,7 +97,7 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.THORIUM_ORE);
       ItemGroup.add(ModBlocks.NITER_ORE);
       ItemGroup.add(ModBlocks.TUNGSTEN_ORE);
-      ItemGroup.add(ModBlocks.ALUMINIUM_ORE);
+      ItemGroup.add(ModBlocks.ALUMINIUM_BEARING_ORE);
       ItemGroup.add(ModBlocks.FLUORITE_ORE);
       ItemGroup.add(ModBlocks.LEAD_ORE);
       ItemGroup.add(ModBlocks.SCHRABIDIUM_ORE);
@@ -172,6 +172,7 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.SULFUROUS_STONE);
       ItemGroup.add(ModBlocks.TEKITE);
       ItemGroup.add(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE);
+      ItemGroup.add(ModBlocks.TRIXITE_ORE);
       ItemGroup.add(ModBlocks.GEOTHERMAL_VENT);
       ItemGroup.add(ModBlocks.BEDROCK_OIL_DEPOSIT);
       ItemGroup.add(ModBlocks.BEDROCK_ORE);
