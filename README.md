@@ -5,8 +5,8 @@ Depending on how development plays out features from [NTM-Space](https://github.
 
 ## **DISCLAIMER !!!!!!!**
 **NTM-Fabric is not even remotely finished!** 
-There is a Reason that have to download the Mod from GitHub if you want to play it! 
-Most Features are still missing, unfinished or barely functioning. I won't be publishing the mod in any official capacity (aka: Modrinth / CurseForge) until I feel like the mod is at least in a *playable* State
+There is a Reason you have to download the Mod from GitHub if you want to play it! 
+Most Features are still missing, unfinished or barely functioning. I won't be publishing the mod in any official capacity (aka: Modrinth / CurseForge) until I feel like the mod is at least in a *"playable"* State
 
 ## Installing NTM-Fabric
 In the future there may also be Releases on Modrinth & CurseForge (refer to the Disclaimer).

@@ -27,6 +27,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -61,6 +62,12 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   public static final int INPUT_BOTTOM_SLOT_INDEX = 3;
   
   private final InventoryStorage inventoryStorage = InventoryStorage.of(inventory, null);
+  
+  @Override
+  public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+    ItemScatterer.spawn(world, pos, inventory);
+    super.onBlockReplaced(pos, oldState);
+  }
   
   public static void tick(World world, BlockPos pos, BlockState state, AlloyFurnaceBE entity) {
     entity.processFuelInput();

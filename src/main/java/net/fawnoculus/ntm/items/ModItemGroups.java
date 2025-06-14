@@ -176,6 +176,25 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.GEOTHERMAL_VENT);
       ItemGroup.add(ModBlocks.BEDROCK_OIL_DEPOSIT);
       ItemGroup.add(ModBlocks.BEDROCK_ORE);
+      ItemGroup.add(ModItems.RAW_URANIUM);
+      ItemGroup.add(ModItems.RAW_SCORCHED_URANIUM);
+      ItemGroup.add(ModItems.RAW_PLUTONIUM);
+      ItemGroup.add(ModItems.RAW_THORIUM);
+      ItemGroup.add(ModItems.RAW_TITANIUM);
+      ItemGroup.add(ModItems.RAW_TUNGSTEN);
+      ItemGroup.add(ModItems.RAW_CRYOLITE);
+      ItemGroup.add(ModItems.RAW_BERYLLIUM);
+      ItemGroup.add(ModItems.RAW_LEAD);
+      ItemGroup.add(ModItems.RAW_SCHRABIDIUM);
+      ItemGroup.add(ModItems.RAW_AUSTRALIUM);
+      ItemGroup.add(ModItems.RAW_COLTAN);
+      ItemGroup.add(ModItems.RAW_METEORIC_IRON);
+      ItemGroup.add(ModItems.RAW_METEORIC_COPPER);
+      ItemGroup.add(ModItems.RAW_METEORIC_ALUMINIUM);
+      ItemGroup.add(ModItems.RAW_METEORIC_RARE_EARTH);
+      ItemGroup.add(ModItems.RAW_METEORIC_COBALT);
+      ItemGroup.add(ModItems.RAW_TRIXITE);
+      ItemGroup.add(ModItems.RAW_OSMIRIDIUM);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINES_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);

@@ -113,80 +113,24 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_OIL_DEPOSIT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_ORE);
     
+    Identifier alloyFurnaceUFN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUFO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUFS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUFW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUTN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUTO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUTS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceUTW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLFN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLFO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLFS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLFW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLTN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLTO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLTS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
+    Identifier alloyFurnaceLTW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
     blockStateModelGenerator.registerSingleton(ModBlocks.ALLOY_FURNACE, TexturedModel.ORIENTABLE_WITH_BOTTOM);
-    
-    /*
-    blockStateModelGenerator.blockStateCollector.accept(
-        VariantsBlockModelDefinitionCreator.of(ModBlocks.ALLOY_FURNACE)
-            .with(
-                BlockStateVariantMap.models(AlloyFurnaceBlock.FACING, AlloyFurnaceBlock.LIT, AlloyFurnaceBlock.EXTENSION)
-                    .generate(ModelProvider::AlloyFurnace)
-            )
-    );
-    */
   }
-  
-  /*
-  private static final WeightedVariant alloyFurnaceVariant = createWeightedVariant(Models.ORIENTABLE.upload(ModBlocks.ALLOY_FURNACE, new TextureMap()
-          .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top"))
-          .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"))
-          .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front"))
-          .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side"))
-      , BlockModelCollector));
-  
-  private static final WeightedVariant alloyFurnaceLitVariant = createWeightedVariant(Models.ORIENTABLE.upload(ModBlocks.ALLOY_FURNACE, new TextureMap()
-          .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top_lit"))
-          .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"))
-          .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front_lit"))
-          .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side"))
-      , BlockModelCollector));
-  
-  private static final WeightedVariant alloyFurnaceTallVariant = createWeightedVariant(Models.ORIENTABLE.upload(ModBlocks.ALLOY_FURNACE, new TextureMap()
-          .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top"))
-          .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"))
-          .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front_tall"))
-          .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side_tall"))
-      , BlockModelCollector));
-  
-  private static final WeightedVariant alloyFurnaceLitTallVariant = createWeightedVariant(Models.ORIENTABLE.upload(ModBlocks.ALLOY_FURNACE, new TextureMap()
-          .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top_lit"))
-          .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"))
-          .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front_lit_tall"))
-          .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side_tall"))
-      , BlockModelCollector));
-  
-  private static WeightedVariant AlloyFurnace(Direction facing, boolean lit, boolean extension) {
-    WeightedVariant weightedVariant;
-    
-    
-    if (lit && extension) {
-      weightedVariant = alloyFurnaceLitTallVariant;
-    } else if (lit) {
-      weightedVariant = alloyFurnaceLitVariant;
-    } else if (extension) {
-      weightedVariant = alloyFurnaceTallVariant;
-    } else {
-      weightedVariant = alloyFurnaceVariant;
-    }
-    
-    
-    switch (facing){
-      case EAST -> {
-        return weightedVariant.apply(ROTATE_X_90);
-      }
-      case SOUTH -> {
-        return weightedVariant.apply(ROTATE_Y_180);
-      }
-      case WEST -> {
-        return weightedVariant.apply(ROTATE_Y_270);
-      }
-      default -> {
-        return weightedVariant;
-      }
-    }
-  }
-   
-   */
   
   @Override
   public void generateItemModels(ItemModelGenerator itemModelGenerator) {
@@ -214,11 +158,111 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RAW_METEORIC_COBALT, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_TRIXITE, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_OSMIRIDIUM, Models.GENERATED);
-
-
+    
     itemModelGenerator.register(ModItems.URANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_233_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_235_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_238_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_FUEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_238_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_239_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_240_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_241_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM__INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.THORIUM_232_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.THORIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TITANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TUNGSTEN_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MAGNETIZED_TUNGSTEN_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ALUMINIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BERYLLIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LEAD_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LEAD_209_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AUSTRALIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.OSMIRIDIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_241_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_242_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_AMERICIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_242_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_243_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_244_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_245_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_246_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_247_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CURIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_CURIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BERKELIUM_247_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CALIFORNIUM_251_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CALIFORNIUM_252_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EINSTEINIUM_253_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EINSTEINIUM_255_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NEPTUNIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POLONIUM_210_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TECHNETIUM_99_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_60_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STRONTIUM_90_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GOLD_198_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RADIUM_226_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NICKEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RED_COPPER_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ZINC_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GALLIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GALLIUM_ARSENIDE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TECHTACTIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TECHTACTIUM_ARSENIDE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLATINIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.IRIDIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PALLADIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STAINLESS_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TECHNETIUM_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CADMIUM_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BISMUTH_BRONZE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ARSENIC_BRONZE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BSCCO_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BISMUTH_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ARSENIC_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CALCIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CADMIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TANTALUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NIOBIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BORON_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GRAPHITE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.HIGH_SPEED_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.VULCANITE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRARANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FERRIC_SCHARBIDATE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CMB_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SOLINIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GHIORSIUM_336_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CHINESIUM_989_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MOX_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SEMI_STABLE_LANTHANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ACTINIUM_227_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DESH_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FERROURANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STARMETAL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GUNMETAL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.WEAPON_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SATURNITE_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EUPHEMIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DINEUTRONIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ELECTRONIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GWENIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.HAFNIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DUSTED_STEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.HEAVY_CHAINSTEEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.METEORITE_INGOT, Models.GENERATED);
     
     // TOOLS & WEAPONS START
     itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);
