@@ -142,7 +142,7 @@ public class ModItems {
   public static final Item ELECTRONIUM_INGOT = register("electronium_ingot", Item::new, new Item.Settings());
   public static final Item GWENIUM_INGOT = register("gwenium_ingot", Item::new, new Item.Settings());
   public static final Item HAFNIUM_INGOT = register("hafnium_ingot", Item::new, new Item.Settings());
-  public static final Item DUSTED_STEEL_INGOT = register("hafnium_ingot", Item::new, new Item.Settings());
+  public static final Item DUSTED_STEEL_INGOT = register("dusted_steel_ingot", Item::new, new Item.Settings());
   public static final Item HEAVY_CHAINSTEEL_INGOT = register("heavy_chainsteel_ingot", Item::new, new Item.Settings());
   public static final Item METEORITE_INGOT = register("meteorite_ingot", Item::new, new Item.Settings());
 
