@@ -16,7 +16,9 @@ import static net.fawnoculus.ntm.items.ModToolMaterials.STEEL_TOOL_MATERIAL;
 public class ModItems {
   // BASIC ITEMS
   public static final Item NULL = register("null", Item::new, new Item.Settings());
-  
+
+
+  // delete gleich again
   // Raw Ores & Ore based Resources
   public static final Item RAW_URANIUM = register("raw_uranium", Item::new, new Item.Settings());
   public static final Item RAW_SCORCHED_URANIUM = register("raw_scorched_uranium", Item::new, new Item.Settings());
