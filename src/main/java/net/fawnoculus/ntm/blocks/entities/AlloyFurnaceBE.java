@@ -18,6 +18,7 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -111,7 +112,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   public ItemStack getRecipeOutput(){
-    return new ItemStack(ModItems.STEEL_INGOT, 1); //TODO: recipes
+    return new ItemStack(Items.AIR, 1); //TODO: recipes
   }
   
   public float getProgress(){
