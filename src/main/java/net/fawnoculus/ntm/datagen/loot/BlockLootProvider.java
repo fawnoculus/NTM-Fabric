@@ -49,7 +49,7 @@ public class BlockLootProvider extends FabricBlockLootTableProvider {
     addDrop(ModBlocks.CINNEBAR_ORE, ModItems.NULL);
     addDrop(ModBlocks.COLTAN_ORE, oreDrops(ModBlocks.COLTAN_ORE, ModItems.RAW_COLTAN));
     addDrop(ModBlocks.LIGNITE_ORE, ModItems.NULL);
-    addDrop(ModBlocks.ASBESTOS_ORE, oreDrops(ModBlocks.ASBESTOS_ORE, ModItems.RAW_ASBESTOS));
+    addDrop(ModBlocks.ASBESTOS_ORE, ModItems.NULL);
     addDrop(ModBlocks.OIL_DEPOSIT);
     addDrop(ModBlocks.EMPTY_OIL_DEPOSIT);
     addDrop(ModBlocks.ALUMINIUM_ORE_CLUSTER, ModItems.NULL);

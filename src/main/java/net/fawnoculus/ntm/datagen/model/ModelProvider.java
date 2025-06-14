@@ -204,7 +204,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RAW_CRYOLITE, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_BERYLLIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_LEAD, Models.GENERATED);
-    itemModelGenerator.register(ModItems.RAW_ASBESTOS, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_SCHRABIDIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_AUSTRALIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_COLTAN, Models.GENERATED);
@@ -215,9 +214,11 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RAW_METEORIC_COBALT, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_TRIXITE, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_OSMIRIDIUM, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
+
+
     itemModelGenerator.register(ModItems.URANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
     
     // TOOLS & WEAPONS START
     itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);

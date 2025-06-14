@@ -19,5 +19,6 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Minecraft Grade Copper -> Red Copper
 - Basalt -> Volcanic Basalt
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
+- Tantalium -> Tantalum
 #### Features:
 - RF to HE / HE to RF Converter -> Energy Converter (all Energy types  + to & from HE in one Block)
