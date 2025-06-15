@@ -8,12 +8,12 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Don't forget to add EMI & JEI compatability once they port beyond 1.21.1
 #
 ### Some Stuff will be changed to fit into modern Versions:
+(Maybe make the old names & textures advisable through a resource pack)
 #### Textures:
 - Industrial Copper -> Standard Minecraft Copper
 - Ores -> Ores but with new Stone/Netherrack Texture
 - Buckets of Fluid -> new Bucket Texture
 #### Names:
-(Maybe make the old names & textures advisable through a resource pack)
 - Blast Furnace -> Alloying Furnace
 - Industrial Grade Copper -> Copper
 - Minecraft Grade Copper -> Red Copper
