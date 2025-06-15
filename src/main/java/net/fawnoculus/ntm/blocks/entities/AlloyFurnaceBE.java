@@ -94,7 +94,9 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   public boolean hasValidRecipe(){
-    return getRecipeOutput() != null; //TODO: recipes
+    ItemStack RecipeOutput = getRecipeOutput();
+    return RecipeOutput != null
+        && RecipeOutput != ItemStack.EMPTY;
   }
   private boolean inputsContain(Item check){
     return inventory.getStack(INPUT_TOP_SLOT_INDEX).getItem() == check || inventory.getStack(INPUT_BOTTOM_SLOT_INDEX).getItem() == check;
@@ -116,7 +118,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   public ItemStack getRecipeOutput(){
-    return new ItemStack(Items.AIR, 1); //TODO: recipes
+    return ItemStack.EMPTY; //TODO: recipes
   }
   
   public float getProgress(){

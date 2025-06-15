@@ -172,6 +172,7 @@ public class ModelProvider extends FabricModelProvider {
     ItemModelCollector = itemModelGenerator.modelCollector;
     // BASIC ITEMS
     itemModelGenerator.register(ModItems.NULL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DEBUG_WAND, Models.GENERATED);
     
     // Raw Ores & Ore based Resources
     itemModelGenerator.register(ModItems.RAW_URANIUM, Models.GENERATED);

@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.items;
 
+import net.fawnoculus.ntm.items.custom.DebugWand;
 import net.fawnoculus.ntm.items.custom.tools.*;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.item.Item;
@@ -14,12 +15,11 @@ import static net.fawnoculus.ntm.items.ModToolMaterials.STEEL_TOOL_MATERIAL;
 
 
 public class ModItems {
-  // BASIC ITEMS
+  // Basic Items
   public static final Item NULL = register("null", Item::new, new Item.Settings());
-
-
-  // delete gleich again
-  // Raw Ores & Ore based Resources
+  public static final Item DEBUG_WAND = register("debug_wand", DebugWand::new, new Item.Settings());
+  
+  // Raw Resources
   public static final Item RAW_URANIUM = register("raw_uranium", Item::new, new Item.Settings());
   public static final Item RAW_SCORCHED_URANIUM = register("raw_scorched_uranium", Item::new, new Item.Settings());
   public static final Item RAW_PLUTONIUM = register("raw_plutonium", Item::new, new Item.Settings());
@@ -39,7 +39,6 @@ public class ModItems {
   public static final Item RAW_METEORIC_COBALT = register("raw_meteoric_cobalt", Item::new, new Item.Settings());
   public static final Item RAW_TRIXITE = register("raw_trixite", Item::new, new Item.Settings());
   public static final Item RAW_OSMIRIDIUM = register("raw_osmiridium", Item::new, new Item.Settings());
-
 
   public static final Item URANIUM_INGOT = register("uranium_ingot", Item::new, new Item.Settings());
   public static final Item URANIUM_233_INGOT = register("uranium_233_ingot", Item::new, new Item.Settings());
@@ -148,7 +147,7 @@ public class ModItems {
   public static final Item METEORITE_INGOT = register("meteorite_ingot", Item::new, new Item.Settings());
 
 
-  // TOOLS & WEAPONS
+  // Tools
   public static final Item STEEL_SWORD = register("steel_sword",new Item.Settings(), settings -> new SpecialSword(settings, STEEL_TOOL_MATERIAL, 1f, 1f));
   public static final Item STEEL_PICKAXE = register("steel_pickaxe",new Item.Settings(), settings -> new SpecialPickaxe(settings, STEEL_TOOL_MATERIAL, 1f, 1f));
   public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxe(settings, STEEL_TOOL_MATERIAL, 1f, 1f)

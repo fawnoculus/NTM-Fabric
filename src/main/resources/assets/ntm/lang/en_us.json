@@ -2,6 +2,7 @@
   "info.ntm.ability.unselect": "[Tool ability deactivated]",
   "info.ntm.ability.select": "[Enabled %1$s]",
 
+  "tooltip.ntm.debug_wand": "Used for Debugging, Obviously",
   "tooltip.ntm.ability.start": "Abilities:",
   "tooltip.ntm.ability.end1": "Right click to cycle through abilities!",
   "tooltip.ntm.ability.end2": "Sneak-click to turn ability off!",

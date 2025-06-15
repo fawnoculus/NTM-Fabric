@@ -317,7 +317,7 @@ public class ModItemGroups {
     });
     ItemGroupEvents.modifyEntriesEvent(CONSUMABLES_AND_GEAR_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);
-      ItemGroup.add(ModItems.NULL);
+      ItemGroup.add(ModItems.DEBUG_WAND);
     });
     ItemGroupEvents.modifyEntriesEvent(TOOLS_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.STEEL_SWORD);

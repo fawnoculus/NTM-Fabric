@@ -155,6 +155,7 @@ d35fd553acf42d30280def8c4ebf75f322bcc830 assets/ntm/items/curium_246_ingot.json
 291b76deff729bd5236411ca32fea632962cc61d assets/ntm/items/curium_247_ingot.json
 a72867b9b99a5d75d3d4d09878603f9a495ab8c0 assets/ntm/items/curium_fuel_ingot.json
 3405ca91c82bdae6ef3f90bae78ed4d5b2656a2c assets/ntm/items/dead_dirt.json
+fb05ae533b28fa44fc14444abb6e1bc3a41f86c4 assets/ntm/items/debug_wand.json
 61301fca9329ee0e7b86f51a50c3ebe0444e2ffd assets/ntm/items/decorated_cobalt_axe.json
 ce414121e8b00c83b9f7b72a0cc432de5a27f26c assets/ntm/items/decorated_cobalt_hoe.json
 883b2c18e87ac7d0a928fc7ad09c43fe7be85e76 assets/ntm/items/decorated_cobalt_pickaxe.json
@@ -489,6 +490,7 @@ d7145bc6f56f102391614c73991de4f29340a63f assets/ntm/models/item/curium_245_ingot
 243bbef0a9e2549343735dd7093eb67bd81645d1 assets/ntm/models/item/curium_246_ingot.json
 2b3ffa897d5d1413dcf025124939253868ff878e assets/ntm/models/item/curium_247_ingot.json
 c03c9d1827bad242b27281857e480b76f80ae5a2 assets/ntm/models/item/curium_fuel_ingot.json
+919910b56dcc77618e7e9977b4b19a623c7c3993 assets/ntm/models/item/debug_wand.json
 d73a18d9f935da6bb9ab30ad744ea10a745036f1 assets/ntm/models/item/decorated_cobalt_axe.json
 94a7d4e79fc6a3a3f9d092e3e5aeb549b92bda00 assets/ntm/models/item/decorated_cobalt_hoe.json
 3a203a5b6276a1293686d8f460e7e4de73b8d064 assets/ntm/models/item/decorated_cobalt_pickaxe.json
