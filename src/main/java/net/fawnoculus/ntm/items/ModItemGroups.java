@@ -56,7 +56,7 @@ public class ModItemGroups {
       .build();
   public static final RegistryKey<ItemGroup> CONSUMABLES_AND_GEAR_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("consumables_and_gear"));
   public static final ItemGroup CONSUMABLES_AND_GEAR = FabricItemGroup.builder()
-      .icon(() -> new ItemStack(ModItems.NULL))
+      .icon(() -> new ItemStack(ModItems.BOTTLE_OF_NUKA_COLA))
       .displayName(Text.translatable("itemGroup.ntm.consumables_and_gear"))
       .build();
   public static final RegistryKey<ItemGroup> TOOLS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("tools"));
@@ -289,7 +289,25 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.NULL);
     });
     ItemGroupEvents.modifyEntriesEvent(CONSUMABLES_AND_GEAR_KEY).register(ItemGroup -> {
-      ItemGroup.add(ModItems.NULL);
+      ItemGroup.add(ModItems.EMPTY_BOTTLE);
+      ItemGroup.add(ModItems.EMPTY_BOMB_BOTTLE);
+      ItemGroup.add(ModItems.NUKA_COLA_BOTTLE_CAP);
+      ItemGroup.add(ModItems.NUKA_COLA_QUANTUM_BOTTLE_CAP);
+      ItemGroup.add(ModItems.S_COLA_BOTTLE_CAP);
+      ItemGroup.add(ModItems.S_COLA_RAD_BOTTLE_CAP);
+      ItemGroup.add(ModItems.KAROL_BOTTLE_CAP);
+      ItemGroup.add(ModItems.FRITZ_COLA_BOTTLE_CAP);
+      ItemGroup.add(ModItems.BOTTLE_OF_NUKA_COLA);
+      ItemGroup.add(ModItems.BOTTLE_OF_NUKA_CHERRY);
+      ItemGroup.add(ModItems.BOTTLE_OF_NUKA_COLA_QUANTUM);
+      ItemGroup.add(ModItems.BOTTLE_OF_S_COLA);
+      ItemGroup.add(ModItems.BOTTLE_OF_S_COLA_RAD);
+      ItemGroup.add(ModItems.BOTTLE_OF_KAROL);
+      ItemGroup.add(ModItems.FIRST_BOTTLE_OF_KAROL);
+      ItemGroup.add(ModItems.BOTTLE_OF_FRITZ_COLA);
+      ItemGroup.add(ModItems.FIRST_BOTTLE_OF_FRITZ_COLA);
+      ItemGroup.add(ModItems.BOTTLE_OPENER);
+      ItemGroup.add(ModItems.CONSTRUCTION_WAND);
       ItemGroup.add(ModItems.DEBUG_WAND);
     });
     ItemGroupEvents.modifyEntriesEvent(TOOLS_KEY).register(ItemGroup -> {
