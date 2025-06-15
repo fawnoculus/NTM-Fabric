@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.ModBlockProperties;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,7 +40,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   }
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final BooleanProperty LIT = Properties.LIT;
-  public static final BooleanProperty EXTENSION = BooleanProperty.of("extension");
+  public static final BooleanProperty EXTENSION = ModBlockProperties.EXTENTION;
   
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {

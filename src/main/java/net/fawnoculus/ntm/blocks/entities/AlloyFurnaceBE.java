@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
-import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.BlockPosPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
@@ -32,8 +31,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
@@ -144,7 +141,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     this.fuel -= FUEL_PER_TICK;
     this.progress++;
     
-    if(hasExtention()){
+    if(hasExtension()){
       this.progress++;
       this.progress++;
     }
@@ -163,7 +160,8 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   private void processFuelInput(){
-    FuelRegistry fuelRegistry = Objects.requireNonNull(this.getWorld()).getFuelRegistry();
+    assert this.getWorld() != null;
+    FuelRegistry fuelRegistry = this.getWorld().getFuelRegistry();
     if(!fuelRegistry.isFuel(inventory.getStack(FUEL_SLOT_INDEX))) return;
     
     int fuelTicks = fuelRegistry.getFuelTicks(inventory.getStack(FUEL_SLOT_INDEX));
@@ -174,9 +172,9 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     inventory.removeStack(FUEL_SLOT_INDEX, 1);
   }
   
-  private boolean hasExtention(){
-    assert this.world != null;
-    return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
+  private boolean hasExtension(){
+    assert this.getWorld() != null;
+    return this.getWorld().getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
   }
   
   private void update(){

@@ -127,6 +127,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.POLONIUM_210_INGOT);
       ItemGroup.add(ModItems.TECHNETIUM_99_INGOT);
       ItemGroup.add(ModItems.COBALT_60_INGOT);
+      ItemGroup.add(ModItems.STRONTIUM_INGOT);
       ItemGroup.add(ModItems.STRONTIUM_90_INGOT);
       ItemGroup.add(ModItems.GOLD_198_INGOT);
       ItemGroup.add(ModItems.RADIUM_226_INGOT);
@@ -166,7 +167,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.GHIORSIUM_336_INGOT);
       ItemGroup.add(ModItems.CHINESIUM_989_INGOT);
       ItemGroup.add(ModItems.MOX_FUEL_INGOT);
-      ItemGroup.add(ModItems.SEMI_STABLE_LANTHANIUM_INGOT);
+      ItemGroup.add(ModItems.SEMI_STABLE_LANTHANUM_INGOT);
       ItemGroup.add(ModItems.ACTINIUM_227_INGOT);
       ItemGroup.add(ModItems.DESH_INGOT);
       ItemGroup.add(ModItems.FERROURANIUM_INGOT);

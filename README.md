@@ -1,7 +1,7 @@
 # NTM-Fabric
 ## What is NTM-Fabric?
 NTM-Fabric is an Attempt to recreate [HBM's NTM](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT) (a mod for 1.7.10) on modern Versions of Minecraft in Fabric.
-Depending on how development plays out features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
+Depending on how development plays out some features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
 
 ## **DISCLAIMER !!!!!!!**
 **NTM-Fabric is not even remotely finished!** 
@@ -59,7 +59,7 @@ git clone https://github.com/fawnoculus/NTM-Fabric
 ```bash
     ./gradlew vscode
 ```
-5. Make the Code Changes you with to make
+5. Make the Code Changes you with to make (don't forget to update the Changelog!)
 6. Make sure that the Code works
 ```bash
     ./gradlew runClient

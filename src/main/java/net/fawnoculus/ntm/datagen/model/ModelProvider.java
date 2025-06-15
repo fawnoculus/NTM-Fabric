@@ -2,11 +2,15 @@ package net.fawnoculus.ntm.datagen.model;
 
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fawnoculus.ntm.blocks.ModBlockProperties;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.client.data.*;
+import net.minecraft.client.render.model.json.WeightedVariant;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -113,23 +117,54 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_OIL_DEPOSIT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_ORE);
     
-    Identifier alloyFurnaceUFN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUFO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUFS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUFW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUTN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUTO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUTS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceUTW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLFN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLFO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLFS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLFW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLTN = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLTO = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLTS = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    Identifier alloyFurnaceLTW = TexturedModel.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, blockStateModelGenerator.modelCollector);
-    blockStateModelGenerator.registerSingleton(ModBlocks.ALLOY_FURNACE, TexturedModel.ORIENTABLE_WITH_BOTTOM);
+    TextureMap alloyFurnaceTextureMap = new TextureMap()
+        .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top"))
+        .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side"))
+        .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front"))
+        .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"));
+    TextureMap litAlloyFurnaceTextureMap = new TextureMap()
+        .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top_lit"))
+        .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side"))
+        .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front_lit"))
+        .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"));
+    TextureMap tallAlloyFurnaceTextureMap = new TextureMap()
+        .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top"))
+        .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side_tall"))
+        .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front_tall"))
+        .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"));
+    TextureMap litTallAlloyFurnaceTextureMap = new TextureMap()
+        .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top_lit"))
+        .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_side_tall"))
+        .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_front_lit_tall"))
+        .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"));
+    
+    WeightedVariant alloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, "", alloyFurnaceTextureMap, blockStateModelGenerator.modelCollector));
+    WeightedVariant litAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "lit", Models.ORIENTABLE_WITH_BOTTOM, a -> litAlloyFurnaceTextureMap));
+    WeightedVariant tallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "tall", Models.ORIENTABLE_WITH_BOTTOM, a -> tallAlloyFurnaceTextureMap));
+    WeightedVariant litTallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "lit_tall", Models.ORIENTABLE_WITH_BOTTOM, a -> litTallAlloyFurnaceTextureMap));
+    blockStateModelGenerator.blockStateCollector
+        .accept(
+            VariantsBlockModelDefinitionCreator.of(ModBlocks.ALLOY_FURNACE)
+                .with(
+                    BlockStateVariantMap.models(Properties.HORIZONTAL_FACING, Properties.LIT, ModBlockProperties.EXTENTION)
+                        .register(Direction.NORTH, false, false, alloyFurnaceweightedVariant)
+                        .register(Direction.EAST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                        .register(Direction.NORTH, true, false, litAlloyFurnaceweightedVariant)
+                        .register(Direction.EAST, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                        .register(Direction.NORTH, false, true, tallAlloyFurnaceweightedVariant)
+                        .register(Direction.EAST, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                        .register(Direction.NORTH, true, true, litTallAlloyFurnaceweightedVariant)
+                        .register(Direction.EAST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                )
+        );
   }
   
   @Override
@@ -208,6 +243,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.POLONIUM_210_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.TECHNETIUM_99_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.COBALT_60_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STRONTIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.STRONTIUM_90_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.GOLD_198_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.RADIUM_226_INGOT, Models.GENERATED);
@@ -247,7 +283,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.GHIORSIUM_336_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.CHINESIUM_989_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.MOX_FUEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.SEMI_STABLE_LANTHANIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SEMI_STABLE_LANTHANUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.ACTINIUM_227_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.DESH_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.FERROURANIUM_INGOT, Models.GENERATED);

@@ -20,5 +20,7 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Basalt -> Volcanic Basalt
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
 - Tantalium -> Tantalum
+- Lanthanium -> Lanthanum
+- Ingot of "x" Fuel -> "x" Fuel Ingot
 #### Features:
 - RF to HE / HE to RF Converter -> Energy Converter (all Energy types  + to & from HE in one Block)

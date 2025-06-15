@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ntm:item/highly_enriched_schrabidium_fuel_ingot"
+  }
+}
