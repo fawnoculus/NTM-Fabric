@@ -66,6 +66,7 @@ public class ModCommands {
   
   private static int funny(CommandContext<ServerCommandSource> context){
     context.getSource().sendFeedback(() -> Text.literal("Performed 'the funny' >:3"), false);
+    // This doesn't actually do anything
     return 1;
   }
   
