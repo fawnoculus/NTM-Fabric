@@ -59,12 +59,12 @@ git clone https://github.com/fawnoculus/NTM-Fabric
 ```bash
     ./gradlew vscode
 ```
-5. Make the Code Changes you with to make (don't forget to update the Changelog!)
+5. Make the Code Changes you with to make (don't forget to update the Changelog &/or the DevNotes)
 6. Make sure that the Code works
 ```bash
     ./gradlew runClient
 ```
-7. Open a Pull request on [GitHub](https://github.com/fawnoculus/NTM-Fabric)
+7. Open a Pull request right here on [GitHub](https://github.com/fawnoculus/NTM-Fabric)
 
 ## Licence
 This software is licensed under the GNU Public License version 3. In short: This software is free, you may run the software freely, create modified versions, distribute this software and distribute modified versions, as long as the modified software too has a free software license. The full license can be found in the `LICENSE.txt` file.
