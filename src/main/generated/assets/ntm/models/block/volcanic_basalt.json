@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_top",
-  "textures": {
-    "side": "ntm:block/volcanic_basalt_side",
-    "top": "ntm:block/volcanic_basalt_top"
-  }
-}

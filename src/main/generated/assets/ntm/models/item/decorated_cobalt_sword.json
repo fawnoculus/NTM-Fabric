@@ -1,6 +1,0 @@
-{
-  "parent": "ntm:item/handheld_large",
-  "textures": {
-    "layer0": "ntm:item/decorated_cobalt_sword"
-  }
-}
