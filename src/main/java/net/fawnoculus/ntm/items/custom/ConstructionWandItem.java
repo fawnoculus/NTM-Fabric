@@ -13,6 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Optional;
@@ -89,17 +90,17 @@ public class ConstructionWandItem extends Item {
   
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    tooltip.accept(Text.translatable("tooltip.ntm.creative_only"));
-    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand1"));
-    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand2"));
-    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand3"));
+    tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand1").formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand2").formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand3").formatted(Formatting.GRAY));
     BlockPos pos = getBlockPos(stack);
     if(pos != null){
-      tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.pos", pos.getX(), pos.getY(), pos.getZ()));
+      tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.pos", pos.getX(), pos.getY(), pos.getZ()).formatted(Formatting.GRAY));
     }else {
-      tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.no_pos"));
+      tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.no_pos").formatted(Formatting.GRAY));
     }
     String blockIdentifier = Registries.BLOCK.getEntry(getBlockState(stack).getBlock()).getIdAsString();
-    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.block", blockIdentifier));
+    tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.block", blockIdentifier).formatted(Formatting.GRAY));
   }
 }

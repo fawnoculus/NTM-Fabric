@@ -7,7 +7,7 @@
 - Heat System for Machines
 - Working Config File(s)
 - Working Ores and Deposits
-- Advanced Tools (Abilities, Weapon modifiers, ...)
+- ~~Advanced Tools (Abilities, Weapon modifiers, ...)~~
 - Special Text Box in the Top Left
 - Item Help (aka: [Press F1 for Help])
 - Conveyor Belts, Pneumatic Tubes & Drones

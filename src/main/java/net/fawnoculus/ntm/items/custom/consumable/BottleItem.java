@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -29,7 +30,7 @@ public class BottleItem extends Item {
 
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)));
-    tooltip.accept(Text.translatable("tooltip.ntm.needs_bottle_opener"));
+    tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.needs_bottle_opener").formatted(Formatting.GRAY));
   }
 }

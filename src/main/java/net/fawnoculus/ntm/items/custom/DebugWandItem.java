@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -38,7 +39,7 @@ public class DebugWandItem extends Item {
   
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    tooltip.accept(Text.translatable("tooltip.ntm.creative_only"));
-    tooltip.accept(Text.translatable("tooltip.ntm.debug_wand"));
+    tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.debug_wand").formatted(Formatting.GRAY));
   }
 }
