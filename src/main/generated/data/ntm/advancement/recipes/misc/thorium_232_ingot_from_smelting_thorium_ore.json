@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:thorium_232_ingot_from_smelting_thorium_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_thorium_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:thorium_ore"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_thorium_ore"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:thorium_232_ingot_from_smelting_thorium_ore"
+    ]
+  }
+}

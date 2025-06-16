@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_australium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:raw_australium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:australium_ingot_from_blasting_raw_australium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_australium"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:australium_ingot_from_blasting_raw_australium"
+    ]
+  }
+}

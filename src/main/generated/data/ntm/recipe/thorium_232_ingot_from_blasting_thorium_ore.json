@@ -3,9 +3,9 @@
   "category": "misc",
   "cookingtime": 150,
   "experience": 1.0,
-  "group": "uranium",
-  "ingredient": "ntm:raw_uranium",
+  "group": "thorium",
+  "ingredient": "ntm:thorium_ore",
   "result": {
-    "id": "ntm:uranium_ingot"
+    "id": "ntm:thorium_232_ingot"
   }
 }

@@ -3,9 +3,9 @@
   "category": "misc",
   "cookingtime": 150,
   "experience": 1.0,
-  "group": "uranium",
-  "ingredient": "ntm:raw_uranium",
+  "group": "plutonium",
+  "ingredient": "ntm:nether_plutonium_ore",
   "result": {
-    "id": "ntm:uranium_ingot"
+    "id": "ntm:plutonium_ingot"
   }
 }

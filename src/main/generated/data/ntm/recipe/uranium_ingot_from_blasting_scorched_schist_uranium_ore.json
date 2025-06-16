@@ -3,8 +3,8 @@
   "category": "misc",
   "cookingtime": 150,
   "experience": 1.0,
-  "group": "uranium",
-  "ingredient": "ntm:raw_uranium",
+  "group": "scorched_uranium",
+  "ingredient": "ntm:scorched_schist_uranium_ore",
   "result": {
     "id": "ntm:uranium_ingot"
   }

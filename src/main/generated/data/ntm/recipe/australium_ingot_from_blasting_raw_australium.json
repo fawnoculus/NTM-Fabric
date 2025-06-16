@@ -3,9 +3,9 @@
   "category": "misc",
   "cookingtime": 150,
   "experience": 1.0,
-  "group": "uranium",
-  "ingredient": "ntm:raw_uranium",
+  "group": "australium",
+  "ingredient": "ntm:raw_australium",
   "result": {
-    "id": "ntm:uranium_ingot"
+    "id": "ntm:australium_ingot"
   }
 }

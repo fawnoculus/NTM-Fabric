@@ -3,9 +3,9 @@
   "category": "misc",
   "cookingtime": 150,
   "experience": 1.0,
-  "group": "uranium",
-  "ingredient": "ntm:raw_uranium",
+  "group": "lead",
+  "ingredient": "ntm:raw_lead",
   "result": {
-    "id": "ntm:uranium_ingot"
+    "id": "ntm:lead_ingot"
   }
 }

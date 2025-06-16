@@ -1,8 +1,8 @@
 {
   "type": "minecraft:blasting",
   "category": "misc",
-  "cookingtime": 500,
-  "experience": 0.5,
+  "cookingtime": 150,
+  "experience": 1.0,
   "group": "uranium",
   "ingredient": "ntm:uranium_ore",
   "result": {
