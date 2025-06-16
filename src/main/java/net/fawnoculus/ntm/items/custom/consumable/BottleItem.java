@@ -21,7 +21,12 @@ public class BottleItem extends Item {
     this.EFFECTS = effects;
     this.RETURN_ITEMS = returnItems;
   }
-  
+
+
+  //Consumable, Drink Sound
+  //List for Effects and ReturnItems roll und applies to player
+
+
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)));
