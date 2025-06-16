@@ -5,18 +5,22 @@ import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.collection.DefaultedList;
 
-public record AlloyFurnaceRecipeInput(ItemStack input1, ItemStack input2) implements RecipeInput {
+public record AlloyFurnaceRecipeInput(ItemStack input) implements RecipeInput {
   @Override
   public ItemStack getStackInSlot(int slot) {
+    return input;
+    /*
     return switch (slot){
-      case 1 -> input1;
-      case 2 -> input2;
+      case 0 -> input1;
+      case 1 -> input2;
       default -> throw new IllegalArgumentException("Recipe does not contain slot " + slot);
+      
     };
+     */
   }
   
   @Override
   public int size() {
-    return 2;
+    return 1;
   }
 }

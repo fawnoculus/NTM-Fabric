@@ -1,0 +1,9 @@
+{
+  "type": "ntm:alloy_furnace",
+  "ingredient": {
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "id": "ntm:steel_ingot"
+  }
+}

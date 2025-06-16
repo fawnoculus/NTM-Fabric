@@ -7,8 +7,12 @@ import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.BlockPosPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
+import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipe;
+import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipeInput;
+import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,9 +26,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
@@ -32,18 +38,20 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
     super(ModBlockEntities.AlloyFurnaceBE, pos, state);
   }
   
   // max fuel is consistent with original, but translated to fuel burn ticks for consistency
-  public static final int MAX_FUEL = 102400;
+  private static final int MAX_FUEL = 102400;
   private static final int FUEL_PER_TICK = 8;
-  public int fuel = 0;
+  private int fuel = 0;
   
-  public static final int MAX_PROGESS = 400;
-  public int progress = 0;
+  private static final int MAX_PROGESS = 400;
+  private int progress = 0;
   
   private final SimpleInventory inventory = new SimpleInventory(4){
     @Override
@@ -84,20 +92,24 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   public boolean canCraft(){
-    return this.hasValidRecipe()
-        && this.canInsertIntoSlot(this.getRecipeOutput() , OUTPUT_SLOT_INDEX)
+    Optional<RecipeEntry<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
+    return recipe.isPresent()
+        && this.canInsertIntoSlot(recipe.get().value().output(), OUTPUT_SLOT_INDEX)
         && this.hasEnoughFuel();
   }
   
-  public boolean hasEnoughFuel(){
+  private boolean hasEnoughFuel(){
     return fuel >= FUEL_PER_TICK;
   }
   
-  public boolean hasValidRecipe(){
-    ItemStack RecipeOutput = getRecipeOutput();
-    return RecipeOutput != null
-        && RecipeOutput != ItemStack.EMPTY;
+  private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
+    if(this.getWorld() instanceof ServerWorld serverWorld) {
+      return serverWorld.getRecipeManager()
+          .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(inventory.getStack(INPUT_TOP_SLOT_INDEX)), serverWorld);
+    }
+    return Optional.empty();
   }
+  
   private boolean inputsContain(Item check){
     return inventory.getStack(INPUT_TOP_SLOT_INDEX).getItem() == check || inventory.getStack(INPUT_BOTTOM_SLOT_INDEX).getItem() == check;
   }
@@ -117,10 +129,6 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     return ((float) this.fuel) / ((float) MAX_FUEL);
   }
   
-  public ItemStack getRecipeOutput(){
-    return ItemStack.EMPTY; //TODO: recipes
-  }
-  
   public float getProgress(){
     return ((float) this.progress) / ((float) MAX_PROGESS);
   }
@@ -129,8 +137,13 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     return this.progress >= MAX_PROGESS;
   }
   
-  private void craftOutput(){  //TODO: recipes !!!!!!!!!!
-    ItemStack recipeOutput = getRecipeOutput();
+  private void craftOutput(){
+    if(getCurrentRecipe().isEmpty()) throw new IllegalStateException();
+    RecipeEntry<AlloyFurnaceRecipe> recipe = getCurrentRecipe().get();
+    
+    ItemStack recipeOutput = recipe.value().output();
+    
+    
     recipeOutput.setCount(inventory.getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
     
     inventory.setStack(OUTPUT_SLOT_INDEX, recipeOutput);
@@ -148,6 +161,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
       this.progress++;
     }
     
+    
     assert this.world != null;
     BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
     this.world.setBlockState(this.pos, state);
@@ -164,14 +178,18 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   private void processFuelInput(){
     assert this.getWorld() != null;
     FuelRegistry fuelRegistry = this.getWorld().getFuelRegistry();
-    if(!fuelRegistry.isFuel(inventory.getStack(FUEL_SLOT_INDEX))) return;
+    ItemStack fuelStack = inventory.getStack(FUEL_SLOT_INDEX);
+    if(!fuelRegistry.isFuel(fuelStack)) return;
     
-    int fuelTicks = fuelRegistry.getFuelTicks(inventory.getStack(FUEL_SLOT_INDEX));
-    if(fuelTicks > MAX_FUEL - this.fuel) return;
+    int fuelTicks = fuelRegistry.getFuelTicks(fuelStack);
+    if(fuelTicks >= MAX_FUEL - this.fuel) return;
     this.fuel += fuelTicks;
     
-    // TODO: set fuel remainder if posible (aka: bucket of lava -> bucket)
-    inventory.removeStack(FUEL_SLOT_INDEX, 1);
+    Item item = fuelStack.getItem();
+    fuelStack.decrement(1);
+    if (fuelStack.isEmpty()) {
+      inventory.setStack(FUEL_SLOT_INDEX, item.getRecipeRemainder());
+    }
   }
   
   private boolean hasExtension(){
