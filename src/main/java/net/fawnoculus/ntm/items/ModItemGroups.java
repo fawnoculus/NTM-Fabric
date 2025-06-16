@@ -89,7 +89,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.PLUTONIUM_240_INGOT);
       ItemGroup.add(ModItems.PLUTONIUM_241_INGOT);
       ItemGroup.add(ModItems.PLUTONIUM_FUEL_INGOT);
-      ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM__INGOT);
+      ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM_INGOT);
       ItemGroup.add(ModItems.THORIUM_232_INGOT);
       ItemGroup.add(ModItems.THORIUM_FUEL_INGOT);
       ItemGroup.add(ModItems.TITANIUM_INGOT);

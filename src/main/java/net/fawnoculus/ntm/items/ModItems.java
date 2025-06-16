@@ -24,7 +24,18 @@ public class ModItems {
   public static final Item DEBUG_WAND = register("debug_wand", DebugWandItem::new, new Item.Settings());
   public static final Item CONSTRUCTION_WAND = register("construction_wand", ConstructionWandItem::new, new Item.Settings());
   
-  // All Raw Resources sorted by Type (I'm feeling dead inside)
+  // All Resources sorted by Type (I'm feeling dead inside)
+
+  //Advanced Alloy
+  public static final Item ADVANCED_ALLOY_INGOT = register("advanced_alloy_ingot", Item::new, new Item.Settings());
+  public static final Item ADVANCED_ALLOY_POWDER = register("advanced_alloy_powder", Item::new, new Item.Settings());
+
+  //Aluminium
+  public static final Item RAW_METEORIC_ALUMINIUM = register("raw_meteoric_aluminium", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_CRYSTALS = register("aluminium_crystals", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_INGOT = register("aluminium_ingot", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_POWDER = register("aluminium_powder", Item::new, new Item.Settings());
+
   //Australium
   public static final Item RAW_AUSTRALIUM = register("raw_australium", Item::new, new Item.Settings());
   public static final Item AUSTRALIUM_INGOT = register("australium_ingot", Item::new, new Item.Settings());
@@ -48,6 +59,11 @@ public class ModItems {
   public static final Item RAW_COLTAN = register("raw_coltan", Item::new, new Item.Settings());
   public static final Item CRUSHED_COLTAN = register("crushed_coltan", Item::new, new Item.Settings());
   public static final Item PURIFIED_TANTALITE = register("purified_tantalite", Item::new, new Item.Settings());
+
+  //Copper
+  public static final Item RAW_METEORIC_COPPER = register("raw_meteoric_copper", Item::new, new Item.Settings());
+  public static final Item COPPER_CRYSTALS = register("copper_crystals", Item::new, new Item.Settings());
+  public static final Item COPPER_POWDER = register("copper_powder", Item::new, new Item.Settings());
 
   //Cryolite
   public static final Item RAW_CRYOLITE = register("raw_cryolite", Item::new, new Item.Settings());
@@ -88,23 +104,30 @@ public class ModItems {
   public static final Item PLUTONIUM_CRYSTAL = register("plutonium_crystal", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_INGOT = register("plutonium_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_FUEL_INGOT = register("plutonium_fuel_ingot", Item::new, new Item.Settings());
+  public static final Item REACTOR_GRADE_PLUTONIUM_INGOT = register("plutonium_fuel_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_238_INGOT = register("plutonium_238_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_239_INGOT = register("plutonium_239_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_240_INGOT = register("plutonium_240_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_241_INGOT = register("plutonium_241_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_BILLET = register("plutonium_billet", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_FUEL_BILLET = register("plutonium_fuel_billet", Item::new, new Item.Settings());
+  public static final Item REACTOR_GRADE_PLUTONIUM_BILLET = register("plutonium_fuel_billet", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_238_BILLET = register("plutonium_238_billet", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_239_BILLET = register("plutonium_239_billet", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_240_BILLET = register("plutonium_240_billet", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_241_BILLET = register("plutonium_241_billet", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_NUGGET = register("plutonium_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_FUEL_NUGGET = register("plutonium_fuel_nugget", Item::new, new Item.Settings());
+  public static final Item REACTOR_GRADE_PLUTONIUM_NUGGET = register("plutonium_fuel_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_238_NUGGET = register("plutonium_238_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_239_NUGGET = register("plutonium_239_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_240_NUGGET = register("plutonium_240_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_241_NUGGET = register("plutonium_241_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_POWDER = register("plutonium_powder", Item::new, new Item.Settings());
+
+  //Red Copper
+  public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings()); // => Minecraft Grade Copper
+  public static final Item RED_COPPER_POWDER = register("red_copper_powder", Item::new, new Item.Settings());
 
   //Schrabidium
   public static final Item RAW_SCHRABIDIUM = register("raw_schrabidium", Item::new, new Item.Settings());
@@ -186,16 +209,12 @@ public class ModItems {
 
 
   public static final Item RAW_METEORIC_IRON = register("raw_meteoric_iron", Item::new, new Item.Settings());
-  public static final Item RAW_METEORIC_COPPER = register("raw_meteoric_copper", Item::new, new Item.Settings());
-  public static final Item RAW_METEORIC_ALUMINIUM = register("raw_meteoric_aluminium", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_RARE_EARTH = register("raw_meteoric_rare_earth", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_COBALT = register("raw_meteoric_cobalt", Item::new, new Item.Settings());
 
 
 
-  public static final Item REACTOR_GRADE_PLUTONIUM__INGOT = register("reactor_grade_plutonium_ingot", Item::new, new Item.Settings());
   public static final Item MAGNETIZED_TUNGSTEN_INGOT = register("magnetized_tungsten_ingot", Item::new, new Item.Settings());
-  public static final Item ALUMINIUM_INGOT = register("aluminium_ingot", Item::new, new Item.Settings());
   public static final Item AMERICIUM_241_INGOT = register("americium_241_ingot", Item::new, new Item.Settings());
   public static final Item AMERICIUM_242_INGOT = register("americium_242_ingot", Item::new, new Item.Settings());
   public static final Item AMERICIUM_FUEL_INGOT = register("americium_fuel_ingot", Item::new, new Item.Settings());
@@ -209,8 +228,6 @@ public class ModItems {
   public static final Item STRONTIUM_90_INGOT = register("strontium_90_ingot", Item::new, new Item.Settings());
   public static final Item GOLD_198_INGOT = register("gold_198_ingot", Item::new, new Item.Settings());
   public static final Item RADIUM_226_INGOT = register("radium_266_ingot", Item::new, new Item.Settings());
-  public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings()); // => Minecraft Grade Copper
-  public static final Item ADVANCED_ALLOY_INGOT = register("advanced_alloy_ingot", Item::new, new Item.Settings());
   public static final Item STEEL_INGOT = register("steel_ingot", Item::new, new Item.Settings());
   public static final Item BSCCO_INGOT = register("bscco_ingot", Item::new, new Item.Settings());
   public static final Item BISMUTH_INGOT = register("bismuth_ingot", Item::new, new Item.Settings());
