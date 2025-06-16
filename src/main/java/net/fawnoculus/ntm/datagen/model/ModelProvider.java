@@ -207,7 +207,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.PLUTONIUM_240_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_241_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM__INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.THORIUM_232_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.THORIUM_FUEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.TITANIUM_INGOT, Models.GENERATED);
