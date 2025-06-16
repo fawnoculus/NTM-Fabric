@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "M": "ntm:steel_ingot",
+    "M": "ntm:cobalt_ingot",
     "S": "minecraft:stick"
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ntm:steel_sword"
+    "id": "ntm:cobalt_sword"
   }
 }

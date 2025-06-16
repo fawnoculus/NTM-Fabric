@@ -6,12 +6,12 @@
     "S": "minecraft:stick"
   },
   "pattern": [
-    " M ",
-    " M ",
+    " MM",
+    " SM",
     " S "
   ],
   "result": {
     "count": 1,
-    "id": "ntm:steel_sword"
+    "id": "ntm:steel_axe"
   }
 }

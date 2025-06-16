@@ -7,11 +7,11 @@
   },
   "pattern": [
     " M ",
-    " M ",
+    " S ",
     " S "
   ],
   "result": {
     "count": 1,
-    "id": "ntm:steel_sword"
+    "id": "ntm:steel_shovel"
   }
 }

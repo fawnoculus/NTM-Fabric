@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.datagen.recipes;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.data.recipe.RecipeExporter;
@@ -18,7 +19,7 @@ public class SmeltingRecipeProvider extends FabricRecipeProvider {
     super(output, registriesFuture);
   }
   
-  private static final List<ItemConvertible> URANIUM_ORES = List.of();
+  private static final List<ItemConvertible> URANIUM_ORES = List.of(ModItems.RAW_URANIUM, ModBlocks.URANIUM_ORE);
   
   
   @Override

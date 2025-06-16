@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "M": "ntm:steel_ingot",
+    "M": "ntm:desh_ingot",
     "S": "minecraft:stick"
   },
   "pattern": [
-    " M ",
-    " M ",
+    "MMM",
+    " S ",
     " S "
   ],
   "result": {
     "count": 1,
-    "id": "ntm:steel_sword"
+    "id": "ntm:desh_pickaxe"
   }
 }
