@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ntm:block/meteorite_treasure_block"
+    }
+  }
+}

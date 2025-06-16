@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ntm:block/broken_meteorite_block"
+    }
+  }
+}
