@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class BottleOpenerItem extends Item {
   public BottleOpenerItem(Settings settings) {
-    super(settings);
+    super(settings.maxCount(1));
   }
   
   @Override
