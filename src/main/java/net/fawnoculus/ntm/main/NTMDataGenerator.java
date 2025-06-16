@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fawnoculus.ntm.datagen.AdvancementProvider;
 import net.fawnoculus.ntm.datagen.EnchantmentProvider;
+import net.fawnoculus.ntm.datagen.ModelProvider;
 import net.fawnoculus.ntm.datagen.RegistryProvider;
 import net.fawnoculus.ntm.datagen.loot.BlockLootProvider;
 import net.fawnoculus.ntm.datagen.loot.ChestLootProvider;
@@ -18,7 +19,7 @@ import net.fawnoculus.ntm.world.ModPlacedFeatures;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 
-public class NTMCommonDataGenerator implements DataGeneratorEntrypoint {
+public class NTMDataGenerator implements DataGeneratorEntrypoint {
   
   @Override
   public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
@@ -41,6 +42,8 @@ public class NTMCommonDataGenerator implements DataGeneratorEntrypoint {
     
     
     pack.addProvider(EnchantmentProvider::new);
+    
+    pack.addProvider(ModelProvider::new);
   }
   
   @Override

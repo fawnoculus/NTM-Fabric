@@ -40,8 +40,7 @@
       "net.fawnoculus.ntm.main.NTMClient"
     ],
     "fabric-datagen": [
-      "net.fawnoculus.ntm.main.NTMCommonDataGenerator",
-      "net.fawnoculus.ntm.main.NTMClientDataGenerator"
+      "net.fawnoculus.ntm.main.NTMDataGenerator"
     ],
     "jade": [
       "net.fawnoculus.ntm.compat.jade.NTMJadePlugin"
