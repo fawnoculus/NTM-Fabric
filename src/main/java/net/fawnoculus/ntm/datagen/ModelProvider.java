@@ -308,6 +308,24 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.TITANIUM_SHOVEL, Models.HANDHELD);
     itemModelGenerator.register(ModItems.TITANIUM_HOE, Models.HANDHELD);
     
+    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_SWORD, HANDHELD_LARGE);
+    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_PICKAXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_AXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_SHOVEL, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_HOE, Models.HANDHELD);
+    
+    itemModelGenerator.register(ModItems.CMB_STEEL_SWORD, HANDHELD_LARGE);
+    itemModelGenerator.register(ModItems.CMB_STEEL_PICKAXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.CMB_STEEL_AXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.CMB_STEEL_SHOVEL, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.CMB_STEEL_HOE, Models.HANDHELD);
+    
+    itemModelGenerator.register(ModItems.DESH_SWORD, HANDHELD_LARGE);
+    itemModelGenerator.register(ModItems.DESH_PICKAXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.DESH_AXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.DESH_SHOVEL, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.DESH_HOE, Models.HANDHELD);
+    
     itemModelGenerator.register(ModItems.COBALT_SWORD, HANDHELD_LARGE);
     itemModelGenerator.register(ModItems.COBALT_PICKAXE, Models.HANDHELD);
     itemModelGenerator.register(ModItems.COBALT_AXE, Models.HANDHELD);
@@ -326,23 +344,11 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.STARMETAL_SHOVEL, Models.HANDHELD);
     itemModelGenerator.register(ModItems.STARMETAL_HOE, Models.HANDHELD);
     
-    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_SWORD, HANDHELD_LARGE);
-    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_PICKAXE, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_AXE, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_SHOVEL, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.ADVANCED_ALLOY_HOE, Models.HANDHELD);
-    
-    itemModelGenerator.register(ModItems.CMB_STEEL_SWORD, HANDHELD_LARGE);
-    itemModelGenerator.register(ModItems.CMB_STEEL_PICKAXE, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.CMB_STEEL_AXE, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.CMB_STEEL_SHOVEL, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.CMB_STEEL_HOE, Models.HANDHELD);
-    
-    itemModelGenerator.register(ModItems.DESH_SWORD, HANDHELD_LARGE);
-    itemModelGenerator.register(ModItems.DESH_PICKAXE, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.DESH_AXE, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.DESH_SHOVEL, Models.HANDHELD);
-    itemModelGenerator.register(ModItems.DESH_HOE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_SWORD, HANDHELD_LARGE);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_PICKAXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_AXE, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_SHOVEL, Models.HANDHELD);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_HOE, Models.HANDHELD);
     
     itemModelGenerator.register(ModItems.BISMUTH_PICKAXE, HANDHELD_LARGE);
     itemModelGenerator.register(ModItems.BISMUTH_AXE, HANDHELD_LARGE);

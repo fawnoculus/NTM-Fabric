@@ -2,6 +2,8 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 
 /**
  * An Empty Interface
@@ -11,6 +13,12 @@ import net.minecraft.item.ItemStack;
  * All modifiers can be found in {@link Modifiers}
  */
 public interface ItemModifier {
+  default MutableText getFullName(){
+    if(this.getValue() != null){
+      return Text.translatable(this.getTranslationKey()).append(Text.literal(" ("+ this.getValue() +")"));
+    }
+    return Text.translatable(this.getTranslationKey());
+  }
   String getTranslationKey();
   String getValue();
   void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker);

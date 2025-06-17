@@ -6,39 +6,27 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 
 public class ModBlockTags {
-  // Ores
-  public static final TagKey<Block> QUARTZ_ORES = createTagKey("quartz_ores");
-  public static final TagKey<Block> URANIUM_ORES = createTagKey("uranium_ores");
-  public static final TagKey<Block> PLUTONIUM_ORES = createTagKey("plutonium_ores");
-  public static final TagKey<Block> THORIUM_ORES = createTagKey("thorium_ores");
-  public static final TagKey<Block> MORKITE_ORES = createTagKey("morkite_ores");
-  public static final TagKey<Block> TITANIUM_ORES = createTagKey("titanium_ores");
-  public static final TagKey<Block> SULFUR_ORES = createTagKey("sulfur_ores");
-  public static final TagKey<Block> GLOWSTONE_ORES = createTagKey("glowstone_ores");
-  public static final TagKey<Block> NITER_ORES = createTagKey("nitter_ores");
-  public static final TagKey<Block> NICKEL_ORES = createTagKey("nickel_ores");
-  public static final TagKey<Block> ZINC_ORES = createTagKey("zinc_ores");
-  public static final TagKey<Block> TUNGSTEN_ORES = createTagKey("tungsten_ores");
-  public static final TagKey<Block> ALUMINIUM_ORES = createTagKey("aluminium_ores");
-  public static final TagKey<Block> FLUORITE_ORES = createTagKey("fluorite_ores");
-  public static final TagKey<Block> BERYLLIUM_ORES = createTagKey("beryllium_ores");
-  public static final TagKey<Block> LEAD_ORES = createTagKey("lead_ores");
-  public static final TagKey<Block> LIGNITE_ORES = createTagKey("lignite_ores");
-  public static final TagKey<Block> ASBESTOS_ORES = createTagKey("asbestos_ores");
-  public static final TagKey<Block> SCHRABIDIUM_ORES = createTagKey("schrabidium_ores");
-  public static final TagKey<Block> LITHIUM_ORES = createTagKey("lithium_ores");
-  public static final TagKey<Block> NIOBIUM_ORES = createTagKey("niobium_ores");
-  public static final TagKey<Block> CADMIUM_ORES = createTagKey("cadmium_ores");
-  public static final TagKey<Block> PALLADIUM_ORES = createTagKey("palladium_ores");
-  public static final TagKey<Block> IODINE_ORES = createTagKey("iodine_ores");
-  public static final TagKey<Block> ARSENIC_ORES = createTagKey("arsenic_ores");
-  public static final TagKey<Block> SILICON_ORES = createTagKey("silicon_ores");
-  public static final TagKey<Block> PHOSPHORUS_ORES = createTagKey("phosphorus_ores");
-  public static final TagKey<Block> AUSTRALIAN_ORES = createTagKey("australian_ores");
-  public static final TagKey<Block> COBALT_ORES = createTagKey("cobalt_ores");
-  public static final TagKey<Block> CINNABAR_ORES = createTagKey("cinnabar_ores");
-  public static final TagKey<Block> COLTAN_ORES = createTagKey("coltan_ores");
-  public static final TagKey<Block> LANTHANIUM_ORES = createTagKey("lanthanium_ores");
+  // Tool stuff
+  public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = createTagKey("incorrect_for_steel_tool");
+  public static final TagKey<Block> INCORRECT_FOR_TITANIUM_TOOL = createTagKey("incorrect_for_titanium_tool");
+  public static final TagKey<Block> INCORRECT_FOR_ADVANCED_ALLOY_TOOL = createTagKey("incorrect_for_advanced_alloy_tool");
+  public static final TagKey<Block> INCORRECT_FOR_CMB_STEEL_TOOL = createTagKey("incorrect_for_cmb_steel_tool");
+  public static final TagKey<Block> INCORRECT_FOR_DESH_TOOL = createTagKey("incorrect_for_desh_tool");
+  public static final TagKey<Block> INCORRECT_FOR_COBALT_TOOL = createTagKey("incorrect_for_cobalt_tool");
+  public static final TagKey<Block> INCORRECT_FOR_DECORATED_COBALT_TOOL = createTagKey("incorrect_for_decorated_cobalt_tool");
+  public static final TagKey<Block> INCORRECT_FOR_STARMETAL_TOOL = createTagKey("incorrect_for_starmetal_tool");
+  public static final TagKey<Block> INCORRECT_FOR_SCHRABIDIUM_TOOL = createTagKey("incorrect_for_schrabidium_tool");
+  public static final TagKey<Block> INCORRECT_FOR_BISMUTH_TOOL = createTagKey("incorrect_for_bismuth_tool");
+  public static final TagKey<Block> INCORRECT_FOR_MOLTEN_TOOL = createTagKey("incorrect_for_molten_tool");
+  public static final TagKey<Block> INCORRECT_FOR_CHLOROPHYTE_TOOL = createTagKey("incorrect_for_chlorophyte_tool");
+  public static final TagKey<Block> INCORRECT_FOR_MESE_TOOL = createTagKey("incorrect_for_mese_tool");
+  
+  public static final TagKey<Block> NEEDS_NETHERRITE_TOOL = createTagKey("needs_netherrite_tool");
+  public static final TagKey<Block> NEEDS_SCHRABIDIUM_TOOL = createTagKey("needs_schrabidium_tool");
+  public static final TagKey<Block> NEEDS_BISMUTH_TOOL = createTagKey("needs_bismuth_tool");
+  public static final TagKey<Block> NEEDS_MESE_TOOL = createTagKey("needs_mese_tool");
+  
+  public static final TagKey<Block> DEPTH_ROCK = createTagKey("depth_rock");
   
   private static TagKey<Block> createTagKey(String name){
     return TagKey.of(RegistryKeys.BLOCK, NTM.id(name));

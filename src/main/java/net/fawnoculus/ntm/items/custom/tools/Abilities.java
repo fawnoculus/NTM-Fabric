@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Abilities {
+public abstract class Abilities {
   // Abilities that can be used are bellow
   /**
    * VeinMiner causes all blocks of the same type as the one broken to be mined

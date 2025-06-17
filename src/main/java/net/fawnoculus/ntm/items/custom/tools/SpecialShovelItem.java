@@ -92,13 +92,7 @@ public class SpecialShovelItem extends ShovelItem implements SpecialTool {
           prefix = Text.literal(" >").formatted(Formatting.GRAY);
         }
         
-        String translationKey = ability.getTranslationKey();
-        String value = ability.getValue();
-        if (value != null) {
-          tooltip.accept(prefix.append(Text.translatable(translationKey, value).formatted(Formatting.GOLD)));
-        } else {
-          tooltip.accept(prefix.append(Text.translatable(translationKey).formatted(Formatting.GOLD)));
-        }
+        tooltip.accept(prefix.append(ability.getFullName()));
       }
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end1").formatted(Formatting.GRAY));
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
@@ -107,15 +101,7 @@ public class SpecialShovelItem extends ShovelItem implements SpecialTool {
     if(!modifiers.isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.modifier.start").formatted(Formatting.GRAY));
       for (ItemModifier modifier : modifiers) {
-        MutableText prefix = Text.literal("  ");
-        
-        String translationKey = modifier.getTranslationKey();
-        String value = modifier.getValue();
-        if (value != null){
-          tooltip.accept(prefix.append(Text.translatable(translationKey, value).formatted(Formatting.RED)));
-        }else {
-          tooltip.accept(prefix.append(Text.translatable(translationKey).formatted(Formatting.RED)));
-        }
+        tooltip.accept(Text.literal("  ").append(modifier.getFullName()));
       }
     }
     
@@ -158,13 +144,7 @@ public class SpecialShovelItem extends ShovelItem implements SpecialTool {
       stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
       
-      String translationKey = getSelectedAbility(stack).getTranslationKey();
-      String value = getSelectedAbility(stack).getValue();
-      if (value != null){
-        player.sendMessage(Text.translatable("message.ntm.ability.select", Text.translatable(translationKey, value)).formatted(Formatting.YELLOW), true);
-      }else {
-        player.sendMessage(Text.translatable("message.ntm.ability.select", Text.translatable(translationKey)).formatted(Formatting.YELLOW), true);
-      }
+      player.sendMessage(getSelectedAbility(stack).getFullName().formatted(Formatting.YELLOW), true);
     }
   }
 }

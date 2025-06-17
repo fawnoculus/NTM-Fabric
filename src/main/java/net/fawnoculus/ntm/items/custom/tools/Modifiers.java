@@ -5,7 +5,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 
-public class Modifiers {
+public abstract class Modifiers {
   // All Weapon Modifiers reside here
   
   /**
