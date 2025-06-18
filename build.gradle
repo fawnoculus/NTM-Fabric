@@ -95,20 +95,20 @@ dependencies {
     modApi "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 
     // Compatibility Tests & better Dev Environment //
-    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"             // ModMenu
-    modLocalRuntime "maven.modrinth:jade:${project.jade_version}"                       // Jade
-    modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"                   // Sodium (gotta be sodium compatible after all)
-    modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"     // REI
-    //modLocalRuntime "dev.emi:emi-fabric:${emi_version}+${emi_mc_version}"               // EMI (there is no version for 1.21.5 yet)
-    //modLocalRuntime "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"              // JEI (there is no version for 1.21.5 yet)
+    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"                 // ModMenu
+    modLocalRuntime "maven.modrinth:jade:${project.jade_version}"                           // Jade
+    modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"                       // Sodium (gotta be sodium compatible after all)
+    modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"         // REI
+    //modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}+${project.emi_mc_version}"   // EMI (there is no version for 1.21.5 yet)
+    //modLocalRuntime "mezz.jei:jei-${project.jei_mc_version}-fabric:${project.jei_version}"  // JEI (there is no version for 1.21.5 yet)
 
     // Compile Time Stuff //
     modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"                          // ModMenu
     modCompileOnly "maven.modrinth:jade:${project.jade_version}"                                    // Jade
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"              // REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"   // REI default Plugins
-    modCompileOnly "dev.emi:emi-fabric:${emi_version}+${emi_mc_version}:api"                        // EMI
-    modCompileOnly "mezz.jei:jei-${jei_mc_version}-fabric-api:${jei_version}"                       // JEI
+    modCompileOnly "dev.emi:emi-fabric:${project.emi_version}+${project.emi_mc_version}:api"        // EMI
+    modCompileOnly "mezz.jei:jei-${project.jei_mc_version}-fabric-api:${project.jei_version}"       // JEI
 }
 
 processResources {
