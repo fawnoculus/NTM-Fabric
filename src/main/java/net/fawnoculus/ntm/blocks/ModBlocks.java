@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.blocks;
 
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceExtensionBlock;
+import net.fawnoculus.ntm.blocks.custom.RenderTestBlock;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -142,6 +143,8 @@ public class ModBlocks {
           .requiresTool()
   , true);
   public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create(), true);
+  
+  public static final Block RENDER_TEST = register("render_test", RenderTestBlock::new, AbstractBlock.Settings.create(), true);
   
   
   

@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Rarity;
 
 import java.util.List;
 import java.util.function.Function;
@@ -480,10 +481,10 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(3)));
   public static final Item STARMETAL_HOE = register("starmetal_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.RadioactiveBlade(50f))
       .addModifier(new Modifiers.Vampire(2f)));
-  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -491,7 +492,7 @@ public class ModItems {
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialAxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -500,7 +501,7 @@ public class ModItems {
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -508,7 +509,7 @@ public class ModItems {
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f));
   
   public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
@@ -534,7 +535,7 @@ public class ModItems {
       .addModifier(new Modifiers.Flaming(5))
       .addModifier(new Modifiers.Vampire(2.0f))
       .addModifier(new Modifiers.Decapitator())
-      .canBreakDepthRock());
+      .addCanBreakDepthRock());
   public static final Item MOLTEN_AXE = register("molten_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
@@ -554,7 +555,7 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(10))
       .addModifier(new Modifiers.Vampire(5.0f))
       .addModifier(new Modifiers.Decapitator())
-      .canBreakDepthRock());
+      .addCanBreakDepthRock());
   public static final Item CHLOROPHYTE_AXE = register("chlorophyte_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
@@ -562,7 +563,7 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(10))
       .addModifier(new Modifiers.Vampire(5.0f))
       .addModifier(new Modifiers.Decapitator())
-      .canBreakDepthRock());
+      .addCanBreakDepthRock());
   
   public static final Item MESE_PICKAXE = register("mese_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(3))
@@ -577,7 +578,7 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(10))
       .addModifier(new Modifiers.PhosphorusTip(60))
       .addModifier(new Modifiers.Decapitator())
-      .canBreakDepthRock());
+      .addCanBreakDepthRock());
   public static final Item MESE_AXE = register("mese_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(3))
       .addAbility(new Abilities.VeinMiner(5))
