@@ -5,6 +5,7 @@ import net.fawnoculus.ntm.commands.ModClientCommands;
 import net.fawnoculus.ntm.render.ModBlockEntityRenderer;
 import net.fawnoculus.ntm.gui.ModHandledScreens;
 import net.fawnoculus.ntm.gui.ModScreenHandlerType;
+import net.fawnoculus.ntm.render.ModHudRender;
 
 public class NTMClient implements ClientModInitializer {
   @Override
@@ -15,6 +16,8 @@ public class NTMClient implements ClientModInitializer {
     ModBlockEntityRenderer.initialize();
     ModScreenHandlerType.initialize();
     ModHandledScreens.initialize();
+    
+    ModHudRender.initialize();
     NTM.LOGGER.info("Finished Client Initialization");
   }
 }

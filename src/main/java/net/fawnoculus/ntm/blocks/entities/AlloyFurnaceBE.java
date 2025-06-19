@@ -12,7 +12,6 @@ import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipeInput;
 import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,7 +20,6 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -42,7 +40,7 @@ import java.util.Optional;
 
 public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.AlloyFurnaceBE, pos, state);
+    super(ModBlockEntities.ALLOY_FURNACE_BE, pos, state);
   }
   
   // max fuel is consistent with original, but translated to fuel burn ticks for consistency

@@ -1,8 +1,6 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModDataComponentTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,18 +8,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.MutableText;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 
@@ -30,85 +25,51 @@ public class SpecialSwordItem extends Item implements SpecialTool {
     super(settings.sword(material, attackDamage, attackSpeed).component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1));
   }
   
-  public boolean canBreakDepthRock = false;
+  public final AtomicBoolean canBreakDepthRock = new AtomicBoolean(false);
   public final List<ItemAbility> abilities = new ArrayList<>();
   public final List<ItemModifier> modifiers = new ArrayList<>();
   
   public SpecialSwordItem addAbility(ItemAbility ability) {
-    abilities.add(ability);
+    this.abilities.add(ability);
     return this;
   }
   
   public SpecialSwordItem addModifier(ItemModifier modifier) {
-    modifiers.add(modifier);
+    this.modifiers.add(modifier);
     return this;
   }
   
   @Override
-  public SpecialSwordItem canBreakDepthRock() {
-    canBreakDepthRock = true;
+  public SpecialSwordItem addCanBreakDepthRock() {
+    this.canBreakDepthRock.set(true);
     return this;
   }
   
-  public ItemAbility getSelectedAbility(ItemStack stack) {
-    int selectedAbility = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
-    if(selectedAbility < 0){return null;}
-    return this.abilities.get(selectedAbility);
+  @Override
+  public List<ItemAbility> getAbilities() {
+    return this.abilities;
   }
   
   @Override
-  public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-    if(world.isClient()){
-      return;
-    }
-    if(!(miner instanceof PlayerEntity player)){
-      return;
-    }
-    
-    ItemAbility ability = getSelectedAbility(stack);
-    if(ability != null){
-      ability.preMine(stack, world, state, pos, player);
-    }
+  public List<ItemModifier> getModifiers() {
+    return this.modifiers;
+  }
+  
+  @Override
+  public boolean canBreakDepthRock() {
+    return this.canBreakDepthRock.get();
   }
   
   @Override
   public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-    for (ItemModifier modifier :modifiers){
-      modifier.postHit(stack, target, attacker);
-    }
+    this.processMakerModifiers(stack, target, attacker);
     super.postHit(stack, target, attacker);
   }
   
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    
-    if(!abilities.isEmpty()) {
-      tooltip.accept(Text.translatable("tooltip.ntm.ability.start").formatted(Formatting.GRAY));
-      for (int i = 0; i < abilities.size(); i++) {
-        ItemAbility ability = abilities.get(i);
-        
-        MutableText prefix = Text.literal("  ");
-        if (i == stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1)) {
-          prefix = Text.literal(" >").formatted(Formatting.GRAY);
-        }
-        
-        tooltip.accept(prefix.append(ability.getFullName()));
-      }
-      tooltip.accept(Text.translatable("tooltip.ntm.ability.end1").formatted(Formatting.GRAY));
-      tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
-    }
-    
-    if(!modifiers.isEmpty()) {
-      tooltip.accept(Text.translatable("tooltip.ntm.modifier.start").formatted(Formatting.GRAY));
-      for (ItemModifier modifier : modifiers) {
-        tooltip.accept(Text.literal("  ").append(modifier.getFullName()));
-      }
-    }
-    
-    if (this.canBreakDepthRock){
-      tooltip.accept(Text.of(""));
-      tooltip.accept(Text.translatable("tooltip.ntm.canbreakdepthrock").formatted(Formatting.RED));
-    }
+    this.processTooltip(stack, context, displayComponent, tooltip, type);
+    super.appendTooltip(stack, context, displayComponent, tooltip, type);
   }
   
   @Override
@@ -116,35 +77,11 @@ public class SpecialSwordItem extends Item implements SpecialTool {
     if (world.isClient()) {
       return super.use(world, player, hand);
     }
-    
-    cycleAbility(player.getStackInHand(hand), player);
+    if (player instanceof ServerPlayerEntity serverPlayer) {
+      this.cycleAbility(player.getStackInHand(hand), serverPlayer);
+      return ActionResult.SUCCESS;
+    }
     
     return super.use(world, player, hand);
-  }
-  
-  public void cycleAbility(ItemStack stack, PlayerEntity player) {
-    int AbilityAmount = abilities.size();
-    if (abilities.isEmpty()) {
-      return;
-    }
-    
-    int NewAbilityIndex = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
-    NewAbilityIndex++;
-    
-    if (NewAbilityIndex >= AbilityAmount || player.isSneaking() || NewAbilityIndex < -1) {
-      // Ability Unselected
-      stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
-      stack.remove(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
-      player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
-      
-      player.sendMessage(Text.translatable("message.ntm.ability.unselect").formatted(Formatting.GOLD), true);
-    } else {
-      // Ability switched
-      stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, NewAbilityIndex);
-      stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
-      player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
-      
-      player.sendMessage(getSelectedAbility(stack).getFullName().formatted(Formatting.YELLOW), true);
-    }
   }
 }

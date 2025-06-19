@@ -65,7 +65,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
     if(world.isClient) return null;
-    return validateTicker(type, ModBlockEntities.AlloyFurnaceBE, AlloyFurnaceBE::tick);
+    return validateTicker(type, ModBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
   }
   
   @Override

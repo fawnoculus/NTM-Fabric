@@ -9,7 +9,8 @@ import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.commands.ModCommandArguments;
 import net.fawnoculus.ntm.commands.ModCommands;
 import net.fawnoculus.ntm.items.*;
-import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipe;
+import net.fawnoculus.ntm.network.ModPayloadHandler;
+import net.fawnoculus.ntm.network.ModPayloads;
 import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
 import net.minecraft.util.Identifier;
@@ -48,6 +49,9 @@ public class NTM implements ModInitializer {
     ModCommands.initialize();
     
     ModWorldGeneration.initialize();
+    
+    ModPayloads.initialize();
+    ModPayloadHandler.initialize();
     
     LOGGER.info("Initialization finished");
   }

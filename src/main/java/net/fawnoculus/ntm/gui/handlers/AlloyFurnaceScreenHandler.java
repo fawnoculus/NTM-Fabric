@@ -76,7 +76,7 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
     if (clickedStack.isEmpty()) return ItemStack.EMPTY;
     
     World world = Objects.requireNonNull(blockEntity.getWorld());
-    //if(world.getFuelRegistry().isFuel(clickedStack) && blockEntity.getInventory().getStack(AlloyFurnaceBE.FUEL_SLOT_INDEX)
+    //if(world.getFuelRegistry().isFuel(clickedStack) && blockEntity.getInventory().getStack(ALLOY_FURNACE_BE.FUEL_SLOT_INDEX)
     
     return ItemStack.EMPTY;
     /* TODO: fix this

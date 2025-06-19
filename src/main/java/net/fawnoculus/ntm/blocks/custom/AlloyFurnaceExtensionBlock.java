@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +10,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 
-public class AlloyFurnaceExtensionBlock extends Block {
+public class AlloyFurnaceExtensionBlock extends AdvancedModelBlock {
   public AlloyFurnaceExtensionBlock(Settings settings) {
     super(settings);
   }

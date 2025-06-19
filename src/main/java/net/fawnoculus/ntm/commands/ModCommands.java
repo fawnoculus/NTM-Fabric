@@ -30,7 +30,7 @@ public class ModCommands {
                 .then(CommandManager.literal("client")
                     .requires(ignored -> environment.integrated)))
             .then(CommandManager.literal("version")
-                .executes(ModCommands::version))
+                .executes(context -> version(context, environment)))
             .then(CommandManager.literal("dev")
                 .requires(source -> allowCommands(source, null))
                 .then(CommandManager.literal("list_components")
@@ -59,8 +59,13 @@ public class ModCommands {
     return DevUUIDs.contains(source.getPlayer().getUuidAsString());
   }
   
-  private static int version(CommandContext<ServerCommandSource> context){
-    context.getSource().sendFeedback(() -> Text.literal("NTM Server Version: " + NTM.METADATA.getVersion()), false);
+  private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment){
+    if(environment.dedicated) {
+      context.getSource().sendFeedback(() -> Text.literal("NTM Server Version: " + NTM.METADATA.getVersion()), false);
+    }
+    if(environment.integrated){
+      context.getSource().sendFeedback(() -> Text.literal("NTM Version: " + NTM.METADATA.getVersion()), false);
+    }
     return 1;
   }
   
