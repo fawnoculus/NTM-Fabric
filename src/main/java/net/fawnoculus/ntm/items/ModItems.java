@@ -27,11 +27,26 @@ public class ModItems {
 
   public static final Item ADVANCED_ALLOY_INGOT = register("advanced_alloy_ingot", Item::new, new Item.Settings());
   public static final Item ADVANCED_ALLOY_POWDER = register("advanced_alloy_powder", Item::new, new Item.Settings());
+  public static final Item ADVANCED_ALLOY_PLATE = register("advanced_alloy_plate", Item::new, new Item.Settings());
+  public static final Item CAST_ADVANCED_ALLOY_PLATE = register("cast_advanced_alloy_plate", Item::new, new Item.Settings());
+  public static final Item HEAVY_ADVANCED_ALLOY_COMPONENT = register("heavy_advanced_alloy_component", Item::new, new Item.Settings());
+  public static final Item ADVANCED_ALLOY_WIRE = register("advanced_alloy_wire", Item::new, new Item.Settings());
+  public static final Item DENSE_ADVANCED_ALLOY_WIRE = register("dense_advanced_alloy_wire", Item::new, new Item.Settings());
 
   public static final Item RAW_METEORIC_ALUMINIUM = register("raw_meteoric_aluminium", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_CRYSTALS = register("aluminium_crystals", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_INGOT = register("aluminium_ingot", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_POWDER = register("aluminium_powder", Item::new, new Item.Settings());
+  public static final Item CRYSTALLINE_ALUMINIUM_FRAGMENT = register("crystalline_aluminium_fragment", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_BEDROCK_ORE_FRAGMENT = register("aluminium_bedrock_ore_fragment", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_PLATE = register("aluminium_plate", Item::new, new Item.Settings());
+  public static final Item CAST_ALUMINIUM_PLATE = register("cast_aluminium_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_ALUMINIUM_PLATE = register("welded_aluminium_plate", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_SHELL = register("aluminium_shell", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_PIPE = register("aluminium_pipe", Item::new, new Item.Settings());
+  public static final Item HEAVY_ALUMINIUM_COMPONENT = register("heavy_aluminium_component", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_WIRE = register("aluminium_wire", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_REACTION_CATALYST = register("aluminium_reaction_catalyst", TooltipItem::new, new Item.Settings());
 
   public static final Item RAW_AUSTRALIUM = register("raw_australium", Item::new, new Item.Settings());
   public static final Item AUSTRALIUM_INGOT = register("australium_ingot", Item::new, new Item.Settings());
@@ -49,6 +64,9 @@ public class ModItems {
   public static final Item BERYLLIUM_BILLET = register("beryllium_billet", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_NUGGET = register("beryllium_nugget", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_POWDER = register("beryllium_powder", Item::new, new Item.Settings());
+  public static final Item BERYLLIUM_BEDROCK_ORE_FRAGMENT = register("beryllium_bedrock_ore_fragment", Item::new, new Item.Settings());
+  public static final Item BERYLLIUM_FLYWHEEL = register("beryllium_flywheel", Item::new, new Item.Settings());
+  public static final Item BERYLLIUM_REACTION_CATALYST = register("beryllium_reaction_catalyst", TooltipItem::new, new Item.Settings());
 
   public static final Item COAL_POWDER = register("coal_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_COAL_POWDER = register("tiny_pile_of_coal_powder", Item::new, new Item.Settings());
