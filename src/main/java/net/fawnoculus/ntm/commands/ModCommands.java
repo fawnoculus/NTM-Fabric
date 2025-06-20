@@ -61,16 +61,16 @@ public class ModCommands {
   
   private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment){
     if(environment.dedicated) {
-      context.getSource().sendFeedback(() -> Text.literal("NTM Server Version: " + NTM.METADATA.getVersion()), false);
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.version.server", NTM.METADATA.getVersion()), false);
     }
     if(environment.integrated){
-      context.getSource().sendFeedback(() -> Text.literal("NTM Version: " + NTM.METADATA.getVersion()), false);
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.version", NTM.METADATA.getVersion()), false);
     }
     return 1;
   }
   
   private static int funny(CommandContext<ServerCommandSource> context){
-    context.getSource().sendFeedback(() -> Text.literal("Performed 'the funny' >:3"), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.the_funny"), false);
     // This doesn't actually do anything
     return 1;
   }
@@ -89,8 +89,9 @@ public class ModCommands {
         }
       }
     }
-    String feedback = String.format("Deleted '%s' old log files ('%s' bytes total)", files, data);
-    context.getSource().sendFeedback(() -> Text.literal(feedback), false);
+    long finalFiles = files;
+    long finalData = data;
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.clean_logs", finalFiles, finalData), false);
     return 1;
   }
   
@@ -106,7 +107,7 @@ public class ModCommands {
   private static int getDataComponents(CommandContext<ServerCommandSource> context){
     PlayerEntity player = context.getSource().getPlayer();
     if(player == null || player.getMainHandStack() == ItemStack.EMPTY){
-      context.getSource().sendError(Text.literal("Could not get held Item"));
+      context.getSource().sendError(Text.translatable("message.ntm.get_components.could_not_get_item"));
       return -1;
     }
     
@@ -115,21 +116,21 @@ public class ModCommands {
       maxSize = context.getArgument("max_length", Integer.class);
     }catch (Exception ignored){}
     
-    context.getSource().sendFeedback(() -> Text.literal("//////Components Start//////").formatted(Formatting.DARK_GRAY), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_components.start").formatted(Formatting.DARK_GRAY), false);
     for(Component<?> component : player.getMainHandStack().getComponents()){
       String type = component.type().toString();
       String value = component.value().toString();
       MutableText feedback = Text.literal("");
       feedback.append(Text.literal(type + ": ").formatted(Formatting.YELLOW));
       if(value.length() > maxSize) {
-        feedback.append(Text.literal("... (value > max_length)").formatted(Formatting.GRAY));
+        feedback.append(Text.translatable("message.ntm.get_components.value_max_length").formatted(Formatting.GRAY));
         context.getSource().sendFeedback(() -> feedback, false);
         continue;
       }
         feedback.append(Text.literal(value).formatted(Formatting.WHITE));
       context.getSource().sendFeedback(() -> feedback, false);
     }
-    context.getSource().sendFeedback(() -> Text.literal("//////Components End//////").formatted(Formatting.DARK_GRAY), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_components.stop").formatted(Formatting.DARK_GRAY), false);
     return 1;
   }
 }

@@ -39,7 +39,7 @@ public class ModClientCommands {
     ));
   }
   private static int version(CommandContext<FabricClientCommandSource> context){
-    context.getSource().sendFeedback(Text.literal("NTM Client Version: " + NTM.METADATA.getVersion()));
+    context.getSource().sendFeedback(Text.translatable("message.ntm.version.client", NTM.METADATA.getVersion()));
     return 1;
   }
   private static int forceQuit(CommandContext<FabricClientCommandSource> context){
@@ -51,6 +51,7 @@ public class ModClientCommands {
     return 1;
   }
   private static int clearMessages(CommandContext<FabricClientCommandSource> context){
+    context.getSource().sendFeedback(Text.translatable("message.ntm.message.cleared", MessageSystem.getAllMessages().size()));
     MessageSystem.removeAllMessages();
     return 1;
   }
