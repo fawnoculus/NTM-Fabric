@@ -8,7 +8,8 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
-import net.fawnoculus.ntm.network.custom.ClearMessagesS2CPayload;
+import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
+import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
 import net.fawnoculus.ntm.util.messages.AdvancedMessage;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
@@ -66,7 +67,7 @@ public class ModCommands {
                 )
                 .then(CommandManager.literal("parse_cmd")
                     .then(CommandManager.argument("cmd", StringArgumentType.greedyString())
-                        .executes(ModCommands::execCommand)
+                        .executes(context -> execCommand(context, context.getArgument("cmd", String.class)))
                     )
                 )
             )
@@ -102,13 +103,13 @@ public class ModCommands {
                             )
                         )
                     )
-                    .then(CommandManager.literal("clear")
+                    .then(CommandManager.literal("remove")
                         .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
-                            .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
+                            .executes(context -> removeMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
                         )
                     )
-                    .then(CommandManager.literal("clear_all")
-                        .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), Identifier.of("special:all_messages")))
+                    .then(CommandManager.literal("remove_all")
+                        .executes(context -> removeAllMessages(context, EntityArgumentType.getPlayers(context, "targets")))
                     )
                 )
             )
@@ -137,15 +138,23 @@ public class ModCommands {
     return 1;
   }
   
-  private static int clearMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier){
+  private static int removeMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier){
     for(ServerPlayerEntity player : targets){
-      ServerPlayNetworking.send(player, new ClearMessagesS2CPayload(identifier));
+      ServerPlayNetworking.send(player, new RemoveMessageS2CPayload(identifier));
     }
     if(identifier.toString().equals("special:all_messages")){
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
     }else {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
     }
+    return 1;
+  }
+  
+  private static int removeAllMessages(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets){
+    for(ServerPlayerEntity player : targets){
+      ServerPlayNetworking.send(player, new RemoveAllMessagesS2CPayload());
+    }
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
     return 1;
   }
   private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float ticks){
@@ -169,10 +178,10 @@ public class ModCommands {
     assert logs != null;
     for(File log : logs){
       if(log.getName().endsWith(".log.gz")){
-        long filesize = log.length();
+        long fileSize = log.length();
         if(log.delete()) {
           files++;
-          data += filesize;
+          data += fileSize;
         }
       }
     }
@@ -182,11 +191,7 @@ public class ModCommands {
     return 1;
   }
   
-  private static int execCommand(CommandContext<ServerCommandSource> context){
-    String command = "";
-    try{
-      command = context.getArgument("cmd", String.class);
-    }catch (Exception ignored){}
+  private static int execCommand(CommandContext<ServerCommandSource> context, String command){
     context.getSource().getServer().getCommandManager().executeWithPrefix(context.getSource().withLevel(Integer.MAX_VALUE), command);
     return 1;
   }

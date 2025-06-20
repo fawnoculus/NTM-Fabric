@@ -4,7 +4,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
-import net.fawnoculus.ntm.network.custom.ClearMessagesS2CPayload;
+import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
+import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
 import net.fawnoculus.ntm.util.messages.MessageSystem;
 
 public class ModPayloadHandler {
@@ -24,12 +25,11 @@ public class ModPayloadHandler {
     ClientPlayNetworking.registerGlobalReceiver(AdvancedMessageS2CPayload.ID, (payload, context) -> {
       MessageSystem.addMessage(payload.message());
     });
-    ClientPlayNetworking.registerGlobalReceiver(ClearMessagesS2CPayload.ID, (payload, context) -> {
-      if(payload.identifier().toString().equals("special:all_messages")){
-        MessageSystem.removeAllMessages();
-        return;
-      }
+    ClientPlayNetworking.registerGlobalReceiver(RemoveMessageS2CPayload.ID, (payload, context) -> {
       MessageSystem.removeMessage(payload.identifier());
+    });
+    ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesS2CPayload.ID, (payload, context) -> {
+      MessageSystem.removeAllMessages();
     });
   }
 }
