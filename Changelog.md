@@ -10,6 +10,7 @@
 * Nuggets
 ## Fixed:
 * Alloy Furnace Model
+* Alloy Furnace Recipes
 ## Changed:
 * Mod Description for better Clarity
 * Advanced Tools (they now use the new Message System)
