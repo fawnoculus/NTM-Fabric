@@ -64,7 +64,7 @@ public class ModHudRender {
     
     for(int i = 0; i < messages.size(); i++){
       Text text = messages.get(i).getText();
-      context.drawText(textRenderer, text, marginSide + paddingSide, marginTop + paddingTop + (textRenderer.fontHeight * i), ColorHelper.fromFloats(messages.get(i).getOpacity(), 1f, 1f, 1f) , true);
+      context.drawText(textRenderer, text, marginSide + paddingSide, marginTop + paddingTop + (textRenderer.fontHeight * i), ColorHelper.getArgb(messages.get(i).getOpacity(), 256, 256, 256) , true);
     }
   }
 }

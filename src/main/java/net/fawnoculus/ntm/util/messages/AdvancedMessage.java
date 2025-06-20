@@ -11,6 +11,7 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Range;
 
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -76,10 +77,12 @@ public class AdvancedMessage {
   }
   
   /**
-   * @return the Opacity of the message as a float (1-0)
+   * @return the Opacity of the message as an int (4 - 256)
    */
-  public float getOpacity(){
-    if(this.ticksLeft > BLEND_TIME) return 1f;
-    return Math.max(this.ticksLeft / BLEND_TIME, 0.1f);
+  @Range(from = 4, to = 256)
+  public int getOpacity(){
+    if(this.ticksLeft > BLEND_TIME) return 256;
+    int min = 4; // for some reason any value bellow 4 will be displayed incorrectly
+    return (int) Math.clamp(this.ticksLeft / BLEND_TIME * 256, min, 256);
   }
 }
