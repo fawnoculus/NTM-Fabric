@@ -4,15 +4,13 @@ import com.mojang.serialization.MapCodec;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.ModBlockProperties;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -58,8 +56,11 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
       super.onStateReplaced(state, world, pos, moved);
       return;
     }
-    ItemScatterer.spawn(world, pos, alloyFurnaceBE.getInventory());
+    if(!moved){
+      ItemScatterer.spawn(world, pos, alloyFurnaceBE.getInventory());
+    }
     world.updateComparators(pos, this);
+    super.onStateReplaced(state, world, pos, moved);
   }
   
   @Override
@@ -102,9 +103,49 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   
   @Override
   public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-    // TODO: Particles & Sounds in here
-    if(world.getBlockState(pos).get(AlloyFurnaceBlock.LIT)){
+    if(!world.isClient()){
+      return;
+    }
+    
+    if(state.get(AlloyFurnaceBlock.LIT)){
+      double y = pos.getY() + 1;
+      if(state.get(EXTENSION)) y += 1;
+      double x = pos.getX();
+      if(x > -1){
+        x += 0.5;
+      }else {
+        x -= 0.5;
+      }
+      double z = pos.getZ();
+      if(z > -1){
+        z += 0.5;
+      }else {
+        z -= 0.5;
+      }
+      world.addParticleClient(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
       
+      x = pos.getX();
+      y = pos.getY() + 0.3 + random.nextDouble() * 0.4;
+      z = pos.getZ();
+      switch (state.get(AlloyFurnaceBlock.FACING)){
+        case Direction.NORTH -> {
+          x += 0.3 + random.nextDouble() * 0.4;
+          z -= 0.1;
+        }
+        case Direction.EAST -> {
+          x += 1.1;
+          z += 0.3 + random.nextDouble() * 0.4;
+        }
+        case Direction.WEST -> {
+          x -= 0.1;
+          z += 0.3 + random.nextDouble() * 0.4;
+        }
+        case Direction.SOUTH -> {
+          x+= 0.3 + random.nextDouble() * 0.4;
+          z += 1.1;
+        }
+      }
+      world.addParticleClient(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
     }
   }
 }

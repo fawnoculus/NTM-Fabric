@@ -169,7 +169,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     this.progress = 0;
     
     assert this.world != null;
-    BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, false);
+    BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
     this.world.setBlockState(this.pos, state);
   }
   
@@ -202,10 +202,6 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   
   public SimpleInventory getInventory(){
     return this.inventory;
-  }
-  
-  public InventoryStorage getInventoryStorage(Direction direction){
-    return this.inventoryStorage;
   }
   
   @Override
