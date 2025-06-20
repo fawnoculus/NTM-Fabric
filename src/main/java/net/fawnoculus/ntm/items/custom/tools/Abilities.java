@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTMConfig;
-import net.fawnoculus.ntm.util.EnchantmentHelper;
+import net.fawnoculus.ntm.util.EnchantmentUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -242,12 +242,12 @@ public abstract class Abilities {
       if(miner.isCreative()){
         return;
       }
-      if(EnchantmentHelper.hasEnchantment(stack, Enchantments.SILK_TOUCH)){
+      if(EnchantmentUtil.hasEnchantment(stack, Enchantments.SILK_TOUCH)){
         return;
       }
-      EnchantmentHelper.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
+      EnchantmentUtil.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
       world.breakBlock(pos, true, miner);
-      EnchantmentHelper.removeEnchantment(stack, Enchantments.SILK_TOUCH);
+      EnchantmentUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
     }
   }
   /**
@@ -270,12 +270,12 @@ public abstract class Abilities {
       if(miner.isCreative()){
         return;
       }
-      if(EnchantmentHelper.hasEnchantment(stack, Enchantments.FORTUNE)){
+      if(EnchantmentUtil.hasEnchantment(stack, Enchantments.FORTUNE)){
         return;
       }
-      EnchantmentHelper.addEnchantment(stack, Enchantments.FORTUNE, level);
+      EnchantmentUtil.addEnchantment(stack, Enchantments.FORTUNE, level);
       world.breakBlock(pos, true, miner);
-      EnchantmentHelper.removeEnchantment(stack, Enchantments.FORTUNE);
+      EnchantmentUtil.removeEnchantment(stack, Enchantments.FORTUNE);
     }
   }
   /**

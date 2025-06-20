@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 
-public class EnchantmentHelper {
+public class EnchantmentUtil {
   public static boolean hasEnchantment( ItemStack stack, RegistryKey<Enchantment> enchantmentRegistryKey){
     RegistryEntry<Enchantment> enchantmentRegistryEntry = getEnchantmentEntry(enchantmentRegistryKey);
     return net.minecraft.enchantment.EnchantmentHelper.getLevel(enchantmentRegistryEntry, stack) > 0;
