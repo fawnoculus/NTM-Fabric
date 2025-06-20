@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.gui;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.network.custom.BlockPosPayload;
+import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -15,7 +15,7 @@ import net.minecraft.screen.ScreenHandlerType;
 
 public class ModScreenHandlerType {
   
-  public static final ScreenHandlerType<AlloyFurnaceScreenHandler> ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceScreenHandler::new, BlockPosPayload.PACKET_CODEC);
+  public static final ScreenHandlerType<AlloyFurnaceScreenHandler> ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceScreenHandler::new, BlockPosS2CPayload.PACKET_CODEC);
   
   
   public static <T extends ScreenHandler, D extends CustomPayload>ExtendedScreenHandlerType<T, D>

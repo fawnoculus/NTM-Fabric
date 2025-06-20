@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.network.custom.BlockPosPayload;
+import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipe;
 import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipeInput;
@@ -37,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosPayload> {
+public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosS2CPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
     super(ModBlockEntities.ALLOY_FURNACE_BE, pos, state);
   }
@@ -214,8 +214,8 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   }
   
   @Override
-  public BlockPosPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
-    return new BlockPosPayload(this.pos);
+  public BlockPosS2CPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
+    return new BlockPosS2CPayload(this.pos);
   }
   
   @Override
