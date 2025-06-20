@@ -38,7 +38,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   }
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final BooleanProperty LIT = Properties.LIT;
-  public static final BooleanProperty EXTENSION = ModBlockProperties.EXTENTION;
+  public static final BooleanProperty EXTENSION = ModBlockProperties.EXTENSION;
   
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {

@@ -148,7 +148,7 @@ public class ModelProvider extends FabricModelProvider {
         .accept(
             VariantsBlockModelDefinitionCreator.of(ModBlocks.ALLOY_FURNACE)
                 .with(
-                    BlockStateVariantMap.models(Properties.HORIZONTAL_FACING, Properties.LIT, ModBlockProperties.EXTENTION)
+                    BlockStateVariantMap.models(Properties.HORIZONTAL_FACING, Properties.LIT, ModBlockProperties.EXTENSION)
                         .register(Direction.NORTH, false, false, alloyFurnaceweightedVariant)
                         .register(Direction.EAST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
                         .register(Direction.SOUTH, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))

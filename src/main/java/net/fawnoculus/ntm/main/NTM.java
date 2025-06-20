@@ -22,7 +22,7 @@ import java.nio.file.Path;
 public class NTM implements ModInitializer {
   
   public static final String MOD_ID = "ntm";
-  public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).get().getMetadata();
+  public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
   public static final EnvType ENVIRONMENT = FabricLoader.getInstance().getEnvironmentType();
   public static final Path CONFIG_DIR = FabricLoader.getInstance().getConfigDir();
   public static final String MOD_NAME = METADATA.getName();

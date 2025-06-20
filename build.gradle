@@ -14,7 +14,7 @@ repositories {
     // REI
     exclusiveContent {
         forRepository {
-            maven {
+            repositories.maven {
                 name = "Shedaniel's Maven"
                 url = "https://maven.shedaniel.me/"
             }
@@ -28,7 +28,7 @@ repositories {
     exclusiveContent {
         forRepository {
             // JEI
-            maven {
+            repositories.maven {
                 name = "Jared's maven"
                 url = "https://maven.blamejared.com/"
             }
@@ -39,7 +39,7 @@ repositories {
     // EMI & Modmenu
     exclusiveContent {
         forRepository {
-            maven {
+            repositories.maven {
                 name = "Terraformers"
                 url = "https://maven.terraformersmc.com/"
             }
@@ -51,7 +51,7 @@ repositories {
     // Jade & Sodium
     exclusiveContent {
         forRepository {
-            maven {
+            repositories.maven {
                 name = "Modrinth Maven"
                 url = "https://api.modrinth.com/maven"
             }

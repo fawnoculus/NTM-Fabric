@@ -31,9 +31,9 @@ public class ModClientCommands {
                 .then(ClientCommandManager.literal("add_message")
                     .executes(ModClientCommands::forceDisconnect)
                     .then(ClientCommandManager.argument("text", TextArgumentType.text(registryAccess))
-                        .executes(context -> addMessage(context, context.getArgument("text", Text.class), 40f))
+                        .executes(context -> addMessage(context.getArgument("text", Text.class), 40f))
                         .then(ClientCommandManager.argument("ticks", FloatArgumentType.floatArg(0))
-                            .executes(context -> addMessage(context, context.getArgument("text", Text.class), context.getArgument("ticks", Float.class))))))
+                            .executes(context -> addMessage(context.getArgument("text", Text.class), context.getArgument("ticks", Float.class))))))
                 .then(ClientCommandManager.literal("clear_messages")
                     .executes(ModClientCommands::clearMessages)))
     ));
@@ -55,7 +55,7 @@ public class ModClientCommands {
     MessageSystem.removeAllMessages();
     return 1;
   }
-  private static int addMessage(CommandContext<FabricClientCommandSource> context, Text text, float ticks){
+  private static int addMessage(Text text, float ticks){
     MessageSystem.addMessage(new AdvancedMessage(NTM.id("command_client"), text, ticks));
     return 1;
   }

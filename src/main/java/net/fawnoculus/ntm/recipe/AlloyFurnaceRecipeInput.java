@@ -2,8 +2,6 @@ package net.fawnoculus.ntm.recipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.util.collection.DefaultedList;
 
 public record AlloyFurnaceRecipeInput(ItemStack input) implements RecipeInput {
   @Override

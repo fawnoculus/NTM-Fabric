@@ -7,16 +7,16 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.slot.Slot;
 
 public class ItemFuelSlot  extends Slot {
-  FuelRegistry fuelRegistry;
+  final FuelRegistry FUEL_REGISTRY;
   
   public ItemFuelSlot(FuelRegistry fuelRegistry ,Inventory inventory, int index, int x, int y) {
     super(inventory, index, x, y);
-    this.fuelRegistry = fuelRegistry;
+    this.FUEL_REGISTRY = fuelRegistry;
   }
   
   @Override
   public boolean canInsert(ItemStack stack) {
-    return this.fuelRegistry.isFuel(stack) || isBucket(stack);
+    return this.FUEL_REGISTRY.isFuel(stack) || isBucket(stack);
   }
   
   @Override
