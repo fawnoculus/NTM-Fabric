@@ -6,12 +6,12 @@
   "description": "NTM-Fabric is a Recreation of 'HBM's Nuclear Tech Mod' in Modern Minecraft made for Fabric/Quilt",
   "authors": [
     "fawnoculus",
-    "HbMinecraft [Original]"
+    "HbMinecraft [Original Mod]"
   ],
   "contributors": [
     "Elo3000 [Code]",
     "gvriDD [Code]",
-    "OrdenEnderman [Textures]",
+    "OrdenEnderman [Emotional Support]",
     "All Contributors of the Original"
   ],
   "contact": {
@@ -69,5 +69,10 @@
     "fabric": "*",
     "java": ">=21",
     "minecraft": "${minecraft_version}"
+  },
+  "recommends": {
+    "modmenu": "*",
+    "jade": "*",
+    "rei": "*"
   }
 }
