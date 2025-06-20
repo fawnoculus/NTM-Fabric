@@ -5,21 +5,21 @@
       "y": 90
     },
     "extension=false,facing=east,lit=true": {
-      "model": "ntm:block/alloy_furnacelit",
+      "model": "ntm:block/alloy_furnace_lit",
       "y": 90
     },
     "extension=false,facing=north,lit=false": {
       "model": "ntm:block/alloy_furnace"
     },
     "extension=false,facing=north,lit=true": {
-      "model": "ntm:block/alloy_furnacelit"
+      "model": "ntm:block/alloy_furnace_lit"
     },
     "extension=false,facing=south,lit=false": {
       "model": "ntm:block/alloy_furnace",
       "y": 180
     },
     "extension=false,facing=south,lit=true": {
-      "model": "ntm:block/alloy_furnacelit",
+      "model": "ntm:block/alloy_furnace_lit",
       "y": 180
     },
     "extension=false,facing=west,lit=false": {
@@ -27,37 +27,37 @@
       "y": 270
     },
     "extension=false,facing=west,lit=true": {
-      "model": "ntm:block/alloy_furnacelit",
+      "model": "ntm:block/alloy_furnace_lit",
       "y": 270
     },
     "extension=true,facing=east,lit=false": {
-      "model": "ntm:block/alloy_furnacetall",
+      "model": "ntm:block/alloy_furnace_tall",
       "y": 90
     },
     "extension=true,facing=east,lit=true": {
-      "model": "ntm:block/alloy_furnacelit_tall",
+      "model": "ntm:block/alloy_furnace_lit_tall",
       "y": 90
     },
     "extension=true,facing=north,lit=false": {
-      "model": "ntm:block/alloy_furnacetall"
+      "model": "ntm:block/alloy_furnace_tall"
     },
     "extension=true,facing=north,lit=true": {
-      "model": "ntm:block/alloy_furnacelit_tall"
+      "model": "ntm:block/alloy_furnace_lit_tall"
     },
     "extension=true,facing=south,lit=false": {
-      "model": "ntm:block/alloy_furnacetall",
+      "model": "ntm:block/alloy_furnace_tall",
       "y": 180
     },
     "extension=true,facing=south,lit=true": {
-      "model": "ntm:block/alloy_furnacelit_tall",
+      "model": "ntm:block/alloy_furnace_lit_tall",
       "y": 180
     },
     "extension=true,facing=west,lit=false": {
-      "model": "ntm:block/alloy_furnacetall",
+      "model": "ntm:block/alloy_furnace_tall",
       "y": 270
     },
     "extension=true,facing=west,lit=true": {
-      "model": "ntm:block/alloy_furnacelit_tall",
+      "model": "ntm:block/alloy_furnace_lit_tall",
       "y": 270
     }
   }

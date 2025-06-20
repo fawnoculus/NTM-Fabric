@@ -141,9 +141,9 @@ public class ModelProvider extends FabricModelProvider {
         .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_bottom"));
     
     WeightedVariant alloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ALLOY_FURNACE, "", alloyFurnaceTextureMap, blockStateModelGenerator.modelCollector));
-    WeightedVariant litAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "lit", Models.ORIENTABLE_WITH_BOTTOM, a -> litAlloyFurnaceTextureMap));
-    WeightedVariant tallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "tall", Models.ORIENTABLE_WITH_BOTTOM, a -> tallAlloyFurnaceTextureMap));
-    WeightedVariant litTallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "lit_tall", Models.ORIENTABLE_WITH_BOTTOM, a -> litTallAlloyFurnaceTextureMap));
+    WeightedVariant litAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "_lit", Models.ORIENTABLE_WITH_BOTTOM, a -> litAlloyFurnaceTextureMap));
+    WeightedVariant tallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "_tall", Models.ORIENTABLE_WITH_BOTTOM, a -> tallAlloyFurnaceTextureMap));
+    WeightedVariant litTallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ALLOY_FURNACE, "_lit_tall", Models.ORIENTABLE_WITH_BOTTOM, a -> litTallAlloyFurnaceTextureMap));
     blockStateModelGenerator.blockStateCollector
         .accept(
             VariantsBlockModelDefinitionCreator.of(ModBlocks.ALLOY_FURNACE)

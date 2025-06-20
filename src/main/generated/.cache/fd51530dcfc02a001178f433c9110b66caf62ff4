@@ -1,6 +1,6 @@
 // 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/ntm Model Provider
 a2c3b374683caf281551ac9ff4f594e8e2e8f958 assets/ntm/blockstates/alexandrite_ore.json
-6ed64d9a419695313095d538caabad60059f547f assets/ntm/blockstates/alloy_furnace.json
+1cc2e343a6e4a5f30c28e517e9f8e47bdb79d27f assets/ntm/blockstates/alloy_furnace.json
 68390457cc8b59593e9958f7700fc903de92bdd9 assets/ntm/blockstates/aluminium_bearing_ore.json
 00cd0a4659bcc376d91d0ebc0bdbb6cb371be8d9 assets/ntm/blockstates/aluminium_ore_cluster.json
 64072e3c9b11e903d374f5fda3cb3606193f97d1 assets/ntm/blockstates/asbestos_ore.json
@@ -348,9 +348,9 @@ f5fde53238f9756592066b084fcdddc522d32581 assets/ntm/items/uranium_fuel_ingot.jso
 164a8416c328a97d89af0e82714a2235de81380f assets/ntm/items/weapon_steel_ingot.json
 584c57fada61c80d0a764866a36353672341d34a assets/ntm/models/block/alexandrite_ore.json
 b2c5c4277962c059d38d92c8a7c2c89c6e776c01 assets/ntm/models/block/alloy_furnace.json
-50fa5196e346cc5793296b8cb00bb93635e7e4bb assets/ntm/models/block/alloy_furnacelit.json
-032956f195492d9af10c3005d1757c2eb8114566 assets/ntm/models/block/alloy_furnacelit_tall.json
-60f1babb81cadcd63e79bf25e6d9adea0bcd25d2 assets/ntm/models/block/alloy_furnacetall.json
+50fa5196e346cc5793296b8cb00bb93635e7e4bb assets/ntm/models/block/alloy_furnace_lit.json
+032956f195492d9af10c3005d1757c2eb8114566 assets/ntm/models/block/alloy_furnace_lit_tall.json
+60f1babb81cadcd63e79bf25e6d9adea0bcd25d2 assets/ntm/models/block/alloy_furnace_tall.json
 d4e33448fc74f84023fdeaff98ba0f91d832e899 assets/ntm/models/block/aluminium_bearing_ore.json
 c43e5568434d88abd95343dbdd45062066731994 assets/ntm/models/block/aluminium_ore_cluster.json
 61ec153200d70150194856bf8ff008a7bbf2fbfc assets/ntm/models/block/asbestos_ore.json
