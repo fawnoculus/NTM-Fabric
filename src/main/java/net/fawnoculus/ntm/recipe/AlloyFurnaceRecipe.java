@@ -14,11 +14,12 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public record AlloyFurnaceRecipe(Ingredient ingredient, ItemStack output) implements Recipe<AlloyFurnaceRecipeInput> {
+public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2, ItemStack output) implements Recipe<AlloyFurnaceRecipeInput> {
   
   public DefaultedList<Ingredient> getIngredients() {
     DefaultedList<Ingredient> list = DefaultedList.of();
-    list.add(this.ingredient);
+    list.add(this.ingredient1);
+    list.add(this.ingredient2);
     return list;
   }
   
@@ -27,7 +28,12 @@ public record AlloyFurnaceRecipe(Ingredient ingredient, ItemStack output) implem
     if(world.isClient()) {
       return false;
     }
-    return ingredient.test(input.getStackInSlot(0));
+    
+    if(ingredient1.test(input.getStackInSlot(1)) && ingredient2.test(input.getStackInSlot(0))){
+      return true;
+    }
+    
+    return ingredient1.test(input.getStackInSlot(0)) && ingredient2.test(input.getStackInSlot(1));
   }
   
   @Override
@@ -47,7 +53,7 @@ public record AlloyFurnaceRecipe(Ingredient ingredient, ItemStack output) implem
   
   @Override
   public IngredientPlacement getIngredientPlacement() {
-    return IngredientPlacement.forShapeless(List.of(ingredient));
+    return IngredientPlacement.forShapeless(List.of(ingredient1, ingredient2));
   }
   
   @Override
@@ -57,15 +63,18 @@ public record AlloyFurnaceRecipe(Ingredient ingredient, ItemStack output) implem
   
   public static class Serializer implements RecipeSerializer<AlloyFurnaceRecipe> {
     public static final MapCodec<AlloyFurnaceRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-        Ingredient.CODEC.fieldOf("ingredient").forGetter(AlloyFurnaceRecipe::ingredient),
+        Ingredient.CODEC.fieldOf("ingredient1").forGetter(AlloyFurnaceRecipe::ingredient1),
+        Ingredient.CODEC.fieldOf("ingredient2").forGetter(AlloyFurnaceRecipe::ingredient2),
         ItemStack.CODEC.fieldOf("result").forGetter(AlloyFurnaceRecipe::output)
     ).apply(inst, AlloyFurnaceRecipe::new));
     
     public static final PacketCodec<RegistryByteBuf, AlloyFurnaceRecipe> STREAM_CODEC =
         PacketCodec.tuple(
-            Ingredient.PACKET_CODEC, AlloyFurnaceRecipe::ingredient,
+            Ingredient.PACKET_CODEC, AlloyFurnaceRecipe::ingredient1,
+            Ingredient.PACKET_CODEC, AlloyFurnaceRecipe::ingredient2,
             ItemStack.PACKET_CODEC, AlloyFurnaceRecipe::output,
-            AlloyFurnaceRecipe::new);
+            AlloyFurnaceRecipe::new
+        );
     
     @Override
     public MapCodec<AlloyFurnaceRecipe> codec() {

@@ -1,0 +1,9 @@
+{
+  "type": "ntm:alloy_furnace",
+  "ingredient1":  "minecraft:copper_ingot",
+  "ingredient2":  "ntm:steel_ingot",
+  "result": {
+    "id": "ntm:red_copper_ingot",
+    "count": 2
+  }
+}

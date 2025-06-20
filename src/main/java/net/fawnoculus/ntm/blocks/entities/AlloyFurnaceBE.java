@@ -102,7 +102,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
     if(this.getWorld() instanceof ServerWorld serverWorld) {
       return serverWorld.getRecipeManager()
-          .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(inventory.getStack(INPUT_TOP_SLOT_INDEX)), serverWorld);
+          .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(inventory.getStack(INPUT_TOP_SLOT_INDEX), inventory.getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
     }
     return Optional.empty();
   }
@@ -130,6 +130,11 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     return ((float) this.progress) / ((float) MAX_PROGESS);
   }
   
+  public boolean showFireInGUI(){
+    assert this.world != null;
+    return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
+  }
+  
   private boolean progressFinished(){
     return this.progress >= MAX_PROGESS;
   }
@@ -138,9 +143,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     if(getCurrentRecipe().isEmpty()) throw new IllegalStateException();
     RecipeEntry<AlloyFurnaceRecipe> recipe = getCurrentRecipe().get();
     
-    ItemStack recipeOutput = recipe.value().output();
-    
-    
+    ItemStack recipeOutput = recipe.value().output().copy();
     recipeOutput.setCount(inventory.getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
     
     inventory.setStack(OUTPUT_SLOT_INDEX, recipeOutput);
@@ -168,8 +171,10 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     this.progress = 0;
     
     assert this.world != null;
-    BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
-    this.world.setBlockState(this.pos, state);
+    if(!this.canCraft()){ // this is to avoid flickering
+      BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, false);
+      this.world.setBlockState(this.pos, state);
+    }
   }
   
   private void processFuelInput(){

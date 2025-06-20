@@ -24,7 +24,7 @@ public class AlloyFurnaceScreen extends HandledScreen<AlloyFurnaceScreenHandler>
     
     
     AlloyFurnaceBE entity = this.handler.getBlockEntity();
-    boolean showFire = entity.canCraft();
+    boolean showFire = entity.showFireInGUI();
     int fuelBarSize = MathHelper.ceil(entity.getFuel() * 54);
     int progressBarSize = MathHelper.ceil(entity.getProgress() * 24);
     
