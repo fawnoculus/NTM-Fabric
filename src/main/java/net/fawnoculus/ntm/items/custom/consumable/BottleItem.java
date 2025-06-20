@@ -28,7 +28,6 @@ public class BottleItem extends Item {
     this.RETURN_ITEMS = returnItems;
   }
 
-  // Tooltip
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
     tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
@@ -37,11 +36,18 @@ public class BottleItem extends Item {
 
   @Override
   public ActionResult use(World world, PlayerEntity playerEntity, Hand hand) {
+    if(world.isClient()){
+      return ActionResult.PASS;
+    }
 
-    ItemStack bottleOpenerStack = new ItemStack(ModItems.BOTTLE_OPENER);
-
-    if (!playerEntity.getInventory().contains(bottleOpenerStack)) {
-      if (world.isClient) {}
+    boolean hasBottleOpener = false;
+    for(ItemStack stack : playerEntity.getInventory()){
+      if(stack.getItem() == ModItems.BOTTLE_OPENER) {
+        hasBottleOpener = true;
+        break;
+      }
+    }
+    if(!hasBottleOpener) {
       return ActionResult.FAIL;
     }
 
@@ -50,18 +56,14 @@ public class BottleItem extends Item {
 
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
-    ItemStack result = super.finishUsing(stack, world, entity);
-
-    if (!world.isClient && entity instanceof PlayerEntity player) {
-      for (StatusEffectInstance effect : EFFECTS) {
+    if (!world.isClient() && entity instanceof PlayerEntity player) {
+      for (StatusEffectInstance effect : this.EFFECTS) {
         player.addStatusEffect(new StatusEffectInstance(effect));
       }
-
-      for (Item returnItem : RETURN_ITEMS) {
-        player.getInventory().insertStack(new ItemStack(returnItem));
+      for (Item returnItem : this.RETURN_ITEMS) {
+        player.giveItemStack(new ItemStack(returnItem));
       }
     }
-
-    return result;
+    return super.finishUsing(stack, world, entity);
   }
 }

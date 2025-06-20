@@ -26,8 +26,7 @@ public class ModClientCommands {
                 .then(ClientCommandManager.literal("force_quit")
                     .executes(ModClientCommands::forceQuit))
                 .then(ClientCommandManager.literal("force_disconnect")
-                    .executes(ModClientCommands::forceDisconnect))
-            
+                    .executes(ModClientCommands::forceDisconnect)))
             .then(ClientCommandManager.literal("message")
                 .then(ClientCommandManager.literal("add_message")
                     .executes(ModClientCommands::forceDisconnect)
@@ -36,7 +35,7 @@ public class ModClientCommands {
                         .then(ClientCommandManager.argument("ticks", FloatArgumentType.floatArg(0))
                             .executes(context -> addMessage(context, context.getArgument("text", Text.class), context.getArgument("ticks", Float.class))))))
                 .then(ClientCommandManager.literal("clear_messages")
-                    .executes(ModClientCommands::clearMessages))))
+                    .executes(ModClientCommands::clearMessages)))
     ));
   }
   private static int version(CommandContext<FabricClientCommandSource> context){
