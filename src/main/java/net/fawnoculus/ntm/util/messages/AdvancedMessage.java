@@ -20,7 +20,8 @@ public class AdvancedMessage {
   private static final float BLEND_TIME = 10f;
   private final Identifier IDENTIFIER;
   private final Text TEXT;
-  private float ticksLeft;public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
+  private float ticksLeft;
+  public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
     public AdvancedMessage decode(ByteBuf byteBuf) {
       String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
       Gson gson = new GsonBuilder().disableHtmlEscaping().create();
@@ -82,7 +83,7 @@ public class AdvancedMessage {
   @Range(from = 4, to = 256)
   public int getOpacity(){
     if(this.ticksLeft > BLEND_TIME) return 256;
-    int min = 4; // for some reason any value bellow 4 will be displayed incorrectly
+    int min = 4; // for some reason anything with a alpha value bellow 4 will be displayed incorrectly
     return (int) Math.clamp(this.ticksLeft / BLEND_TIME * 256, min, 256);
   }
 }

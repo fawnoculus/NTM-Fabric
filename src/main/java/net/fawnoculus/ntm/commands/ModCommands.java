@@ -1,21 +1,32 @@
 package net.fawnoculus.ntm.commands;
 
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.network.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.network.ClearMessagesS2CPayload;
+import net.fawnoculus.ntm.util.messages.AdvancedMessage;
+import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.IdentifierArgumentType;
+import net.minecraft.command.argument.TextArgumentType;
 import net.minecraft.component.Component;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 public class ModCommands {
@@ -24,26 +35,83 @@ public class ModCommands {
     CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
         CommandManager.literal("ntm")
             .then(CommandManager.literal("config")
-                .requires(source -> allowCommands(source, environment))
-                .then(CommandManager.literal("server"))
-                .then(CommandManager.literal("world"))
+                .requires(source -> allowCommands(source, environment)
+                )
+                .then(CommandManager.literal("server")
+                )
+                .then(CommandManager.literal("world")
+                )
                 .then(CommandManager.literal("client")
-                    .requires(ignored -> environment.integrated)))
+                    .requires(ignored -> environment.integrated)
+                )
+            )
             .then(CommandManager.literal("version")
-                .executes(context -> version(context, environment)))
+                .executes(context -> version(context, environment)
+                )
+            )
             .then(CommandManager.literal("dev")
-                .requires(source -> allowCommands(source, null))
+                .requires(source -> allowCommands(source, null)
+                )
                 .then(CommandManager.literal("list_components")
                     .executes(ModCommands::getDataComponents)
                     .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
-                        .executes(ModCommands::getDataComponents)))
+                        .executes(ModCommands::getDataComponents)
+                    )
+                )
                 .then(CommandManager.literal("clean_logs")
-                    .executes(ModCommands::deleteLogs))
+                    .executes(ModCommands::deleteLogs)
+                )
                 .then(CommandManager.literal("funny")
-                    .executes(ModCommands::funny))
+                    .executes(ModCommands::funny)
+                )
                 .then(CommandManager.literal("parse_cmd")
                     .then(CommandManager.argument("cmd", StringArgumentType.greedyString())
-                        .executes(ModCommands::execCommand))))
+                        .executes(ModCommands::execCommand)
+                    )
+                )
+            )
+            .then(CommandManager.literal("message")
+                .requires(source -> allowCommands(source, environment))
+                .then(CommandManager.argument("targets", EntityArgumentType.players())
+                    .then(CommandManager.literal("send")
+                        .then(CommandManager.argument("text", TextArgumentType.text(registryAccess))
+                            .executes(context ->
+                                sendMessage(context,
+                                    EntityArgumentType.getPlayers(context, "targets"),
+                                    NTM.id("command_server"),
+                                    context.getArgument("text", Text.class),
+                                    60f))
+                            .then(CommandManager.argument("ticks", FloatArgumentType.floatArg(0f, 10000f))
+                                .executes(context ->
+                                    sendMessage(context,
+                                        EntityArgumentType.getPlayers(context, "targets"),
+                                        NTM.id("command_server"),
+                                        context.getArgument("text", Text.class),
+                                        context.getArgument("ticks", Float.class)
+                                    ))
+                                .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                                    .executes(context ->
+                                        sendMessage(
+                                            context,
+                                            EntityArgumentType.getPlayers(context, "targets"),
+                                            context.getArgument("identifier", Identifier.class),
+                                            context.getArgument("text", Text.class),
+                                            context.getArgument("ticks", Float.class)
+                                        ))
+                                )
+                            )
+                        )
+                    )
+                    .then(CommandManager.literal("clear")
+                        .then(CommandManager.literal("all")
+                            .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), null))
+                        )
+                        .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                            .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
+                        )
+                    )
+                )
+            )
     ));
   }
   
@@ -66,6 +134,27 @@ public class ModCommands {
     if(environment.integrated){
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.version", NTM.METADATA.getVersion()), false);
     }
+    return 1;
+  }
+  
+  private static int clearMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, @Nullable Identifier identifier){
+    if(identifier == null){
+      identifier = Identifier.of("special", "all_messages");
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
+    }else {
+      Identifier finalIdentifier = identifier;
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", finalIdentifier.toString(), targets.size()), true);
+    }
+    for(ServerPlayerEntity player : targets){
+        ServerPlayNetworking.send(player, new ClearMessagesS2CPayload(identifier));
+    }
+    return 1;
+  }
+  private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float ticks){
+    for(ServerPlayerEntity player : targets){
+      ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(identifier, text, ticks)));
+    }
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.sent", targets.size()), true);
     return 1;
   }
   

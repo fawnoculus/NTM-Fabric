@@ -19,23 +19,31 @@ public class ModClientCommands {
   public static void initialize() {
     ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(
         ClientCommandManager.literal("ntm_client")
-            .then(ClientCommandManager.literal("config"))
+            .then(ClientCommandManager.literal("config")
+            )
             .then(ClientCommandManager.literal("version")
-                .executes(ModClientCommands::version))
+                .executes(ModClientCommands::version)
+            )
             .then(ClientCommandManager.literal("dev")
                 .then(ClientCommandManager.literal("force_quit")
                     .executes(ModClientCommands::forceQuit))
                 .then(ClientCommandManager.literal("force_disconnect")
-                    .executes(ModClientCommands::forceDisconnect)))
+                    .executes(ModClientCommands::forceDisconnect)
+                )
+            )
             .then(ClientCommandManager.literal("message")
                 .then(ClientCommandManager.literal("add_message")
-                    .executes(ModClientCommands::forceDisconnect)
                     .then(ClientCommandManager.argument("text", TextArgumentType.text(registryAccess))
                         .executes(context -> addMessage(context.getArgument("text", Text.class), 40f))
                         .then(ClientCommandManager.argument("ticks", FloatArgumentType.floatArg(0))
-                            .executes(context -> addMessage(context.getArgument("text", Text.class), context.getArgument("ticks", Float.class))))))
+                            .executes(context -> addMessage(context.getArgument("text", Text.class), context.getArgument("ticks", Float.class)))
+                        )
+                    )
+                )
                 .then(ClientCommandManager.literal("clear_messages")
-                    .executes(ModClientCommands::clearMessages)))
+                    .executes(ModClientCommands::clearMessages)
+                )
+            )
     ));
   }
   private static int version(CommandContext<FabricClientCommandSource> context){
@@ -51,7 +59,7 @@ public class ModClientCommands {
     return 1;
   }
   private static int clearMessages(CommandContext<FabricClientCommandSource> context){
-    context.getSource().sendFeedback(Text.translatable("message.ntm.message.cleared", MessageSystem.getAllMessages().size()));
+    context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.cleared", MessageSystem.getAllMessages().size()));
     MessageSystem.removeAllMessages();
     return 1;
   }

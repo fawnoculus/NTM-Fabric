@@ -22,5 +22,12 @@ public class ModPayloadHandler {
     ClientPlayNetworking.registerGlobalReceiver(AdvancedMessageS2CPayload.ID, (payload, context) -> {
       MessageSystem.addMessage(payload.message());
     });
+    ClientPlayNetworking.registerGlobalReceiver(ClearMessagesS2CPayload.ID, (payload, context) -> {
+      if(payload.identifier().toString().equals("special:all_messages")){
+        MessageSystem.removeAllMessages();
+        return;
+      }
+      MessageSystem.removeMessage(payload.identifier());
+    });
   }
 }
