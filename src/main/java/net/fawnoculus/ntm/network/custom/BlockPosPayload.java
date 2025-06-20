@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.network;
+package net.fawnoculus.ntm.network.custom;
 
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.network.RegistryByteBuf;

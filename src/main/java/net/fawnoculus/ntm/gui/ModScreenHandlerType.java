@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.gui;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.network.BlockPosPayload;
+import net.fawnoculus.ntm.network.custom.BlockPosPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

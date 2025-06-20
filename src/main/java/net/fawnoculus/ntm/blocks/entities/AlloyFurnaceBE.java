@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.network.BlockPosPayload;
+import net.fawnoculus.ntm.network.custom.BlockPosPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipe;
 import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipeInput;

@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.network.custom.ClearMessagesS2CPayload;
 
 public class ModPayloads {
   public static void initialize(){

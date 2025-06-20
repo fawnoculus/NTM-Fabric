@@ -3,6 +3,8 @@ package net.fawnoculus.ntm.network;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.network.custom.ClearMessagesS2CPayload;
 import net.fawnoculus.ntm.util.messages.MessageSystem;
 
 public class ModPayloadHandler {
