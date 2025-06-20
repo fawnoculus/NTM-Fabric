@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.commands;
 
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.api.EnvType;
@@ -10,8 +11,10 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.util.messages.AdvancedMessage;
 import net.fawnoculus.ntm.util.messages.MessageSystem;
+import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.TextArgumentType;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class ModClientCommands {
@@ -31,17 +34,52 @@ public class ModClientCommands {
                     .executes(ModClientCommands::forceDisconnect)
                 )
             )
-            .then(ClientCommandManager.literal("message")
+            .then(ClientCommandManager.literal("messages")
                 .then(ClientCommandManager.literal("add_message")
                     .then(ClientCommandManager.argument("text", TextArgumentType.text(registryAccess))
-                        .executes(context -> addMessage(context.getArgument("text", Text.class), 40f))
-                        .then(ClientCommandManager.argument("ticks", FloatArgumentType.floatArg(0))
-                            .executes(context -> addMessage(context.getArgument("text", Text.class), context.getArgument("ticks", Float.class)))
+                        .executes(context ->
+                            addMessage(
+                                context,
+                                context.getArgument("text", Text.class),
+                                40f,
+                                NTM.id("command_client")
+                            )
+                        )
+                        .then(ClientCommandManager.argument("ticks", FloatArgumentType.floatArg(0f, 10000f))
+                            .executes(context ->
+                                addMessage(
+                                context,
+                                context.getArgument("text", Text.class),
+                                context.getArgument("ticks", Float.class),
+                                NTM.id("command_client")
+                                )
+                            )
+                            .then(ClientCommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                                .executes(context ->
+                                    addMessage(
+                                        context,
+                                        context.getArgument("text", Text.class),
+                                        context.getArgument("ticks", Float.class),
+                                        context.getArgument("identifier", Identifier.class)
+                                    )
+                                )
+                            )
                         )
                     )
                 )
-                .then(ClientCommandManager.literal("clear_messages")
+                .then(ClientCommandManager.literal("remove_message")
+                    .then(ClientCommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                        .executes(context -> removeMessage(context, context.getArgument("identifier", Identifier.class)))
+                    )
+                )
+                .then(ClientCommandManager.literal("remove_all_messages")
                     .executes(ModClientCommands::clearMessages)
+                )
+                .then(ClientCommandManager.literal("enabled")
+                    .executes(ModClientCommands::getMessagesEnabled)
+                    .then(ClientCommandManager.argument("enabled" ,BoolArgumentType.bool())
+                        .executes(context -> setMessagesEnabled(context, context.getArgument("enabled", Boolean.class)))
+                    )
                 )
             )
     ));
@@ -63,8 +101,32 @@ public class ModClientCommands {
     MessageSystem.removeAllMessages();
     return 1;
   }
-  private static int addMessage(Text text, float ticks){
-    MessageSystem.addMessage(new AdvancedMessage(NTM.id("command_client"), text, ticks));
+  private static int removeMessage(CommandContext<FabricClientCommandSource> context, Identifier identifier){
+    context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.removed", identifier.toString()));
+    MessageSystem.removeAllMessages();
+    return 1;
+  }
+  private static int addMessage(CommandContext<FabricClientCommandSource> context, Text text, float ticks, Identifier identifier){
+    MessageSystem.addMessage(new AdvancedMessage(identifier, text, ticks));
+    context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.added"));
+    return 1;
+  }
+  private static int getMessagesEnabled(CommandContext<FabricClientCommandSource> context){
+    boolean enabled = MessageSystem.getIsEnabled();
+    if(enabled){
+      context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.is_enabled"));
+    }else {
+      context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.is_disabled"));
+    }
+    return 1;
+  }
+  private static int setMessagesEnabled(CommandContext<FabricClientCommandSource> context, Boolean enabled){
+    MessageSystem.setIsEnabled(enabled);
+    if(enabled){
+      context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.set_enabled"));
+    }else {
+      context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.set_disabled"));
+    }
     return 1;
   }
 }

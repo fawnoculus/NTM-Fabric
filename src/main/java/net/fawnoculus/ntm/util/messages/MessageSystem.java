@@ -7,13 +7,17 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Environment(EnvType.CLIENT)
 public class MessageSystem {
   private static final List<AdvancedMessage> ALL_MESSAGES = new ArrayList<>();
   private static final HashMap<String, AdvancedMessage> MESSAGE_HASH_MAP = new HashMap<>();
+  private static final AtomicBoolean isEnabled = new AtomicBoolean(true);
   
   public static void addMessage(AdvancedMessage message){
+    if(!isEnabled.get()) return;
+    
     Identifier identifier = message.getID();
     removeMessage(identifier);
     ALL_MESSAGES.add(message);
@@ -40,5 +44,12 @@ public class MessageSystem {
   
   public static List<AdvancedMessage> getAllMessages(){
     return ALL_MESSAGES;
+  }
+  
+  public static boolean getIsEnabled() {
+    return isEnabled.get();
+  }
+  public static void setIsEnabled(boolean enabled) {
+    isEnabled.set(enabled);
   }
 }

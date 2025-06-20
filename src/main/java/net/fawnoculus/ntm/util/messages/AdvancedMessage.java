@@ -10,11 +10,13 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
 
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class AdvancedMessage {
   private static final float BLEND_TIME = 10f;
@@ -46,7 +48,7 @@ public class AdvancedMessage {
   private static AdvancedMessage decode(JsonObject json){
     Identifier identifier = Identifier.of(json.getAsJsonPrimitive("identifier").getAsString());
     float ticksLeft  = json.getAsJsonPrimitive("tick_amount").getAsFloat();
-    Text text = Text.Serialization.fromJson(json.getAsJsonPrimitive("text").getAsString(), BuiltinRegistries.createWrapperLookup());
+    Text text = Objects.requireNonNull(Text.Serialization.fromJson(json.getAsJsonPrimitive("text").getAsString(), BuiltinRegistries.createWrapperLookup()));
     return new AdvancedMessage(identifier, text, ticksLeft);
   }
   
@@ -56,6 +58,9 @@ public class AdvancedMessage {
    * @param tick_amount Amount of Ticks the Message should be displayed for;
    */
   public AdvancedMessage(Identifier identifier, Text text, float tick_amount){
+    if(text.getStyle().getColor() == null) {
+      text = text.copy().formatted(Formatting.WHITE);
+    }
     this.IDENTIFIER = identifier;
     this.TEXT = text;
     this.ticksLeft = tick_amount;

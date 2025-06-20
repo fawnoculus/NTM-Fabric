@@ -53,9 +53,9 @@ public class ModCommands {
                 .requires(source -> allowCommands(source, null)
                 )
                 .then(CommandManager.literal("list_components")
-                    .executes(ModCommands::getDataComponents)
+                    .executes(context -> getDataComponents(context, 100))
                     .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
-                        .executes(ModCommands::getDataComponents)
+                        .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
                     )
                 )
                 .then(CommandManager.literal("clean_logs")
@@ -103,12 +103,12 @@ public class ModCommands {
                         )
                     )
                     .then(CommandManager.literal("clear")
-                        .then(CommandManager.literal("all")
-                            .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), null))
-                        )
                         .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
                             .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
                         )
+                    )
+                    .then(CommandManager.literal("clear_all")
+                        .executes(context -> clearMessage(context, EntityArgumentType.getPlayers(context, "targets"), Identifier.of("special:all_messages")))
                     )
                 )
             )
@@ -137,16 +137,14 @@ public class ModCommands {
     return 1;
   }
   
-  private static int clearMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, @Nullable Identifier identifier){
-    if(identifier == null){
-      identifier = Identifier.of("special", "all_messages");
+  private static int clearMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier){
+    for(ServerPlayerEntity player : targets){
+      ServerPlayNetworking.send(player, new ClearMessagesS2CPayload(identifier));
+    }
+    if(identifier.toString().equals("special:all_messages")){
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
     }else {
-      Identifier finalIdentifier = identifier;
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", finalIdentifier.toString(), targets.size()), true);
-    }
-    for(ServerPlayerEntity player : targets){
-        ServerPlayNetworking.send(player, new ClearMessagesS2CPayload(identifier));
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
     }
     return 1;
   }
@@ -180,7 +178,7 @@ public class ModCommands {
     }
     long finalFiles = files;
     long finalData = data;
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.clean_logs", finalFiles, finalData), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.clean_logs", finalFiles, finalData), true);
     return 1;
   }
   
@@ -193,17 +191,12 @@ public class ModCommands {
     return 1;
   }
   
-  private static int getDataComponents(CommandContext<ServerCommandSource> context){
+  private static int getDataComponents(CommandContext<ServerCommandSource> context, int maxSize){
     PlayerEntity player = context.getSource().getPlayer();
     if(player == null || player.getMainHandStack() == ItemStack.EMPTY){
       context.getSource().sendError(Text.translatable("message.ntm.get_components.could_not_get_item"));
       return -1;
     }
-    
-    int maxSize = 100;
-    try{
-      maxSize = context.getArgument("max_length", Integer.class);
-    }catch (Exception ignored){}
     
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_components.start").formatted(Formatting.DARK_GRAY), false);
     for(Component<?> component : player.getMainHandStack().getComponents()){
@@ -216,7 +209,7 @@ public class ModCommands {
         context.getSource().sendFeedback(() -> feedback, false);
         continue;
       }
-        feedback.append(Text.literal(value).formatted(Formatting.WHITE));
+      feedback.append(Text.literal(value).formatted(Formatting.WHITE));
       context.getSource().sendFeedback(() -> feedback, false);
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_components.stop").formatted(Formatting.DARK_GRAY), false);
