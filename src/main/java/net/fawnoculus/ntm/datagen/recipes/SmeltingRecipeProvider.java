@@ -19,9 +19,6 @@ public class SmeltingRecipeProvider extends FabricRecipeProvider {
     super(output, registriesFuture);
   }
   
-  private static final List<ItemConvertible> URANIUM_ORES = List.of(ModItems.RAW_URANIUM, ModBlocks.URANIUM_ORE);
-  
-  
   @Override
   public RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
     return new RecipeGenerator(registryLookup, exporter) {
