@@ -8,7 +8,6 @@ a2c3b374683caf281551ac9ff4f594e8e2e8f958 assets/ntm/blockstates/alexandrite_ore.
 2e05d6dc76952d038c85eff882abf15b9a258f89 assets/ntm/blockstates/australium_ore.json
 ee5e2e291a7ff2026c266ce5d0326cd866e23778 assets/ntm/blockstates/bauxite.json
 d029470cd9f3f8ae60be459f659c38456bb40f70 assets/ntm/blockstates/bedrock_oil_deposit.json
-314bdbd4e39308838e18ed0edd8542b94f2843e7 assets/ntm/blockstates/bedrock_ore.json
 7cc71038ac91a0dd0db38e7ee6216b1b921964c7 assets/ntm/blockstates/beryllium_ore.json
 d7dca22cbdfdfd5dd5e49c9ebefc83208252b1f8 assets/ntm/blockstates/broken_meteorite_block.json
 2c9b8d46dd6cf83aba2279677291efbc7a0d6479 assets/ntm/blockstates/chrysotile.json
@@ -63,6 +62,7 @@ deb9391b88dd96ae9bbdaffa0c0a4b71d8ac4b63 assets/ntm/blockstates/oily_dirt.json
 911fcf011243a47c763eac0504f00c0dbe65ca3c assets/ntm/blockstates/oily_sand.json
 46d0d7dc3f9b1b7b7676dc89b3a0916082d0e5d7 assets/ntm/blockstates/osmiridium_infused_tekite.json
 1baea9b3da51401e0e82bffcc570ae888f68fd3d assets/ntm/blockstates/rare_earth_ore.json
+f175b9dc3b48e294714494eac8ca558a3a92d459 assets/ntm/blockstates/render_test.json
 3462091a141d5b668a420b4a4550c9b7afe7c517 assets/ntm/blockstates/schist_asbestos_ore.json
 8851dd5f04f22a2c4e8e62784cf411cd3fc4cf75 assets/ntm/blockstates/schist_copper_ore.json
 9d298ec197cc13cbf9da4d23eae8dac92f60cb64 assets/ntm/blockstates/schist_gold_ore.json
@@ -110,7 +110,6 @@ ade5437e9194ff81a4ed1a71dee1457c0bafd055 assets/ntm/items/americium_fuel_ingot.j
 11412f2af8c6d49b1e309bb8d0581095584d7289 assets/ntm/items/australium_ore.json
 1f5ff61a90c20704abc2a64ed7863c8fa2c0358f assets/ntm/items/bauxite.json
 e33d01a349cdbe21f335c6bb931b30abc2bed0e4 assets/ntm/items/bedrock_oil_deposit.json
-747e069a04faaaadbc3d8559f31f59bb7d6673f5 assets/ntm/items/bedrock_ore.json
 6def4e80f70390372d344c196ecef1a63bdd7f9b assets/ntm/items/beryllium_ingot.json
 0fbbe7ddc233bf54af378781de1c26967715c425 assets/ntm/items/beryllium_ore.json
 4ffb2ef9adf1bde922d366dfcdd069f35a5da7f0 assets/ntm/items/bismuth_axe.json
@@ -277,6 +276,7 @@ e5e79f7e1f1a7a066c4358e3d6ad485efde0682f assets/ntm/items/raw_trixite.json
 a753909dff796c8bdda33f4ff225d53a73299c89 assets/ntm/items/reactor_grade_americium_ingot.json
 a8e2f7d5173172961aaec5d5ac7fa46bf6df11f3 assets/ntm/items/reactor_grade_plutonium_ingot.json
 d251e0ae4b32c810dc9cc2cd9a3f877dbd233430 assets/ntm/items/red_copper_ingot.json
+26683dd966700d293ccbfdef648e1f698452e116 assets/ntm/items/render_test.json
 99e7a2696efc22b97feca352ce2a60df7cf9f28e assets/ntm/items/s_cola_bottle_cap.json
 0809b95774e27076148fb2846de3684094a1634e assets/ntm/items/s_cola_rad_bottle_cap.json
 2b500a5b7826ae99e0e6907100819bcac83aefc6 assets/ntm/items/saturnite_ingot.json
@@ -358,7 +358,6 @@ c43e5568434d88abd95343dbdd45062066731994 assets/ntm/models/block/aluminium_ore_c
 38f1f353b8011736a5c2bc0a001c23a2032b2aba assets/ntm/models/block/australium_ore.json
 4c1e7f442f1e038ef48266029ee6939d374a8cc2 assets/ntm/models/block/bauxite.json
 38641c241ba414d3d16ab243eb053c31e78a10b9 assets/ntm/models/block/bedrock_oil_deposit.json
-9ea97b186c137d68d22e0f34079541bdd71d3a12 assets/ntm/models/block/bedrock_ore.json
 4f24796ec93dc0882d4da1f5d9da57047d4c6f7f assets/ntm/models/block/beryllium_ore.json
 7a557cfa2478251468aa6361d521019a5582ad18 assets/ntm/models/block/broken_meteorite_block.json
 2ecefce55ffccd30ef405673ac8f09052713ed7b assets/ntm/models/block/chrysotile.json
@@ -413,6 +412,7 @@ b8d8795b87b491891db5e071bd93a308b67dbbbd assets/ntm/models/block/oily_dirt.json
 e63f8eb4db02f619966edf7e6317c66f18fdbc61 assets/ntm/models/block/oily_sand.json
 62cc1dc9019100a397ff8b78ac2e57a026d581b9 assets/ntm/models/block/osmiridium_infused_tekite.json
 f169794f14188dc77de0a2b6c966ca5598a81cb1 assets/ntm/models/block/rare_earth_ore.json
+5de05f85025a04dc8c4dde51c579fdd8b8a9a8e8 assets/ntm/models/block/render_test.json
 ec3a02f9e53a68b7136a33cdbf88eb21b7b4b46b assets/ntm/models/block/schist_asbestos_ore.json
 e82c94f5f795ede2c7fb5c99175a5082b2698c96 assets/ntm/models/block/schist_copper_ore.json
 ca76fa63e0cac4dbc7caf20af04d1dec789b669e assets/ntm/models/block/schist_gold_ore.json

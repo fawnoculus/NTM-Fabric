@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ntm:block/bedrock_ore"
+      "model": "ntm:block/render_test"
     }
   }
 }

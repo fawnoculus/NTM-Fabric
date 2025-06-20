@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ntm:block/bedrock_ore"
+    "model": "ntm:block/render_test"
   }
 }
