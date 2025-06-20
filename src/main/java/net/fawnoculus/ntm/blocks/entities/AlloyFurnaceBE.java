@@ -107,10 +107,6 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     return Optional.empty();
   }
   
-  private boolean inputsContain(Item check){
-    return inventory.getStack(INPUT_TOP_SLOT_INDEX).getItem() == check || inventory.getStack(INPUT_BOTTOM_SLOT_INDEX).getItem() == check;
-  }
-  
   public boolean canInsertIntoSlot(ItemStack stack, int slotIndex){
     ItemStack switchStack = this.inventory.getStack(slotIndex);
     if(switchStack.isEmpty()) return true;
