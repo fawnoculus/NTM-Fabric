@@ -238,52 +238,126 @@ public class ModItems {
 
 
   public static final Item MAGNETIZED_TUNGSTEN_INGOT = register("magnetized_tungsten_ingot", Item::new, new Item.Settings());
+
+
   public static final Item AMERICIUM_241_INGOT = register("americium_241_ingot", Item::new, new Item.Settings());
   public static final Item AMERICIUM_242_INGOT = register("americium_242_ingot", Item::new, new Item.Settings());
   public static final Item AMERICIUM_FUEL_INGOT = register("americium_fuel_ingot", Item::new, new Item.Settings());
   public static final Item REACTOR_GRADE_AMERICIUM_INGOT = register("reactor_grade_americium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item POLONIUM_210_INGOT = register("polonium_210_ingot", Item::new, new Item.Settings());
+
+
   public static final Item TECHNETIUM_99_INGOT = register("technetium_99_ingot", Item::new, new Item.Settings());
   public static final Item TECHNETIUM_STEEL_INGOT = register("technetium_steel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item COBALT_INGOT = register("cobalt_ingot", Item::new, new Item.Settings());
   public static final Item COBALT_60_INGOT = register("cobalt_60_ingot", Item::new, new Item.Settings());
+
+
   public static final Item STRONTIUM_INGOT = register("strontium_ingot", Item::new, new Item.Settings());
   public static final Item STRONTIUM_90_INGOT = register("strontium_90_ingot", Item::new, new Item.Settings());
+
+
   public static final Item GOLD_198_INGOT = register("gold_198_ingot", Item::new, new Item.Settings());
+
+
   public static final Item RADIUM_226_INGOT = register("radium_266_ingot", Item::new, new Item.Settings());
+
+
   public static final Item BSCCO_INGOT = register("bscco_ingot", Item::new, new Item.Settings());
+
+
   public static final Item BISMUTH_INGOT = register("bismuth_ingot", Item::new, new Item.Settings());
   public static final Item BISMUTH_BRONZE_INGOT = register("bismuth_bronze_ingot", Item::new, new Item.Settings());
+
+
   public static final Item ARSENIC_INGOT = register("arsenic_ingot", Item::new, new Item.Settings());
   public static final Item ARSENIC_BRONZE_INGOT = register("arsenic_bronze_ingot", Item::new, new Item.Settings());
+
+
   public static final Item CALCIUM_INGOT = register("calcium_ingot", Item::new, new Item.Settings());
   public static final Item CADMIUM_INGOT = register("cadmium_ingot", Item::new, new Item.Settings());
   public static final Item CADMIUM_STEEL_INGOT = register("cadmium_steel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item TANTALUM_INGOT = register("tantalum_ingot", Item::new, new Item.Settings()); // AKA TANALIUM
+
+
   public static final Item NIOBIUM_INGOT = register("niobium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item BORON_INGOT = register("boron_ingot", Item::new, new Item.Settings());
+
+
   public static final Item GRAPHITE_INGOT = register("graphite_ingot", Item::new, new Item.Settings());
+
+
   public static final Item HIGH_SPEED_STEEL_INGOT = register("high_speed_steel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item SCHRARANIUM_INGOT = register("schraranium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item FERRIC_SCHARBIDATE_INGOT = register("ferric_schrabidate_ingot", Item::new, new Item.Settings());
+
+
   public static final Item CMB_STEEL_INGOT = register("cmb_steel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item SOLINIUM_INGOT = register("solinium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item GHIORSIUM_336_INGOT = register("ghiorsium_336_ingot", Item::new, new Item.Settings());
+
+
   public static final Item MOX_FUEL_INGOT = register("mox_fuel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item SEMI_STABLE_LANTHANUM_INGOT = register("semi_stable_lanthanum_ingot", Item::new, new Item.Settings());
+
+
   public static final Item ACTINIUM_227_INGOT = register("actinium_227_ingot", Item::new, new Item.Settings());
+
+
   public static final Item DESH_INGOT = register("desh_ingot", Item::new, new Item.Settings());
+
+
   public static final Item FERROURANIUM_INGOT = register("ferrouranium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item STARMETAL_INGOT = register("starmetal_ingot", Item::new, new Item.Settings());
+
+
   public static final Item GUNMETAL_INGOT = register("gunmetal_ingot", Item::new, new Item.Settings());
+
+
   public static final Item WEAPON_STEEL_INGOT = register("weapon_steel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item SATURNITE_INGOT = register("saturnite_ingot", Item::new, new Item.Settings());
+
+
   public static final Item EUPHEMIUM_INGOT = register("euphemium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item DINEUTRONIUM_INGOT = register("dineutronium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item ELECTRONIUM_INGOT = register("electronium_ingot", Item::new, new Item.Settings());
+
+
   public static final Item DUSTED_STEEL_INGOT = register("dusted_steel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item HEAVY_CHAINSTEEL_INGOT = register("heavy_chainsteel_ingot", Item::new, new Item.Settings());
+
+
   public static final Item METEORITE_INGOT = register("meteorite_ingot", Item::new, new Item.Settings());
+
+
   public static final Item SILICON_BOULE = register("silicon_boule", Item::new, new Item.Settings());
 
   
