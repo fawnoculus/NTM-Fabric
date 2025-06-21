@@ -95,7 +95,7 @@ public class PropertiesConfigFile implements ConfigFileType {
           for (char currentChar : Chars) {
             if (currentChar == ';' && currentString.isEmpty()) {
               LOGGER.error("Failed to parse String List Option '{}' in Config File '{}': Unexpected ';' after empty String", stringListOption.NAME, configFile.getPath());
-              stringList = new ArrayList<>(stringListOption.DEFAULT_VALUE);
+              stringList = new ArrayList<>(stringListOption.getDefaultValue());
               break;
             }
             if (currentChar != ';') {
@@ -104,7 +104,7 @@ public class PropertiesConfigFile implements ConfigFileType {
             }
             
             // Only allow valid Entries
-            if(stringListOption.IsEntryValid(currentString.toString())) {
+            if(stringListOption.isEntryValid(currentString.toString())) {
               stringList.add(currentString.toString());
             }
             currentString = new StringBuilder();

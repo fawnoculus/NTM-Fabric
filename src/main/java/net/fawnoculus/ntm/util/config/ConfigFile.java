@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.util.config;
 
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.util.config.options.*;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -10,20 +11,19 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class ConfigFile {
-  private List<Option<?>> options = new ArrayList<>();
-  private Boolean initialized = false;
-  
+  public final Logger LOGGER;
+  public final File CONFIG_FILE;
   public final ConfigFileType CONFIG_FILE_TYPE;
+  public final List<String> OPTION_NAMES = new ArrayList<>();
+  public List<Option<?>> options = new ArrayList<>();
+  public boolean initialized = false;
   
-  private final File CONFIG_FILE;
-  private final Logger LOGGER;
-  private final List<String> optionNames = new ArrayList<>();
   
-  public ConfigFile(String path, ConfigFileType configFileType, @Nullable Logger logger){
-    this(Path.of(path), configFileType, logger);
+  
+  public ConfigFile(String subPath, ConfigFileType configFileType, @Nullable Logger logger){
+    this(FabricLoader.getInstance().getConfigDir().resolve(subPath).toAbsolutePath(), configFileType, logger);
   }
   
   public ConfigFile(Path path, ConfigFileType configFileType, @Nullable Logger logger) {
@@ -56,7 +56,7 @@ public class ConfigFile {
         if (newFile) {
           LOGGER.info("Created new Config File: {}", CONFIG_FILE.getPath());
         } else {
-          LOGGER.info("Failed to create Config File: {}", CONFIG_FILE.getPath());
+          LOGGER.warn("Failed to create Config File: {}", CONFIG_FILE.getPath());
         }
       } else {
         boolean delete = CONFIG_FILE.delete();
@@ -81,17 +81,21 @@ public class ConfigFile {
     initialized = true;
   }
   
+  public List<Option<?>> getAllOptions(){
+    return List.copyOf(options);
+  }
+  
   // Everything bellow is just for getting new Options from a Config File //
   
-  private void addAndValidateOption(Option<?> option) {
+  protected void addAndValidateOption(Option<?> option) {
     String name = option.NAME;
     
     if (!CONFIG_FILE_TYPE.isValidOption(option))
-      throw new IllegalArgumentException("Option with name '" + name + "' is not valid for Config Type '" + CONFIG_FILE_TYPE.getClass() + "'");
-    if (optionNames.contains(name))
+      throw new IllegalArgumentException("Option with name '" + name + "' is not valid for Config Type '" + CONFIG_FILE_TYPE.getClass().getName() + "'");
+    if (OPTION_NAMES.contains(name))
       throw new IllegalArgumentException("Option with name '" + name + "' already exist in Config File '" + CONFIG_FILE.getPath() + "'");
     
-    this.optionNames.add(name);
+    this.OPTION_NAMES.add(name);
     this.options.add(option);
   }
   
@@ -99,12 +103,12 @@ public class ConfigFile {
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
-   * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Function<Boolean, Boolean> validator) {
+  public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if(comment != null) comment += " [Default: " + defaultValue + "]";
     
-    BooleanOption option = new BooleanOption(this, name, defaultValue, comment, validator);
+    BooleanOption option = new BooleanOption(this, name, defaultValue, comment);
+    option.setExtraType(extraType);
     addAndValidateOption(option);
     return option;
   }
@@ -115,19 +119,19 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment) {
-    return newBooleanOption(name, defaultValue, comment, value -> true);
+    return newBooleanOption(name, defaultValue, comment, new Option.ExtraType.Generic());
   }
   
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
-   * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Function<Double, Boolean> validator) {
+  public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if (comment != null) comment += " [Default: " + defaultValue + "]";
     
-    DoubleOption option = new DoubleOption(this, name, defaultValue, comment, validator);
+    DoubleOption option = new DoubleOption(this, name, defaultValue, comment);
+    option.setExtraType(extraType);
     addAndValidateOption(option);
     return option;
   }
@@ -142,7 +146,7 @@ public class ConfigFile {
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Double min, Double max) {
     if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
     
-    return newDoubleOption(name, defaultValue, comment, value -> value >= min && value <= max);
+    return newDoubleOption(name, defaultValue, comment, new Option.ExtraType.FloatRange(min, max));
   }
   
   /**
@@ -151,19 +155,19 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment) {
-    return newDoubleOption(name, defaultValue, comment, value -> true);
+    return newDoubleOption(name, defaultValue, comment, new Option.ExtraType.Generic());
   }
   
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
-   * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Function<Float, Boolean> validator) {
+  public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if (comment != null) comment += " [Default: " + defaultValue + "]";
     
-    FloatOption option = new FloatOption(this, name, defaultValue, comment, validator);
+    FloatOption option = new FloatOption(this, name, defaultValue, comment);
+    option.setExtraType(extraType);
     addAndValidateOption(option);
     return option;
   }
@@ -178,7 +182,7 @@ public class ConfigFile {
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Float min, Float max) {
     if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
     
-    return newFloatOption(name, defaultValue, comment, value -> value >= min && value <= max);
+    return newFloatOption(name, defaultValue, comment, new Option.ExtraType.FloatRange(min, max));
   }
   
   /**
@@ -187,19 +191,19 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment) {
-    return newFloatOption(name, defaultValue, comment, value -> true);
+    return newFloatOption(name, defaultValue, comment, new Option.ExtraType.Generic());
   }
   
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
-   * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Function<Integer, Boolean> validator) {
+  public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if (comment != null) comment += " [Default: " + defaultValue + "]";
     
-    IntegerOption option = new IntegerOption(this, name, defaultValue, comment, validator);
+    IntegerOption option = new IntegerOption(this, name, defaultValue, comment);
+    option.setExtraType(extraType);
     addAndValidateOption(option);
     return option;
   }
@@ -214,7 +218,7 @@ public class ConfigFile {
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Integer min, Integer max) {
     if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
     
-    return newIntegerOption(name, defaultValue, comment, value -> value >= min && value <= max);
+    return newIntegerOption(name, defaultValue, comment, new Option.ExtraType.IntRange(min, max));
   }
   
   /**
@@ -223,19 +227,19 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment) {
-    return newIntegerOption(name, defaultValue, comment, value -> true);
+    return newIntegerOption(name, defaultValue, comment, new Option.ExtraType.Generic());
   }
   
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment      Optional Comment (use "null" for no Comment)
-   * @param validator    Function for additional Validation (like: value > 10 && value < 100 or smth.)
    */
-  public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, Function<String, Boolean> validator) {
+  public StringOption newStringOption(String name, String defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if (comment != null) comment += " [Default: " + defaultValue + "]";
     
-    StringOption option = new StringOption(this, name, defaultValue, comment, validator);
+    StringOption option = new StringOption(this, name, defaultValue, comment);
+    option.setExtraType(extraType);
     addAndValidateOption(option);
     return option;
   }
@@ -258,7 +262,7 @@ public class ConfigFile {
       comment += "]";
     }
     
-    return newStringOption(name, defaultValue, comment, value -> List.of(allowedValues).contains(value));
+    return newStringOption(name, defaultValue, comment,  new Option.ExtraType.AllowedValues(allowedValues));
   }
   
   /**
@@ -267,32 +271,36 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringOption newStringOption(String name, String defaultValue, @Nullable String comment) {
-    return newStringOption(name, defaultValue, comment, value -> true);
+    return newStringOption(name, defaultValue, comment, new Option.ExtraType.Generic());
+  }
+  
+  /**
+   * @param name         Name of the Option
+   * @param defaultValue the Value that the Option will default to
+   * @param comment      Optional Comment (use "null" for no Comment)
+   */
+  public StringOption newItemOption(String name, String defaultValue, @Nullable String comment) {
+    return newStringOption(name, defaultValue, comment, new Option.ExtraType.Item());
+  }
+  
+  /**
+   * @param name         Name of the Option
+   * @param defaultValue the Value that the Option will default to
+   * @param comment      Optional Comment (use "null" for no Comment)
+   */
+  public StringOption newBlockOption(String name, String defaultValue, @Nullable String comment) {
+    return newStringOption(name, defaultValue, comment, new Option.ExtraType.Block());
   }
   /**
    * @param name Name of the Option
    * @param defaultValue the Value that the Option will default to
    * @param comment Optional Comment (use "null" for no Comment)
-   * @param listValidator Function for additional Validation of the List (like: list.size() < 100)
-   * @param entryValidator Function for additional Validation of all Values (like: String.endsWith("abc"))
    */
-  public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Function<List<String>, Boolean> listValidator, Function<String, Boolean> entryValidator) {
+  public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if (comment != null) comment += " [Default: " + defaultValue + "]";
     
-    StringListOption option = new StringListOption(this, name, defaultValue, comment, listValidator, entryValidator);
-    addAndValidateOption(option);
-    return option;
-  }
-  /**
-   * @param name         Name of the Option
-   * @param defaultValue the Value that the Option will default to
-   * @param comment      Optional Comment (use "null" for no Comment)
-   * @param type         Option Type for Special Things
-   */
-  public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, StringListOption.Type type) {
-    if (comment != null) comment += " [Default: " + defaultValue + "]";
-    
-    StringListOption option = new StringListOption(this, name, defaultValue, comment, list -> true, type.ENTRY_VALIDATOR);
+    StringListOption option = new StringListOption(this, name, defaultValue, comment);
+    option.setExtraType(extraType);
     addAndValidateOption(option);
     return option;
   }
@@ -302,6 +310,22 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment) {
-    return newStringListOption(name, defaultValue, comment, StringListOption.Type.GENERIC);
+    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.Generic());
+  }
+  /**
+   * @param name         Name of the Option
+   * @param defaultValue the Value that the Option will default to
+   * @param comment      Optional Comment (use "null" for no Comment)
+   */
+  public StringListOption newItemListOption(String name, List<String> defaultValue, @Nullable String comment) {
+    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.Item());
+  }
+  /**
+   * @param name         Name of the Option
+   * @param defaultValue the Value that the Option will default to
+   * @param comment      Optional Comment (use "null" for no Comment)
+   */
+  public StringListOption newBlockListOption(String name, List<String> defaultValue, @Nullable String comment) {
+    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.Block());
   }
 }

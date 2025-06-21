@@ -117,7 +117,7 @@ public class JsonConfigFile implements ConfigFileType {
             for (JsonElement object : jsonArray) {
               String str = object.getAsString();
               // Only allow valid Entries
-              if(stringListOption.IsEntryValid(str)) {
+              if(stringListOption.isEntryValid(str)) {
                 strings.add(str);
               }
             }
