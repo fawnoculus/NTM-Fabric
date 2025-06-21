@@ -334,8 +334,8 @@ public class ModItems {
 
   public static final Item CMB_STEEL_INGOT = register("cmb_steel_ingot", TooltipItem::new, new Item.Settings());
   public static final Item CMB_STEEL_POWDER = register("cmb_steel_powder", Item::new, new Item.Settings());
-  public static final Item CAST_COMBINE_STEEL_PLATE = register("cast_combine_steel_plate", Item::new, new Item.Settings());
-  public static final Item WELDED_COMBINE_STEEL_PLATE = register("cast_combine_steel_plate", Item::new, new Item.Settings());
+  public static final Item CAST_CMB_STEEL_PLATE = register("cast_cmb_steel_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_COMBINE_STEEL_PLATE = register("welded_cmb_steel_plate", Item::new, new Item.Settings());
   public static final Item CMB_STEEL_PLATE = register("cmb_steel_plate", Item::new, new Item.Settings());
 
 

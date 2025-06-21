@@ -15,13 +15,14 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Ores : the new Stone/Netherrack/Endstone Texture
 - Buckets of "x": the new Bucket Texture
 #### Names:
-- Industrial Grade Copper -> Copper
-- Minecraft Grade Copper -> Red Copper
-- Basalt -> Volcanic Basalt
+- Industrial Grade Copper -> Copper (Copper already exist after all)
+- Minecraft Grade Copper -> Red Copper (Consistency)
+- Combine Steel -> CMB Steel (Consistency)
+- Basalt -> Volcanic Basalt (Basalt Already Exists)
 - Tantalium -> Tantalum
 - Lanthanium -> Lanthanum
 - Ingot of "x" Fuel -> "x" Fuel Ingot
-- Blast Furnace -> Alloying Furnace
+- Blast Furnace -> Alloying Furnace (Blast Furnace already Exists)
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
 #### Features:
 - Features that already have *replacements* (Example: Particle Accelerator) will not be implemented ... yet (maybe we'll do it once the rest is working)
