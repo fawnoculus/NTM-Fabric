@@ -250,7 +250,16 @@ public class ModItems {
 
 
   public static final Item TECHNETIUM_99_INGOT = register("technetium_99_ingot", Item::new, new Item.Settings());
+
   public static final Item TECHNETIUM_STEEL_INGOT = register("technetium_steel_ingot", Item::new, new Item.Settings());
+  public static final Item TECHNETIUM_STEEL_POWDER = register("technetium_steel_powder", Item::new, new Item.Settings());
+  public static final Item CAST_TECHNETIUM_STEEL_PLATE = register("cast_technetium_steel_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_TECHNETIUM_STEEL_PLATE = register("welded_technetium_steel_plate", Item::new, new Item.Settings());
+  public static final Item HEAVY_TECHNETIUM_STEEL_COMPONENT = register("heavy_technetium_steel_component", Item::new, new Item.Settings());
+  public static final Item HEAVY_TECHNETIUM_STEEL_BARREL = register("heavy_technetium_steel_barrel", Item::new, new Item.Settings());
+  public static final Item LIGHT_TECHNETIUM_STEEL_BARREL = register("light_technetium_steel_barrel", Item::new, new Item.Settings());
+  public static final Item LIGHT_TECHNETIUM_STEEL_RECEIVER = register("light_technetium_steel_receiver", Item::new, new Item.Settings());
+  public static final Item HEAVY_TECHNETIUM_STEEL_RECEIVER = register("heavy_technetium_steel_receiver", Item::new, new Item.Settings());
 
 
   public static final Item COBALT_INGOT = register("cobalt_ingot", Item::new, new Item.Settings());
@@ -279,8 +288,17 @@ public class ModItems {
 
 
   public static final Item CALCIUM_INGOT = register("calcium_ingot", Item::new, new Item.Settings());
+
   public static final Item CADMIUM_INGOT = register("cadmium_ingot", Item::new, new Item.Settings());
+
   public static final Item CADMIUM_STEEL_INGOT = register("cadmium_steel_ingot", Item::new, new Item.Settings());
+  public static final Item CAST_CADMIUM_STEEL_PLATE = register("cast_cadmium_steel_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_CADMIUM_STEEL_PLATE = register("welded_cadmium_steel_plate", Item::new, new Item.Settings());
+  public static final Item HEAVY_CADMIUM_STEEL_COMPONENT = register("heavy_cadmium_steel_component", Item::new, new Item.Settings());
+  public static final Item HEAVY_CADMIUM_STEEL_BARREL = register("heavy_cadmium_steel_barrel", Item::new, new Item.Settings());
+  public static final Item LIGHT_CADMIUM_STEEL_BARREL = register("light_cadmium_steel_barrel", Item::new, new Item.Settings());
+  public static final Item LIGHT_CADMIUM_STEEL_RECEIVER = register("light_cadmium_steel_receiver", Item::new, new Item.Settings());
+  public static final Item HEAVY_CADMIUM_STEEL_RECEIVER = register("heavy_cadmium_steel_receiver", Item::new, new Item.Settings());
 
 
   public static final Item TANTALUM_INGOT = register("tantalum_ingot", Item::new, new Item.Settings()); // AKA TANALIUM
@@ -296,6 +314,16 @@ public class ModItems {
 
 
   public static final Item HIGH_SPEED_STEEL_INGOT = register("high_speed_steel_ingot", Item::new, new Item.Settings());
+  public static final Item HIGH_SPEED_STEEL_POWDER = register("high_speed_steel_powder", Item::new, new Item.Settings());
+  public static final Item CAST_HIGH_SPEED_STEEL_PLATE = register("cast_high_speed_steel_plate", Item::new, new Item.Settings());
+  public static final Item HIGH_SPEED_STEEL_PLATE = register("high_speed_steel_plate", Item::new, new Item.Settings());
+  public static final Item HIGH_SPEED_STEEL_PIPE = register("high_speed_steel_pipe", Item::new, new Item.Settings());
+  public static final Item HEAVY_HIGH_SPEED_STEEL_BARREL = register("heavy_high_speed_steel_barrel", Item::new, new Item.Settings());
+  public static final Item LIGHT_HIGH_SPEED_STEEL_BARREL = register("light_high_speed_steel_barrel", Item::new, new Item.Settings());
+  public static final Item LIGHT_HIGH_SPEED_STEEL_RECEIVER = register("light_high_speed_steel_receiver", Item::new, new Item.Settings());
+  public static final Item HEAVY_HIGH_SPEED_STEEL_RECEIVER = register("heavy_high_speed_steel_receiver", Item::new, new Item.Settings());
+  public static final Item HIGH_SPEED_STEEL_GRIP = register("high_speed_steel_grip", Item::new, new Item.Settings());
+  public static final Item HIGH_SPEED_STEEL_BOLT = register("high_speed_steel_bolt", Item::new, new Item.Settings());
 
 
   public static final Item SCHRARANIUM_INGOT = register("schraranium_ingot", Item::new, new Item.Settings());
@@ -304,7 +332,11 @@ public class ModItems {
   public static final Item FERRIC_SCHARBIDATE_INGOT = register("ferric_schrabidate_ingot", Item::new, new Item.Settings());
 
 
-  public static final Item CMB_STEEL_INGOT = register("cmb_steel_ingot", Item::new, new Item.Settings());
+  public static final Item CMB_STEEL_INGOT = register("cmb_steel_ingot", TooltipItem::new, new Item.Settings());
+  public static final Item CMB_STEEL_POWDER = register("cmb_steel_powder", Item::new, new Item.Settings());
+  public static final Item CAST_COMBINE_STEEL_PLATE = register("cast_combine_steel_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_COMBINE_STEEL_PLATE = register("cast_combine_steel_plate", Item::new, new Item.Settings());
+  public static final Item CMB_STEEL_PLATE = register("cmb_steel_plate", Item::new, new Item.Settings());
 
 
   public static final Item SOLINIUM_INGOT = register("solinium_ingot", Item::new, new Item.Settings());
