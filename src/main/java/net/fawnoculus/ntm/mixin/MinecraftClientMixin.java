@@ -22,16 +22,16 @@ public class MinecraftClientMixin {
   private void clearAllMessages(CallbackInfo ci) {
     List<AdvancedMessage> messageList = MessageSystem.getAllMessages();
     
-    float deltaTick = (float) ((System.nanoTime() - LastNanoTime) / 50000000.0);
+    float deltaMillis = (float) ((System.nanoTime() - LastNanoTime) / 1000000);
     
     List<AdvancedMessage> toBeRemovedMessages = new ArrayList<>();
     for(AdvancedMessage message : messageList){
-      float ticksLeft = message.getTicksLeft();
-      if(ticksLeft < 0){
+      float millisLeft = message.getMillisLeft();
+      if(millisLeft < 0){
         toBeRemovedMessages.add(message);
         continue;
       }
-      message.setTicksLeft(ticksLeft - deltaTick);
+      message.setMillisLeft(millisLeft - deltaMillis);
     }
     for(AdvancedMessage message : toBeRemovedMessages){
       MessageSystem.removeMessage(message.getID());

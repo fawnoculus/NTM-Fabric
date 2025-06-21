@@ -81,14 +81,14 @@ public class ModCommands {
                                     EntityArgumentType.getPlayers(context, "targets"),
                                     NTM.id("command_server"),
                                     context.getArgument("text", Text.class),
-                                    60f))
-                            .then(CommandManager.argument("ticks", FloatArgumentType.floatArg(0f, 10000f))
+                                    2000.0f))
+                            .then(CommandManager.argument("seconds", FloatArgumentType.floatArg(0f, 10000f))
                                 .executes(context ->
                                     sendMessage(context,
                                         EntityArgumentType.getPlayers(context, "targets"),
                                         NTM.id("command_server"),
                                         context.getArgument("text", Text.class),
-                                        context.getArgument("ticks", Float.class)
+                                        context.getArgument("seconds", Float.class)
                                     ))
                                 .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
                                     .executes(context ->
@@ -97,7 +97,7 @@ public class ModCommands {
                                             EntityArgumentType.getPlayers(context, "targets"),
                                             context.getArgument("identifier", Identifier.class),
                                             context.getArgument("text", Text.class),
-                                            context.getArgument("ticks", Float.class)
+                                            context.getArgument("seconds", Float.class)
                                         ))
                                 )
                             )
@@ -157,9 +157,9 @@ public class ModCommands {
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
     return 1;
   }
-  private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float ticks){
+  private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float millis){
     for(ServerPlayerEntity player : targets){
-      ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(identifier, text, ticks)));
+      ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(identifier, text, millis)));
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.sent", targets.size()), true);
     return 1;

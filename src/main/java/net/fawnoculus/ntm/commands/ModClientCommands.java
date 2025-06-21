@@ -41,16 +41,16 @@ public class ModClientCommands {
                             addMessage(
                                 context,
                                 context.getArgument("text", Text.class),
-                                40f,
+                                2000.0f,
                                 NTM.id("command_client")
                             )
                         )
-                        .then(ClientCommandManager.argument("ticks", FloatArgumentType.floatArg(0f, 10000f))
+                        .then(ClientCommandManager.argument("millis", FloatArgumentType.floatArg(0.0f, 1000000.0f))
                             .executes(context ->
                                 addMessage(
                                 context,
                                 context.getArgument("text", Text.class),
-                                context.getArgument("ticks", Float.class),
+                                context.getArgument("millis", Float.class),
                                 NTM.id("command_client")
                                 )
                             )
@@ -59,7 +59,7 @@ public class ModClientCommands {
                                     addMessage(
                                         context,
                                         context.getArgument("text", Text.class),
-                                        context.getArgument("ticks", Float.class),
+                                        context.getArgument("millis", Float.class),
                                         context.getArgument("identifier", Identifier.class)
                                     )
                                 )
@@ -106,8 +106,8 @@ public class ModClientCommands {
     MessageSystem.removeAllMessages();
     return 1;
   }
-  private static int addMessage(CommandContext<FabricClientCommandSource> context, Text text, float ticks, Identifier identifier){
-    MessageSystem.addMessage(new AdvancedMessage(identifier, text, ticks));
+  private static int addMessage(CommandContext<FabricClientCommandSource> context, Text text, float millis, Identifier identifier){
+    MessageSystem.addMessage(new AdvancedMessage(identifier, text, millis));
     context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.added"));
     return 1;
   }

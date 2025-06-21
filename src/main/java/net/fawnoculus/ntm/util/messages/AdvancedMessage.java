@@ -19,10 +19,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class AdvancedMessage {
-  private static final float BLEND_TIME = 10f;
+  private static final float BLEND_TIME = 500.0f;
   private final Identifier IDENTIFIER;
   private final Text TEXT;
-  private float ticksLeft;
+  private float millisLeft;
   public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
     public AdvancedMessage decode(ByteBuf byteBuf) {
       String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
@@ -41,29 +41,29 @@ public class AdvancedMessage {
   private static JsonObject encode(AdvancedMessage message){
     JsonObject jsonObject = new JsonObject();
     jsonObject.add("identifier", new JsonPrimitive(message.IDENTIFIER.toString()));
-    jsonObject.add("tick_amount", new JsonPrimitive(message.ticksLeft));
+    jsonObject.add("millis_left", new JsonPrimitive(message.millisLeft));
     jsonObject.add("text", new JsonPrimitive(Text.Serialization.toJsonString(message.TEXT, BuiltinRegistries.createWrapperLookup())));
     return jsonObject;
   }
   private static AdvancedMessage decode(JsonObject json){
     Identifier identifier = Identifier.of(json.getAsJsonPrimitive("identifier").getAsString());
-    float ticksLeft  = json.getAsJsonPrimitive("tick_amount").getAsFloat();
+    float millisLeft  = json.getAsJsonPrimitive("millis_left").getAsFloat();
     Text text = Objects.requireNonNull(Text.Serialization.fromJson(json.getAsJsonPrimitive("text").getAsString(), BuiltinRegistries.createWrapperLookup()));
-    return new AdvancedMessage(identifier, text, ticksLeft);
+    return new AdvancedMessage(identifier, text, millisLeft);
   }
   
   /**
    * @param identifier Identifier of the Message (can override other messages if the Identifier is the same)
    * @param text Text to be displayed
-   * @param tick_amount Amount of Ticks the Message should be displayed for;
+   * @param millisSeconds Amount of Milliseconds the Message should be displayed for;
    */
-  public AdvancedMessage(Identifier identifier, Text text, float tick_amount){
+  public AdvancedMessage(Identifier identifier, Text text, float millisSeconds){
     if(text.getStyle().getColor() == null) {
       text = text.copy().formatted(Formatting.WHITE);
     }
     this.IDENTIFIER = identifier;
     this.TEXT = text;
-    this.ticksLeft = tick_amount;
+    this.millisLeft = millisSeconds;
   }
   
   public Identifier getID() {
@@ -74,12 +74,12 @@ public class AdvancedMessage {
     return this.TEXT;
   }
   
-  public float getTicksLeft() {
-    return this.ticksLeft;
+  public float getMillisLeft() {
+    return this.millisLeft;
   }
   
-  public void setTicksLeft(float ticksLeft) {
-    this.ticksLeft = ticksLeft;
+  public void setMillisLeft(float millisLeft) {
+    this.millisLeft = millisLeft;
   }
   
   /**
@@ -87,8 +87,8 @@ public class AdvancedMessage {
    */
   @Range(from = 4, to = 256)
   public int getOpacity(){
-    if(this.ticksLeft > BLEND_TIME) return 256;
+    if(this.millisLeft > BLEND_TIME) return 256;
     int min = 4; // for some reason anything with a alpha value bellow 4 will be displayed incorrectly
-    return (int) Math.clamp(this.ticksLeft / BLEND_TIME * 256, min, 256);
+    return (int) Math.clamp(this.millisLeft / BLEND_TIME * 256, min, 256);
   }
 }

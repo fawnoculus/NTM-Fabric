@@ -83,7 +83,7 @@ public interface SpecialTool {
       ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(
           ADVANCED_MESSAGE_ID,
           Text.translatable("message.ntm.ability.unselect").formatted(Formatting.GOLD),
-          25f)));
+          1000.0f)));
     } else {
       // Ability switched
       stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, NewAbilityIndex);
@@ -93,7 +93,7 @@ public interface SpecialTool {
       ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(
           ADVANCED_MESSAGE_ID,
           Text.translatable("message.ntm.ability.select", getSelectedAbility(stack).getFullName()).formatted(Formatting.YELLOW),
-          25f)));
+          1000.0f)));
     }
   }
   
