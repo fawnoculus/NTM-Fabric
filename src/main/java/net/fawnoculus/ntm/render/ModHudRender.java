@@ -15,7 +15,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
@@ -37,28 +36,15 @@ public class ModHudRender {
     int paddingSide = 5;
     int paddingTop = 5;
     
-    float deltaTick = tickCounter.getDynamicDeltaTicks();
     TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
     
     int width = 0;
-    List<AdvancedMessage> toBeRemovedMessages = new ArrayList<>();
     for(AdvancedMessage message : messages){
-      float ticksLeft = message.getTicksLeft();
-      if(ticksLeft < 0){
-        toBeRemovedMessages.add(message);
-        continue;
-      }
-      message.setTicksLeft(ticksLeft - deltaTick);
-      
       if(textRenderer.getWidth(message.getText()) > width){
         width = textRenderer.getWidth(message.getText());
       }
     }
     int height = textRenderer.fontHeight * messages.size();
-    
-    for(AdvancedMessage message : toBeRemovedMessages){
-      MessageSystem.removeMessage(message.getID());
-    }
     
     context.fill(marginSide, marginTop, marginSide + (paddingSide*2) + width, marginTop + (paddingTop*2) + height, 0, backgroundColor);
     

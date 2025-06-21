@@ -8,6 +8,8 @@
     "ServerPlayerInteractionManagerMixin"
   ],
   "client": [
+    "ClientWorldMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1
