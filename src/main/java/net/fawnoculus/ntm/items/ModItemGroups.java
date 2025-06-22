@@ -153,8 +153,6 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.EUPHEMIUM_INGOT);
       ItemGroup.add(ModItems.DINEUTRONIUM_INGOT);
       ItemGroup.add(ModItems.ELECTRONIUM_INGOT);
-      ItemGroup.add(ModItems.DUSTED_STEEL_INGOT);
-      ItemGroup.add(ModItems.HEAVY_CHAINSTEEL_INGOT);
       ItemGroup.add(ModItems.METEORITE_INGOT);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINE_ITEMS_AND_FUEL_KEY).register(ItemGroup -> {
@@ -263,7 +261,6 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RAW_LEAD);
       ItemGroup.add(ModItems.RAW_SCHRABIDIUM);
       ItemGroup.add(ModItems.RAW_AUSTRALIUM);
-      ItemGroup.add(ModItems.RAW_COLTAN);
       ItemGroup.add(ModItems.RAW_METEORIC_IRON);
       ItemGroup.add(ModItems.RAW_METEORIC_COPPER);
       ItemGroup.add(ModItems.RAW_METEORIC_ALUMINIUM);

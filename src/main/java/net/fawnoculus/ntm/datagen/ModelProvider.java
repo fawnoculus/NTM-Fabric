@@ -189,7 +189,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RAW_LEAD, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_SCHRABIDIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_AUSTRALIUM, Models.GENERATED);
-    itemModelGenerator.register(ModItems.RAW_COLTAN, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_METEORIC_IRON, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_METEORIC_COPPER, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_METEORIC_ALUMINIUM, Models.GENERATED);
@@ -273,8 +272,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.EUPHEMIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.DINEUTRONIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.ELECTRONIUM_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.DUSTED_STEEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.HEAVY_CHAINSTEEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.METEORITE_INGOT, Models.GENERATED);
     
     // Consumables

@@ -127,7 +127,6 @@ public class ItemTagProvider extends FabricTagProvider<Item> {
         .setReplace(false);
     getOrCreateTagBuilder(ModItemTags.COLTAN_ORES)
         .add(ModBlocks.COLTAN_ORE.asItem())
-        .add(ModItems.RAW_COLTAN)
         .setReplace(false);
     getOrCreateTagBuilder(ModItemTags.PLUTONIUM_ORES)
         .add(ModBlocks.NETHER_PLUTONIUM_ORE.asItem())
