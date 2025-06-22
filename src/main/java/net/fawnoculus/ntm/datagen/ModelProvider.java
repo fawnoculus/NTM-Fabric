@@ -667,6 +667,26 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.WELDED_ZIRCONIUM_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.ZIRCONIUM_WIRE, Models.GENERATED);
     
+    // Consumables
+    itemModelGenerator.register(ModItems.BOTTLE_OPENER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EMPTY_BOTTLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EMPTY_BOMB_BOTTLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NUKA_COLA_BOTTLE_CAP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NUKA_COLA_QUANTUM_BOTTLE_CAP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.S_COLA_BOTTLE_CAP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.S_COLA_RAD_BOTTLE_CAP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.KAROL_BOTTLE_CAP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FRITZ_COLA_BOTTLE_CAP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_NUKA_COLA, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_NUKA_CHERRY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_NUKA_COLA_QUANTUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_S_COLA, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_S_COLA_RAD, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_KAROL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FIRST_BOTTLE_OF_KAROL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BOTTLE_OF_FRITZ_COLA, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FIRST_BOTTLE_OF_FRITZ_COLA, Models.GENERATED);
+    
     // Tools
     itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);
     itemModelGenerator.register(ModItems.STEEL_PICKAXE, Models.HANDHELD);
