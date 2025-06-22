@@ -13,7 +13,7 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 #### Textures:
 - Industrial Copper -> Standard Minecraft Copper
 - Ores : the new Stone/Netherrack/Endstone Texture
-- Buckets of "x": the new Bucket Texture
+- Buckets : the new Bucket Texture
 #### Names:
 - Industrial Grade Copper -> Copper (Copper already exist after all)
 - Minecraft Grade Copper -> Red Copper (Consistency)
@@ -21,7 +21,8 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Basalt -> Volcanic Basalt (Basalt Already Exists)
 - Tantalium -> Tantalum
 - Lanthanium -> Lanthanum
-- Ingot of "x" Fuel -> "x" Fuel Ingot
+- Ingot of "resource" -> "resource" Ingot
+- Bar of "resource" -> "resource" Bar
 - Blast Furnace -> Alloying Furnace (Blast Furnace already Exists)
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
 #### Features:

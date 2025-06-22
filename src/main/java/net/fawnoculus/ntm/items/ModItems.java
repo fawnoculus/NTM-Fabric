@@ -23,16 +23,7 @@ public class ModItems {
   public static final Item DEBUG_WAND = register("debug_wand", DebugWandItem::new, new Item.Settings());
   public static final Item CONSTRUCTION_WAND = register("construction_wand", ConstructionWandItem::new, new Item.Settings());
   
-  // All Resources split by Type sorted Alphabetically because I felt like it
-  // TODO: BOLTS
-  // TODO: PIPES
-  // TODO: SHELLS
-  // TODO: WIRES
-  // TODO: DENSE WIRES
-  // TODO: PLATES
-  // TODO: CAST PLATES
-  // TODO: WELDED PLATES
-  // TODO: CRYSTALS
+  // Basic Resources split by Type sorted Alphabetically because I felt like it
   public static final Item ACTINIUM_227_INGOT = register("actinium_227_ingot", Item::new, new Item.Settings());
   public static final Item ACTINIUM_227_BILLET = register("actinium_227_billet", Item::new, new Item.Settings());
   public static final Item ACTINIUM_227_POWDER = register("actinium_227_powder", Item::new, new Item.Settings());
@@ -46,9 +37,10 @@ public class ModItems {
   public static final Item CAST_ADVANCED_ALLOY_PLATE = register("cast_advanced_alloy_plate", Item::new, new Item.Settings());
   public static final Item ADVANCED_ALLOY_WIRE = register("advanced_alloy_wire", Item::new, new Item.Settings());
   public static final Item DENSE_ADVANCED_ALLOY_WIRE = register("dense_advanced_alloy_wire", Item::new, new Item.Settings());
-
+  
+  public static final Item ALEXANDRITE = register("alexandrite", Item::new, new Item.Settings()); // Visually it's a gem
+  
   public static final Item RAW_METEORIC_ALUMINIUM = register("raw_meteoric_aluminium", Item::new, new Item.Settings());
-  public static final Item ALUMINIUM_CRYSTALS = register("aluminium_crystals", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_INGOT = register("aluminium_ingot", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_POWDER = register("aluminium_powder", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_PLATE = register("aluminium_plate", Item::new, new Item.Settings());
@@ -57,6 +49,7 @@ public class ModItems {
   public static final Item ALUMINIUM_SHELL = register("aluminium_shell", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_PIPE = register("aluminium_pipe", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_WIRE = register("aluminium_wire", Item::new, new Item.Settings());
+  public static final Item ALUMINIUM_CRYSTALS = register("aluminium_crystals", Item::new, new Item.Settings());
   
   public static final Item AMERICIUM_241_INGOT = register("americium_241_ingot", Item::new, new Item.Settings());
   public static final Item AMERICIUM_242_INGOT = register("americium_242_ingot", Item::new, new Item.Settings());
@@ -67,6 +60,8 @@ public class ModItems {
   public static final Item ARSENIC_NUGGET = register("arsenic_nugget", Item::new, new Item.Settings());
   public static final Item ARSENIC_BRONZE_INGOT = register("arsenic_bronze_ingot", Item::new, new Item.Settings());
   public static final Item CAST_ARSENIC_BRONZE_PLATE = register("cast_arsenic_bronze_plate", Item::new, new Item.Settings());
+  
+  public static final Item ASBESTOS_SHEET = register("asbestos_sheet", Item::new, new Item.Settings());
 
   public static final Item RAW_AUSTRALIUM = register("raw_australium", Item::new, new Item.Settings());
   public static final Item AUSTRALIUM_INGOT = register("australium_ingot", Item::new, new Item.Settings());
@@ -77,14 +72,17 @@ public class ModItems {
   public static final Item LESSER_AUSTRALIUM_NUGGET = register("lesser_australium_nugget", Item::new, new Item.Settings());
   public static final Item GREATER_AUSTRALIUM_NUGGET = register("greater_australium_nugget", Item::new, new Item.Settings());
   public static final Item AUSTRALIUM_POWDER = register("australium_powder", Item::new, new Item.Settings());
-
+  
+  public static final Item BAKELITE_BAR = register("bakelite_bar", Item::new, new Item.Settings());
+  public static final Item BAKELITE_POWDER = register("bakelite_powder", Item::new, new Item.Settings());
+  
   public static final Item RAW_BERYLLIUM = register("raw_beryllium", Item::new, new Item.Settings());
-  public static final Item BERYLLIUM_CRYSTALS = register("beryllium_crystals", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_INGOT = register("beryllium_ingot", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_BILLET = register("beryllium_billet", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_NUGGET = register("beryllium_nugget", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_POWDER = register("beryllium_powder", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_FLYWHEEL = register("beryllium_flywheel", Item::new, new Item.Settings());
+  public static final Item BERYLLIUM_CRYSTALS = register("beryllium_crystals", Item::new, new Item.Settings());
   
   public static final Item BISMUTH_INGOT = register("bismuth_ingot", Item::new, new Item.Settings());
   public static final Item BISMUTH_BILLET = register("bismuth_billet", Item::new, new Item.Settings());
@@ -99,6 +97,9 @@ public class ModItems {
   public static final Item TINY_PILE_OF_BORON_POWDER = register("tiny_pile_of_boron_powder", Item::new, new Item.Settings());
   public static final Item BORON_FRAGMENT = register("boron_fragment", Item::new, new Item.Settings());
   
+  public static final Item BORAX_INGOT = register("borax_ingot", Item::new, new Item.Settings());
+  public static final Item BORAX_POWDER = register("borax_powder", Item::new, new Item.Settings());
+  
   public static final Item BSCCO_INGOT = register("bscco_ingot", Item::new, new Item.Settings());
   public static final Item DENSE_BSCCO_WIRE = register("dense_bscco_wire", Item::new, new Item.Settings());
   
@@ -110,16 +111,15 @@ public class ModItems {
   public static final Item CADMIUM_STEEL_INGOT = register("cadmium_steel_ingot", Item::new, new Item.Settings());
   public static final Item CAST_CADMIUM_STEEL_PLATE = register("cast_cadmium_steel_plate", Item::new, new Item.Settings());
   public static final Item WELDED_CADMIUM_STEEL_PLATE = register("welded_cadmium_steel_plate", Item::new, new Item.Settings());
-  public static final Item HEAVY_CADMIUM_STEEL_BARREL = register("heavy_cadmium_steel_barrel", Item::new, new Item.Settings());
-  public static final Item LIGHT_CADMIUM_STEEL_BARREL = register("light_cadmium_steel_barrel", Item::new, new Item.Settings());
-  public static final Item LIGHT_CADMIUM_STEEL_RECEIVER = register("light_cadmium_steel_receiver", Item::new, new Item.Settings());
-  public static final Item HEAVY_CADMIUM_STEEL_RECEIVER = register("heavy_cadmium_steel_receiver", Item::new, new Item.Settings());
   
   public static final Item CERIUM_POWDER = register("cerium_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_CERIUM_POWDER = register("tiny_pile_of_cerium_powder", Item::new, new Item.Settings());
   public static final Item CERIUM_FRAGMENT = register("cerium_fragment", Item::new, new Item.Settings());
   
-  public static final Item CHLOROCALCITE = register("chlorocalcite", Item::new, new Item.Settings()); // It's a powder, but it's the only ting of it's Resource type
+  public static final Item CHLOROCALCITE = register("chlorocalcite", Item::new, new Item.Settings());
+  
+  public static final Item CINNABAR = register("cinnabar", Item::new, new Item.Settings());
+  public static final Item CINNABAR_CRYSTALS = register("cinnabar_crystals", Item::new, new Item.Settings());
   
   public static final Item CMB_STEEL_INGOT = register("cmb_steel_ingot", TooltipItem::new, new Item.Settings());
   public static final Item CMB_STEEL_POWDER = register("cmb_steel_powder", Item::new, new Item.Settings());
@@ -129,17 +129,26 @@ public class ModItems {
 
   public static final Item COAL_POWDER = register("coal_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_COAL_POWDER = register("tiny_pile_of_coal_powder", Item::new, new Item.Settings());
+  public static final Item CARBON_WIRE = register("carbon_wire", Item::new, new Item.Settings());
   
   public static final Item COBALT_INGOT = register("cobalt_ingot", Item::new, new Item.Settings());
   public static final Item COBALT_60_INGOT = register("cobalt_60_ingot", Item::new, new Item.Settings());
   public static final Item COBALT_FRAGMENT = register("cobalt_fragment", Item::new, new Item.Settings());
+  public static final Item COBALT_CRYSTALS = register("cobalt_crystals", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_COBALT = register("raw_meteoric_cobalt", Item::new, new Item.Settings());
   
   public static final Item COLTAN = register("coltan", Item::new, new Item.Settings());
   public static final Item CRUSHED_COLTAN = register("crushed_coltan", Item::new, new Item.Settings()); // Turns into TANTALUM
 
-  public static final Item COPPER_CRYSTALS = register("copper_crystals", Item::new, new Item.Settings());
   public static final Item COPPER_POWDER = register("copper_powder", Item::new, new Item.Settings());
+  public static final Item COPPER_PLATE = register("copper_plate", Item::new, new Item.Settings());
+  public static final Item CAST_COPPER_PLATE = register("cast_copper_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_COPPER_PLATE = register("welded_copper_plate", Item::new, new Item.Settings());
+  public static final Item COPPER_PIPE = register("copper_pipe", Item::new, new Item.Settings());
+  public static final Item COPPER_SHELL = register("copper_shell", Item::new, new Item.Settings());
+  public static final Item COPPER_WIRE = register("copper_wire", Item::new, new Item.Settings());
+  public static final Item DENSE_COPPER_WIRE = register("dense_copper_wire", Item::new, new Item.Settings());
+  public static final Item COPPER_CRYSTALS = register("copper_crystals", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_COPPER = register("raw_meteoric_copper", Item::new, new Item.Settings());
 
   public static final Item RAW_CRYOLITE = register("raw_cryolite", Item::new, new Item.Settings());
@@ -152,9 +161,12 @@ public class ModItems {
   public static final Item DESH_NUGGET = register("desh_nugget", Item::new, new Item.Settings());
   public static final Item CAST_DESH_PLATE = register("cast_desh_plate", Item::new, new Item.Settings());
   
+  public static final Item DIAMOND_CRYSTALS = register("diamond_crystals", Item::new, new Item.Settings());
+  
   public static final Item DINEUTRONIUM_INGOT = register("dineutronium_ingot", Item::new, new Item.Settings());
   public static final Item DINEUTRONIUM_POWDER = register("dineutronium_powder", Item::new, new Item.Settings());
   public static final Item DINEUTRONIUM_NUGGET = register("dineutronium_nugget", Item::new, new Item.Settings());
+  public static final Item DENSE_DINEUTRONIUM_NUGGET = register("dense_dineutronium_nugget", Item::new, new Item.Settings());
   
   public static final Item ELECTRONIUM_INGOT = register("electronium_ingot", Item::new, new Item.Settings());
   
@@ -170,6 +182,9 @@ public class ModItems {
   public static final Item FERROURANIUM_INGOT = register("ferrouranium_ingot", Item::new, new Item.Settings());
   public static final Item CAST_FERROURANIUM_PLATE = register("cast_ferrouranium_plate", Item::new, new Item.Settings());
   
+  public static final Item FLUORITE = register("fluorite", Item::new, new Item.Settings()); // "Minecraft Education Edition Salt" is a surprisingly fitting description for this
+  public static final Item FLUORITE_CRYSTALS = register("fluorite_crystals", Item::new, new Item.Settings());
+  
   public static final Item GHIORSIUM_336_INGOT = register("ghiorsium_336_ingot", Item::new, new Item.Settings());
   public static final Item GHIORSIUM_336_BILLET = register("ghiorsium_336_billet", Item::new, new Item.Settings());
   public static final Item GHIORSIUM_336_NUGGET = register("ghiorsium_336_nugget", Item::new, new Item.Settings());
@@ -179,6 +194,7 @@ public class ModItems {
   public static final Item CAST_GOLD_PLATE = register("cast_gold_plate", Item::new, new Item.Settings());
   public static final Item GOLD_WIRE = register("gold_wire", Item::new, new Item.Settings());
   public static final Item DENSE_GOLD_WIRE = register("dense_gold_wire", Item::new, new Item.Settings());
+  public static final Item GOLD_CRYSTALS = register("gold_crystals", Item::new, new Item.Settings());
   public static final Item GOLD_198_INGOT = register("gold_198_ingot", Item::new, new Item.Settings());
   public static final Item GOLD_198_BILLET = register("gold_198_billet", Item::new, new Item.Settings());
   public static final Item GOLD_198_POWDER = register("gold_198_powder", Item::new, new Item.Settings());
@@ -189,28 +205,39 @@ public class ModItems {
   public static final Item GUNMETAL_INGOT = register("gunmetal_ingot", Item::new, new Item.Settings());
   public static final Item GUNMETAL_PLATE = register("gunmetal_plate", Item::new, new Item.Settings());
   
+  public static final Item HARD_PLASTIC_BAR = register("hard_plastic_bar", Item::new, new Item.Settings());
+  
   public static final Item HIGH_SPEED_STEEL_INGOT = register("high_speed_steel_ingot", Item::new, new Item.Settings());
   public static final Item HIGH_SPEED_STEEL_POWDER = register("high_speed_steel_powder", Item::new, new Item.Settings());
   public static final Item CAST_HIGH_SPEED_STEEL_PLATE = register("cast_high_speed_steel_plate", Item::new, new Item.Settings());
   public static final Item HIGH_SPEED_STEEL_PLATE = register("high_speed_steel_plate", Item::new, new Item.Settings());
   public static final Item HIGH_SPEED_STEEL_BOLT = register("high_speed_steel_bolt", Item::new, new Item.Settings());
+  public static final Item HIGH_SPEED_STEEL_PIPE = register("high_speed_steel_pipe", Item::new, new Item.Settings());
   
   public static final Item IRON_POWDER = register("iron_powder", Item::new, new Item.Settings());
   public static final Item IRON_PLATE = register("iron_plate", Item::new, new Item.Settings());
   public static final Item CAST_IRON_PLATE = register("cast_iron_plate", Item::new, new Item.Settings());
   public static final Item WELDED_IRON_PLATE = register("welded_iron_plate", Item::new, new Item.Settings());
+  public static final Item IRON_PIPE = register("iron_pipe", Item::new, new Item.Settings());
+  public static final Item IRON_CRYSTALS = register("iron_crystals", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_IRON = register("raw_meteoric_iron", Item::new, new Item.Settings());
+  
+  public static final Item INFERNAL_COAL = register("infernal_coal", Item::new, new Item.Settings());
   
   public static final Item SEMI_STABLE_LANTHANUM_INGOT = register("semi_stable_lanthanum_ingot", Item::new, new Item.Settings());
   public static final Item LANTHANUM_FRAGMENT = register("lanthanum_fragment", Item::new, new Item.Settings());
-
+  
+  public static final Item LAPIS_CRYSTALS = register("lapis_crystals", Item::new, new Item.Settings());
+  
+  public static final Item LATEX = register("latex", Item::new, new Item.Settings());
+  public static final Item LATEX_BAR = register("latex_bar", Item::new, new Item.Settings());
+  
   public static final Item RAW_LEAD = register("raw_lead", Item::new, new Item.Settings());
-  public static final Item LEAD_CRYSTALS = register("lead_crystals", Item::new, new Item.Settings());
   public static final Item LEAD_INGOT = register("lead_ingot", Item::new, new Item.Settings());
-  public static final Item LEAD_209_INGOT = register("lead_209_ingot", Item::new, new Item.Settings());
   public static final Item LEAD_BILLET = register("lead_billet", Item::new, new Item.Settings());
-  public static final Item LEAD_209_BILLET = register("lead_209_billet", Item::new, new Item.Settings());
   public static final Item LEAD_NUGGET = register("lead_nugget", Item::new, new Item.Settings());
+  public static final Item LEAD_209_INGOT = register("lead_209_ingot", Item::new, new Item.Settings());
+  public static final Item LEAD_209_BILLET = register("lead_209_billet", Item::new, new Item.Settings());
   public static final Item LEAD_209_NUGGET = register("lead_209_nugget", Item::new, new Item.Settings());
   public static final Item LEAD_POWDER = register("lead_powder", Item::new, new Item.Settings());
   public static final Item LEAD_PLATE = register("lead_plate", Item::new, new Item.Settings());
@@ -218,12 +245,17 @@ public class ModItems {
   public static final Item LEAD_PIPE = register("lead_pipe", Item::new, new Item.Settings());
   public static final Item LEAD_BOLT = register("lead_bolt", Item::new, new Item.Settings());
   public static final Item LEAD_WIRE = register("lead_wire", Item::new, new Item.Settings());
-  public static final Item LEAD_CLADDING = register("lead_cladding", Item::new, new Item.Settings());
+  public static final Item LEAD_CRYSTALS = register("lead_crystals", Item::new, new Item.Settings());
 
   public static final Item LIGNITE = register("lignite", Item::new, new Item.Settings());
   public static final Item LIGNITE_POWDER = register("lignite_powder", Item::new, new Item.Settings());
   public static final Item LIGNITE_COKE = register("lignite_coke", Item::new, new Item.Settings());
   public static final Item LIGNITE_BRIQUETTE = register("lignite_briquette", Item::new, new Item.Settings());
+  
+  public static final Item LITHIUM_CUBE = register("lithium_cube", Item::new, new Item.Settings());
+  public static final Item LITHIUM_POWDER = register("lithium_powder", Item::new, new Item.Settings());
+  public static final Item TINY_PILE_OF_LITHIUM_POWDER = register("tiny_pile_of_lithium_powder", Item::new, new Item.Settings());
+  public static final Item LITHIUM_CRYSTALS = register("lithium_crystals", Item::new, new Item.Settings());
   
   public static final Item MAGNETIZED_TUNGSTEN_INGOT = register("magnetized_tungsten_ingot", Item::new, new Item.Settings());
   public static final Item MAGNETIZED_TUNGSTEN_POWDER = register("magnetized_tungsten_powder", Item::new, new Item.Settings());
@@ -234,6 +266,8 @@ public class ModItems {
   public static final Item METEORITE_POWDER = register("meteorite_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_METEORITE_POWDER = register("tiny_pile_of_meteorite_powder", Item::new, new Item.Settings());
   public static final Item METEORITE_FRAGMENT = register("meteorite_fragment", Item::new, new Item.Settings());
+  
+  public static final Item MOLYSITE = register("molysite", Item::new, new Item.Settings());
   
   public static final Item MOX_FUEL_INGOT = register("mox_fuel_ingot", Item::new, new Item.Settings());
   public static final Item MOX_FUEL_BILLET = register("mox_fuel_billet", Item::new, new Item.Settings());
@@ -261,22 +295,31 @@ public class ModItems {
   public static final Item NIOBIUM_NUGGET = register("niobium_nugget", Item::new, new Item.Settings());
   public static final Item DENSE_NIOBIUM_WIRE = register("dense_niobium_wire", Item::new, new Item.Settings());
   public static final Item NIOBIUM_FRAGMENT = register("niobium_fragment", Item::new, new Item.Settings());
+  
+  public static final Item NITER = register("niter", Item::new, new Item.Settings());
+  public static final Item NITER_CRYSTALS = register("niter_crystals", Item::new, new Item.Settings());
 
   public static final Item RAW_OSMIRIDIUM = register("raw_osmiridium", Item::new, new Item.Settings());
-  public static final Item OSMIRIDIUM_CRYSTALS = register("osmiridium_crystals", Item::new, new Item.Settings());
   public static final Item OSMIRIDIUM_INGOT = register("osmiridium_ingot", Item::new, new Item.Settings());
   public static final Item OSMIRIDIUM_NUGGET = register("osmiridium_nugget", Item::new, new Item.Settings());
   public static final Item IMPURE_OSMIRIDIUM_POWDER = register("impure_osmiridium_powder", Item::new, new Item.Settings());
   public static final Item CAST_OSMIRIDIUM_PLATE = register("cast_osmiridium_plate", Item::new, new Item.Settings());
   public static final Item WELDED_OSMIRIDIUM_PLATE = register("welded_osmiridium_plate", Item::new, new Item.Settings());
+  public static final Item OSMIRIDIUM_CRYSTALS = register("osmiridium_crystals", Item::new, new Item.Settings());
+  
+  public static final Item RED_PHOSPHORUS = register("red_phosphorus", Item::new, new Item.Settings()); // I Just grouped these together and sorted them as "Phosphorus"
+  public static final Item WHITE_PHOSPHORUS_BAR = register("white_phosphorus_bar", Item::new, new Item.Settings());
+  public static final Item PHOSPHORUS_CRYSTALS = register("phosphorus_crystals", Item::new, new Item.Settings());
   
   public static final Item POLONIUM_210_INGOT = register("polonium_210_ingot", Item::new, new Item.Settings());
   public static final Item POLONIUM_210_BILLET = register("polonium_210_billet", Item::new, new Item.Settings());
   public static final Item POLONIUM_210_NUGGET = register("polonium_210_nugget", Item::new, new Item.Settings());
   public static final Item POLONIUM_210_DUST = register("polonium_210_dust", Item::new, new Item.Settings());
   
+  public static final Item POLYMER_BAR = register("polymer_bar", Item::new, new Item.Settings());
+  public static final Item POLYMER_POWDER = register("polymer_powder", Item::new, new Item.Settings());
+  
   public static final Item RAW_PLUTONIUM = register("raw_plutonium", Item::new, new Item.Settings());
-  public static final Item PLUTONIUM_CRYSTALS = register("plutonium_crystals", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_INGOT = register("plutonium_ingot", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_FUEL_INGOT = register("plutonium_fuel_ingot", Item::new, new Item.Settings());
   public static final Item REACTOR_GRADE_PLUTONIUM_INGOT = register("reactor_grade_plutonium_ingot", Item::new, new Item.Settings());
@@ -299,6 +342,9 @@ public class ModItems {
   public static final Item PLUTONIUM_240_NUGGET = register("plutonium_240_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_241_NUGGET = register("plutonium_241_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_POWDER = register("plutonium_powder", Item::new, new Item.Settings());
+  public static final Item PLUTONIUM_CRYSTALS = register("plutonium_crystals", Item::new, new Item.Settings());
+  
+  public static final Item PVC_BAR = register("pvc_bar", Item::new, new Item.Settings());
   
   public static final Item RADIUM_226_INGOT = register("radium_266_ingot", Item::new, new Item.Settings());
   public static final Item RADIUM_226_BILLET = register("radium_266_billet", Item::new, new Item.Settings());
@@ -306,17 +352,24 @@ public class ModItems {
   public static final Item RADIUM_226_NUGGET = register("radium_266_nugget", Item::new, new Item.Settings());
   
   public static final Item RARE_EARTH_ORE_CHUNK = register("rare_earth_ore_chunk", Item::new, new Item.Settings());
+  public static final Item RARE_EARTH_CRYSTALS = register("rare_earth_crystals", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_RARE_EARTH = register("raw_meteoric_rare_earth", Item::new, new Item.Settings());
 
-  public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings()); // => Minecraft Grade Copper
+  public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings()); // It's called "Minecraft Grade Copper" in the Original but "Red Copper" in the Code, so we used "Red Copper"
   public static final Item RED_COPPER_POWDER = register("red_copper_powder", Item::new, new Item.Settings());
+  public static final Item RED_COPPER_WIRE = register("red_copper_wire", Item::new, new Item.Settings());
+  
+  public static final Item REDSTONE_CRYSTALS = register("redstone_crystals", Item::new, new Item.Settings());
+  
+  public static final Item RUBBER_BAR = register("rubber_bar", Item::new, new Item.Settings());
+  public static final Item RUBBER_PIPE = register("rubber_pipe", Item::new, new Item.Settings());
   
   public static final Item SATURNITE_INGOT = register("saturnite_ingot", Item::new, new Item.Settings());
   public static final Item SATURNITE_PLATE = register("saturnite_plate", Item::new, new Item.Settings());
   public static final Item CAST_SATURNITE_PLATE = register("cast_saturnite_plate", Item::new, new Item.Settings());
+  public static final Item SATURNITE_SHELL = register("saturnite_shell", Item::new, new Item.Settings());
   
   public static final Item RAW_SCHRABIDIUM = register("raw_schrabidium", Item::new, new Item.Settings());
-  public static final Item SCHRABIDIUM_CRYSTALS = register("schrabidium_crystals", Item::new, new Item.Settings());
   public static final Item SCHRABIDIUM_INGOT = register("schrabidium_ingot", Item::new, new Item.Settings());
   public static final Item SCHRABIDIUM_FUEL_INGOT = register("schrabidium_fuel_ingot", Item::new, new Item.Settings());
   public static final Item LOW_ENRICHED_SCHRABIDIUM_FUEL_INGOT = register("low_enriched_schrabidium_fuel_ingot", Item::new, new Item.Settings());
@@ -334,8 +387,10 @@ public class ModItems {
   public static final Item CAST_SCHRABIDIUM_PLATE = register("cast_schrabidium_plate", Item::new, new Item.Settings());
   public static final Item SCHRABIDIUM_WIRE = register("schrabidium_wire", Item::new, new Item.Settings());
   public static final Item DENSE_SCHRABIDIUM_WIRE = register("dense_schrabidium_wire", Item::new, new Item.Settings());
+  public static final Item SCHRABIDIUM_CRYSTALS = register("schrabidium_crystals", Item::new, new Item.Settings());
   
   public static final Item SCHRARANIUM_INGOT = register("schraranium_ingot", Item::new, new Item.Settings());
+  public static final Item SCHRARANIUM_CRYSTALS = register("schraranium_crystals", Item::new, new Item.Settings());
   
   public static final Item SILICON_BOULE = register("silicon_boule", Item::new, new Item.Settings());
   public static final Item SILICON_WAFER = register("silicon_wafer", Item::new, new Item.Settings());
@@ -349,6 +404,7 @@ public class ModItems {
   public static final Item STARMETAL_INGOT = register("starmetal_ingot", Item::new, new Item.Settings());
   public static final Item DENSE_STARMETAL_WIRE = register("dense_starmetal_wire", Item::new, new Item.Settings());
   public static final Item STARMETAL_RING = register("starmetal_ring", Item::new, new Item.Settings());
+  public static final Item STARMETAL_CRYSTALS = register("starmetal_crystals", Item::new, new Item.Settings());
   
   public static final Item STRONTIUM_INGOT = register("strontium_ingot", Item::new, new Item.Settings());
   public static final Item STRONTIUM_POWDER = register("strontium_powder", Item::new, new Item.Settings());
@@ -361,9 +417,19 @@ public class ModItems {
   public static final Item STEEL_INGOT = register("steel_ingot", Item::new, new Item.Settings());
   public static final Item STEEL_POWDER = register("steel_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_STEEL_POWDER = register("tiny_pile_of_steel_powder", Item::new, new Item.Settings());
+  public static final Item STEEL_PLATE = register("steel_plate", Item::new, new Item.Settings());
+  public static final Item CAST_STEEL_PLATE = register("cast_steel_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_STEEL_PLATE = register("welded_steel_plate", Item::new, new Item.Settings());
+  public static final Item STEEL_BOLT = register("steel_bolt", Item::new, new Item.Settings());
+  public static final Item STEEL_PIPE = register("steel_pipe", Item::new, new Item.Settings());
+  public static final Item STEEL_SHELL = register("steel_shell", Item::new, new Item.Settings());
+  public static final Item STEEL_WIRE = register("steel_wire", Item::new, new Item.Settings());
+  
+  public static final Item SULFUR = register("sulfur", Item::new, new Item.Settings());
+  public static final Item SULFUR_CRYSTALS = register("sulfur_crystals", Item::new, new Item.Settings());
   
   public static final Item PURIFIED_TANTALITE = register("purified_tantalite", Item::new, new Item.Settings()); // Comes from Coltan
-  public static final Item TANTALUM_INGOT = register("tantalum_ingot", Item::new, new Item.Settings()); // It's called Tantalium in the Original but Tantalum IRL, so we use Tantalum
+  public static final Item TANTALUM_INGOT = register("tantalum_ingot", Item::new, new Item.Settings()); // It's called "Tantalium" in the Original but "Tantalum" IRL, so we used "Tantalum"
   public static final Item TANTALUM_POWDER = register("tantalum_powder", Item::new, new Item.Settings());
   public static final Item TANTALUM_NUGGET = register("tantalum_nugget", Item::new, new Item.Settings());
   public static final Item TANTALUM_POLYCRYSTAL = register("tantalum_polycrystal", Item::new, new Item.Settings());
@@ -376,14 +442,8 @@ public class ModItems {
   public static final Item TECHNETIUM_STEEL_POWDER = register("technetium_steel_powder", Item::new, new Item.Settings());
   public static final Item CAST_TECHNETIUM_STEEL_PLATE = register("cast_technetium_steel_plate", Item::new, new Item.Settings());
   public static final Item WELDED_TECHNETIUM_STEEL_PLATE = register("welded_technetium_steel_plate", Item::new, new Item.Settings());
-  public static final Item HEAVY_TECHNETIUM_STEEL_COMPONENT = register("heavy_technetium_steel_component", Item::new, new Item.Settings());
-  public static final Item HEAVY_TECHNETIUM_STEEL_BARREL = register("heavy_technetium_steel_barrel", Item::new, new Item.Settings());
-  public static final Item LIGHT_TECHNETIUM_STEEL_BARREL = register("light_technetium_steel_barrel", Item::new, new Item.Settings());
-  public static final Item LIGHT_TECHNETIUM_STEEL_RECEIVER = register("light_technetium_steel_receiver", Item::new, new Item.Settings());
-  public static final Item HEAVY_TECHNETIUM_STEEL_RECEIVER = register("heavy_technetium_steel_receiver", Item::new, new Item.Settings());
 
   public static final Item RAW_THORIUM = register("raw_thorium", Item::new, new Item.Settings());
-  public static final Item THORIUM_CRYSTALS = register("thorium_crystals", Item::new, new Item.Settings());
   public static final Item THORIUM_232_INGOT = register("thorium_232_ingot", Item::new, new Item.Settings());
   public static final Item THORIUM_FUEL_INGOT = register("thorium_fuel_ingot", Item::new, new Item.Settings());
   public static final Item THORIUM_232_BILLET = register("thorium_232_billet", Item::new, new Item.Settings());
@@ -391,27 +451,35 @@ public class ModItems {
   public static final Item THORIUM_232_NUGGET = register("thorium_232_nugget", Item::new, new Item.Settings());
   public static final Item THORIUM_FUEL_NUGGET = register("thorium_fuel_nugget", Item::new, new Item.Settings());
   public static final Item THORIUM_POWDER = register("thorium_powder", Item::new, new Item.Settings());
+  public static final Item THORIUM_CRYSTALS = register("thorium_crystals", Item::new, new Item.Settings());
 
   public static final Item RAW_TITANIUM = register("raw_titanium", Item::new, new Item.Settings());
-  public static final Item TITANIUM_CRYSTALS = register("titanium_crystals", Item::new, new Item.Settings());
   public static final Item TITANIUM_INGOT = register("titanium_ingot", Item::new, new Item.Settings());
+  public static final Item TITANIUM_PLATE = register("titanium_plate", Item::new, new Item.Settings());
+  public static final Item CAST_TITANIUM_PLATE = register("cast_titanium_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_TITANIUM_PLATE = register("welded_titanium_plate", Item::new, new Item.Settings());
   public static final Item TITANIUM_BILLET = register("titanium_billet", Item::new, new Item.Settings());
   public static final Item TITANIUM_NUGGET = register("titanium_nugget", Item::new, new Item.Settings());
   public static final Item TITANIUM_POWDER = register("titanium_powder", Item::new, new Item.Settings());
+  public static final Item TITANIUM_SHELL = register("titanium_shell", Item::new, new Item.Settings());
+  public static final Item DENSE_TITANIUM_WIRE = register("dense_titanium_wire", Item::new, new Item.Settings());
+  public static final Item TITANIUM_CRYSTALS = register("titanium_crystals", Item::new, new Item.Settings());
 
   public static final Item RAW_TRIXITE = register("raw_trixite", Item::new, new Item.Settings());
   public static final Item TRIXITE_CRYSTALS = register("trixite_crystals", Item::new, new Item.Settings());
   
   public static final Item RAW_TUNGSTEN = register("raw_tungsten", Item::new, new Item.Settings());
-  public static final Item TUNGSTEN_CRYSTALS = register("tungsten_crystals", Item::new, new Item.Settings());
   public static final Item TUNGSTEN_INGOT = register("tungsten_ingot", Item::new, new Item.Settings());
   public static final Item TUNGSTEN_BILLET = register("tungsten_billet", Item::new, new Item.Settings());
   public static final Item TUNGSTEN_NUGGET = register("tungsten_nugget", Item::new, new Item.Settings());
   public static final Item TUNGSTEN_POWDER = register("tungsten_powder", Item::new, new Item.Settings());
+  public static final Item TUNGSTEN_BOLT = register("tungsten_bolt", Item::new, new Item.Settings());
+  public static final Item TUNGSTEN_WIRE = register("tungsten_wire", Item::new, new Item.Settings());
+  public static final Item DENSE_TUNGSTEN_WIRE = register("dense_tungsten_wire", Item::new, new Item.Settings());
+  public static final Item TUNGSTEN_CRYSTALS = register("tungsten_crystals", Item::new, new Item.Settings());
   
   public static final Item RAW_URANIUM = register("raw_uranium", Item::new, new Item.Settings());
   public static final Item RAW_SCORCHED_URANIUM = register("raw_scorched_uranium", Item::new, new Item.Settings());
-  public static final Item URANIUM_CRYSTALS = register("uranium_crystals", Item::new, new Item.Settings());
   public static final Item URANIUM_INGOT = register("uranium_ingot", Item::new, new Item.Settings());
   public static final Item URANIUM_FUEL_INGOT = register("uranium_fuel_ingot", Item::new, new Item.Settings());
   public static final Item URANIUM_233_INGOT = register("uranium_233_ingot", Item::new, new Item.Settings());
@@ -428,10 +496,22 @@ public class ModItems {
   public static final Item URANIUM_235_NUGGET = register("uranium_235_nugget", Item::new, new Item.Settings());
   public static final Item URANIUM_238_NUGGET = register("uranium_238_nugget", Item::new, new Item.Settings());
   public static final Item URANIUM_POWDER = register("uranium_powder", Item::new, new Item.Settings());
-
+  public static final Item URANIUM_CRYSTALS = register("uranium_crystals", Item::new, new Item.Settings());
+  
+  public static final Item VOLCANIC_GEM = register("volcanic_gem", Item::new, new Item.Settings());
+  
   public static final Item WEAPON_STEEL_INGOT = register("weapon_steel_ingot", Item::new, new Item.Settings());
   public static final Item WEAPON_STEEL_PLATE = register("weapon_steel_plate", Item::new, new Item.Settings());
   public static final Item CAST_WEAPON_STEEL_PLATE = register("cast_weapon_steel_plate", Item::new, new Item.Settings());
+  public static final Item WEAPON_STEEL_SHELL = register("weapon_steel_shell", Item::new, new Item.Settings());
+  
+  public static final Item ZIRCONIUM_SPLINTER = register("zirconium_splinter", Item::new, new Item.Settings());
+  public static final Item ZIRCONIUM_CUBE = register("zirconium_cube", Item::new, new Item.Settings());
+  public static final Item ZIRCONIUM_BILLET = register("zirconium_billet", Item::new, new Item.Settings());
+  public static final Item ZIRCONIUM_POWDER = register("zirconium_powder", Item::new, new Item.Settings());
+  public static final Item CAST_ZIRCONIUM_PLATE = register("cast_zirconium_plate", Item::new, new Item.Settings());
+  public static final Item WELDED_ZIRCONIUM_PLATE = register("welded_zirconium_plate", Item::new, new Item.Settings());
+  public static final Item ZIRCONIUM_WIRE = register("zirconium_wire", Item::new, new Item.Settings());
   
   // TODO: Heatable/Forgeable Ingots
   // public static final Item DUSTED_STEEL_INGOT = register("dusted_steel_ingot", Item::new, new Item.Settings());
@@ -439,7 +519,7 @@ public class ModItems {
   // public static final Item FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", Item::new, new Item.Settings());
   
   // Consumables
-  public static final Item BOTTLE_OPENER = register("bottle_opener", BottleOpenerItem::new, new Item.Settings());
+  public static final Item BOTTLE_OPENER = register("bottle_opener", settings -> new TooltipItem(settings, 2), new Item.Settings());
   public static final Item EMPTY_BOTTLE = register("empty_bottle", Item::new, new Item.Settings());
   public static final Item EMPTY_BOMB_BOTTLE = register("empty_bomb_bottle", Item::new, new Item.Settings());
   public static final Item NUKA_COLA_BOTTLE_CAP = register("nuka_cola_bottle_cap", Item::new, new Item.Settings());

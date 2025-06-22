@@ -40,7 +40,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "ntm:raw_coltan"
+              "name": "ntm:coltan"
             }
           ]
         }
