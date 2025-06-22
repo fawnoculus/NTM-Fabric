@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ntm:item/welded_zirconium_plate"
+  }
+}

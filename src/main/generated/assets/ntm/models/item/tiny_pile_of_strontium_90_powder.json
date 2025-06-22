@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ntm:item/tiny_pile_of_strontium_90_powder"
+  }
+}
