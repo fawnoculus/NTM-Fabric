@@ -25,7 +25,7 @@ To Install it:
 3. Put the Jar File in your Mods Folder.
 
 ## Other Versions
-I will (probably) not make a Forge or Neoforge Version of this, but you could if you wanted.
+I will (probably) not make a Forge or Neoforge Version of this Port, but instead of complaining about that, why don't you try making that port? the code is opensource after all..
 
 The Original 1.7.10 Forge mod can be found [here](https://modrinth.com/mod/ntm)
 
