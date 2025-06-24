@@ -82,13 +82,13 @@ public class ModCommands {
                                     NTM.id("command_server"),
                                     context.getArgument("text", Text.class),
                                     2000.0f))
-                            .then(CommandManager.argument("seconds", FloatArgumentType.floatArg(0f, 10000f))
+                            .then(CommandManager.argument("milliSeconds", FloatArgumentType.floatArg(0f, 10000f))
                                 .executes(context ->
                                     sendMessage(context,
                                         EntityArgumentType.getPlayers(context, "targets"),
                                         NTM.id("command_server"),
                                         context.getArgument("text", Text.class),
-                                        context.getArgument("seconds", Float.class)
+                                        context.getArgument("milliSeconds", Float.class)
                                     ))
                                 .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
                                     .executes(context ->
@@ -97,7 +97,7 @@ public class ModCommands {
                                             EntityArgumentType.getPlayers(context, "targets"),
                                             context.getArgument("identifier", Identifier.class),
                                             context.getArgument("text", Text.class),
-                                            context.getArgument("seconds", Float.class)
+                                            context.getArgument("milliSeconds", Float.class)
                                         ))
                                 )
                             )
