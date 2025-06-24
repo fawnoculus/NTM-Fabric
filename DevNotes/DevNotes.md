@@ -23,6 +23,7 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Lanthanium -> Lanthanum
 - Ingot of "resource" -> "resource" Ingot
 - Bar of "resource" -> "resource" Bar
+- Block of "resource" -> "resource" Block
 - Blast Furnace -> Alloying Furnace (Blast Furnace already Exists)
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
 #### Features:

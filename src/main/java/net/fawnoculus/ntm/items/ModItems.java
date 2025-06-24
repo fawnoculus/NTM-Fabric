@@ -104,6 +104,7 @@ public class ModItems {
   public static final Item DENSE_BSCCO_WIRE = register("dense_bscco_wire", Item::new, new Item.Settings());
   
   public static final Item CADMIUM_INGOT = register("cadmium_ingot", Item::new, new Item.Settings());
+  public static final Item CADMIUM_POWDER = register("cadmium_powder", Item::new, new Item.Settings());
   
   public static final Item CALCIUM_INGOT = register("calcium_ingot", Item::new, new Item.Settings());
   public static final Item CALCIUM_POWDER = register("calcium_powder", Item::new, new Item.Settings());
@@ -343,7 +344,6 @@ public class ModItems {
   public static final Item PLUTONIUM_241_NUGGET = register("plutonium_241_nugget", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_POWDER = register("plutonium_powder", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_CRYSTALS = register("plutonium_crystals", Item::new, new Item.Settings());
-  
   public static final Item PVC_BAR = register("pvc_bar", Item::new, new Item.Settings());
   
   public static final Item RADIUM_226_INGOT = register("radium_266_ingot", Item::new, new Item.Settings());
