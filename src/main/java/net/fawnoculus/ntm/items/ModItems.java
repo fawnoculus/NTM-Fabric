@@ -38,7 +38,7 @@ public class ModItems {
   public static final Item ADVANCED_ALLOY_WIRE = register("advanced_alloy_wire", Item::new, new Item.Settings());
   public static final Item DENSE_ADVANCED_ALLOY_WIRE = register("dense_advanced_alloy_wire", Item::new, new Item.Settings());
   
-  public static final Item ALEXANDRITE = register("alexandrite", Item::new, new Item.Settings()); // Visually it's a gem
+  public static final Item ALEXANDRITE = register("alexandrite", Item::new, new Item.Settings());
   
   public static final Item RAW_METEORIC_ALUMINIUM = register("raw_meteoric_aluminium", Item::new, new Item.Settings());
   public static final Item ALUMINIUM_INGOT = register("aluminium_ingot", Item::new, new Item.Settings());
@@ -81,7 +81,6 @@ public class ModItems {
   public static final Item BERYLLIUM_BILLET = register("beryllium_billet", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_NUGGET = register("beryllium_nugget", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_POWDER = register("beryllium_powder", Item::new, new Item.Settings());
-  public static final Item BERYLLIUM_FLYWHEEL = register("beryllium_flywheel", Item::new, new Item.Settings());
   public static final Item BERYLLIUM_CRYSTALS = register("beryllium_crystals", Item::new, new Item.Settings());
   
   public static final Item BISMUTH_INGOT = register("bismuth_ingot", Item::new, new Item.Settings());
@@ -183,7 +182,7 @@ public class ModItems {
   public static final Item FERROURANIUM_INGOT = register("ferrouranium_ingot", Item::new, new Item.Settings());
   public static final Item CAST_FERROURANIUM_PLATE = register("cast_ferrouranium_plate", Item::new, new Item.Settings());
   
-  public static final Item FLUORITE = register("fluorite", Item::new, new Item.Settings()); // "Minecraft Education Edition Salt" is a surprisingly fitting description for this
+  public static final Item FLUORITE = register("fluorite", Item::new, new Item.Settings());
   public static final Item FLUORITE_CRYSTALS = register("fluorite_crystals", Item::new, new Item.Settings());
   
   public static final Item GHIORSIUM_336_INGOT = register("ghiorsium_336_ingot", Item::new, new Item.Settings());
@@ -308,7 +307,7 @@ public class ModItems {
   public static final Item WELDED_OSMIRIDIUM_PLATE = register("welded_osmiridium_plate", Item::new, new Item.Settings());
   public static final Item OSMIRIDIUM_CRYSTALS = register("osmiridium_crystals", Item::new, new Item.Settings());
   
-  public static final Item RED_PHOSPHORUS = register("red_phosphorus", Item::new, new Item.Settings()); // I Just grouped these together and sorted them as "Phosphorus"
+  public static final Item RED_PHOSPHORUS = register("red_phosphorus", Item::new, new Item.Settings());
   public static final Item WHITE_PHOSPHORUS_BAR = register("white_phosphorus_bar", Item::new, new Item.Settings());
   public static final Item PHOSPHORUS_CRYSTALS = register("phosphorus_crystals", Item::new, new Item.Settings());
   
@@ -355,7 +354,7 @@ public class ModItems {
   public static final Item RARE_EARTH_CRYSTALS = register("rare_earth_crystals", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_RARE_EARTH = register("raw_meteoric_rare_earth", Item::new, new Item.Settings());
 
-  public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings()); // It's called "Minecraft Grade Copper" in the Original but "Red Copper" in the Code, so we used "Red Copper"
+  public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings());
   public static final Item RED_COPPER_POWDER = register("red_copper_powder", Item::new, new Item.Settings());
   public static final Item RED_COPPER_WIRE = register("red_copper_wire", Item::new, new Item.Settings());
   
@@ -429,7 +428,7 @@ public class ModItems {
   public static final Item SULFUR_CRYSTALS = register("sulfur_crystals", Item::new, new Item.Settings());
   
   public static final Item PURIFIED_TANTALITE = register("purified_tantalite", Item::new, new Item.Settings()); // Comes from Coltan
-  public static final Item TANTALUM_INGOT = register("tantalum_ingot", Item::new, new Item.Settings()); // It's called "Tantalium" in the Original but "Tantalum" IRL, so we used "Tantalum"
+  public static final Item TANTALUM_INGOT = register("tantalum_ingot", Item::new, new Item.Settings());
   public static final Item TANTALUM_POWDER = register("tantalum_powder", Item::new, new Item.Settings());
   public static final Item TANTALUM_NUGGET = register("tantalum_nugget", Item::new, new Item.Settings());
   public static final Item TANTALUM_POLYCRYSTAL = register("tantalum_polycrystal", Item::new, new Item.Settings());
