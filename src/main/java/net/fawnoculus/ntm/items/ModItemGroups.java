@@ -132,7 +132,6 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.BERYLLIUM_BILLET);
       ItemGroup.add(ModItems.BERYLLIUM_NUGGET);
       ItemGroup.add(ModItems.BERYLLIUM_POWDER);
-      ItemGroup.add(ModItems.BERYLLIUM_FLYWHEEL);
       ItemGroup.add(ModItems.BERYLLIUM_CRYSTALS);
       
       ItemGroup.add(ModItems.BISMUTH_INGOT);
