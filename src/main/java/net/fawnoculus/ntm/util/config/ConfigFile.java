@@ -280,7 +280,7 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringOption newItemOption(String name, String defaultValue, @Nullable String comment) {
-    return newStringOption(name, defaultValue, comment, new Option.ExtraType.Item());
+    return newStringOption(name, defaultValue, comment, new Option.ExtraType.ItemOption());
   }
   
   /**
@@ -289,7 +289,7 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringOption newBlockOption(String name, String defaultValue, @Nullable String comment) {
-    return newStringOption(name, defaultValue, comment, new Option.ExtraType.Block());
+    return newStringOption(name, defaultValue, comment, new Option.ExtraType.BlockOption());
   }
   /**
    * @param name Name of the Option
@@ -318,7 +318,7 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringListOption newItemListOption(String name, List<String> defaultValue, @Nullable String comment) {
-    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.Item());
+    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.ItemOption());
   }
   /**
    * @param name         Name of the Option
@@ -326,6 +326,6 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringListOption newBlockListOption(String name, List<String> defaultValue, @Nullable String comment) {
-    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.Block());
+    return newStringListOption(name, defaultValue, comment, new Option.ExtraType.BlockOption());
   }
 }

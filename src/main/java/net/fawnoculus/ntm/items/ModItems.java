@@ -513,9 +513,9 @@ public class ModItems {
   public static final Item ZIRCONIUM_WIRE = register("zirconium_wire", Item::new, new Item.Settings());
   
   // TODO: Heatable/Forgeable Ingots
-  // public static final Item DUSTED_STEEL_INGOT = register("dusted_steel_ingot", Item::new, new Item.Settings());
-  // public static final Item HEAVY_CHAINSTEEL_INGOT = register("heavy_chainsteel_ingot", Item::new, new Item.Settings());
-  // public static final Item FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", Item::new, new Item.Settings());
+  // public static final ItemOption DUSTED_STEEL_INGOT = register("dusted_steel_ingot", ItemOption::new, new ItemOption.Settings());
+  // public static final ItemOption HEAVY_CHAINSTEEL_INGOT = register("heavy_chainsteel_ingot", ItemOption::new, new ItemOption.Settings());
+  // public static final ItemOption FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", ItemOption::new, new ItemOption.Settings());
   
   // Consumables
   public static final Item BOTTLE_OPENER = register("bottle_opener", settings -> new TooltipItem(settings, 2), new Item.Settings());

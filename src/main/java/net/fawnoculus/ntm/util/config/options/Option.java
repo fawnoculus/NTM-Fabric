@@ -130,13 +130,13 @@ public abstract class Option<T> {
         return value > this.min && value < this.max;
       }
     }
-    record Item() implements Option.ExtraType{
+    record ItemOption() implements Option.ExtraType{
       public boolean isValid(String string){
         if(Registries.ITEM.getDefaultEntry().isEmpty()) throw new IllegalStateException("Registries.ITEM doesn't have a default value");
         return Registries.ITEM.get(Identifier.of(string)) != Registries.ITEM.getDefaultEntry().get().value();
       }
     }
-    record Block() implements Option.ExtraType{
+    record BlockOption() implements Option.ExtraType{
       public boolean isValid(String string){
         if(Registries.BLOCK.getDefaultEntry().isEmpty()) throw new IllegalStateException("Registries.BLOCK doesn't have a default value");
         return Registries.BLOCK.get(Identifier.of(string)) != Registries.BLOCK.getDefaultEntry().get().value();

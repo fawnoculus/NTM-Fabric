@@ -133,7 +133,6 @@ ef8e4a5cc2fab881190eee7936eb42a5fc078335 assets/ntm/items/australium_nugget.json
 e33d01a349cdbe21f335c6bb931b30abc2bed0e4 assets/ntm/items/bedrock_oil_deposit.json
 dda221bec7c9e2eec3c44636f6faccc0ea174f4a assets/ntm/items/beryllium_billet.json
 b377b2f817081b9ef29de3ab2647ddb013b3b6d2 assets/ntm/items/beryllium_crystals.json
-1c3aca16e58521675a7f1549933603e9c3b6fed5 assets/ntm/items/beryllium_flywheel.json
 6def4e80f70390372d344c196ecef1a63bdd7f9b assets/ntm/items/beryllium_ingot.json
 8b8d630c03425695d19811c15e115dc3a0ca72dd assets/ntm/items/beryllium_nugget.json
 0fbbe7ddc233bf54af378781de1c26967715c425 assets/ntm/items/beryllium_ore.json
@@ -779,7 +778,6 @@ ebaa2ae3d4194ad5742f2520095ec2ff1933a513 assets/ntm/models/item/bakelite_bar.jso
 234acb4063aa36da3c97526d3a3361abe21d7839 assets/ntm/models/item/bakelite_powder.json
 fae1a6e38ae7f27c2e90f3b38281bcc28b2be197 assets/ntm/models/item/beryllium_billet.json
 a73de6dd787b889130987f4872ce65d6ebd2919f assets/ntm/models/item/beryllium_crystals.json
-f14b87e860af5bac44c391ddf2f12feb3b612fb5 assets/ntm/models/item/beryllium_flywheel.json
 6701c4bb8802e258226db5a2276050df7dcfe6e5 assets/ntm/models/item/beryllium_ingot.json
 ff138c0d9655a9158a7bf5183390a00b86334b87 assets/ntm/models/item/beryllium_nugget.json
 552ab929d237d78f5de6c3fcdb9af39f68cfbde3 assets/ntm/models/item/beryllium_powder.json

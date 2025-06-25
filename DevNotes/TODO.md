@@ -5,12 +5,13 @@
 - Atmosphere System & Gases in the Environment
 - Radioactivity
 - Heat System for Machines
-- Working Config File(s)
 - Working Ores and Deposits
-- ~~Advanced Tools (Abilities, Weapon modifiers, ...)~~
+- Advanced Tools (Abilities, Weapon modifiers, ...)
 - Special Text Box in the Top Left
 - Item Help (aka: [Press F1 for Help])
 - Conveyor Belts, Pneumatic Tubes & Drones
+- ~~Working Config File(s)~~
+- ~~Advanced Message System~~
 
 # Regular Features
 ### Single Block Machines
