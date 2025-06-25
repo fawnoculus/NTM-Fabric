@@ -235,7 +235,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.BERYLLIUM_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.BERYLLIUM_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.BERYLLIUM_POWDER, Models.GENERATED);
-    itemModelGenerator.register(ModItems.BERYLLIUM_FLYWHEEL, Models.GENERATED);
     itemModelGenerator.register(ModItems.BERYLLIUM_CRYSTALS, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.BISMUTH_INGOT, Models.GENERATED);
