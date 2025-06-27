@@ -41,5 +41,6 @@ public class NTMConfig {
       ClientConfig.initialize();
     }
     CommonConfig.initialize();
+    WorldConfig.initialize();
   }
 }

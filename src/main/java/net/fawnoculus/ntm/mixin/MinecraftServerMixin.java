@@ -26,4 +26,14 @@ public abstract class MinecraftServerMixin {
       configFile.setConfigPath(worldConfigDir);
     }
   }
+  
+  @Inject(at = @At("TAIL"), method = "shutdown")
+  private void removeWorldSpecificConfig(CallbackInfo ci) {
+    List<PerWorldConfigFile> perWorldConfigFiles = PerWorldConfigFile.getPerWorldConfigFiles();
+    
+    for(PerWorldConfigFile configFile : perWorldConfigFiles){
+      configFile.removeConfigPath();
+    }
+  }
+  
 }

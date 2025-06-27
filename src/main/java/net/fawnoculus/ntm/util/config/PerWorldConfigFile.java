@@ -100,11 +100,6 @@ public class PerWorldConfigFile extends ConfigFile{
     this.perWorldOptions = readOptions;
   }
   
-  @Override
-  public void initialize() {
-    throw new IllegalArgumentException("per world configs should not be initialized!");
-  }
-  
   // Overwriting option creation to return the per world option
   
   
