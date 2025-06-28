@@ -161,6 +161,7 @@ e97058ea5306a7db5101b2f88df936daf60d57cb assets/ntm/items/bottle_of_s_cola.json
 e60867b0ac377cc468399f6949b30784940f976d assets/ntm/items/broken_meteorite_block.json
 9616ec2c668b135acf400223f157baca15574f93 assets/ntm/items/bscco_ingot.json
 ab897041878609758dc4c492075d3e13e3f9cadc assets/ntm/items/cadmium_ingot.json
+e1f0d58f31659f11edb38196c12993e0f955463c assets/ntm/items/cadmium_powder.json
 fe41ccf50b3d78a7deac5a217f272b9895b67268 assets/ntm/items/cadmium_steel_ingot.json
 b9d9c262b8fcbc222218dc2a10f596e060d1fc50 assets/ntm/items/calcium_ingot.json
 08a7f60ca572b7a95a6ecb21a94d8c1a55a00b4a assets/ntm/items/calcium_powder.json
@@ -400,6 +401,7 @@ a2d393d285a3d8b3353eeb20fe473f806527816f assets/ntm/items/nether_plutonium_ore.j
 e11a43a25c943fd307b53b7e8ea4d2c16d3cc856 assets/ntm/items/nether_sulfur_ore.json
 823c566d8b2f8cb80306dac222e8026bcbf8b7d9 assets/ntm/items/nether_tungsten_ore.json
 49698e900941b933645c0a5a116db3891d288b4f assets/ntm/items/nether_uranium_ore.json
+4a1dc015a4373c2ac40cc6b676951a7889ede770 assets/ntm/items/network_debug_tool.json
 12db876e08d2dd75091f90e77695039223a6004a assets/ntm/items/niobium_fragment.json
 b3308170614d26ebfa8c842276abdd23de94c0af assets/ntm/items/niobium_ingot.json
 354955c0438bc7db3f3611f082151b182e669bdf assets/ntm/items/niobium_nugget.json
@@ -804,6 +806,7 @@ fd4b50c42598ea124584ad5f1a08416b1af0d3fa assets/ntm/models/item/bottle_of_s_cola
 7e97378df4523130983244d5a209555fe0943509 assets/ntm/models/item/bottle_opener.json
 8754f20e04e68d85c26240c66d2835f0c40cc12a assets/ntm/models/item/bscco_ingot.json
 0a8765e0ec9e41cd5a74ac3b95bcafb0c5cea12e assets/ntm/models/item/cadmium_ingot.json
+d06d5280d0df80cde767115cfbf0c24b7f828093 assets/ntm/models/item/cadmium_powder.json
 f2482313c70f1cb6de50af34ae8b6d616a6997a9 assets/ntm/models/item/cadmium_steel_ingot.json
 de126b8f6151f329ae74a31587189e3e00e59ab5 assets/ntm/models/item/calcium_ingot.json
 11d04a9ba3460559bfbb6e1a7b383c57f8e7db26 assets/ntm/models/item/calcium_powder.json
@@ -997,6 +1000,7 @@ aa377789e50b876dc9234f0716703a77b457e677 assets/ntm/models/item/neptunium_crysta
 33d1a854176b6e7f66686feeff7581ce916dac0e assets/ntm/models/item/neptunium_ingot.json
 acc40f39ffa83a9f29322ad5ad68256c787fafbe assets/ntm/models/item/neptunium_nugget.json
 c1d07ec9d8e309bfb13de2b76022abda13c70897 assets/ntm/models/item/neptunium_powder.json
+8d6ff224121f05beba0f525f0c138061de064f85 assets/ntm/models/item/network_debug_tool.json
 16a3519d91d0cf04b5e47c3d9f99c1f4df99eec0 assets/ntm/models/item/niobium_fragment.json
 929dcbe4c2d203985e034889b17917105540c704 assets/ntm/models/item/niobium_ingot.json
 46bd744d1bea89d912d52282d9d36b6941e0d746 assets/ntm/models/item/niobium_nugget.json

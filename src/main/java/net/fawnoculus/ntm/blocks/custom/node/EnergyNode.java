@@ -19,6 +19,7 @@ import java.util.UUID;
 public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   public EnergyNode(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
+    this.assignNetwork();
   }
   
   @Override

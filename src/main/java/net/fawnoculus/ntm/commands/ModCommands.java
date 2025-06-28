@@ -185,7 +185,6 @@ public class ModCommands {
       return -1;
     }
     
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_components.start").formatted(Formatting.DARK_GRAY), false);
     for(Component<?> component : player.getMainHandStack().getComponents()){
       String type = component.type().toString();
       String value = component.value().toString();
@@ -199,7 +198,6 @@ public class ModCommands {
       feedback.append(Text.literal(value).formatted(Formatting.WHITE));
       context.getSource().sendFeedback(() -> feedback, false);
     }
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_components.stop").formatted(Formatting.DARK_GRAY), false);
     return 1;
   }
 }

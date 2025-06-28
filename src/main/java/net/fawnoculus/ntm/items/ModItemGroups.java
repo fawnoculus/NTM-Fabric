@@ -154,6 +154,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.DENSE_BSCCO_WIRE);
       
       ItemGroup.add(ModItems.CADMIUM_INGOT);
+      ItemGroup.add(ModItems.CADMIUM_POWDER);
       
       ItemGroup.add(ModItems.CALCIUM_INGOT);
       ItemGroup.add(ModItems.CALCIUM_POWDER);
@@ -698,6 +699,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.BOTTLE_OPENER);
       ItemGroup.add(ModItems.CONSTRUCTION_WAND);
       ItemGroup.add(ModItems.DEBUG_WAND);
+      ItemGroup.add(ModItems.NETWORK_DEBUG_TOOL);
     });
     ItemGroupEvents.modifyEntriesEvent(TOOLS_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.STEEL_SWORD);

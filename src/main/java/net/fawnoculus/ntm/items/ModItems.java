@@ -22,6 +22,7 @@ public class ModItems {
   public static final Item NULL = register("null", Item::new, new Item.Settings());
   public static final Item DEBUG_WAND = register("debug_wand", DebugWandItem::new, new Item.Settings());
   public static final Item CONSTRUCTION_WAND = register("construction_wand", ConstructionWandItem::new, new Item.Settings());
+  public static final Item NETWORK_DEBUG_TOOL = register("network_debug_tool", NetworkDebuggingToolItem::new, new Item.Settings());
   
   // Basic Resources split by Type sorted Alphabetically because I felt like it
   public static final Item ACTINIUM_227_INGOT = register("actinium_227_ingot", Item::new, new Item.Settings());
@@ -579,7 +580,7 @@ public class ModItems {
           new StatusEffectInstance(StatusEffects.HASTE, 600, 2),
           new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2)
       ), List.of(
-      EMPTY_BOMB_BOTTLE,
+      EMPTY_BOTTLE,
       KAROL_BOTTLE_CAP
   )));
   public static final Item FIRST_BOTTLE_OF_KAROL = register("first_bottle_of_karol", new Item.Settings(), settings -> new BottleItem(settings,
@@ -588,7 +589,7 @@ public class ModItems {
           new StatusEffectInstance(StatusEffects.HASTE, 2400, 2),
           new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2)
       ), List.of(
-      EMPTY_BOMB_BOTTLE,
+      EMPTY_BOTTLE,
       KAROL_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_FRITZ_COLA = register("bottle_of_fritz_cola", new Item.Settings(), settings -> new BottleItem(settings,
@@ -597,7 +598,7 @@ public class ModItems {
           new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2),
           new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2)
       ), List.of(
-      EMPTY_BOMB_BOTTLE,
+      EMPTY_BOTTLE,
       FRITZ_COLA_BOTTLE_CAP
   )));
   public static final Item FIRST_BOTTLE_OF_FRITZ_COLA = register("first_bottle_of_fritz_cola", new Item.Settings(), settings -> new BottleItem(settings,
@@ -606,7 +607,7 @@ public class ModItems {
           new StatusEffectInstance(StatusEffects.JUMP_BOOST, 2400, 2),
           new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2)
       ), List.of(
-      EMPTY_BOMB_BOTTLE,
+      EMPTY_BOTTLE,
       FRITZ_COLA_BOTTLE_CAP
   )));
 

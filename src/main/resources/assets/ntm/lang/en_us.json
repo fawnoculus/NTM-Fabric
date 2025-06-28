@@ -4,6 +4,14 @@
   "message.ntm.construction_wand.set_block": "Set Block: %1$s",
   "message.ntm.construction_wand.set_pos": "Position Set: %1$s %2$s %3$s",
   "message.ntm.construction_wand.filled": "Filled %1$s Blocks",
+  "message.ntm.network_debug.no_node": "Clicked Block is not a Node, it can't be part of a Network",
+  "message.ntm.network_debug.no_network": "Clicked Node does not have a Network (This is really bad)",
+  "message.ntm.network_debug.network_name": "Network: %1$s",
+  "message.ntm.network_debug.network_type": "Network-Type: %1$s",
+  "message.ntm.network_debug.loaded_connector_count": "Loaded Connector(s): %1$S",
+  "message.ntm.network_debug.loaded_consumer_count": "Loaded Consumer(s): %1$S",
+  "message.ntm.network_debug.loaded_provider_count": "Loaded Supplier(s): %1$S",
+  "message.ntm.network_debug.loaded_storage_count": "Loaded Storage(s): %1$S",
   "message.ntm.message_client.added": "Added Message to Que",
   "message.ntm.message_client.cleared": "Removed %1$s Message(s)",
   "message.ntm.message_client.removed": "Removed Message with id '%1$s'",
@@ -20,8 +28,6 @@
   "message.ntm.the_funny": "Performed 'the funny' >:3",
   "message.ntm.clean_logs": "Deleted '%1$s' old log files ('%2$s' bytes total)",
   "message.ntm.get_components.could_not_get_item": "Could not get held Item!",
-  "message.ntm.get_components.start": "//////Components Start//////",
-  "message.ntm.get_components.stop": "//////Components End//////",
   "message.ntm.get_components.value_max_length": "... (value > max_length)",
 
   "tooltip.ntm.creative_only": "Creative-only item",
@@ -32,8 +38,8 @@
   "tooltip.ntm.construction_wand.no_pos": "No Position Saved!",
   "tooltip.ntm.construction_wand.pos": "Pos: 'x:%1$s y:%2$s z:%3$s'",
   "tooltip.ntm.construction_wand.block": "Block saved: '%1$s'",
-  "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
-
+  "tooltip.ntm.network_debug_tool1": "Right-click node to analyze the Node-Network",
+  "tooltip.ntm.network_debug_tool2": "Displays information about the Network in Chat",
   "tooltip.ntm.needs_bottle_opener": "[Requires bottle opener]",
   "tooltip.ntm.bottle_of_nuka_cola": "Contains about 210 kcal and 1500 mSv.",
   "tooltip.ntm.bottle_of_nuka_cherry": "Now with severe radiation poisoning in every seventh bottle!",
@@ -46,7 +52,6 @@
   "tooltip.ntm.first_bottle_of_fritz_cola": "moremore caffeine",
   "tooltip.ntm.bottle_opener1": "His very own bottle opener.",
   "tooltip.ntm.bottle_opener2": "Use with caution!",
-
   "tooltip.ntm.ability.start": "Abilities:",
   "tooltip.ntm.ability.end1": "Right click to cycle through abilities!",
   "tooltip.ntm.ability.end2": "Sneak-click to turn ability off!",
@@ -60,7 +65,6 @@
   "tooltip.ntm.ability.fortune": "Fortune",
   "tooltip.ntm.ability.explosion": "Explosion",
   "tooltip.ntm.ability.mercurytouch": "Mercury Touch",
-
   "tooltip.ntm.modifier.start": "Weapon modifiers:",
   "tooltip.ntm.modifier.decapitator": "Decapitator",
   "tooltip.ntm.modifier.luckofthecollector": "Luck of the Collector",
@@ -70,8 +74,8 @@
   "tooltip.ntm.modifier.vampire": "Vampire",
   "tooltip.ntm.modifier.radioactiveblade": "Radioactive Blade",
   "tooltip.ntm.modifier.painsaw": "Painsaw",
-
   "tooltip.ntm.canbreakdepthrock": "Can break depth rock!",
+  "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
 
   "itemGroup.ntm.resources_and_parts": "NTM Resources and Parts",
   "itemGroup.ntm.machine_items_and_fuel": "NTM Machine Items and Fuel",
@@ -310,6 +314,7 @@
 
   "item.ntm.debug_wand": "Debug Wand",
   "item.ntm.construction_wand": "Construction Wand",
+  "item.ntm.network_debug_tool": "Network Debug Tool",
 
   "item.ntm.raw_uranium": "Raw Uranium",
   "item.ntm.raw_scorched_uranium": "Raw Scorched Uranium",

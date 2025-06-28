@@ -176,6 +176,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.NULL, Models.GENERATED);
     itemModelGenerator.register(ModItems.DEBUG_WAND, Models.GENERATED);
     itemModelGenerator.register(ModItems.CONSTRUCTION_WAND, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NETWORK_DEBUG_TOOL, Models.GENERATED);
     
     // Raw Resources
     itemModelGenerator.register(ModItems.ACTINIUM_227_INGOT, Models.GENERATED);
@@ -257,6 +258,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.DENSE_BSCCO_WIRE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.CADMIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CADMIUM_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.CALCIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.CALCIUM_POWDER, Models.GENERATED);
