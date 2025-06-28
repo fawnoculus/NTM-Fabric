@@ -1,6 +1,6 @@
-package net.fawnoculus.ntm.blocks.custom.node;
+package net.fawnoculus.ntm.blocks.node;
 
-import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetwork;
+import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

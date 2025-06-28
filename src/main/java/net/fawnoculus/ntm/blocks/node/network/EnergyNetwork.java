@@ -1,6 +1,6 @@
-package net.fawnoculus.ntm.blocks.custom.node.network;
+package net.fawnoculus.ntm.blocks.node.network;
 
-import net.fawnoculus.ntm.blocks.custom.node.EnergyNode;
+import net.fawnoculus.ntm.blocks.node.EnergyNode;
 
 public class EnergyNetwork extends NodeNetwork<EnergyNode>{
   public EnergyNetwork() {

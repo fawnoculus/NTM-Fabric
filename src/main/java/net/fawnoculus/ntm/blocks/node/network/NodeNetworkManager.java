@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.blocks.custom.node.network;
+package net.fawnoculus.ntm.blocks.node.network;
 
 import net.fawnoculus.ntm.main.NTM;
 

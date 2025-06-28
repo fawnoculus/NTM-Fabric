@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetwork;
-import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetworkManager;
+import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
+import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.profiler.Profilers;

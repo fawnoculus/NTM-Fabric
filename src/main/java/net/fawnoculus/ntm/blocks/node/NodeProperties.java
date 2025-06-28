@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.blocks.custom.node;
+package net.fawnoculus.ntm.blocks.node;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;

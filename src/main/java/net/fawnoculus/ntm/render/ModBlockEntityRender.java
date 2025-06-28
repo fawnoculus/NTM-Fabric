@@ -7,7 +7,7 @@ import net.fawnoculus.ntm.render.blockentity.RenderTestRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
 @Environment(EnvType.CLIENT)
-public class ModBlockEntityRenderer {
+public class ModBlockEntityRender {
   public static void initialize(){
     BlockEntityRendererFactories.register(ModBlockEntities.RENDER_TEST_BE, RenderTestRenderer::new);
   }

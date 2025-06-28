@@ -1,6 +1,6 @@
-package net.fawnoculus.ntm.blocks.custom.node.network;
+package net.fawnoculus.ntm.blocks.node.network;
 
-import net.fawnoculus.ntm.blocks.custom.node.FluidNode;
+import net.fawnoculus.ntm.blocks.node.FluidNode;
 
 public class FluidNetwork extends NodeNetwork<FluidNode>{
   public FluidNetwork() {

@@ -22,7 +22,7 @@ public class ModHudRender {
   public static final Identifier MESSAGE_SYSTEM_ID = NTM.id("message_system");
   
   public static void initialize(){
-    HudLayerRegistrationCallback.EVENT.register(MESSAGE_SYSTEM_ID, layeredDrawer -> layeredDrawer.attachLayerBefore(IdentifiedLayer.HOTBAR_AND_BARS, MESSAGE_SYSTEM_ID, ModHudRender::drawMessageSystem));
+    HudLayerRegistrationCallback.EVENT.register(layeredDrawer -> layeredDrawer.attachLayerBefore(IdentifiedLayer.HOTBAR_AND_BARS, MESSAGE_SYSTEM_ID, ModHudRender::drawMessageSystem));
   }
   
   private static void drawMessageSystem(DrawContext context, RenderTickCounter tickCounter) {

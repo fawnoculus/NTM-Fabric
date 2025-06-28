@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.blocks.custom.node.Node;
-import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetwork;
+import net.fawnoculus.ntm.blocks.node.Node;
+import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

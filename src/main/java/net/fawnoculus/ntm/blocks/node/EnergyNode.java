@@ -1,8 +1,8 @@
-package net.fawnoculus.ntm.blocks.custom.node;
+package net.fawnoculus.ntm.blocks.node;
 
-import net.fawnoculus.ntm.blocks.custom.node.network.FluidNetwork;
-import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetwork;
-import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetworkManager;
+import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
+import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
+import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -15,36 +15,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class FluidNode extends BlockEntity implements Node<FluidNode> {
-  private FluidNetwork network;
+public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
+  private EnergyNetwork network;
   private NodeProperties nodeProperties;
   
-  private FluidNode(BlockEntityType<?> type, BlockPos pos, BlockState state, NodeProperties properties){
+  private EnergyNode(BlockEntityType<?> type, BlockPos pos, BlockState state, NodeProperties properties){
     super(type, pos, state);
     this.setNodeProperties(properties);
     this.assignNetwork();
   }
   
-  public static FluidNode createConnectorNode(BlockEntityType<?> type, BlockPos pos, BlockState state){
-    return new FluidNode(type, pos, state, new NodeProperties.Connector());
+  public static EnergyNode createConnectorNode(BlockEntityType<?> type, BlockPos pos, BlockState state){
+    return new EnergyNode(type, pos, state, new NodeProperties.Connector());
   }
-  public static FluidNode createProviderNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
+  public static EnergyNode createProviderNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
     NodeProperties properties = new NodeProperties.Provider();
     properties.setMaxValue(MaxEnergy);
     properties.setMaxTransfer(MaxTransfer);
-    return new FluidNode(type, pos, state, properties);
+    return new EnergyNode(type, pos, state, properties);
   }
-  public static FluidNode createConsumerNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
+  public static EnergyNode createConsumerNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
     NodeProperties properties = new NodeProperties.Consumer();
     properties.setMaxValue(MaxEnergy);
     properties.setMaxTransfer(MaxTransfer);
-    return new FluidNode(type, pos, state, properties);
+    return new EnergyNode(type, pos, state, properties);
   }
-  public static FluidNode createStorageNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
+  public static EnergyNode createStorageNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
     NodeProperties properties = new NodeProperties.Storge();
     properties.setMaxValue(MaxEnergy);
     properties.setMaxTransfer(MaxTransfer);
-    return new FluidNode(type, pos, state, properties);
+    return new EnergyNode(type, pos, state, properties);
   }
   
   @Override
@@ -54,11 +54,11 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   
   @Override
-  public void setNetwork(NodeNetwork<FluidNode> network) {
-    this.network = (FluidNetwork) network;
+  public void setNetwork(NodeNetwork<EnergyNode> network) {
+    this.network = (EnergyNetwork) network;
   }
   @Override
-  public FluidNetwork getNetwork() {
+  public EnergyNetwork getNetwork() {
     if(this.network == null){
       this.assignNetwork();
     }
@@ -66,14 +66,14 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   @Override
   public void assignNetwork() {
-    FluidNetwork detectedNetwork = this.findNetwork(this.getPos().up(), null);
+    EnergyNetwork detectedNetwork = this.findNetwork(this.getPos().up(), null);
     detectedNetwork = this.findNetwork(this.getPos().down(), detectedNetwork);
     detectedNetwork = this.findNetwork(this.getPos().north(), detectedNetwork);
     detectedNetwork = this.findNetwork(this.getPos().east(), detectedNetwork);
     detectedNetwork = this.findNetwork(this.getPos().south(), detectedNetwork);
     detectedNetwork = this.findNetwork(this.getPos().west(), detectedNetwork);
     if(detectedNetwork == null){
-      detectedNetwork = new FluidNetwork();
+      detectedNetwork = new EnergyNetwork();
     }
     if(!detectedNetwork.containsNode(this)){
       detectedNetwork.addNode(this);
@@ -82,13 +82,13 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
     this.setNetwork(detectedNetwork);
   }
   
-  private FluidNetwork findNetwork(BlockPos blockPos, FluidNetwork detectedNetwork) {
+  private EnergyNetwork findNetwork(BlockPos blockPos, EnergyNetwork detectedNetwork) {
     assert this.world != null;
     BlockEntity bl = this.world.getBlockEntity(blockPos);
-    if (!(bl instanceof FluidNode node) || node.network == null) {
+    if (!(bl instanceof EnergyNode node) || node.network == null) {
       return detectedNetwork;
     }
-    FluidNetwork foundNetwork = node.getNetwork();
+    EnergyNetwork foundNetwork = node.getNetwork();
     if (detectedNetwork != null && !foundNetwork.equals(detectedNetwork)) {
       detectedNetwork.mergeNetworksAt(this);
       return detectedNetwork;
@@ -96,28 +96,28 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
     return foundNetwork;
   }
   @Override
-  public List<Node<FluidNode>> getConnectedNodes() {
+  public List<Node<EnergyNode>> getConnectedNodes() {
     World world = this.getWorld();
     assert world != null;
     BlockPos pos = this.getPos();
-    List<Node<FluidNode>> nodes = new ArrayList<>();
-    if(world.getBlockEntity(pos.up()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
+    List<Node<EnergyNode>> nodes = new ArrayList<>();
+    if(world.getBlockEntity(pos.up()) instanceof EnergyNode energyNode){
+      nodes.add(energyNode);
     }
-    if(world.getBlockEntity(pos.down()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
+    if(world.getBlockEntity(pos.down()) instanceof EnergyNode energyNode){
+      nodes.add(energyNode);
     }
-    if(world.getBlockEntity(pos.north()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
+    if(world.getBlockEntity(pos.north()) instanceof EnergyNode energyNode){
+      nodes.add(energyNode);
     }
-    if(world.getBlockEntity(pos.east()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
+    if(world.getBlockEntity(pos.east()) instanceof EnergyNode energyNode){
+      nodes.add(energyNode);
     }
-    if(world.getBlockEntity(pos.south()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
+    if(world.getBlockEntity(pos.south()) instanceof EnergyNode energyNode){
+      nodes.add(energyNode);
     }
-    if(world.getBlockEntity(pos.west()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
+    if(world.getBlockEntity(pos.west()) instanceof EnergyNode energyNode){
+      nodes.add(energyNode);
     }
     return nodes;
   }
@@ -135,7 +135,7 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   
   
   @Override
-  public FluidNode getBE() {
+  public EnergyNode getBE() {
     return this;
   }
   
@@ -146,7 +146,7 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
       this.assignNetwork();
       s = this.getNetwork().ID.toString();
     }
-    this.setNetwork(NodeNetworkManager.getFluidNetwork(UUID.fromString(s)));
+    this.setNetwork(NodeNetworkManager.getEnergyNetwork(UUID.fromString(s)));
     this.nodeProperties.readNBT(nbt, registries);
   }
   @Override
