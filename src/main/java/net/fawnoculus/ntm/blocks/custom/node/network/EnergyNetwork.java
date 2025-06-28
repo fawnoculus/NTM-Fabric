@@ -14,6 +14,7 @@ public class EnergyNetwork extends NodeNetwork<EnergyNode>{
   }
   
   @Override
-  void tickNetwork() {
+  public void tickNetwork() {
+    //TODO: this
   }
 }

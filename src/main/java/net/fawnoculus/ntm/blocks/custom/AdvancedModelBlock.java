@@ -8,7 +8,13 @@ import net.minecraft.world.BlockView;
 
 public class AdvancedModelBlock extends Block {
   public AdvancedModelBlock(Settings settings) {
-    super(settings);
+    super(settings
+        .nonOpaque()
+        .allowsSpawning(Blocks::never)
+        .solidBlock(Blocks::never)
+        .suffocates(Blocks::never)
+        .blockVision(Blocks::never)
+    );
   }
   
   @Override

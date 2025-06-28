@@ -29,6 +29,10 @@
   "message.ntm.clean_logs": "Deleted '%1$s' old log files ('%2$s' bytes total)",
   "message.ntm.get_components.could_not_get_item": "Could not get held Item!",
   "message.ntm.get_components.value_max_length": "... (value > max_length)",
+  "message.ntm.get_node_networks.energy": "Energy Networks:",
+  "message.ntm.get_node_networks.fluid": "Fluid Networks:",
+  "message.ntm.get_node_networks.other": "Unknown Networks:",
+  "message.ntm.get_node_networks.none": "None",
 
   "tooltip.ntm.creative_only": "Creative-only item",
   "tooltip.ntm.debug_wand": "Used for 'Debugging' >:3",

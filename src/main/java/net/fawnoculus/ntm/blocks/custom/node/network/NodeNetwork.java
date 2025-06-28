@@ -1,14 +1,15 @@
 package net.fawnoculus.ntm.blocks.custom.node.network;
 
 import net.fawnoculus.ntm.blocks.custom.node.Node;
-import net.fawnoculus.ntm.blocks.custom.node.NodeType;
+import net.fawnoculus.ntm.blocks.custom.node.NodeProperties;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.main.NTMConfig;
+import net.minecraft.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public abstract class NodeNetwork<T> {
+public abstract class NodeNetwork<T extends BlockEntity> {
   public final UUID ID;
   public final List<Node<T>> LOADED_CONNECTORS = new ArrayList<>();
   public final List<Node<T>> LOADED_CONSUMERS = new ArrayList<>();
@@ -25,22 +26,26 @@ public abstract class NodeNetwork<T> {
   
   public abstract NodeNetwork<T> makeNewNetwork();
   
+  public boolean containsNode(Node<T> node){
+    return this.getLoadedComponents().contains(node);
+  }
+  
   public void addNode(Node<T> node){
     switch (node.getNodeType()){
-      case NodeType.Connector connector -> LOADED_CONNECTORS.add(node);
-      case NodeType.Consumer consumer -> LOADED_CONSUMERS.add(node);
-      case NodeType.Provider provider -> LOADED_PROVIDERS.add(node);
-      case NodeType.Storge connector -> LOADED_STORAGES.add(node);
-      default -> throw new IllegalArgumentException("Provided node does not have valid type!");
+      case NodeProperties.Connector connector -> LOADED_CONNECTORS.add(node);
+      case NodeProperties.Consumer consumer -> LOADED_CONSUMERS.add(node);
+      case NodeProperties.Provider provider -> LOADED_PROVIDERS.add(node);
+      case NodeProperties.Storge connector -> LOADED_STORAGES.add(node);
+      default -> NTM.LOGGER.warn("Tired to add Node with Unknown Type ({}) to network {}", node.getNodeType().getClass().getName(), this.ID);
     }
   }
   public void removeNode(Node<T> node){
     switch (node.getNodeType()){
-      case NodeType.Connector connector -> LOADED_CONNECTORS.remove(node);
-      case NodeType.Consumer consumer -> LOADED_CONSUMERS.remove(node);
-      case NodeType.Provider provider -> LOADED_PROVIDERS.remove(node);
-      case NodeType.Storge connector -> LOADED_STORAGES.remove(node);
-      default -> throw new IllegalArgumentException("Provided node does not have valid type!");
+      case NodeProperties.Connector connector -> LOADED_CONNECTORS.remove(node);
+      case NodeProperties.Consumer consumer -> LOADED_CONSUMERS.remove(node);
+      case NodeProperties.Provider provider -> LOADED_PROVIDERS.remove(node);
+      case NodeProperties.Storge connector -> LOADED_STORAGES.remove(node);
+      default -> NTM.LOGGER.warn("Tired to remove Node with Unknown Type ({}) from network {}", node.getNodeType().getClass().getName(), this.ID);
     }
   }
   /**
@@ -48,7 +53,10 @@ public abstract class NodeNetwork<T> {
    * @param node the Node to me removed
    */
   public final void disconnectNode(Node<T> node){
-    if(!this.getLoadedComponents().contains(node)) throw new IllegalArgumentException("This network does not contain the Specified Node");
+    if(!this.containsNode(node)){
+      NTM.LOGGER.warn("Tired to disconnect Node from a network network it isn't a part of (Network: {})", this.ID);
+      return;
+    }
     List<Node<T>> initialNodes = node.getConnectedNodes();
     Stack<Node<T>> toBeDisconnectedNodes = new Stack<>();
     for(Node<T> n : initialNodes){
@@ -98,9 +106,11 @@ public abstract class NodeNetwork<T> {
    */
   public final void disconnectNodes(Collection<Node<T>> providedNodes){
     Stack<Node<T>> toBeDisconnectedNodes = new Stack<>();
-    List<Node<T>> allNodesInNetwork = this.getLoadedComponents();
     for(Node<T> node : providedNodes){
-      if(!allNodesInNetwork.contains(node)) throw new IllegalArgumentException("This network does not contain all of Specified Nodes");
+      if(!this.containsNode(node)){
+        NTM.LOGGER.warn("Tired to disconnect {} Node(s) from each other, but they are not part of network {}", providedNodes.size(), this.ID);
+        return;
+      }
       toBeDisconnectedNodes.push(node);
     }
     
@@ -190,7 +200,7 @@ public abstract class NodeNetwork<T> {
     return Objects.hash(ID);
   }
   
-  abstract void tickNetwork();
+  public abstract void tickNetwork();
   
   @Override
   public String toString() {

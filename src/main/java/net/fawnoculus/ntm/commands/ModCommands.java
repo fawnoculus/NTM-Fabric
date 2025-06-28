@@ -5,6 +5,10 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fawnoculus.ntm.blocks.custom.node.network.EnergyNetwork;
+import net.fawnoculus.ntm.blocks.custom.node.network.FluidNetwork;
+import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetwork;
+import net.fawnoculus.ntm.blocks.custom.node.network.NodeNetworkManager;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.main.NTMConfig;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
@@ -27,7 +31,9 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ModCommands {
   public static void initialize() {
@@ -47,22 +53,6 @@ public class ModCommands {
             )
             .then(CommandManager.literal("version")
                 .executes(context -> version(context, environment)
-                )
-            )
-            .then(CommandManager.literal("dev")
-                .requires(source -> allowCommands(source, null)
-                )
-                .then(CommandManager.literal("list_components")
-                    .executes(context -> getDataComponents(context, 100))
-                    .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
-                        .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
-                    )
-                )
-                .then(CommandManager.literal("clean_logs")
-                    .executes(ModCommands::deleteLogs)
-                )
-                .then(CommandManager.literal("funny")
-                    .executes(ModCommands::funny)
                 )
             )
             .then(CommandManager.literal("message")
@@ -105,6 +95,25 @@ public class ModCommands {
                     .then(CommandManager.literal("remove_all")
                         .executes(context -> removeAllMessages(context, EntityArgumentType.getPlayers(context, "targets")))
                     )
+                )
+            )
+            .then(CommandManager.literal("dev")
+                .requires(source -> allowCommands(source, null)
+                )
+                .then(CommandManager.literal("list_components")
+                    .executes(context -> getDataComponents(context, 100))
+                    .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
+                        .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
+                    )
+                )
+                .then(CommandManager.literal("clean_logs")
+                    .executes(ModCommands::deleteLogs)
+                )
+                .then(CommandManager.literal("funny")
+                    .executes(ModCommands::funny)
+                )
+                .then(CommandManager.literal("get_node_networks")
+                    .executes(ModCommands::getNodeNetworks)
                 )
             )
     ));
@@ -155,6 +164,48 @@ public class ModCommands {
   private static int funny(CommandContext<ServerCommandSource> context){
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.the_funny"), false);
     // This doesn't actually do anything
+    return 1;
+  }
+  
+  private static int getNodeNetworks(CommandContext<ServerCommandSource> context){
+    List<NodeNetwork<?>> otherNetworks = new ArrayList<>();
+    List<FluidNetwork> fluidNetworks = new ArrayList<>();
+    List<EnergyNetwork> energyNetworks = new ArrayList<>();
+    for (NodeNetwork<?> network : NodeNetworkManager.getAllNetworks()){
+      switch (network){
+        case EnergyNetwork energyNetwork -> energyNetworks.add(energyNetwork);
+        case FluidNetwork fluidNetwork -> fluidNetworks.add(fluidNetwork);
+        default -> otherNetworks.add(network);
+      }
+    }
+    
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.other").formatted(Formatting.GOLD), false);
+    if(otherNetworks.isEmpty()){
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
+    }else {
+      for(EnergyNetwork network : energyNetworks){
+        context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
+      }
+    }
+    
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.fluid").formatted(Formatting.GOLD), false);
+    if(fluidNetworks.isEmpty()){
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
+    }else {
+      for(FluidNetwork network : fluidNetworks){
+        context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
+      }
+    }
+    
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.energy").formatted(Formatting.GOLD), false);
+    if(energyNetworks.isEmpty()){
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
+    }
+    else {
+      for(NodeNetwork<?> network : otherNetworks){
+        context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
+      }
+    }
     return 1;
   }
   
