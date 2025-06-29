@@ -140,7 +140,7 @@ public class ItemTagProvider extends FabricTagProvider<Item> {
         .add(ModItems.RAW_TRIXITE)
         .setReplace(false);
     getOrCreateTagBuilder(ModItemTags.OSMIRIDIUM_ORES)
-        .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE.asItem())
+        .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE.asItem())
         .add(ModItems.RAW_METEORIC_IRON)
         .setReplace(false);
     getOrCreateTagBuilder(ModItemTags.METEORIC_IRON_ORES)

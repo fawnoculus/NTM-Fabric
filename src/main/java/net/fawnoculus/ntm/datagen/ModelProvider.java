@@ -110,8 +110,8 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LIMESTONE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MALACHITE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SULFUROUS_STONE);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TEKITE);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TEKTITE);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRIXITE_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GEOTHERMAL_VENT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_OIL_DEPOSIT);
@@ -207,9 +207,18 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.ALUMINIUM_CRYSTALS, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.AMERICIUM_241_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_241_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_241_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.AMERICIUM_242_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_242_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_242_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.AMERICIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_FUEL_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AMERICIUM_FUEL_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.REACTOR_GRADE_AMERICIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_AMERICIUM_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_AMERICIUM_ZFB_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_AMERICIUM_NUGGET, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.ARSENIC_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.ARSENIC_NUGGET, Models.GENERATED);
@@ -217,19 +226,33 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.CAST_ARSENIC_BRONZE_PLATE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.ASBESTOS_SHEET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ASBESTOS_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.ASTATINE_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ASTATINE_209_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.ASH, Models.GENERATED);
+    itemModelGenerator.register(ModItems.WOOD_ASH, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COAL_ASH, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FLY_ASH, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FINE_SOOT, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.RAW_AUSTRALIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.AUSTRALIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.AUSTRALIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.LESSER_AUSTRALIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.GREATER_AUSTRALIUM_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.AUSTRALIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LESSER_AUSTRALIUM_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.LESSER_AUSTRALIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GREATER_AUSTRALIUM_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.GREATER_AUSTRALIUM_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.AUSTRALIUM_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.BAKELITE_BAR, Models.GENERATED);
     itemModelGenerator.register(ModItems.BAKELITE_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.BALEFIRE_EGG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BALEFIRE_SHARD, Models.GENERATED);
+    itemModelGenerator.register(ModItems.THERMONUCLEAR_ASHES, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.RAW_BERYLLIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.BERYLLIUM_INGOT, Models.GENERATED);
@@ -246,19 +269,24 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.BISMUTH_BRONZE_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.CAST_BISMUTH_BRONZE_PLATE, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.BORAX_POWDER, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.BORON_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.BORON_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.TINY_PILE_OF_BORON_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.BORON_FRAGMENT, Models.GENERATED);
     
-    itemModelGenerator.register(ModItems.BORAX_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.BORAX_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BROMINE_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.BSCCO_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.DENSE_BSCCO_WIRE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.CADMIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.CADMIUM_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.CAESIUM_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CAESIUM_137_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TINY_PILE_OF_CAESIUM_137_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.CALCIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.CALCIUM_POWDER, Models.GENERATED);
@@ -267,11 +295,15 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.CAST_CADMIUM_STEEL_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.WELDED_CADMIUM_STEEL_PLATE, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.CEMENT, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.CERIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.TINY_PILE_OF_CERIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.CERIUM_FRAGMENT, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.CHLOROCALCITE, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.CHLOROPHYTE_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.CINNABAR, Models.GENERATED);
     itemModelGenerator.register(ModItems.CINNABAR_CRYSTALS, Models.GENERATED);
@@ -285,9 +317,17 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.COAL_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.TINY_PILE_OF_COAL_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.CARBON_WIRE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COAL_BRIQUETTE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.COBALT_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TINY_PILE_OF_COBALT_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.COBALT_60_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_60_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_60_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COBALT_60_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.COBALT_FRAGMENT, Models.GENERATED);
     itemModelGenerator.register(ModItems.COBALT_CRYSTALS, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_METEORIC_COBALT, Models.GENERATED);
@@ -306,6 +346,8 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.COPPER_CRYSTALS, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_METEORIC_COPPER, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.CRYO_POWDER, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.RAW_CRYOLITE, Models.GENERATED);
     itemModelGenerator.register(ModItems.CRYOLITE_CHUNK, Models.GENERATED);
     
@@ -316,6 +358,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.DESH_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.CAST_DESH_PLATE, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.DIAMOND_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.DIAMOND_CRYSTALS, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.DINEUTRONIUM_INGOT, Models.GENERATED);
@@ -324,6 +367,10 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.DENSE_DINEUTRONIUM_NUGGET, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.ELECTRONIUM_INGOT, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.EMERALD_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.ENERGY_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.EUPHEMIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.EUPHEMIUM_POWDER, Models.GENERATED);
@@ -337,8 +384,17 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.FERROURANIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.CAST_FERROURANIUM_PLATE, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.FLASH_GOLD, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.FLASH_LEAD, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.FLUORITE, Models.GENERATED);
     itemModelGenerator.register(ModItems.FLUORITE_CRYSTALS, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.FLUX, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.FULLERENE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CRYSTALLINE_FULLERENE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.GHIORSIUM_336_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.GHIORSIUM_336_BILLET, Models.GENERATED);
@@ -369,6 +425,10 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.HIGH_SPEED_STEEL_BOLT, Models.GENERATED);
     itemModelGenerator.register(ModItems.HIGH_SPEED_STEEL_PIPE, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.IODINE_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.IODINE_131_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TINY_PILE_OF_IODINE_131_POWDER, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.IRON_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.IRON_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.CAST_IRON_PLATE, Models.GENERATED);
@@ -377,11 +437,16 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.IRON_CRYSTALS, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_METEORIC_IRON, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.INDUSTRIAL_FERTILIZER, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.INFERNAL_COAL, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.SEMI_STABLE_LANTHANUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LANTHANUM_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TINY_PILE_OF_LANTHANUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.LANTHANUM_FRAGMENT, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.LAPIS_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.LAPIS_CRYSTALS, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.LATEX, Models.GENERATED);
@@ -389,7 +454,6 @@ public class ModelProvider extends FabricModelProvider {
     
     itemModelGenerator.register(ModItems.RAW_LEAD, Models.GENERATED);
     itemModelGenerator.register(ModItems.LEAD_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.LEAD_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.LEAD_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.LEAD_209_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.LEAD_209_BILLET, Models.GENERATED);
@@ -406,6 +470,8 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.LIGNITE_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.LIGNITE_COKE, Models.GENERATED);
     itemModelGenerator.register(ModItems.LIGNITE_BRIQUETTE, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.LIMESTONE_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.LITHIUM_CUBE, Models.GENERATED);
     itemModelGenerator.register(ModItems.LITHIUM_POWDER, Models.GENERATED);
@@ -428,21 +494,18 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.MOX_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.MOX_FUEL_NUGGET, Models.GENERATED);
     
-    itemModelGenerator.register(ModItems.NEODYMIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.NEODYMIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.TINY_PILE_OF_NEODYMIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.DENSE_NEODYMIUM_WIRE, Models.GENERATED);
     itemModelGenerator.register(ModItems.NEODYMIUM_FRAGMENT, Models.GENERATED);
     
-    itemModelGenerator.register(ModItems.RAW_NEPTUNIUM, Models.GENERATED);
-    itemModelGenerator.register(ModItems.NEPTUNIUM_CRYSTALS, Models.GENERATED);
     itemModelGenerator.register(ModItems.NEPTUNIUM_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.NEPTUNIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.NEPTUNIUM_NUGGET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.NEPTUNIUM_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NEPTUNIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NEPTUNIUM_FUEL_NUGGET, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.NIOBIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.NIOBIUM_POWDER, Models.GENERATED);
@@ -451,10 +514,12 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.DENSE_NIOBIUM_WIRE, Models.GENERATED);
     itemModelGenerator.register(ModItems.NIOBIUM_FRAGMENT, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.NITAN_BLEND, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.NITER, Models.GENERATED);
     itemModelGenerator.register(ModItems.NITER_CRYSTALS, Models.GENERATED);
     
-    itemModelGenerator.register(ModItems.RAW_OSMIRIDIUM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE, Models.GENERATED);
     itemModelGenerator.register(ModItems.OSMIRIDIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.OSMIRIDIUM_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.IMPURE_OSMIRIDIUM_POWDER, Models.GENERATED);
@@ -462,47 +527,60 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.WELDED_OSMIRIDIUM_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.OSMIRIDIUM_CRYSTALS, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.PALEOGENITE_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TINY_PILE_OF_PALEOGENITE_POWDER, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.RED_PHOSPHORUS, Models.GENERATED);
     itemModelGenerator.register(ModItems.WHITE_PHOSPHORUS_BAR, Models.GENERATED);
     itemModelGenerator.register(ModItems.PHOSPHORUS_CRYSTALS, Models.GENERATED);
     
-    itemModelGenerator.register(ModItems.POLONIUM_210_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.POLONIUM_210_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.POLONIUM_210_NUGGET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.POLONIUM_210_DUST, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.POLYMER_BAR, Models.GENERATED);
-    itemModelGenerator.register(ModItems.POLYMER_POWDER, Models.GENERATED);
-    
     itemModelGenerator.register(ModItems.RAW_PLUTONIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_238_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_239_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_240_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_241_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_238_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_239_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_240_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PLUTONIUM_241_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_FUEL_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.REACTOR_GRADE_PLUTONIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_238_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_238_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_238_BE_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_238_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_239_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_239_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_239_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_240_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_240_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_240_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_241_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_241_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_241_ZFB_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_241_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_CRYSTALS, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.POISON_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.POLONIUM_210_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POLONIUM_210_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POLONIUM_210_BE_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POLONIUM_210_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POLONIUM_210_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.POLYMER_BAR, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POLYMER_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.PULVERIZED_ENCHANTMENT, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.PVC_BAR, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.QUARTZ_POWDER, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.RADIUM_226_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.RADIUM_226_BILLET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RADIUM_226_BE_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.RADIUM_226_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.RADIUM_226_NUGGET, Models.GENERATED);
     
@@ -524,18 +602,21 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.CAST_SATURNITE_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.SATURNITE_SHELL, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.SAWDUST_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SAWDUST_BRIQUETTE, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.RAW_SCHRABIDIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRABIDIUM_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRABIDIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.SCHRABIDIUM_FUEL_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRABIDIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRABIDIUM_FUEL_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRABIDIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRABIDIUM_PLATE, Models.GENERATED);
@@ -547,21 +628,27 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.SCHRARANIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.SCHRARANIUM_CRYSTALS, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.SEMTEX_BLEND, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SEMTEX_BAR, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.SILICON_BOULE, Models.GENERATED);
     itemModelGenerator.register(ModItems.SILICON_WAFER, Models.GENERATED);
     itemModelGenerator.register(ModItems.PRINTED_SILICON_WAFER, Models.GENERATED);
     itemModelGenerator.register(ModItems.SILICON_NUGGET, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.SODIUM_POWDER, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.SOLINIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.SOLINIUM_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.SOLINIUM_NUGGET, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.SPARK_BLEND, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.STARMETAL_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.DENSE_STARMETAL_WIRE, Models.GENERATED);
     itemModelGenerator.register(ModItems.STARMETAL_RING, Models.GENERATED);
     itemModelGenerator.register(ModItems.STARMETAL_CRYSTALS, Models.GENERATED);
     
-    itemModelGenerator.register(ModItems.STRONTIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.STRONTIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.STRONTIUM_90_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.STRONTIUM_90_BILLET, Models.GENERATED);
@@ -598,6 +685,12 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.CAST_TECHNETIUM_STEEL_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.WELDED_TECHNETIUM_STEEL_PLATE, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.TEKTITE_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.TENNESSINE_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.THERMITE, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.RAW_THORIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.THORIUM_232_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.THORIUM_FUEL_INGOT, Models.GENERATED);
@@ -613,8 +706,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.TITANIUM_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.CAST_TITANIUM_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.WELDED_TITANIUM_PLATE, Models.GENERATED);
-    itemModelGenerator.register(ModItems.TITANIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.TITANIUM_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.TITANIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.TITANIUM_SHELL, Models.GENERATED);
     itemModelGenerator.register(ModItems.DENSE_TITANIUM_WIRE, Models.GENERATED);
@@ -625,8 +716,6 @@ public class ModelProvider extends FabricModelProvider {
     
     itemModelGenerator.register(ModItems.RAW_TUNGSTEN, Models.GENERATED);
     itemModelGenerator.register(ModItems.TUNGSTEN_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.TUNGSTEN_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.TUNGSTEN_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.TUNGSTEN_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.TUNGSTEN_BOLT, Models.GENERATED);
     itemModelGenerator.register(ModItems.TUNGSTEN_WIRE, Models.GENERATED);
@@ -636,19 +725,19 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RAW_URANIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.RAW_SCORCHED_URANIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_FUEL_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_233_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_235_INGOT, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_238_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_FUEL_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_233_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_235_BILLET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.URANIUM_238_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_FUEL_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_FUEL_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_FUEL_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_233_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_233_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_233_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_235_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_235_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_235_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_238_INGOT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.URANIUM_238_BILLET, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_238_NUGGET, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.URANIUM_CRYSTALS, Models.GENERATED);
@@ -659,6 +748,13 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.WEAPON_STEEL_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.CAST_WEAPON_STEEL_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.WEAPON_STEEL_SHELL, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.XENON_135_POWDER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TINY_PILE_OF_XENON_135_POWDER, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.YHARONITE_BILLET, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.YELLOWCAKE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.ZIRCONIUM_SPLINTER, Models.GENERATED);
     itemModelGenerator.register(ModItems.ZIRCONIUM_CUBE, Models.GENERATED);

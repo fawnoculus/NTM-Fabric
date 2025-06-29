@@ -118,8 +118,8 @@ public class BlockLootProvider extends FabricBlockLootTableProvider {
     addDrop(ModBlocks.MALACHITE);
     addDrop(ModBlocks.SULFUROUS_STONE);
     
-    addDrop(ModBlocks.TEKITE);
-    addDrop(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE, oreDrops(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE, ModItems.RAW_OSMIRIDIUM));
+    addDrop(ModBlocks.TEKTITE);
+    addDrop(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE, oreDrops(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE, ModItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE));
     addDrop(ModBlocks.TRIXITE_ORE, oreDrops(ModBlocks.TRIXITE_ORE, ModItems.RAW_TRIXITE));
   }
   

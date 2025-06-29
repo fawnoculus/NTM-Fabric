@@ -57,7 +57,7 @@ b51c067bb0cb75426eaa523e29a918c1bb93dd88 data/ntm/loot_table/blocks/meteor_rare_
 104573c2c773ee7ded74dedd198ea657b80679e7 data/ntm/loot_table/blocks/oil_deposit.json
 14ef9442534b92fb7c8ecc9cf3a369eb0f2c2a5e data/ntm/loot_table/blocks/oily_dirt.json
 0b678f22ddc49d8a3cc91aaac512eaf3055b2547 data/ntm/loot_table/blocks/oily_sand.json
-e83b9368af4cb2bd4d1930772fb6139a85d522b2 data/ntm/loot_table/blocks/osmiridium_infused_tekite.json
+efd61b8751130fa4536884989f92115645599ccd data/ntm/loot_table/blocks/osmiridium_infused_tektite.json
 4ff78a47723a042a1284bb34091c0a2d9651f5c6 data/ntm/loot_table/blocks/rare_earth_ore.json
 4ff78a47723a042a1284bb34091c0a2d9651f5c6 data/ntm/loot_table/blocks/schist_asbestos_ore.json
 c849c3333bf3ad7b98c6dcf8825a8c43592bb33f data/ntm/loot_table/blocks/schist_copper_ore.json
@@ -75,7 +75,7 @@ f59d2ca66bd5d90ba77ebb4ab0f13605029bf10d data/ntm/loot_table/blocks/scorched_sch
 4ff78a47723a042a1284bb34091c0a2d9651f5c6 data/ntm/loot_table/blocks/sulfur_ore.json
 4ff78a47723a042a1284bb34091c0a2d9651f5c6 data/ntm/loot_table/blocks/sulfur_rich_volcanic_basalt.json
 2e23e4a67d04e8a18c7c364a8452dc2dc5c82d86 data/ntm/loot_table/blocks/sulfurous_stone.json
-a8d5fdd9355f33a4f64b0a78c6c4d0e3ab96dbb6 data/ntm/loot_table/blocks/tekite.json
+b0bc26a03d4d2ab349c41c14e58c8b7c7d67204b data/ntm/loot_table/blocks/tektite.json
 709463be1f2731dad9693f4dc21f39ca1f464e6c data/ntm/loot_table/blocks/thorium_ore.json
 90508df8f6d294df0a5e953fc60846bb0f128dcc data/ntm/loot_table/blocks/titanium_ore.json
 4ff78a47723a042a1284bb34091c0a2d9651f5c6 data/ntm/loot_table/blocks/titanium_ore_cluster.json

@@ -75,7 +75,7 @@ public class BlockTagProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.SCHIST_SCHRABIDIUM_ORE)
         .add(ModBlocks.SCHIST_RARE_EARTH_ORE)
         .add(ModBlocks.GAS_SHALE)
-        .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE)
+        .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE)
         .add(ModBlocks.TRIXITE_ORE)
         .setReplace(false);
     getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL)
@@ -271,8 +271,8 @@ public class BlockTagProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.LIMESTONE)
         .add(ModBlocks.MALACHITE)
         .add(ModBlocks.SULFUROUS_STONE)
-        .add(ModBlocks.TEKITE)
-        .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE)
+        .add(ModBlocks.TEKTITE)
+        .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE)
         .add(ModBlocks.TRIXITE_ORE)
         .setReplace(false);
   }

@@ -27,6 +27,7 @@ public class EnchantmentProvider extends FabricDynamicRegistryProvider {
   protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
     RegistryWrapper<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
     
+    /*
     register(entries, ModEnchantmentEffects.THUNDERING_KEY, Enchantment.builder(
         Enchantment.definition(
             itemLookup.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
@@ -43,6 +44,7 @@ public class EnchantmentProvider extends FabricDynamicRegistryProvider {
         EnchantmentEffectTarget.VICTIM,
         new LightningEnchantmentEffect(EnchantmentLevelBasedValue.linear(0.4f, 0.2f))
     ));
+     */
   }
   private void register(Entries entries, RegistryKey<Enchantment> key, Enchantment.Builder builder, ResourceCondition... resourceConditions) {
     entries.add(key, builder.build(key.getValue()), resourceConditions);

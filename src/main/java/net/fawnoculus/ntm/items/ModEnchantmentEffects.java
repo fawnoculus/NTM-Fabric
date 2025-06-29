@@ -19,8 +19,8 @@ public class ModEnchantmentEffects {
     return Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, NTM.id(id), codec);
   }
   
-  public static final RegistryKey<Enchantment> THUNDERING_KEY = of("thundering");
-  public static MapCodec<LightningEnchantmentEffect> LIGHTNING_EFFECT = register("lightning_effect", LightningEnchantmentEffect.CODEC);
+  //public static final RegistryKey<Enchantment> THUNDERING_KEY = of("thundering");
+  //public static MapCodec<LightningEnchantmentEffect> LIGHTNING_EFFECT = register("lightning_effect", LightningEnchantmentEffect.CODEC);
   
   public static void initialize() {}
 }

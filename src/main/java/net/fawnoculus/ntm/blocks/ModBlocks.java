@@ -133,8 +133,8 @@ public class ModBlocks {
   public static final Block MALACHITE = register("malachite", Block::new, STONE_SETTINGS, true);
   public static final Block SULFUROUS_STONE = register("sulfurous_stone", Block::new, STONE_SETTINGS, true);
   
-  public static final Block TEKITE = register("tekite", Block::new, STONE_SETTINGS, true);
-  public static final Block OSMIRIDIUM_INFUSED_TEKITE = register("osmiridium_infused_tekite", Block::new, STONE_SETTINGS, true);
+  public static final Block TEKTITE = register("tektite", Block::new, STONE_SETTINGS, true);
+  public static final Block OSMIRIDIUM_INFUSED_TEKTITE = register("osmiridium_infused_tektite", Block::new, STONE_SETTINGS, true);
   public static final Block TRIXITE_ORE = register("trixite_ore", Block::new, STONE_SETTINGS, true);
   
   public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, STONE_SETTINGS, true);

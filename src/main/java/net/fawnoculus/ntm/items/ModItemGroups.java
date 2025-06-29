@@ -105,9 +105,18 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.ALUMINIUM_CRYSTALS);
       
       ItemGroup.add(ModItems.AMERICIUM_241_INGOT);
+      ItemGroup.add(ModItems.AMERICIUM_241_BILLET);
+      ItemGroup.add(ModItems.AMERICIUM_241_NUGGET);
       ItemGroup.add(ModItems.AMERICIUM_242_INGOT);
+      ItemGroup.add(ModItems.AMERICIUM_242_BILLET);
+      ItemGroup.add(ModItems.AMERICIUM_242_NUGGET);
       ItemGroup.add(ModItems.AMERICIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.AMERICIUM_FUEL_BILLET);
+      ItemGroup.add(ModItems.AMERICIUM_FUEL_NUGGET);
       ItemGroup.add(ModItems.REACTOR_GRADE_AMERICIUM_INGOT);
+      ItemGroup.add(ModItems.REACTOR_GRADE_AMERICIUM_BILLET);
+      ItemGroup.add(ModItems.REACTOR_GRADE_AMERICIUM_ZFB_BILLET);
+      ItemGroup.add(ModItems.REACTOR_GRADE_AMERICIUM_NUGGET);
       
       ItemGroup.add(ModItems.ARSENIC_INGOT);
       ItemGroup.add(ModItems.ARSENIC_NUGGET);
@@ -115,18 +124,29 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.CAST_ARSENIC_BRONZE_PLATE);
       
       ItemGroup.add(ModItems.ASBESTOS_SHEET);
+      ItemGroup.add(ModItems.ASBESTOS_POWDER);
+      
+      ItemGroup.add(ModItems.ASH);
+      ItemGroup.add(ModItems.WOOD_ASH);
+      ItemGroup.add(ModItems.COAL_ASH);
+      ItemGroup.add(ModItems.FLY_ASH);
+      ItemGroup.add(ModItems.FINE_SOOT);
       
       ItemGroup.add(ModItems.AUSTRALIUM_INGOT);
       ItemGroup.add(ModItems.AUSTRALIUM_BILLET);
-      ItemGroup.add(ModItems.LESSER_AUSTRALIUM_BILLET);
-      ItemGroup.add(ModItems.GREATER_AUSTRALIUM_BILLET);
       ItemGroup.add(ModItems.AUSTRALIUM_NUGGET);
+      ItemGroup.add(ModItems.LESSER_AUSTRALIUM_BILLET);
       ItemGroup.add(ModItems.LESSER_AUSTRALIUM_NUGGET);
+      ItemGroup.add(ModItems.GREATER_AUSTRALIUM_BILLET);
       ItemGroup.add(ModItems.GREATER_AUSTRALIUM_NUGGET);
       ItemGroup.add(ModItems.AUSTRALIUM_POWDER);
       
       ItemGroup.add(ModItems.BAKELITE_BAR);
       ItemGroup.add(ModItems.BAKELITE_POWDER);
+      
+      ItemGroup.add(ModItems.BALEFIRE_EGG);
+      ItemGroup.add(ModItems.BALEFIRE_SHARD);
+      ItemGroup.add(ModItems.THERMONUCLEAR_ASHES);
       
       ItemGroup.add(ModItems.BERYLLIUM_INGOT);
       ItemGroup.add(ModItems.BERYLLIUM_BILLET);
@@ -142,19 +162,24 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.BISMUTH_BRONZE_INGOT);
       ItemGroup.add(ModItems.CAST_BISMUTH_BRONZE_PLATE);
       
+      ItemGroup.add(ModItems.BORAX_POWDER);
+      
       ItemGroup.add(ModItems.BORON_INGOT);
       ItemGroup.add(ModItems.BORON_POWDER);
       ItemGroup.add(ModItems.TINY_PILE_OF_BORON_POWDER);
       ItemGroup.add(ModItems.BORON_FRAGMENT);
       
-      ItemGroup.add(ModItems.BORAX_INGOT);
-      ItemGroup.add(ModItems.BORAX_POWDER);
+      ItemGroup.add(ModItems.BROMINE_POWDER);
       
       ItemGroup.add(ModItems.BSCCO_INGOT);
       ItemGroup.add(ModItems.DENSE_BSCCO_WIRE);
       
       ItemGroup.add(ModItems.CADMIUM_INGOT);
       ItemGroup.add(ModItems.CADMIUM_POWDER);
+      
+      ItemGroup.add(ModItems.CAESIUM_POWDER);
+      ItemGroup.add(ModItems.CAESIUM_137_POWDER);
+      ItemGroup.add(ModItems.TINY_PILE_OF_CAESIUM_137_POWDER);
       
       ItemGroup.add(ModItems.CALCIUM_INGOT);
       ItemGroup.add(ModItems.CALCIUM_POWDER);
@@ -163,11 +188,15 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.CAST_CADMIUM_STEEL_PLATE);
       ItemGroup.add(ModItems.WELDED_CADMIUM_STEEL_PLATE);
       
+      ItemGroup.add(ModItems.CEMENT);
+      
       ItemGroup.add(ModItems.CERIUM_POWDER);
       ItemGroup.add(ModItems.TINY_PILE_OF_CERIUM_POWDER);
       ItemGroup.add(ModItems.CERIUM_FRAGMENT);
       
       ItemGroup.add(ModItems.CHLOROCALCITE);
+      
+      ItemGroup.add(ModItems.CHLOROPHYTE_POWDER);
       
       ItemGroup.add(ModItems.CINNABAR);
       ItemGroup.add(ModItems.CINNABAR_CRYSTALS);
@@ -181,9 +210,17 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.COAL_POWDER);
       ItemGroup.add(ModItems.TINY_PILE_OF_COAL_POWDER);
       ItemGroup.add(ModItems.CARBON_WIRE);
+      ItemGroup.add(ModItems.COAL_BRIQUETTE);
       
       ItemGroup.add(ModItems.COBALT_INGOT);
+      ItemGroup.add(ModItems.COBALT_BILLET);
+      ItemGroup.add(ModItems.COBALT_POWDER);
+      ItemGroup.add(ModItems.COBALT_NUGGET);
+      ItemGroup.add(ModItems.TINY_PILE_OF_COBALT_POWDER);
       ItemGroup.add(ModItems.COBALT_60_INGOT);
+      ItemGroup.add(ModItems.COBALT_60_BILLET);
+      ItemGroup.add(ModItems.COBALT_60_POWDER);
+      ItemGroup.add(ModItems.COBALT_60_NUGGET);
       ItemGroup.add(ModItems.COBALT_FRAGMENT);
       ItemGroup.add(ModItems.COBALT_CRYSTALS);
       
@@ -200,6 +237,8 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.DENSE_COPPER_WIRE);
       ItemGroup.add(ModItems.COPPER_CRYSTALS);
       
+      ItemGroup.add(ModItems.CRYO_POWDER);
+      
       ItemGroup.add(ModItems.CRYOLITE_CHUNK);
       
       ItemGroup.add(ModItems.DESH_INGOT);
@@ -209,6 +248,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.DESH_NUGGET);
       ItemGroup.add(ModItems.CAST_DESH_PLATE);
       
+      ItemGroup.add(ModItems.DIAMOND_POWDER);
       ItemGroup.add(ModItems.DIAMOND_CRYSTALS);
       
       ItemGroup.add(ModItems.DINEUTRONIUM_INGOT);
@@ -217,6 +257,10 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.DENSE_DINEUTRONIUM_NUGGET);
       
       ItemGroup.add(ModItems.ELECTRONIUM_INGOT);
+      
+      ItemGroup.add(ModItems.EMERALD_POWDER);
+      
+      ItemGroup.add(ModItems.ENERGY_POWDER);
       
       ItemGroup.add(ModItems.EUPHEMIUM_INGOT);
       ItemGroup.add(ModItems.EUPHEMIUM_POWDER);
@@ -230,8 +274,17 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.FERROURANIUM_INGOT);
       ItemGroup.add(ModItems.CAST_FERROURANIUM_PLATE);
       
+      ItemGroup.add(ModItems.FLASH_GOLD);
+      
+      ItemGroup.add(ModItems.FLASH_LEAD);
+      
       ItemGroup.add(ModItems.FLUORITE);
       ItemGroup.add(ModItems.FLUORITE_CRYSTALS);
+      
+      ItemGroup.add(ModItems.FLUX);
+      
+      ItemGroup.add(ModItems.FULLERENE);
+      ItemGroup.add(ModItems.CRYSTALLINE_FULLERENE);
       
       ItemGroup.add(ModItems.GHIORSIUM_336_INGOT);
       ItemGroup.add(ModItems.GHIORSIUM_336_BILLET);
@@ -262,6 +315,10 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.HIGH_SPEED_STEEL_BOLT);
       ItemGroup.add(ModItems.HIGH_SPEED_STEEL_PIPE);
       
+      ItemGroup.add(ModItems.IODINE_POWDER);
+      ItemGroup.add(ModItems.IODINE_131_POWDER);
+      ItemGroup.add(ModItems.TINY_PILE_OF_IODINE_131_POWDER);
+      
       ItemGroup.add(ModItems.IRON_POWDER);
       ItemGroup.add(ModItems.IRON_PLATE);
       ItemGroup.add(ModItems.CAST_IRON_PLATE);
@@ -269,18 +326,22 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.IRON_PIPE);
       ItemGroup.add(ModItems.IRON_CRYSTALS);
       
+      ItemGroup.add(ModItems.INDUSTRIAL_FERTILIZER);
+      
       ItemGroup.add(ModItems.INFERNAL_COAL);
       
       ItemGroup.add(ModItems.SEMI_STABLE_LANTHANUM_INGOT);
+      ItemGroup.add(ModItems.LANTHANUM_POWDER);
+      ItemGroup.add(ModItems.TINY_PILE_OF_LANTHANUM_POWDER);
       ItemGroup.add(ModItems.LANTHANUM_FRAGMENT);
       
+      ItemGroup.add(ModItems.LAPIS_POWDER);
       ItemGroup.add(ModItems.LAPIS_CRYSTALS);
       
       ItemGroup.add(ModItems.LATEX);
       ItemGroup.add(ModItems.LATEX_BAR);
       
       ItemGroup.add(ModItems.LEAD_INGOT);
-      ItemGroup.add(ModItems.LEAD_BILLET);
       ItemGroup.add(ModItems.LEAD_NUGGET);
       ItemGroup.add(ModItems.LEAD_209_INGOT);
       ItemGroup.add(ModItems.LEAD_209_BILLET);
@@ -297,6 +358,8 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.LIGNITE_POWDER);
       ItemGroup.add(ModItems.LIGNITE_COKE);
       ItemGroup.add(ModItems.LIGNITE_BRIQUETTE);
+      
+      ItemGroup.add(ModItems.LIMESTONE_POWDER);
       
       ItemGroup.add(ModItems.LITHIUM_CUBE);
       ItemGroup.add(ModItems.LITHIUM_POWDER);
@@ -319,20 +382,18 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.MOX_FUEL_BILLET);
       ItemGroup.add(ModItems.MOX_FUEL_NUGGET);
       
-      ItemGroup.add(ModItems.NEODYMIUM_INGOT);
       ItemGroup.add(ModItems.NEODYMIUM_POWDER);
       ItemGroup.add(ModItems.TINY_PILE_OF_NEODYMIUM_POWDER);
       ItemGroup.add(ModItems.DENSE_NEODYMIUM_WIRE);
       ItemGroup.add(ModItems.NEODYMIUM_FRAGMENT);
       
-      ItemGroup.add(ModItems.NEPTUNIUM_CRYSTALS);
       ItemGroup.add(ModItems.NEPTUNIUM_INGOT);
-      ItemGroup.add(ModItems.NEPTUNIUM_FUEL_INGOT);
       ItemGroup.add(ModItems.NEPTUNIUM_BILLET);
-      ItemGroup.add(ModItems.NEPTUNIUM_FUEL_BILLET);
-      ItemGroup.add(ModItems.NEPTUNIUM_NUGGET);
-      ItemGroup.add(ModItems.NEPTUNIUM_FUEL_NUGGET);
       ItemGroup.add(ModItems.NEPTUNIUM_POWDER);
+      ItemGroup.add(ModItems.NEPTUNIUM_NUGGET);
+      ItemGroup.add(ModItems.NEPTUNIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.NEPTUNIUM_FUEL_BILLET);
+      ItemGroup.add(ModItems.NEPTUNIUM_FUEL_NUGGET);
       
       ItemGroup.add(ModItems.NIOBIUM_INGOT);
       ItemGroup.add(ModItems.NIOBIUM_POWDER);
@@ -340,6 +401,8 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.NIOBIUM_NUGGET);
       ItemGroup.add(ModItems.DENSE_NIOBIUM_WIRE);
       ItemGroup.add(ModItems.NIOBIUM_FRAGMENT);
+      
+      ItemGroup.add(ModItems.NITAN_BLEND);
       
       ItemGroup.add(ModItems.NITER);
       ItemGroup.add(ModItems.NITER_CRYSTALS);
@@ -351,46 +414,59 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.WELDED_OSMIRIDIUM_PLATE);
       ItemGroup.add(ModItems.OSMIRIDIUM_CRYSTALS);
       
+      ItemGroup.add(ModItems.PALEOGENITE_POWDER);
+      ItemGroup.add(ModItems.TINY_PILE_OF_PALEOGENITE_POWDER);
+      
       ItemGroup.add(ModItems.RED_PHOSPHORUS);
       ItemGroup.add(ModItems.WHITE_PHOSPHORUS_BAR);
       ItemGroup.add(ModItems.PHOSPHORUS_CRYSTALS);
       
-      ItemGroup.add(ModItems.POLONIUM_210_INGOT);
-      ItemGroup.add(ModItems.POLONIUM_210_BILLET);
-      ItemGroup.add(ModItems.POLONIUM_210_NUGGET);
-      ItemGroup.add(ModItems.POLONIUM_210_DUST);
-      
-      ItemGroup.add(ModItems.POLYMER_BAR);
-      ItemGroup.add(ModItems.POLYMER_POWDER);
-      
       ItemGroup.add(ModItems.PLUTONIUM_INGOT);
-      ItemGroup.add(ModItems.PLUTONIUM_FUEL_INGOT);
-      ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM_INGOT);
-      ItemGroup.add(ModItems.PLUTONIUM_238_INGOT);
-      ItemGroup.add(ModItems.PLUTONIUM_239_INGOT);
-      ItemGroup.add(ModItems.PLUTONIUM_240_INGOT);
-      ItemGroup.add(ModItems.PLUTONIUM_241_INGOT);
       ItemGroup.add(ModItems.PLUTONIUM_BILLET);
-      ItemGroup.add(ModItems.PLUTONIUM_FUEL_BILLET);
-      ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM_BILLET);
-      ItemGroup.add(ModItems.PLUTONIUM_238_BILLET);
-      ItemGroup.add(ModItems.PLUTONIUM_239_BILLET);
-      ItemGroup.add(ModItems.PLUTONIUM_240_BILLET);
-      ItemGroup.add(ModItems.PLUTONIUM_241_BILLET);
       ItemGroup.add(ModItems.PLUTONIUM_NUGGET);
+      ItemGroup.add(ModItems.PLUTONIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.PLUTONIUM_FUEL_BILLET);
       ItemGroup.add(ModItems.PLUTONIUM_FUEL_NUGGET);
+      ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM_INGOT);
+      ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM_BILLET);
       ItemGroup.add(ModItems.REACTOR_GRADE_PLUTONIUM_NUGGET);
+      ItemGroup.add(ModItems.PLUTONIUM_238_INGOT);
+      ItemGroup.add(ModItems.PLUTONIUM_238_BILLET);
+      ItemGroup.add(ModItems.PLUTONIUM_238_BE_BILLET);
       ItemGroup.add(ModItems.PLUTONIUM_238_NUGGET);
+      ItemGroup.add(ModItems.PLUTONIUM_239_INGOT);
+      ItemGroup.add(ModItems.PLUTONIUM_239_BILLET);
       ItemGroup.add(ModItems.PLUTONIUM_239_NUGGET);
+      ItemGroup.add(ModItems.PLUTONIUM_240_INGOT);
+      ItemGroup.add(ModItems.PLUTONIUM_240_BILLET);
       ItemGroup.add(ModItems.PLUTONIUM_240_NUGGET);
+      ItemGroup.add(ModItems.PLUTONIUM_241_INGOT);
+      ItemGroup.add(ModItems.PLUTONIUM_241_BILLET);
+      ItemGroup.add(ModItems.PLUTONIUM_241_ZFB_BILLET);
       ItemGroup.add(ModItems.PLUTONIUM_241_NUGGET);
       ItemGroup.add(ModItems.PLUTONIUM_POWDER);
       ItemGroup.add(ModItems.PLUTONIUM_CRYSTALS);
       
+      ItemGroup.add(ModItems.POISON_POWDER);
+      
+      ItemGroup.add(ModItems.POLONIUM_210_INGOT);
+      ItemGroup.add(ModItems.POLONIUM_210_BILLET);
+      ItemGroup.add(ModItems.POLONIUM_210_BE_BILLET);
+      ItemGroup.add(ModItems.POLONIUM_210_NUGGET);
+      ItemGroup.add(ModItems.POLONIUM_210_POWDER);
+      
+      ItemGroup.add(ModItems.POLYMER_BAR);
+      ItemGroup.add(ModItems.POLYMER_POWDER);
+      
+      ItemGroup.add(ModItems.PULVERIZED_ENCHANTMENT);
+      
       ItemGroup.add(ModItems.PVC_BAR);
+      
+      ItemGroup.add(ModItems.QUARTZ_POWDER);
       
       ItemGroup.add(ModItems.RADIUM_226_INGOT);
       ItemGroup.add(ModItems.RADIUM_226_BILLET);
+      ItemGroup.add(ModItems.RADIUM_226_BE_BILLET);
       ItemGroup.add(ModItems.RADIUM_226_POWDER);
       ItemGroup.add(ModItems.RADIUM_226_NUGGET);
       
@@ -411,17 +487,20 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.CAST_SATURNITE_PLATE);
       ItemGroup.add(ModItems.SATURNITE_SHELL);
       
+      ItemGroup.add(ModItems.SAWDUST_POWDER);
+      ItemGroup.add(ModItems.SAWDUST_BRIQUETTE);
+      
       ItemGroup.add(ModItems.SCHRABIDIUM_INGOT);
-      ItemGroup.add(ModItems.SCHRABIDIUM_FUEL_INGOT);
-      ItemGroup.add(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_INGOT);
-      ItemGroup.add(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_INGOT);
       ItemGroup.add(ModItems.SCHRABIDIUM_BILLET);
-      ItemGroup.add(ModItems.SCHRABIDIUM_FUEL_BILLET);
-      ItemGroup.add(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_BILLET);
-      ItemGroup.add(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_BILLET);
       ItemGroup.add(ModItems.SCHRABIDIUM_NUGGET);
+      ItemGroup.add(ModItems.SCHRABIDIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.SCHRABIDIUM_FUEL_BILLET);
       ItemGroup.add(ModItems.SCHRABIDIUM_FUEL_NUGGET);
+      ItemGroup.add(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_BILLET);
       ItemGroup.add(ModItems.LOW_ENRICHED_SCHRABIDIUM_FUEL_NUGGET);
+      ItemGroup.add(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_BILLET);
       ItemGroup.add(ModItems.HIGHLY_ENRICHED_SCHRABIDIUM_FUEL_NUGGET);
       ItemGroup.add(ModItems.SCHRABIDIUM_POWDER);
       ItemGroup.add(ModItems.SCHRABIDIUM_PLATE);
@@ -433,21 +512,27 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.SCHRARANIUM_INGOT);
       ItemGroup.add(ModItems.SCHRARANIUM_CRYSTALS);
       
+      ItemGroup.add(ModItems.SEMTEX_BLEND);
+      ItemGroup.add(ModItems.SEMTEX_BAR);
+      
       ItemGroup.add(ModItems.SILICON_BOULE);
       ItemGroup.add(ModItems.SILICON_WAFER);
       ItemGroup.add(ModItems.PRINTED_SILICON_WAFER);
       ItemGroup.add(ModItems.SILICON_NUGGET);
       
+      ItemGroup.add(ModItems.SODIUM_POWDER);
+      
       ItemGroup.add(ModItems.SOLINIUM_INGOT);
       ItemGroup.add(ModItems.SOLINIUM_BILLET);
       ItemGroup.add(ModItems.SOLINIUM_NUGGET);
+      
+      ItemGroup.add(ModItems.SPARK_BLEND);
       
       ItemGroup.add(ModItems.STARMETAL_INGOT);
       ItemGroup.add(ModItems.DENSE_STARMETAL_WIRE);
       ItemGroup.add(ModItems.STARMETAL_RING);
       ItemGroup.add(ModItems.STARMETAL_CRYSTALS);
       
-      ItemGroup.add(ModItems.STRONTIUM_INGOT);
       ItemGroup.add(ModItems.STRONTIUM_POWDER);
       ItemGroup.add(ModItems.STRONTIUM_90_INGOT);
       ItemGroup.add(ModItems.STRONTIUM_90_BILLET);
@@ -484,6 +569,12 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.CAST_TECHNETIUM_STEEL_PLATE);
       ItemGroup.add(ModItems.WELDED_TECHNETIUM_STEEL_PLATE);
       
+      ItemGroup.add(ModItems.TEKTITE_POWDER);
+      
+      ItemGroup.add(ModItems.TENNESSINE_POWDER);
+      
+      ItemGroup.add(ModItems.THERMITE);
+      
       ItemGroup.add(ModItems.THORIUM_232_INGOT);
       ItemGroup.add(ModItems.THORIUM_FUEL_INGOT);
       ItemGroup.add(ModItems.THORIUM_232_BILLET);
@@ -497,8 +588,6 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.TITANIUM_PLATE);
       ItemGroup.add(ModItems.CAST_TITANIUM_PLATE);
       ItemGroup.add(ModItems.WELDED_TITANIUM_PLATE);
-      ItemGroup.add(ModItems.TITANIUM_BILLET);
-      ItemGroup.add(ModItems.TITANIUM_NUGGET);
       ItemGroup.add(ModItems.TITANIUM_POWDER);
       ItemGroup.add(ModItems.TITANIUM_SHELL);
       ItemGroup.add(ModItems.DENSE_TITANIUM_WIRE);
@@ -507,8 +596,6 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.TRIXITE_CRYSTALS);
       
       ItemGroup.add(ModItems.TUNGSTEN_INGOT);
-      ItemGroup.add(ModItems.TUNGSTEN_BILLET);
-      ItemGroup.add(ModItems.TUNGSTEN_NUGGET);
       ItemGroup.add(ModItems.TUNGSTEN_POWDER);
       ItemGroup.add(ModItems.TUNGSTEN_BOLT);
       ItemGroup.add(ModItems.TUNGSTEN_WIRE);
@@ -516,19 +603,19 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.TUNGSTEN_CRYSTALS);
       
       ItemGroup.add(ModItems.URANIUM_INGOT);
-      ItemGroup.add(ModItems.URANIUM_FUEL_INGOT);
-      ItemGroup.add(ModItems.URANIUM_233_INGOT);
-      ItemGroup.add(ModItems.URANIUM_235_INGOT);
-      ItemGroup.add(ModItems.URANIUM_238_INGOT);
       ItemGroup.add(ModItems.URANIUM_BILLET);
-      ItemGroup.add(ModItems.URANIUM_FUEL_BILLET);
-      ItemGroup.add(ModItems.URANIUM_233_BILLET);
-      ItemGroup.add(ModItems.URANIUM_235_BILLET);
-      ItemGroup.add(ModItems.URANIUM_238_BILLET);
       ItemGroup.add(ModItems.URANIUM_NUGGET);
+      ItemGroup.add(ModItems.URANIUM_FUEL_INGOT);
+      ItemGroup.add(ModItems.URANIUM_FUEL_BILLET);
       ItemGroup.add(ModItems.URANIUM_FUEL_NUGGET);
+      ItemGroup.add(ModItems.URANIUM_233_INGOT);
+      ItemGroup.add(ModItems.URANIUM_233_BILLET);
       ItemGroup.add(ModItems.URANIUM_233_NUGGET);
+      ItemGroup.add(ModItems.URANIUM_235_INGOT);
+      ItemGroup.add(ModItems.URANIUM_235_BILLET);
       ItemGroup.add(ModItems.URANIUM_235_NUGGET);
+      ItemGroup.add(ModItems.URANIUM_238_INGOT);
+      ItemGroup.add(ModItems.URANIUM_238_BILLET);
       ItemGroup.add(ModItems.URANIUM_238_NUGGET);
       ItemGroup.add(ModItems.URANIUM_POWDER);
       ItemGroup.add(ModItems.URANIUM_CRYSTALS);
@@ -539,6 +626,13 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.WEAPON_STEEL_PLATE);
       ItemGroup.add(ModItems.CAST_WEAPON_STEEL_PLATE);
       ItemGroup.add(ModItems.WEAPON_STEEL_SHELL);
+      
+      ItemGroup.add(ModItems.XENON_135_POWDER);
+      ItemGroup.add(ModItems.TINY_PILE_OF_XENON_135_POWDER);
+      
+      ItemGroup.add(ModItems.YHARONITE_BILLET);
+      
+      ItemGroup.add(ModItems.YELLOWCAKE);
       
       ItemGroup.add(ModItems.ZIRCONIUM_SPLINTER);
       ItemGroup.add(ModItems.ZIRCONIUM_CUBE);
@@ -637,8 +731,8 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.LIMESTONE);
       ItemGroup.add(ModBlocks.MALACHITE);
       ItemGroup.add(ModBlocks.SULFUROUS_STONE);
-      ItemGroup.add(ModBlocks.TEKITE);
-      ItemGroup.add(ModBlocks.OSMIRIDIUM_INFUSED_TEKITE);
+      ItemGroup.add(ModBlocks.TEKTITE);
+      ItemGroup.add(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE);
       ItemGroup.add(ModBlocks.TRIXITE_ORE);
       ItemGroup.add(ModBlocks.GEOTHERMAL_VENT);
       ItemGroup.add(ModBlocks.BEDROCK_OIL_DEPOSIT);
@@ -660,7 +754,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RAW_METEORIC_RARE_EARTH);
       ItemGroup.add(ModItems.RAW_METEORIC_COBALT);
       ItemGroup.add(ModItems.RAW_TRIXITE);
-      ItemGroup.add(ModItems.RAW_OSMIRIDIUM);
+      ItemGroup.add(ModItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINES_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);
