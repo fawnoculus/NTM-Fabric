@@ -42,6 +42,7 @@ public class ModItemGroups {
   public static final RegistryKey<ItemGroup> BOMBS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("bombs"));
   public static final ItemGroup BOMBS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(ModItems.NULL))
+      .texture(NTM.id("textures/gui/creative_inventory/tab_nuke.png"))
       .displayName(Text.translatable("itemGroup.ntm.bombs"))
       .build();
   public static final RegistryKey<ItemGroup> MISSILES_AND_SATELLITES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("missiles_and_satellites"));
