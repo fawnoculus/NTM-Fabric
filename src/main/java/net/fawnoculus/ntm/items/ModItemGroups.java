@@ -758,8 +758,12 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINES_KEY).register(ItemGroup -> {
-      ItemGroup.add(ModItems.NULL);
-      ItemGroup.add(ModItems.NULL);
+      ItemGroup.add(ModBlocks.TEMP_CABLE);
+      ItemGroup.add(ModBlocks.POTATO_BATTERY_BLOCK);
+      ItemGroup.add(ModBlocks.ENERGY_STORAGE_BLOCK);
+      ItemGroup.add(ModBlocks.LITHIUM_ION_ENERGY_STORAGE_BLOCK);
+      ItemGroup.add(ModBlocks.SCHRABIDIUM_ENERGY_STORAGE_BLOCK);
+      ItemGroup.add(ModBlocks.SPARK_ENERGY_STORAGE_BLOCK);
     });
     ItemGroupEvents.modifyEntriesEvent(BOMBS_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);

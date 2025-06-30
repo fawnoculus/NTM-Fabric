@@ -11,8 +11,6 @@ public interface NodeProperties {
   long getValue();
   void setPriority(long value);
   long getPriority();
-  void setMaxTransfer(@Range(from = 0, to = Long.MAX_VALUE) long value);
-  long getMaxTransfer();
   void setMaxValue(@Range(from = 0, to = Long.MAX_VALUE) long value);
   long getMaxValue();
   void writeNBT(NbtCompound nbt, RegistryWrapper.WrapperLookup registries);
@@ -62,10 +60,6 @@ public interface NodeProperties {
     @Override
     public long getPriority() {return 0;}
     @Override
-    public void setMaxTransfer(long value) {}
-    @Override
-    public long getMaxTransfer() {return 0;}
-    @Override
     public void setMaxValue(long value) {}
     @Override
     public long getMaxValue() {return 0;}
@@ -82,7 +76,6 @@ public interface NodeProperties {
     long value = 0;
     long maxValue = 0;
     long priority = 0;
-    long maxTransfer = 0;
     @Override
     public void setValue(long value) {
       this.value = value;
@@ -98,14 +91,6 @@ public interface NodeProperties {
     @Override
     public long getPriority() {
       return this.priority;
-    }
-    @Override
-    public void setMaxTransfer(long value) {
-      this.maxTransfer = value;
-    }
-    @Override
-    public long getMaxTransfer() {
-      return this.maxTransfer;
     }
     @Override
     public void setMaxValue(long value) {
@@ -134,7 +119,6 @@ public interface NodeProperties {
     long value = 0;
     long maxValue = 0;
     long priority = 0;
-    long maxTransfer = 0;
     @Override
     public void setValue(long value) {
       this.value = value;
@@ -150,14 +134,6 @@ public interface NodeProperties {
     @Override
     public long getPriority() {
       return this.priority;
-    }
-    @Override
-    public void setMaxTransfer(long value) {
-      this.maxTransfer = value;
-    }
-    @Override
-    public long getMaxTransfer() {
-      return this.maxTransfer;
     }
     @Override
     public void setMaxValue(long value) {
@@ -186,7 +162,6 @@ public interface NodeProperties {
     long value = 0;
     long maxValue = 0;
     long priority = 0;
-    long maxTransfer = 0;
     StorageMode mode = StorageMode.Consume;
     @Override
     public void setValue(long value) {
@@ -203,14 +178,6 @@ public interface NodeProperties {
     @Override
     public long getPriority() {
       return this.priority;
-    }
-    @Override
-    public void setMaxTransfer(long value) {
-      this.maxTransfer = value;
-    }
-    @Override
-    public long getMaxTransfer() {
-      return this.maxTransfer;
     }
     @Override
     public void setMaxValue(long value) {

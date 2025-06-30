@@ -32,8 +32,8 @@ public interface ProxyNode<T extends BlockEntity> extends Node<T>{
     this.getNode().setNodeProperties(nodeProperties);
   }
   @Override
-  default NodeProperties getNodeType(){
-    return this.getNode().getNodeType();
+  default NodeProperties getNodeProperties(){
+    return this.getNode().getNodeProperties();
   }
   
   @Override

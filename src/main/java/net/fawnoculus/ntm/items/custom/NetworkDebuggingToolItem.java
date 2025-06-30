@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.items.custom;
 
 import net.fawnoculus.ntm.blocks.node.Node;
+import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
+import net.fawnoculus.ntm.blocks.node.network.FluidNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +25,7 @@ public class NetworkDebuggingToolItem extends Item {
   
   @Override
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.WHITE));
     tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool1").formatted(Formatting.RED));
     tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool2").formatted(Formatting.RED));
   }
@@ -41,21 +43,25 @@ public class NetworkDebuggingToolItem extends Item {
     assert player != null;
     
     if (!(world.getBlockEntity(pos) instanceof Node<?> node)) {
-      player.sendMessage(Text.translatable("message.ntm.network_debug.no_node").formatted(Formatting.RED), false);
+      player.sendMessage(Text.translatable("message.ntm.network_debug.not_node").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
     NodeNetwork<?> network = node.getNetwork();
     if(network == null){
-      player.sendMessage(Text.translatable("message.ntm.network_debug.no_network").formatted(Formatting.RED), false);
+      player.sendMessage(Text.translatable("message.ntm.network_debug.node_no_network").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
     
-    player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", network.ID), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.getClass()), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_connector_count", network.LOADED_CONNECTORS.size()), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_consumer_count", network.LOADED_CONSUMERS), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_provider_count", network.LOADED_PROVIDERS.size()), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_storage_count", network.LOADED_STORAGES.size()), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
+    switch (network){
+      case EnergyNetwork ignored -> player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.energy").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+      case FluidNetwork ignored -> player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.fluid").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+      default -> player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.unknown").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    }
+    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_provider_count", Text.literal(String.valueOf(network.LOADED_PROVIDERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_storage_count", Text.literal(String.valueOf(network.LOADED_STORAGES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     
     return ActionResult.SUCCESS_SERVER;
   }

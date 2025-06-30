@@ -2,7 +2,8 @@ package net.fawnoculus.ntm.blocks;
 
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceExtensionBlock;
-import net.fawnoculus.ntm.blocks.custom.RenderTestBlock;
+import net.fawnoculus.ntm.blocks.custom.SimpleEnergyStorageBlock;
+import net.fawnoculus.ntm.blocks.custom.TempCableBlock;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -164,11 +165,20 @@ public class ModBlocks {
           .strength(1.5F, 6.0F)
           .sounds(BlockSoundGroup.STONE)
           .mapColor(MapColor.TERRACOTTA_ORANGE)
-          .requiresTool()
-  , true);
-  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create(), true);
+          .requiresTool(), true);
+  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create()
+          .strength(1.5F, 6.0F)
+          .sounds(BlockSoundGroup.STONE)
+          .mapColor(MapColor.TERRACOTTA_ORANGE)
+          .requiresTool(), true);
   
-  public static final Block RENDER_TEST = register("render_test", RenderTestBlock::new, AbstractBlock.Settings.create(), true);
+  // Energy Stuff
+  public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create(), true);
+  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(10_000L), AbstractBlock.Settings.create(), true);
+  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000L), AbstractBlock.Settings.create(), true);
+  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(50_000_000L), AbstractBlock.Settings.create(), true);
+  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(25_000_000_000L), AbstractBlock.Settings.create(), true);
+  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000_000_000L), AbstractBlock.Settings.create(), true);
   
   
   

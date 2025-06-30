@@ -18,7 +18,7 @@ public interface Node<T extends BlockEntity>  {
   List<Node<T>> getConnectedNodes();
   
   void setNodeProperties(NodeProperties nodeProperties);
-  NodeProperties getNodeType();
+  NodeProperties getNodeProperties();
   
   BlockPos getPos();
   World getWorld();

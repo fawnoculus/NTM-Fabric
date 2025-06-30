@@ -14,37 +14,15 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Supplier;
 
-public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
+public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   private EnergyNetwork network;
   private NodeProperties nodeProperties;
   
-  private EnergyNode(BlockEntityType<?> type, BlockPos pos, BlockState state, NodeProperties properties){
+  public EnergyNode(BlockEntityType<?> type, Supplier<NodeProperties> properties, BlockPos pos, BlockState state){
     super(type, pos, state);
-    this.setNodeProperties(properties);
-    this.assignNetwork();
-  }
-  
-  public static EnergyNode createConnectorNode(BlockEntityType<?> type, BlockPos pos, BlockState state){
-    return new EnergyNode(type, pos, state, new NodeProperties.Connector());
-  }
-  public static EnergyNode createProviderNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
-    NodeProperties properties = new NodeProperties.Provider();
-    properties.setMaxValue(MaxEnergy);
-    properties.setMaxTransfer(MaxTransfer);
-    return new EnergyNode(type, pos, state, properties);
-  }
-  public static EnergyNode createConsumerNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
-    NodeProperties properties = new NodeProperties.Consumer();
-    properties.setMaxValue(MaxEnergy);
-    properties.setMaxTransfer(MaxTransfer);
-    return new EnergyNode(type, pos, state, properties);
-  }
-  public static EnergyNode createStorageNode(BlockEntityType<?> type, BlockPos pos, BlockState state, long MaxEnergy, long MaxTransfer){
-    NodeProperties properties = new NodeProperties.Storge();
-    properties.setMaxValue(MaxEnergy);
-    properties.setMaxTransfer(MaxTransfer);
-    return new EnergyNode(type, pos, state, properties);
+    this.setNodeProperties(properties.get());
   }
   
   @Override
@@ -57,6 +35,18 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   public void setNetwork(NodeNetwork<EnergyNode> network) {
     this.network = (EnergyNetwork) network;
   }
+  
+  @Override
+  public void setWorld(World world) {
+    super.setWorld(world);
+    if(world.isClient){
+      return;
+    }
+    if(this.network == null){
+      this.assignNetwork();
+    }
+  }
+  
   @Override
   public EnergyNetwork getNetwork() {
     if(this.network == null){
@@ -129,7 +119,7 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
     }
   }
   @Override
-  public NodeProperties getNodeType() {
+  public NodeProperties getNodeProperties() {
     return nodeProperties;
   }
   
@@ -141,12 +131,14 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   
   @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-    String s = nbt.getString("network", null);
-    if(s == null){
-      this.assignNetwork();
-      s = this.getNetwork().ID.toString();
+    UUID uuid = null;
+    try{
+      uuid = UUID.fromString(nbt.getString("network", null));
+    } catch (IllegalArgumentException ignored){}
+    if(uuid != null){
+      this.setNetwork(NodeNetworkManager.getEnergyNetwork(uuid));
+      this.network.addNode(this);
     }
-    this.setNetwork(NodeNetworkManager.getEnergyNetwork(UUID.fromString(s)));
     this.nodeProperties.readNBT(nbt, registries);
   }
   @Override

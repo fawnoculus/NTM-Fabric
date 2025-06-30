@@ -1,6 +1,5 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
@@ -16,10 +15,9 @@ public class ServerWorldMixin {
   @Inject(at = @At("TAIL"), method = "tick")
   private void tickNodeNetworks(CallbackInfo ci) {
     Profiler profiler = Profilers.get();
-    profiler.push("nodeNetwork");
-    for(NodeNetwork<?> network : NodeNetworkManager.getAllNetworks()){
-      network.tickNetwork();
-    }
+    
+    profiler.push("nodeNetworks");
+    NodeNetworkManager.tickNetworks();
     profiler.pop();
   }
 }

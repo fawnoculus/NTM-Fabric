@@ -31,21 +31,21 @@ public abstract class NodeNetwork<T extends BlockEntity> {
   }
   
   public void addNode(Node<T> node){
-    switch (node.getNodeType()){
+    switch (node.getNodeProperties()){
       case NodeProperties.Connector connector -> LOADED_CONNECTORS.add(node);
       case NodeProperties.Consumer consumer -> LOADED_CONSUMERS.add(node);
       case NodeProperties.Provider provider -> LOADED_PROVIDERS.add(node);
       case NodeProperties.Storge connector -> LOADED_STORAGES.add(node);
-      default -> NTM.LOGGER.warn("Tired to add Node with Unknown Type ({}) to network {}", node.getNodeType().getClass().getName(), this.ID);
+      default -> NTM.LOGGER.warn("Tired to add Node with Unknown Type ({}) to network {}", node.getNodeProperties().getClass().getName(), this.ID);
     }
   }
   public void removeNode(Node<T> node){
-    switch (node.getNodeType()){
+    switch (node.getNodeProperties()){
       case NodeProperties.Connector connector -> LOADED_CONNECTORS.remove(node);
       case NodeProperties.Consumer consumer -> LOADED_CONSUMERS.remove(node);
       case NodeProperties.Provider provider -> LOADED_PROVIDERS.remove(node);
       case NodeProperties.Storge connector -> LOADED_STORAGES.remove(node);
-      default -> NTM.LOGGER.warn("Tired to remove Node with Unknown Type ({}) from network {}", node.getNodeType().getClass().getName(), this.ID);
+      default -> NTM.LOGGER.warn("Tired to remove Node with Unknown Type ({}) from network {}", node.getNodeProperties().getClass().getName(), this.ID);
     }
   }
   /**
@@ -188,20 +188,22 @@ public abstract class NodeNetwork<T extends BlockEntity> {
     return nodes;
   }
   
+  public boolean isEmpty(){
+    return this.LOADED_CONNECTORS.isEmpty()
+        && this.LOADED_PROVIDERS.isEmpty()
+        && this.LOADED_CONSUMERS.isEmpty()
+        && this.LOADED_STORAGES.isEmpty();
+  }
+  
+  public abstract void tickNetwork();
+  
+  
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
     NodeNetwork<?> that = (NodeNetwork<?>) object;
     return this.ID.equals(that.ID);
   }
-  
-  @Override
-  public int hashCode() {
-    return Objects.hash(ID);
-  }
-  
-  public abstract void tickNetwork();
-  
   @Override
   public String toString() {
     return "NodeNetwork{" +
