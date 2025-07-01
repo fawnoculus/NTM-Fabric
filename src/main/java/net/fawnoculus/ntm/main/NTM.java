@@ -27,7 +27,7 @@ public class NTM implements ModInitializer {
   
   @Override
   public void onInitialize() {
-    LOGGER.info("Initializing NTM-Fabric ...");
+    LOGGER.info("Initializing {} ...", MOD_NAME);
     
     NTMConfig.initialize();
     
@@ -50,7 +50,7 @@ public class NTM implements ModInitializer {
     ModPayloads.initialize();
     ModPayloadHandler.initialize();
     
-    LOGGER.info("Initialization finished");
+    NTM.LOGGER.info("Finished {} Initialization", NTM.MOD_NAME);
   }
   
   public static Identifier id(String name){
