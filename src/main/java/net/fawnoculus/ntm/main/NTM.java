@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NTM implements ModInitializer {
-  
   public static final String MOD_ID = "ntm";
   public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
   public static final EnvType ENVIRONMENT = FabricLoader.getInstance().getEnvironmentType();
