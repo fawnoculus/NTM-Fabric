@@ -165,9 +165,9 @@ public class ModBlocks {
   public static final Block FLUORITE_BLOCK = register("fluorite_block", Block::new, STONE_SETTINGS, true);
   public static final Block GRAPHITE_BLOCK = register("graphite_block", Block::new, STONE_SETTINGS, true);
   public static final Block HIGH_SPEED_STEEL_BLOCK = register("high_speed_steel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block RAW_LEAD = register("raw_lead", Block::new, STONE_SETTINGS, true);
   public static final Block LIGNITE_COKE_BLOCK = register("lignite_coke_block", Block::new, STONE_SETTINGS, true);
   public static final Block LITHIUM_BLOCK = register("lithium_block", Block::new, STONE_SETTINGS, true);
+  public static final Block LEAD_BLOCK = register("lead_block", Block::new, STONE_SETTINGS, true);
   public static final Block MAGNETIZED_TUNGSTEN_BLOCK = register("magnetized_tungsten_block", Block::new, STONE_SETTINGS, true);
   public static final Block MOX_FUEL_BLOCK = register("mox_fuel_block", Block::new, STONE_SETTINGS, true);
   public static final Block NEPTUNIUM_BLOCK = register("neptunium_block", Block::new, STONE_SETTINGS, true);
