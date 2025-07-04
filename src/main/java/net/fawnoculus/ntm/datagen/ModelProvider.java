@@ -115,6 +115,7 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRIXITE_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GEOTHERMAL_VENT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_OIL_DEPOSIT);
+
     
     TextureMap alloyFurnaceTextureMap = new TextureMap()
         .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top"))

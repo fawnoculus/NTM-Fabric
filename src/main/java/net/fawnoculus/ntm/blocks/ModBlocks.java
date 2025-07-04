@@ -182,10 +182,10 @@ public class ModBlocks {
   public static final Block PLUTONIUM_240_BLOCK = register("plutonium_240_block", Block::new, STONE_SETTINGS, true);
   public static final Block PLUTONIUM_241_BLOCK = register("plutonium_241_block", Block::new, STONE_SETTINGS, true);
   public static final Block POLONIUM_210_BLOCK = register("polonium_210_block", Block::new, STONE_SETTINGS, true);
-  public static final Block POLYMER_BLOCK = register("polymer_bar", Block::new, STONE_SETTINGS, true);
+  public static final Block POLYMER_BLOCK = register("polymer_block", Block::new, STONE_SETTINGS, true);
   public static final Block RADIUM_226_BLOCK = register("radium_266_block", Block::new, STONE_SETTINGS, true);
   public static final Block RED_COPPER_BLOCK = register("red_copper_block", Block::new, STONE_SETTINGS, true);
-  public static final Block RUBBER_BLOCK = register("rubber_bar", Block::new, STONE_SETTINGS, true);
+  public static final Block RUBBER_BLOCK = register("rubber_block", Block::new, STONE_SETTINGS, true);
   public static final Block SCHRABIDIUM_BLOCK = register("schrabidium_block", Block::new, STONE_SETTINGS, true);
   public static final Block FERRIC_SCHRABIDATE_BLOCK = register("ferric_schrabidate_block", Block::new, STONE_SETTINGS, true);
   public static final Block SCHRABIDIUM_FUEL_BLOCK = register("schrabidium_fuel_block", Block::new, STONE_SETTINGS, true);
