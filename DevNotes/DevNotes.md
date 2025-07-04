@@ -26,5 +26,7 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Block of "resource" -> "resource" Block
 - Blast Furnace -> Alloying Furnace (Blast Furnace already Exists)
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
+- Reinforced Block of Desh -> Desh Block
+- Reinforced Block of High-Speed Steel -> High-Speed Steel Block
 #### Features:
 - Features that already have *replacements* (Example: Particle Accelerator) will not be implemented ... yet (maybe we'll do it once the rest is working)
