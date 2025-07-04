@@ -161,7 +161,7 @@ public class ModBlocks {
   public static final Block DESH_BLOCK = register("desh_block", Block::new, STONE_SETTINGS, true);
   public static final Block DINEUTRONIUM_BLOCK = register("dineutronium_block", Block::new, STONE_SETTINGS, true);
   public static final Block EUPHEMIUM_BLOCK = register("euphemium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block FERRIC_SCHARBIDATE_BLOCK = register("ferric_schrabidate_block", Block::new, STONE_SETTINGS, true);
+  public static final Block FERRIC_SCHRABIDATE_BLOCK = register("ferric_schrabidate_block", Block::new, STONE_SETTINGS, true);
   public static final Block FLUORITE_BLOCK = register("fluorite_block", Block::new, STONE_SETTINGS, true);
   public static final Block GRAPHITE_BLOCK = register("graphite_block", Block::new, STONE_SETTINGS, true);
   public static final Block HIGH_SPEED_STEEL_BLOCK = register("high_speed_steel_block", Block::new, STONE_SETTINGS, true);
@@ -187,7 +187,6 @@ public class ModBlocks {
   public static final Block RED_COPPER_BLOCK = register("red_copper_block", Block::new, STONE_SETTINGS, true);
   public static final Block RUBBER_BLOCK = register("rubber_block", Block::new, STONE_SETTINGS, true);
   public static final Block SCHRABIDIUM_BLOCK = register("schrabidium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block FERRIC_SCHRABIDATE_BLOCK = register("ferric_schrabidate_block", Block::new, STONE_SETTINGS, true);
   public static final Block SCHRABIDIUM_FUEL_BLOCK = register("schrabidium_fuel_block", Block::new, STONE_SETTINGS, true);
   public static final Block SCHRARANIUM_BLOCK = register("schraranium_block", Block::new, STONE_SETTINGS, true);
   public static final Block SEMTEX_BLOCK = register("semtex_block", Block::new, STONE_SETTINGS, true);
