@@ -106,11 +106,15 @@ public abstract class NodeNetwork<T extends BlockEntity> {
       Stack<Node<T>> toBeScannedNodes = new Stack<>();
       toBeScannedNodes.push(disconectedNode);
       
+      alreadyScannedNodes.add(disconectedNode);
+      disconectedNode.setNetwork(assignedNetwork);
+      assignedNetwork.addNode(disconectedNode);
+      
       while(!toBeScannedNodes.isEmpty()){
         Node<T> scannedNode = toBeScannedNodes.pop();
         
         for(Node<T> node : scannedNode.getConnectedNodes()){
-          if(alreadyScannedNodes.contains(scannedNode)) continue;
+          if(alreadyScannedNodes.contains(node)) continue;
           if(disconnectedNodeList.contains(node)) {
             disconnectedNodes.remove(node);
           }
@@ -161,11 +165,15 @@ public abstract class NodeNetwork<T extends BlockEntity> {
       Stack<Node<T>> toBeScannedNodes = new Stack<>();
       toBeScannedNodes.push(disconectedNode);
       
+      alreadyScannedNodes.add(disconectedNode);
+      disconectedNode.setNetwork(assignedNetwork);
+      assignedNetwork.addNode(disconectedNode);
+      
       while(!toBeScannedNodes.isEmpty()){
         Node<T> scannedNode = toBeScannedNodes.pop();
         
         for(Node<T> node : scannedNode.getConnectedNodes()){
-          if(alreadyScannedNodes.contains(scannedNode)) continue;
+          if(alreadyScannedNodes.contains(node)) continue;
           if(disconnectedNodeList.contains(node)) {
             disconnectedNodes.remove(node);
           }
@@ -205,6 +213,7 @@ public abstract class NodeNetwork<T extends BlockEntity> {
       
       for(Node<T> connectedNode : scaningNode.getConnectedNodes()){
         if(scannedNodes.contains(connectedNode)) continue;
+        if(connectedNode.getNetwork() == null) continue;
         if(connectedNode.getNetwork().equals(this)) continue;
         
         connectedNode.setNetwork(this);

@@ -4,6 +4,7 @@ import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -14,12 +15,23 @@ import java.util.List;
 public interface ProxyNode<T extends BlockEntity> extends Node<T>{
   Node<T> getNode();
   
+  default T getBE(){
+    return this.getNode().getBE();
+  }
+  
+  default void setShouldAssignNetwork(boolean value){
+    this.getNode().setShouldAssignNetwork(value);
+  }
+  default boolean shouldAssignNetwork(){
+    return this.getNode().shouldAssignNetwork();
+  }
+  
   @Override
   default void setNetwork(NodeNetwork<T> network){
     this.getNode().setNetwork(network);
   }
   @Override
-  default NodeNetwork<T> getNetwork(){
+  default @Nullable NodeNetwork<T> getNetwork(){
     return this.getNode().getNetwork();
   }
   @Override

@@ -10,6 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode> {
+  private boolean shouldAssignNetwork = true;
   private EnergyNetwork network;
   private NodeProperties nodeProperties;
   
@@ -29,6 +31,16 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
   public void onBlockReplaced(BlockPos pos, BlockState oldState) {
     super.onBlockReplaced(pos, oldState);
     this.onBreak();
+  }
+  
+  @Override
+  public void setShouldAssignNetwork(boolean value) {
+    this.shouldAssignNetwork = value;
+  }
+  
+  @Override
+  public boolean shouldAssignNetwork() {
+    return this.shouldAssignNetwork;
   }
   
   @Override
@@ -48,7 +60,7 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
   }
   
   @Override
-  public EnergyNetwork getNetwork() {
+  public @Nullable EnergyNetwork getNetwork() {
     if(this.network == null){
       this.assignNetwork();
     }
@@ -56,6 +68,8 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
   }
   @Override
   public void assignNetwork() {
+    if(!this.shouldAssignNetwork()) return;
+    
     EnergyNetwork detectedNetwork = this.findNetwork(this.getPos().up(), null);
     detectedNetwork = this.findNetwork(this.getPos().down(), detectedNetwork);
     detectedNetwork = this.findNetwork(this.getPos().north(), detectedNetwork);
@@ -75,11 +89,14 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
   private EnergyNetwork findNetwork(BlockPos blockPos, EnergyNetwork detectedNetwork) {
     assert this.world != null;
     BlockEntity bl = this.world.getBlockEntity(blockPos);
-    if (!(bl instanceof EnergyNode node) || node.network == null) {
+    if(!(bl instanceof EnergyNode node) || node.network == null) {
       return detectedNetwork;
     }
     EnergyNetwork foundNetwork = node.getNetwork();
-    if (detectedNetwork != null && !foundNetwork.equals(detectedNetwork)) {
+    if(detectedNetwork != null
+        && foundNetwork != null
+        && !foundNetwork.equals(detectedNetwork)
+    ) {
       detectedNetwork.mergeNetworksAt(this);
       return detectedNetwork;
     }
@@ -149,7 +166,9 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
   }
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-    nbt.putString("network", this.getNetwork().ID.toString());
+    if(this.getNetwork() != null){
+      nbt.putString("network", this.getNetwork().ID.toString());
+    }
     this.nodeProperties.writeNBT(nbt, registries);
   }
 }
