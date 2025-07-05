@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class FluidNode extends BlockEntity implements Node<FluidNode> {
   private boolean shouldAssignNetwork = true;
-  private FluidNetwork network;
+  private NodeNetwork<FluidNode> network;
   private NodeProperties nodeProperties;
   
   public FluidNode(BlockEntityType<?> type, Supplier<NodeProperties> properties, BlockPos pos, BlockState state){
@@ -45,7 +45,7 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   
   @Override
   public void setNetwork(NodeNetwork<FluidNode> network) {
-    this.network = (FluidNetwork) network;
+    this.network = network;
   }
   
   @Override
@@ -60,7 +60,7 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   
   @Override
-  public @Nullable FluidNetwork getNetwork() {
+  public @Nullable NodeNetwork<FluidNode> getNetwork() {
     if(this.network == null){
       this.assignNetwork();
     }

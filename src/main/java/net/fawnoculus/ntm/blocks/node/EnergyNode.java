@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   private boolean shouldAssignNetwork = true;
-  private EnergyNetwork network;
+  private NodeNetwork<EnergyNode> network;
   private NodeProperties nodeProperties;
   
   public EnergyNode(BlockEntityType<?> type, Supplier<NodeProperties> properties, BlockPos pos, BlockState state){
@@ -45,7 +45,7 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   
   @Override
   public void setNetwork(NodeNetwork<EnergyNode> network) {
-    this.network = (EnergyNetwork) network;
+    this.network = network;
   }
   
   @Override
@@ -60,7 +60,7 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   }
   
   @Override
-  public @Nullable EnergyNetwork getNetwork() {
+  public @Nullable NodeNetwork<EnergyNode> getNetwork() {
     if(this.network == null){
       this.assignNetwork();
     }
