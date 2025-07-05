@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -72,30 +73,42 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
     return new EnergyNetwork();
   }
   
-  @Override
+  @Override @SuppressWarnings("unchecked")
   public List<Node<EnergyNode>> getConnectedNodes() {
     World world = this.getWorld();
     assert world != null;
     BlockPos pos = this.getPos();
     List<Node<EnergyNode>> nodes = new ArrayList<>();
-    if(world.getBlockEntity(pos.up()) instanceof EnergyNode energyNode){
-      nodes.add(energyNode);
-    }
-    if(world.getBlockEntity(pos.down()) instanceof EnergyNode energyNode){
-      nodes.add(energyNode);
-    }
-    if(world.getBlockEntity(pos.north()) instanceof EnergyNode energyNode){
-      nodes.add(energyNode);
-    }
-    if(world.getBlockEntity(pos.east()) instanceof EnergyNode energyNode){
-      nodes.add(energyNode);
-    }
-    if(world.getBlockEntity(pos.south()) instanceof EnergyNode energyNode){
-      nodes.add(energyNode);
-    }
-    if(world.getBlockEntity(pos.west()) instanceof EnergyNode energyNode){
-      nodes.add(energyNode);
-    }
+    try {
+      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.up());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.down());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.north());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.east());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.south());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.west());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
     return nodes;
   }
   public void setNodeProperties(NodeProperties nodeProperties) {

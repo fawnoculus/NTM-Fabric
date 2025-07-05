@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -72,30 +73,42 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
     return new FluidNetwork();
   }
   
-  @Override
+  @Override @SuppressWarnings("unchecked")
   public List<Node<FluidNode>> getConnectedNodes() {
     World world = this.getWorld();
     assert world != null;
     BlockPos pos = this.getPos();
     List<Node<FluidNode>> nodes = new ArrayList<>();
-    if(world.getBlockEntity(pos.up()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
-    }
-    if(world.getBlockEntity(pos.down()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
-    }
-    if(world.getBlockEntity(pos.north()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
-    }
-    if(world.getBlockEntity(pos.east()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
-    }
-    if(world.getBlockEntity(pos.south()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
-    }
-    if(world.getBlockEntity(pos.west()) instanceof FluidNode FluidNode){
-      nodes.add(FluidNode);
-    }
+    try {
+      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.up());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.down());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.north());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.east());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.south());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
+    try {
+      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.west());
+      Objects.requireNonNull(node);
+      nodes.add(node);
+    } catch (Exception ignored) {}
     return nodes;
   }
   public void setNodeProperties(NodeProperties nodeProperties) {
