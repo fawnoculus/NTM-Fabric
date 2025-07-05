@@ -62,8 +62,12 @@ public class JsonConfigFile implements ConfigFileType {
       if (!jsonObject.isJsonObject()) {
         throw new JsonSyntaxException("What the hell did you do to the Json File?!");
       }
-    } catch (Exception exception) {
-      LOGGER.error("Failed to parse Json Config File '{}' \n Exception: {}", configFile.getPath(), exception);
+    } catch (Exception e) {
+      StringBuilder Exception = new StringBuilder(e.toString());
+      for(StackTraceElement element : e.getStackTrace()){
+        Exception.append("\n\t").append(element);
+      }
+      LOGGER.error("Failed to parse Json Config File '{}' \nException: {}", configFile.getPath(), Exception);
       return expectedOptions;
     }
     

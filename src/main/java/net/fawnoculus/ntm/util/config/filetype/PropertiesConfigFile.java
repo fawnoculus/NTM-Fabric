@@ -50,8 +50,12 @@ public class PropertiesConfigFile implements ConfigFileType {
     Properties properties = new Properties();
     try {
       properties.load(new FileReader(configFile));
-    } catch (Exception exception){
-      LOGGER.error("Failed to parse Properties Config File '{}' \n Exception: {}", configFile.getPath(), exception);
+    } catch (Exception e){
+      StringBuilder Exception = new StringBuilder(e.toString());
+      for(StackTraceElement element : e.getStackTrace()){
+        Exception.append("\n\t").append(element);
+      }
+      LOGGER.error("Failed to parse Properties Config File '{}' \nException: {}", configFile.getPath(), Exception);
       return expectedOptions;
     }
     
