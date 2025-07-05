@@ -38,7 +38,10 @@
   "message.ntm.get_node_networks.other": "Unknown Networks:",
   "message.ntm.get_node_networks.none": "None",
 
-  "death.attack.poison_injection": "%1$s euthanized himself",
+  "death.attack.ntm.poison_injection": "%1$s euthanized himself",
+
+  "effect.ntm.rad_away": "RadAway",
+  "effect.ntm.rad_x": "Rad-X",
 
   "tooltip.ntm.creative_only": "Creative-only item",
   "tooltip.ntm.debug_wand": "Used for 'Debugging' >:3",
@@ -595,7 +598,6 @@
   "item.ntm.dusted_steel_ingot": "Dusted Steel Ingot",
   "item.ntm.heavy_chainsteel_ingot": "Heavy Chainsteel Ingot",
   "item.ntm.meteorite_ingot": "Meteorite Ingot",
-
 
   "item.ntm.empty_syringe": "Empty Syringe",
   "item.ntm.poisonous_injection": "Poisonous Injection",

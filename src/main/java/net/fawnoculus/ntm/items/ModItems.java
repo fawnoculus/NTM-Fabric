@@ -634,82 +634,82 @@ public class ModItems {
   public static final Item FRITZ_COLA_BOTTLE_CAP = register("fritz_cola_bottle_cap", Item::new, new Item.Settings());
   public static final Item BOTTLE_OF_NUKA_COLA = register("bottle_of_nuka_cola", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1),
-          new StatusEffectInstance(StatusEffects.HASTE, 600, 1)
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.HASTE, 600, 1, false, false, true)
       ), List.of(
       EMPTY_BOMB_BOTTLE,
       NUKA_COLA_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_NUKA_CHERRY = register("bottle_of_nuka_cherry", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 0),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true)
       ), List.of(
       EMPTY_BOMB_BOTTLE,
       NUKA_COLA_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_NUKA_COLA_QUANTUM = register("bottle_of_nuka_cola_quantum", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
       ), List.of(
       EMPTY_BOMB_BOTTLE,
       NUKA_COLA_QUANTUM_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_S_COLA = register("bottle_of_s_cola", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1),
-          new StatusEffectInstance(StatusEffects.HASTE, 2400, 1),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.HASTE, 2400, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true)
       ), List.of(
       EMPTY_BOMB_BOTTLE,
       S_COLA_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_S_COLA_RAD = register("bottle_of_s_cola_rad", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1),
-          new StatusEffectInstance(StatusEffects.HASTE, 2400, 1),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 4),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2),
-          new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 2400, 0)
+          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.HASTE, 2400, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 4, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 2400, 0, false, false, true)
       ), List.of(
       EMPTY_BOMB_BOTTLE,
       S_COLA_RAD_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_KAROL = register("bottle_of_karol", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1),
-          new StatusEffectInstance(StatusEffects.HASTE, 600, 2),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.HASTE, 600, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2, false, false, true)
       ), List.of(
       EMPTY_BOTTLE,
       KAROL_BOTTLE_CAP
   )));
   public static final Item FIRST_BOTTLE_OF_KAROL = register("first_bottle_of_karol", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1),
-          new StatusEffectInstance(StatusEffects.HASTE, 2400, 2),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.HASTE, 2400, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2, false, false, true)
       ), List.of(
       EMPTY_BOTTLE,
       KAROL_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_FRITZ_COLA = register("bottle_of_fritz_cola", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
       ), List.of(
       EMPTY_BOTTLE,
       FRITZ_COLA_BOTTLE_CAP
   )));
   public static final Item FIRST_BOTTLE_OF_FRITZ_COLA = register("first_bottle_of_fritz_cola", new Item.Settings(), settings -> new BottleItem(settings,
       List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 2400, 2),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2)
+          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 2400, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true)
       ), List.of(
       EMPTY_BOTTLE,
       FRITZ_COLA_BOTTLE_CAP

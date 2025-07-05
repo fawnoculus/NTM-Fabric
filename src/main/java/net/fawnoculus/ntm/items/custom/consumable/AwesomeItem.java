@@ -25,16 +25,16 @@ public class AwesomeItem extends Item {
       stack.decrement(1);
     }
     player.giveItemStack(new ItemStack(ModItems.EMPTY_SYRINGE));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false));
-    player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false, true));
+    player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false, true));
     return ActionResult.PASS;
   }
 }

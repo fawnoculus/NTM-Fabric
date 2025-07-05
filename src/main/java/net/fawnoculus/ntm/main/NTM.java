@@ -8,6 +8,8 @@ import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.commands.ModCommandArguments;
 import net.fawnoculus.ntm.commands.ModCommands;
+import net.fawnoculus.ntm.entity.ModDamageTypes;
+import net.fawnoculus.ntm.entity.ModStatusEffects;
 import net.fawnoculus.ntm.items.*;
 import net.fawnoculus.ntm.network.ModPayloadHandler;
 import net.fawnoculus.ntm.network.ModPayloads;
@@ -29,6 +31,9 @@ public class NTM implements ModInitializer {
     LOGGER.info("Initializing {} ...", MOD_NAME);
     
     NTMConfig.initialize();
+    
+    ModDamageTypes.initialize();
+    ModStatusEffects.initialize();
     
     ModToolMaterials.initialize();
     ModDataComponentTypes.initialize();
