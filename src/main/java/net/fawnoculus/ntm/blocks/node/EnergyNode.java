@@ -130,6 +130,12 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
   }
   
   @Override
+  public void markRemoved() {
+    super.markRemoved();
+    this.onUnload();
+  }
+  
+  @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     UUID uuid = null;
     try{

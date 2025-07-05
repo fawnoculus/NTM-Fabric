@@ -130,6 +130,12 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   
   @Override
+  public void markRemoved() {
+    super.markRemoved();
+    this.onUnload();
+  }
+  
+  @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     UUID uuid = null;
     try{

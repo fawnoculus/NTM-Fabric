@@ -26,6 +26,11 @@ public interface Node<T extends BlockEntity>  {
   T getBE();
   
   default void onBreak(){
-    this.getNetwork().disconnectNode(this);
+    if(this.getConnectedNodes().size() > 1){
+      this.getNetwork().disconnectNode(this);
+    }
+  }
+  default void onUnload(){
+    this.getNetwork().removeNode(this);
   }
 }
