@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ntm:block/render_test"
+      "model": "ntm:block/desh_block"
     }
   }
 }

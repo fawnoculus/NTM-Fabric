@@ -6,6 +6,7 @@ import net.fawnoculus.ntm.blocks.ModBlockProperties;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
+import net.minecraft.block.Block;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.state.property.Properties;
@@ -178,8 +179,13 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.URANIUM_238_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.YELLOWCAKE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ZIRCONIUM_BLOCK);
-
-
+    
+    registerSimpleHorizontalOrientable(blockStateModelGenerator, ModBlocks.POTATO_BATTERY_BLOCK);
+    registerSimpleHorizontalOrientable(blockStateModelGenerator, ModBlocks.ENERGY_STORAGE_BLOCK);
+    registerSimpleHorizontalOrientable(blockStateModelGenerator, ModBlocks.LITHIUM_ION_ENERGY_STORAGE_BLOCK);
+    registerSimpleHorizontalOrientable(blockStateModelGenerator, ModBlocks.SCHRABIDIUM_ENERGY_STORAGE_BLOCK);
+    registerSimpleHorizontalOrientable(blockStateModelGenerator, ModBlocks.SPARK_ENERGY_STORAGE_BLOCK);
+    
     
     TextureMap alloyFurnaceTextureMap = new TextureMap()
         .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ALLOY_FURNACE, "_top"))
@@ -227,6 +233,21 @@ public class ModelProvider extends FabricModelProvider {
                         .register(Direction.EAST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
                         .register(Direction.SOUTH, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
                         .register(Direction.WEST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                )
+        );
+  }
+  
+  private void registerSimpleHorizontalOrientable(BlockStateModelGenerator blockStateModelGenerator, Block block){
+    WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(TexturedModel.ORIENTABLE.upload(block, blockStateModelGenerator.modelCollector));
+    blockStateModelGenerator.blockStateCollector
+        .accept(
+            VariantsBlockModelDefinitionCreator.of(block)
+                .with(
+                    BlockStateVariantMap.models(Properties.HORIZONTAL_FACING)
+                        .register(Direction.NORTH, weightedVariant)
+                        .register(Direction.EAST, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
                 )
         );
   }

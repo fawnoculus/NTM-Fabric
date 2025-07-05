@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ntm:block/render_test"
+    "all": "ntm:block/aluminium_block"
   }
 }

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ntm:block/render_test"
+    "model": "ntm:block/niobium_block"
   }
 }
