@@ -57,6 +57,6 @@ public class SmeltingRecipeProvider extends FabricRecipeProvider {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Smelting-Recipe Provider";
+    return NTM.MOD_NAME + " Smelting-Recipe Provider";
   }
 }

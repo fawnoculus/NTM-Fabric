@@ -170,6 +170,6 @@ public class ItemTagProvider extends FabricTagProvider<Item> {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " ItemOption-Tag Provider";
+    return NTM.MOD_NAME + " ItemOption-Tag Provider";
   }
 }

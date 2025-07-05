@@ -4,6 +4,7 @@ import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
 import net.fawnoculus.ntm.items.custom.tools.*;
 import net.fawnoculus.ntm.main.NTM;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
@@ -617,6 +618,11 @@ public class ModItems {
   // public static final ItemOption FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", ItemOption::new, new ItemOption.Settings());
   
   // Consumables
+  public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
+  public static final Item POISONOUS_INJECTION = register("poisonous_injection", PoisonousInjectionItem::new, new Item.Settings());
+  public static final Item ANTIDOTE = register("antidote", AntidoteItem::new, new Item.Settings());
+  public static final Item AWESOME = register("awesome", AwesomeItem::new, new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
+  
   public static final Item BOTTLE_OPENER = register("bottle_opener", settings -> new TooltipItem(settings, 2), new Item.Settings());
   public static final Item EMPTY_BOTTLE = register("empty_bottle", Item::new, new Item.Settings());
   public static final Item EMPTY_BOMB_BOTTLE = register("empty_bomb_bottle", Item::new, new Item.Settings());

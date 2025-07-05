@@ -848,6 +848,11 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.ZIRCONIUM_WIRE, Models.GENERATED);
     
     // Consumables
+    itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POISONOUS_INJECTION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ANTIDOTE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AWESOME, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.BOTTLE_OPENER, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOTTLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOMB_BOTTLE, Models.GENERATED);
@@ -942,6 +947,6 @@ public class ModelProvider extends FabricModelProvider {
   }
   @Override
   public String getName() {
-    return NTM.MOD_ID+" Model Provider";
+    return NTM.MOD_NAME+" Model Provider";
   }
 }

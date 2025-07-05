@@ -20,6 +20,6 @@ public class EntityTypeTagProvider extends FabricTagProvider<EntityType<?>> {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " EntityType-Tag Provider";
+    return NTM.MOD_NAME + " EntityType-Tag Provider";
   }
 }

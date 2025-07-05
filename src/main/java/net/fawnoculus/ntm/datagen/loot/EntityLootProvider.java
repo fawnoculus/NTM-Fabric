@@ -20,6 +20,6 @@ public class EntityLootProvider extends FabricEntityLootTableProvider {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Entity-Loot Provider";
+    return NTM.MOD_NAME + " Entity-Loot Provider";
   }
 }

@@ -279,6 +279,6 @@ public class BlockTagProvider extends FabricTagProvider<Block> {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Block-Tag Provider";
+    return NTM.MOD_NAME + " Block-Tag Provider";
   }
 }

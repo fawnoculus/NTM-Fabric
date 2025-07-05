@@ -51,7 +51,7 @@ public class EnchantmentProvider extends FabricDynamicRegistryProvider {
   }
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Enchantment Provider";
+    return NTM.MOD_NAME + " Enchantment Provider";
   }
   
 }

@@ -38,6 +38,8 @@
   "message.ntm.get_node_networks.other": "Unknown Networks:",
   "message.ntm.get_node_networks.none": "None",
 
+  "death.attack.poison_injection": "%1$s euthanized himself",
+
   "tooltip.ntm.creative_only": "Creative-only item",
   "tooltip.ntm.debug_wand": "Used for 'Debugging' >:3",
   "tooltip.ntm.asbestos_sheet": "''Filled with life, self-doubt and asbestos. That comes with the air.''",
@@ -594,6 +596,11 @@
   "item.ntm.heavy_chainsteel_ingot": "Heavy Chainsteel Ingot",
   "item.ntm.meteorite_ingot": "Meteorite Ingot",
 
+
+  "item.ntm.empty_syringe": "Empty Syringe",
+  "item.ntm.poisonous_injection": "Poisonous Injection",
+  "item.ntm.antidote": "Antidote",
+  "item.ntm.awesome": "AWESOME",
   "item.ntm.empty_bottle": "Empty Bottle",
   "item.ntm.empty_bomb_bottle": "Empty Bomb-Shaped Bottle",
   "item.ntm.nuka_cola_bottle_cap": "Nuka Cola Bottle Cap",

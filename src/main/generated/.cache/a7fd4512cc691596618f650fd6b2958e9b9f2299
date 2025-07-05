@@ -1,4 +1,4 @@
-// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/ntm Model Provider
+// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric Model Provider
 ce5a504210889c7793cb97202d2e4b01361e88bc assets/ntm/blockstates/actinium_227_block.json
 03d9257b83bbe92a1acccb36af896e6c246c6948 assets/ntm/blockstates/advanced_alloy_block.json
 a2c3b374683caf281551ac9ff4f594e8e2e8f958 assets/ntm/blockstates/alexandrite_ore.json
@@ -192,6 +192,7 @@ df9ecd8c6761ba6a1738eec54a8efe00905f6b3c assets/ntm/items/aluminium_shell.json
 34fe24ee2a5572e03a1a655a2dc6a53d3cf22a43 assets/ntm/items/americium_fuel_billet.json
 ade5437e9194ff81a4ed1a71dee1457c0bafd055 assets/ntm/items/americium_fuel_ingot.json
 e5e329b16ee47a8eef75927ff9768da3987c0201 assets/ntm/items/americium_fuel_nugget.json
+7eeb7541da3bc075ffddd3e67f85c2614b40f345 assets/ntm/items/antidote.json
 4b1340a2428a349029d8a2b497e982dde731815c assets/ntm/items/arsenic_bronze_ingot.json
 4ffbe09390d0768e466b0e1a0bf7b8c287fcadc2 assets/ntm/items/arsenic_ingot.json
 c076070aa8892e2e06d78b2fff526889d1ca06ca assets/ntm/items/arsenic_nugget.json
@@ -209,6 +210,7 @@ d06f3783be5cb6b6337db8c2b803f96b2eb0ac52 assets/ntm/items/astatine_powder.json
 ef8e4a5cc2fab881190eee7936eb42a5fc078335 assets/ntm/items/australium_nugget.json
 11412f2af8c6d49b1e309bb8d0581095584d7289 assets/ntm/items/australium_ore.json
 8d87f569d7d172aee607be2f0af743d6372d359e assets/ntm/items/australium_powder.json
+dd4fb108e25bfca7c881fa2621dd8f03e49c48a0 assets/ntm/items/awesome.json
 7f0d41212e453a5d652b8acf3b19fad0f2e65c2b assets/ntm/items/bakelite_bar.json
 9b39333902ddecc2bd4e0e48c6cc1cb70ec3752f assets/ntm/items/bakelite_block.json
 774ee5edf06b05310a8229bc93dad90f3539d3a2 assets/ntm/items/bakelite_powder.json
@@ -384,6 +386,7 @@ feb8480a821d71b6c75f1ab25b0a6ead6ad5bb8d assets/ntm/items/dineutronium_powder.js
 c01e372010c2d0fd5856b0f63d7a5e414dff94b8 assets/ntm/items/empty_bomb_bottle.json
 66af44d736ed39622c6cf6b69854b6de189da19b assets/ntm/items/empty_bottle.json
 a04afef6f51fd3bac770f7bbcefb8af0013fa5e7 assets/ntm/items/empty_oil_deposit.json
+588fddaaf77a081427c978f5e1c1d62fe3d3f2fb assets/ntm/items/empty_syringe.json
 50c3e25b947f8ea700eb4d021bdd1ca0bb904cca assets/ntm/items/energy_powder.json
 09b7bc251630554ad13971d39427719f21cd2506 assets/ntm/items/energy_storage_block.json
 fb9e364a00fd93cf87164af812ad541ae0ec4283 assets/ntm/items/euphemium_block.json
@@ -586,6 +589,7 @@ cf0739be9548ec9ed1f8f46a48c89c52589ebd55 assets/ntm/items/plutonium_fuel_nugget.
 2f199a863675ac696c660a31882d5ea3038418f0 assets/ntm/items/plutonium_nugget.json
 a04ec7bcdfe4f53194130f8ba6b7e8fe3813797e assets/ntm/items/plutonium_powder.json
 4f68ed152e11a7b6eb3eda679654bd143ec5ed87 assets/ntm/items/poison_powder.json
+a7f210fcaf781a6d144b5508b177754159022c62 assets/ntm/items/poisonous_injection.json
 b21d8c5bc62ac28accf5969c89a18f9712aa5d95 assets/ntm/items/polonium_210_be_billet.json
 c3bfe4a08d5b046a2a477cce6f9c38388127b28d assets/ntm/items/polonium_210_billet.json
 bf5d6fd0c0f1f99acba031b242088ee0652c82d8 assets/ntm/items/polonium_210_block.json
@@ -1039,6 +1043,7 @@ e8d3083ae9af856216f72c2831c77ab71ad5587f assets/ntm/models/item/americium_242_in
 6b51ef1cf236c914ddf19d4b90993bb45bbaf833 assets/ntm/models/item/americium_fuel_billet.json
 ff4fe11c2594ddf956d5554c3e0310eaf75cbf33 assets/ntm/models/item/americium_fuel_ingot.json
 8301a5d35a1c285cd954ccb7c8f4466b6b6d623b assets/ntm/models/item/americium_fuel_nugget.json
+28d3c7f0183aec31dd8d31d80179b8b112f54927 assets/ntm/models/item/antidote.json
 83225a936cd2ed24f81a7b0905fceb91febe4615 assets/ntm/models/item/arsenic_bronze_ingot.json
 586d36246a82d74edc211c8ce1a385d8804811cd assets/ntm/models/item/arsenic_ingot.json
 bd3898467809e100a6ff30f32360d6650a2c0def assets/ntm/models/item/arsenic_nugget.json
@@ -1051,6 +1056,7 @@ c49a0fca63ba85de1ee238ac24a917c7f6f7d561 assets/ntm/models/item/astatine_powder.
 627a17e2f3826c9ab3cf4144870ad0ff871adc44 assets/ntm/models/item/australium_ingot.json
 0acee191c1776286e12e5d26521138d96a8d6f75 assets/ntm/models/item/australium_nugget.json
 a080e5b9c7605dc07274c3ade314601944d7130d assets/ntm/models/item/australium_powder.json
+1223b86bb3c31e0b5c48c30206d0730dc38fee69 assets/ntm/models/item/awesome.json
 ebaa2ae3d4194ad5742f2520095ec2ff1933a513 assets/ntm/models/item/bakelite_bar.json
 234acb4063aa36da3c97526d3a3361abe21d7839 assets/ntm/models/item/bakelite_powder.json
 c2d04053dc8335cd93cdcccfe9e930842d98b9fd assets/ntm/models/item/balefire_egg.json
@@ -1197,6 +1203,7 @@ ec9675ac51f472c84bcccecbc4cf2bbf71b32cab assets/ntm/models/item/dineutronium_pow
 f6007544735e39428dc1d05cfc482c45d9c45cde assets/ntm/models/item/emerald_powder.json
 b27faffb3d942e16dce3424c97ba5b1a7924c41a assets/ntm/models/item/empty_bomb_bottle.json
 75efcadef2d55eb4247d72a1ade248c99272b3d5 assets/ntm/models/item/empty_bottle.json
+8bc73a8791dd8201da206886d6af7be09723972c assets/ntm/models/item/empty_syringe.json
 6200109812225c5e12e06997a76d6f65888c25b7 assets/ntm/models/item/energy_powder.json
 be686e1345c9bfd174aba0761e74fffdfcc0b6d6 assets/ntm/models/item/euphemium_ingot.json
 d0b96f6edf6c356cbce92ded2a2cbb13373dfe62 assets/ntm/models/item/euphemium_nugget.json
@@ -1342,6 +1349,7 @@ bf32710b3083b13fba9e31080a01481849d08f2e assets/ntm/models/item/plutonium_fuel_b
 40bdd83811917192e41de6ec2167d59cebcb9dcc assets/ntm/models/item/plutonium_nugget.json
 9abddda6654a8c21581d858ca893a5e990cdc3d9 assets/ntm/models/item/plutonium_powder.json
 6726c1d73cc0392dfc527af80d218da8c65e030a assets/ntm/models/item/poison_powder.json
+6e0a4bce3ed4949914f6b0179e63fcea9fe9a87a assets/ntm/models/item/poisonous_injection.json
 0abad865b2dcd30a57cb7897607a01ff5402d269 assets/ntm/models/item/polonium_210_be_billet.json
 0410485d8becbd08b92c0823e43f163d078a442d assets/ntm/models/item/polonium_210_billet.json
 fc9aff657a3f501eef590b7b6ab595d3d1582d9b assets/ntm/models/item/polonium_210_ingot.json

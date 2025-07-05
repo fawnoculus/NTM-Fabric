@@ -21,6 +21,6 @@ public class AdvancementProvider extends FabricAdvancementProvider {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID;
+    return NTM.MOD_NAME + " Advancement Provider";
   }
 }

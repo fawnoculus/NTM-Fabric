@@ -1,4 +1,4 @@
-// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/ntm Smelting-Recipe Provider
+// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric Smelting-Recipe Provider
 ac6faa24d348d3f094c2f5829afcba4505f89534 data/ntm/advancement/recipes/misc/australium_ingot_from_blasting_australium_ore.json
 14e8215a3ad7c93dab66f58ae83219f14d02c9e3 data/ntm/advancement/recipes/misc/australium_ingot_from_blasting_raw_australium.json
 71ee64ba7f3cad871af796826b67fff8635315fe data/ntm/advancement/recipes/misc/australium_ingot_from_smelting_australium_ore.json

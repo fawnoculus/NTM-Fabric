@@ -136,6 +136,6 @@ public class BlockLootProvider extends FabricBlockLootTableProvider {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Block-Loot Provider";
+    return NTM.MOD_NAME + " Block-Loot Provider";
   }
 }

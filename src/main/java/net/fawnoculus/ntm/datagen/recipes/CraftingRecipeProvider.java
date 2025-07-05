@@ -90,6 +90,6 @@ public class CraftingRecipeProvider extends FabricRecipeProvider{
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Crafting-Recipe Provider";
+    return NTM.MOD_NAME + " Crafting-Recipe Provider";
   }
 }

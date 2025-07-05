@@ -12,6 +12,7 @@ import net.fawnoculus.ntm.datagen.loot.EntityLootProvider;
 import net.fawnoculus.ntm.datagen.recipes.CraftingRecipeProvider;
 import net.fawnoculus.ntm.datagen.recipes.SmeltingRecipeProvider;
 import net.fawnoculus.ntm.datagen.tags.BlockTagProvider;
+import net.fawnoculus.ntm.datagen.tags.DamageTypeTagProvider;
 import net.fawnoculus.ntm.datagen.tags.EntityTypeTagProvider;
 import net.fawnoculus.ntm.datagen.tags.ItemTagProvider;
 import net.fawnoculus.ntm.world.ModConfiguredFeatures;
@@ -30,6 +31,7 @@ public class NTMDataGenerator implements DataGeneratorEntrypoint {
     pack.addProvider(ItemTagProvider::new);
     pack.addProvider(BlockTagProvider::new);
     pack.addProvider(EntityTypeTagProvider::new);
+    pack.addProvider(DamageTypeTagProvider::new);
     
     pack.addProvider(BlockLootProvider::new);
     pack.addProvider(ChestLootProvider::new);

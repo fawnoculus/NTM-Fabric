@@ -21,6 +21,6 @@ public class RegistryProvider extends FabricDynamicRegistryProvider {
   
   @Override
   public String getName() {
-    return NTM.MOD_ID + " Dynamic-Registry Provider";
+    return NTM.MOD_NAME + " Dynamic-Registry Provider";
   }
 }
