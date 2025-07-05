@@ -23,7 +23,7 @@ public class NetworkDebuggingToolItem extends Item {
     super(settings);
   }
   
-  @Override
+  @Override  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.WHITE));
     tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool1").formatted(Formatting.RED));

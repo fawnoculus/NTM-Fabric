@@ -66,10 +66,9 @@ public class SpecialHoeItem extends HoeItem implements SpecialTool {
     super.postHit(stack, target, attacker);
   }
   
-  @Override
+  @Override  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    this.processTooltip(stack, context, displayComponent, tooltip, type);
-    super.appendTooltip(stack, context, displayComponent, tooltip, type);
+    this.processTooltip(stack, tooltip);
   }
   
   @Override

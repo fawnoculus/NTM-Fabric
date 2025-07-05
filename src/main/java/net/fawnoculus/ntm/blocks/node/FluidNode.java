@@ -66,42 +66,12 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
     }
     return this.network;
   }
+  
   @Override
-  public void assignNetwork() {
-    if(!this.shouldAssignNetwork()) return;
-    
-    FluidNetwork detectedNetwork = this.findNetwork(this.getPos().up(), null);
-    detectedNetwork = this.findNetwork(this.getPos().down(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().north(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().east(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().south(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().west(), detectedNetwork);
-    if(detectedNetwork == null){
-      detectedNetwork = new FluidNetwork();
-    }
-    if(!detectedNetwork.containsNode(this)){
-      detectedNetwork.addNode(this);
-    }
-    
-    this.setNetwork(detectedNetwork);
+  public NodeNetwork<FluidNode> makeNewNetwork() {
+    return new FluidNetwork();
   }
   
-  private FluidNetwork findNetwork(BlockPos blockPos, FluidNetwork detectedNetwork) {
-    assert this.world != null;
-    BlockEntity bl = this.world.getBlockEntity(blockPos);
-    if(!(bl instanceof FluidNode node) || node.network == null) {
-      return detectedNetwork;
-    }
-    FluidNetwork foundNetwork = node.getNetwork();
-    if(detectedNetwork != null
-        && foundNetwork != null
-        && !foundNetwork.equals(detectedNetwork)
-    ) {
-      detectedNetwork.mergeNetworksAt(this);
-      return detectedNetwork;
-    }
-    return foundNetwork;
-  }
   @Override
   public List<Node<FluidNode>> getConnectedNodes() {
     World world = this.getWorld();

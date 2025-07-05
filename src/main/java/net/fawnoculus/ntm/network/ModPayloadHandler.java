@@ -13,23 +13,14 @@ public class ModPayloadHandler {
     if (NTM.ENVIRONMENT == EnvType.CLIENT) {
       initializeClient();
     }
-    if (NTM.ENVIRONMENT == EnvType.SERVER) {
-      initializeServer();
-    }
+    initializeServer();
   }
   
-  private static void initializeServer() {
-  }
+  private static void initializeServer(){}
   
   private static void initializeClient() {
-    ClientPlayNetworking.registerGlobalReceiver(AdvancedMessageS2CPayload.ID, (payload, context) -> {
-      MessageSystem.addMessage(payload.message());
-    });
-    ClientPlayNetworking.registerGlobalReceiver(RemoveMessageS2CPayload.ID, (payload, context) -> {
-      MessageSystem.removeMessage(payload.identifier());
-    });
-    ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesS2CPayload.ID, (payload, context) -> {
-      MessageSystem.removeAllMessages();
-    });
+    ClientPlayNetworking.registerGlobalReceiver(AdvancedMessageS2CPayload.ID, (payload, context) -> MessageSystem.addMessage(payload.message()));
+    ClientPlayNetworking.registerGlobalReceiver(RemoveMessageS2CPayload.ID, (payload, context) -> MessageSystem.removeMessage(payload.identifier()));
+    ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesS2CPayload.ID, (payload, context) -> MessageSystem.removeAllMessages());
   }
 }

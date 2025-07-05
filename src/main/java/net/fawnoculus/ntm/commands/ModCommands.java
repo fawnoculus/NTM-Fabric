@@ -183,15 +183,9 @@ public class ModCommands {
     
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
     switch (network){
-      case EnergyNetwork ignored -> {
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.energy").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-      }
-      case FluidNetwork ignored -> {
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.fluid").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-      }
-      default -> {
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.unknown").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-      }
+      case EnergyNetwork ignored -> context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.energy").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+      case FluidNetwork ignored -> context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.fluid").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+      default -> context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.unknown").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);

@@ -4,7 +4,6 @@ import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceExtensionBlock;
 import net.fawnoculus.ntm.blocks.custom.SimpleEnergyStorageBlock;
 import net.fawnoculus.ntm.blocks.custom.TempCableBlock;
-import net.fawnoculus.ntm.items.custom.TooltipItem;
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -39,174 +38,174 @@ public class ModBlocks {
       .instrument(NoteBlockInstrument.SNARE);
 		
   // Ore Blocks
-  public static final Block URANIUM_ORE = register("uranium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCORCHED_URANIUM_ORE = register("scorched_uranium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block TITANIUM_ORE = register("titanium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SULFUR_ORE = register("sulfur_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block THORIUM_ORE = register("thorium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NITER_ORE = register("niter_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block TUNGSTEN_ORE = register("tungsten_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block ALUMINIUM_BEARING_ORE = register("aluminium_bearing_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block FLUORITE_ORE = register("fluorite_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block LEAD_ORE = register("lead_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHRABIDIUM_ORE = register("schrabidium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block BERYLLIUM_ORE = register("beryllium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block AUSTRALIUM_ORE = register("australium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block RARE_EARTH_ORE = register("rare_earth_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block COBALT_ORE = register("cobalt_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block CINNEBAR_ORE = register("cinnebar_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block COLTAN_ORE = register("coltan_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block LIGNITE_ORE = register("lignite_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block ASBESTOS_ORE = register("asbestos_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block OIL_DEPOSIT = register("oil_deposit", Block::new, STONE_SETTINGS, true);
-  public static final Block EMPTY_OIL_DEPOSIT = register("empty_oil_deposit", Block::new, STONE_SETTINGS, true);
-  public static final Block ALUMINIUM_ORE_CLUSTER = register("aluminium_ore_cluster", Block::new, STONE_SETTINGS, true);
-  public static final Block COPPER_ORE_CLUSTER = register("copper_ore_cluster", Block::new, STONE_SETTINGS, true);
-  public static final Block IRON_ORE_CLUSTER = register("iron_ore_cluster", Block::new, STONE_SETTINGS, true);
-  public static final Block TITANIUM_ORE_CLUSTER = register("titanium_ore_cluster", Block::new, STONE_SETTINGS, true);
+  public static final Block URANIUM_ORE = register("uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCORCHED_URANIUM_ORE = register("scorched_uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block TITANIUM_ORE = register("titanium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SULFUR_ORE = register("sulfur_ore", Block::new, STONE_SETTINGS);
+  public static final Block THORIUM_ORE = register("thorium_ore", Block::new, STONE_SETTINGS);
+  public static final Block NITER_ORE = register("niter_ore", Block::new, STONE_SETTINGS);
+  public static final Block TUNGSTEN_ORE = register("tungsten_ore", Block::new, STONE_SETTINGS);
+  public static final Block ALUMINIUM_BEARING_ORE = register("aluminium_bearing_ore", Block::new, STONE_SETTINGS);
+  public static final Block FLUORITE_ORE = register("fluorite_ore", Block::new, STONE_SETTINGS);
+  public static final Block LEAD_ORE = register("lead_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHRABIDIUM_ORE = register("schrabidium_ore", Block::new, STONE_SETTINGS);
+  public static final Block BERYLLIUM_ORE = register("beryllium_ore", Block::new, STONE_SETTINGS);
+  public static final Block AUSTRALIUM_ORE = register("australium_ore", Block::new, STONE_SETTINGS);
+  public static final Block RARE_EARTH_ORE = register("rare_earth_ore", Block::new, STONE_SETTINGS);
+  public static final Block COBALT_ORE = register("cobalt_ore", Block::new, STONE_SETTINGS);
+  public static final Block CINNEBAR_ORE = register("cinnebar_ore", Block::new, STONE_SETTINGS);
+  public static final Block COLTAN_ORE = register("coltan_ore", Block::new, STONE_SETTINGS);
+  public static final Block LIGNITE_ORE = register("lignite_ore", Block::new, STONE_SETTINGS);
+  public static final Block ASBESTOS_ORE = register("asbestos_ore", Block::new, STONE_SETTINGS);
+  public static final Block OIL_DEPOSIT = register("oil_deposit", Block::new, STONE_SETTINGS);
+  public static final Block EMPTY_OIL_DEPOSIT = register("empty_oil_deposit", Block::new, STONE_SETTINGS);
+  public static final Block ALUMINIUM_ORE_CLUSTER = register("aluminium_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block COPPER_ORE_CLUSTER = register("copper_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block IRON_ORE_CLUSTER = register("iron_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block TITANIUM_ORE_CLUSTER = register("titanium_ore_cluster", Block::new, STONE_SETTINGS);
   
-  public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DIRT_SETTINGS.hardness(2f), true);
-  public static final Block OILY_DIRT = register("oily_dirt", Block::new, DIRT_SETTINGS.hardness(2f), true);
-  public static final Block OILY_SAND = register("oily_sand", Block::new, SAND_SETTINGS.hardness(2f), true);
+  public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
+  public static final Block OILY_DIRT = register("oily_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
+  public static final Block OILY_SAND = register("oily_sand", Block::new, SAND_SETTINGS.hardness(2f));
 
   // Depth Stone Type
-  public static final Block DEPTH_ROCK = register("depth_rock", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block DEPTH_CINNABAR_ORE = register("depth_cinnabar_ore", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block DEPTH_ZIRCONIUM_ORE = register("depth_zirconium", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block DEPTH_BORAX_ORE = register("depth_borax_ore", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block DEPTH_IRON_ORE_CLUSTER = register("depth_iron_ore_cluster", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block DEPTH_TITANIUM_ORE_CLUSTER = register("depth_titanium_ore_cluster", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block DEPTH_TUNGSTEN_ORE_CLUSTER = register("depth_tungsten_ore_cluster", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block ALEXANDRITE_ORE = register("alexandrite_ore", Block::new, DEPTH_STONE_SETTINGS, true);
+  public static final Block DEPTH_ROCK = register("depth_rock", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEPTH_CINNABAR_ORE = register("depth_cinnabar_ore", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEPTH_ZIRCONIUM_ORE = register("depth_zirconium", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEPTH_BORAX_ORE = register("depth_borax_ore", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEPTH_IRON_ORE_CLUSTER = register("depth_iron_ore_cluster", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEPTH_TITANIUM_ORE_CLUSTER = register("depth_titanium_ore_cluster", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEPTH_TUNGSTEN_ORE_CLUSTER = register("depth_tungsten_ore_cluster", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block ALEXANDRITE_ORE = register("alexandrite_ore", Block::new, DEPTH_STONE_SETTINGS);
 
   // Volcanic Stone Type
-  public static final Block VOLCANIC_BASALT = register("volcanic_basalt", Block::new, STONE_SETTINGS, true);
-  public static final Block SULFUR_RICH_VOLCANIC_BASALT = register("sulfur_rich_volcanic_basalt", Block::new, STONE_SETTINGS, true);
-  public static final Block FLUORITE_RICH_VOLCANIC_BASALT = register("fluorite_rich_volcanic_basalt", Block::new, STONE_SETTINGS, true);
-  public static final Block ASBESTOS_RICH_VOLCANIC_BASALT = register("asbestos_rich_volcanic_basalt", Block::new, STONE_SETTINGS, true);
-  public static final Block GEM_RICH_VOLCANIC_BASALT = register("gem_rich_volcanic_basalt", Block::new, STONE_SETTINGS, true);
-  public static final Block MOLYSITE_RICH_VOLCANIC_BASALT = register("molysite_rich_volcanic_basalt", Block::new, STONE_SETTINGS, true);
+  public static final Block VOLCANIC_BASALT = register("volcanic_basalt", Block::new, STONE_SETTINGS);
+  public static final Block SULFUR_RICH_VOLCANIC_BASALT = register("sulfur_rich_volcanic_basalt", Block::new, STONE_SETTINGS);
+  public static final Block FLUORITE_RICH_VOLCANIC_BASALT = register("fluorite_rich_volcanic_basalt", Block::new, STONE_SETTINGS);
+  public static final Block ASBESTOS_RICH_VOLCANIC_BASALT = register("asbestos_rich_volcanic_basalt", Block::new, STONE_SETTINGS);
+  public static final Block GEM_RICH_VOLCANIC_BASALT = register("gem_rich_volcanic_basalt", Block::new, STONE_SETTINGS);
+  public static final Block MOLYSITE_RICH_VOLCANIC_BASALT = register("molysite_rich_volcanic_basalt", Block::new, STONE_SETTINGS);
 
   // Netherreck Type
-  public static final Block SMOLDERING_NETHERRACK = register("smoldering_netherrack", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_COAL_ORE = register("nether_coal_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_URANIUM_ORE = register("nether_uranium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCORCHED_NETHER_URANIUM_ORE = register("scorched_nether_uranium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_PLUTONIUM_ORE = register("nether_plutonium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_TUNGSTEN_ORE = register("nether_tungsten_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_SULFUR_ORE = register("nether_sulfur_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_PHOSPHORUS_ORE = register("nether_phosphorus_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_COBALT_ORE = register("nether_cobalt_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block NETHER_SCHRABIDIUM_ORE = register("nether_schrabidium_ore", Block::new, STONE_SETTINGS, true);
+  public static final Block SMOLDERING_NETHERRACK = register("smoldering_netherrack", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_COAL_ORE = register("nether_coal_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_URANIUM_ORE = register("nether_uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCORCHED_NETHER_URANIUM_ORE = register("scorched_nether_uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_PLUTONIUM_ORE = register("nether_plutonium_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_TUNGSTEN_ORE = register("nether_tungsten_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_SULFUR_ORE = register("nether_sulfur_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_PHOSPHORUS_ORE = register("nether_phosphorus_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_COBALT_ORE = register("nether_cobalt_ore", Block::new, STONE_SETTINGS);
+  public static final Block NETHER_SCHRABIDIUM_ORE = register("nether_schrabidium_ore", Block::new, STONE_SETTINGS);
 
   // Nether Depth Stone Type
-  public static final Block NETHER_DEPTH_ROCK = register("nether_depth_rock", Block::new, DEPTH_STONE_SETTINGS, true);
-  public static final Block NETHER_DEPTH_NEODYMIUM_ORE = register("nether_depth_neodymium_ore", Block::new, DEPTH_STONE_SETTINGS, true);
+  public static final Block NETHER_DEPTH_ROCK = register("nether_depth_rock", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block NETHER_DEPTH_NEODYMIUM_ORE = register("nether_depth_neodymium_ore", Block::new, DEPTH_STONE_SETTINGS);
 
   // Meteorite Stone Type
-  public static final Block METEORITE_BLOCK = register("meteorite_block", Block::new, STONE_SETTINGS, true);
-  public static final Block BROKEN_METEORITE_BLOCK = register("broken_meteorite_block", Block::new, STONE_SETTINGS, true);
-  public static final Block METEORITE_COBBLESTONE = register("meteorite_cobblestone", Block::new, STONE_SETTINGS, true);
-  public static final Block HOT_METEORITE_COBBLESTONE = register("hot_meteorite_cobblestone", Block::new, STONE_SETTINGS, true);
-  public static final Block METEORITE_TREASURE_BLOCK = register("meteorite_treasure_block", Block::new, STONE_SETTINGS, true);
-  public static final Block METEOR_IRON_ORE = register("meteor_iron_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block METEOR_COPPER_ORE = register("meteor_copper_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block METEOR_ALUMINIUM_ORE = register("meteor_aluminium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block METEOR_RARE_EARTH_ORE = register("meteor_rare_earth_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block METEOR_COBALT_ORE = register("meteor_cobalt_ore", Block::new, STONE_SETTINGS, true);
+  public static final Block METEORITE_BLOCK = register("meteorite_block", Block::new, STONE_SETTINGS);
+  public static final Block BROKEN_METEORITE_BLOCK = register("broken_meteorite_block", Block::new, STONE_SETTINGS);
+  public static final Block METEORITE_COBBLESTONE = register("meteorite_cobblestone", Block::new, STONE_SETTINGS);
+  public static final Block HOT_METEORITE_COBBLESTONE = register("hot_meteorite_cobblestone", Block::new, STONE_SETTINGS);
+  public static final Block METEORITE_TREASURE_BLOCK = register("meteorite_treasure_block", Block::new, STONE_SETTINGS);
+  public static final Block METEOR_IRON_ORE = register("meteor_iron_ore", Block::new, STONE_SETTINGS);
+  public static final Block METEOR_COPPER_ORE = register("meteor_copper_ore", Block::new, STONE_SETTINGS);
+  public static final Block METEOR_ALUMINIUM_ORE = register("meteor_aluminium_ore", Block::new, STONE_SETTINGS);
+  public static final Block METEOR_RARE_EARTH_ORE = register("meteor_rare_earth_ore", Block::new, STONE_SETTINGS);
+  public static final Block METEOR_COBALT_ORE = register("meteor_cobalt_ore", Block::new, STONE_SETTINGS);
 
   // Schist Stone Type
-  public static final Block GRAPHITIC_SCHIST = register("graphitic_schist", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_IRON_ORE = register("schist_iron_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_GOLD_ORE = register("schist_gold_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_URANIUM_ORE = register("schist_uranium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCORCHED_SCHIST_URANIUM_ORE = register("scorched_schist_uranium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_COPPER_ORE = register("schist_copper_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_ASBESTOS_ORE = register("schist_asbestos_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_LITHIUM_ORE = register("schist_lithium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_SCHRABIDIUM_ORE = register("schist_schrabidium_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHIST_RARE_EARTH_ORE = register("schist_rare_earth_ore", Block::new, STONE_SETTINGS, true);
-  public static final Block GAS_SHALE = register("gas_shale", Block::new, STONE_SETTINGS, true);
+  public static final Block GRAPHITIC_SCHIST = register("graphitic_schist", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_IRON_ORE = register("schist_iron_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_GOLD_ORE = register("schist_gold_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_URANIUM_ORE = register("schist_uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCORCHED_SCHIST_URANIUM_ORE = register("scorched_schist_uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_COPPER_ORE = register("schist_copper_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_ASBESTOS_ORE = register("schist_asbestos_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_LITHIUM_ORE = register("schist_lithium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_SCHRABIDIUM_ORE = register("schist_schrabidium_ore", Block::new, STONE_SETTINGS);
+  public static final Block SCHIST_RARE_EARTH_ORE = register("schist_rare_earth_ore", Block::new, STONE_SETTINGS);
+  public static final Block GAS_SHALE = register("gas_shale", Block::new, STONE_SETTINGS);
   
-  public static final Block BAUXITE = register("bauxite", Block::new, STONE_SETTINGS, true);
-  public static final Block CHRYSOTILE = register("chrysotile", Block::new, STONE_SETTINGS, true);
-  public static final Block HEMATITE = register("hematite", Block::new, STONE_SETTINGS, true);
-  public static final Block LIMESTONE = register("limestone", Block::new, STONE_SETTINGS, true);
-  public static final Block MALACHITE = register("malachite", Block::new, STONE_SETTINGS, true);
-  public static final Block SULFUROUS_STONE = register("sulfurous_stone", Block::new, STONE_SETTINGS, true);
+  public static final Block BAUXITE = register("bauxite", Block::new, STONE_SETTINGS);
+  public static final Block CHRYSOTILE = register("chrysotile", Block::new, STONE_SETTINGS);
+  public static final Block HEMATITE = register("hematite", Block::new, STONE_SETTINGS);
+  public static final Block LIMESTONE = register("limestone", Block::new, STONE_SETTINGS);
+  public static final Block MALACHITE = register("malachite", Block::new, STONE_SETTINGS);
+  public static final Block SULFUROUS_STONE = register("sulfurous_stone", Block::new, STONE_SETTINGS);
   
-  public static final Block TEKTITE = register("tektite", Block::new, STONE_SETTINGS, true);
-  public static final Block OSMIRIDIUM_INFUSED_TEKTITE = register("osmiridium_infused_tektite", Block::new, STONE_SETTINGS, true);
-  public static final Block TRIXITE_ORE = register("trixite_ore", Block::new, STONE_SETTINGS, true);
+  public static final Block TEKTITE = register("tektite", Block::new, STONE_SETTINGS);
+  public static final Block OSMIRIDIUM_INFUSED_TEKTITE = register("osmiridium_infused_tektite", Block::new, STONE_SETTINGS);
+  public static final Block TRIXITE_ORE = register("trixite_ore", Block::new, STONE_SETTINGS);
   
-  public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, STONE_SETTINGS, true);
-  public static final Block BEDROCK_OIL_DEPOSIT = register("bedrock_oil_deposit", Block::new, STONE_SETTINGS, true);
-  public static final Block BEDROCK_ORE = register("bedrock_ore", Block::new, STONE_SETTINGS, true);
+  public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, STONE_SETTINGS);
+  public static final Block BEDROCK_OIL_DEPOSIT = register("bedrock_oil_deposit", Block::new, STONE_SETTINGS);
+  public static final Block BEDROCK_ORE = register("bedrock_ore", Block::new, STONE_SETTINGS);
 
   //Element Blocks
-  public static final Block ACTINIUM_227_BLOCK = register("actinium_227_block", Block::new, STONE_SETTINGS, true);
-  public static final Block ADVANCED_ALLOY_BLOCK = register("advanced_alloy_block", Block::new, STONE_SETTINGS, true);
-  public static final Block ALUMINIUM_BLOCK = register("aluminium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block ASBESTOS_BLOCK = register("asbestos_block", Block::new, STONE_SETTINGS, true);
-  public static final Block AUSTRALIUM_BLOCK = register("australium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block BAKELITE_BLOCK = register("bakelite_block", Block::new, STONE_SETTINGS, true);
-  public static final Block BERYLLIUM_BLOCK = register("beryllium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block BISMUTH_BLOCK = register("bismuth_block", Block::new, STONE_SETTINGS, true);
-  public static final Block BORON_BLOCK = register("boron_block", Block::new, STONE_SETTINGS, true);
-  public static final Block CADMIUM_BLOCK = register("cadmium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block CADMIUM_STEEL_BLOCK = register("cadmium_steel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block CMB_STEEL_BLOCK = register("cmb_steel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block COBALT_BLOCK = register("cobalt_block", Block::new, STONE_SETTINGS, true);
-  public static final Block COLTAN_BLOCK = register("coltan_block", Block::new, STONE_SETTINGS, true);
-  public static final Block DESH_BLOCK = register("desh_block", Block::new, STONE_SETTINGS, true);
-  public static final Block DINEUTRONIUM_BLOCK = register("dineutronium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block EUPHEMIUM_BLOCK = register("euphemium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block FERRIC_SCHRABIDATE_BLOCK = register("ferric_schrabidate_block", Block::new, STONE_SETTINGS, true);
-  public static final Block FLUORITE_BLOCK = register("fluorite_block", Block::new, STONE_SETTINGS, true);
-  public static final Block GRAPHITE_BLOCK = register("graphite_block", Block::new, STONE_SETTINGS, true);
-  public static final Block HIGH_SPEED_STEEL_BLOCK = register("high_speed_steel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block LIGNITE_COKE_BLOCK = register("lignite_coke_block", Block::new, STONE_SETTINGS, true);
-  public static final Block LITHIUM_BLOCK = register("lithium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block LEAD_BLOCK = register("lead_block", Block::new, STONE_SETTINGS, true);
-  public static final Block MAGNETIZED_TUNGSTEN_BLOCK = register("magnetized_tungsten_block", Block::new, STONE_SETTINGS, true);
-  public static final Block MOX_FUEL_BLOCK = register("mox_fuel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block NEPTUNIUM_BLOCK = register("neptunium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block NIOBIUM_BLOCK = register("niobium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block NITER_BLOCK = register("niter_block", Block::new, STONE_SETTINGS, true);
-  public static final Block RED_PHOSPHORUS_BLOCK = register("red_phosphorus_block", Block::new, STONE_SETTINGS, true);
-  public static final Block WHITE_PHOSPHORUS_BLOCK = register("white_phosphorus_block", Block::new, STONE_SETTINGS, true);
-  public static final Block PLUTONIUM_BLOCK = register("plutonium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block REACTOR_GRADE_PLUTONIUM_BLOCK = register("reactor_grade_plutonium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block PLUTONIUM_238_BLOCK = register("plutonium_238_block", Block::new, STONE_SETTINGS, true);
-  public static final Block PLUTONIUM_239_BLOCK = register("plutonium_239_block", Block::new, STONE_SETTINGS, true);
-  public static final Block PLUTONIUM_240_BLOCK = register("plutonium_240_block", Block::new, STONE_SETTINGS, true);
-  public static final Block PLUTONIUM_241_BLOCK = register("plutonium_241_block", Block::new, STONE_SETTINGS, true);
-  public static final Block POLONIUM_210_BLOCK = register("polonium_210_block", Block::new, STONE_SETTINGS, true);
-  public static final Block POLYMER_BLOCK = register("polymer_block", Block::new, STONE_SETTINGS, true);
-  public static final Block RADIUM_226_BLOCK = register("radium_266_block", Block::new, STONE_SETTINGS, true);
-  public static final Block RED_COPPER_BLOCK = register("red_copper_block", Block::new, STONE_SETTINGS, true);
-  public static final Block RUBBER_BLOCK = register("rubber_block", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHRABIDIUM_BLOCK = register("schrabidium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHRABIDIUM_FUEL_BLOCK = register("schrabidium_fuel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block SCHRARANIUM_BLOCK = register("schraranium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block SEMTEX_BLOCK = register("semtex_block", Block::new, STONE_SETTINGS, true);
-  public static final Block SOLINIUM_BLOCK = register("solinium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block STARMETAL_BLOCK = register("starmetal_block", Block::new, STONE_SETTINGS, true);
-  public static final Block STEEL_BLOCK = register("steel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block SULFUR_BLOCK = register("sulfur_block", Block::new, STONE_SETTINGS, true);
-  public static final Block TANTALUM_BLOCK = register("tantalum_block", Block::new, STONE_SETTINGS, true);
-  public static final Block TECHNETIUM_STEEL_BLOCK = register("technetium_steel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block THORIUM_232_BLOCK = register("thorium_232_block", Block::new, STONE_SETTINGS, true);
-  public static final Block THORIUM_FUEL_BLOCK = register("thorium_fuel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block TITANIUM_BLOCK = register("titanium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block TUNGSTEN_BLOCK = register("tungsten_block", Block::new, STONE_SETTINGS, true);
-  public static final Block URANIUM_BLOCK = register("uranium_block", Block::new, STONE_SETTINGS, true);
-  public static final Block URANIUM_FUEL_BLOCK = register("uranium_fuel_block", Block::new, STONE_SETTINGS, true);
-  public static final Block URANIUM_233_BLOCK = register("uranium_233_block", Block::new, STONE_SETTINGS, true);
-  public static final Block URANIUM_235_BLOCK = register("uranium_235_block", Block::new, STONE_SETTINGS, true);
-  public static final Block URANIUM_238_BLOCK = register("uranium_238_block", Block::new, STONE_SETTINGS, true);
-  public static final Block YELLOWCAKE_BLOCK = register("yellowcake_block", Block::new, STONE_SETTINGS, true);
-  public static final Block ZIRCONIUM_BLOCK = register("zirconium_block", Block::new, STONE_SETTINGS, true);
+  public static final Block ACTINIUM_227_BLOCK = register("actinium_227_block", Block::new, STONE_SETTINGS);
+  public static final Block ADVANCED_ALLOY_BLOCK = register("advanced_alloy_block", Block::new, STONE_SETTINGS);
+  public static final Block ALUMINIUM_BLOCK = register("aluminium_block", Block::new, STONE_SETTINGS);
+  public static final Block ASBESTOS_BLOCK = register("asbestos_block", Block::new, STONE_SETTINGS);
+  public static final Block AUSTRALIUM_BLOCK = register("australium_block", Block::new, STONE_SETTINGS);
+  public static final Block BAKELITE_BLOCK = register("bakelite_block", Block::new, STONE_SETTINGS);
+  public static final Block BERYLLIUM_BLOCK = register("beryllium_block", Block::new, STONE_SETTINGS);
+  public static final Block BISMUTH_BLOCK = register("bismuth_block", Block::new, STONE_SETTINGS);
+  public static final Block BORON_BLOCK = register("boron_block", Block::new, STONE_SETTINGS);
+  public static final Block CADMIUM_BLOCK = register("cadmium_block", Block::new, STONE_SETTINGS);
+  public static final Block CADMIUM_STEEL_BLOCK = register("cadmium_steel_block", Block::new, STONE_SETTINGS);
+  public static final Block CMB_STEEL_BLOCK = register("cmb_steel_block", Block::new, STONE_SETTINGS);
+  public static final Block COBALT_BLOCK = register("cobalt_block", Block::new, STONE_SETTINGS);
+  public static final Block COLTAN_BLOCK = register("coltan_block", Block::new, STONE_SETTINGS);
+  public static final Block DESH_BLOCK = register("desh_block", Block::new, STONE_SETTINGS);
+  public static final Block DINEUTRONIUM_BLOCK = register("dineutronium_block", Block::new, STONE_SETTINGS);
+  public static final Block EUPHEMIUM_BLOCK = register("euphemium_block", Block::new, STONE_SETTINGS);
+  public static final Block FERRIC_SCHRABIDATE_BLOCK = register("ferric_schrabidate_block", Block::new, STONE_SETTINGS);
+  public static final Block FLUORITE_BLOCK = register("fluorite_block", Block::new, STONE_SETTINGS);
+  public static final Block GRAPHITE_BLOCK = register("graphite_block", Block::new, STONE_SETTINGS);
+  public static final Block HIGH_SPEED_STEEL_BLOCK = register("high_speed_steel_block", Block::new, STONE_SETTINGS);
+  public static final Block LIGNITE_COKE_BLOCK = register("lignite_coke_block", Block::new, STONE_SETTINGS);
+  public static final Block LITHIUM_BLOCK = register("lithium_block", Block::new, STONE_SETTINGS);
+  public static final Block LEAD_BLOCK = register("lead_block", Block::new, STONE_SETTINGS);
+  public static final Block MAGNETIZED_TUNGSTEN_BLOCK = register("magnetized_tungsten_block", Block::new, STONE_SETTINGS);
+  public static final Block MOX_FUEL_BLOCK = register("mox_fuel_block", Block::new, STONE_SETTINGS);
+  public static final Block NEPTUNIUM_BLOCK = register("neptunium_block", Block::new, STONE_SETTINGS);
+  public static final Block NIOBIUM_BLOCK = register("niobium_block", Block::new, STONE_SETTINGS);
+  public static final Block NITER_BLOCK = register("niter_block", Block::new, STONE_SETTINGS);
+  public static final Block RED_PHOSPHORUS_BLOCK = register("red_phosphorus_block", Block::new, STONE_SETTINGS);
+  public static final Block WHITE_PHOSPHORUS_BLOCK = register("white_phosphorus_block", Block::new, STONE_SETTINGS);
+  public static final Block PLUTONIUM_BLOCK = register("plutonium_block", Block::new, STONE_SETTINGS);
+  public static final Block REACTOR_GRADE_PLUTONIUM_BLOCK = register("reactor_grade_plutonium_block", Block::new, STONE_SETTINGS);
+  public static final Block PLUTONIUM_238_BLOCK = register("plutonium_238_block", Block::new, STONE_SETTINGS);
+  public static final Block PLUTONIUM_239_BLOCK = register("plutonium_239_block", Block::new, STONE_SETTINGS);
+  public static final Block PLUTONIUM_240_BLOCK = register("plutonium_240_block", Block::new, STONE_SETTINGS);
+  public static final Block PLUTONIUM_241_BLOCK = register("plutonium_241_block", Block::new, STONE_SETTINGS);
+  public static final Block POLONIUM_210_BLOCK = register("polonium_210_block", Block::new, STONE_SETTINGS);
+  public static final Block POLYMER_BLOCK = register("polymer_block", Block::new, STONE_SETTINGS);
+  public static final Block RADIUM_226_BLOCK = register("radium_266_block", Block::new, STONE_SETTINGS);
+  public static final Block RED_COPPER_BLOCK = register("red_copper_block", Block::new, STONE_SETTINGS);
+  public static final Block RUBBER_BLOCK = register("rubber_block", Block::new, STONE_SETTINGS);
+  public static final Block SCHRABIDIUM_BLOCK = register("schrabidium_block", Block::new, STONE_SETTINGS);
+  public static final Block SCHRABIDIUM_FUEL_BLOCK = register("schrabidium_fuel_block", Block::new, STONE_SETTINGS);
+  public static final Block SCHRARANIUM_BLOCK = register("schraranium_block", Block::new, STONE_SETTINGS);
+  public static final Block SEMTEX_BLOCK = register("semtex_block", Block::new, STONE_SETTINGS);
+  public static final Block SOLINIUM_BLOCK = register("solinium_block", Block::new, STONE_SETTINGS);
+  public static final Block STARMETAL_BLOCK = register("starmetal_block", Block::new, STONE_SETTINGS);
+  public static final Block STEEL_BLOCK = register("steel_block", Block::new, STONE_SETTINGS);
+  public static final Block SULFUR_BLOCK = register("sulfur_block", Block::new, STONE_SETTINGS);
+  public static final Block TANTALUM_BLOCK = register("tantalum_block", Block::new, STONE_SETTINGS);
+  public static final Block TECHNETIUM_STEEL_BLOCK = register("technetium_steel_block", Block::new, STONE_SETTINGS);
+  public static final Block THORIUM_232_BLOCK = register("thorium_232_block", Block::new, STONE_SETTINGS);
+  public static final Block THORIUM_FUEL_BLOCK = register("thorium_fuel_block", Block::new, STONE_SETTINGS);
+  public static final Block TITANIUM_BLOCK = register("titanium_block", Block::new, STONE_SETTINGS);
+  public static final Block TUNGSTEN_BLOCK = register("tungsten_block", Block::new, STONE_SETTINGS);
+  public static final Block URANIUM_BLOCK = register("uranium_block", Block::new, STONE_SETTINGS);
+  public static final Block URANIUM_FUEL_BLOCK = register("uranium_fuel_block", Block::new, STONE_SETTINGS);
+  public static final Block URANIUM_233_BLOCK = register("uranium_233_block", Block::new, STONE_SETTINGS);
+  public static final Block URANIUM_235_BLOCK = register("uranium_235_block", Block::new, STONE_SETTINGS);
+  public static final Block URANIUM_238_BLOCK = register("uranium_238_block", Block::new, STONE_SETTINGS);
+  public static final Block YELLOWCAKE_BLOCK = register("yellowcake_block", Block::new, STONE_SETTINGS);
+  public static final Block ZIRCONIUM_BLOCK = register("zirconium_block", Block::new, STONE_SETTINGS);
 
 
 
@@ -216,23 +215,26 @@ public class ModBlocks {
           .strength(1.5F, 6.0F)
           .sounds(BlockSoundGroup.STONE)
           .mapColor(MapColor.TERRACOTTA_ORANGE)
-          .requiresTool(), true);
+          .requiresTool());
   public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create()
           .strength(1.5F, 6.0F)
           .sounds(BlockSoundGroup.STONE)
           .mapColor(MapColor.TERRACOTTA_ORANGE)
-          .requiresTool(), true);
+          .requiresTool());
   
   // Energy Stuff
-  public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create(), true);
-  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(10_000L), AbstractBlock.Settings.create(), true);
-  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000L), AbstractBlock.Settings.create(), true);
-  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(50_000_000L), AbstractBlock.Settings.create(), true);
-  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(25_000_000_000L), AbstractBlock.Settings.create(), true);
-  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000_000_000L), AbstractBlock.Settings.create(), true);
+  public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create());
+  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(10_000L), AbstractBlock.Settings.create());
+  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000L), AbstractBlock.Settings.create());
+  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(50_000_000L), AbstractBlock.Settings.create());
+  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(25_000_000_000L), AbstractBlock.Settings.create());
+  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000_000_000L), AbstractBlock.Settings.create());
   
   
   
+  private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings){
+    return register(name, blockFactory, settings, true);
+  }
   private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean registerItem){
     RegistryKey<Block> blockKey = keyOfBlock(name);
     Block block = blockFactory.apply(settings.registryKey(blockKey));

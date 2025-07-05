@@ -8,12 +8,9 @@ import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.util.messages.AdvancedMessage;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -97,7 +94,7 @@ public interface SpecialTool {
     }
   }
   
-  default void processTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+  default void processTooltip(ItemStack stack, Consumer<Text> tooltip) {
     List<ItemAbility> abilities = getAbilities();
     List<ItemModifier> modifiers = getModifiers();
     

@@ -8,7 +8,7 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - The original hbm's displayed some information next to your Crosshair (like info about an RBMK Reactor) this will likely be moved to the Jade compatibility Plugin
 - 
 #
-### Some Stuff will be changed to fit into modern Versions:
+### Some Stuff will be changed to fit into modern Versions (or because i felt like it):
 (Maybe make the old names & textures advisable through a resource pack)
 #### Textures:
 - Industrial Copper -> Standard Minecraft Copper
@@ -29,4 +29,5 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Reinforced Block of Desh -> Desh Block
 - Reinforced Block of High-Speed Steel -> High-Speed Steel Block
 #### Features:
+- Energy & Fluid Storages, Providers & Consumers will be able to connect to each other just like Cables/Pipes can
 - Features that already have *replacements* (Example: Particle Accelerator) will not be implemented ... yet (maybe we'll do it once the rest is working)

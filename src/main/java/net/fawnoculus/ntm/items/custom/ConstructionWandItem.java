@@ -87,7 +87,7 @@ public class ConstructionWandItem extends Item {
     return stack.getOrDefault(ModDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
   }
   
-  @Override
+  @Override  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
     tooltip.accept(Text.translatable("tooltip.ntm.construction_wand1").formatted(Formatting.GRAY));

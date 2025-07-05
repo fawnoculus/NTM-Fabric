@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode> {
+public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   private boolean shouldAssignNetwork = true;
   private EnergyNetwork network;
   private NodeProperties nodeProperties;
@@ -66,42 +66,12 @@ public abstract class EnergyNode extends BlockEntity implements Node<EnergyNode>
     }
     return this.network;
   }
+  
   @Override
-  public void assignNetwork() {
-    if(!this.shouldAssignNetwork()) return;
-    
-    EnergyNetwork detectedNetwork = this.findNetwork(this.getPos().up(), null);
-    detectedNetwork = this.findNetwork(this.getPos().down(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().north(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().east(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().south(), detectedNetwork);
-    detectedNetwork = this.findNetwork(this.getPos().west(), detectedNetwork);
-    if(detectedNetwork == null){
-      detectedNetwork = new EnergyNetwork();
-    }
-    if(!detectedNetwork.containsNode(this)){
-      detectedNetwork.addNode(this);
-    }
-    
-    this.setNetwork(detectedNetwork);
+  public NodeNetwork<EnergyNode> makeNewNetwork() {
+    return new EnergyNetwork();
   }
   
-  private EnergyNetwork findNetwork(BlockPos blockPos, EnergyNetwork detectedNetwork) {
-    assert this.world != null;
-    BlockEntity bl = this.world.getBlockEntity(blockPos);
-    if(!(bl instanceof EnergyNode node) || node.network == null) {
-      return detectedNetwork;
-    }
-    EnergyNetwork foundNetwork = node.getNetwork();
-    if(detectedNetwork != null
-        && foundNetwork != null
-        && !foundNetwork.equals(detectedNetwork)
-    ) {
-      detectedNetwork.mergeNetworksAt(this);
-      return detectedNetwork;
-    }
-    return foundNetwork;
-  }
   @Override
   public List<Node<EnergyNode>> getConnectedNodes() {
     World world = this.getWorld();

@@ -37,7 +37,7 @@ public class DebugWandItem extends Item {
     return ActionResult.SUCCESS_SERVER;
   }
   
-  @Override
+  @Override  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
     tooltip.accept(Text.translatable("tooltip.ntm.debug_wand").formatted(Formatting.GRAY));

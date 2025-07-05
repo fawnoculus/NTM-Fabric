@@ -21,7 +21,7 @@ public class TooltipItem extends Item {
     this.TOOLTIP_COUNT = tooltipCount;
   }
   
-  @Override
+  @Override @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     if(this.TOOLTIP_COUNT == 1){
       tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));

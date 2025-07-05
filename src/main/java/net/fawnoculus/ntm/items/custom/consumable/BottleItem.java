@@ -28,7 +28,7 @@ public class BottleItem extends Item {
     this.RETURN_ITEMS = returnItems;
   }
 
-  @Override
+  @Override  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
     tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
     tooltip.accept(Text.translatable("tooltip.ntm.needs_bottle_opener").formatted(Formatting.GRAY));
