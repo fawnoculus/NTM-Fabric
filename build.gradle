@@ -97,18 +97,18 @@ dependencies {
     // Compatibility Tests & better Dev Environment //
     modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"                 // ModMenu
     modLocalRuntime "maven.modrinth:jade:${project.jade_version}"                           // Jade
-    modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"                       // Sodium (gotta be sodium compatible after all)
+    modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"                       // Sodium
+    //modLocalRuntime "mezz.jei:jei-${project.jei_mc_version}-fabric:${project.jei_version}"  // JEI (for some reason it doesn't start with jei ¯\_('-')_/¯
     modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"         // REI
     //modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}+${project.emi_mc_version}"   // EMI (there is no version for 1.21.5 yet)
-    //modLocalRuntime "mezz.jei:jei-${project.jei_mc_version}-fabric:${project.jei_version}"  // JEI (there is no version for 1.21.5 yet)
 
     // Compile Time Stuff //
     modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"                          // ModMenu
     modCompileOnly "maven.modrinth:jade:${project.jade_version}"                                    // Jade
+    modCompileOnly "mezz.jei:jei-${project.jei_mc_version}-fabric-api:${project.jei_version}"       // JEI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"              // REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"   // REI default Plugins
     modCompileOnly "dev.emi:emi-fabric:${project.emi_version}+${project.emi_mc_version}:api"        // EMI
-    modCompileOnly "mezz.jei:jei-${project.jei_mc_version}-fabric-api:${project.jei_version}"       // JEI
 }
 
 processResources {
