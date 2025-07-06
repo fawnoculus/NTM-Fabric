@@ -845,6 +845,26 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.POISONOUS_INJECTION);
       ItemGroup.add(ModItems.ANTIDOTE);
       ItemGroup.add(ModItems.AWESOME);
+      ItemGroup.add(ModItems.METAL_SYRINGE);
+      ItemGroup.add(ModItems.STIMPAK);
+      ItemGroup.add(ModItems.MED_X);
+      ItemGroup.add(ModItems.PSYCHO);
+      ItemGroup.add(ModItems.SUPER_STIMPAK);
+      ItemGroup.add(ModItems.WATERY_TAINT_INJECTION);
+      ItemGroup.add(ModItems.FIST_AID_KIT);
+      ItemGroup.add(ModItems.IV_BAG);
+      ItemGroup.add(ModItems.BLOOD_BAG);
+      ItemGroup.add(ModItems.EMPTY_EXPERIENCE_BAG);
+      ItemGroup.add(ModItems.EXPERIENCE_BAG);
+      ItemGroup.add(ModItems.RAD_AWAY);
+      ItemGroup.add(ModItems.STRONG_RAD_AWAY);
+      ItemGroup.add(ModItems.ELITE_RAD_AWAY);
+      
+      ItemGroup.add(ModItems.RAD_X);
+      
+      ItemGroup.add(ModItems.IPECAC_SYRUP);
+      ItemGroup.add(ModItems.PTSD_MEDICATION);
+      
       ItemGroup.add(ModItems.EMPTY_BOTTLE);
       ItemGroup.add(ModItems.EMPTY_BOMB_BOTTLE);
       ItemGroup.add(ModItems.NUKA_COLA_BOTTLE_CAP);
@@ -863,6 +883,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.BOTTLE_OF_FRITZ_COLA);
       ItemGroup.add(ModItems.FIRST_BOTTLE_OF_FRITZ_COLA);
       ItemGroup.add(ModItems.BOTTLE_OPENER);
+      
       ItemGroup.add(ModItems.CONSTRUCTION_WAND);
       ItemGroup.add(ModItems.DEBUG_WAND);
       ItemGroup.add(ModItems.NETWORK_DEBUG_TOOL);

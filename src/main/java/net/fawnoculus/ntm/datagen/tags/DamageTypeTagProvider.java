@@ -20,19 +20,27 @@ public class DamageTypeTagProvider extends FabricTagProvider<DamageType> {
   protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
         .addOptional(ModDamageTypes.POISON_INJECTION.getValue())
+        .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
         .setReplace(false);
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_EFFECTS)
         .addOptional(ModDamageTypes.POISON_INJECTION.getValue())
+        .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
         .setReplace(false);
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
         .addOptional(ModDamageTypes.POISON_INJECTION.getValue())
+        .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
         .setReplace(false);
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_RESISTANCE)
         .addOptional(ModDamageTypes.POISON_INJECTION.getValue())
+        .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
         .setReplace(false);
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
         .setReplace(false);
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
+        .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
+        .setReplace(false);
+    getOrCreateTagBuilder(DamageTypeTags.NO_KNOCKBACK)
+        .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
         .setReplace(false);
   }
   

@@ -11,8 +11,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class AntidoteItem extends Item {
-  public AntidoteItem(Settings settings) {
+public class ExperienceBagItem  extends Item {
+  public ExperienceBagItem(Settings settings) {
     super(settings);
   }
   
@@ -25,9 +25,10 @@ public class AntidoteItem extends Item {
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }
-    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.SYRINGE_INJECTS, SoundCategory.PLAYERS);
-    player.giveItemStack(new ItemStack(ModItems.EMPTY_SYRINGE));
-    player.clearStatusEffects();
+    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    player.getInventory().offerOrDrop(new ItemStack(ModItems.EMPTY_EXPERIENCE_BAG));
+    player.addExperience(EmptyExperienceBagItem.XP_PER_BAG);
+    
     return ActionResult.SUCCESS_SERVER;
   }
 }

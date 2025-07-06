@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class ModSounds {
   public static final SoundEvent SYRINGE_INJECTS = register("item.syringe_injects");
-  public static final SoundEvent RADAWAY_INJECTS = register("item.radaway_injects");
+  public static final SoundEvent IV_BAG_INJECTS = register("item.iv_bag_injects");
   
   
   private static SoundEvent register(String id){

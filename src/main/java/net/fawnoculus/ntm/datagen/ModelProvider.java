@@ -848,11 +848,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.ZIRCONIUM_WIRE, Models.GENERATED);
     
     // Consumables
-    itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);
-    itemModelGenerator.register(ModItems.POISONOUS_INJECTION, Models.GENERATED);
-    itemModelGenerator.register(ModItems.ANTIDOTE, Models.GENERATED);
-    itemModelGenerator.register(ModItems.AWESOME, Models.GENERATED);
-    
     itemModelGenerator.register(ModItems.BOTTLE_OPENER, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOTTLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOMB_BOTTLE, Models.GENERATED);
@@ -871,6 +866,33 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.FIRST_BOTTLE_OF_KAROL, Models.GENERATED);
     itemModelGenerator.register(ModItems.BOTTLE_OF_FRITZ_COLA, Models.GENERATED);
     itemModelGenerator.register(ModItems.FIRST_BOTTLE_OF_FRITZ_COLA, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.IPECAC_SYRUP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PTSD_MEDICATION, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.RAD_X, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POISONOUS_INJECTION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ANTIDOTE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AWESOME, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.METAL_SYRINGE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STIMPAK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MED_X, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PSYCHO, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SUPER_STIMPAK, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.WATERY_TAINT_INJECTION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FIST_AID_KIT, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.IV_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BLOOD_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EMPTY_EXPERIENCE_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EXPERIENCE_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAD_AWAY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STRONG_RAD_AWAY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ELITE_RAD_AWAY, Models.GENERATED);
     
     // Tools
     itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);

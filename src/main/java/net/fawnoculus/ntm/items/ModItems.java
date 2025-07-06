@@ -1,13 +1,21 @@
 package net.fawnoculus.ntm.items;
 
+import net.fawnoculus.ntm.entity.ModDamageTypes;
+import net.fawnoculus.ntm.entity.ModStatusEffects;
+import net.fawnoculus.ntm.items.components.ModConsumableComponents;
+import net.fawnoculus.ntm.items.components.ModFoodComponents;
 import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
 import net.fawnoculus.ntm.items.custom.tools.*;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.sounds.ModSounds;
+import net.fawnoculus.ntm.util.EntityUtil;
+import net.fawnoculus.ntm.util.PlayerUtil;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -18,7 +26,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class ModItems {
-
+  
   // Basic Items
   public static final Item NULL = register("null", Item::new, new Item.Settings());
   public static final Item DEBUG_WAND = register("debug_wand", DebugWandItem::new, new Item.Settings());
@@ -83,7 +91,7 @@ public class ModItems {
   public static final Item COAL_ASH = register("coal_ash", Item::new, new Item.Settings());
   public static final Item FLY_ASH = register("fly_ash", Item::new, new Item.Settings());
   public static final Item FINE_SOOT = register("fine_soot", Item::new, new Item.Settings());
-
+  
   public static final Item RAW_AUSTRALIUM = register("raw_australium", Item::new, new Item.Settings());
   public static final Item AUSTRALIUM_INGOT = register("australium_ingot", Item::new, new Item.Settings());
   public static final Item AUSTRALIUM_BILLET = register("australium_billet", Item::new, new Item.Settings());
@@ -161,7 +169,7 @@ public class ModItems {
   public static final Item CAST_CMB_STEEL_PLATE = register("cast_cmb_steel_plate", Item::new, new Item.Settings());
   public static final Item WELDED_CMB_STEEL_PLATE = register("welded_cmb_steel_plate", Item::new, new Item.Settings());
   public static final Item CMB_STEEL_PLATE = register("cmb_steel_plate", Item::new, new Item.Settings());
-
+  
   public static final Item COAL_POWDER = register("coal_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_COAL_POWDER = register("tiny_pile_of_coal_powder", Item::new, new Item.Settings());
   public static final Item CARBON_WIRE = register("carbon_wire", Item::new, new Item.Settings());
@@ -182,7 +190,7 @@ public class ModItems {
   
   public static final Item COLTAN = register("coltan", Item::new, new Item.Settings());
   public static final Item CRUSHED_COLTAN = register("crushed_coltan", Item::new, new Item.Settings()); // Turns into TANTALUM
-
+  
   public static final Item COPPER_POWDER = register("copper_powder", Item::new, new Item.Settings());
   public static final Item COPPER_PLATE = register("copper_plate", Item::new, new Item.Settings());
   public static final Item CAST_COPPER_PLATE = register("cast_copper_plate", Item::new, new Item.Settings());
@@ -195,7 +203,7 @@ public class ModItems {
   public static final Item RAW_METEORIC_COPPER = register("raw_meteoric_copper", Item::new, new Item.Settings());
   
   public static final Item CRYO_POWDER = register("cryo_powder", Item::new, new Item.Settings());
-
+  
   public static final Item RAW_CRYOLITE = register("raw_cryolite", Item::new, new Item.Settings());
   public static final Item CRYOLITE_CHUNK = register("cryolite_chunk", Item::new, new Item.Settings());
   
@@ -313,7 +321,7 @@ public class ModItems {
   public static final Item LEAD_BOLT = register("lead_bolt", Item::new, new Item.Settings());
   public static final Item LEAD_WIRE = register("lead_wire", Item::new, new Item.Settings());
   public static final Item LEAD_CRYSTALS = register("lead_crystals", Item::new, new Item.Settings());
-
+  
   public static final Item LIGNITE = register("lignite", Item::new, new Item.Settings());
   public static final Item LIGNITE_POWDER = register("lignite_powder", Item::new, new Item.Settings());
   public static final Item LIGNITE_COKE = register("lignite_coke", Item::new, new Item.Settings());
@@ -346,7 +354,7 @@ public class ModItems {
   public static final Item TINY_PILE_OF_NEODYMIUM_POWDER = register("tiny_pile_of_neodymium_powder", Item::new, new Item.Settings());
   public static final Item DENSE_NEODYMIUM_WIRE = register("dense_neodymium_wire", Item::new, new Item.Settings());
   public static final Item NEODYMIUM_FRAGMENT = register("neodymium_fragment", Item::new, new Item.Settings());
-
+  
   public static final Item NEPTUNIUM_INGOT = register("neptunium_ingot", Item::new, new Item.Settings());
   public static final Item NEPTUNIUM_POWDER = register("neptunium_powder", Item::new, new Item.Settings());
   public static final Item NEPTUNIUM_BILLET = register("neptunium_billet", Item::new, new Item.Settings());
@@ -366,7 +374,7 @@ public class ModItems {
   
   public static final Item NITER = register("niter", Item::new, new Item.Settings());
   public static final Item NITER_CRYSTALS = register("niter_crystals", Item::new, new Item.Settings());
-
+  
   public static final Item RAW_OSMIRIDIUM_INFUSED_TEKTITE = register("raw_osmiridium_infused_tektite", Item::new, new Item.Settings());
   public static final Item OSMIRIDIUM_INGOT = register("osmiridium_ingot", Item::new, new Item.Settings());
   public static final Item OSMIRIDIUM_NUGGET = register("osmiridium_nugget", Item::new, new Item.Settings());
@@ -435,7 +443,7 @@ public class ModItems {
   public static final Item RARE_EARTH_ORE_CHUNK = register("rare_earth_ore_chunk", Item::new, new Item.Settings());
   public static final Item RARE_EARTH_CRYSTALS = register("rare_earth_crystals", Item::new, new Item.Settings());
   public static final Item RAW_METEORIC_RARE_EARTH = register("raw_meteoric_rare_earth", Item::new, new Item.Settings());
-
+  
   public static final Item RED_COPPER_INGOT = register("red_copper_ingot", Item::new, new Item.Settings());
   public static final Item RED_COPPER_POWDER = register("red_copper_powder", Item::new, new Item.Settings());
   public static final Item RED_COPPER_WIRE = register("red_copper_wire", Item::new, new Item.Settings());
@@ -485,7 +493,7 @@ public class ModItems {
   public static final Item SILICON_NUGGET = register("silicon_nugget", Item::new, new Item.Settings());
   
   public static final Item SODIUM_POWDER = register("sodium_powder", Item::new, new Item.Settings());
-
+  
   public static final Item SOLINIUM_INGOT = register("solinium_ingot", Item::new, new Item.Settings());
   public static final Item SOLINIUM_BILLET = register("solinium_billet", Item::new, new Item.Settings());
   public static final Item SOLINIUM_NUGGET = register("solinium_nugget", Item::new, new Item.Settings());
@@ -503,7 +511,7 @@ public class ModItems {
   public static final Item STRONTIUM_90_POWDER = register("strontium_90_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_STRONTIUM_90_POWDER = register("tiny_pile_of_strontium_90_powder", Item::new, new Item.Settings());
   public static final Item STRONTIUM_90_NUGGET = register("strontium_90_nugget", Item::new, new Item.Settings());
-
+  
   public static final Item STEEL_INGOT = register("steel_ingot", Item::new, new Item.Settings());
   public static final Item STEEL_POWDER = register("steel_powder", Item::new, new Item.Settings());
   public static final Item TINY_PILE_OF_STEEL_POWDER = register("tiny_pile_of_steel_powder", Item::new, new Item.Settings());
@@ -538,7 +546,7 @@ public class ModItems {
   public static final Item TENNESSINE_POWDER = register("tennessine_powder", Item::new, new Item.Settings());
   
   public static final Item THERMITE = register("thermite", Item::new, new Item.Settings());
-
+  
   public static final Item RAW_THORIUM = register("raw_thorium", Item::new, new Item.Settings());
   public static final Item THORIUM_232_INGOT = register("thorium_232_ingot", Item::new, new Item.Settings());
   public static final Item THORIUM_232_BILLET = register("thorium_232_billet", Item::new, new Item.Settings());
@@ -548,7 +556,7 @@ public class ModItems {
   public static final Item THORIUM_FUEL_NUGGET = register("thorium_fuel_nugget", Item::new, new Item.Settings());
   public static final Item THORIUM_POWDER = register("thorium_powder", Item::new, new Item.Settings());
   public static final Item THORIUM_CRYSTALS = register("thorium_crystals", Item::new, new Item.Settings());
-
+  
   public static final Item RAW_TITANIUM = register("raw_titanium", Item::new, new Item.Settings());
   public static final Item TITANIUM_INGOT = register("titanium_ingot", Item::new, new Item.Settings());
   public static final Item TITANIUM_PLATE = register("titanium_plate", Item::new, new Item.Settings());
@@ -558,7 +566,7 @@ public class ModItems {
   public static final Item TITANIUM_SHELL = register("titanium_shell", Item::new, new Item.Settings());
   public static final Item DENSE_TITANIUM_WIRE = register("dense_titanium_wire", Item::new, new Item.Settings());
   public static final Item TITANIUM_CRYSTALS = register("titanium_crystals", Item::new, new Item.Settings());
-
+  
   public static final Item RAW_TRIXITE = register("raw_trixite", Item::new, new Item.Settings());
   public static final Item TRIXITE_CRYSTALS = register("trixite_crystals", Item::new, new Item.Settings());
   
@@ -618,11 +626,6 @@ public class ModItems {
   // public static final ItemOption FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", ItemOption::new, new ItemOption.Settings());
   
   // Consumables
-  public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
-  public static final Item POISONOUS_INJECTION = register("poisonous_injection", PoisonousInjectionItem::new, new Item.Settings());
-  public static final Item ANTIDOTE = register("antidote", AntidoteItem::new, new Item.Settings());
-  public static final Item AWESOME = register("awesome", AwesomeItem::new, new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
-  
   public static final Item BOTTLE_OPENER = register("bottle_opener", settings -> new TooltipItem(settings, 2), new Item.Settings());
   public static final Item EMPTY_BOTTLE = register("empty_bottle", Item::new, new Item.Settings());
   public static final Item EMPTY_BOMB_BOTTLE = register("empty_bomb_bottle", Item::new, new Item.Settings());
@@ -714,37 +717,143 @@ public class ModItems {
       EMPTY_BOTTLE,
       FRITZ_COLA_BOTTLE_CAP
   )));
-
+  
+  public static final Item IPECAC_SYRUP = register("ipecac_syrup", settings -> new TooltipItem(settings, 2), new Item.Settings()
+      .component(DataComponentTypes.CONSUMABLE, ModConsumableComponents.IPECAC_SYRUP)
+      .component(DataComponentTypes.FOOD, ModFoodComponents.ALWAYS_EDIBLE)
+  );
+  public static final Item PTSD_MEDICATION = register("ptsd_medication", settings -> new TooltipItem(settings, 2), new Item.Settings()
+      .component(DataComponentTypes.CONSUMABLE, ModConsumableComponents.IPECAC_SYRUP)
+      .component(DataComponentTypes.FOOD, ModFoodComponents.ALWAYS_EDIBLE)
+  );
+  
+  public static final Item RAD_X = register("rad_x", TooltipItem::new, new Item.Settings()
+      .component(DataComponentTypes.CONSUMABLE, ModConsumableComponents.RAD_X)
+      .component(DataComponentTypes.FOOD, ModFoodComponents.ALWAYS_EDIBLE)
+  );
+  
+  public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
+  public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, new ItemStack(EMPTY_SYRINGE),
+          (serverWorld, player, hand) -> EntityUtil.applyDamage(player, serverWorld, ModDamageTypes.POISON_INJECTION, 30f)
+      ), new Item.Settings()
+  );
+  public static final Item ANTIDOTE = register("antidote", settings ->
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, new ItemStack(EMPTY_SYRINGE),
+          (serverWorld, player, hand) -> player.clearStatusEffects()
+      ), new Item.Settings()
+  );
+  public static final Item AWESOME = register("awesome", settings ->
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, new ItemStack(EMPTY_SYRINGE),
+          (serverWorld, player, hand) -> {
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(ModStatusEffects.RAD_X, 700, 9, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false, true));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false, true));
+          }), new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+  );
+  
+  public static final Item METAL_SYRINGE = register("metal_syringe", Item::new, new Item.Settings());
+  public static final Item STIMPAK = register("stimpak", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS,
+      new ItemStack(METAL_SYRINGE),
+          (serverWorld, player, hand) -> player.heal(5F)
+      ), new Item.Settings()
+  );
+  public static final Item MED_X = register("med_x", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS,
+      new ItemStack(METAL_SYRINGE),
+          (serverWorld, player, hand) -> player.addStatusEffect(
+              new StatusEffectInstance(StatusEffects.RESISTANCE, 4800, 2, false, false, true)
+          )
+      ), new Item.Settings()
+  );
+  public static final Item PSYCHO = register("psycho", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS,
+      new ItemStack(METAL_SYRINGE),
+      (serverWorld, player, hand) -> {
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 0, false, false, true));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 0, false, false, true));
+      }), new Item.Settings()
+  );
+  public static final Item SUPER_STIMPAK = register("super_stimpak", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS,
+      new ItemStack(METAL_SYRINGE),
+      (serverWorld, player, hand) -> {
+        player.heal(50F);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0, false, false, true));
+      }), new Item.Settings()
+  );
+  
+  public static final Item WATERY_TAINT_INJECTION = register("watery_taint_injection", settings -> new InjectionWithTooltipItem(settings, 3, ModSounds.SYRINGE_INJECTS,
+      List.of(new ItemStack(METAL_SYRINGE), new ItemStack(EMPTY_BOTTLE)),
+      (serverWorld, player, hand) -> {
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 5*20, 0, false, false, true));
+        player.addStatusEffect(new StatusEffectInstance(ModStatusEffects.TAINT, 60*20, 0, false, false, true));
+        PlayerUtil.removeNegativeEffects(player);
+      }), new Item.Settings()
+  );
+  public static final Item FIST_AID_KIT = register("fist_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS,
+      new ItemStack(METAL_SYRINGE),
+      (serverWorld, player, hand) -> {
+        player.setHealth(player.getMaxHealth());
+        PlayerUtil.removeNegativeEffects(player);
+      }), new Item.Settings()
+  );
+  
+  public static final Item IV_BAG = register("iv_bag", IvBagItem::new, new Item.Settings());
+  public static final Item BLOOD_BAG = register("blood_bag", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+      (serverWorld, player, hand) -> player.heal(5F)
+      ), new Item.Settings()
+  );
+  public static final Item EMPTY_EXPERIENCE_BAG = register("empty_experience_bag", EmptyExperienceBagItem::new, new Item.Settings());
+  public static final Item EXPERIENCE_BAG = register("experience_bag", ExperienceBagItem::new, new Item.Settings());
+  public static final Item RAD_AWAY = register("rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+      (serverWorld, player, hand) -> PlayerUtil.addEffectDuration(player, ModStatusEffects.RAD_AWAY, 140)
+      ), new Item.Settings()
+  );
+  public static final Item STRONG_RAD_AWAY = register("strong_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+          (serverWorld, player, hand) -> PlayerUtil.addEffectDuration(player, ModStatusEffects.RAD_AWAY, 350)
+      ), new Item.Settings()
+  );
+  public static final Item ELITE_RAD_AWAY = register("elite_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+          (serverWorld, player, hand) -> PlayerUtil.addEffectDuration(player, ModStatusEffects.RAD_AWAY, 500)
+      ), new Item.Settings()
+  );
+  
   // Tools
-  public static final Item STEEL_SWORD = register("steel_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
-  public static final Item STEEL_PICKAXE = register("steel_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STEEL_SWORD = register("steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STEEL_PICKAXE = register("steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
   public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item STEEL_SHOVEL = register("steel_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
-  public static final Item STEEL_HOE = register("steel_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STEEL_HOE = register("steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item TITANIUM_SWORD = register("titanium_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
-  public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item TITANIUM_SWORD = register("titanium_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
   public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item TITANIUM_SHOVEL = register("titanium_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
-  public static final Item TITANIUM_HOE = register("titanium_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item TITANIUM_HOE = register("titanium_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
+  public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Stunning(2)));
-  public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
+  public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(3)));
   public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(3))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
+  public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(3)));
-  public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f));
+  public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Stunning(2))
       .addModifier(new Modifiers.Vampire(2.0f)));
-  public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.SilkTouch())
@@ -755,17 +864,17 @@ public class ModItems {
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item CMB_STEEL_SHOVEL = register("cmb_steel_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CMB_STEEL_SHOVEL = register("cmb_steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3)));
-  public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item DESH_SWORD = register("desh_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DESH_SWORD = register("desh_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Stunning(2))
       .addModifier(new Modifiers.Vampire(2.0f)));
-  public static final Item DESH_PICKAXE = register("desh_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DESH_PICKAXE = register("desh_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.SilkTouch())
@@ -776,23 +885,23 @@ public class ModItems {
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(2))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item DESH_SHOVEL = register("desh_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(2)));
-  public static final Item DESH_HOE = register("desh_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f));
+  public static final Item DESH_HOE = register("desh_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item COBALT_SWORD = register("cobalt_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
-  public static final Item COBALT_PICKAXE = register("cobalt_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item COBALT_SWORD = register("cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item COBALT_PICKAXE = register("cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
   public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item COBALT_SHOVEL = register("cobalt_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
-  public static final Item COBALT_HOE = register("cobalt_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item COBALT_SHOVEL = register("cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item COBALT_HOE = register("cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.LuckOfTheCollector()));
-  public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.SilkTouch())
@@ -804,18 +913,18 @@ public class ModItems {
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item DECORATED_COBALT_SHOVEL = register("decorated_cobalt_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DECORATED_COBALT_SHOVEL = register("decorated_cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3)));
-  public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item STARMETAL_SWORD = register("starmetal_sword",new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STARMETAL_SWORD = register("starmetal_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.Decapitator())
       .addModifier(new Modifiers.Stunning(3))
       .addModifier(new Modifiers.LuckOfTheCollector()));
-  public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(6))
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.SilkTouch())
@@ -828,18 +937,18 @@ public class ModItems {
       .addAbility(new Abilities.Fortune(5))
       .addModifier(new Modifiers.Decapitator())
       .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_SHOVEL = register("starmetal_shovel",new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STARMETAL_SHOVEL = register("starmetal_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(6))
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(5))
       .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_HOE = register("starmetal_hoe",new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addModifier(new Modifiers.RadioactiveBlade(50f))
       .addModifier(new Modifiers.Vampire(2f)));
-  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -856,7 +965,7 @@ public class ModItems {
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -864,9 +973,9 @@ public class ModItems {
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe",new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f));
   
-  public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 1f, 1f)
+  public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AutoShreader())
@@ -881,7 +990,7 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(10))
       .addModifier(new Modifiers.Decapitator()));
   
-  public static final Item MOLTEN_PICKAXE = register("molten_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 1f, 1f)
+  public static final Item MOLTEN_PICKAXE = register("molten_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AutoSmelt())
@@ -901,7 +1010,7 @@ public class ModItems {
       .addModifier(new Modifiers.Vampire(3.0f))
       .addModifier(new Modifiers.Decapitator()));
   
-  public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.Fortune(4))
@@ -920,7 +1029,7 @@ public class ModItems {
       .addModifier(new Modifiers.Decapitator())
       .addCanBreakDepthRock());
   
-  public static final Item MESE_PICKAXE = register("mese_pickaxe",new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 1f, 1f)
+  public static final Item MESE_PICKAXE = register("mese_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.AoE(3))
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoCrystallizer())

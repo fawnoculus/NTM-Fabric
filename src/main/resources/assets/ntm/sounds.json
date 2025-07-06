@@ -5,10 +5,10 @@
       "ntm:item/syringe_injects"
     ]
   },
-  "item.radaway_injects": {
-    "subtitle": "sound.ntm.item.radaway_injects",
+  "item.iv_bag_injects": {
+    "subtitle": "sound.ntm.item.iv_bag_injects",
     "sounds": [
-      "ntm:item/radaway_injects"
+      "ntm:item/iv_bag_injects"
     ]
   }
 }

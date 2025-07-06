@@ -61,7 +61,7 @@ public class BottleItem extends Item {
         player.addStatusEffect(new StatusEffectInstance(effect));
       }
       for (Item returnItem : this.RETURN_ITEMS) {
-        player.giveItemStack(new ItemStack(returnItem));
+        player.getInventory().offerOrDrop(new ItemStack(returnItem));
       }
     }
     return super.finishUsing(stack, world, entity);

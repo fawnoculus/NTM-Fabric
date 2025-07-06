@@ -14,10 +14,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PoisonousInjectionItem extends Item {
-  public PoisonousInjectionItem(Settings settings) {
+public class IvBagItem  extends Item {
+  public IvBagItem(Settings settings) {
     super(settings);
   }
+  
   
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
@@ -25,12 +26,13 @@ public class PoisonousInjectionItem extends Item {
       return ActionResult.SUCCESS;
     }
     if(!player.isCreative()){
+      EntityUtil.applyDamage(player, (ServerWorld) world, ModDamageTypes.BLOOD_LOSS, 5F);
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }
-    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.SYRINGE_INJECTS, SoundCategory.PLAYERS);
-    player.giveItemStack(new ItemStack(ModItems.EMPTY_SYRINGE));
-    EntityUtil.applyDamage(player, (ServerWorld) world, ModDamageTypes.POISON_INJECTION, 30f);
+    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    player.getInventory().offerOrDrop(new ItemStack(ModItems.BLOOD_BAG));
+    
     return ActionResult.SUCCESS_SERVER;
   }
 }
