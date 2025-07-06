@@ -1,34 +1,30 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.util.TriConsumer;
 import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class InjectionWithTooltipItem extends InjectionItem {
   private final int TOOLTIP_COUNT;
   
-  public InjectionWithTooltipItem(Settings settings, SoundEvent sound, ItemStack returnItem, TriConsumer<ServerWorld, PlayerEntity, Hand> serverUse) {
+  public InjectionWithTooltipItem(Settings settings, SoundEvent sound, ItemStack returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     this(settings, 1, sound, returnItem, serverUse);
   }
-  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, ItemStack returnItem, TriConsumer<ServerWorld, PlayerEntity, Hand> serverUse) {
+  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, ItemStack returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings, sound, returnItem, serverUse);
     
     this.TOOLTIP_COUNT = tooltipCount;
   }
-  public InjectionWithTooltipItem(Settings settings, SoundEvent sound, List<ItemStack> returnItems, TriConsumer<ServerWorld, PlayerEntity, Hand> serverUse) {
-    this(settings, 1, sound, returnItems, serverUse);
-  }
-  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<ItemStack> returnItems, TriConsumer<ServerWorld, PlayerEntity, Hand> serverUse) {
+  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<ItemStack> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings, sound, returnItems, serverUse);
     
     this.TOOLTIP_COUNT = tooltipCount;

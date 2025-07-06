@@ -216,6 +216,8 @@ dd4fb108e25bfca7c881fa2621dd8f03e49c48a0 assets/ntm/items/awesome.json
 774ee5edf06b05310a8229bc93dad90f3539d3a2 assets/ntm/items/bakelite_powder.json
 acc2a61d3b7e295cf8417c19b409d385aec30a64 assets/ntm/items/balefire_egg.json
 30a7adf1fba67d445f796fdedc07c35f2100da84 assets/ntm/items/balefire_shard.json
+29af7e9c74bc51835a9cc8eacc42155d28c54814 assets/ntm/items/basic_lead_apple.json
+c80990ec0a377d89268b828c0656ffbf826a9c40 assets/ntm/items/basic_schrabidium_apple.json
 1f5ff61a90c20704abc2a64ed7863c8fa2c0358f assets/ntm/items/bauxite.json
 e33d01a349cdbe21f335c6bb931b30abc2bed0e4 assets/ntm/items/bedrock_oil_deposit.json
 dda221bec7c9e2eec3c44636f6faccc0ea174f4a assets/ntm/items/beryllium_billet.json
@@ -392,6 +394,9 @@ a04afef6f51fd3bac770f7bbcefb8af0013fa5e7 assets/ntm/items/empty_oil_deposit.json
 588fddaaf77a081427c978f5e1c1d62fe3d3f2fb assets/ntm/items/empty_syringe.json
 50c3e25b947f8ea700eb4d021bdd1ca0bb904cca assets/ntm/items/energy_powder.json
 09b7bc251630554ad13971d39427719f21cd2506 assets/ntm/items/energy_storage_block.json
+9ef453b66bd8557fcbba90eeb017569546f70da8 assets/ntm/items/epic_lead_apple.json
+48939051e1ae4dbc7bd7705b4678a4ca133e7f91 assets/ntm/items/epic_schrabidium_apple.json
+83d848bd80b8774020387171ef8b0df457101886 assets/ntm/items/euphemium_apple.json
 fb9e364a00fd93cf87164af812ad541ae0ec4283 assets/ntm/items/euphemium_block.json
 9cdab47dcb597b4f5439bf29865b13fdc0d95efb assets/ntm/items/euphemium_ingot.json
 888007e33a8cd2826b71daa6cd15132edf48e2dc assets/ntm/items/euphemium_nugget.json
@@ -430,6 +435,8 @@ d1cb9817078b3f3c2bbf6cb4b4749cbbb7e722d7 assets/ntm/items/gold_crystals.json
 6b0f217fc9adcf3abddad1340d23a0398cb07bee assets/ntm/items/gold_plate.json
 ec8d98584d81a5e92496dd5a75c87795888ed071 assets/ntm/items/gold_powder.json
 55b0c811f7945cb311338a8926069a68f5af35f5 assets/ntm/items/gold_wire.json
+a8c8c313f470189eb11f30d66ebdb6493bd58832 assets/ntm/items/good_lead_apple.json
+65bbc655cf3e612efcb0eb1fcc2f1687f53f8746 assets/ntm/items/good_schrabidium_apple.json
 37d11a0ef235f58e30043fb3402b74663a9c4213 assets/ntm/items/graphite_block.json
 ec2695332b6b73b2d9fe072bf0c8d94fa3f9906d assets/ntm/items/graphite_ingot.json
 d0f81e11a1db5e1e51ad3a301f3653c3490b37f6 assets/ntm/items/graphitic_schist.json
@@ -1078,6 +1085,8 @@ ebaa2ae3d4194ad5742f2520095ec2ff1933a513 assets/ntm/models/item/bakelite_bar.jso
 234acb4063aa36da3c97526d3a3361abe21d7839 assets/ntm/models/item/bakelite_powder.json
 c2d04053dc8335cd93cdcccfe9e930842d98b9fd assets/ntm/models/item/balefire_egg.json
 ec8ffcc03f5f77c5a623d08d2e586932fa5562e8 assets/ntm/models/item/balefire_shard.json
+eeba633ab77bea5a5e783c17d32965a1af88e467 assets/ntm/models/item/basic_lead_apple.json
+d4fccb6ab7610f6f0119b3cea037340c87f82308 assets/ntm/models/item/basic_schrabidium_apple.json
 fae1a6e38ae7f27c2e90f3b38281bcc28b2be197 assets/ntm/models/item/beryllium_billet.json
 a73de6dd787b889130987f4872ce65d6ebd2919f assets/ntm/models/item/beryllium_crystals.json
 6701c4bb8802e258226db5a2276050df7dcfe6e5 assets/ntm/models/item/beryllium_ingot.json
@@ -1225,6 +1234,9 @@ b27faffb3d942e16dce3424c97ba5b1a7924c41a assets/ntm/models/item/empty_bomb_bottl
 65f3de054180ae0603fab8f2b182390325b7e08e assets/ntm/models/item/empty_experience_bag.json
 8bc73a8791dd8201da206886d6af7be09723972c assets/ntm/models/item/empty_syringe.json
 6200109812225c5e12e06997a76d6f65888c25b7 assets/ntm/models/item/energy_powder.json
+4191114f68ae936b2b58bfda5ccb250fdadf813a assets/ntm/models/item/epic_lead_apple.json
+1f982d9dafb544d15d869813bf1d9b1d3d3424c8 assets/ntm/models/item/epic_schrabidium_apple.json
+b825dfcc26695b1f29f69b53172aa302d3c67bba assets/ntm/models/item/euphemium_apple.json
 be686e1345c9bfd174aba0761e74fffdfcc0b6d6 assets/ntm/models/item/euphemium_ingot.json
 d0b96f6edf6c356cbce92ded2a2cbb13373dfe62 assets/ntm/models/item/euphemium_nugget.json
 03eb0348a57cb75559cc0973e11427da79bbb212 assets/ntm/models/item/euphemium_powder.json
@@ -1255,6 +1267,8 @@ b5f9fbadf29cc7afc7a0b31a6905edd1b3a87b8c assets/ntm/models/item/ghiorsium_336_in
 d7d4c84c7d2cf1cabce2805553b74b5fa8d90dae assets/ntm/models/item/gold_plate.json
 7bff412bc98f5177e1028c91cd7092e847540ca2 assets/ntm/models/item/gold_powder.json
 7f21f4a352f9892645862c9ec0e9703c47929bdb assets/ntm/models/item/gold_wire.json
+132f786cab1f4a92cb2c4277de3b07f234a51df0 assets/ntm/models/item/good_lead_apple.json
+913722bff384b71c90cae0070203bf2362fae4ec assets/ntm/models/item/good_schrabidium_apple.json
 c17e6878c39990cba2a2f367e093c131ef436324 assets/ntm/models/item/graphite_ingot.json
 05295af4e70ee0986c27c623ea9380215be48a60 assets/ntm/models/item/greater_australium_billet.json
 811ba310023a8646fbe61148d88288d0fe62582b assets/ntm/models/item/greater_australium_nugget.json

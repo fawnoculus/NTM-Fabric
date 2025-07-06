@@ -7,6 +7,10 @@
     {
       "id": "ntm:blood_loss",
       "required": false
+    },
+    {
+      "id": "ntm:lead_poisoning",
+      "required": false
     }
   ]
 }

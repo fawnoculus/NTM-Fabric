@@ -4,6 +4,7 @@ import net.fawnoculus.ntm.entity.ModDamageTypes;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.sounds.ModSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,5 +35,18 @@ public class IvBagItem  extends Item {
     player.getInventory().offerOrDrop(new ItemStack(ModItems.BLOOD_BAG));
     
     return ActionResult.SUCCESS_SERVER;
+  }
+  
+  @Override
+  public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    if(!(target.getWorld() instanceof ServerWorld world) || !(attacker instanceof PlayerEntity player)){
+      return;
+    }
+    if(!player.isCreative()){
+      EntityUtil.applyDamage(target, world, ModDamageTypes.BLOOD_LOSS, 5F);
+      stack.decrement(1);
+    }
+    world.playSound(null, BlockPos.ofFloored(target.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    player.getInventory().offerOrDrop(new ItemStack(ModItems.BLOOD_BAG));
   }
 }

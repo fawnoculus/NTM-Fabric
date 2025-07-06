@@ -848,6 +848,14 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.ZIRCONIUM_WIRE, Models.GENERATED);
     
     // Consumables
+    itemModelGenerator.register(ModItems.BASIC_LEAD_APPLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GOOD_LEAD_APPLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EPIC_LEAD_APPLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BASIC_SCHRABIDIUM_APPLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GOOD_SCHRABIDIUM_APPLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EPIC_SCHRABIDIUM_APPLE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EUPHEMIUM_APPLE, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.BOTTLE_OPENER, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOTTLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOMB_BOTTLE, Models.GENERATED);

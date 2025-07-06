@@ -862,6 +862,14 @@ public class ModItemGroups {
       
       ItemGroup.add(ModItems.RAD_X);
       
+      ItemGroup.add(ModItems.BASIC_LEAD_APPLE);
+      ItemGroup.add(ModItems.GOOD_LEAD_APPLE);
+      ItemGroup.add(ModItems.EPIC_LEAD_APPLE);
+      ItemGroup.add(ModItems.BASIC_SCHRABIDIUM_APPLE);
+      ItemGroup.add(ModItems.GOOD_SCHRABIDIUM_APPLE);
+      ItemGroup.add(ModItems.EPIC_SCHRABIDIUM_APPLE);
+      ItemGroup.add(ModItems.EUPHEMIUM_APPLE);
+      
       ItemGroup.add(ModItems.IPECAC_SYRUP);
       ItemGroup.add(ModItems.PTSD_MEDICATION);
       

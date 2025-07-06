@@ -1,8 +1,8 @@
 // 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric DamageType-Tag Provider
-ae6c480b07653ef438d76ee5ab57cfcb3a9a277b data/minecraft/tags/damage_type/bypasses_armor.json
-2b8e11f823bf80d37392b46daa9b7e7a934c7f60 data/minecraft/tags/damage_type/bypasses_cooldown.json
+ae1e0aa5a89041601f159af4d62de06cd90d2ed4 data/minecraft/tags/damage_type/bypasses_armor.json
+c1fd392a799bb41de6694a0d493a13ec80e15433 data/minecraft/tags/damage_type/bypasses_cooldown.json
 ae6c480b07653ef438d76ee5ab57cfcb3a9a277b data/minecraft/tags/damage_type/bypasses_effects.json
-ae6c480b07653ef438d76ee5ab57cfcb3a9a277b data/minecraft/tags/damage_type/bypasses_enchantments.json
+ae1e0aa5a89041601f159af4d62de06cd90d2ed4 data/minecraft/tags/damage_type/bypasses_enchantments.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/damage_type/bypasses_invulnerability.json
-ae6c480b07653ef438d76ee5ab57cfcb3a9a277b data/minecraft/tags/damage_type/bypasses_resistance.json
-2b8e11f823bf80d37392b46daa9b7e7a934c7f60 data/minecraft/tags/damage_type/no_knockback.json
+ae1e0aa5a89041601f159af4d62de06cd90d2ed4 data/minecraft/tags/damage_type/bypasses_resistance.json
+ae1e0aa5a89041601f159af4d62de06cd90d2ed4 data/minecraft/tags/damage_type/no_knockback.json

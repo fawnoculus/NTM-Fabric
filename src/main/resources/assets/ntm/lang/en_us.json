@@ -43,10 +43,13 @@
   "death.attack.ntm.poison_injection.player": "%1$s was euthanized by %2$s",
   "death.attack.ntm.blood_loss": "%1$s lost to much Blood",
   "death.attack.ntm.blood_loss.player": "%1$s lost to much Blood while fighting %2$s",
+  "death.attack.ntm.lead_poisoning": "%1$s died from lead poisoning",
+  "death.attack.ntm.lead_poisoning.player": "%1$s died from lead poisoning while fighting %2$s",
 
   "effect.ntm.rad_away": "RadAway",
   "effect.ntm.rad_x": "Rad-X",
   "effect.ntm.taint": "Tainted",
+  "effect.ntm.lead_poisoning": "Lead Poisoning",
 
   "sound.ntm.item.syringe_injects": "Syringe Injects",
   "sound.ntm.item.iv_bag_injects": "RadAway Injects",
@@ -68,8 +71,8 @@
   "tooltip.ntm.fist_aid_kit2": "Removes negative effects",
   "tooltip.ntm.rad_x": "Increases radiation resistance by 0.2 (37%) for 3 minutes",
   "tooltip.ntm.ipecac_syrup1": "Bitter juice that will cause your stomach",
-  "tooltip.ntm.ipecac_syrup2": "ro forcefully eject its contents",
-  "tooltip.ntm.ptsd_medication1": "This isn't ecen PTSD medication, it's just",
+  "tooltip.ntm.ipecac_syrup2": "to forcefully eject its contents",
+  "tooltip.ntm.ptsd_medication1": "This isn't even PTSD medication, it's just",
   "tooltip.ntm.ptsd_medication2": "Ipecac in a different bottle!",
 
   "tooltip.ntm.needs_bottle_opener": "[Requires bottle opener]",
@@ -625,6 +628,14 @@
   "item.ntm.dusted_steel_ingot": "Dusted Steel Ingot",
   "item.ntm.heavy_chainsteel_ingot": "Heavy Chainsteel Ingot",
   "item.ntm.meteorite_ingot": "Meteorite Ingot",
+
+  "item.ntm.basic_lead_apple": "Basic Lead Apple",
+  "item.ntm.good_lead_apple": "Good Lead Apple",
+  "item.ntm.epic_lead_apple": "Epic Lead Apple",
+  "item.ntm.basic_schrabidium_apple": "Basic Schrabidium Apple",
+  "item.ntm.good_schrabidium_apple": "Good Schrabidium Apple",
+  "item.ntm.epic_schrabidium_apple": "Epic Schrabidium Apple",
+  "item.ntm.euphemium_apple": "Euphemium Apple",
 
   "item.ntm.bottle_opener": "Hbm's own Self-Made Bottle Opener",
   "item.ntm.empty_bottle": "Empty Bottle",
