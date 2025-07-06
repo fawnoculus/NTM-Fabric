@@ -5,7 +5,6 @@ import net.fawnoculus.ntm.blocks.node.Node;
 import net.fawnoculus.ntm.blocks.node.NodeProperties;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.main.NTMConfig;
-import net.minecraft.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
