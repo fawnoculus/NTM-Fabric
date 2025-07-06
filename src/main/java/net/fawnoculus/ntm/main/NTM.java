@@ -14,6 +14,7 @@ import net.fawnoculus.ntm.items.*;
 import net.fawnoculus.ntm.network.ModPayloadHandler;
 import net.fawnoculus.ntm.network.ModPayloads;
 import net.fawnoculus.ntm.recipe.ModRecipes;
+import net.fawnoculus.ntm.sounds.ModSounds;
 import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -34,6 +35,8 @@ public class NTM implements ModInitializer {
     
     ModDamageTypes.initialize();
     ModStatusEffects.initialize();
+    
+    ModSounds.initialize();
     
     ModToolMaterials.initialize();
     ModDataComponentTypes.initialize();

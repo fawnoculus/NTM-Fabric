@@ -43,10 +43,14 @@
   "effect.ntm.rad_away": "RadAway",
   "effect.ntm.rad_x": "Rad-X",
 
-  "tooltip.ntm.creative_only": "Creative-only item",
-  "tooltip.ntm.debug_wand": "Used for 'Debugging' >:3",
+  "sound.ntm.item.syringe_injects": "Player injects Syringe",
+  "sound.ntm.item.radaway_injects": "Player injects RadAway",
+
+  "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
   "tooltip.ntm.asbestos_sheet": "''Filled with life, self-doubt and asbestos. That comes with the air.''",
   "tooltip.ntm.asbestos_powder": "''Sniffffffff- MHHHHHHHHHHHHHHHH''",
+  "tooltip.ntm.creative_only": "Creative-only item",
+  "tooltip.ntm.debug_wand": "Used for 'Debugging' >:3",
   "tooltip.ntm.construction_wand1": "'Destruction brings creation'",
   "tooltip.ntm.construction_wand2": "(Set position with right click,",
   "tooltip.ntm.construction_wand3": "set block with shift-right click!)",
@@ -90,7 +94,6 @@
   "tooltip.ntm.modifier.radioactiveblade": "Radioactive Blade",
   "tooltip.ntm.modifier.painsaw": "Painsaw",
   "tooltip.ntm.canbreakdepthrock": "Can break depth rock!",
-  "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
 
   "itemGroup.ntm.resources_and_parts": "NTM Resources and Parts",
   "itemGroup.ntm.machine_items_and_fuel": "NTM Machine Items and Fuel",

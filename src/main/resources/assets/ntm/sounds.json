@@ -1,0 +1,14 @@
+{
+  "item.syringe_injects": {
+    "subtitle": "sound.ntm.item.syringe_injects",
+    "sounds": [
+      "ntm:item/syringe_injects"
+    ]
+  },
+  "item.radaway_injects": {
+    "subtitle": "sound.ntm.item.radaway_injects",
+    "sounds": [
+      "ntm:item/radaway_injects"
+    ]
+  }
+}
