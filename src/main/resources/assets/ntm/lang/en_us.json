@@ -46,6 +46,7 @@
 
   "effect.ntm.rad_away": "RadAway",
   "effect.ntm.rad_x": "Rad-X",
+  "effect.ntm.taint": "Tainted",
 
   "sound.ntm.item.syringe_injects": "Syringe Injects",
   "sound.ntm.item.iv_bag_injects": "RadAway Injects",
