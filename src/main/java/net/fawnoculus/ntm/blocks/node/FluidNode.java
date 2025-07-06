@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.blocks.node;
 
 import net.fawnoculus.ntm.blocks.node.network.FluidNetwork;
+import net.fawnoculus.ntm.blocks.node.network.NetworkType;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.minecraft.block.BlockState;
@@ -12,15 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class FluidNode extends BlockEntity implements Node<FluidNode> {
+public class FluidNode extends BlockEntity implements Node<NetworkType.Fluid> {
   private boolean shouldAssignNetwork = true;
-  private NodeNetwork<FluidNode> network;
+  private NodeNetwork<NetworkType.Fluid> network;
   private NodeProperties nodeProperties;
   
   public FluidNode(BlockEntityType<?> type, Supplier<NodeProperties> properties, BlockPos pos, BlockState state){
@@ -45,7 +43,7 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   
   @Override
-  public void setNetwork(NodeNetwork<FluidNode> network) {
+  public void setNetwork(NodeNetwork<NetworkType.Fluid> network) {
     this.network = network;
   }
   
@@ -61,7 +59,7 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   
   @Override
-  public @Nullable NodeNetwork<FluidNode> getNetwork() {
+  public @Nullable NodeNetwork<NetworkType.Fluid> getNetwork() {
     if(this.network == null){
       this.assignNetwork();
     }
@@ -69,48 +67,10 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   }
   
   @Override
-  public NodeNetwork<FluidNode> makeNewNetwork() {
+  public NodeNetwork<NetworkType.Fluid> makeNewNetwork() {
     return new FluidNetwork();
   }
   
-  @Override @SuppressWarnings("unchecked")
-  public List<Node<FluidNode>> getConnectedNodes() {
-    World world = this.getWorld();
-    assert world != null;
-    BlockPos pos = this.getPos();
-    List<Node<FluidNode>> nodes = new ArrayList<>();
-    try {
-      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.up());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.down());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.north());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.east());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.south());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<FluidNode> node = (Node<FluidNode>) world.getBlockEntity(pos.west());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    return nodes;
-  }
   public void setNodeProperties(NodeProperties nodeProperties) {
     this.nodeProperties = nodeProperties;
     if(this.network != null){
@@ -121,12 +81,6 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
   @Override
   public NodeProperties getNodeProperties() {
     return nodeProperties;
-  }
-  
-  
-  @Override
-  public FluidNode getBE() {
-    return this;
   }
   
   @Override
@@ -143,7 +97,9 @@ public class FluidNode extends BlockEntity implements Node<FluidNode> {
     } catch (IllegalArgumentException ignored){}
     if(uuid != null){
       this.setNetwork(NodeNetworkManager.getFluidNetwork(uuid));
-      this.network.addNode(this);
+      if(!this.network.containsNode(this)){
+        this.network.addNode(this);
+      }
     }
     this.nodeProperties.readNBT(nbt, registries);
   }

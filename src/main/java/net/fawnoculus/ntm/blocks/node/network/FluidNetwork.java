@@ -1,10 +1,8 @@
 package net.fawnoculus.ntm.blocks.node.network;
 
-import net.fawnoculus.ntm.blocks.node.FluidNode;
-
 import java.util.UUID;
 
-public class FluidNetwork extends NodeNetwork<FluidNode>{
+public class FluidNetwork extends NodeNetwork<NetworkType.Fluid>{
   public FluidNetwork() {
     super();
     NodeNetworkManager.addFluidNetwork(this);

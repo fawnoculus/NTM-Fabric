@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.blocks.node;
 
 import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
+import net.fawnoculus.ntm.blocks.node.network.NetworkType;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.minecraft.block.BlockState;
@@ -12,15 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
+public class EnergyNode extends BlockEntity implements Node<NetworkType.Energy> {
   private boolean shouldAssignNetwork = true;
-  private NodeNetwork<EnergyNode> network;
+  private NodeNetwork<NetworkType.Energy> network;
   private NodeProperties nodeProperties;
   
   public EnergyNode(BlockEntityType<?> type, Supplier<NodeProperties> properties, BlockPos pos, BlockState state){
@@ -45,7 +43,7 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   }
   
   @Override
-  public void setNetwork(NodeNetwork<EnergyNode> network) {
+  public void setNetwork(NodeNetwork<NetworkType.Energy> network) {
     this.network = network;
   }
   
@@ -61,7 +59,7 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   }
   
   @Override
-  public @Nullable NodeNetwork<EnergyNode> getNetwork() {
+  public @Nullable NodeNetwork<NetworkType.Energy> getNetwork() {
     if(this.network == null){
       this.assignNetwork();
     }
@@ -69,48 +67,10 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   }
   
   @Override
-  public NodeNetwork<EnergyNode> makeNewNetwork() {
+  public NodeNetwork<NetworkType.Energy> makeNewNetwork() {
     return new EnergyNetwork();
   }
   
-  @Override @SuppressWarnings("unchecked")
-  public List<Node<EnergyNode>> getConnectedNodes() {
-    World world = this.getWorld();
-    assert world != null;
-    BlockPos pos = this.getPos();
-    List<Node<EnergyNode>> nodes = new ArrayList<>();
-    try {
-      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.up());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.down());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.north());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.east());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.south());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    try {
-      Node<EnergyNode> node = (Node<EnergyNode>) world.getBlockEntity(pos.west());
-      Objects.requireNonNull(node);
-      nodes.add(node);
-    } catch (Exception ignored) {}
-    return nodes;
-  }
   public void setNodeProperties(NodeProperties nodeProperties) {
     this.nodeProperties = nodeProperties;
     if(this.network != null){
@@ -121,12 +81,6 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
   @Override
   public NodeProperties getNodeProperties() {
     return nodeProperties;
-  }
-  
-  
-  @Override
-  public EnergyNode getBE() {
-    return this;
   }
   
   @Override
@@ -143,7 +97,9 @@ public class EnergyNode extends BlockEntity implements Node<EnergyNode> {
     } catch (IllegalArgumentException ignored){}
     if(uuid != null){
       this.setNetwork(NodeNetworkManager.getEnergyNetwork(uuid));
-      this.network.addNode(this);
+      if(!this.network.containsNode(this)){
+        this.network.addNode(this);
+      }
     }
     this.nodeProperties.readNBT(nbt, registries);
   }

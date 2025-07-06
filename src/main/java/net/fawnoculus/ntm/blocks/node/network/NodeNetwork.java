@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public abstract class NodeNetwork<T extends BlockEntity> {
+public abstract class NodeNetwork<T extends NetworkType> {
   public final UUID ID;
   public final HashSet<Node<T>> LOADED_CONNECTORS = new HashSet<>();
   public final HashSet<Node<T>> LOADED_CONSUMERS = new HashSet<>();

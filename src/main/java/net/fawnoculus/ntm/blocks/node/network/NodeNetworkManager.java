@@ -1,7 +1,5 @@
 package net.fawnoculus.ntm.blocks.node.network;
 
-import net.fawnoculus.ntm.blocks.node.EnergyNode;
-import net.fawnoculus.ntm.blocks.node.FluidNode;
 import net.fawnoculus.ntm.main.NTM;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -11,8 +9,8 @@ import java.util.*;
 
 public class NodeNetworkManager {
   private static final HashMap<UUID, NodeNetwork<?>> ALL_NODE_NETWORKS = new HashMap<>();
-  private static final HashMap<UUID, NodeNetwork<EnergyNode>> ALL_ENERGY_NETWORKS = new HashMap<>();
-  private static final HashMap<UUID, NodeNetwork<FluidNode>> ALL_FLUID_NETWORKS = new HashMap<>();
+  private static final HashMap<UUID, NodeNetwork<NetworkType.Energy>> ALL_ENERGY_NETWORKS = new HashMap<>();
+  private static final HashMap<UUID, NodeNetwork<NetworkType.Fluid>> ALL_FLUID_NETWORKS = new HashMap<>();
   
   public static void addNetwork(@NotNull NodeNetwork<?> network){
     if(ALL_NODE_NETWORKS.get(network.ID) != null){
@@ -42,8 +40,8 @@ public class NodeNetworkManager {
   }
   
   @NotNull
-  public static NodeNetwork<EnergyNode> getEnergyNetwork(@NotNull UUID uuid){
-    NodeNetwork<EnergyNode> network = ALL_ENERGY_NETWORKS.get(uuid);
+  public static NodeNetwork<NetworkType.Energy> getEnergyNetwork(@NotNull UUID uuid){
+    NodeNetwork<NetworkType.Energy> network = ALL_ENERGY_NETWORKS.get(uuid);
     if(network == null){
       network = new EnergyNetwork(uuid);
     }
@@ -55,8 +53,8 @@ public class NodeNetworkManager {
   }
   
   @NotNull
-  public static NodeNetwork<FluidNode> getFluidNetwork(@NotNull UUID uuid){
-    NodeNetwork<FluidNode> network = ALL_FLUID_NETWORKS.get(uuid);
+  public static NodeNetwork<NetworkType.Fluid> getFluidNetwork(@NotNull UUID uuid){
+    NodeNetwork<NetworkType.Fluid> network = ALL_FLUID_NETWORKS.get(uuid);
     if(network == null){
       network = new FluidNetwork(uuid);
     }

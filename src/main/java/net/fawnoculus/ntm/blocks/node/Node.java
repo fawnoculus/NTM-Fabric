@@ -1,12 +1,13 @@
 package net.fawnoculus.ntm.blocks.node;
 
+import net.fawnoculus.ntm.blocks.node.network.NetworkType;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.main.NTM;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
  * A Node serves as the base Part of a Node-Network.
  * It can be a connector, provider, consumer or storage for a specific integer based value (Energy/Fluid)
  */
-public interface Node<T extends BlockEntity>  {
+public interface Node<T extends NetworkType>  {
   default Node<T> getNode(){
     return this;
   }
@@ -25,7 +26,20 @@ public interface Node<T extends BlockEntity>  {
   void setNetwork(NodeNetwork<T> network);
   @Nullable NodeNetwork<T> getNetwork();
   NodeNetwork<T> makeNewNetwork();
-  List<Node<T>> getConnectedNodes();
+  
+  default List<Node<T>> getConnectedNodes(){
+    World world = this.getWorld();
+    assert world != null;
+    BlockPos pos = this.getPos();
+    List<Node<T>> nodes = new ArrayList<>();
+    nodes.addAll(this.checkForNode(world.getBlockEntity(pos.up())));
+    nodes.addAll(this.checkForNode(world.getBlockEntity(pos.down())));
+    nodes.addAll(this.checkForNode(world.getBlockEntity(pos.north())));
+    nodes.addAll(this.checkForNode(world.getBlockEntity(pos.east())));
+    nodes.addAll(this.checkForNode(world.getBlockEntity(pos.south())));
+    nodes.addAll(this.checkForNode(world.getBlockEntity(pos.west())));
+    return nodes;
+  }
   
   default void assignNetwork() {
     if (!this.shouldAssignNetwork()) return;
@@ -69,13 +83,30 @@ public interface Node<T extends BlockEntity>  {
     return foundNetwork;
   }
   
+  @SuppressWarnings("unchecked")
+  default List<Node<T>> checkForNode(Object object){
+    List<Object> toBeChecked = new ArrayList<>();
+    toBeChecked.add(object);
+    if(object instanceof MultiNode multiNode){
+      toBeChecked.addAll(multiNode.getNodes());
+    }
+    
+    List<Node<T>> nodes = new ArrayList<>();
+    for(Object o : toBeChecked){
+      try{
+        Node<T> node = (Node<T>) o;
+        Objects.requireNonNull(node);
+        nodes.add(node);
+      }catch (ClassCastException | NullPointerException ignored){}
+    }
+    return nodes;
+  }
+  
   void setNodeProperties(NodeProperties nodeProperties);
   NodeProperties getNodeProperties();
   
   BlockPos getPos();
   World getWorld();
-  
-  T getBE();
   
   default void onBreak(){
     if(this.getConnectedNodes().size() > 1 && this.getNetwork() != null){
