@@ -628,7 +628,12 @@ public class ModItems {
   public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
   public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
       new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 30f)
+          (serverWorld, entity) -> {
+            if (!entity.isInCreativeMode()){
+              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 30f);
+            }else {
+              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 1f);
+            }}
       ), new Item.Settings()
   );
   public static final Item ANTIDOTE = register("antidote", settings ->
@@ -1184,5 +1189,6 @@ public class ModItems {
     return register(name, itemFactory, settings);
   }
   
-  public static void initialize() {}
+  public static void initialize() {
+  }
 }

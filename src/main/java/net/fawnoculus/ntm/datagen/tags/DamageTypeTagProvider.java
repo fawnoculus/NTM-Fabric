@@ -41,6 +41,7 @@ public class DamageTypeTagProvider extends FabricTagProvider<DamageType> {
         .addOptional(ModDamageTypes.POISON_INJECTION.getValue())
         .setReplace(false);
     getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
+        .addOptional(ModDamageTypes.POISON_INJECTION.getValue())
         .addOptional(ModDamageTypes.BLOOD_LOSS.getValue())
         .addOptional(ModDamageTypes.LEAD_POISONING.getValue())
         .setReplace(false);
