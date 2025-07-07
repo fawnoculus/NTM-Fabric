@@ -11,7 +11,6 @@ import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.sounds.ModSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;

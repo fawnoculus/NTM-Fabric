@@ -2,10 +2,8 @@ package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.items.custom.TooltipItem;
-import net.fawnoculus.ntm.util.PlayerUtil;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;

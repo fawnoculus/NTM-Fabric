@@ -3,7 +3,6 @@ package net.fawnoculus.ntm.items.custom.consumable;
 import net.fawnoculus.ntm.items.ModDataComponentTypes;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.FoodComponents;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
