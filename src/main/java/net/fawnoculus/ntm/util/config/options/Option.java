@@ -6,9 +6,24 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Option<T> {
+  public static final HashMap<String, Option<?>> ALL_OPTIONS = new HashMap<>();
+  
+  public static void addOption(Option<?> option){
+    ALL_OPTIONS.put(getID(option), option);
+  }
+  public static Option<?> getOption(String s){
+    return ALL_OPTIONS.get(s);
+  }
+  public static String getID(Option<?> option){
+    
+    return Path.of(option.PARENT.CONFIG_FILE.getPath()).getFileName().toString() + ":" + option.NAME;
+  }
+  
   public final String NAME;
   public final String COMMENT;
   
@@ -33,6 +48,8 @@ public abstract class Option<T> {
     if(isInvalidValue(defaultValue)){
       throw new IllegalArgumentException("Default Value is not a valid for this Option");
     }
+    
+    addOption(this);
   }
   
   /**

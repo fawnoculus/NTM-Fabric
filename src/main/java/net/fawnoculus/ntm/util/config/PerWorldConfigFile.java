@@ -100,6 +100,10 @@ public class PerWorldConfigFile extends ConfigFile{
     this.perWorldOptions = readOptions;
   }
   
+  public List<Option<?>> getAllPerWorldOptions() {
+    return List.copyOf(this.perWorldOptions);
+  }
+  
   // Overwriting option creation to return the per world option
   
   

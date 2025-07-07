@@ -48,6 +48,8 @@ public class ModCommands {
                 .then(CommandManager.literal("server")
                 )
                 .then(CommandManager.literal("world")
+                    .then(CommandManager.literal("default")
+                    )
                 )
                 .then(CommandManager.literal("client")
                     .requires(ignored -> environment.integrated)
