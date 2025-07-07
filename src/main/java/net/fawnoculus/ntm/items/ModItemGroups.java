@@ -859,9 +859,12 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RAD_AWAY);
       ItemGroup.add(ModItems.STRONG_RAD_AWAY);
       ItemGroup.add(ModItems.ELITE_RAD_AWAY);
-      
       ItemGroup.add(ModItems.RAD_X);
+      ItemGroup.add(ModItems.IODINE_PILL);
       
+      ItemGroup.add(ModItems.WAFFLE_OF_MASS_DESTRUCTION);
+      ItemGroup.add(ModItems.VEGAN_SCHNITZEL);
+      ItemGroup.add(ModItems.RADIOACTIVE_COTTON_CANDY);
       ItemGroup.add(ModItems.BASIC_LEAD_APPLE);
       ItemGroup.add(ModItems.GOOD_LEAD_APPLE);
       ItemGroup.add(ModItems.EPIC_LEAD_APPLE);
@@ -869,10 +872,49 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.GOOD_SCHRABIDIUM_APPLE);
       ItemGroup.add(ModItems.EPIC_SCHRABIDIUM_APPLE);
       ItemGroup.add(ModItems.EUPHEMIUM_APPLE);
-      
+      ItemGroup.add(ModItems.CHEAP_TEM_FLAKES);
+      ItemGroup.add(ModItems.TEM_FLAKES);
+      ItemGroup.add(ModItems.EXPENSIVE_TEM_FLAKES);
+      ItemGroup.add(ModItems.GLOWING_MUSHROOM_STEW);
+      ItemGroup.add(ModItems.SCRAMBLED_BALEFIRE_EGG);
+      ItemGroup.add(ModItems.SCRAMBLED_BALEFIRE_EGG_AND_HAM);
+      ItemGroup.add(ModItems.LEMON);
+      ItemGroup.add(ModItems.MRE);
+      ItemGroup.add(ModItems.LOOPS);
+      ItemGroup.add(ModItems.IT_BREAKFAST);
+      ItemGroup.add(ModItems.SPONGEBOB_MACARONI);
+      ItemGroup.add(ModItems.FOOD_ITEM);
+      ItemGroup.add(ModItems.TWINKIE);
+      ItemGroup.add(ModItems.TV_STATIC_SANDWICH);
+      ItemGroup.add(ModItems.PUDDING);
+      ItemGroup.add(ModItems.SCRAP_PANCAKE);
+      ItemGroup.add(ModItems.CHICKEN_NUGGET);
+      ItemGroup.add(ModItems.PEAS);
+      ItemGroup.add(ModItems.MARSHMALLOW_ON_A_STICK);
+      ItemGroup.add(ModItems.ROASTED_MARSHMALLOW_ON_A_STICK);
+      ItemGroup.add(ModItems.CHEESE);
+      ItemGroup.add(ModItems.CHEESE_QUESADILLA);
+      ItemGroup.add(ModItems.GLYPHID_MEAT);
+      ItemGroup.add(ModItems.GRILLED_GLYPHID_MEAT);
+      ItemGroup.add(ModItems.GLYPHID_EGG);
       ItemGroup.add(ModItems.IPECAC_SYRUP);
       ItemGroup.add(ModItems.PTSD_MEDICATION);
-      
+      ItemGroup.add(ModItems.STYLISH_FLASK);
+      ItemGroup.add(ModItems.ARIZONA_MUCHO_MANGO);
+      ItemGroup.add(ModItems.RADIUM_CHOCOLATE);
+      ItemGroup.add(ModItems.EMPTY_CAN);
+      ItemGroup.add(ModItems.RING_PULL);
+      ItemGroup.add(ModItems.SMART_ENERGY_DRINK);
+      ItemGroup.add(ModItems.CREATURE_ENERGY_DRINK);
+      ItemGroup.add(ModItems.RED_BOMB_ENERGY_DRINK);
+      ItemGroup.add(ModItems.DR_SUGAR_SOFT_DRINK);
+      ItemGroup.add(ModItems.OVERCHARGE_DELIRIUM_XT);
+      ItemGroup.add(ModItems.BLACK_MESA_LUNA_DARK_COLA);
+      ItemGroup.add(ModItems.BEPIS);
+      ItemGroup.add(ModItems.DR_BREENS_PRIVATE_RESERVE);
+      ItemGroup.add(ModItems.MUG_ROOT_BEER);
+      ItemGroup.add(ModItems.COFFEE);
+      ItemGroup.add(ModItems.RADIUM_COFFEE);
       ItemGroup.add(ModItems.EMPTY_BOTTLE);
       ItemGroup.add(ModItems.EMPTY_BOMB_BOTTLE);
       ItemGroup.add(ModItems.NUKA_COLA_BOTTLE_CAP);

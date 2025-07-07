@@ -11,6 +11,7 @@ import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.sounds.ModSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
@@ -625,6 +626,147 @@ public class ModItems {
   // public static final ItemOption FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", ItemOption::new, new ItemOption.Settings());
   
   // Consumables
+  public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
+  public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
+          (serverWorld, entity) -> EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 30f)
+      ), new Item.Settings()
+  );
+  public static final Item ANTIDOTE = register("antidote", settings ->
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
+          (serverWorld, entity) -> entity.clearStatusEffects()
+      ), new Item.Settings()
+  );
+  public static final Item AWESOME = register("awesome", settings ->
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
+          (serverWorld, entity) -> {
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.RAD_X, 700, 9, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false, true));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false, true));
+          }), new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+  );
+  public static final Item METAL_SYRINGE = register("metal_syringe", Item::new, new Item.Settings());
+  public static final Item STIMPAK = register("stimpak", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
+          (serverWorld, entity) -> entity.heal(5F)
+      ), new Item.Settings()
+  );
+  public static final Item MED_X = register("med_x", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
+          (serverWorld, entity) -> entity.addStatusEffect(
+              new StatusEffectInstance(StatusEffects.RESISTANCE, 4800, 2, false, false, true)
+          )
+      ), new Item.Settings()
+  );
+  public static final Item PSYCHO = register("psycho", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
+      (serverWorld, entity) -> {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 0, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 0, false, false, true));
+      }), new Item.Settings()
+  );
+  public static final Item SUPER_STIMPAK = register("super_stimpak", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
+      (serverWorld, entity) -> {
+        entity.heal(50F);
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0, false, false, true));
+      }), new Item.Settings()
+  );
+  public static final Item FIRST_AID_KIT = register("first_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, null, Items.AIR,
+      (serverWorld, entity) -> {
+        entity.setHealth(entity.getMaxHealth());
+        EntityUtil.removeNegativeEffects(entity);
+      }), new Item.Settings()
+  );
+  
+  public static final Item IV_BAG = register("iv_bag", IvBagItem::new, new Item.Settings());
+  public static final Item BLOOD_BAG = register("blood_bag", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
+          (serverWorld, entity) -> entity.heal(5F)
+      ), new Item.Settings()
+  );
+  public static final Item EMPTY_EXPERIENCE_BAG = register("empty_experience_bag", EmptyExperienceBagItem::new, new Item.Settings());
+  public static final Item EXPERIENCE_BAG = register("experience_bag", ExperienceBagItem::new, new Item.Settings());
+  public static final Item RAD_AWAY = register("rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
+          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 140)
+      ), new Item.Settings()
+  );
+  public static final Item STRONG_RAD_AWAY = register("strong_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
+          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 350)
+      ), new Item.Settings()
+  );
+  public static final Item ELITE_RAD_AWAY = register("elite_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
+          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 500)
+      ), new Item.Settings()
+  );
+  public static final Item RAD_X = register("rad_x", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.RAD_X)
+  );
+  public static final Item IODINE_PILL = register("iodine_pill", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.IODINE_PILL)
+  );
+  public static final Item EMPTY_CAN = register("empty_can", Item::new, new Item.Settings());
+  public static final Item RING_PULL = register("ring_pull", Item::new, new Item.Settings());
+  public static final Item SMART_ENERGY_DRINK = register("smart_energy_drink", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
+      )), new Item.Settings());
+  public static final Item CREATURE_ENERGY_DRINK = register("creature_energy_drink", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+          new StatusEffectInstance(StatusEffects.REGENERATION, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
+      )), new Item.Settings());
+  public static final Item RED_BOMB_ENERGY_DRINK = register("red_bomb_energy_drink", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+          new StatusEffectInstance(StatusEffects.ABSORPTION, 600, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 1, false, false, true)
+      )), new Item.Settings());
+  public static final Item DR_SUGAR_SOFT_DRINK = register("dr_sugar_soft_drink", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+          new StatusEffectInstance(StatusEffects.HASTE, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true)
+      )), new Item.Settings());
+  public static final Item OVERCHARGE_DELIRIUM_XT = register("overcharge_delirium_xt", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
+      )), new Item.Settings());
+  public static final Item BLACK_MESA_LUNA_DARK_COLA = register("black_mesa_luna_dark_cola", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1, false, false, true),
+          new StatusEffectInstance(StatusEffects.REGENERATION, 600, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
+      )), new Item.Settings());
+  public static final Item BEPIS = register("bepis", settings -> new DrinkCanItem(settings,
+      List.of(
+          new StatusEffectInstance(StatusEffects.SPEED, 600, 3, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
+      )), new Item.Settings());
+  public static final Item DR_BREENS_PRIVATE_RESERVE = register("dr_breens_private_reserve", settings -> new DrinkCanItem(settings, 2,
+      List.of(
+          new StatusEffectInstance(StatusEffects.NAUSEA, 600, 0, false, false, true)
+      )), new Item.Settings());
+  public static final Item MUG_ROOT_BEER = register("mug_root_beer", settings -> new DrinkCanItem(settings, 0,
+      List.of(
+          new StatusEffectInstance(StatusEffects.REGENERATION, 1200, 2, false, false, true),
+          new StatusEffectInstance(StatusEffects.RESISTANCE, 3600, 2, false, false, true)
+      )), new Item.Settings());
+  
+  public static final Item WAFFLE_OF_MASS_DESTRUCTION = register("waffle_of_mass_destruction", DestructiveWaffleItem::new, new Item.Settings());
+  public static final Item VEGAN_SCHNITZEL = register("vegan_schnitzel", VeganSchnitzelItem::new, new Item.Settings());
+  public static final Item RADIOACTIVE_COTTON_CANDY = register("radioactive_cotton_candy", Item::new, new Item.Settings()
+      .food(ModFoodComponents.RADIOACTIVE_COTTON_CANDY, ModConsumableComponents.RADIOACTIVE_COTTON_CANDY));
+  
   public static final Item BASIC_LEAD_APPLE = register("basic_lead_apple", Item::new, new Item.Settings()
       .food(ModFoodComponents.LEAD_APPLE, ModConsumableComponents.BASIC_LEAD_APPLE).rarity(Rarity.UNCOMMON));
   public static final Item GOOD_LEAD_APPLE = register("good_lead_apple", Item::new, new Item.Settings()
@@ -642,6 +784,64 @@ public class ModItems {
   public static final Item EUPHEMIUM_APPLE = register("euphemium_apple", Item::new, new Item.Settings()
       .food(ModFoodComponents.SCHRABIDIUM_APPLE, ModConsumableComponents.EUPHEMIUM_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
   
+  public static final Item CHEAP_TEM_FLAKES = register("cheap_tem_flakes", TemFlakesItem::new, new Item.Settings());
+  public static final Item TEM_FLAKES = register("tem_flakes", TemFlakesItem::new, new Item.Settings());
+  public static final Item EXPENSIVE_TEM_FLAKES = register("expensive_tem_flakes", TemFlakesItem::new, new Item.Settings());
+  
+  public static final Item GLOWING_MUSHROOM_STEW = register("glowing_mushroom_stew", Item::new, new Item.Settings()
+      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW));
+  public static final Item SCRAMBLED_BALEFIRE_EGG = register("scrambled_balefire_egg", Item::new, new Item.Settings()
+      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW));
+  public static final Item SCRAMBLED_BALEFIRE_EGG_AND_HAM = register("scrambled_balefire_egg_and_ham", Item::new, new Item.Settings()
+      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW));
+  public static final Item LEMON = register("lemon", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.LEMON));
+  public static final Item MRE = register("mre", Item::new, new Item.Settings()
+      .food(ModFoodComponents.MRE));
+  public static final Item LOOPS = register("loops", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.LOOPS));
+  public static final Item IT_BREAKFAST = register("it_breakfast", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.IT_BREAKFAST));
+  public static final Item SPONGEBOB_MACARONI = register("spongebob_macaroni", Item::new, new Item.Settings()
+      .food(ModFoodComponents.SPONGEBOB_MACARONI));
+  public static final Item FOOD_ITEM = register("food_item", Item::new, new Item.Settings()
+      .food(ModFoodComponents.FOOD_ITEM));
+  public static final Item TWINKIE = register("twinkie", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.TWINKIE));
+  public static final Item TV_STATIC_SANDWICH = register("tv_static_sandwich", Item::new, new Item.Settings()
+      .food(ModFoodComponents.TV_STATIC_SANDWICH));
+  public static final Item PUDDING = register("pudding", settings -> new TooltipItem(settings, 3), new Item.Settings()
+      .food(ModFoodComponents.PUDDING));
+  public static final Item SCRAP_PANCAKE = register("scrap_pancake", ScrapPancakeItem::new, new Item.Settings());
+  public static final Item CHICKEN_NUGGET = register("chicken_nugget", Item::new, new Item.Settings()
+      .food(ModFoodComponents.CHICKEN_NUGGET));
+  public static final Item PEAS = register("peas", PeasItem::new, new Item.Settings());
+  public static final Item MARSHMALLOW_ON_A_STICK = register("marshmallow_on_a_stick", Item::new, new Item.Settings()
+      .food(ModFoodComponents.MARSHMALLOW_ON_A_STICK));
+  public static final Item ROASTED_MARSHMALLOW_ON_A_STICK = register("roasted_marshmallow_on_a_stick", Item::new, new Item.Settings()
+      .food(ModFoodComponents.ROASTED_MARSHMALLOW_ON_A_STICK));
+  public static final Item CHEESE = register("cheese", Item::new, new Item.Settings()
+      .food(ModFoodComponents.CHEESE));
+  public static final Item CHEESE_QUESADILLA = register("cheese_quesadilla", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.CHEESE_QUESADILLA));
+  public static final Item GLYPHID_MEAT = register("glyphid_meat", Item::new, new Item.Settings()
+      .food(ModFoodComponents.GLYPHID_MEAT));
+  public static final Item GRILLED_GLYPHID_MEAT = register("grilled_glyphid_meat", Item::new, new Item.Settings()
+      .food(ModFoodComponents.GRILLED_GLYPHID_MEAT));
+  public static final Item GLYPHID_EGG = register("glyphid_egg", Item::new, new Item.Settings());
+  public static final Item IPECAC_SYRUP = register("ipecac_syrup", settings -> new TooltipItem(settings, 2), new Item.Settings()
+      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.IPECAC_SYRUP)
+  );
+  public static final Item PTSD_MEDICATION = register("ptsd_medication", settings -> new TooltipItem(settings, 2), new Item.Settings()
+      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.IPECAC_SYRUP)
+  );
+  public static final Item STYLISH_FLASK = register("stylish_flask", StylishFlaskItem::new, new Item.Settings());
+  public static final Item ARIZONA_MUCHO_MANGO = register("arizona_mucho_mango", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.ARIZONA_MUCHO_MANGO, ModConsumableComponents.ARIZONA_MUCHO_MANGO));
+  public static final Item RADIUM_CHOCOLATE = register("radium_chocolate", TooltipItem::new, new Item.Settings()
+      .food(ModFoodComponents.RADIUM_CHOCOLATE, ModConsumableComponents.RADIUM_CHOCOLATE));
+  public static final Item COFFEE = register("coffee", CoffeeItem::new, new Item.Settings());
+  public static final Item RADIUM_COFFEE = register("radium_coffee", RadiumCoffeeItem::new, new Item.Settings());
   public static final Item BOTTLE_OPENER = register("bottle_opener", settings -> new TooltipItem(settings, 2), new Item.Settings());
   public static final Item EMPTY_BOTTLE = register("empty_bottle", Item::new, new Item.Settings());
   public static final Item EMPTY_BOMB_BOTTLE = register("empty_bomb_bottle", Item::new, new Item.Settings());
@@ -733,103 +933,12 @@ public class ModItems {
       EMPTY_BOTTLE,
       FRITZ_COLA_BOTTLE_CAP
   )));
-  
-  public static final Item IPECAC_SYRUP = register("ipecac_syrup", settings -> new TooltipItem(settings, 2), new Item.Settings()
-      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.IPECAC_SYRUP)
-  );
-  public static final Item PTSD_MEDICATION = register("ptsd_medication", settings -> new TooltipItem(settings, 2), new Item.Settings()
-      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.IPECAC_SYRUP)
-  );
-  
-  public static final Item RAD_X = register("rad_x", TooltipItem::new, new Item.Settings()
-      .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.RAD_X)
-  );
-  
-  public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
-  public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
-      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 30f)
-      ), new Item.Settings()
-  );
-  public static final Item ANTIDOTE = register("antidote", settings ->
-      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> entity.clearStatusEffects()
-      ), new Item.Settings()
-  );
-  public static final Item AWESOME = register("awesome", settings ->
-      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.RAD_X, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false, true));
-          }), new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
-  );
-  
-  public static final Item METAL_SYRINGE = register("metal_syringe", Item::new, new Item.Settings());
-  public static final Item STIMPAK = register("stimpak", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-          (serverWorld, entity) -> entity.heal(5F)
-      ), new Item.Settings()
-  );
-  public static final Item MED_X = register("med_x", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-          (serverWorld, entity) -> entity.addStatusEffect(
-              new StatusEffectInstance(StatusEffects.RESISTANCE, 4800, 2, false, false, true)
-          )
-      ), new Item.Settings()
-  );
-  public static final Item PSYCHO = register("psycho", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-      (serverWorld, entity) -> {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 0, false, false, true));
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 0, false, false, true));
-      }), new Item.Settings()
-  );
-  public static final Item SUPER_STIMPAK = register("super_stimpak", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-      (serverWorld, entity) -> {
-        entity.heal(50F);
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0, false, false, true));
-      }), new Item.Settings()
-  );
-  
   public static final Item WATERY_TAINT_INJECTION = register("watery_taint_injection", settings -> new InjectionWithTooltipItem(settings, 3, ModSounds.SYRINGE_INJECTS,
       List.of(METAL_SYRINGE, EMPTY_BOTTLE),
       (serverWorld, entity) -> {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 5*20, 0, false, false, true));
-        entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.TAINT, 60*20, 0, false, false, true));
-        EntityUtil.removeNegativeEffects(entity);
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.TAINT, 1200, 0, false, false, true));
       }), new Item.Settings()
-  );
-  public static final Item FIRST_AID_KIT = register("first_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, null, Items.AIR,
-      (serverWorld, entity) -> {
-        entity.setHealth(entity.getMaxHealth());
-        EntityUtil.removeNegativeEffects(entity);
-      }), new Item.Settings()
-  );
-  
-  public static final Item IV_BAG = register("iv_bag", IvBagItem::new, new Item.Settings());
-  public static final Item BLOOD_BAG = register("blood_bag", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
-      (serverWorld, entity) -> entity.heal(5F)
-      ), new Item.Settings()
-  );
-  public static final Item EMPTY_EXPERIENCE_BAG = register("empty_experience_bag", EmptyExperienceBagItem::new, new Item.Settings());
-  public static final Item EXPERIENCE_BAG = register("experience_bag", ExperienceBagItem::new, new Item.Settings());
-  public static final Item RAD_AWAY = register("rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
-      (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 140)
-      ), new Item.Settings()
-  );
-  public static final Item STRONG_RAD_AWAY = register("strong_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
-          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 350)
-      ), new Item.Settings()
-  );
-  public static final Item ELITE_RAD_AWAY = register("elite_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
-          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 500)
-      ), new Item.Settings()
   );
   
   // Tools

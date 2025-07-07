@@ -6,12 +6,16 @@ import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
+import net.minecraft.item.consume.ClearAllEffectsConsumeEffect;
 
 import java.util.List;
 
 public class ModConsumableComponents {
     public static final ConsumableComponent RAD_X = ConsumableComponents.food().consumeSeconds(0.8F)
         .consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(ModStatusEffects.RAD_X, 3600, 0, false, false, true)))
+        .build();
+    public static final ConsumableComponent IODINE_PILL = ConsumableComponents.food().consumeSeconds(0.8F)
+        .consumeEffect(new ClearAllEffectsConsumeEffect())
         .build();
     public static final ConsumableComponent IPECAC_SYRUP = ConsumableComponents.food().consumeSeconds(0.8F)
         .consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(StatusEffects.HUNGER, 200, 255, false, false, true)))
@@ -67,6 +71,30 @@ public class ModConsumableComponents {
             new StatusEffectInstance(StatusEffects.SATURATION, StatusEffectInstance.INFINITE, 122, false, false, true),
             new StatusEffectInstance(StatusEffects.RESISTANCE, StatusEffectInstance.INFINITE, 122, false, false, true),
             new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, StatusEffectInstance.INFINITE, 0, false, false, true)
+        )))
+        .build();
+    public static final ConsumableComponent VEGAN_SCHNITZEL = ConsumableComponents.food()
+        .consumeEffect(new ApplyEffectsConsumeEffect(List.of(
+            new StatusEffectInstance(StatusEffects.HUNGER, 3600, 4, false, false, true),
+            new StatusEffectInstance(StatusEffects.WITHER, 60, 0, false, false, true),
+            new StatusEffectInstance(StatusEffects.NAUSEA, 600, 0, false, false, true),
+            new StatusEffectInstance(StatusEffects.BLINDNESS, 200, 0, false, false, true)
+        )))
+        .build();
+    public static final ConsumableComponent RADIOACTIVE_COTTON_CANDY = ConsumableComponents.food()
+        .consumeEffect(new ApplyEffectsConsumeEffect(List.of(
+            new StatusEffectInstance(StatusEffects.SPEED, 750, 2, false, false, true),
+            new StatusEffectInstance(StatusEffects.WEAKNESS, 750, 2, false, false, true),
+            new StatusEffectInstance(StatusEffects.POISON, 300, 0, false, false, true),
+            new StatusEffectInstance(StatusEffects.WITHER, 100, 0, false, false, true)
+        )))
+        .build();
+    public static final ConsumableComponent ARIZONA_MUCHO_MANGO = ConsumableComponents.drink().consumeSeconds(10f).build();
+    public static final ConsumableComponent RADIUM_CHOCOLATE = ConsumableComponents.food().consumeSeconds(0.8F)
+        .consumeEffect(new ApplyEffectsConsumeEffect(List.of(
+            new StatusEffectInstance(StatusEffects.SPEED, 1200, 3),
+            new StatusEffectInstance(StatusEffects.HASTE, 1200, 3),
+            new StatusEffectInstance(StatusEffects.JUMP_BOOST, 1200, 3)
         )))
         .build();
 }

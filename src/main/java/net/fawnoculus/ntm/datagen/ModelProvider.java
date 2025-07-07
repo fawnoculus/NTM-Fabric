@@ -848,6 +848,30 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.ZIRCONIUM_WIRE, Models.GENERATED);
     
     // Consumables
+    itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POISONOUS_INJECTION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ANTIDOTE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.AWESOME, Models.GENERATED);
+    itemModelGenerator.register(ModItems.METAL_SYRINGE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STIMPAK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MED_X, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PSYCHO, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SUPER_STIMPAK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.WATERY_TAINT_INJECTION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FIRST_AID_KIT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.IV_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BLOOD_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EMPTY_EXPERIENCE_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EXPERIENCE_BAG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAD_AWAY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STRONG_RAD_AWAY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ELITE_RAD_AWAY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RAD_X, Models.GENERATED);
+    itemModelGenerator.register(ModItems.IODINE_PILL, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.WAFFLE_OF_MASS_DESTRUCTION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.VEGAN_SCHNITZEL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RADIOACTIVE_COTTON_CANDY, Models.GENERATED);
     itemModelGenerator.register(ModItems.BASIC_LEAD_APPLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.GOOD_LEAD_APPLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EPIC_LEAD_APPLE, Models.GENERATED);
@@ -855,7 +879,49 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.GOOD_SCHRABIDIUM_APPLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EPIC_SCHRABIDIUM_APPLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EUPHEMIUM_APPLE, Models.GENERATED);
-    
+    itemModelGenerator.register(ModItems.CHEAP_TEM_FLAKES, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TEM_FLAKES, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EXPENSIVE_TEM_FLAKES, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GLOWING_MUSHROOM_STEW, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCRAMBLED_BALEFIRE_EGG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCRAMBLED_BALEFIRE_EGG_AND_HAM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LEMON, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MRE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LOOPS, Models.GENERATED);
+    itemModelGenerator.register(ModItems.IT_BREAKFAST, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPONGEBOB_MACARONI, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FOOD_ITEM, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TWINKIE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TV_STATIC_SANDWICH, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PUDDING, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCRAP_PANCAKE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CHICKEN_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PEAS, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MARSHMALLOW_ON_A_STICK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ROASTED_MARSHMALLOW_ON_A_STICK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CHEESE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CHEESE_QUESADILLA, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GLYPHID_MEAT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GRILLED_GLYPHID_MEAT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GLYPHID_EGG, Models.GENERATED);
+    itemModelGenerator.register(ModItems.IPECAC_SYRUP, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PTSD_MEDICATION, Models.GENERATED);
+    itemModelGenerator.register(ModItems.STYLISH_FLASK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ARIZONA_MUCHO_MANGO, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RADIUM_CHOCOLATE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.EMPTY_CAN, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RING_PULL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SMART_ENERGY_DRINK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CREATURE_ENERGY_DRINK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RED_BOMB_ENERGY_DRINK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DR_SUGAR_SOFT_DRINK, Models.GENERATED);
+    itemModelGenerator.register(ModItems.OVERCHARGE_DELIRIUM_XT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BLACK_MESA_LUNA_DARK_COLA, Models.GENERATED);
+    itemModelGenerator.register(ModItems.BEPIS, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DR_BREENS_PRIVATE_RESERVE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.MUG_ROOT_BEER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COFFEE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.RADIUM_COFFEE, Models.GENERATED);
     itemModelGenerator.register(ModItems.BOTTLE_OPENER, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOTTLE, Models.GENERATED);
     itemModelGenerator.register(ModItems.EMPTY_BOMB_BOTTLE, Models.GENERATED);
@@ -874,33 +940,6 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.FIRST_BOTTLE_OF_KAROL, Models.GENERATED);
     itemModelGenerator.register(ModItems.BOTTLE_OF_FRITZ_COLA, Models.GENERATED);
     itemModelGenerator.register(ModItems.FIRST_BOTTLE_OF_FRITZ_COLA, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.IPECAC_SYRUP, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PTSD_MEDICATION, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.RAD_X, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);
-    itemModelGenerator.register(ModItems.POISONOUS_INJECTION, Models.GENERATED);
-    itemModelGenerator.register(ModItems.ANTIDOTE, Models.GENERATED);
-    itemModelGenerator.register(ModItems.AWESOME, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.METAL_SYRINGE, Models.GENERATED);
-    itemModelGenerator.register(ModItems.STIMPAK, Models.GENERATED);
-    itemModelGenerator.register(ModItems.MED_X, Models.GENERATED);
-    itemModelGenerator.register(ModItems.PSYCHO, Models.GENERATED);
-    itemModelGenerator.register(ModItems.SUPER_STIMPAK, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.WATERY_TAINT_INJECTION, Models.GENERATED);
-    itemModelGenerator.register(ModItems.FIRST_AID_KIT, Models.GENERATED);
-    
-    itemModelGenerator.register(ModItems.IV_BAG, Models.GENERATED);
-    itemModelGenerator.register(ModItems.BLOOD_BAG, Models.GENERATED);
-    itemModelGenerator.register(ModItems.EMPTY_EXPERIENCE_BAG, Models.GENERATED);
-    itemModelGenerator.register(ModItems.EXPERIENCE_BAG, Models.GENERATED);
-    itemModelGenerator.register(ModItems.RAD_AWAY, Models.GENERATED);
-    itemModelGenerator.register(ModItems.STRONG_RAD_AWAY, Models.GENERATED);
-    itemModelGenerator.register(ModItems.ELITE_RAD_AWAY, Models.GENERATED);
     
     // Tools
     itemModelGenerator.register(ModItems.STEEL_SWORD, Models.HANDHELD);

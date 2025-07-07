@@ -21,6 +21,8 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Basalt -> Volcanic Basalt (Basalt Already Exists)
 - Tantalium -> Tantalum
 - Lanthanium -> Lanthanum
+- Sandwich Garnished with TV Static -> TV Static Sandwich
+- Pancake made from Scrap Metal, Nails and Gem Dust -> Scrap Pancake
 - Ingot of "resource" -> "resource" Ingot
 - Bar of "resource" -> "resource" Bar
 - Block of "resource" -> "resource" Block

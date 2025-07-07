@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.util.PlayerUtil;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -36,21 +37,9 @@ public class BottleItem extends Item {
 
   @Override
   public ActionResult use(World world, PlayerEntity playerEntity, Hand hand) {
-    if(world.isClient()){
-      return ActionResult.PASS;
-    }
-
-    boolean hasBottleOpener = false;
-    for(ItemStack stack : playerEntity.getInventory()){
-      if(stack.getItem() == ModItems.BOTTLE_OPENER) {
-        hasBottleOpener = true;
-        break;
-      }
-    }
-    if(!hasBottleOpener) {
+    if(!PlayerUtil.hasItem(playerEntity, ModItems.BOTTLE_OPENER)) {
       return ActionResult.FAIL;
     }
-
     return super.use(world, playerEntity, hand);
   }
 
