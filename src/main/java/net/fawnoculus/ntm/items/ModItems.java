@@ -14,7 +14,6 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -747,17 +746,17 @@ public class ModItems {
   
   public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
   public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
-      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, new ItemStack(EMPTY_SYRINGE),
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
           (serverWorld, entity) -> EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 30f)
       ), new Item.Settings()
   );
   public static final Item ANTIDOTE = register("antidote", settings ->
-      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, new ItemStack(EMPTY_SYRINGE),
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
           (serverWorld, entity) -> entity.clearStatusEffects()
       ), new Item.Settings()
   );
   public static final Item AWESOME = register("awesome", settings ->
-      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, new ItemStack(EMPTY_SYRINGE),
+      new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
           (serverWorld, entity) -> {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
@@ -774,27 +773,23 @@ public class ModItems {
   );
   
   public static final Item METAL_SYRINGE = register("metal_syringe", Item::new, new Item.Settings());
-  public static final Item STIMPAK = register("stimpak", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS,
-      new ItemStack(METAL_SYRINGE),
+  public static final Item STIMPAK = register("stimpak", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
           (serverWorld, entity) -> entity.heal(5F)
       ), new Item.Settings()
   );
-  public static final Item MED_X = register("med_x", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS,
-      new ItemStack(METAL_SYRINGE),
+  public static final Item MED_X = register("med_x", settings -> new InjectionWithTooltipItem(settings, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
           (serverWorld, entity) -> entity.addStatusEffect(
               new StatusEffectInstance(StatusEffects.RESISTANCE, 4800, 2, false, false, true)
           )
       ), new Item.Settings()
   );
-  public static final Item PSYCHO = register("psycho", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS,
-      new ItemStack(METAL_SYRINGE),
+  public static final Item PSYCHO = register("psycho", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
       (serverWorld, entity) -> {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 0, false, false, true));
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 0, false, false, true));
       }), new Item.Settings()
   );
-  public static final Item SUPER_STIMPAK = register("super_stimpak", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS,
-      new ItemStack(METAL_SYRINGE),
+  public static final Item SUPER_STIMPAK = register("super_stimpak", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
       (serverWorld, entity) -> {
         entity.heal(50F);
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0, false, false, true));
@@ -802,15 +797,14 @@ public class ModItems {
   );
   
   public static final Item WATERY_TAINT_INJECTION = register("watery_taint_injection", settings -> new InjectionWithTooltipItem(settings, 3, ModSounds.SYRINGE_INJECTS,
-      List.of(new ItemStack(METAL_SYRINGE), new ItemStack(EMPTY_BOTTLE)),
+      List.of(METAL_SYRINGE, EMPTY_BOTTLE),
       (serverWorld, entity) -> {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 5*20, 0, false, false, true));
         entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.TAINT, 60*20, 0, false, false, true));
         EntityUtil.removeNegativeEffects(entity);
       }), new Item.Settings()
   );
-  public static final Item FIST_AID_KIT = register("fist_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS,
-      new ItemStack(METAL_SYRINGE),
+  public static final Item FIST_AID_KIT = register("fist_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
       (serverWorld, entity) -> {
         entity.setHealth(entity.getMaxHealth());
         EntityUtil.removeNegativeEffects(entity);
@@ -818,21 +812,21 @@ public class ModItems {
   );
   
   public static final Item IV_BAG = register("iv_bag", IvBagItem::new, new Item.Settings());
-  public static final Item BLOOD_BAG = register("blood_bag", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+  public static final Item BLOOD_BAG = register("blood_bag", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
       (serverWorld, entity) -> entity.heal(5F)
       ), new Item.Settings()
   );
   public static final Item EMPTY_EXPERIENCE_BAG = register("empty_experience_bag", EmptyExperienceBagItem::new, new Item.Settings());
   public static final Item EXPERIENCE_BAG = register("experience_bag", ExperienceBagItem::new, new Item.Settings());
-  public static final Item RAD_AWAY = register("rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+  public static final Item RAD_AWAY = register("rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
       (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 140)
       ), new Item.Settings()
   );
-  public static final Item STRONG_RAD_AWAY = register("strong_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+  public static final Item STRONG_RAD_AWAY = register("strong_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
           (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 350)
       ), new Item.Settings()
   );
-  public static final Item ELITE_RAD_AWAY = register("elite_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, new ItemStack(IV_BAG),
+  public static final Item ELITE_RAD_AWAY = register("elite_rad_away", settings -> new InjectionItem(settings, ModSounds.IV_BAG_INJECTS, IV_BAG,
           (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, ModStatusEffects.RAD_AWAY, 500)
       ), new Item.Settings()
   );

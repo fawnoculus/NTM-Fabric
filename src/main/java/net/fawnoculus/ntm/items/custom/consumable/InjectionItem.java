@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
+import net.fawnoculus.ntm.util.ItemUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -17,10 +18,10 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class InjectionItem extends Item {
-  public InjectionItem(Settings settings, @Nullable SoundEvent sound, @Nullable ItemStack returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+  public InjectionItem(Settings settings, @Nullable SoundEvent sound, @Nullable Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     this(settings, sound, returnItem != null ? List.of(returnItem) : List.of(), serverUse);
   }
-  public InjectionItem(Settings settings, @Nullable SoundEvent sound, List<ItemStack> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+  public InjectionItem(Settings settings, @Nullable SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings);
     
     this.SOUND = sound;
@@ -30,7 +31,7 @@ public class InjectionItem extends Item {
   
   
   private final @Nullable SoundEvent SOUND;
-  private final List<ItemStack> RETURN_ITEMS;
+  private final List<Item> RETURN_ITEMS;
   private final BiConsumer<ServerWorld, LivingEntity> SERVER_USE;
   
   
@@ -46,8 +47,8 @@ public class InjectionItem extends Item {
     if(this.SOUND != null){
       world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), this.SOUND, SoundCategory.PLAYERS);
     }
-    for(ItemStack returnItem : RETURN_ITEMS){
-      player.getInventory().offerOrDrop(returnItem);
+    for(Item returnItem : RETURN_ITEMS){
+      player.getInventory().offerOrDrop(new ItemStack(returnItem));
     }
     
     this.SERVER_USE.accept((ServerWorld) world, player);
@@ -67,8 +68,8 @@ public class InjectionItem extends Item {
     if(this.SOUND != null){
       world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), this.SOUND, SoundCategory.PLAYERS);
     }
-    for(ItemStack returnItem : RETURN_ITEMS){
-      player.getInventory().offerOrDrop(returnItem);
+    for(Item returnItem : RETURN_ITEMS){
+      player.getInventory().offerOrDrop(new ItemStack(returnItem));
     }
     
     this.SERVER_USE.accept(world, target);

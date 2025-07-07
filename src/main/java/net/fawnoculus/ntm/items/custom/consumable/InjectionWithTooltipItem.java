@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.ServerWorld;
@@ -16,15 +17,15 @@ import java.util.function.Consumer;
 public class InjectionWithTooltipItem extends InjectionItem {
   private final int TOOLTIP_COUNT;
   
-  public InjectionWithTooltipItem(Settings settings, SoundEvent sound, ItemStack returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+  public InjectionWithTooltipItem(Settings settings, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     this(settings, 1, sound, returnItem, serverUse);
   }
-  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, ItemStack returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings, sound, returnItem, serverUse);
     
     this.TOOLTIP_COUNT = tooltipCount;
   }
-  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<ItemStack> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings, sound, returnItems, serverUse);
     
     this.TOOLTIP_COUNT = tooltipCount;

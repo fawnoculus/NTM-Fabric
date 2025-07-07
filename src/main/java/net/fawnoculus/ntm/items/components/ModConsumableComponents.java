@@ -14,7 +14,7 @@ public class ModConsumableComponents {
         .consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(ModStatusEffects.RAD_X, 3600, 0, false, false, true)))
         .build();
     public static final ConsumableComponent IPECAC_SYRUP = ConsumableComponents.food().consumeSeconds(0.8F)
-        .consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(StatusEffects.HUNGER, 100, 255, false, false, true)))
+        .consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(StatusEffects.HUNGER, 200, 255, false, false, true)))
         .build();
     
     public static final ConsumableComponent BASIC_LEAD_APPLE = ConsumableComponents.food()
