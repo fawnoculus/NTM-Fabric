@@ -1,11 +1,16 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.items.components.ModFoodComponents;
+import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.util.messages.AdvancedMessage;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 public class DestructiveWaffleItem extends Item {
@@ -15,8 +20,11 @@ public class DestructiveWaffleItem extends Item {
   
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    if(user instanceof PlayerEntity player && !world.isClient()){
-      player.sendMessage(Text.literal("Now you would violently Explode, but Nuclear Explosions are not implemented yet"), false);
+    if(user instanceof ServerPlayerEntity player){
+      ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(
+          NTM.id("waffle_of_mass_destruction"),
+          Text.literal("Now you would violently Explode, but Nuclear Explosions are not implemented yet").formatted(Formatting.RED),
+          4000.0f)));
     }
     // TODO: this, once we have Nuclear Explosions
     return super.finishUsing(stack, world, user);
