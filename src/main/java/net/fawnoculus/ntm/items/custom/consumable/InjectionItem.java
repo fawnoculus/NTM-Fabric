@@ -1,6 +1,5 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.util.ItemUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

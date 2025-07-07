@@ -892,7 +892,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.SUPER_STIMPAK, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.WATERY_TAINT_INJECTION, Models.GENERATED);
-    itemModelGenerator.register(ModItems.FIST_AID_KIT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.FIRST_AID_KIT, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.IV_BAG, Models.GENERATED);
     itemModelGenerator.register(ModItems.BLOOD_BAG, Models.GENERATED);

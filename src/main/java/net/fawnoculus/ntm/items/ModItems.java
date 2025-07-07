@@ -14,6 +14,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -804,7 +805,7 @@ public class ModItems {
         EntityUtil.removeNegativeEffects(entity);
       }), new Item.Settings()
   );
-  public static final Item FIST_AID_KIT = register("fist_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, ModSounds.SYRINGE_INJECTS, METAL_SYRINGE,
+  public static final Item FIRST_AID_KIT = register("first_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, null, Items.AIR,
       (serverWorld, entity) -> {
         entity.setHealth(entity.getMaxHealth());
         EntityUtil.removeNegativeEffects(entity);

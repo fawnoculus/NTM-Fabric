@@ -851,7 +851,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.PSYCHO);
       ItemGroup.add(ModItems.SUPER_STIMPAK);
       ItemGroup.add(ModItems.WATERY_TAINT_INJECTION);
-      ItemGroup.add(ModItems.FIST_AID_KIT);
+      ItemGroup.add(ModItems.FIRST_AID_KIT);
       ItemGroup.add(ModItems.IV_BAG);
       ItemGroup.add(ModItems.BLOOD_BAG);
       ItemGroup.add(ModItems.EMPTY_EXPERIENCE_BAG);

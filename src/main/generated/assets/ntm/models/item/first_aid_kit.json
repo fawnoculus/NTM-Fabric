@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ntm:item/fist_aid_kit"
+    "layer0": "ntm:item/first_aid_kit"
   }
 }
