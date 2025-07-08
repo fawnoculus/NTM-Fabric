@@ -88,7 +88,7 @@ public class AdvancedMessage {
   @Range(from = 4, to = 256)
   public int getOpacity(){
     if(this.millisLeft > BLEND_TIME) return 256;
-    int min = 4; // for some reason anything with a alpha value bellow 4 will be displayed incorrectly
+    int min = 4; // for some reason (probably float inaccuracy) anything with an alpha value bellow 4 will be displayed incorrectly
     return (int) Math.clamp(this.millisLeft / BLEND_TIME * 256, min, 256);
   }
 }

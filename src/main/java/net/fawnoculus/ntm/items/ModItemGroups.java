@@ -841,6 +841,9 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.NULL);
     });
     ItemGroupEvents.modifyEntriesEvent(CONSUMABLES_AND_GEAR_KEY).register(ItemGroup -> {
+      ItemGroup.add(ModItems.DOSIMETER);
+      ItemGroup.add(ModItems.GEIGER_COUNTER);
+      
       ItemGroup.add(ModItems.EMPTY_SYRINGE);
       ItemGroup.add(ModItems.POISONOUS_INJECTION);
       ItemGroup.add(ModItems.ANTIDOTE);

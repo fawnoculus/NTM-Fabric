@@ -257,9 +257,6 @@ public class ModelProvider extends FabricModelProvider {
     ItemModelCollector = itemModelGenerator.modelCollector;
     // Basic Items
     itemModelGenerator.register(ModItems.NULL, Models.GENERATED);
-    itemModelGenerator.register(ModItems.DEBUG_WAND, Models.GENERATED);
-    itemModelGenerator.register(ModItems.CONSTRUCTION_WAND, Models.GENERATED);
-    itemModelGenerator.register(ModItems.NETWORK_DEBUG_TOOL, Models.GENERATED);
     
     // Raw Resources
     itemModelGenerator.register(ModItems.ACTINIUM_227_INGOT, Models.GENERATED);
@@ -847,6 +844,13 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.WELDED_ZIRCONIUM_PLATE, Models.GENERATED);
     itemModelGenerator.register(ModItems.ZIRCONIUM_WIRE, Models.GENERATED);
     
+    // Usable Items
+    itemModelGenerator.register(ModItems.DEBUG_WAND, Models.GENERATED);
+    itemModelGenerator.register(ModItems.CONSTRUCTION_WAND, Models.GENERATED);
+    itemModelGenerator.register(ModItems.NETWORK_DEBUG_TOOL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.GEIGER_COUNTER, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DOSIMETER, Models.GENERATED);
+    
     // Consumables
     itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);
     itemModelGenerator.register(ModItems.POISONOUS_INJECTION, Models.GENERATED);
@@ -1007,7 +1011,6 @@ public class ModelProvider extends FabricModelProvider {
     
     itemModelGenerator.register(ModItems.MESE_PICKAXE, HANDHELD_LARGE);
     itemModelGenerator.register(ModItems.MESE_AXE, HANDHELD_LARGE);
-    // TOOLS & WEAPONS END
   }
   public static final Model HANDHELD_LARGE = item("handheld_large", TextureKey.LAYER0);
   

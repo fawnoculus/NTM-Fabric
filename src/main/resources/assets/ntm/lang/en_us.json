@@ -39,6 +39,8 @@
   "message.ntm.get_node_networks.none": "None",
   "message.ntm.not_enough_xp": "Not Enough Experience!",
   "message.ntm.teeth_to_soft": "Your teeth are to soft to eat this",
+  "message.ntm.rad": "%1$s RAD",
+  "message.ntm.rads": "%1$s RAD/s",
 
   "death.attack.ntm.poison_injection": "%1$s euthanized himself",
   "death.attack.ntm.poison_injection.player": "%1$s was euthanized while fighting %2$s",

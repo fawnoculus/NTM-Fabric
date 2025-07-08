@@ -20,7 +20,7 @@ public class AlloyFurnaceScreen extends HandledScreen<AlloyFurnaceScreenHandler>
   
   @Override
   protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {
-    context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x, this.y, 0.0F, 0.0F, this.backgroundWidth, this.backgroundHeight, 256, 256);
+    context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
     
     
     AlloyFurnaceBE entity = this.handler.getBlockEntity();

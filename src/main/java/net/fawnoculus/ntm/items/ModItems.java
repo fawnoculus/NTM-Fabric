@@ -25,12 +25,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public class ModItems {
-  
   // Basic Items
   public static final Item NULL = register("null", Item::new, new Item.Settings());
-  public static final Item DEBUG_WAND = register("debug_wand", DebugWandItem::new, new Item.Settings());
-  public static final Item CONSTRUCTION_WAND = register("construction_wand", ConstructionWandItem::new, new Item.Settings());
-  public static final Item NETWORK_DEBUG_TOOL = register("network_debug_tool", NetworkDebuggingToolItem::new, new Item.Settings());
   
   // Basic Resources split by Type sorted Alphabetically because I felt like it
   public static final Item ACTINIUM_227_INGOT = register("actinium_227_ingot", Item::new, new Item.Settings());
@@ -624,6 +620,14 @@ public class ModItems {
   // public static final ItemOption HEAVY_CHAINSTEEL_INGOT = register("heavy_chainsteel_ingot", ItemOption::new, new ItemOption.Settings());
   // public static final ItemOption FORGED_METEORITE_INGOT = register("forged_meteorite_ingot", ItemOption::new, new ItemOption.Settings());
   
+  
+  // Usable Items
+  public static final Item DEBUG_WAND = register("debug_wand", DebugWandItem::new, new Item.Settings());
+  public static final Item CONSTRUCTION_WAND = register("construction_wand", ConstructionWandItem::new, new Item.Settings());
+  public static final Item NETWORK_DEBUG_TOOL = register("network_debug_tool", NetworkDebuggingToolItem::new, new Item.Settings());
+  public static final Item GEIGER_COUNTER = register("geiger_counter", GeigerCounterItem::new, new Item.Settings());
+  public static final Item DOSIMETER = register("dosimeter", DosimeterItem::new, new Item.Settings());
+  
   // Consumables
   public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
   public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
@@ -793,11 +797,11 @@ public class ModItems {
   public static final Item EXPENSIVE_TEM_FLAKES = register("expensive_tem_flakes", TemFlakesItem::new, new Item.Settings());
   
   public static final Item GLOWING_MUSHROOM_STEW = register("glowing_mushroom_stew", Item::new, new Item.Settings()
-      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW));
+      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
   public static final Item SCRAMBLED_BALEFIRE_EGG = register("scrambled_balefire_egg", Item::new, new Item.Settings()
-      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW));
+      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
   public static final Item SCRAMBLED_BALEFIRE_EGG_AND_HAM = register("scrambled_balefire_egg_and_ham", Item::new, new Item.Settings()
-      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW));
+      .food(ModFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
   public static final Item LEMON = register("lemon", TooltipItem::new, new Item.Settings()
       .food(ModFoodComponents.LEMON));
   public static final Item MRE = register("mre", Item::new, new Item.Settings()
@@ -805,7 +809,7 @@ public class ModItems {
   public static final Item LOOPS = register("loops", TooltipItem::new, new Item.Settings()
       .food(ModFoodComponents.LOOPS));
   public static final Item IT_BREAKFAST = register("it_breakfast", TooltipItem::new, new Item.Settings()
-      .food(ModFoodComponents.IT_BREAKFAST));
+      .food(ModFoodComponents.IT_BREAKFAST).useRemainder(Items.BOWL));
   public static final Item SPONGEBOB_MACARONI = register("spongebob_macaroni", Item::new, new Item.Settings()
       .food(ModFoodComponents.SPONGEBOB_MACARONI));
   public static final Item FOOD_ITEM = register("food_item", Item::new, new Item.Settings()

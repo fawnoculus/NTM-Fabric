@@ -11,11 +11,12 @@ import net.fawnoculus.ntm.commands.ModCommands;
 import net.fawnoculus.ntm.entity.ModDamageTypes;
 import net.fawnoculus.ntm.entity.ModStatusEffects;
 import net.fawnoculus.ntm.items.*;
-import net.fawnoculus.ntm.network.ModPayloadHandler;
+import net.fawnoculus.ntm.network.ModServerPayloadHandler;
 import net.fawnoculus.ntm.network.ModPayloads;
 import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.fawnoculus.ntm.sounds.ModSounds;
 import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
+import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,8 @@ public class NTM implements ModInitializer {
     
     ModSounds.initialize();
     
+    ServerRadiationManager.initialize();
+    
     ModToolMaterials.initialize();
     ModDataComponentTypes.initialize();
     ModItems.initialize();
@@ -55,7 +58,7 @@ public class NTM implements ModInitializer {
     ModWorldGeneration.initialize();
     
     ModPayloads.initialize();
-    ModPayloadHandler.initialize();
+    ModServerPayloadHandler.initialize();
     
     NTM.LOGGER.info("Finished {} Initialization", NTM.MOD_NAME);
   }

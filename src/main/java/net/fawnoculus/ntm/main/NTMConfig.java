@@ -31,6 +31,7 @@ public class NTMConfig {
       "Blocks that will be immune to the Aoe Ability (the ability already skips all blocks that the tool is incorrect for)" );
   public static final IntegerOption RequiredCommandPermission = CommonConfig.newIntegerOption("RequiredCommandPermission", 2 , "The required Permission-Level for Operator NTM Commands");
   public static final IntegerOption MaxNodeScanDepth = CommonConfig.newIntegerOption("MaxNodeScanDepth", 100000 , "The max Amount of Blocks a node-network will scan through when nodes are added/removed. Set to 0 to disable limit");
+  public static final BooleanOption AlwaysSendRadiationPacket = CommonConfig.newBooleanOption("AlwaysSendRadiationPacket", false , "If the Server should always send the Radiation Packet to player, enabling this may increase performance");
   
   public static final PerWorldConfigFile WorldConfig = new PerWorldConfigFile("ntm/world_default", "ntm/world_config", new JsonConfigFile(), NTM.LOGGER);
   public static final BooleanOption WorldTestOption = WorldConfig.newBooleanOption("test", true, "this is a test");
