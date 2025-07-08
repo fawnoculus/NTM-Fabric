@@ -393,6 +393,7 @@ ecf187b7eb2cbacc6bb3ebfa12693eb9e94acf4e assets/ntm/items/dineutronium_block.jso
 f9b0468d6274bae5b8f69f6bccf4fcdc265b9a11 assets/ntm/items/dineutronium_ingot.json
 bba28e212ea68e49184fb5f8cb6cec0508d7e05e assets/ntm/items/dineutronium_nugget.json
 feb8480a821d71b6c75f1ab25b0a6ead6ad5bb8d assets/ntm/items/dineutronium_powder.json
+ec96c520285b004b502033d64d8e2d78932bfe60 assets/ntm/items/dosimeter.json
 70032ec6221ae1d9254f83d40aea6df1e98b335e assets/ntm/items/dr_breens_private_reserve.json
 083d345f4969e3fee6b4e60749bfb3fe31a830cd assets/ntm/items/dr_sugar_soft_drink.json
 51dfffb3950e5245b20e5642a9f639673950276a assets/ntm/items/electronium_ingot.json
@@ -436,6 +437,7 @@ ec7e0705066a705047dd1d0de5fb207881e1b41c assets/ntm/items/fly_ash.json
 ff26b0042e42444a27353289d667dedd5b683c43 assets/ntm/items/fritz_cola_bottle_cap.json
 90393b2ddfa1c5c11beea3ac72b3647bd46b745e assets/ntm/items/fullerene.json
 d996b9380e5aeb1a35ebd200ae918f8ddd19472c assets/ntm/items/gas_shale.json
+eb10c5d24d731602cf40a36a742fd0785316b42c assets/ntm/items/geiger_counter.json
 2b0aefc14f4d8b90e83a748660528dd1875156f4 assets/ntm/items/gem_rich_volcanic_basalt.json
 dfbcbafdb2349fece2cc4cbc3b1d8019733e04e4 assets/ntm/items/geothermal_vent.json
 ae47198b9048d2faf0eecc751beedfb9fbf0a90d assets/ntm/items/ghiorsium_336_billet.json
@@ -1280,6 +1282,7 @@ bd672076a9d506270c34e9611d86060fd57227fc assets/ntm/models/item/deshready_blend.
 30e46c11e39159a71edacb4a8fbce57dc4041bd8 assets/ntm/models/item/dineutronium_ingot.json
 a3e601c394a3e6f24f5d3284a80f352285811f7e assets/ntm/models/item/dineutronium_nugget.json
 ec9675ac51f472c84bcccecbc4cf2bbf71b32cab assets/ntm/models/item/dineutronium_powder.json
+e7df135a88e33c147379fcc6355eaa58da3561fc assets/ntm/models/item/dosimeter.json
 b4d6728689f2e17625feaaab4ba3b095a911ec5a assets/ntm/models/item/dr_breens_private_reserve.json
 3dd4b1781db0e9cb6ab0138b683d3fbb38be4d26 assets/ntm/models/item/dr_sugar_soft_drink.json
 4b92f45fc2376892db7c952579e5e10ede0f4fc9 assets/ntm/models/item/electronium_ingot.json
@@ -1315,6 +1318,7 @@ c45bff9974e4263634c9775e1679cf8288c95edc assets/ntm/models/item/fluorite_crystal
 d4c12265708096f6f814cd7416c112503210e79c assets/ntm/models/item/food_item.json
 377cea210f64c40dcfe313140f6c1fb00f47916b assets/ntm/models/item/fritz_cola_bottle_cap.json
 120735339e67564e095cd4cf973f99b480dd5ea6 assets/ntm/models/item/fullerene.json
+3f8040cf2de5527dbc4e822921c2b05a2615f6fc assets/ntm/models/item/geiger_counter.json
 3eaa9bac61ffc8747da456b4b7400ac616350bab assets/ntm/models/item/ghiorsium_336_billet.json
 b5f9fbadf29cc7afc7a0b31a6905edd1b3a87b8c assets/ntm/models/item/ghiorsium_336_ingot.json
 4a2ac26f37f4c9055ef149524119b3bd1a9ce46a assets/ntm/models/item/ghiorsium_336_nugget.json

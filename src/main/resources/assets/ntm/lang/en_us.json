@@ -403,10 +403,6 @@
   "block.ntm.temp_cable": "Temporary Cable (until we have the real thing)",
   "item.ntm.temp_cable": "Temporary Cable (until we have the real thing)",
 
-  "item.ntm.debug_wand": "Debug Wand",
-  "item.ntm.construction_wand": "Construction Wand",
-  "item.ntm.network_debug_tool": "Network Debug Tool",
-
   "item.ntm.null": "Item(s) not Implemented (yet)",
   "item.ntm.raw_uranium": "Raw Uranium",
   "item.ntm.raw_scorched_uranium": "Raw Scorched Uranium",
@@ -755,6 +751,12 @@
   "item.ntm.first_bottle_of_karol": "The First Karol",
   "item.ntm.bottle_of_fritz_cola": "Fritz Cola",
   "item.ntm.first_bottle_of_fritz_cola": "The First Fritz Cola",
+
+  "item.ntm.debug_wand": "Debug Wand",
+  "item.ntm.construction_wand": "Construction Wand",
+  "item.ntm.network_debug_tool": "Network Debug Tool",
+  "item.ntm.geiger_counter": "Geiger Counter",
+  "item.ntm.dosimeter": "Dosimeter",
 
   "item.ntm.steel_sword": "Steel Sword",
   "item.ntm.steel_pickaxe": "Steel Pickaxe",
