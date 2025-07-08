@@ -6,9 +6,11 @@
 * Raw Ores
 * Some Consumables
 * Debug & Construction Wand
+* Geiger Counter & Dosimeter
 * Ingots
 * Billets
 * Nuggets
+* The Beginning of the Radiation System
 * Consumables (Bottles, Syringes, ...)
 ## Fixed:
 * Alloy Furnace Model
