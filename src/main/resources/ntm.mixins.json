@@ -4,6 +4,7 @@
   "package": "net.fawnoculus.ntm.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "LivingEntityMixin",
     "MinecraftServerMixin",
     "ServerPlayerInteractionManagerMixin",
     "ServerWorldMixin"

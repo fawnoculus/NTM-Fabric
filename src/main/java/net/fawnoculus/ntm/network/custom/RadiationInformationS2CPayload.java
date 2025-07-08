@@ -1,12 +1,10 @@
 package net.fawnoculus.ntm.network.custom;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.stream.JsonReader;
 import io.netty.buffer.ByteBuf;
 import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.util.JsonUtil;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -14,7 +12,6 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
 
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
 public record RadiationInformationS2CPayload(RadiationInfo info) implements CustomPayload {
@@ -32,10 +29,7 @@ public record RadiationInformationS2CPayload(RadiationInfo info) implements Cust
     public static final PacketCodec<ByteBuf, RadiationInfo> PACKET_CODEC = new PacketCodec<>() {
       public RadiationInfo decode(ByteBuf byteBuf) {
         String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        JsonReader jsonReader = new JsonReader(new StringReader(string));
-        JsonObject jsonObject = gson.fromJson(jsonReader, JsonObject.class);
-        return RadiationInfo.decode(jsonObject);
+        return RadiationInfo.decode(JsonUtil.jsonFromString(string));
       }
       
       public void encode(ByteBuf byteBuf, RadiationInfo message) {

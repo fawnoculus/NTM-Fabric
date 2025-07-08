@@ -1,11 +1,9 @@
 package net.fawnoculus.ntm.util.messages;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.stream.JsonReader;
 import io.netty.buffer.ByteBuf;
+import net.fawnoculus.ntm.util.JsonUtil;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.BuiltinRegistries;
@@ -14,7 +12,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
 
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
@@ -26,10 +23,7 @@ public class AdvancedMessage {
   public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
     public AdvancedMessage decode(ByteBuf byteBuf) {
       String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
-      Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-      JsonReader jsonReader = new JsonReader(new StringReader(string));
-      JsonObject jsonObject = gson.fromJson(jsonReader, JsonObject.class);
-      return AdvancedMessage.decode(jsonObject);
+      return AdvancedMessage.decode(JsonUtil.jsonFromString(string));
     }
     
     public void encode(ByteBuf byteBuf, AdvancedMessage message) {
