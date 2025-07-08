@@ -9,6 +9,11 @@ import net.fawnoculus.ntm.util.PlayerUtil;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Position;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.chunk.WorldChunk;
+import org.jetbrains.annotations.Range;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,9 +46,11 @@ public class ServerRadiationManager {
   }
   
   public void sendPacket(ServerPlayerEntity player){
-    // TODO: this
     ServerPlayNetworking.send(player, new RadiationInformationS2CPayload(new RadiationInformationS2CPayload.RadiationInfo(
-        1, 1, 1, 1
+        getRadiationExposure(player),
+        getInventoryRadiation(player),
+        getPassiveChunkRadiation(player.getServerWorld(), player.getPos()),
+        getActiveChunkRadiation(player.getServerWorld(), player.getPos())
     )));
   }
   
@@ -65,8 +72,53 @@ public class ServerRadiationManager {
     return false;
   }
   
+  @Range(from = 0, to = 1_000_000)
+  public double getRadiationExposure(ServerPlayerEntity player){
+    // TODO: this
+    return 100;
+  }
+  
+  public double getRadiationResistance(ServerPlayerEntity player){
+    // TODO: this
+    return 100;
+  }
+  @Range(from = 0, to = 100)
+  public double getRadiationResistancePercentage(ServerPlayerEntity player){
+    // TODO: this
+    return 50;
+  }
+  
+  public double getInventoryRadiation(ServerPlayerEntity player){
+    // TODO: this
+    return 100;
+  }
+  public double getActiveChunkRadiation(ServerWorld world, Vec3d pos){
+    // TODO: this
+    return 100;
+  }
+  public double getPassiveChunkRadiation(ServerWorld world, Vec3d pos){
+    // TODO: this
+    return 100;
+  }
+  public double getChunkRadiation(ServerWorld world, Vec3d pos){
+    return getActiveChunkRadiation(world, pos) + getPassiveChunkRadiation(world, pos);
+  }
+  public double getTotalRadiation(ServerPlayerEntity player){
+    return this.getChunkRadiation(player.getServerWorld(), player.getPos()) + getInventoryRadiation(player);
+  }
+  
   public void tick(ServerWorld world){
     this.sendPacketIfNeeded(world.getPlayers());
-    // TODO: this
+    // TODO: the rest of this
+  }
+  
+  public void tickChunk(ServerWorld world, WorldChunk chunk){
+    // TODO: how?
+  }
+  public void saveChunk(){
+    // TODO: how?
+  }
+  public void loadChunk(){
+    // TODO: how?
   }
 }

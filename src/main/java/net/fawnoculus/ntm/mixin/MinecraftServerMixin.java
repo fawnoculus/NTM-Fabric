@@ -35,5 +35,4 @@ public abstract class MinecraftServerMixin {
       configFile.removeConfigPath();
     }
   }
-  
 }

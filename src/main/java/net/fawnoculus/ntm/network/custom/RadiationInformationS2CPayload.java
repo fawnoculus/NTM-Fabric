@@ -24,7 +24,7 @@ public record RadiationInformationS2CPayload(RadiationInfo info) implements Cust
   public static final PacketCodec<RegistryByteBuf, RadiationInformationS2CPayload> PACKET_CODEC = PacketCodec.tuple(RadiationInfo.PACKET_CODEC, RadiationInformationS2CPayload::info, RadiationInformationS2CPayload::new);
   
   public record RadiationInfo(
-      @Range(from = 0, to = 1000000) double radiationExposure,
+      @Range(from = 0, to = 1_000_000) double radiationExposure,
       double inventoryRadiation,
       double passiveChunkRadiation,
       double activeChunkRadiation
