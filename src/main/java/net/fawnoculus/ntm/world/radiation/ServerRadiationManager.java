@@ -6,11 +6,13 @@ import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.main.NTMConfig;
 import net.fawnoculus.ntm.network.custom.RadiationInformationS2CPayload;
 import net.fawnoculus.ntm.util.PlayerUtil;
+import net.fawnoculus.ntm.world.radiation.processor.EmptyRadiationProcessor;
+import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Range;
 
 import java.util.Collection;
@@ -106,17 +108,14 @@ public class ServerRadiationManager {
   }
   
   public void tick(ServerWorld world){
+    for(RadiationProcessor processor : MultiRadiationProcessorHolder.from(world).NTM$getRadiationProcessors()){
+      processor.tick();
+    }
+    
     this.sendPacketIfNeeded(world.getPlayers());
-    // TODO: the rest of this
   }
   
-  public void tickChunk(ServerWorld world, WorldChunk chunk){
-    // TODO: how?
-  }
-  public void saveChunk(){
-    // TODO: how?
-  }
-  public void loadChunk(){
-    // TODO: how?
+  public RadiationProcessor makeNewRadiationProcessor(ChunkPos pos){
+    return new EmptyRadiationProcessor();
   }
 }

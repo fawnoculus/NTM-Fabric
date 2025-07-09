@@ -4,10 +4,13 @@
   "package": "net.fawnoculus.ntm.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ChunkMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
+    "SerializedChunkMixin",
     "ServerPlayerInteractionManagerMixin",
-    "ServerWorldMixin"
+    "ServerWorldMixin",
+    "WorldChunkMixin"
   ],
   "client": [
     "ClientWorldMixin",

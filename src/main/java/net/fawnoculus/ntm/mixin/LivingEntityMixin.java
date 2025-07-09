@@ -17,18 +17,16 @@ import java.util.Optional;
 public abstract class LivingEntityMixin implements CustomDataHolder {
   @Unique
   CustomData customData = new CustomData();
-  @Unique
-  String  customDataKey = "ntm.custom_data";
   
   @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
   protected void readCustomData(NbtCompound nbt, CallbackInfo ci){
-    Optional<String> string = nbt.getString(customDataKey);
+    Optional<String> string = nbt.getString(CustomData.KEY);
     customData = string.map(CustomData::new).orElseGet(CustomData::new);
   }
   
   @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
   protected void writeCustomData(NbtCompound nbt, CallbackInfo ci){
-    nbt.putString(customDataKey, customData.getDataAsString());
+    nbt.putString(CustomData.KEY, customData.getDataAsString());
   }
   
   @Override
@@ -37,5 +35,9 @@ public abstract class LivingEntityMixin implements CustomDataHolder {
       customData = new CustomData();
     }
     return customData;
+  }
+  @Override
+  public void NTM$setCustomData(CustomData customData) {
+    this.customData = customData;
   }
 }

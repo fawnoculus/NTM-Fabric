@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public class CustomData {
+  public static final String  KEY = "ntm.custom_data";
+  
   private final JsonObject Data;
   
   public CustomData(){
