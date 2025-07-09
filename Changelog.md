@@ -1,6 +1,7 @@
 # V0.0.2-alpha
 ## Added:
 * Advanced Message System
+* Radiation System
 * Node Network System (aka: Energy Cables & Fluid Pipes)
 * Ore Drops
 * Raw Ores
