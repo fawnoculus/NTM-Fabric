@@ -59,7 +59,7 @@ public class GeigerCounterItem extends Item {
   
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
-    if(!(world instanceof ServerWorld serverWorld) || RadiationManager.getInstance() == null){
+    if(!(world instanceof ServerWorld serverWorld)){
       return ActionResult.SUCCESS;
     }
     RadiationManager radiationManager = RadiationManager.getInstance();

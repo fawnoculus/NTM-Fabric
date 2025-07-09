@@ -31,7 +31,6 @@ public class ClientRadiationManager {
     return ClientRadiationManager.INSTANCE;
   }
   
-  public boolean displayGeigerCounter = true;
   public @Range(from = 0, to = 1000000) double radiationExposure = 0;
   public double inventoryRadiation = 0;
   public double activeChunkRadiation = 0;

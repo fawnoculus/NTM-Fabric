@@ -1,12 +1,10 @@
 package net.fawnoculus.ntm.main;
 
-import net.fabricmc.api.EnvType;
 import net.fawnoculus.ntm.util.config.ConfigFile;
 import net.fawnoculus.ntm.util.config.PerWorldConfigFile;
 import net.fawnoculus.ntm.util.config.filetype.JsonConfigFile;
 import net.fawnoculus.ntm.util.config.options.BooleanOption;
 import net.fawnoculus.ntm.util.config.options.IntegerOption;
-import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.StringListOption;
 
 import java.util.List;
