@@ -212,6 +212,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.TINY_PILE_OF_COAL_POWDER);
       ItemGroup.add(ModItems.CARBON_WIRE);
       ItemGroup.add(ModItems.COAL_BRIQUETTE);
+      ItemGroup.add(ModItems.COAL_COKE);
       
       ItemGroup.add(ModItems.COBALT_INGOT);
       ItemGroup.add(ModItems.COBALT_BILLET);
@@ -421,6 +422,8 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RED_PHOSPHORUS);
       ItemGroup.add(ModItems.WHITE_PHOSPHORUS_BAR);
       ItemGroup.add(ModItems.PHOSPHORUS_CRYSTALS);
+      
+      ItemGroup.add(ModItems.PETROLEUM_COKE);
       
       ItemGroup.add(ModItems.PLUTONIUM_INGOT);
       ItemGroup.add(ModItems.PLUTONIUM_BILLET);
@@ -756,6 +759,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RAW_METEORIC_COBALT);
       ItemGroup.add(ModItems.RAW_TRIXITE);
       ItemGroup.add(ModItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE);
+      
       ItemGroup.add(ModBlocks.ACTINIUM_227_BLOCK);
       ItemGroup.add(ModBlocks.ADVANCED_ALLOY_BLOCK);
       ItemGroup.add(ModBlocks.ALUMINIUM_BLOCK);
@@ -768,6 +772,7 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.CADMIUM_BLOCK);
       ItemGroup.add(ModBlocks.CADMIUM_STEEL_BLOCK);
       ItemGroup.add(ModBlocks.CMB_STEEL_BLOCK);
+      ItemGroup.add(ModBlocks.COAL_COKE_BLOCK);
       ItemGroup.add(ModBlocks.COBALT_BLOCK);
       ItemGroup.add(ModBlocks.COLTAN_BLOCK);
       ItemGroup.add(ModBlocks.DESH_BLOCK);
@@ -778,16 +783,16 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.GRAPHITE_BLOCK);
       ItemGroup.add(ModBlocks.HIGH_SPEED_STEEL_BLOCK);
       ItemGroup.add(ModBlocks.LIGNITE_COKE_BLOCK);
-      ItemGroup.add(ModBlocks.LITHIUM_BLOCK);
       ItemGroup.add(ModBlocks.LEAD_BLOCK);
+      ItemGroup.add(ModBlocks.LITHIUM_BLOCK);
       ItemGroup.add(ModBlocks.MAGNETIZED_TUNGSTEN_BLOCK);
       ItemGroup.add(ModBlocks.MOX_FUEL_BLOCK);
       ItemGroup.add(ModBlocks.NEPTUNIUM_BLOCK);
       ItemGroup.add(ModBlocks.NIOBIUM_BLOCK);
       ItemGroup.add(ModBlocks.NITER_BLOCK);
-      ItemGroup.add(ModBlocks.RED_PHOSPHORUS_BLOCK);
-      ItemGroup.add(ModBlocks.WHITE_PHOSPHORUS_BLOCK);
+      ItemGroup.add(ModBlocks.PETROLEUM_COKE_BLOCK);
       ItemGroup.add(ModBlocks.PLUTONIUM_BLOCK);
+      ItemGroup.add(ModBlocks.PLUTONIUM_FUEL_BLOCK);
       ItemGroup.add(ModBlocks.REACTOR_GRADE_PLUTONIUM_BLOCK);
       ItemGroup.add(ModBlocks.PLUTONIUM_238_BLOCK);
       ItemGroup.add(ModBlocks.PLUTONIUM_239_BLOCK);
@@ -797,6 +802,7 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.POLYMER_BLOCK);
       ItemGroup.add(ModBlocks.RADIUM_226_BLOCK);
       ItemGroup.add(ModBlocks.RED_COPPER_BLOCK);
+      ItemGroup.add(ModBlocks.RED_PHOSPHORUS_BLOCK);
       ItemGroup.add(ModBlocks.RUBBER_BLOCK);
       ItemGroup.add(ModBlocks.SCHRABIDIUM_BLOCK);
       ItemGroup.add(ModBlocks.SCHRABIDIUM_FUEL_BLOCK);
@@ -817,6 +823,7 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.URANIUM_233_BLOCK);
       ItemGroup.add(ModBlocks.URANIUM_235_BLOCK);
       ItemGroup.add(ModBlocks.URANIUM_238_BLOCK);
+      ItemGroup.add(ModBlocks.WHITE_PHOSPHORUS_BLOCK);
       ItemGroup.add(ModBlocks.YELLOWCAKE_BLOCK);
       ItemGroup.add(ModBlocks.ZIRCONIUM_BLOCK);
     });

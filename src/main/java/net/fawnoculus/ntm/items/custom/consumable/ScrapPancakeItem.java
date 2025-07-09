@@ -23,9 +23,6 @@ public class ScrapPancakeItem extends Item {
   
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
-    if (world.isClient()) {
-      return super.use(world, player, hand);
-    }
     // TODO: this, once we have lunar cybernetic armor
     ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessageS2CPayload(new AdvancedMessage(
         NTM.id("scrap_pancake"),

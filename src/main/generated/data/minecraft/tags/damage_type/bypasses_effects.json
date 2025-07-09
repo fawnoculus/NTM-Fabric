@@ -1,11 +1,15 @@
 {
   "values": [
     {
-      "id": "ntm:poison_injection",
+      "id": "ntm:euthanized",
       "required": false
     },
     {
       "id": "ntm:blood_loss",
+      "required": false
+    },
+    {
+      "id": "ntm:radiation",
       "required": false
     }
   ]

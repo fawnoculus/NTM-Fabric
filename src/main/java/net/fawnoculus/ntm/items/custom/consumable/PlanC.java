@@ -16,7 +16,11 @@ public class PlanC extends TooltipItem {
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
     if(world instanceof ServerWorld serverWorld){
-      EntityUtil.applyDamage(user, serverWorld, ModDamageTypes.EUTHANIZED, Float.MAX_VALUE);
+      if(!user.isInCreativeMode()){
+        EntityUtil.applyDamage(user, serverWorld, ModDamageTypes.EUTHANIZED, Float.MAX_VALUE);
+      }else {
+        EntityUtil.applyDamage(user, serverWorld, ModDamageTypes.EUTHANIZED, 10);
+      }
     }
     return super.finishUsing(stack, world, user);
   }

@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_top",
   "textures": {
-    "all": "ntm:block/semtex_block"
+    "side": "ntm:block/semtex_block_side",
+    "top": "ntm:block/semtex_block_top"
   }
 }

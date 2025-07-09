@@ -169,6 +169,7 @@ public class ModItems {
   public static final Item TINY_PILE_OF_COAL_POWDER = register("tiny_pile_of_coal_powder", Item::new, new Item.Settings());
   public static final Item CARBON_WIRE = register("carbon_wire", Item::new, new Item.Settings());
   public static final Item COAL_BRIQUETTE = register("coal_briquette", Item::new, new Item.Settings());
+  public static final Item COAL_COKE = register("coal_coke", Item::new, new Item.Settings());
   
   public static final Item COBALT_INGOT = register("cobalt_ingot", Item::new, new Item.Settings());
   public static final Item COBALT_BILLET = register("cobalt_billet", Item::new, new Item.Settings());
@@ -384,6 +385,8 @@ public class ModItems {
   public static final Item RED_PHOSPHORUS = register("red_phosphorus", settings -> new TooltipItem(settings, 2), new Item.Settings());
   public static final Item WHITE_PHOSPHORUS_BAR = register("white_phosphorus_bar", Item::new, new Item.Settings());
   public static final Item PHOSPHORUS_CRYSTALS = register("phosphorus_crystals", Item::new, new Item.Settings());
+  
+  public static final Item PETROLEUM_COKE = register("petroleum_coke", Item::new, new Item.Settings());
   
   public static final Item RAW_PLUTONIUM = register("raw_plutonium", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_INGOT = register("plutonium_ingot", Item::new, new Item.Settings());

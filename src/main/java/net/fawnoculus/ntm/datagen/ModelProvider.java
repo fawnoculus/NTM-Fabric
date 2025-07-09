@@ -116,6 +116,7 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TRIXITE_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GEOTHERMAL_VENT);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BEDROCK_OIL_DEPOSIT);
+    
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ACTINIUM_227_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ADVANCED_ALLOY_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ALUMINIUM_BLOCK);
@@ -128,6 +129,7 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.CADMIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.CADMIUM_STEEL_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.CMB_STEEL_BLOCK);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COAL_COKE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COBALT_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COLTAN_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.DESH_BLOCK);
@@ -138,16 +140,16 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GRAPHITE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.HIGH_SPEED_STEEL_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LIGNITE_COKE_BLOCK);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LITHIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LEAD_BLOCK);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.LITHIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MAGNETIZED_TUNGSTEN_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.MOX_FUEL_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.NEPTUNIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.NIOBIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.NITER_BLOCK);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.RED_PHOSPHORUS_BLOCK);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WHITE_PHOSPHORUS_BLOCK);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PETROLEUM_COKE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PLUTONIUM_BLOCK);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PLUTONIUM_FUEL_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.REACTOR_GRADE_PLUTONIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PLUTONIUM_238_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.PLUTONIUM_239_BLOCK);
@@ -157,11 +159,12 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.POLYMER_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.RADIUM_226_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.RED_COPPER_BLOCK);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.RED_PHOSPHORUS_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.RUBBER_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SCHRABIDIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SCHRABIDIUM_FUEL_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SCHRARANIUM_BLOCK);
-    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SEMTEX_BLOCK);
+    blockStateModelGenerator.registerSingleton(ModBlocks.SEMTEX_BLOCK, TexturedModel.CUBE_TOP);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SOLINIUM_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.STARMETAL_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.STEEL_BLOCK);
@@ -177,6 +180,7 @@ public class ModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.URANIUM_233_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.URANIUM_235_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.URANIUM_238_BLOCK);
+    blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.WHITE_PHOSPHORUS_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.YELLOWCAKE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.ZIRCONIUM_BLOCK);
     
@@ -398,6 +402,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.TINY_PILE_OF_COAL_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.CARBON_WIRE, Models.GENERATED);
     itemModelGenerator.register(ModItems.COAL_BRIQUETTE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.COAL_COKE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.COBALT_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.COBALT_BILLET, Models.GENERATED);
@@ -613,6 +618,8 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RED_PHOSPHORUS, Models.GENERATED);
     itemModelGenerator.register(ModItems.WHITE_PHOSPHORUS_BAR, Models.GENERATED);
     itemModelGenerator.register(ModItems.PHOSPHORUS_CRYSTALS, Models.GENERATED);
+    
+    itemModelGenerator.register(ModItems.PETROLEUM_COKE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.RAW_PLUTONIUM, Models.GENERATED);
     itemModelGenerator.register(ModItems.PLUTONIUM_INGOT, Models.GENERATED);
