@@ -1,10 +1,12 @@
 package net.fawnoculus.ntm.mixin;
 
+import net.fawnoculus.ntm.util.data.CustomDataHolder;
 import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkSection;
+import net.minecraft.world.chunk.ProtoChunk;
 import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.gen.chunk.BlendingData;
@@ -41,5 +43,10 @@ public class WorldChunkMixin extends ChunkMixin {
     if(world instanceof ServerWorld serverWorld){
       RadiationProcessorMultiHolder.from(serverWorld).NTM$addRadiationProcessors(this.radiationProcessor, pos);
     }
+  }
+  
+  @Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/ProtoChunk;Lnet/minecraft/world/chunk/WorldChunk$EntityLoader;)V")
+  private void getCustomData(ServerWorld world, ProtoChunk protoChunk, WorldChunk.EntityLoader entityLoader, CallbackInfo ci) {
+    this.NTM$setCustomData(CustomDataHolder.from(protoChunk).NTM$getCustomData());
   }
 }
