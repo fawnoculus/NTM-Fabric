@@ -52,7 +52,7 @@ public class WorldChunkMixin extends ChunkMixin {
       CallbackInfo ci
   ) {
     if(world instanceof ServerWorld serverWorld){
-      MultiRadiationProcessorHolder.from(serverWorld).NTM$addRadiationProcessors(this.radiationProcessor);
+      MultiRadiationProcessorHolder.from(serverWorld).NTM$addRadiationProcessors(this.radiationProcessor, pos);
     }
   }
 }

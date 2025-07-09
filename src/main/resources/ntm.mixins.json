@@ -8,6 +8,7 @@
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "SerializedChunkMixin",
+    "ServerChunkLoadingManagerMixin",
     "ServerPlayerInteractionManagerMixin",
     "ServerWorldMixin",
     "WorldChunkMixin"

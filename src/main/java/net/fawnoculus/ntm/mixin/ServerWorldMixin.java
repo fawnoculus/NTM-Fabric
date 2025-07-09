@@ -5,6 +5,7 @@ import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
 import net.fawnoculus.ntm.world.radiation.MultiRadiationProcessorHolder;
 import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.profiler.Profilers;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,13 +15,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin implements MultiRadiationProcessorHolder {
   @Shadow public abstract ServerWorld toServerWorld();
-  @Unique private final List<RadiationProcessor> radiationProcessors = new ArrayList<>();
+  @Unique private final HashMap<ChunkPos ,RadiationProcessor> radiationProcessors = new HashMap<>();
+  @Unique private final HashMap<RadiationProcessor ,ChunkPos> ChunkPositions = new HashMap<>();
   
   @Inject(at = @At("TAIL"), method = "tick")
   private void tickNodeNetworks(CallbackInfo ci) {
@@ -40,13 +42,33 @@ public abstract class ServerWorldMixin implements MultiRadiationProcessorHolder 
     profiler.pop();
   }
   
-  public List<RadiationProcessor> NTM$getRadiationProcessors(){
-    return radiationProcessors;
+  @Override
+  public Collection<RadiationProcessor> NTM$getRadiationProcessors(){
+    return radiationProcessors.values();
   }
-  public void NTM$addRadiationProcessors(RadiationProcessor processor){
-    radiationProcessors.add(processor);
+  
+  @Override
+  public RadiationProcessor NTM$getRadiationProcessor(ChunkPos chunkPos) {
+    return radiationProcessors.get(chunkPos);
   }
+  
+  @Override
+  public void NTM$addRadiationProcessors(RadiationProcessor processor, ChunkPos chunkPos) {
+    radiationProcessors.put(chunkPos, processor);
+    ChunkPositions.put(processor, chunkPos);
+  }
+  
+  @Override
+  public void NTM$removeRadiationProcessors(ChunkPos chunkPos) {
+    RadiationProcessor processor = radiationProcessors.get(chunkPos);
+    ChunkPositions.remove(processor);
+    radiationProcessors.remove(chunkPos);
+  }
+  
+  @Override
   public void NTM$removeRadiationProcessors(RadiationProcessor processor){
-    radiationProcessors.remove(processor);
+    ChunkPos chunkPos = ChunkPositions.get(processor);
+    ChunkPositions.remove(processor);
+    radiationProcessors.remove(chunkPos);
   }
 }
