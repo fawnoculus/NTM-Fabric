@@ -48,12 +48,14 @@
   "message.ntm.radiation.player_contamination": "Player contamination: ",
   "message.ntm.radiation.player_resistance": "Player resistance: ",
 
-  "death.attack.ntm.poison_injection": "%1$s euthanized himself",
-  "death.attack.ntm.poison_injection.player": "%1$s was euthanized while fighting %2$s",
+  "death.attack.ntm.euthanized": "%1$s euthanized himself",
+  "death.attack.ntm.euthanized.player": "%1$s was euthanized while fighting %2$s",
   "death.attack.ntm.blood_loss": "%1$s lost to much Blood",
   "death.attack.ntm.blood_loss.player": "%1$s lost to much Blood while fighting %2$s",
   "death.attack.ntm.lead_poisoning": "%1$s died from lead poisoning",
   "death.attack.ntm.lead_poisoning.player": "%1$s died from lead poisoning while fighting %2$s",
+  "death.attack.ntm.radiation": "%1$s died from radiation poisoning while fighting",
+  "death.attack.ntm.radiation.player": "%1$s died from radiation poisoning while fighting %2$s",
 
   "effect.ntm.rad_away": "RadAway",
   "effect.ntm.rad_x": "Rad-X",

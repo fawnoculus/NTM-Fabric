@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.world.radiation.MultiRadiationProcessorHolder;
+import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerChunkLoadingManager;
 import net.minecraft.server.world.ServerWorld;
@@ -16,7 +16,7 @@ public class ServerChunkLoadingManagerMixin {
   @Inject(method = "tryUnloadChunk", at = @At("HEAD"))
   private void removeRadiationProcessor(long pos, ChunkHolder chunk, CallbackInfo ci){
     if(chunk.getWorldChunk() != null  && chunk.getWorldChunk().getWorld() instanceof ServerWorld world){
-      MultiRadiationProcessorHolder.from(world).NTM$removeRadiationProcessors(
+      RadiationProcessorMultiHolder.from(world).NTM$removeRadiationProcessors(
           new ChunkPos(pos)
       );
     }

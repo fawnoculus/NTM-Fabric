@@ -23,74 +23,74 @@ public class CustomData {
     this.Data = json;
   }
   
-  void set(Identifier identifier, String string){
-    this.set(identifier, object -> new JsonPrimitive(object).getAsJsonObject(), string);
+  public void set(Identifier identifier, String string){
+    this.set(identifier, JsonPrimitive::new, string);
   }
-  void set(Identifier identifier, Number number){
-    this.set(identifier, object -> new JsonPrimitive(object).getAsJsonObject(), number);
+  public void set(Identifier identifier, Number number){
+    this.set(identifier, JsonPrimitive::new, number);
   }
-  void set(Identifier identifier, Boolean bool){
-    this.set(identifier, object -> new JsonPrimitive(object).getAsJsonObject(), bool);
+  public void set(Identifier identifier, Boolean bool){
+    this.set(identifier, JsonPrimitive::new, bool);
   }
-  void set(Identifier identifier, JsonObject json){
+  public void set(Identifier identifier, JsonElement json){
     this.set(identifier, object -> object, json);
   }
   
-  String getStringOrThrow(Identifier identifier) throws NullPointerException{
+  public String getStringOrThrow(Identifier identifier) throws NullPointerException{
     return Objects.requireNonNull(this.get(identifier)).getAsJsonPrimitive().getAsString();
   }
-  Integer getIntOrThrow(Identifier identifier) throws NullPointerException{
+  public Integer getIntOrThrow(Identifier identifier) throws NullPointerException{
     return Objects.requireNonNull(this.get(identifier)).getAsJsonPrimitive().getAsInt();
   }
-  Float getFloatOrThrow(Identifier identifier) throws NullPointerException{
+  public Float getFloatOrThrow(Identifier identifier) throws NullPointerException{
     return Objects.requireNonNull(this.get(identifier)).getAsJsonPrimitive().getAsFloat();
   }
-  Double getDoubleOrThrow(Identifier identifier) throws NullPointerException{
+  public Double getDoubleOrThrow(Identifier identifier) throws NullPointerException{
     return Objects.requireNonNull(this.get(identifier)).getAsJsonPrimitive().getAsDouble();
   }
-  Boolean getBoolOrThrow(Identifier identifier) throws NullPointerException{
+  public Boolean getBoolOrThrow(Identifier identifier) throws NullPointerException{
     return Objects.requireNonNull(this.get(identifier)).getAsJsonPrimitive().getAsBoolean();
   }
-  JsonObject getJsonOrThrow(Identifier identifier) throws NullPointerException{
+  public JsonObject getJsonOrThrow(Identifier identifier) throws NullPointerException{
     return Objects.requireNonNull(this.get(identifier)).getAsJsonObject();
   }
   
-  String getOrDefaultString(Identifier identifier, String val){
+  public String getOrDefaultString(Identifier identifier, String val){
     try{
       return getStringOrThrow(identifier);
     }catch (NullPointerException exception){
       return val;
     }
   }
-  Integer getOrDefaultInt(Identifier identifier, Integer val){
+  public Integer getOrDefaultInt(Identifier identifier, Integer val){
     try{
       return getIntOrThrow(identifier);
     }catch (NullPointerException exception){
       return val;
     }
   }
-  Float getOrDefaultFloat(Identifier identifier, Float val){
+  public Float getOrDefaultFloat(Identifier identifier, Float val){
     try{
       return getFloatOrThrow(identifier);
     }catch (NullPointerException exception){
       return val;
     }
   }
-  Double getOrDefaultDouble(Identifier identifier, Double val){
+  public Double getOrDefaultDouble(Identifier identifier, Double val){
     try{
       return getDoubleOrThrow(identifier);
     }catch (NullPointerException exception){
       return val;
     }
   }
-  Boolean getOrDefaultBool(Identifier identifier, Boolean val){
+  public Boolean getOrDefaultBool(Identifier identifier, Boolean val){
     try{
       return getBoolOrThrow(identifier);
     }catch (NullPointerException exception){
       return val;
     }
   }
-  JsonObject getOrDefaultJson(Identifier identifier, JsonObject val){
+  public JsonObject getOrDefaultJson(Identifier identifier, JsonObject val){
     try{
       return getJsonOrThrow(identifier);
     }catch (NullPointerException exception){
@@ -98,7 +98,7 @@ public class CustomData {
     }
   }
   
-  <T> void set(Identifier identifier, Function<T, JsonObject> serializer, T object){
+  <T> void set(Identifier identifier, Function<T, JsonElement> serializer, T object){
     Data.add(identifier.toString(), serializer.apply(object));
   }
   @Nullable JsonElement get(Identifier identifier){

@@ -1,12 +1,11 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -38,9 +37,9 @@ public class DosimeterItem extends Item {
     if(world.isClient()){
       return ActionResult.SUCCESS;
     }
-    ServerRadiationManager radiationManager = ServerRadiationManager.getInstance();
+    RadiationManager radiationManager = RadiationManager.getInstance();
     
-    double totalRadiation = radiationManager.getTotalRadiation((ServerPlayerEntity) user);
+    double totalRadiation = radiationManager.getTotalRadiation(user);
     
     user.sendMessage(Text.translatable("message.ntm.dosimeter").formatted(Formatting.GOLD), false);
     user.sendMessage(Text.translatable("message.ntm.radiation.environmental_radiation").append(getRadsText(totalRadiation)).formatted(Formatting.YELLOW), false);

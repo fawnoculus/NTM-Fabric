@@ -21,11 +21,13 @@ public class AdvancedMessage {
   private final Text TEXT;
   private float millisLeft;
   public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
+    @Override
     public AdvancedMessage decode(ByteBuf byteBuf) {
       String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
       return AdvancedMessage.decode(JsonUtil.jsonFromString(string));
     }
     
+    @Override
     public void encode(ByteBuf byteBuf, AdvancedMessage message) {
       JsonObject json = AdvancedMessage.encode(message);
       PacketByteBuf.writeByteArray(byteBuf, json.toString().getBytes(StandardCharsets.UTF_8));

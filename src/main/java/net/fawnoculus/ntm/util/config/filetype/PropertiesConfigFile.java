@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.util.config.filetype;
 
+import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
 import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.*;
@@ -51,11 +52,7 @@ public class PropertiesConfigFile implements ConfigFileType {
     try {
       properties.load(new FileReader(configFile));
     } catch (Exception e){
-      StringBuilder Exception = new StringBuilder(e.toString());
-      for(StackTraceElement element : e.getStackTrace()){
-        Exception.append("\n\t").append(element);
-      }
-      LOGGER.error("Failed to parse Properties Config File '{}' \nException: {}", configFile.getPath(), Exception);
+      LOGGER.error("Failed to parse Properties Config File '{}' \nException: {}", configFile.getPath(), ExceptionUtil.makePretty(e));
       return expectedOptions;
     }
     

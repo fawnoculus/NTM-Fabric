@@ -1,12 +1,11 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -60,18 +59,18 @@ public class GeigerCounterItem extends Item {
   
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
-    if(!(world instanceof ServerWorld serverWorld) || ServerRadiationManager.getInstance() == null){
+    if(!(world instanceof ServerWorld serverWorld) || RadiationManager.getInstance() == null){
       return ActionResult.SUCCESS;
     }
-    ServerRadiationManager radiationManager = ServerRadiationManager.getInstance();
+    RadiationManager radiationManager = RadiationManager.getInstance();
     
     double chunkRadiation = radiationManager.getChunkRadiation(serverWorld, user.getPos());
-    double totalRadiation = radiationManager.getTotalRadiation((ServerPlayerEntity) user);
-    double playerContamination = radiationManager.getRadiationExposure((ServerPlayerEntity) user);
-    double playerResistance = radiationManager.getRadiationResistance((ServerPlayerEntity) user);
-    double playerResistancePercentage = radiationManager.getRadiationResistancePercentage((ServerPlayerEntity) user);
+    double totalRadiation = radiationManager.getTotalRadiation(user);
+    double playerContamination = radiationManager.getRadiationExposure(user);
+    double playerResistance = radiationManager.getRadiationResistance(user);
+    double playerResistancePercentage = radiationManager.getRadiationResistancePercentage(user);
     
-    Text player_resistance = Text.literal(String.format("%.1f%% (%.1f)", playerResistance, playerResistancePercentage)).formatted(Formatting.WHITE);
+    Text player_resistance = Text.literal(String.format("%.1f%% (%.1f)", playerResistancePercentage, playerResistance)).formatted(Formatting.WHITE);
     
     user.sendMessage(Text.translatable("message.ntm.geiger_counter").formatted(Formatting.GOLD), false);
     user.sendMessage(Text.translatable("message.ntm.radiation.chunk_radiation").append(getRadsText(chunkRadiation)).formatted(Formatting.YELLOW), false);

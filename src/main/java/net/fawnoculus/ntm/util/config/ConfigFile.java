@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.util.config;
 
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.options.*;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -41,8 +42,8 @@ public class ConfigFile {
     
     try {
       readOptions = this.CONFIG_FILE_TYPE.readFile(CONFIG_FILE, this.LOGGER, this.options);
-    } catch (Exception exception) {
-      LOGGER.error("Failed to read from Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
+    } catch (Exception e) {
+      LOGGER.error("Failed to read from Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), ExceptionUtil.makePretty(e));
     }
     
     this.options = readOptions;
@@ -66,8 +67,8 @@ public class ConfigFile {
       }
       
       this.CONFIG_FILE_TYPE.writeFile(CONFIG_FILE, this.LOGGER, this.options);
-    } catch (Exception exception) {
-      LOGGER.error("Failed to write to Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), exception);
+    } catch (Exception e) {
+      LOGGER.error("Failed to write to Config File: {} \n Exception: {}", CONFIG_FILE.getPath(), ExceptionUtil.makePretty(e));
     }
   }
   

@@ -2,10 +2,10 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.util.data.CustomData;
 import net.fawnoculus.ntm.util.data.CustomDataHolder;
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.fawnoculus.ntm.world.radiation.processor.EmptyRadiationProcessor;
 import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
-import net.fawnoculus.ntm.world.radiation.RadiationProcessorHolder;
-import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
+import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorHolder;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.HeightLimitView;
@@ -30,7 +30,7 @@ public class ChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
   
   @Inject(at = @At("TAIL"), method = "<init>")
   private void addRadiationProcessor(ChunkPos pos, UpgradeData upgradeData, HeightLimitView heightLimitView, Registry biomeRegistry, long inhabitedTime, ChunkSection[] sectionArray, BlendingData blendingData, CallbackInfo ci) {
-    this.radiationProcessor = ServerRadiationManager.getInstance().makeNewRadiationProcessor(pos);
+    this.radiationProcessor = RadiationManager.getInstance().makeNewRadiationProcessor(pos);
   }
   
   @Override

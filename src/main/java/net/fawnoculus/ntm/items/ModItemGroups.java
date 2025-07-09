@@ -865,6 +865,8 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.RAD_X);
       ItemGroup.add(ModItems.IODINE_PILL);
       
+      ItemGroup.add(ModItems.PLAN_C);
+      
       ItemGroup.add(ModItems.WAFFLE_OF_MASS_DESTRUCTION);
       ItemGroup.add(ModItems.VEGAN_SCHNITZEL);
       ItemGroup.add(ModItems.RADIOACTIVE_COTTON_CANDY);

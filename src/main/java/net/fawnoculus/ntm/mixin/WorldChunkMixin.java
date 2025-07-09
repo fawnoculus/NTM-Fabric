@@ -1,28 +1,15 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.util.data.CustomData;
-import net.fawnoculus.ntm.util.data.CustomDataHolder;
-import net.fawnoculus.ntm.world.radiation.MultiRadiationProcessorHolder;
-import net.fawnoculus.ntm.world.radiation.RadiationProcessorHolder;
-import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
-import net.fawnoculus.ntm.world.radiation.processor.EmptyRadiationProcessor;
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
-import net.minecraft.registry.Registry;
+import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.gen.chunk.BlendingData;
 import net.minecraft.world.tick.ChunkTickScheduler;
-import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -52,7 +39,7 @@ public class WorldChunkMixin extends ChunkMixin {
       CallbackInfo ci
   ) {
     if(world instanceof ServerWorld serverWorld){
-      MultiRadiationProcessorHolder.from(serverWorld).NTM$addRadiationProcessors(this.radiationProcessor, pos);
+      RadiationProcessorMultiHolder.from(serverWorld).NTM$addRadiationProcessors(this.radiationProcessor, pos);
     }
   }
 }

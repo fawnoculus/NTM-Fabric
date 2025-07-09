@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.util.data.CustomData;
 import net.fawnoculus.ntm.util.data.CustomDataHolder;
-import net.fawnoculus.ntm.world.radiation.RadiationProcessorHolder;
+import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorHolder;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.world.ServerWorld;

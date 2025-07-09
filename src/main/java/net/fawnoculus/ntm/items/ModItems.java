@@ -634,9 +634,9 @@ public class ModItems {
       new InjectionItem(settings, ModSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
           (serverWorld, entity) -> {
             if (!entity.isInCreativeMode()){
-              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 30f);
+              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.EUTHANIZED, 30f);
             }else {
-              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.POISON_INJECTION, 1f);
+              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.EUTHANIZED, 1f);
             }}
       ), new Item.Settings()
   );
@@ -715,6 +715,9 @@ public class ModItems {
   );
   public static final Item IODINE_PILL = register("iodine_pill", TooltipItem::new, new Item.Settings()
       .food(ModFoodComponents.ALWAYS_EDIBLE, ModConsumableComponents.IODINE_PILL)
+  );
+  public static final Item PLAN_C = register("plan_c", PlanC::new, new Item.Settings()
+      .food(ModFoodComponents.ALWAYS_EDIBLE)
   );
   public static final Item EMPTY_CAN = register("empty_can", Item::new, new Item.Settings());
   public static final Item RING_PULL = register("ring_pull", Item::new, new Item.Settings());

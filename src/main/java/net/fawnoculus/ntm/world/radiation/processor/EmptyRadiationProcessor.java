@@ -4,6 +4,9 @@ import net.fawnoculus.ntm.util.data.CustomData;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 
+/**
+ * A Radiation Processor that does absolutely nothing.
+ */
 public class EmptyRadiationProcessor extends RadiationProcessor {
   public EmptyRadiationProcessor() {
     super(ChunkPos.ORIGIN);

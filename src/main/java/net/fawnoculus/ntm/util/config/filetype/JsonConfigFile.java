@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.JsonElement;
 import com.google.gson.stream.JsonReader;
+import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
 import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.*;
@@ -63,11 +64,7 @@ public class JsonConfigFile implements ConfigFileType {
         throw new JsonSyntaxException("What the hell did you do to the Json File?!");
       }
     } catch (Exception e) {
-      StringBuilder Exception = new StringBuilder(e.toString());
-      for(StackTraceElement element : e.getStackTrace()){
-        Exception.append("\n\t").append(element);
-      }
-      LOGGER.error("Failed to parse Json Config File '{}' \nException: {}", configFile.getPath(), Exception);
+      LOGGER.error("Failed to parse Json Config File '{}' \nException: {}", configFile.getPath(), ExceptionUtil.makePretty(e));
       return expectedOptions;
     }
     

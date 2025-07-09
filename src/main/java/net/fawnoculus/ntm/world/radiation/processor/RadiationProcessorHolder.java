@@ -1,6 +1,5 @@
-package net.fawnoculus.ntm.world.radiation;
+package net.fawnoculus.ntm.world.radiation.processor;
 
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
 import net.minecraft.world.chunk.Chunk;
 
 public interface RadiationProcessorHolder {

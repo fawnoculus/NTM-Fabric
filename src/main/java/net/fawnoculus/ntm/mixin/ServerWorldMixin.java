@@ -2,12 +2,14 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
-import net.fawnoculus.ntm.world.radiation.MultiRadiationProcessorHolder;
-import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
+import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.profiler.Profilers;
+import net.minecraft.world.EntityList;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,8 +21,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin implements MultiRadiationProcessorHolder {
+public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder {
   @Shadow public abstract ServerWorld toServerWorld();
+  
+  @Shadow @Final EntityList entityList;
   @Unique private final HashMap<ChunkPos ,RadiationProcessor> radiationProcessors = new HashMap<>();
   @Unique private final HashMap<RadiationProcessor ,ChunkPos> ChunkPositions = new HashMap<>();
   
@@ -38,7 +42,7 @@ public abstract class ServerWorldMixin implements MultiRadiationProcessorHolder 
     Profiler profiler = Profilers.get();
     
     profiler.push("radiationManager");
-    ServerRadiationManager.getInstance().tick(this.toServerWorld());
+    RadiationManager.getInstance().tick(this.toServerWorld(), this.entityList);
     profiler.pop();
   }
   

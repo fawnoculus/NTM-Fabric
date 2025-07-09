@@ -1,8 +1,9 @@
-package net.fawnoculus.ntm.world.radiation;
+package net.fawnoculus.ntm.world.radiation.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fawnoculus.ntm.network.custom.RadiationInformationS2CPayload;
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
 
@@ -15,8 +16,8 @@ import java.util.function.Function;
  * <br>- Player Radiation Exposure
  * <br>- etc.
  * <br>So that Items like the Geiger Counter can display them to the Player
- * <br>It is not responsible for Handling anything Else, Everything else is done in the {@link ServerRadiationManager ServerRadiationManager}
- * <br>The Server Radiation Manager will only send Radiation Info to the Client Radiation Manager if one of the {@link ServerRadiationManager#addPacketReason(Identifier, Function)  Added Packed Reasons} returns true or the {@link net.fawnoculus.ntm.main.NTMConfig#AlwaysSendRadiationPacket Option for it} is enabled
+ * <br>It is not responsible for Handling anything Else, Everything else is done in the {@link RadiationManager RadiationManager}
+ * <br>The Server Radiation Manager will only send Radiation Info to the Client Radiation Manager if one of the {@link RadiationManager#addPacketReason(Identifier, Function)  Added Packed Reasons} returns true or the {@link net.fawnoculus.ntm.main.NTMConfig#AlwaysSendRadiationPacket Option for it} is enabled
  */
 @Environment(EnvType.CLIENT)
 public class ClientRadiationManager {

@@ -11,13 +11,15 @@ import net.fawnoculus.ntm.gui.ModScreenHandlerType;
 import net.fawnoculus.ntm.render.ModHudRender;
 import net.fawnoculus.ntm.render.ModParticleRender;
 import net.fawnoculus.ntm.render.ModWorldRender;
-import net.fawnoculus.ntm.world.radiation.ClientRadiationManager;
+import net.fawnoculus.ntm.world.radiation.client.ClientRadiationManager;
 
 @Environment(EnvType.CLIENT)
 public class NTMClient implements ClientModInitializer {
   @Override
   public void onInitializeClient() {
     NTM.LOGGER.info("Initializing {} Client Components", NTM.MOD_NAME);
+    
+    NTMClientConfig.initialize();
     
     ModClientCommands.initialize();
     

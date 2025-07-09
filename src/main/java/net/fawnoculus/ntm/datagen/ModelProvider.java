@@ -873,6 +873,8 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.RAD_X, Models.GENERATED);
     itemModelGenerator.register(ModItems.IODINE_PILL, Models.GENERATED);
     
+    itemModelGenerator.register(ModItems.PLAN_C, Models.GENERATED);
+    
     itemModelGenerator.register(ModItems.WAFFLE_OF_MASS_DESTRUCTION, Models.GENERATED);
     itemModelGenerator.register(ModItems.VEGAN_SCHNITZEL, Models.GENERATED);
     itemModelGenerator.register(ModItems.RADIOACTIVE_COTTON_CANDY, Models.GENERATED);

@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.main.NTM;
 import net.fawnoculus.ntm.util.PlayerUtil;
-import net.fawnoculus.ntm.world.radiation.ClientRadiationManager;
+import net.fawnoculus.ntm.world.radiation.client.ClientRadiationManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

@@ -16,7 +16,8 @@ import net.fawnoculus.ntm.network.ModPayloads;
 import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.fawnoculus.ntm.sounds.ModSounds;
 import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
-import net.fawnoculus.ntm.world.radiation.ServerRadiationManager;
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
+import net.fawnoculus.ntm.world.radiation.RadiationRegistry;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +40,6 @@ public class NTM implements ModInitializer {
     
     ModSounds.initialize();
     
-    ServerRadiationManager.initialize();
-    
     ModToolMaterials.initialize();
     ModDataComponentTypes.initialize();
     ModItems.initialize();
@@ -49,6 +48,9 @@ public class NTM implements ModInitializer {
     
     ModBlocks.initialize();
     ModBlockEntities.initialize();
+    
+    RadiationManager.initialize();
+    RadiationRegistry.initialize();
     
     ModRecipes.initialize();
     
