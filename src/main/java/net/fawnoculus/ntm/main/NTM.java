@@ -1,6 +1,5 @@
 package net.fawnoculus.ntm.main;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
 public class NTM implements ModInitializer {
   public static final String MOD_ID = "ntm";
   public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
-  public static final EnvType ENVIRONMENT = FabricLoader.getInstance().getEnvironmentType();
   public static final String MOD_NAME = METADATA.getName();
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
   
