@@ -46,9 +46,12 @@ public class RadiationRegistry {
           NTM.LOGGER.info("Created Radiation Overrides File");
           try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write("{\n");
+            fileWriter.write("\t\"mod_id:item_or_block_id\": 0,\n");
             fileWriter.write("\t\"example:not_radioactive_before\": 5,\n");
             fileWriter.write("\t\"example:no_longer_radioactive\": 0,\n");
-            fileWriter.write("\t\"example:decimals_are_allowed\": 0.75\n");
+            fileWriter.write("\t\"example:values_are_in_milli_rads\": 0,\n");
+            fileWriter.write("\t\"example:this_is_one_rad_per_second\": 1000,\n");
+            fileWriter.write("\t\"example:decimals_are_also_allowed\": 0.75\n");
             fileWriter.write("}");
           } catch (Exception e) {
             NTM.LOGGER.error("An Exception occurred while trying write Examples to Radiation Overrides File\nException:{}", ExceptionUtil.makePretty(e));
@@ -100,14 +103,14 @@ public class RadiationRegistry {
     return radioactivityGetter.getOrDefault(identifier, 0.0);
   }
   
-  public void register(Block block, double radioactivity) {
-    this.register(Registries.BLOCK.getId(block), radioactivity);
+  public void register(Block block, double milliRads) {
+    this.register(Registries.BLOCK.getId(block), milliRads);
   }
-  public void register(Item item, double radioactivity) {
-   this.register(Registries.ITEM.getId(item), radioactivity);
+  public void register(Item item, double milliRads) {
+   this.register(Registries.ITEM.getId(item), milliRads);
   }
-  public void register(Identifier identifier, double radioactivity) {
-    this.radioactivityGetter.put(identifier, radioactivity);
+  public void register(Identifier identifier, double milliRads) {
+    this.radioactivityGetter.put(identifier, milliRads);
   }
   
   public RadiationRegistry.Serialized serialize() {

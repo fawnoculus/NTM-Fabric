@@ -54,7 +54,7 @@
   "death.attack.ntm.blood_loss.player": "%1$s lost to much Blood while fighting %2$s",
   "death.attack.ntm.lead_poisoning": "%1$s died from lead poisoning",
   "death.attack.ntm.lead_poisoning.player": "%1$s died from lead poisoning while fighting %2$s",
-  "death.attack.ntm.radiation": "%1$s died from radiation poisoning while fighting",
+  "death.attack.ntm.radiation": "%1$s died from radiation poisoning",
   "death.attack.ntm.radiation.player": "%1$s died from radiation poisoning while fighting %2$s",
 
   "effect.ntm.rad_away": "RadAway",

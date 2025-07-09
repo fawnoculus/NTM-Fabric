@@ -42,6 +42,7 @@ public class NTM implements ModInitializer {
     ModDataComponentTypes.initialize();
     ModItems.initialize();
     ModItemGroups.initialize();
+    ItemRegisters.initialize();
     ModEnchantmentEffects.initialize();
     
     ModBlocks.initialize();
