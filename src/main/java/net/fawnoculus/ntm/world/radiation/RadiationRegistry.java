@@ -81,6 +81,8 @@ public class RadiationRegistry {
         NTM.LOGGER.error("An Exception occurred while trying parse Radiation Overrides for {}\nException:{}", key, ExceptionUtil.makePretty(e));
       }
     }
+    
+    NTM.LOGGER.info("Successfully loaded Radioactivity Overrides for {} identifier(s)", radioactivityOverrides.size());
   }
   
   public double getRadioactivity(BlockState state) {

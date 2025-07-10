@@ -70,9 +70,5 @@
     "java": ">=21",
     "minecraft": "${minecraft_version}"
   },
-  "recommends": {
-    "modmenu": "*",
-    "jade": "*",
-    "rei": "*"
-  }
+  "recommends": {}
 }

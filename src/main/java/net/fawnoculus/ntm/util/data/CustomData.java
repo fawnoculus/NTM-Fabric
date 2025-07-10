@@ -98,7 +98,7 @@ public class CustomData {
     }
   }
   
-  <T> void set(Identifier identifier, Function<T, JsonElement> serializer, T object){
+  public <T> void set(Identifier identifier, Function<T, JsonElement> serializer, T object){
     Data.add(identifier.toString(), serializer.apply(object));
   }
   @Nullable JsonElement get(Identifier identifier){

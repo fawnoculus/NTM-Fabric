@@ -12,15 +12,19 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
 public class EntityUtil {
-  public static DamageSource newGenericDamageSource(World world, RegistryKey<DamageType> damageTypeKey){
+  @Contract("_, _ -> new")
+  public static @NotNull DamageSource newGenericDamageSource(World world, RegistryKey<DamageType> damageTypeKey){
     return newGenericDamageSource(world, damageTypeKey, null, null);
   }
-  public static DamageSource newGenericDamageSource(World world, RegistryKey<DamageType> damageTypeKey, @Nullable Entity source, @Nullable Entity attacker){
+  @Contract("_, _, _, _ -> new")
+  public static @NotNull DamageSource newGenericDamageSource(@NotNull World world, RegistryKey<DamageType> damageTypeKey, @Nullable Entity source, @Nullable Entity attacker){
     DamageType damageType = world.getRegistryManager()
         .getOrThrow(RegistryKeys.DAMAGE_TYPE)
         .get(damageTypeKey);
@@ -35,11 +39,11 @@ public class EntityUtil {
     return new DamageSource(damageTypeEntry, source, attacker);
   }
   
-  public static void applyDamage(Entity entity, ServerWorld serverWorld, RegistryKey<DamageType> damageTypeKey, float amount){
+  public static void applyDamage(@NotNull Entity entity, ServerWorld serverWorld, RegistryKey<DamageType> damageTypeKey, float amount){
     entity.damage(serverWorld, newGenericDamageSource(serverWorld, damageTypeKey), amount);
   }
   
-  public static void removeNegativeEffects(LivingEntity entity){
+  public static void removeNegativeEffects(@NotNull LivingEntity entity){
     Collection<StatusEffectInstance> effectInstances = entity.getStatusEffects();
     for(StatusEffectInstance effectInstance : effectInstances){
       if(!effectInstance.getEffectType().value().isBeneficial()){
@@ -47,7 +51,7 @@ public class EntityUtil {
       }
     }
   }
-  public static void addEffectDuration(LivingEntity entity, RegistryEntry<StatusEffect> effect, int ticksToAdd){
+  public static void addEffectDuration(@NotNull LivingEntity entity, RegistryEntry<StatusEffect> effect, int ticksToAdd){
     Collection<StatusEffectInstance> effectInstances = entity.getStatusEffects();
     boolean hasEffect = false;
     for(StatusEffectInstance effectInstance : effectInstances){

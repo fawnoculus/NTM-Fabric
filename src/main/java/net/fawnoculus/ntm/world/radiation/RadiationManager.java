@@ -25,6 +25,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.EntityList;
 import org.jetbrains.annotations.Range;
 
@@ -132,10 +133,10 @@ public class RadiationManager {
     return 0;
   }
   public double getActiveChunkRadiation(ServerWorld world, Vec3d pos){
-    return RadiationProcessorMultiHolder.from(world).NTM$getRadiationProcessor(WorldUtil.getChunkPos(pos)).getActiveRadiation(pos);
+    return getRadiationProcessor(world, pos).getActiveRadiation(pos);
   }
   public double getPassiveChunkRadiation(ServerWorld world, Vec3d pos){
-    return RadiationProcessorMultiHolder.from(world).NTM$getRadiationProcessor(WorldUtil.getChunkPos(pos)).getPassiveRadiation(pos);
+    return getRadiationProcessor(world, pos).getPassiveRadiation(pos);
   }
   public double getChunkRadiation(ServerWorld world, Vec3d pos){
     return getActiveChunkRadiation(world, pos) + getPassiveChunkRadiation(world, pos);
@@ -145,6 +146,16 @@ public class RadiationManager {
       return this.getChunkRadiation(serverWorld, entity.getPos()) + getInventoryRadiation(entity);
     }
     return 0;
+  }
+  
+  public RadiationProcessor getRadiationProcessor(ServerWorld world, Vec3d pos){
+    return getRadiationProcessor(world, WorldUtil.getChunkPos(pos));
+  }
+  public RadiationProcessor getRadiationProcessor(ServerWorld world, Vec3i pos){
+    return getRadiationProcessor(world, WorldUtil.getChunkPos(pos));
+  }
+  public RadiationProcessor getRadiationProcessor(ServerWorld world, ChunkPos pos){
+    return RadiationProcessorMultiHolder.from(world).NTM$getRadiationProcessor(pos);
   }
   
   // Radiation Modifiers
