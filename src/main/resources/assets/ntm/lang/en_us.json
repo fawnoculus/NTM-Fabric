@@ -41,8 +41,6 @@
   "message.ntm.teeth_to_soft": "Your teeth are to soft to eat this",
   "message.ntm.dosimeter": "===== ☢ DOSIMETER ☢ =====",
   "message.ntm.geiger_counter": "===== ☢ GEIGER COUNTER ☢ =====",
-  "message.ntm.radiation.rad": "%1$s RAD",
-  "message.ntm.radiation.rads": "%1$s RAD/s",
   "message.ntm.radiation.environmental_radiation": "Total environmental radiation: ",
   "message.ntm.radiation.chunk_radiation": "Current chunk radiation: ",
   "message.ntm.radiation.player_contamination": "Player contamination: ",
@@ -64,6 +62,11 @@
 
   "sound.ntm.item.syringe_injects": "Syringe Injects",
   "sound.ntm.item.iv_bag_injects": "RadAway Injects",
+
+  "genric.ntm.radiation.rad": "%1$s RAD",
+  "genric.ntm.radiation.rads": "%1$s RAD/s",
+
+  "tooltip.ntm.radioactive": "[Radioactive]",
 
   "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
   "tooltip.ntm.asbestos_sheet": "\"Filled with life, self-doubt and asbestos. That comes with the air.\"",

@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
+import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -11,7 +12,10 @@ public class RadiumCoffeeItem extends CoffeeItem{
   
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    // TODO: this, once we have Radiation (gives 500 RAD)
+    if(!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()){
+      RadiationManager radiationManager = RadiationManager.getInstance();
+      radiationManager.increaseRadiationExposure(user, 500_000);
+    }
     return super.finishUsing(stack, world, user);
   }
 }

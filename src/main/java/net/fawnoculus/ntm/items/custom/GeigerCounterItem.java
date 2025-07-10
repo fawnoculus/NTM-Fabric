@@ -21,40 +21,40 @@ public class GeigerCounterItem extends Item {
   
   private Text getRadsText(double milliRads){
     if(milliRads > 1_000_000){
-      return Text.translatable("message.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
+      return Text.translatable("genric.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
     }
     if(milliRads > 100_000){
-      return Text.translatable("message.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_RED);
+      return Text.translatable("genric.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_RED);
     }
     if(milliRads > 10_000){
-      return Text.translatable("message.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.RED);
+      return Text.translatable("genric.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.RED);
     }
     if(milliRads > 1_000){
-      return Text.translatable("message.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
+      return Text.translatable("genric.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
     }
     if(milliRads > 0){
-      return Text.translatable("message.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
+      return Text.translatable("genric.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
     }
-    return Text.translatable("message.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
+    return Text.translatable("genric.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
   }
   
   private Text getRadText(double milliRad){
     if(milliRad > 900_000){
-      return Text.translatable("message.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_GRAY);
+      return Text.translatable("genric.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_GRAY);
     }
     if(milliRad > 800_000){
-      return Text.translatable("message.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_RED);
+      return Text.translatable("genric.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_RED);
     }
     if(milliRad > 600_000){
-      return Text.translatable("message.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.RED);
+      return Text.translatable("genric.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.RED);
     }
     if(milliRad > 400_000){
-      return Text.translatable("message.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GOLD);
+      return Text.translatable("genric.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GOLD);
     }
     if(milliRad > 200_000){
-      return Text.translatable("message.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.YELLOW);
+      return Text.translatable("genric.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.YELLOW);
     }
-    return Text.translatable("message.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GREEN);
+    return Text.translatable("genric.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GREEN);
   }
   
   @Override
