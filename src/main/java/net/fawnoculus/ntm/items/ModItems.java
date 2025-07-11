@@ -8,7 +8,7 @@ import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
 import net.fawnoculus.ntm.items.custom.tools.*;
 import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.sounds.ModSounds;
+import net.fawnoculus.ntm.misc.ModSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -216,7 +216,7 @@ public class ModItems {
   public static final Item DINEUTRONIUM_INGOT = register("dineutronium_ingot", Item::new, new Item.Settings());
   public static final Item DINEUTRONIUM_POWDER = register("dineutronium_powder", Item::new, new Item.Settings());
   public static final Item DINEUTRONIUM_NUGGET = register("dineutronium_nugget", Item::new, new Item.Settings());
-  public static final Item DENSE_DINEUTRONIUM_NUGGET = register("dense_dineutronium_nugget", Item::new, new Item.Settings());
+  public static final Item DENSE_DINEUTRONIUM_WIRE = register("dense_dineutronium_wire", Item::new, new Item.Settings());
   
   public static final Item ELECTRONIUM_INGOT = register("electronium_ingot", Item::new, new Item.Settings());
   
@@ -483,7 +483,7 @@ public class ModItems {
   public static final Item SCHRARANIUM_CRYSTALS = register("schraranium_crystals", Item::new, new Item.Settings());
   
   public static final Item SEMTEX_BLEND = register("semtex_blend", Item::new, new Item.Settings());
-  public static final Item SEMTEX_BAR = register("semtex_bar", Item::new, new Item.Settings());
+  public static final Item SEMTEX_BAR = register("semtex_bar", settings -> new TooltipItem(settings, 3), new Item.Settings());
   
   public static final Item SILICON_BOULE = register("silicon_boule", Item::new, new Item.Settings());
   public static final Item SILICON_WAFER = register("silicon_wafer", Item::new, new Item.Settings());

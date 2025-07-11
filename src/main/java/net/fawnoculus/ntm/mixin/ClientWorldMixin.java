@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.util.messages.MessageSystem;
+import net.fawnoculus.ntm.misc.messages.MessageSystem;
 import net.minecraft.client.world.ClientWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.sounds;
+package net.fawnoculus.ntm.misc;
 
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.registry.Registries;

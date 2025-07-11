@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.util.data.CustomDataHolder;
+import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;

@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.world.radiation.processor;
 
-import net.fawnoculus.ntm.util.data.CustomData;
+import net.fawnoculus.ntm.misc.data.CustomData;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 

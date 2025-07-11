@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.tags;
+package net.fawnoculus.ntm.misc.tags;
 
 import net.fawnoculus.ntm.main.NTM;
 import net.minecraft.block.Block;

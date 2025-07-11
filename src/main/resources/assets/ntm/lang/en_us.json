@@ -66,7 +66,14 @@
   "genric.ntm.radiation.rad": "%1$s RAD",
   "genric.ntm.radiation.rads": "%1$s RAD/s",
 
+  "key.category.ntm": "NTM-Fabric",
+
+  "key.ntm.extra_info": "Display Extra Info",
+
   "tooltip.ntm.radioactive": "[Radioactive]",
+  "tooltip.ntm.stack_rads": "Stack: %1$s RAD/s",
+  "tooltip.ntm.dangerous_drop": "[Dangerous Drop]",
+  "tooltip.ntm.hold_for_info": "Hold <%1$s> to display more info",
 
   "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
   "tooltip.ntm.asbestos_sheet": "\"Filled with life, self-doubt and asbestos. That comes with the air.\"",
@@ -800,7 +807,7 @@
   "item.ntm.emerald_powder": "Emerald Powder",
   "item.ntm.energy_powder": "Energy Powder",
   "item.ntm.dineutronium_nugget": "Dineutronium Nugget",
-  "item.ntm.dense_dineutronium_nugget": "Dense Dineutronium Nugget",
+  "item.ntm.dense_dineutronium_wire": "Dense Dineutronium Wire",
   "item.ntm.electronium_ingot": "Electronium Ingot",
   "item.ntm.dusted_steel_ingot": "Dusted Steel Ingot",
   "item.ntm.heavy_chainsteel_ingot": "Heavy Chainsteel Ingot",

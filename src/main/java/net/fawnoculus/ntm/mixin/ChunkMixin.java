@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.util.data.CustomData;
-import net.fawnoculus.ntm.util.data.CustomDataHolder;
+import net.fawnoculus.ntm.misc.data.CustomData;
+import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.world.radiation.RadiationManager;
 import net.fawnoculus.ntm.world.radiation.processor.EmptyRadiationProcessor;
 import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;

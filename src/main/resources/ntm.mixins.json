@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ChunkMixin",
-    "ItemStackMixin",
+    "ItemEntityMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "PlayerManagerMixin",
@@ -16,6 +16,7 @@
     "WorldChunkMixin"
   ],
   "client": [
+    "ClientsideItemStackMixin",
     "ClientWorldMixin",
     "MinecraftClientMixin"
   ],

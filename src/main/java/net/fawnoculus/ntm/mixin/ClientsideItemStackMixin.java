@@ -1,5 +1,8 @@
 package net.fawnoculus.ntm.mixin;
 
+import net.fawnoculus.ntm.items.custom.genric.DangerousDrop;
+import net.fawnoculus.ntm.items.custom.genric.ExtraInfo;
+import net.fawnoculus.ntm.misc.ModKeybinds;
 import net.fawnoculus.ntm.world.radiation.client.ClientRadiationRegistry;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,9 +22,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin {
+public abstract class ClientsideItemStackMixin {
   @Shadow public abstract Item getItem();
   
+  @Shadow private int count;
   @Unique
   private static final ClientRadiationRegistry clientRadiationRegistry = ClientRadiationRegistry.getInstance();
   
@@ -40,10 +44,21 @@ public abstract class ItemStackMixin {
       Item.TooltipContext context, TooltipDisplayComponent displayComponent, @Nullable PlayerEntity player, TooltipType type, Consumer<Text> textConsumer, CallbackInfo ci
   ) {
     double milliRads = clientRadiationRegistry.getRadioactivity(this.getItem());
-    
     if(milliRads > 0){
       textConsumer.accept(Text.translatable("tooltip.ntm.radioactive").formatted(Formatting.GREEN));
       textConsumer.accept(Text.translatable("genric.ntm.radiation.rads", milliRads / 1000.0).formatted(Formatting.YELLOW));
+      textConsumer.accept(Text.translatable("tooltip.ntm.stack_rads", milliRads * this.count / 1000.0).formatted(Formatting.YELLOW));
+    }
+    
+    if(this.getItem() instanceof ExtraInfo extraInfo){
+      if(!ModKeybinds.displayExtraInfo.isPressed()){
+        textConsumer.accept(extraInfo.getHelpText());
+      }else {
+        extraInfo.getInfo().forEach(textConsumer);
+      }
+    }
+    if(this.getItem() instanceof DangerousDrop){
+      textConsumer.accept(Text.translatable("tooltip.ntm.dangerous_drop").formatted(Formatting.RED));
     }
   }
 }

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.util.messages.AdvancedMessage;
-import net.fawnoculus.ntm.util.messages.MessageSystem;
+import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.misc.messages.MessageSystem;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

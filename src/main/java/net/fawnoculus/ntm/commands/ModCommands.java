@@ -14,7 +14,7 @@ import net.fawnoculus.ntm.main.NTMConfig;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
-import net.fawnoculus.ntm.util.messages.AdvancedMessage;
+import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.TextArgumentType;

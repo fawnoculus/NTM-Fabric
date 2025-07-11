@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.network.custom.*;
-import net.fawnoculus.ntm.util.messages.MessageSystem;
+import net.fawnoculus.ntm.misc.messages.MessageSystem;
 import net.fawnoculus.ntm.world.radiation.client.ClientRadiationManager;
 import net.fawnoculus.ntm.world.radiation.client.ClientRadiationRegistry;
 

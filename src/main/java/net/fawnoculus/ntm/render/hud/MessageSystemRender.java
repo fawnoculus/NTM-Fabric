@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.render.hud;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fawnoculus.ntm.util.messages.AdvancedMessage;
-import net.fawnoculus.ntm.util.messages.MessageSystem;
+import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.misc.messages.MessageSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

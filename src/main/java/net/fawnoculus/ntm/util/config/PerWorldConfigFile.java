@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PerWorldConfigFile extends ConfigFile{
-  public PerWorldConfigFile(String defaultSubPath,String WorldSubPath, ConfigFileType configFileType, @Nullable Logger logger) {
+  public PerWorldConfigFile(String defaultSubPath, String WorldSubPath, ConfigFileType configFileType, @Nullable Logger logger) {
     super(defaultSubPath, configFileType, logger);
     
     if (WorldSubPath.endsWith(configFileType.getFileExtension())) {

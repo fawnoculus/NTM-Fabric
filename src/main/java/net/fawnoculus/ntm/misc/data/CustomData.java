@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.data;
+package net.fawnoculus.ntm.misc.data;
 
 import com.google.gson.*;
 import net.fawnoculus.ntm.util.JsonUtil;

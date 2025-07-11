@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.entity.ModDamageTypes;
 import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.sounds.ModSounds;
+import net.fawnoculus.ntm.misc.ModSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

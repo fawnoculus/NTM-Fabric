@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.data;
+package net.fawnoculus.ntm.misc.data;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.chunk.Chunk;

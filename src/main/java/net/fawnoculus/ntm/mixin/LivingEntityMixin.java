@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.util.data.CustomData;
-import net.fawnoculus.ntm.util.data.CustomDataHolder;
+import net.fawnoculus.ntm.misc.data.CustomData;
+import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.NotNull;

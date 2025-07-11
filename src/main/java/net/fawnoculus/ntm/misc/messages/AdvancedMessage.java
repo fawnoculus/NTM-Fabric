@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.messages;
+package net.fawnoculus.ntm.misc.messages;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;

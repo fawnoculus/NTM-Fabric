@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fawnoculus.ntm.commands.ModClientCommands;
+import net.fawnoculus.ntm.misc.ModKeybinds;
 import net.fawnoculus.ntm.network.ModClientPayloadHandler;
 import net.fawnoculus.ntm.render.ModBlockEntityRender;
 import net.fawnoculus.ntm.gui.ModHandledScreens;
@@ -20,6 +21,8 @@ public class NTMClient implements ClientModInitializer {
     NTM.LOGGER.info("Initializing {} Client Components", NTM.MOD_NAME);
     
     NTMClientConfig.initialize();
+    
+    ModKeybinds.initialize();
     
     ModClientCommands.initialize();
     

@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.messages;
+package net.fawnoculus.ntm.misc.messages;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

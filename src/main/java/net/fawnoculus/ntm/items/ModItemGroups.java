@@ -256,7 +256,7 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.DINEUTRONIUM_INGOT);
       ItemGroup.add(ModItems.DINEUTRONIUM_POWDER);
       ItemGroup.add(ModItems.DINEUTRONIUM_NUGGET);
-      ItemGroup.add(ModItems.DENSE_DINEUTRONIUM_NUGGET);
+      ItemGroup.add(ModItems.DENSE_DINEUTRONIUM_WIRE);
       
       ItemGroup.add(ModItems.ELECTRONIUM_INGOT);
       

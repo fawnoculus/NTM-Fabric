@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.sounds.ModSounds;
+import net.fawnoculus.ntm.misc.ModSounds;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

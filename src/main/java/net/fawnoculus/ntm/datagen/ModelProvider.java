@@ -449,7 +449,7 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.DINEUTRONIUM_INGOT, Models.GENERATED);
     itemModelGenerator.register(ModItems.DINEUTRONIUM_POWDER, Models.GENERATED);
     itemModelGenerator.register(ModItems.DINEUTRONIUM_NUGGET, Models.GENERATED);
-    itemModelGenerator.register(ModItems.DENSE_DINEUTRONIUM_NUGGET, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DENSE_DINEUTRONIUM_WIRE, Models.GENERATED);
     
     itemModelGenerator.register(ModItems.ELECTRONIUM_INGOT, Models.GENERATED);
     
