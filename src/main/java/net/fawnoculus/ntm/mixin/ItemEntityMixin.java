@@ -1,16 +1,12 @@
 package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.items.custom.genric.DangerousDrop;
-import net.fawnoculus.ntm.util.config.PerWorldConfigFile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.level.storage.LevelStorage;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
