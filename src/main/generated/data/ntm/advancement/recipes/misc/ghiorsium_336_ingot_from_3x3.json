@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ghiorsium_336_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:ghiorsium_336_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:ghiorsium_336_ingot_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ghiorsium_336_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:ghiorsium_336_ingot_from_3x3"
+    ]
+  }
+}

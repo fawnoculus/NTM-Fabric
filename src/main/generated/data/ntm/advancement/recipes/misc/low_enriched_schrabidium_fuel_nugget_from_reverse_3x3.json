@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_low_enriched_schrabidium_fuel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:low_enriched_schrabidium_fuel_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:low_enriched_schrabidium_fuel_nugget_from_reverse_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_low_enriched_schrabidium_fuel_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:low_enriched_schrabidium_fuel_nugget_from_reverse_3x3"
+    ]
+  }
+}

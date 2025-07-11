@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_osmiridium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:osmiridium_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:osmiridium_ingot_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_osmiridium_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:osmiridium_ingot_from_3x3"
+    ]
+  }
+}

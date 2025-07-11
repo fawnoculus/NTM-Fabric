@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_actinium_227_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:actinium_227_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:actinium_227_nugget_from_reverse_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_actinium_227_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:actinium_227_nugget_from_reverse_3x3"
+    ]
+  }
+}

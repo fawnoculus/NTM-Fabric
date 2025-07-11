@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_strontium_90_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:strontium_90_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:strontium_90_nugget_from_reverse_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_strontium_90_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:strontium_90_nugget_from_reverse_3x3"
+    ]
+  }
+}

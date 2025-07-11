@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_schraranium_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:schraranium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:schraranium_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_schraranium_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:schraranium_block_from_3x3"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:uranium_238_ingot_from_reverse_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_uranium_238_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:uranium_238_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_uranium_238_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:uranium_238_ingot_from_reverse_3x3"
+    ]
+  }
+}

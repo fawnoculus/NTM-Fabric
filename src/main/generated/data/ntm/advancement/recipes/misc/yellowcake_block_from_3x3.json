@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:yellowcake_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_yellowcake": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:yellowcake"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_yellowcake"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:yellowcake_block_from_3x3"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_semtex_bar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:semtex_bar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:semtex_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_semtex_bar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:semtex_block_from_3x3"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lignite_coke": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:lignite_coke"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:lignite_coke_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_lignite_coke"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:lignite_coke_block_from_3x3"
+    ]
+  }
+}

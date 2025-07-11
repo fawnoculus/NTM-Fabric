@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_americium_241_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:americium_241_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:americium_241_ingot_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_americium_241_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:americium_241_ingot_from_3x3"
+    ]
+  }
+}

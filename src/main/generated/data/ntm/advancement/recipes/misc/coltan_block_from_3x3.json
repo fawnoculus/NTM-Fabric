@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_coltan": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:coltan"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:coltan_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_coltan"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:coltan_block_from_3x3"
+    ]
+  }
+}

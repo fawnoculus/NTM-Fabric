@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polonium_210_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:polonium_210_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:polonium_210_nugget_from_reverse_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_polonium_210_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:polonium_210_nugget_from_reverse_3x3"
+    ]
+  }
+}

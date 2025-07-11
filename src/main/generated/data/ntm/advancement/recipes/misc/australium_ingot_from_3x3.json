@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_australium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:australium_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:australium_ingot_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_australium_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:australium_ingot_from_3x3"
+    ]
+  }
+}

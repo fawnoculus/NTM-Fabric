@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_plutonium_240_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:plutonium_240_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:plutonium_240_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_plutonium_240_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:plutonium_240_block_from_3x3"
+    ]
+  }
+}

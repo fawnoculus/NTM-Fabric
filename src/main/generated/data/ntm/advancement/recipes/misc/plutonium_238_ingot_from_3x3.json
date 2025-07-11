@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_plutonium_238_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:plutonium_238_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:plutonium_238_ingot_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_plutonium_238_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:plutonium_238_ingot_from_3x3"
+    ]
+  }
+}

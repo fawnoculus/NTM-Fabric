@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bakelite_bar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:bakelite_bar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:bakelite_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bakelite_bar"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:bakelite_block_from_3x3"
+    ]
+  }
+}

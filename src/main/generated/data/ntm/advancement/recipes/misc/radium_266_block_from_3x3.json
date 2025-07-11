@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_radium_266_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:radium_266_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:radium_266_block_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_radium_266_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:radium_266_block_from_3x3"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ntm:item/dense_dineutronium_nugget"
+    "model": "ntm:item/dense_dineutronium_wire"
   }
 }

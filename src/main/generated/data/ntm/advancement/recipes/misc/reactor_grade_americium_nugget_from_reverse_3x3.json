@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_reactor_grade_americium_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:reactor_grade_americium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:reactor_grade_americium_nugget_from_reverse_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_reactor_grade_americium_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:reactor_grade_americium_nugget_from_reverse_3x3"
+    ]
+  }
+}

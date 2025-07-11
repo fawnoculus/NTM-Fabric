@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_schrabidium_fuel_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ntm:schrabidium_fuel_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ntm:schrabidium_fuel_ingot_from_3x3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_schrabidium_fuel_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ntm:schrabidium_fuel_ingot_from_3x3"
+    ]
+  }
+}
