@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.util;
 
-import net.minecraft.command.CommandRegistryAccess;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistryView;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
@@ -8,20 +8,13 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.command.CommandManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 public class EnchantmentUtil {
-  // This class is a fucking mess
-  // Registries are stupid
-  // if you get this working i will see you as a god
-  
-  private static final CommandRegistryAccess registryAccess = CommandManager.createRegistryAccess(BuiltinRegistries.createWrapperLookup());
-  
+  private static final Registry<Enchantment> registry = DynamicRegistryManager.of(Registries.REGISTRIES).getOrThrow(RegistryKeys.ENCHANTMENT);
   
   public static boolean hasEnchantment( ItemStack stack, RegistryKey<Enchantment> enchantmentRegistryKey){
     return EnchantmentHelper.getLevel(getEnchantmentEntry(enchantmentRegistryKey), stack) > 0;
@@ -33,7 +26,6 @@ public class EnchantmentUtil {
   }
   
   public static void removeEnchantment(@NotNull ItemStack stack, RegistryKey<Enchantment> enchantmentRegistryKey){
-    /*
     RegistryEntry<Enchantment> enchantment = getEnchantmentEntry(enchantmentRegistryKey);
     
     ItemEnchantmentsComponent itemEnchantmentsComponent = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
@@ -41,16 +33,11 @@ public class EnchantmentUtil {
     builder.remove(Predicate.isEqual(enchantment));
     
     stack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
-     */
   }
   
   public static @Nullable RegistryEntry<Enchantment> getEnchantmentEntry(@NotNull RegistryKey<Enchantment> enchantmentRegistryKey){
-    return null;
+    Enchantment enchantment = registry.get(enchantmentRegistryKey);
     
-    //return registryAccess.getOrThrow(RegistryKeys.ENCHANTMENT).getOptional(enchantmentRegistryKey).get();
-    
-    // why is ist so incredibly tedious to get a Registry Entry from a Registry Key????
-    
-    // WTF why does it all just not work!!?!?!?!?!?!??!?!??!?
+    return registry.getEntry(enchantment);
   }
 }

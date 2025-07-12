@@ -9,6 +9,7 @@ import net.fawnoculus.ntm.commands.ModCommandArguments;
 import net.fawnoculus.ntm.commands.ModCommands;
 import net.fawnoculus.ntm.entity.ModDamageTypes;
 import net.fawnoculus.ntm.entity.ModStatusEffects;
+import net.fawnoculus.ntm.fluid.ModFluids;
 import net.fawnoculus.ntm.items.*;
 import net.fawnoculus.ntm.network.ModServerPayloadHandler;
 import net.fawnoculus.ntm.network.ModPayloads;
@@ -29,7 +30,7 @@ public class NTM implements ModInitializer {
   
   @Override
   public void onInitialize() {
-    LOGGER.info("Initializing {} ...", MOD_NAME);
+    LOGGER.info("Initializing {} ...", NTM.MOD_NAME);
     
     NTMConfig.initialize();
     
@@ -42,8 +43,10 @@ public class NTM implements ModInitializer {
     ModDataComponentTypes.initialize();
     ModItems.initialize();
     ModItemGroups.initialize();
-    ItemRegisters.initialize();
+    ExtraItemData.initialize();
     ModEnchantmentEffects.initialize();
+    
+    ModFluids.initialize();
     
     ModBlocks.initialize();
     ModBlockEntities.initialize();
