@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.fluid;
 
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

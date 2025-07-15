@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.world.radiation.RadiationManager;
+import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

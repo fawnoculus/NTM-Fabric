@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
+import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorMultiHolder;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerChunkLoadingManager;
 import net.minecraft.server.world.ServerWorld;

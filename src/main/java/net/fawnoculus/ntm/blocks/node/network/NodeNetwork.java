@@ -3,8 +3,8 @@ package net.fawnoculus.ntm.blocks.node.network;
 import com.google.common.collect.ImmutableList;
 import net.fawnoculus.ntm.blocks.node.Node;
 import net.fawnoculus.ntm.blocks.node.NodeProperties;
-import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.main.NTMConfig;
+import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.NTMConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

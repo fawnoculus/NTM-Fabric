@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.items.ModDataComponentTypes;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.minecraft.block.BlockState;

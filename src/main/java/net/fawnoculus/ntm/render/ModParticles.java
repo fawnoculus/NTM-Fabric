@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render;
 
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

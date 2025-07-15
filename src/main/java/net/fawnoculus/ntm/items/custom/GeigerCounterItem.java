@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.world.radiation.RadiationManager;
+import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.recipe;
 
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;

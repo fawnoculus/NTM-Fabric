@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.blocks.node.network;
 
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -62,7 +62,6 @@ repositories {
 }
 
 // Splitting Client & main Sources
-/* Might do this later if i feel like it
 loom {
     splitEnvironmentSourceSets()
 
@@ -74,12 +73,18 @@ loom {
     }
 
 }
- */
 
 fabricApi {
     configureDataGeneration {
         client = true
     }
+    /* I'll likely do this once there is a reason to use it
+    configureTests {
+        createSourceSet = true
+        modId = project.name
+        eula = true
+    }
+     */
 }
 
 dependencies {
@@ -88,6 +93,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
 
     // Libraries required by other mods (REI) //
     modApi "dev.architectury:architectury-fabric:${project.architectury_version}"
@@ -97,7 +103,7 @@ dependencies {
     modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"                 // ModMenu
     modLocalRuntime "maven.modrinth:jade:${project.jade_version}"                           // Jade
     modLocalRuntime "maven.modrinth:sodium:${project.sodium_version}"                       // Sodium
-    //modLocalRuntime "mezz.jei:jei-${project.jei_mc_version}-fabric:${project.jei_version}"  // JEI (for some reason it doesn't start with jei ¯\_('-')_/¯
+    //modLocalRuntime "mezz.jei:jei-${project.jei_mc_version}-fabric:${project.jei_version}"  // JEI (there is no version for 1.21.5 fabric yet)
     modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"         // REI
     //modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}+${project.emi_mc_version}"   // EMI (there is no version for 1.21.5 yet)
 
@@ -131,6 +137,20 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
+test {
+    useJUnitPlatform()
+    afterTest {
+        // some test really like creating unnecessary directories
+        // this is here as a (hopefully) "temporary" fix
+        try{
+            projectDir.toPath().resolve("config").toFile().deleteDir()
+            projectDir.toPath().resolve("logs").toFile().deleteDir()
+            projectDir.toPath().resolve("mods").toFile().deleteDir()
+            projectDir.toPath().resolve("world").toFile().deleteDir()
+        }catch (Throwable ignored) {}
+    }
+}
+
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     if (JavaVersion.current() < javaVersion) {
@@ -143,7 +163,7 @@ java {
 }
 
 jar {
-    from("LICENSE") {
+    from("LICENSE.txt") {
         rename { "${it}_${project.archivesBaseName}" }
     }
 }

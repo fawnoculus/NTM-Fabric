@@ -73,7 +73,7 @@
   "tooltip.ntm.radioactive": "[Radioactive]",
   "tooltip.ntm.stack_rads": "Stack: %1$s RAD/s",
   "tooltip.ntm.dangerous_drop": "[Dangerous Drop]",
-  "tooltip.ntm.hold_for_info": "Hold <%1$s> to display more info",
+  "tooltip.ntm.hold_for_info": "Hold 'Extra Info Keybind' to display more info",
 
   "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
   "tooltip.ntm.asbestos_sheet": "\"Filled with life, self-doubt and asbestos. That comes with the air.\"",

@@ -9,8 +9,8 @@ import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
 import net.fawnoculus.ntm.blocks.node.network.FluidNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
-import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.main.NTMConfig;
+import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
@@ -135,10 +135,10 @@ public class ModCommands {
   
   private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment){
     if(environment.dedicated) {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.version.server", NTM.METADATA.getVersion()), false);
+      context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version.server", NTM.METADATA.getVersion()), false);
     }
     if(environment.integrated){
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.version", NTM.METADATA.getVersion()), false);
+      context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version", NTM.METADATA.getVersion()), false);
     }
     return 1;
   }

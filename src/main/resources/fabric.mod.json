@@ -34,35 +34,39 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fawnoculus.ntm.main.NTM"
+      "net.fawnoculus.ntm.NTM"
     ],
     "client": [
-      "net.fawnoculus.ntm.main.NTMClient"
+      "net.fawnoculus.ntm.NTMClient"
     ],
     "fabric-datagen": [
-      "net.fawnoculus.ntm.main.NTMDataGenerator"
+      "net.fawnoculus.ntm.NTMDataGen"
     ],
     "jade": [
-      "net.fawnoculus.ntm.compat.jade.NTMJadePlugin"
+      "net.fawnoculus.ntm.compat.NTMJadePlugin"
     ],
     "modmenu": [
-      "net.fawnoculus.ntm.compat.modmenu.NTMModmenuPlugin"
+      "net.fawnoculus.ntm.compat.NTMModmenuPlugin"
     ],
     "emi": [
-      "net.fawnoculus.ntm.compat.emi.NTMEmiPlugin"
-    ],
-    "rei_client": [
-      "net.fawnoculus.ntm.compat.rei.NTMReiClientPlugin"
+      "net.fawnoculus.ntm.compat.NTMEmiPlugin"
     ],
     "rei_common": [
-      "net.fawnoculus.ntm.compat.rei.NTMReiCommonPlugin"
+      "net.fawnoculus.ntm.compat.NTMReiCommonPlugin"
+    ],
+    "rei_client": [
+      "net.fawnoculus.ntm.compat.NTMReiClientPlugin"
     ],
     "jei_mod_plugin": [
-      "net.fawnoculus.ntm.compat.jei.NTMJeiPlugin"
+      "net.fawnoculus.ntm.compat.NTMJeiPlugin"
     ]
   },
   "mixins": [
-    "ntm.mixins.json"
+    "ntm.mixins.json",
+    {
+      "config": "ntm.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

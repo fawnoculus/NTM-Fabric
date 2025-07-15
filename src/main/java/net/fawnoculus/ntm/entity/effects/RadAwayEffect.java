@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.entity.effects;
 
-import net.fawnoculus.ntm.world.radiation.RadiationManager;
+import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;

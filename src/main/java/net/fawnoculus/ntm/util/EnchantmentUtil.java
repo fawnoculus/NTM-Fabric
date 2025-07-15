@@ -1,6 +1,5 @@
 package net.fawnoculus.ntm.util;
 
-import net.fabricmc.fabric.api.event.registry.DynamicRegistryView;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;

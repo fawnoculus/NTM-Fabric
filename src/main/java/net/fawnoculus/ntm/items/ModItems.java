@@ -7,7 +7,7 @@ import net.fawnoculus.ntm.items.components.ModFoodComponents;
 import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
 import net.fawnoculus.ntm.items.custom.tools.*;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.ModSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.component.DataComponentTypes;

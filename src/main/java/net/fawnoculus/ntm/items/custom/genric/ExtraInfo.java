@@ -2,8 +2,7 @@ package net.fawnoculus.ntm.items.custom.genric;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.misc.ModKeybinds;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -14,7 +13,7 @@ public interface ExtraInfo {
   
   default Text getHelpText(){
     if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT){
-      return Text.translatable("tooltip.ntm.hold_for_info", Text.translatable(ModKeybinds.displayExtraInfo.getBoundKeyTranslationKey()).formatted(Formatting.YELLOW)).formatted(Formatting.DARK_GRAY);
+      return Text.translatable("tooltip.ntm.hold_for_info").formatted(Formatting.DARK_GRAY);
     }else {
       NTM.LOGGER.warn("Tired to call 'ExtraInfo.getHelperTet()' on the Server");
       return Text.literal("Please do not call 'ExtraInfo.getHelperTet()' on the Server").formatted(Formatting.RED);

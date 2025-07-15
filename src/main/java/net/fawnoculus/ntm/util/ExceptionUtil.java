@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.util;
 
 import com.mojang.datafixers.util.Either;
-import net.fawnoculus.ntm.main.NTMConfig;
+import net.fawnoculus.ntm.NTMConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;

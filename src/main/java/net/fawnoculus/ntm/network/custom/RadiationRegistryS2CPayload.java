@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.network.custom;
 
-import net.fawnoculus.ntm.main.NTM;
-import net.fawnoculus.ntm.world.radiation.RadiationRegistry;
+import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;

@@ -34,14 +34,14 @@ public class AdvancedMessage {
     }
   };
   
-  private static JsonObject encode(AdvancedMessage message){
+  public static JsonObject encode(AdvancedMessage message){
     JsonObject jsonObject = new JsonObject();
     jsonObject.add("identifier", new JsonPrimitive(message.IDENTIFIER.toString()));
     jsonObject.add("millis_left", new JsonPrimitive(message.millisLeft));
     jsonObject.add("text", new JsonPrimitive(Text.Serialization.toJsonString(message.TEXT, BuiltinRegistries.createWrapperLookup())));
     return jsonObject;
   }
-  private static AdvancedMessage decode(JsonObject json){
+  public static AdvancedMessage decode(JsonObject json){
     Identifier identifier = Identifier.of(json.getAsJsonPrimitive("identifier").getAsString());
     float millisLeft  = json.getAsJsonPrimitive("millis_left").getAsFloat();
     Text text = Objects.requireNonNull(Text.Serialization.fromJson(json.getAsJsonPrimitive("text").getAsString(), BuiltinRegistries.createWrapperLookup()));

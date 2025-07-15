@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.main.NTMConfig;
+import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.util.EnchantmentUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

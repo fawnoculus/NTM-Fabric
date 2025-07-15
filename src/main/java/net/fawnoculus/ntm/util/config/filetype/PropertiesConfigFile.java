@@ -2,7 +2,6 @@ package net.fawnoculus.ntm.util.config.filetype;
 
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
-import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.*;
 import org.slf4j.Logger;
 

@@ -1,8 +1,7 @@
 package net.fawnoculus.ntm.items;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.items.enchantments.LightningEnchantmentEffect;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
 import net.minecraft.registry.Registries;

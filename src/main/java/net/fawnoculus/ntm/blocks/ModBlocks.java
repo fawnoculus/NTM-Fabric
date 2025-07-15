@@ -4,7 +4,7 @@ import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceExtensionBlock;
 import net.fawnoculus.ntm.blocks.custom.SimpleEnergyStorageBlock;
 import net.fawnoculus.ntm.blocks.custom.TempCableBlock;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;

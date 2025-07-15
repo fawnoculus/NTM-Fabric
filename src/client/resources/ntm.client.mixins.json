@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.fawnoculus.ntm.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientsideItemStackMixin",
+    "ClientWorldMixin",
+    "MinecraftClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

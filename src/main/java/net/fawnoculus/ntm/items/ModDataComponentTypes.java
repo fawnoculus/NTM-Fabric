@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items;
 
 import com.mojang.serialization.Codec;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;

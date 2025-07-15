@@ -4,7 +4,7 @@ import net.fawnoculus.ntm.entity.effects.LeadPoisoningEffect;
 import net.fawnoculus.ntm.entity.effects.RadAwayEffect;
 import net.fawnoculus.ntm.entity.effects.RadXEffect;
 import net.fawnoculus.ntm.entity.effects.TaintEffect;
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;

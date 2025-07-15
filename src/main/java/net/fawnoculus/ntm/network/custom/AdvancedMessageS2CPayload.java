@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.network.custom;
 
-import net.fawnoculus.ntm.main.NTM;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

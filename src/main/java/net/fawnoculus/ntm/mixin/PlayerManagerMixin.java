@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.network.custom.RadiationRegistryS2CPayload;
-import net.fawnoculus.ntm.world.radiation.RadiationRegistry;
+import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ConnectedClientData;

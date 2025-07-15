@@ -2,10 +2,10 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.data.CustomDataHolder;
-import net.fawnoculus.ntm.world.radiation.RadiationManager;
-import net.fawnoculus.ntm.world.radiation.processor.EmptyRadiationProcessor;
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorHolder;
+import net.fawnoculus.ntm.misc.radiation.RadiationManager;
+import net.fawnoculus.ntm.misc.radiation.processor.EmptyRadiationProcessor;
+import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessor;
+import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorHolder;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.HeightLimitView;

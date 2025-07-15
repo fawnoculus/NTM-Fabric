@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items;
 
-import net.fawnoculus.ntm.world.radiation.HazmatRegistry;
-import net.fawnoculus.ntm.world.radiation.RadiationRegistry;
+import net.fawnoculus.ntm.misc.radiation.HazmatRegistry;
+import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 
 public class ExtraItemData {
   private static final RadiationRegistry radiationRegistry = RadiationRegistry.getInstance();

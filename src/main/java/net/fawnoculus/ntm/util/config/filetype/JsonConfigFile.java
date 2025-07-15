@@ -8,7 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.stream.JsonReader;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
-import net.fawnoculus.ntm.util.config.options.Option;
 import net.fawnoculus.ntm.util.config.options.*;
 import org.slf4j.Logger;
 

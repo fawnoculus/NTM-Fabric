@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessor;
-import net.fawnoculus.ntm.world.radiation.processor.RadiationProcessorMultiHolder;
-import net.fawnoculus.ntm.world.radiation.RadiationManager;
+import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessor;
+import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorMultiHolder;
+import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.profiler.Profiler;

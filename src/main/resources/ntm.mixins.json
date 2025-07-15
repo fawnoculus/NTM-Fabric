@@ -15,11 +15,6 @@
     "ServerWorldMixin",
     "WorldChunkMixin"
   ],
-  "client": [
-    "ClientsideItemStackMixin",
-    "ClientWorldMixin",
-    "MinecraftClientMixin"
-  ],
   "injectors": {
     "defaultRequire": 1
   }
