@@ -20,6 +20,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Rarity;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.List;
 import java.util.function.Function;
@@ -1188,7 +1190,7 @@ public class ModItems {
       .addModifier(new Modifiers.PhosphorusTip(60))
       .addModifier(new Modifiers.Decapitator()));
   
-  public static Item register(String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings) {
+  public static Item register(@NotNull String name, @NotNull Function<Item.Settings, Item> itemFactory, @NotNull Item.Settings settings) {
     RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));
     Item item = itemFactory.apply(settings.registryKey(itemKey));
     Registry.register(Registries.ITEM, itemKey, item);

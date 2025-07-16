@@ -242,12 +242,12 @@ public abstract class Abilities {
       if(miner.isCreative()){
         return;
       }
-      if(EnchantmentUtil.hasEnchantment(stack, Enchantments.SILK_TOUCH)){
+      if(EnchantmentUtil.hasEnchantment(world, Enchantments.SILK_TOUCH, stack)){
         return;
       }
-      EnchantmentUtil.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
+      EnchantmentUtil.addEnchantment(world, Enchantments.SILK_TOUCH, 1, stack);
       world.breakBlock(pos, true, miner);
-      EnchantmentUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
+      EnchantmentUtil.removeEnchantment(world, Enchantments.SILK_TOUCH, stack);
     }
   }
   /**
@@ -270,12 +270,12 @@ public abstract class Abilities {
       if(miner.isCreative()){
         return;
       }
-      if(EnchantmentUtil.hasEnchantment(stack, Enchantments.FORTUNE)){
+      if(EnchantmentUtil.hasEnchantment(world, Enchantments.FORTUNE, stack)){
         return;
       }
-      EnchantmentUtil.addEnchantment(stack, Enchantments.FORTUNE, level);
+      EnchantmentUtil.addEnchantment(world, Enchantments.FORTUNE, level, stack);
       world.breakBlock(pos, true, miner);
-      EnchantmentUtil.removeEnchantment(stack, Enchantments.FORTUNE);
+      EnchantmentUtil.removeEnchantment(world, Enchantments.FORTUNE, stack);
     }
   }
   /**

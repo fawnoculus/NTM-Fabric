@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.render;
+package net.fawnoculus.ntm.misc;
 
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fawnoculus.ntm.NTM;

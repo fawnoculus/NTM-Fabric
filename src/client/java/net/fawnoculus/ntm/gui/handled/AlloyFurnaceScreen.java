@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.gui.handled_screens;
+package net.fawnoculus.ntm.gui.handled;
 
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.NTM;

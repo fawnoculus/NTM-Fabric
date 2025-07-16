@@ -15,7 +15,7 @@ import net.fawnoculus.ntm.network.ModServerPayloadHandler;
 import net.fawnoculus.ntm.network.ModPayloads;
 import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.fawnoculus.ntm.misc.ModSounds;
-import net.fawnoculus.ntm.render.ModParticles;
+import net.fawnoculus.ntm.misc.ModParticles;
 import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
 import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
