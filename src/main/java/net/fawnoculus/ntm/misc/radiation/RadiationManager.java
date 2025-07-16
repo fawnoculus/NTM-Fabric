@@ -132,15 +132,19 @@ public class RadiationManager {
     return 0;
   }
   public double getActiveChunkRadiation(ServerWorld world, Vec3d pos){
+    if(world == null || pos == null) return 0;
     return getRadiationProcessor(world, pos).getActiveRadiation(pos);
   }
   public double getPassiveChunkRadiation(ServerWorld world, Vec3d pos){
+    if(world == null || pos == null) return 0;
     return getRadiationProcessor(world, pos).getPassiveRadiation(pos);
   }
   public double getChunkRadiation(ServerWorld world, Vec3d pos){
+    if(world == null || pos == null) return 0;
     return getActiveChunkRadiation(world, pos) + getPassiveChunkRadiation(world, pos);
   }
   public double getTotalRadiation(LivingEntity entity){
+    if(entity == null || entity.getWorld() == null || entity.getPos() == null) return 0;
     if(entity.getWorld() instanceof ServerWorld serverWorld){
       return this.getChunkRadiation(serverWorld, entity.getPos()) + getInventoryRadiation(entity);
     }
