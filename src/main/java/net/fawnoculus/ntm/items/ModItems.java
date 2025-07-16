@@ -21,7 +21,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Rarity;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.util.List;
 import java.util.function.Function;
