@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:mineable/axe",
+      "required": false
+    },
+    {
+      "id": "#minecraft:mineable/hoe",
+      "required": false
+    }
+  ]
+}

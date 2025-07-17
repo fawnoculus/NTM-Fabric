@@ -2,6 +2,7 @@ package net.fawnoculus.ntm;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.ModBlocks;
@@ -27,6 +28,7 @@ public class NTM implements ModInitializer {
   public static final String MOD_ID = "ntm";
   public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
   public static final String MOD_NAME = METADATA.getName();
+  public static final Version MOD_VERSION = METADATA.getVersion();
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
   
   @Override

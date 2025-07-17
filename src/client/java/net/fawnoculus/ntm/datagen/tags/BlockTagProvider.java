@@ -275,6 +275,15 @@ public class BlockTagProvider extends FabricTagProvider<Block> {
         .add(ModBlocks.OSMIRIDIUM_INFUSED_TEKTITE)
         .add(ModBlocks.TRIXITE_ORE)
         .setReplace(false);
+    
+    getOrCreateTagBuilder(ModBlockTags.BIG_AXE_MINEABLE)
+        .addOptionalTag(BlockTags.AXE_MINEABLE)
+        .addOptionalTag(BlockTags.HOE_MINEABLE)
+        .setReplace(false);
+    getOrCreateTagBuilder(ModBlockTags.BIG_PICKAXE_MINEABLE)
+        .addOptionalTag(BlockTags.PICKAXE_MINEABLE)
+        .addOptionalTag(BlockTags.SHOVEL_MINEABLE)
+        .setReplace(false);
   }
   
   @Override

@@ -640,7 +640,7 @@ public class ModItems {
             if (!entity.isInCreativeMode()){
               EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.EUTHANIZED, 30f);
             }else {
-              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.EUTHANIZED, 1f);
+              EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.EUTHANIZED, 2f);
             }}
       ), new Item.Settings()
   );
@@ -957,40 +957,40 @@ public class ModItems {
   );
   
   // Tools
-  public static final Item STEEL_SWORD = register("steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
-  public static final Item STEEL_PICKAXE = register("steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
-  public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STEEL_SWORD = register("steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 3.5f, 1f));
+  public static final Item STEEL_PICKAXE = register("steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1.5f, 1f));
+  public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 2.5f, 1f)
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
-  public static final Item STEEL_HOE = register("steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 0.5f, 1f));
+  public static final Item STEEL_HOE = register("steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STEEL_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item TITANIUM_SWORD = register("titanium_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
-  public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
-  public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item TITANIUM_SWORD = register("titanium_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 3.5f, 1f));
+  public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1.5f, 1f));
+  public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 2.5f, 1f)
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
-  public static final Item TITANIUM_HOE = register("titanium_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 0.5f, 1f));
+  public static final Item TITANIUM_HOE = register("titanium_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.TITANIUM_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
+  public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 5f, 1f)
       .addModifier(new Modifiers.Stunning(2)));
-  public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
+  public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 2f, 1f)
       .addAbility(new Abilities.VeinMiner(3)));
-  public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
+  public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 4f, 1f)
       .addAbility(new Abilities.VeinMiner(3))
       .addModifier(new Modifiers.Decapitator()));
   public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
       .addAbility(new Abilities.VeinMiner(3)));
-  public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f));
+  public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 28f, 1f)
       .addModifier(new Modifiers.Stunning(2))
       .addModifier(new Modifiers.Vampire(2.0f)));
-  public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 3f, 1f)
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3)));
-  public static final Item CMB_STEEL_AXE = register("cmb_steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CMB_STEEL_AXE = register("cmb_steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 23f, 1f)
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.SilkTouch())
@@ -1001,45 +1001,24 @@ public class ModItems {
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3)));
-  public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.CMB_STEEL_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item DESH_SWORD = register("desh_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
-      .addModifier(new Modifiers.Stunning(2))
-      .addModifier(new Modifiers.Vampire(2.0f)));
-  public static final Item DESH_PICKAXE = register("desh_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(2)));
-  public static final Item DESH_AXE = register("desh_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(2))
-      .addModifier(new Modifiers.Decapitator()));
-  public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(2)));
-  public static final Item DESH_HOE = register("desh_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f));
-  
-  public static final Item COBALT_SWORD = register("cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
-  public static final Item COBALT_PICKAXE = register("cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
-  public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item COBALT_SWORD = register("cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 11.5f, 1f));
+  public static final Item COBALT_PICKAXE = register("cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1.5f, 1f));
+  public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 4.5f, 1f)
       .addModifier(new Modifiers.Decapitator()));
   public static final Item COBALT_SHOVEL = register("cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
-  public static final Item COBALT_HOE = register("cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item COBALT_HOE = register("cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.COBALT_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 11f, 1f)
       .addModifier(new Modifiers.LuckOfTheCollector()));
-  public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 2f, 1f)
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3))
   );
-  public static final Item DECORATED_COBALT_AXE = register("decorated_cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DECORATED_COBALT_AXE = register("decorated_cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 4f, 1f)
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.SilkTouch())
@@ -1050,19 +1029,19 @@ public class ModItems {
       .addAbility(new Abilities.AoE(1))
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(3)));
-  public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item STARMETAL_SWORD = register("starmetal_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STARMETAL_SWORD = register("starmetal_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 19f, 1f)
       .addModifier(new Modifiers.Decapitator())
       .addModifier(new Modifiers.Stunning(3))
       .addModifier(new Modifiers.LuckOfTheCollector()));
-  public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 2f, 1f)
       .addAbility(new Abilities.VeinMiner(6))
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(5))
       .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_AXE = register("starmetal_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
+  public static final Item STARMETAL_AXE = register("starmetal_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 6f, 1f)
       .addAbility(new Abilities.VeinMiner(6))
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.SilkTouch())
@@ -1075,12 +1054,33 @@ public class ModItems {
       .addAbility(new Abilities.SilkTouch())
       .addAbility(new Abilities.Fortune(5))
       .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f));
+  public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.STARMETAL_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item DESH_SWORD = register("desh_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 9.5f, 1f)
+      .addModifier(new Modifiers.Stunning(2))
+      .addModifier(new Modifiers.Vampire(2.0f)));
+  public static final Item DESH_PICKAXE = register("desh_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 2f, 1f)
+      .addAbility(new Abilities.AoE(1))
+      .addAbility(new Abilities.VeinMiner(5))
+      .addAbility(new Abilities.SilkTouch())
+      .addAbility(new Abilities.Fortune(2)));
+  public static final Item DESH_AXE = register("desh_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 4.5f, 1f)
+      .addAbility(new Abilities.AoE(1))
+      .addAbility(new Abilities.VeinMiner(5))
+      .addAbility(new Abilities.SilkTouch())
+      .addAbility(new Abilities.Fortune(2))
+      .addModifier(new Modifiers.Decapitator()));
+  public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
+      .addAbility(new Abilities.AoE(1))
+      .addAbility(new Abilities.VeinMiner(5))
+      .addAbility(new Abilities.SilkTouch())
+      .addAbility(new Abilities.Fortune(2)));
+  public static final Item DESH_HOE = register("desh_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, ModToolMaterials.DESH_TOOL_MATERIAL, 0f, 1f));
+  
+  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 65f, 1f)
       .addModifier(new Modifiers.RadioactiveBlade(50f))
       .addModifier(new Modifiers.Vampire(2f)));
-  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 20f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -1088,7 +1088,7 @@ public class ModItems {
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialAxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialAxeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 15f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -1097,7 +1097,7 @@ public class ModItems {
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f))
       .addModifier(new Modifiers.Decapitator()));
-  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f)
+  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 5f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(10))
       .addAbility(new Abilities.SilkTouch())
@@ -1105,15 +1105,15 @@ public class ModItems {
       .addAbility(new Abilities.AutoSmelt())
       .addAbility(new Abilities.AutoShreader())
       .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 1f, 1f));
+  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, ModToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 0f, 1f));
   
-  public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 1f, 1f)
+  public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 0f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AutoShreader())
       .addAbility(new Abilities.Fortune(2))
       .addAbility(new Abilities.SilkTouch()));
-  public static final Item BISMUTH_AXE = register("bismuth_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 1f, 1f)
+  public static final Item BISMUTH_AXE = register("bismuth_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, ModToolMaterials.BISMUTH_TOOL_MATERIAL, 10f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AutoShreader())
@@ -1122,7 +1122,7 @@ public class ModItems {
       .addModifier(new Modifiers.Stunning(10))
       .addModifier(new Modifiers.Decapitator()));
   
-  public static final Item MOLTEN_PICKAXE = register("molten_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 1f, 1f)
+  public static final Item MOLTEN_PICKAXE = register("molten_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 0f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AutoSmelt())
@@ -1132,7 +1132,7 @@ public class ModItems {
       .addModifier(new Modifiers.Vampire(2.0f))
       .addModifier(new Modifiers.Decapitator())
       .addCanBreakDepthRock());
-  public static final Item MOLTEN_AXE = register("molten_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 1f, 1f)
+  public static final Item MOLTEN_AXE = register("molten_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, ModToolMaterials.MOLTEN_TOOL_MATERIAL, 10f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.AutoSmelt())
@@ -1142,7 +1142,7 @@ public class ModItems {
       .addModifier(new Modifiers.Vampire(3.0f))
       .addModifier(new Modifiers.Decapitator()));
   
-  public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 0f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.Fortune(4))
@@ -1152,7 +1152,7 @@ public class ModItems {
       .addModifier(new Modifiers.Vampire(5.0f))
       .addModifier(new Modifiers.Decapitator())
       .addCanBreakDepthRock());
-  public static final Item CHLOROPHYTE_AXE = register("chlorophyte_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 1f, 1f)
+  public static final Item CHLOROPHYTE_AXE = register("chlorophyte_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, ModToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 30f, 1f)
       .addAbility(new Abilities.AoE(2))
       .addAbility(new Abilities.VeinMiner(4))
       .addAbility(new Abilities.Fortune(4))
@@ -1161,7 +1161,7 @@ public class ModItems {
       .addModifier(new Modifiers.Decapitator())
       .addCanBreakDepthRock());
   
-  public static final Item MESE_PICKAXE = register("mese_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 1f, 1f)
+  public static final Item MESE_PICKAXE = register("mese_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 0f, 1f)
       .addAbility(new Abilities.AoE(3))
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoCrystallizer())
@@ -1175,7 +1175,7 @@ public class ModItems {
       .addModifier(new Modifiers.PhosphorusTip(60))
       .addModifier(new Modifiers.Decapitator())
       .addCanBreakDepthRock());
-  public static final Item MESE_AXE = register("mese_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 1f, 1f)
+  public static final Item MESE_AXE = register("mese_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, ModToolMaterials.MESE_TOOL_MATERIAL, 40f, 1f)
       .addAbility(new Abilities.AoE(3))
       .addAbility(new Abilities.VeinMiner(5))
       .addAbility(new Abilities.AutoCrystallizer())

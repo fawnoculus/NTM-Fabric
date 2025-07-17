@@ -14,10 +14,12 @@ For now your Options for getting the mod are:
 - ~~Modrinth~~ (maybe someday)
 - ~~CurseForge~~ (maybe someday)
 - [Github Releases](https://github.com/fawnoculus/NTM-Fabric/releases/latest)
+- [Github Actions](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml) (automatically complies jar every commit)
 - Building it from Source (refer to the Section Below)
 
 
 ## Building it from Source
+Building it from source should be unnecessary as you can download the jar of the latest commit from [Github Actions](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml)
 1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
 2. Open PowerShell (or Bash if you are using Linux)
 3. Navigate to the Directory you wish to copy the Sources to
