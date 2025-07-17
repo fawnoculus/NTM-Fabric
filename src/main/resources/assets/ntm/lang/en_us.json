@@ -77,6 +77,7 @@
 
   "tooltip.ntm.radioactive": "[Radioactive]",
   "tooltip.ntm.stack_rads": "Stack: %1$s RAD/s",
+  "tooltip.ntm.radiation_resistance": "Radiation resistance: %1$s",
   "tooltip.ntm.dangerous_drop": "[Dangerous Drop]",
   "tooltip.ntm.hold_for_info": "Hold 'Extra Info Keybind' to display more info",
 

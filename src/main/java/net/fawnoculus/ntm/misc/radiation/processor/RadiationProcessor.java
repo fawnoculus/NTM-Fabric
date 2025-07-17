@@ -1,24 +1,25 @@
 package net.fawnoculus.ntm.misc.radiation.processor;
 
 import net.fawnoculus.ntm.misc.data.CustomData;
-import net.fawnoculus.ntm.misc.radiation.RadiationManager;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
-public abstract class RadiationProcessor {
-  public final RadiationManager radiationManager;
-  public final ChunkPos POS;
+public interface RadiationProcessor {
+  void tick();
   
-  public RadiationProcessor(ChunkPos pos){
-    this.POS = pos;
-    radiationManager = RadiationManager.getInstance();
+  double getPassiveRadiation(Vec3d pos);
+  double getActiveRadiation(Vec3d pos);
+  default double getPassiveRadiation(Vec3i pos){
+    return getPassiveRadiation(new Vec3d(pos));
+  }
+  default double getActiveRadiation(Vec3i pos){
+    return getPassiveRadiation(new Vec3d(pos));
   }
   
-  public abstract void tick();
+  void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos);
   
-  public abstract double getPassiveRadiation(Vec3d pos);
-  public abstract double getActiveRadiation(Vec3d pos);
-  
-  public abstract void writeData(CustomData data);
-  public abstract void readData(CustomData data);
+  void writeData(CustomData data);
+  void readData(CustomData data);
 }

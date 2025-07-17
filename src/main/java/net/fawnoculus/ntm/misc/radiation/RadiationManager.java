@@ -6,6 +6,7 @@ import net.fawnoculus.ntm.entity.ModStatusEffects;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.misc.radiation.processor.SimpleRadiationProcessor;
 import net.fawnoculus.ntm.network.custom.RadiationInformationS2CPayload;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
@@ -26,6 +27,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.EntityList;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Range;
 
 import java.util.Collection;
@@ -201,11 +203,10 @@ public class RadiationManager {
     increaseRadiationExposure(entity, getTotalRadiation(entity) * getRadiationModifier(entity) / 20.0);
   }
   
-  public RadiationProcessor makeNewRadiationProcessor(ChunkPos pos){
+  public RadiationProcessor makeNewRadiationProcessor(ServerWorld world, ChunkPos pos){
     if(NTMConfig.DisableChunkRadiation.getValue()){
       return new EmptyRadiationProcessor();
     }
-    // TODO: other Radiation Processors
-    return new EmptyRadiationProcessor();
+    return new SimpleRadiationProcessor(world, pos);
   }
 }

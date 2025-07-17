@@ -7,11 +7,13 @@ import net.fawnoculus.ntm.misc.radiation.processor.EmptyRadiationProcessor;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessor;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorHolder;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.UpgradeData;
+import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.gen.chunk.BlendingData;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
@@ -25,13 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Chunk.class)
 public class ChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
   @Shadow @Final protected ChunkPos pos;
-  @Unique protected RadiationProcessor radiationProcessor = new EmptyRadiationProcessor();
+  @Unique protected RadiationProcessor radiationProcessor = new EmptyRadiationProcessor(); // RadiationProcessors are set in WorldChunk
   @Unique protected CustomData customData = new CustomData();
-  
-  @Inject(at = @At("TAIL"), method = "<init>")
-  private void addRadiationProcessor(ChunkPos pos, UpgradeData upgradeData, HeightLimitView heightLimitView, Registry biomeRegistry, long inhabitedTime, ChunkSection[] sectionArray, BlendingData blendingData, CallbackInfo ci) {
-    this.radiationProcessor = RadiationManager.getInstance().makeNewRadiationProcessor(pos);
-  }
   
   @Override
   public RadiationProcessor NTM$getRadiationProcessor() {

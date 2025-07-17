@@ -1,20 +1,16 @@
 package net.fawnoculus.ntm.misc.radiation.processor;
 
 import net.fawnoculus.ntm.misc.data.CustomData;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 /**
  * A Radiation Processor that does absolutely nothing.
  */
-public class EmptyRadiationProcessor extends RadiationProcessor {
-  public EmptyRadiationProcessor() {
-    super(ChunkPos.ORIGIN);
-  }
-  
+public class EmptyRadiationProcessor implements RadiationProcessor {
   @Override
-  public void tick() {
-  }
+  public void tick() {}
   
   @Override
   public double getPassiveRadiation(Vec3d pos) {
@@ -27,10 +23,11 @@ public class EmptyRadiationProcessor extends RadiationProcessor {
   }
   
   @Override
-  public void writeData(CustomData data) {
-  }
+  public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {}
   
   @Override
-  public void readData(CustomData data) {
-  }
+  public void writeData(CustomData data) {}
+  
+  @Override
+  public void readData(CustomData data) {}
 }

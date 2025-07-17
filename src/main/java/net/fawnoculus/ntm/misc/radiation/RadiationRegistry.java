@@ -14,7 +14,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 import java.io.File;
 import java.io.FileReader;
@@ -37,7 +42,7 @@ public class RadiationRegistry {
   private final HashMap<Identifier, Double> radioactivityOverrides = new HashMap<>();
   
   public void loadOverrides() {
-    File file = FabricLoader.getInstance().getConfigDir().resolve("ntm/radiation_overrides.json").toFile();
+    File file = FabricLoader.getInstance().getConfigDir().resolve("ntm/overrides/radiation.json").toFile();
     if(!file.exists()){
       try{
         boolean ignored = file.getParentFile().mkdirs();
@@ -51,7 +56,8 @@ public class RadiationRegistry {
             fileWriter.write("\t\"example:no_longer_radioactive\": 0,\n");
             fileWriter.write("\t\"example:values_are_in_milli_rads\": 0,\n");
             fileWriter.write("\t\"example:this_is_one_rad_per_second\": 1000,\n");
-            fileWriter.write("\t\"example:decimals_are_also_allowed\": 0.75\n");
+            fileWriter.write("\t\"example:decimals_are_also_allowed\": 0.75,\n");
+            fileWriter.write("\t\"example:these_overrides_are_for_items_blocks_and_dimensions\": 0\n");
             fileWriter.write("}");
           } catch (Exception e) {
             NTM.LOGGER.error("An Exception occurred while trying write Examples to Radiation Overrides File\nException:{}", ExceptionUtil.makePretty(e));
@@ -85,6 +91,13 @@ public class RadiationRegistry {
     NTM.LOGGER.info("Successfully loaded Radioactivity Overrides for {} identifier(s)", radioactivityOverrides.size());
   }
   
+  public double getRadioactivity(World world) {
+    try{
+      return getRadioactivity(world.getRegistryManager().getOrThrow(RegistryKeys.DIMENSION_TYPE).getId(world.getDimension()));
+    }catch (Throwable throwable){
+      return 0;
+    }
+  }
   public double getRadioactivity(BlockState state) {
     return getRadioactivity(state.getBlock());
   }

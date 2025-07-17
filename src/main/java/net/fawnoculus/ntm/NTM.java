@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ModMetadata;
+import net.fawnoculus.ntm.blocks.ExtraBlockData;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.commands.ModCommandArguments;
@@ -12,6 +13,7 @@ import net.fawnoculus.ntm.entity.ModDamageTypes;
 import net.fawnoculus.ntm.entity.ModStatusEffects;
 import net.fawnoculus.ntm.fluid.ModFluids;
 import net.fawnoculus.ntm.items.*;
+import net.fawnoculus.ntm.misc.radiation.HazmatRegistry;
 import net.fawnoculus.ntm.network.ModServerPayloadHandler;
 import net.fawnoculus.ntm.network.ModPayloads;
 import net.fawnoculus.ntm.recipe.ModRecipes;
@@ -54,9 +56,11 @@ public class NTM implements ModInitializer {
     
     ModBlocks.initialize();
     ModBlockEntities.initialize();
+    ExtraBlockData.initialize();
     
     RadiationManager.initialize();
     RadiationRegistry.initialize();
+    HazmatRegistry.initialize();
     
     ModRecipes.initialize();
     

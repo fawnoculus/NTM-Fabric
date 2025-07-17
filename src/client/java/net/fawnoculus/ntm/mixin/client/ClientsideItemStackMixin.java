@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.mixin.client;
 import net.fawnoculus.ntm.items.custom.genric.DangerousDrop;
 import net.fawnoculus.ntm.items.custom.genric.ExtraInfo;
 import net.fawnoculus.ntm.misc.ModKeybinds;
+import net.fawnoculus.ntm.misc.radiation.ClientHazmatRegistry;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationRegistry;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +29,8 @@ public abstract class ClientsideItemStackMixin {
   @Shadow private int count;
   @Unique
   private static final ClientRadiationRegistry clientRadiationRegistry = ClientRadiationRegistry.getInstance();
+  @Unique
+  private static final ClientHazmatRegistry clientHazmatRegistry = ClientHazmatRegistry.getInstance();
   
   @Inject(method = "appendTooltip", at = @At(
       value = "INVOKE",
@@ -47,7 +50,13 @@ public abstract class ClientsideItemStackMixin {
     if(milliRads > 0){
       textConsumer.accept(Text.translatable("tooltip.ntm.radioactive").formatted(Formatting.GREEN));
       textConsumer.accept(Text.translatable("genric.ntm.radiation.rads", milliRads / 1000.0).formatted(Formatting.YELLOW));
-      textConsumer.accept(Text.translatable("tooltip.ntm.stack_rads", milliRads * this.count / 1000.0).formatted(Formatting.YELLOW));
+      if(this.count > 1){
+        textConsumer.accept(Text.translatable("tooltip.ntm.stack_rads", milliRads * this.count / 1000.0).formatted(Formatting.YELLOW));
+      }
+    }
+    double radiationResistance = clientHazmatRegistry.getResistance(this.getItem());
+    if(radiationResistance > 0){
+      textConsumer.accept(Text.translatable("tooltip.ntm.radiation_resistance", radiationResistance).formatted(Formatting.YELLOW));
     }
     
     if(this.getItem() instanceof ExtraInfo extraInfo){
