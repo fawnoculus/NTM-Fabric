@@ -34,6 +34,7 @@
   "message.ntm.get_node_networks.fluid": "Fluid Networks:",
   "message.ntm.get_node_networks.other": "Unknown Networks:",
   "message.ntm.get_node_networks.none": "None",
+  "message.ntm.multiblock.not_enough_space": "Not enough space to place",
   "message.ntm.not_enough_xp": "Not Enough Experience!",
   "message.ntm.teeth_to_soft": "Your teeth are to soft to eat this",
   "message.ntm.dosimeter": "===== ☢ DOSIMETER ☢ =====",
