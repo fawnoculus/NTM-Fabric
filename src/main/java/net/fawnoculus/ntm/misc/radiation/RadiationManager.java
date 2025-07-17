@@ -27,8 +27,6 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.EntityList;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Range;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -100,18 +98,15 @@ public class RadiationManager {
   }
   
   public double getRadiationResistance(LivingEntity entity){
-    double resistance = 0;
+    double resistance = hazmatRegistry.getResistance(entity);
     if(entity.hasStatusEffect(ModStatusEffects.RAD_X)){
       resistance += 0.2;
     }
-    resistance += hazmatRegistry.getResistance(entity);
     return resistance;
   }
-  @Range(from = 0, to = 100)
   public double getRadiationResistancePercentage(LivingEntity entity){
     return 100 - (getRadiationModifier(entity) * 100);
   }
-  @Range(from = 0, to = 1)
   public double getRadiationModifier(LivingEntity entity){
     return Math.pow(10.0, -getRadiationResistance(entity));
   }

@@ -5,15 +5,10 @@ import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 /**
  * Simple Chunk Based Radiation Processor
