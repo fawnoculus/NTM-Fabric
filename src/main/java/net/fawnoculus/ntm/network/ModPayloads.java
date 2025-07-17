@@ -11,6 +11,7 @@ public class ModPayloads {
     PayloadTypeRegistry.playS2C().register(RadiationInformationS2CPayload.ID, RadiationInformationS2CPayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(RadiationRegistryS2CPayload.ID, RadiationRegistryS2CPayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(NTMVersionS2CPayload.ID, NTMVersionS2CPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(InventorySyncS2CPayload.ID, InventorySyncS2CPayload.PACKET_CODEC);
     
     /*
     PayloadTypeRegistry.playC2S().register(RadiationRegistryS2CPayload.ID, RadiationRegistryS2CPayload.PACKET_CODEC);

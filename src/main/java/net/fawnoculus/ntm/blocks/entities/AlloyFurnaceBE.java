@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.blocks.entities;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.NTM;
@@ -12,11 +11,8 @@ import net.fawnoculus.ntm.recipe.AlloyFurnaceRecipeInput;
 import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,9 +33,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPosS2CPayload> {
+public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScreenHandlerFactory<BlockPosS2CPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.ALLOY_FURNACE_BE, pos, state);
+    super(ModBlockEntities.ALLOY_FURNACE_BE, pos, state, 4);
   }
   
   // max fuel is consistent with original, but translated to fuel burn ticks for consistency
@@ -50,24 +46,16 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   private static final int MAX_PROGESS = 400;
   private int progress = 0;
   
-  private final SimpleInventory inventory = new SimpleInventory(4){
-    @Override
-    public void markDirty() {
-      super.markDirty();
-      update();
-    }
-  };
-  
   public static final int OUTPUT_SLOT_INDEX = 0;
   public static final int FUEL_SLOT_INDEX = 1;
   public static final int INPUT_TOP_SLOT_INDEX = 2;
   public static final int INPUT_BOTTOM_SLOT_INDEX = 3;
   
-  private final InventoryStorage inventoryStorage = InventoryStorage.of(inventory, null);
+  private static final Text DISPLAY_NAME = Text.translatable("container."+ NTM.MOD_ID+".alloy_furnace");
   
   @Override
   public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-    ItemScatterer.spawn(world, pos, inventory);
+    ItemScatterer.spawn(world, pos, this.getInventory());
     super.onBlockReplaced(pos, oldState);
   }
   
@@ -102,20 +90,9 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
     if(this.getWorld() instanceof ServerWorld serverWorld) {
       return serverWorld.getRecipeManager()
-          .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(inventory.getStack(INPUT_TOP_SLOT_INDEX), inventory.getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
+          .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
     }
     return Optional.empty();
-  }
-  
-  public boolean canInsertIntoSlot(ItemStack stack, int slotIndex){
-    ItemStack switchStack = this.inventory.getStack(slotIndex);
-    if(switchStack.isEmpty()) return true;
-    
-    if(switchStack.getItem() == stack.getItem()){
-      return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
-    }
-    
-    return false;
   }
   
   public float getFuel(){
@@ -140,12 +117,12 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     RecipeEntry<AlloyFurnaceRecipe> recipe = getCurrentRecipe().get();
     
     ItemStack recipeOutput = recipe.value().output().copy();
-    recipeOutput.setCount(inventory.getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
+    recipeOutput.setCount(this.getInventory().getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
     
-    inventory.setStack(OUTPUT_SLOT_INDEX, recipeOutput);
+    this.getInventory().setStack(OUTPUT_SLOT_INDEX, recipeOutput);
     
-    inventory.removeStack(INPUT_BOTTOM_SLOT_INDEX, 1);
-    inventory.removeStack(INPUT_TOP_SLOT_INDEX, 1);
+    this.getInventory().removeStack(INPUT_BOTTOM_SLOT_INDEX, 1);
+    this.getInventory().removeStack(INPUT_TOP_SLOT_INDEX, 1);
   }
   
   private void addProgress(){
@@ -176,7 +153,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   private void processFuelInput(){
     assert this.getWorld() != null;
     FuelRegistry fuelRegistry = this.getWorld().getFuelRegistry();
-    ItemStack fuelStack = inventory.getStack(FUEL_SLOT_INDEX);
+    ItemStack fuelStack = this.getInventory().getStack(FUEL_SLOT_INDEX);
     if(!fuelRegistry.isFuel(fuelStack)) return;
     
     int fuelTicks = fuelRegistry.getFuelTicks(fuelStack);
@@ -186,7 +163,7 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     Item item = fuelStack.getItem();
     fuelStack.decrement(1);
     if (fuelStack.isEmpty()) {
-      inventory.setStack(FUEL_SLOT_INDEX, item.getRecipeRemainder());
+      this.getInventory().setStack(FUEL_SLOT_INDEX, item.getRecipeRemainder());
     }
   }
   
@@ -198,10 +175,6 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   private void update(){
     markDirty();
     if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-  }
-  
-  public SimpleInventory getInventory(){
-    return this.inventory;
   }
   
   @Override
@@ -218,22 +191,14 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     nbt.putInt("fuel", fuel);
     nbt.putInt("process", progress);
-    Inventories.writeNbt(nbt, this.inventory.getHeldStacks(), registryLookup);
     super.writeNbt(nbt, registryLookup);
   }
   
   @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
-    Inventories.readNbt(nbt, this.inventory.getHeldStacks(), registryLookup);
-    
     fuel = nbt.getInt("fuel").orElse(0);
     progress = nbt.getInt("process").orElse(0);
-  }
-  
-  @Override
-  public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-    return createNbt(registryLookup);
   }
   
   @Override
@@ -241,7 +206,6 @@ public class AlloyFurnaceBE extends BlockEntity implements ExtendedScreenHandler
     return BlockEntityUpdateS2CPacket.create(this);
   }
   
-  private static final Text DISPLAY_NAME = Text.translatable("container."+ NTM.MOD_ID+".alloy_furnace");
   @Override
   public Text getDisplayName() {
     return DISPLAY_NAME;
