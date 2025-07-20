@@ -8,18 +8,24 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTexture;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TriState;
 import net.minecraft.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.function.Function;
 
 public class ModRendering {
+  public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Render");
+  public static Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
+  
   public static final RenderPipeline POSITION_COLOR_PIPELINE = RenderPipelines.register(
       RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)
           .withLocation(NTM.id("pipeline/position_color"))
@@ -27,13 +33,12 @@ public class ModRendering {
           .build()
   );
   public static final RenderPipeline TEXTURE_PIPELINE = RenderPipelines.register(
-      RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)
+      RenderPipeline.builder(RenderPipelines.POSITION_TEX_COLOR_SNIPPET)
           .withLocation(NTM.id("pipeline/texture"))
-          .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.TRIANGLES)
+          .withVertexFormat(VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLES)
           .build()
   );
   
-  public static final Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
   
   public static void drawTexture(BuiltBuffer buffer, Identifier texture){
     draw(buffer, TEXTURE_PIPELINE,
@@ -109,10 +114,12 @@ public class ModRendering {
         }
       }
       
-      throw throwable;
+      LOGGER.warn("Exception occurred while trying to Render BuiltBuffer \n\tException: {}", ExceptionUtil.makePretty(throwable, false));
     }
     
-    buffer.close();
+    if(buffer != null){
+      buffer.close();
+    }
     
     phases.forEach(RenderPhase::endDrawing);
   }

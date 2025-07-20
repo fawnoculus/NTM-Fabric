@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.render.hud;
 
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
 import net.minecraft.client.MinecraftClient;
@@ -22,9 +23,9 @@ public class GeigerCounterRender {
   private static final int COLOR = ColorHelper.getArgb(256, 256, 256);
   
   private static boolean shouldDraw(){
-    if(MinecraftClient.getInstance() == null) return false;
-    if(MinecraftClient.getInstance().player == null) return false;
-    return PlayerUtil.hasItem(MinecraftClient.getInstance().player, ModItems.GEIGER_COUNTER);
+    if(ClientUtil.getClient() == null) return false;
+    if(ClientUtil.getPlayer() == null) return false;
+    return PlayerUtil.hasItem(ClientUtil.getPlayer(), ModItems.GEIGER_COUNTER);
   }
   
   public static void drawGeigerCounter(DrawContext context, RenderTickCounter tickCounter) {

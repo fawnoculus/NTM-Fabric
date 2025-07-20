@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.network;
 
 import net.fabricmc.loader.api.Version;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.NTMClient;
 import net.fawnoculus.ntm.network.custom.NTMVersionS2CPayload;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -23,9 +24,12 @@ public class ClientReceivedVersionHandler {
     if(!hasReceivedVersion){
       player.sendMessage(Text.translatable("message.ntm.version.not_installed1"), false);
       player.sendMessage(Text.translatable("message.ntm.version.not_installed2"), false);
+      NTMClient.LOGGER.info("Connected Server does not have {} installed", NTM.MOD_NAME);
       return;
     }
+    NTMClient.LOGGER.info("Connected Server does has Version {} have {} installed", serverVersion.getFriendlyString(), NTM.MOD_NAME);
     if(!serverVersion.getFriendlyString().equals(clientVersion.getFriendlyString())){
+      NTMClient.LOGGER.warn("Version Mismatch, Client has Version {} have {} installed", clientVersion.getFriendlyString(), NTM.MOD_NAME);
       player.sendMessage(Text.translatable("message.ntm.version.mismatch1"), false);
       player.sendMessage(Text.translatable("message.ntm.version.mismatch2"), false);
       player.sendMessage(Text.translatable("message.ntm.version.server", serverVersion.getFriendlyString()), false);

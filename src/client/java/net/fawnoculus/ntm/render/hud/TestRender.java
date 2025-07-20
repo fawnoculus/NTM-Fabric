@@ -9,7 +9,6 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
@@ -20,12 +19,14 @@ public class TestRender {
     Tessellator tessellator = Tessellator.getInstance();
     BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
     
-    totalTickDelta += tickCounter.getTickProgress(false);
+    totalTickDelta += tickCounter.getTickProgress(true);
     
     MatrixStack matrices = context.getMatrices();
     matrices.push();
+    /*
     float scaleAmount = MathHelper.sin(totalTickDelta / 10F) / 2F + 1.5F;
     matrices.scale(scaleAmount, scaleAmount, 1F);
+     */
     float rotationAmount = totalTickDelta / 100F % 180;
     matrices.translate(20f, 20f, 0f);
     matrices.multiply(RotationAxis.POSITIVE_Z.rotation(rotationAmount));

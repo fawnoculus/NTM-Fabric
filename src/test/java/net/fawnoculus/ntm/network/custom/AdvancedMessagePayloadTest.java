@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 public class AdvancedMessagePayloadTest {
   @BeforeAll
   static void beforeAll() {
-    NTM.LOGGER.info("what!");
     SharedConstants.createGameVersion();
     Bootstrap.initialize();
   }

@@ -11,11 +11,14 @@ import net.fawnoculus.ntm.render.ModHudRender;
 import net.fawnoculus.ntm.render.ModParticleRender;
 import net.fawnoculus.ntm.render.ModWorldRender;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NTMClient implements ClientModInitializer {
+  public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client");
   @Override
   public void onInitializeClient() {
-    NTM.LOGGER.info("Initializing {} Client Components", NTM.MOD_NAME);
+    LOGGER.info("Initializing {} Client Components", NTM.MOD_NAME);
     
     NTMClientConfig.initialize();
     
@@ -36,6 +39,6 @@ public class NTMClient implements ClientModInitializer {
     
     ModClientPayloadHandler.initialize();
     
-    NTM.LOGGER.info("Finished {} Client Initialization", NTM.MOD_NAME);
+    LOGGER.info("Finished {} Client Initialization", NTM.MOD_NAME);
   }
 }

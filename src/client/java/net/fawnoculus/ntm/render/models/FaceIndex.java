@@ -7,10 +7,19 @@ import java.util.Collection;
 import java.util.List;
 
 public class FaceIndex {
-  List<Integer> vertexIndexes = new ArrayList<>();
-  List<Integer> coordinateIndexes = new ArrayList<>();
-  List<Integer> normalIndexes = new ArrayList<>();
+  public final List<Integer> vertexIndexes = new ArrayList<>();
+  public final List<Integer> coordinateIndexes = new ArrayList<>();
+  public final List<Integer> normalIndexes = new ArrayList<>();
   
+  public FaceIndex(
+      @NotNull Collection<Integer> vertexIndices,
+      @NotNull Collection<Integer> coordinateIndices,
+      @NotNull Collection<Integer> normalIndices
+  ){
+    this.vertexIndexes.addAll(vertexIndices);
+    this.coordinateIndexes.addAll(coordinateIndices);
+    this.normalIndexes.addAll(normalIndices);
+  }
   
   public PolygonalFace toFace(List<GeometryVertex> vertices, List<TextureCoordinate> coordinates, List<VertexNormal> vertexNormals){
     PolygonalFace polygonalFace = new PolygonalFace();
@@ -39,22 +48,13 @@ public class FaceIndex {
         continue;
       }
       if(index < 0){
-        polygonalFace.addCoordinate(coordinates.get(coordinates.size() + index));
+        polygonalFace.addNormal(vertexNormals.get(coordinates.size() + index));
         continue;
       }
-      polygonalFace.addCoordinate(coordinates.get(index));
+      polygonalFace.addNormal(vertexNormals.get(index));
     }
     
     return polygonalFace;
   }
   
-  public void addIndexes(
-      @NotNull Collection<Integer> vertexIndices,
-      @NotNull Collection<Integer> coordinateIndices,
-      @NotNull Collection<Integer> normalIndices
-      ){
-    this.vertexIndexes.addAll(vertexIndices);
-    this.coordinateIndexes.addAll(coordinateIndices);
-    this.normalIndexes.addAll(normalIndices);
-  }
 }

@@ -14,15 +14,25 @@ public class PolygonalFace {
   public void addVertex(@NotNull GeometryVertex vertex){
     this.vertices.add(vertex);
   }
-  public void addCoordinate(@NotNull TextureCoordinate coordinate){
+  public void addCoordinate(TextureCoordinate coordinate){
     this.coordinates.add(coordinate);
   }
   public void addNormal(@Nullable VertexNormal normal){
     this.normals.add(normal);
   }
   
-  public boolean isValid(){
-    return vertices.size() == coordinates.size()
-        && vertices.size() == normals.size();
+  public boolean isInValid(){
+    return vertices.size() != 3
+        || coordinates.size() != 3
+        || normals.size() != 3;
+  }
+  
+  @Override
+  public String toString() {
+    return "PolygonalFace{" +
+        "vertices=" + vertices +
+        ", coordinates=" + coordinates +
+        ", normals=" + normals +
+        '}';
   }
 }

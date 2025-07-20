@@ -6,11 +6,15 @@ import net.fawnoculus.ntm.util.config.filetype.JsonConfigFile;
 import net.fawnoculus.ntm.util.config.options.BooleanOption;
 import net.fawnoculus.ntm.util.config.options.IntegerOption;
 import net.fawnoculus.ntm.util.config.options.StringListOption;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class NTMConfig {
-  public static final ConfigFile CommonConfig = new ConfigFile("ntm/common", new JsonConfigFile(), NTM.LOGGER);
+  public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Config");
+  
+  public static final ConfigFile CommonConfig = new ConfigFile("ntm/common", new JsonConfigFile(), LOGGER);
   public static final StringListOption VeinMinerAbilityExclude = CommonConfig.newStringListOption(
       "VeinMinerAbilityExclude",
       List.of(
@@ -47,7 +51,7 @@ public class NTMConfig {
       "This is really only usefully for debugging"
   );
   
-  public static final PerWorldConfigFile WorldConfig = new PerWorldConfigFile("ntm/world_default", "ntm/world_config", new JsonConfigFile(), NTM.LOGGER);
+  public static final PerWorldConfigFile WorldConfig = new PerWorldConfigFile("ntm/world_default", "ntm/world_config", new JsonConfigFile(), LOGGER);
   public static final BooleanOption DisableEntityRadiation = WorldConfig.newBooleanOption(
       "DisableEntityRadiation", false,
       "Stops Entities from being able to receive Radiation, does not remove already existent Radiation Poisoning"
