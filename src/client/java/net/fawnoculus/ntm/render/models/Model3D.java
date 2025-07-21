@@ -36,20 +36,23 @@ public class Model3D {
   }
   
   public void draw(MatrixStack.Entry matrix, Identifier texture){
+    draw(matrix, 15728880, texture);
+  }
+  public void draw(MatrixStack.Entry matrix, int light, Identifier texture){
     try{
-      ModRenderPipelines.drawTexture(this.getAsBuffer(matrix).end(), texture);
+      ModRenderPipelines.drawTexture(this.getAsBuffer(matrix, light).end(), texture);
     }catch (Throwable throwable){
       ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render: {}\n\tException: {}", this, ExceptionUtil.makePretty(throwable, false));
     }
   }
   
-  private BufferBuilder getAsBuffer(MatrixStack.Entry matrix) {
+  private BufferBuilder getAsBuffer(MatrixStack.Entry matrix, int light) {
     Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_TEXTURE_COLOR);
-    return addToBuffer(matrix, buffer);
+    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+    return addToBuffer(matrix, light, buffer);
   }
   
-  public BufferBuilder addToBuffer(MatrixStack.Entry matrix, BufferBuilder buffer){
+  public BufferBuilder addToBuffer(MatrixStack.Entry matrix, int light, BufferBuilder buffer){
     for (PolygonalFace face : this.getFaces()){
       if(face.isInValid()) continue;
       
@@ -61,10 +64,12 @@ public class Model3D {
           buffer.vertex(matrix, vertex.X, vertex.Y, vertex.Z)
               .texture(1 - coordinate.getU(), 1 - coordinate.getV())
               .normal(normal.X, normal.Y, normal.Z)
+              .light(light)
               .color(-1);
         }else {
           buffer.vertex(matrix, vertex.X, vertex.Y, vertex.Z)
               .texture( 1 - coordinate.getU(), 1 - coordinate.getV())
+              .light(light)
               .color(-1);
         }
       }

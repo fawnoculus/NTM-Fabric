@@ -31,25 +31,25 @@ public class GroupedModel3D {
   }
   
   public void drawAll(MatrixStack.Entry matrix, Identifier texture) {
-    Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_TEXTURE_COLOR);
-    buffer = addAllToBuffer(matrix, buffer);
+    drawAll(matrix, 15728880 ,texture);
+  }
+  public void drawAll(MatrixStack.Entry matrix, int light, Identifier texture) {
     try{
-      ModRenderPipelines.drawTexture(buffer.end(), texture);
+      ModRenderPipelines.drawTexture(getAllAsBuffer(matrix, light).end(), texture);
     }catch (Throwable throwable){
       ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render GroupedModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
     }
   }
   
-  public BufferBuilder getAllAsBuffer(MatrixStack.Entry matrix) {
+  public BufferBuilder getAllAsBuffer(MatrixStack.Entry matrix, int light) {
     Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_TEXTURE_COLOR);
-    return addAllToBuffer(matrix, buffer);
+    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+    return addAllToBuffer(matrix, light, buffer);
   }
   
-  public BufferBuilder addAllToBuffer(MatrixStack.Entry matrix, BufferBuilder buffer){
+  public BufferBuilder addAllToBuffer(MatrixStack.Entry matrix, int light, BufferBuilder buffer){
       for(Model3D model : MODELS.values()){
-        buffer = model.addToBuffer(matrix, buffer);
+        buffer = model.addToBuffer(matrix, light, buffer);
       }
     return buffer;
   }

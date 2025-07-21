@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.render;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -33,9 +34,14 @@ public class ModRenderPipelines {
           .build()
   );
   public static final RenderPipeline TEXTURE_PIPELINE = RenderPipelines.register(
-      RenderPipeline.builder(RenderPipelines.POSITION_TEX_COLOR_SNIPPET)
+      RenderPipeline.builder()
           .withLocation(NTM.id("pipeline/texture"))
-          .withVertexFormat(VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLES)
+          .withVertexShader(NTM.id("textured"))
+          .withFragmentShader(NTM.id("textured"))
+          .withSampler("Sampler0")
+          .withSampler("Sampler2")
+          .withBlend(BlendFunction.TRANSLUCENT)
+          .withVertexFormat(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL, VertexFormat.DrawMode.TRIANGLES)
           .build()
   );
   

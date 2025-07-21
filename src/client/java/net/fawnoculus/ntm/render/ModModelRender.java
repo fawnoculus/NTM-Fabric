@@ -8,16 +8,19 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.RotationAxis;
 
 import java.util.HashMap;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class ModModelRender {
   public static final HashMap<Item, Consumer<MatrixStack>> ITEM_RENDERERS = new HashMap<>();
+  public static final HashMap<Item, BiConsumer<MatrixStack, Integer>> ITEM_LIGHT_RENDERERS = new HashMap<>();
   
-  private static void register(Consumer<MatrixStack> renderFunc, Block block){
+  private static void register(BiConsumer<MatrixStack, Integer> renderFunc, Block block){
     register(renderFunc, block.asItem());
   }
-  private static void register(Consumer<MatrixStack> renderFunc, Item item){
-    ITEM_RENDERERS.put(item, renderFunc);
+  private static void register(BiConsumer<MatrixStack, Integer> renderFunc, Item item){
+    ITEM_LIGHT_RENDERERS.put(item, renderFunc);
+    ITEM_RENDERERS.put(item, matrixStack -> renderFunc.accept(matrixStack, 15728880));
   }
   
   public static void initialize(){
@@ -29,19 +32,19 @@ public class ModModelRender {
     public final static Model3D SIDE = ModModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
     public final static Model3D BOTTOM = ModModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
     
-    public static void renderItem(MatrixStack matrices) {
+    public static void renderItem(MatrixStack matrices, int light) {
       matrices.push();
       matrices.translate(0, -0.325f, 0);
       matrices.scale(0.75f, 0.75f, 0.75f);
       matrices.multiply(RotationAxis.POSITIVE_Y.rotation(0.5f));
-      render(matrices);
+      render(matrices, light);
       matrices.pop();
     }
-    public static void render(MatrixStack matrices) {
+    public static void render(MatrixStack matrices, int light) {
       matrices.push();
-      TOP.draw(matrices.peek(), ModTextures.ALLOY_FURNACE_EXTENSION_TOP);
-      SIDE.draw(matrices.peek(), ModTextures.ALLOY_FURNACE_EXTENSION_SIDE);
-      BOTTOM.draw(matrices.peek(), ModTextures.ALLOY_FURNACE_EXTENSION_BOTTOM);
+      TOP.draw(matrices.peek(), light, ModTextures.ALLOY_FURNACE_EXTENSION_TOP);
+      SIDE.draw(matrices.peek(), light, ModTextures.ALLOY_FURNACE_EXTENSION_SIDE);
+      BOTTOM.draw(matrices.peek(), light, ModTextures.ALLOY_FURNACE_EXTENSION_BOTTOM);
       matrices.pop();
     }
   }

@@ -16,7 +16,7 @@ public class AlloyFurnaceExtensionBERenderer implements BlockEntityRenderer<Allo
   public void render(AlloyFurnaceExtensionBE entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
     matrices.push();
     matrices.translate(0.5, 0, 0.5);
-    ModModelRender.AlloyFurnaceExtension.render(matrices);
+    ModModelRender.AlloyFurnaceExtension.render(matrices, light);
     matrices.pop();
   }
 }

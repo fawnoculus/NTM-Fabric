@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @Mixin(ItemRenderer.class)
@@ -28,9 +29,9 @@ public abstract class ItemRendererMixin {
           ")V"
   )
   private void renderOverrideModels(LivingEntity entity, ItemStack stack, ItemDisplayContext displayContext, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, int seed, CallbackInfo ci){
-    Consumer<MatrixStack> renderOverride = ModModelRender.ITEM_RENDERERS.get(stack.getItem());
+    BiConsumer<MatrixStack, Integer> renderOverride = ModModelRender.ITEM_LIGHT_RENDERERS.get(stack.getItem());
     if(renderOverride != null){
-      renderOverride.accept(matrices);
+      renderOverride.accept(matrices, light);
       matrices.push();
       matrices.translate(1000f, 1000f, 1000f);
     }
@@ -46,7 +47,7 @@ public abstract class ItemRendererMixin {
           ")V"
   )
   private void resetMatrix(LivingEntity entity, ItemStack stack, ItemDisplayContext displayContext, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, int seed, CallbackInfo ci){
-    if(ModModelRender.ITEM_RENDERERS.containsKey(stack.getItem())){
+    if(ModModelRender.ITEM_LIGHT_RENDERERS.containsKey(stack.getItem())){
       matrices.pop();
     }
   }
