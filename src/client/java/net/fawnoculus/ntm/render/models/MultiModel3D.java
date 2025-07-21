@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.render.models;
 
 
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.fawnoculus.ntm.render.ModRendering;
+import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -36,9 +36,9 @@ public class MultiModel3D {
   
   public void drawAll(MatrixStack.Entry matrix, Identifier texture) {
     try{
-      ModRendering.drawTexture(getAllAsBuffer(matrix).end(), texture);
+      ModRenderPipelines.drawTexture(getAllAsBuffer(matrix).end(), texture);
     }catch (Throwable throwable){
-      ModRendering.LOGGER.warn("Exception occurred while trying to render MultiModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
+      ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render MultiModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
     }
   }
   
@@ -72,7 +72,7 @@ public class MultiModel3D {
     }
     throw new NoSuchElementException("Could not get GroupedModel3D '" + objectName + "' because it does not exist");
   }
-  public @Nullable Model3D getOrThrow(String objectName, String groupName) throws NoSuchElementException {
+  public @NotNull Model3D getOrThrow(String objectName, String groupName) throws NoSuchElementException {
     return getOrThrow(objectName).getOrThrow(groupName);
   }
 }

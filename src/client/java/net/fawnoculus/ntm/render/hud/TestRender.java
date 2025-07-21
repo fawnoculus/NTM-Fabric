@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.hud;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.fawnoculus.ntm.render.ModRendering;
+import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.RenderTickCounter;
@@ -40,6 +40,6 @@ public class TestRender {
     buffer.vertex(transformationMatrix, 35, 40, 5).color(ColorHelper.getArgb(100, 25, 175));
     buffer.vertex(transformationMatrix, 20, 60, 5).color(ColorHelper.getArgb(150, 25, 175));
     
-    ModRendering.drawPositonColor(buffer.end());
+    ModRenderPipelines.drawPositonColor(buffer.end());
   }
 }

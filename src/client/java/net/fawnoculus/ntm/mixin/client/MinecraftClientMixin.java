@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.mixin.client;
 
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.fawnoculus.ntm.misc.messages.MessageSystem;
+import net.fawnoculus.ntm.render.ModModelRender;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,5 +39,17 @@ public abstract class MinecraftClientMixin {
     }
     
     LastNanoTime = System.nanoTime();
+  }
+  
+  @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/ReloadableResourceManagerImpl;reload(" +
+      "Ljava/util/concurrent/Executor;" +
+      "Ljava/util/concurrent/Executor;" +
+      "Ljava/util/concurrent/CompletableFuture;" +
+      "Ljava/util/List;" +
+      ")Lnet/minecraft/resource/ResourceReload;",
+      shift = At.Shift.AFTER
+  ), method = "<init>")
+  private static void initializeModels(CallbackInfo ci) {
+    ModModelRender.initialize();
   }
 }

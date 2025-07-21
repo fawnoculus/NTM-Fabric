@@ -22,7 +22,7 @@ import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.function.Function;
 
-public class ModRendering {
+public class ModRenderPipelines {
   public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Render");
   public static final Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
   

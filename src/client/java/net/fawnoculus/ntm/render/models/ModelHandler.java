@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.render.models;
 
-import net.fawnoculus.ntm.render.ModRendering;
+import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.Resource;
@@ -18,14 +18,14 @@ public class ModelHandler {
     MultiModel3D toBeReturned = new MultiModel3D();
     Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(resourceIdentifier);
     if(resource.isEmpty()){
-      ModRendering.LOGGER.warn("Could not load '{}' (.obj) File, because it does not exist", resourceIdentifier);
+      ModRenderPipelines.LOGGER.warn("Could not load '{}' (.obj) File, because it does not exist", resourceIdentifier);
     }else{
       try{
         toBeReturned = ofWavefrontObj(new Scanner(resource.get().getInputStream()), resourceIdentifier.toString());
       }catch (WavefrontObjSyntaxException e){
-        ModRendering.LOGGER.warn("Exception occurred while parsing '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
+        ModRenderPipelines.LOGGER.warn("Exception occurred while parsing '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
       } catch (IOException e) {
-        ModRendering.LOGGER.warn("Exception occurred while trying to read '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
+        ModRenderPipelines.LOGGER.warn("Exception occurred while trying to read '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
       }
     }
     
@@ -87,7 +87,7 @@ public class ModelHandler {
         for(FaceIndex faceIndex : groupedFaces.get(objectName).get(groupName)){
           PolygonalFace polygonalFace = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
           if(polygonalFace.isInValid()){
-            ModRendering.LOGGER.warn("Created Invalid Polygonal Face: {}", polygonalFace);
+            ModRenderPipelines.LOGGER.warn("Created Invalid Polygonal Face: {}", polygonalFace);
           }
           polygonalFaces.add(polygonalFace);
         }

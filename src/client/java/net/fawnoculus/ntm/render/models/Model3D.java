@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.models;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.fawnoculus.ntm.render.ModRendering;
+import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -37,9 +37,9 @@ public class Model3D {
   
   public void draw(MatrixStack.Entry matrix, Identifier texture){
     try{
-      ModRendering.drawTexture(this.getAsBuffer(matrix).end(), texture);
+      ModRenderPipelines.drawTexture(this.getAsBuffer(matrix).end(), texture);
     }catch (Throwable throwable){
-      ModRendering.LOGGER.warn("Exception occurred while trying to render: {}\n\tException: {}", this, ExceptionUtil.makePretty(throwable, false));
+      ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render: {}\n\tException: {}", this, ExceptionUtil.makePretty(throwable, false));
     }
   }
   

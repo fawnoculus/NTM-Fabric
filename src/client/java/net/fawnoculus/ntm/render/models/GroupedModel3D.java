@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.render.models;
 
 
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.fawnoculus.ntm.render.ModRendering;
+import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -35,9 +35,9 @@ public class GroupedModel3D {
     BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_TEXTURE_COLOR);
     buffer = addAllToBuffer(matrix, buffer);
     try{
-      ModRendering.drawTexture(buffer.end(), texture);
+      ModRenderPipelines.drawTexture(buffer.end(), texture);
     }catch (Throwable throwable){
-      ModRendering.LOGGER.warn("Exception occurred while trying to render GroupedModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
+      ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render GroupedModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
     }
   }
   
