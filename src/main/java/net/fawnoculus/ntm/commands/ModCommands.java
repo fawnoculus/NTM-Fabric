@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.commands;
 
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,6 +16,7 @@ import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
 import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.minecraft.SharedConstants;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.TextArgumentType;
@@ -116,6 +118,11 @@ public class ModCommands {
                 .then(CommandManager.literal("funny")
                     .executes(ModCommands::funny)
                 )
+                .then(CommandManager.literal("set_dev_constant")
+                    .then(CommandManager.argument("bool", BoolArgumentType.bool())
+                        .executes(context -> setDevConstant(context, context.getArgument("bool", Boolean.class)))
+                    )
+                )
                 .then(CommandManager.literal("get_node_networks")
                     .executes(ModCommands::getNodeNetworks)
                 )
@@ -173,6 +180,11 @@ public class ModCommands {
   private static int funny(CommandContext<ServerCommandSource> context){
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.the_funny"), false);
     // This doesn't actually do anything
+    return 1;
+  }
+  private static int setDevConstant(CommandContext<ServerCommandSource> context, boolean value){
+    SharedConstants.isDevelopment = value;
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_dev_constant", value), false);
     return 1;
   }
   

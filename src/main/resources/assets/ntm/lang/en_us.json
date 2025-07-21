@@ -27,6 +27,7 @@
   "message.ntm.message.cleared_specific": "Cleared Message '%1$s' from %2$s Player(s)",
   "message.ntm.message.sent": "Sent Message to %1$s Player(s)",
   "message.ntm.the_funny": "Performed 'the funny' >:3",
+  "message.ntm.set_dev_constant": "Set 'SharedConstants.isDevelopment' to '%1$s'",
   "message.ntm.clean_logs": "Deleted '%1$s' old log files ('%2$s' bytes total)",
   "message.ntm.get_components.could_not_get_item": "Could not get held Item!",
   "message.ntm.get_components.value_max_length": "... (value > max_length)",

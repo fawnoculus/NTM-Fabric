@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.render.models;
 
 import net.fawnoculus.ntm.render.ModRendering;
-import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.Resource;
@@ -10,44 +9,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
 public class ModelHandler {
   private static final Pattern anyButFloats = Pattern.compile("[^.0-9\\-]+");
   
-  public static void addModelToReload(Model3D model3D, @NotNull Identifier identifier) {
-    ClientUtil.onResourceReload(
-        (synchronizer, manager, prepareExecutor, applyExecutor) ->
-            CompletableFuture.supplyAsync(() -> {
-                  Optional<Resource> resource = manager.getResource(identifier);
-                  if (resource.isEmpty()) {
-                    ModRendering.LOGGER.warn("Could not load '{}' (.obj) File during Reload, because it does not exist", identifier);
-                  } else {
-                    try {
-                      model3D.replaceFaces(
-                          ofWavefrontObj(resource.get()).getFaces()
-                      );
-                    } catch (WavefrontObjSyntaxException e) {
-                      ModRendering.LOGGER.warn("Exception occurred while parsing '{}' (.obj) File during Reload\nException: {}", identifier, ExceptionUtil.makePretty(e));
-                    } catch (IOException e) {
-                      ModRendering.LOGGER.warn("Exception occurred while trying to read '{}' (.obj) File during Reload\nException: {}", identifier, ExceptionUtil.makePretty(e));
-                    }
-                  }
-                  return null;
-                }
-            )
-    );
-  }
-  
-  public static Model3D ofWavefrontObj(Identifier resourceIdentifier) {
-    Model3D toBeReturned = Model3D.empty();
+  public static MultiModel3D ofWavefrontObj(Identifier resourceIdentifier) {
+    MultiModel3D toBeReturned = new MultiModel3D();
     Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(resourceIdentifier);
     if(resource.isEmpty()){
       ModRendering.LOGGER.warn("Could not load '{}' (.obj) File, because it does not exist", resourceIdentifier);
     }else{
       try{
-        toBeReturned = ofWavefrontObj(resource.get());
+        toBeReturned = ofWavefrontObj(new Scanner(resource.get().getInputStream()), resourceIdentifier.toString());
       }catch (WavefrontObjSyntaxException e){
         ModRendering.LOGGER.warn("Exception occurred while parsing '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
       } catch (IOException e) {
@@ -55,59 +29,73 @@ public class ModelHandler {
       }
     }
     
-    addModelToReload(toBeReturned, resourceIdentifier);
     return toBeReturned;
   }
   
-  public static Model3D ofWavefrontObj(Resource resource) throws IOException, WavefrontObjSyntaxException {
-    return ofWavefrontObj(new Scanner(resource.getInputStream()));
-  }
-  
-  public static Model3D ofWavefrontObj(@NotNull Scanner scanner) throws WavefrontObjSyntaxException {
+  public static MultiModel3D ofWavefrontObj(@NotNull Scanner scanner, String name) throws WavefrontObjSyntaxException {
     List<GeometryVertex> geometryVertices = new ArrayList<>();
     List<TextureCoordinate> textureCoordinates = new ArrayList<>();
     List<VertexNormal> vertexNormals = new ArrayList<>();
     List<FaceIndex> faceIndices = new ArrayList<>();
+    HashMap<String, HashMap<String, List<FaceIndex>>> groupedFaces = new HashMap<>();
+    String object = "";
+    String group = "";
+    
+    groupedFaces.put(object, new HashMap<>());
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
       if (line.startsWith("#")
           || line.startsWith("l")
           || line.startsWith("s")
-          || line.startsWith("o")
-          || line.startsWith("g")
           || line.startsWith("vp")
       ) {
-        // These currently don't do anything
         continue;
       }
-      
-      if (line.startsWith("vt")) {
-        textureCoordinates.add(getTextureCoordinate(line));
-        continue;
+      if(line.startsWith("o ")){
+        groupedFaces.get(object).put(group, faceIndices);
+        object = line.substring(2);
+        groupedFaces.put(object, new HashMap<>());
+        faceIndices = new ArrayList<>();
       }
-      if (line.startsWith("vn")) {
-        vertexNormals.add(getVertexNormal(line));
-        continue;
+      if(line.startsWith("g ")){
+        groupedFaces.get(object).put(group, faceIndices);
+        group = line.substring(2);
+        faceIndices = new ArrayList<>();
       }
-      if (line.startsWith("v")) {
+      if (line.startsWith("v ")) {
         geometryVertices.add(getGeometryVertex(line));
         continue;
       }
-      if (line.startsWith("f")) {
+      if (line.startsWith("vt ")) {
+        textureCoordinates.add(getTextureCoordinate(line));
+        continue;
+      }
+      if (line.startsWith("vn ")) {
+        vertexNormals.add(getVertexNormal(line));
+        continue;
+      }
+      if (line.startsWith("f ")) {
         faceIndices.add(getFaceIndex(line));
       }
     }
+    groupedFaces.get(object).put(group, faceIndices);
     
-    List<PolygonalFace> polygonalFaces = new ArrayList<>();
-    for(FaceIndex faceIndex : faceIndices){
-      PolygonalFace polygonalFace = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
-      if(polygonalFace.isInValid()){
-        ModRendering.LOGGER.warn("Created Invalid Polygonal Face: {}", polygonalFace);
+    MultiModel3D multiModel = new MultiModel3D(name);
+    for(String objectName : groupedFaces.keySet()){
+      for(String groupName : groupedFaces.get(objectName).keySet()){
+        List<PolygonalFace> polygonalFaces = new ArrayList<>();
+        for(FaceIndex faceIndex : groupedFaces.get(objectName).get(groupName)){
+          PolygonalFace polygonalFace = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
+          if(polygonalFace.isInValid()){
+            ModRendering.LOGGER.warn("Created Invalid Polygonal Face: {}", polygonalFace);
+          }
+          polygonalFaces.add(polygonalFace);
+        }
+        multiModel.addModel(objectName, groupName, new Model3D(polygonalFaces));
       }
-      polygonalFaces.add(polygonalFace);
     }
     
-    return new Model3D(polygonalFaces);
+    return multiModel;
   }
   
   private static @NotNull TextureCoordinate getTextureCoordinate(String line) {

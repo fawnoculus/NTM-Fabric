@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 public class ModRendering {
   public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Render");
-  public static Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
+  public static final Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
   
   public static final RenderPipeline POSITION_COLOR_PIPELINE = RenderPipelines.register(
       RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)

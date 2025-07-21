@@ -12,7 +12,7 @@ public class ClientReceivedVersionHandler {
   public static boolean hasReceivedVersion = false;
   
   public static Version serverVersion = null;
-  public static Version clientVersion = NTM.MOD_VERSION;
+  public static final Version clientVersion = NTM.MOD_VERSION;
   
   public static void handlePacket(NTMVersionS2CPayload payload){
     hasReceivedVersion = true;

@@ -59,12 +59,12 @@ public class Model3D {
         VertexNormal normal = face.normals.get(i);
         if(normal != null){
           buffer.vertex(matrix, vertex.X, vertex.Y, vertex.Z)
-              .texture(-coordinate.getU() + 1, -coordinate.getV() + 1)
-              .normal(matrix, normal.X, normal.Y, normal.Z)
+              .texture(1 - coordinate.getU(), 1 - coordinate.getV())
+              .normal(normal.X, normal.Y, normal.Z)
               .color(-1);
         }else {
           buffer.vertex(matrix, vertex.X, vertex.Y, vertex.Z)
-              .texture(-coordinate.getU() + 1, - coordinate.getV() + 1)
+              .texture( 1 - coordinate.getU(), 1 - coordinate.getV())
               .color(-1);
         }
       }

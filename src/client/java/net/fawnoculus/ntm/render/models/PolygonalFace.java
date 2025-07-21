@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PolygonalFace {
-  public List<GeometryVertex> vertices = new ArrayList<>();
-  public List<TextureCoordinate> coordinates = new ArrayList<>();
-  public List<@Nullable VertexNormal> normals = new ArrayList<>();
+  public final List<GeometryVertex> vertices = new ArrayList<>();
+  public final List<TextureCoordinate> coordinates = new ArrayList<>();
+  public final List<@Nullable VertexNormal> normals = new ArrayList<>();
   
   public void addVertex(@NotNull GeometryVertex vertex){
     this.vertices.add(vertex);
