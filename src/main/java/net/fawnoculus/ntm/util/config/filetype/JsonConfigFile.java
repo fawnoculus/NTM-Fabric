@@ -155,27 +155,27 @@ public class JsonConfigFile implements ConfigFileType {
     
     switch (option) {
       case BooleanOption booleanOption -> {
-        if(booleanOption.COMMENT != null) writer.write(String.format("\t\"%s_comment\": \"%s\",\n", option.NAME, booleanOption.COMMENT));
+        if(booleanOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, booleanOption.COMMENT));
         writer.write(String.format("\t\"%s\": %b%s", option.NAME, booleanOption.getValue(), suffix));
       }
       case DoubleOption doubleOption -> {
-        if(doubleOption.COMMENT != null) writer.write(String.format("\t\"%s_comment\": \"%s\",\n", option.NAME, doubleOption.COMMENT));
+        if(doubleOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, doubleOption.COMMENT));
         writer.write(String.format("\t\"%s\": %f%s", option.NAME, doubleOption.getValue(), suffix));
       }
       case FloatOption floatOption -> {
-        if(floatOption.COMMENT != null) writer.write(String.format("\t\"%s_comment\": \"%s\",\n", option.NAME, floatOption.COMMENT));
+        if(floatOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, floatOption.COMMENT));
         writer.write(String.format("\t\"%s\": %f%s", option.NAME, floatOption.getValue(), suffix));
       }
       case IntegerOption integerOption -> {
-        if(integerOption.COMMENT != null) writer.write(String.format("\t\"%s_comment\": \"%s\",\n", option.NAME, integerOption.COMMENT));
+        if(integerOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, integerOption.COMMENT));
         writer.write(String.format("\t\"%s\": %d%s", option.NAME, integerOption.getValue(), suffix));
       }
       case StringOption stringOption -> {
-        if(stringOption.COMMENT != null) writer.write(String.format("\t\"%s_comment\": \"%s\",\n", option.NAME, stringOption.COMMENT));
+        if(stringOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, stringOption.COMMENT));
         writer.write(String.format("\t\"%s\": \"%s\"%s", option.NAME, stringOption.getValue(), suffix));
       }
       case StringListOption stringListOption -> {
-        if(stringListOption.COMMENT != null) writer.write(String.format("\t\"%s_comment\": \"%s\",\n", option.NAME, stringListOption.COMMENT));
+        if(stringListOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, stringListOption.COMMENT));
         writer.write(String.format("\t\"%s\": [\n", option.NAME));
         String[] strings = stringListOption.getValue().toArray(new String[0]);
         for (int i = 0; i < strings.length ; i++) {
