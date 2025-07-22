@@ -5,11 +5,15 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
-public interface ModDamageTypes {
-  RegistryKey<DamageType> EUTHANIZED = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id("euthanized"));
-  RegistryKey<DamageType> BLOOD_LOSS = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id("blood_loss"));
-  RegistryKey<DamageType> LEAD_POISONING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id("lead_poisoning"));
-  RegistryKey<DamageType> RADIATION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id("radiation"));
+public class ModDamageTypes {
+  public static final RegistryKey<DamageType> EUTHANIZED = of("euthanized");
+  public static final RegistryKey<DamageType> BLOOD_LOSS = of("blood_loss");
+  public static final RegistryKey<DamageType> LEAD_POISONING = of("lead_poisoning");
+  public static final RegistryKey<DamageType> RADIATION = of("radiation");
   
-  static void initialize(){}
+  private static RegistryKey<DamageType> of(String name){
+    return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id(name));
+  }
+  
+  public static void initialize(){}
 }

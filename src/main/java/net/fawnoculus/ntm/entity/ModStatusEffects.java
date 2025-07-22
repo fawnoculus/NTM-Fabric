@@ -12,18 +12,26 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.ColorHelper;
 
-public interface ModStatusEffects {
-  RegistryEntry<StatusEffect> RAD_AWAY = Registry.registerReference(Registries.STATUS_EFFECT, NTM.id("rad_away"),
-      new RadAwayEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(230, 75, 30)));
+public class ModStatusEffects {
+  public static final RegistryEntry<StatusEffect> RAD_AWAY = of("rad_away",
+      new RadAwayEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(230, 75, 30))
+  );
   
-  RegistryEntry<StatusEffect> RAD_X = Registry.registerReference(Registries.STATUS_EFFECT, NTM.id("rad_x"),
-      new RadXEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(230, 75, 30)));
+  public static final RegistryEntry<StatusEffect> RAD_X = of("rad_x",
+      new RadXEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(230, 75, 30))
+  );
   
-  RegistryEntry<StatusEffect> TAINT = Registry.registerReference(Registries.STATUS_EFFECT, NTM.id("taint"),
-      new TaintEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(120, 40, 200)));
+  public static final RegistryEntry<StatusEffect> TAINT = of("taint",
+      new TaintEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(120, 40, 200))
+  );
   
-  RegistryEntry<StatusEffect> LEAD_POISONING = Registry.registerReference(Registries.STATUS_EFFECT, NTM.id("lead_poisoning"),
-      new LeadPoisoningEffect(StatusEffectCategory.HARMFUL, ColorHelper.getArgb(55, 55, 60)));
+  public static final RegistryEntry<StatusEffect> LEAD_POISONING = of("lead_poisoning",
+      new LeadPoisoningEffect(StatusEffectCategory.HARMFUL, ColorHelper.getArgb(55, 55, 60))
+  );
   
-  static void initialize(){}
+  private static RegistryEntry<StatusEffect> of(String name, StatusEffect effect){
+    return Registry.registerReference(Registries.STATUS_EFFECT, NTM.id(name), effect);
+  }
+  
+  public static void initialize(){}
 }
