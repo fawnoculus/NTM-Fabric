@@ -1,9 +1,6 @@
 package net.fawnoculus.ntm.blocks;
 
-import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
-import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceExtensionBlock;
-import net.fawnoculus.ntm.blocks.custom.SimpleEnergyStorageBlock;
-import net.fawnoculus.ntm.blocks.custom.TempCableBlock;
+import net.fawnoculus.ntm.blocks.custom.*;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -36,6 +33,10 @@ public class ModBlocks {
       .sounds(BlockSoundGroup.SAND)
       .mapColor(MapColor.PALE_YELLOW)
       .instrument(NoteBlockInstrument.SNARE);
+  private static final AbstractBlock.Settings MACHINE_SETTINGS = AbstractBlock.Settings.create()
+      .sounds(BlockSoundGroup.STONE)
+      .mapColor(MapColor.GRAY)
+      .strength(2f, 6.0f);
 		
   // Ore Blocks
   public static final Block URANIUM_ORE = register("uranium_ore", Block::new, STONE_SETTINGS);
@@ -209,15 +210,17 @@ public class ModBlocks {
 
 
   public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new, AbstractBlock.Settings.create()
-          .strength(1.5F, 6.0F)
-          .sounds(BlockSoundGroup.STONE)
-          .mapColor(MapColor.TERRACOTTA_ORANGE)
-          .requiresTool());
+      .sounds(BlockSoundGroup.STONE)
+      .strength(2f, 6.0f)
+      .mapColor(MapColor.TERRACOTTA_ORANGE)
+  );
   public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create()
           .strength(1.5F, 6.0F)
           .sounds(BlockSoundGroup.STONE)
           .mapColor(MapColor.TERRACOTTA_ORANGE)
-          .requiresTool());
+  );
+  public static final Block ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlock::new, MACHINE_SETTINGS);
+  public static final Block PWR_CONTROLLER = register("pwr_controller", PWRControllerBlock::new, MACHINE_SETTINGS);
   
   // Energy Stuff
   public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create());

@@ -8,6 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class SimpleEnergyConnectorBE extends EnergyNode {
   public SimpleEnergyConnectorBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.SIMPLE_ENERGY_CONNECTOR_BE, NodeProperties.Connector::new, pos, state);
+    super(ModBlockEntities.SIMPLE_ENERGY_CONNECTOR_BE, pos, state, NodeProperties.Connector::new);
   }
 }

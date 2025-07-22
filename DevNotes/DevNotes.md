@@ -4,7 +4,6 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - A lot of Models will be done with Datagen, but obviously custom/advanced Models will remain as Json/Blender Files
 - Translation will be done with lang files, not with Datagen
 - Don't forget to add EMI & JEI compatibility once they port to whatever version we are at
-- The original mod displayed some information next to your Crosshair (like info about an RBMK Reactor) this will probably be moved to the Jade compatibility Plugin
 
 ### Some Stuff will be changed to fit into modern Versions (or because i felt like it):
 (Maybe make the old names & textures advisable through a resource pack)

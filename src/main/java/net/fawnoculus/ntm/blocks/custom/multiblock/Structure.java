@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.blocks.custom.multiblock;
 
-import net.fawnoculus.ntm.blocks.entities.MultiBlockBE;
+import net.fawnoculus.ntm.blocks.entities.multiblock.MultiBlockBE;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;

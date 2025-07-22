@@ -21,7 +21,7 @@ public class ModItemGroups {
       .build();
   public static final RegistryKey<ItemGroup> MACHINE_ITEMS_AND_FUEL_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machine_items_and_fuel"));
   public static final ItemGroup MACHINE_ITEMS_AND_FUEL = FabricItemGroup.builder()
-      .icon(() -> new ItemStack(ModBlocks.ALLOY_FURNACE))
+      .icon(() -> new ItemStack(ModItems.NULL))
       .displayName(Text.translatable("itemGroup.ntm.machine_items_and_fuel"))
       .build();
   public static final RegistryKey<ItemGroup> TEMPLATES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("templates"));
@@ -36,7 +36,7 @@ public class ModItemGroups {
       .build();
   public static final RegistryKey<ItemGroup> MACHINES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machines"));
   public static final ItemGroup MACHINES = FabricItemGroup.builder()
-      .icon(() -> new ItemStack(ModItems.NULL))
+      .icon(() -> new ItemStack(ModBlocks.PWR_CONTROLLER))
       .displayName(Text.translatable("itemGroup.ntm.machines"))
       .build();
   public static final RegistryKey<ItemGroup> BOMBS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("bombs"));
@@ -647,8 +647,8 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.ZIRCONIUM_WIRE);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINE_ITEMS_AND_FUEL_KEY).register(ItemGroup -> {
-      ItemGroup.add(ModBlocks.ALLOY_FURNACE);
-      ItemGroup.add(ModBlocks.ALLOY_FURNACE_EXTENSION);
+      ItemGroup.add(ModItems.NULL);
+      ItemGroup.add(ModItems.NULL);
     });
     ItemGroupEvents.modifyEntriesEvent(TEMPLATES_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);
@@ -834,6 +834,9 @@ public class ModItemGroups {
       ItemGroup.add(ModBlocks.LITHIUM_ION_ENERGY_STORAGE_BLOCK);
       ItemGroup.add(ModBlocks.SCHRABIDIUM_ENERGY_STORAGE_BLOCK);
       ItemGroup.add(ModBlocks.SPARK_ENERGY_STORAGE_BLOCK);
+      ItemGroup.add(ModBlocks.ALLOY_FURNACE);
+      ItemGroup.add(ModBlocks.ALLOY_FURNACE_EXTENSION);
+      ItemGroup.add(ModBlocks.ELECTRIC_FURNACE);
     });
     ItemGroupEvents.modifyEntriesEvent(BOMBS_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);

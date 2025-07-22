@@ -2,8 +2,9 @@ package net.fawnoculus.ntm.datagen;
 
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fawnoculus.ntm.blocks.ModBlockProperties;
 import net.fawnoculus.ntm.blocks.ModBlocks;
+import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
+import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.Block;
@@ -220,7 +221,7 @@ public class ModelProvider extends FabricModelProvider {
         .accept(
             VariantsBlockModelDefinitionCreator.of(ModBlocks.ALLOY_FURNACE)
                 .with(
-                    BlockStateVariantMap.models(Properties.HORIZONTAL_FACING, Properties.LIT, ModBlockProperties.EXTENSION)
+                    BlockStateVariantMap.models(AlloyFurnaceBlock.FACING, AlloyFurnaceBlock.LIT, AlloyFurnaceBlock.EXTENSION)
                         .register(Direction.NORTH, false, false, alloyFurnaceweightedVariant)
                         .register(Direction.EAST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
                         .register(Direction.SOUTH, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
@@ -239,6 +240,35 @@ public class ModelProvider extends FabricModelProvider {
                         .register(Direction.WEST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
                 )
         );
+    
+    TextureMap electricFurnaceTextureMap = new TextureMap()
+        .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_top"))
+        .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_side"))
+        .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_front"))
+        .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_bottom"));
+    TextureMap litElectricFurnaceTextureMap = new TextureMap()
+        .put(TextureKey.TOP, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_top"))
+        .put(TextureKey.SIDE, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_side"))
+        .put(TextureKey.FRONT, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_front_lit"))
+        .put(TextureKey.BOTTOM, TextureMap.getSubId(ModBlocks.ELECTRIC_FURNACE, "_bottom"));
+    WeightedVariant electricFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.ORIENTABLE_WITH_BOTTOM.upload(ModBlocks.ELECTRIC_FURNACE, "", electricFurnaceTextureMap, blockStateModelGenerator.modelCollector));
+    WeightedVariant litElectricFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(ModBlocks.ELECTRIC_FURNACE, "_lit", Models.ORIENTABLE_WITH_BOTTOM, a -> litElectricFurnaceTextureMap));
+    blockStateModelGenerator.blockStateCollector
+        .accept(
+            VariantsBlockModelDefinitionCreator.of(ModBlocks.ELECTRIC_FURNACE)
+                .with(
+                    BlockStateVariantMap.models(ElectricFurnaceBlock.FACING, ElectricFurnaceBlock.LIT)
+                        .register(Direction.NORTH, false, electricFurnaceweightedVariant)
+                        .register(Direction.EAST, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                        .register(Direction.NORTH, true, litElectricFurnaceweightedVariant)
+                        .register(Direction.EAST, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                        .register(Direction.SOUTH, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                        .register(Direction.WEST, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                )
+        );
+    registerSimpleHorizontalOrientable(blockStateModelGenerator, ModBlocks.PWR_CONTROLLER);
   }
   
   private void registerSimpleHorizontalOrientable(BlockStateModelGenerator blockStateModelGenerator, Block block){

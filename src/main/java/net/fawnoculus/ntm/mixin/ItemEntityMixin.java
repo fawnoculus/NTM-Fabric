@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.items.custom.genric.DangerousDrop;
+import net.fawnoculus.ntm.items.custom.DangerousDrop;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

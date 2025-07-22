@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "ntm:block/electric_furnace_bottom",
+    "front": "ntm:block/electric_furnace_front_lit",
+    "side": "ntm:block/electric_furnace_side",
+    "top": "ntm:block/electric_furnace_top"
+  }
+}

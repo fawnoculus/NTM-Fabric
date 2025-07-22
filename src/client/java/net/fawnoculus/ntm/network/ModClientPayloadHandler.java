@@ -1,13 +1,14 @@
 package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fawnoculus.ntm.blocks.entities.AbstractInventoryBE;
 import net.fawnoculus.ntm.network.custom.*;
 import net.fawnoculus.ntm.misc.messages.MessageSystem;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
 public class ModClientPayloadHandler {
@@ -26,15 +27,15 @@ public class ModClientPayloadHandler {
     if(context.player().clientWorld == null) return;
     
     ClientWorld world = context.player().clientWorld;
-    
-    if(world.getBlockEntity(payload.pos()) instanceof AbstractInventoryBE inventory){
+    BlockEntity be = world.getBlockEntity(payload.pos());
+    if(be instanceof Inventory inventory){
       int i = 0;
       for(ItemStack stack : payload.inventory()){
         inventory.setStack(i, stack);
         i++;
       }
       
-      world.updateListeners(payload.pos(), inventory.getCachedState(), inventory.getCachedState(), Block.NOTIFY_ALL);
+      world.updateListeners(payload.pos(), be.getCachedState(), be.getCachedState(), Block.NOTIFY_ALL);
     }
   }
 }

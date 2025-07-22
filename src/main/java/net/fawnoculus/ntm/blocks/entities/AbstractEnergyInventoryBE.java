@@ -2,10 +2,11 @@ package net.fawnoculus.ntm.blocks.entities;
 
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fawnoculus.ntm.blocks.node.EnergyNode;
+import net.fawnoculus.ntm.blocks.node.NodeProperties;
 import net.fawnoculus.ntm.network.custom.InventorySyncS2CPayload;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -21,12 +22,14 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
 
-public class AbstractInventoryBE extends BlockEntity implements SidedInventory {
+
+public class AbstractEnergyInventoryBE extends EnergyNode implements SidedInventory {
   private final SimpleInventory inventory;
   
-  public AbstractInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
-    super(type, pos, state);
+  public AbstractEnergyInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<NodeProperties> properties, int inventorySlots) {
+    super(type, pos, state, properties);
     
     this.inventory = new SimpleInventory(inventorySlots){
       @Override

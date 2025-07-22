@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.genric;
+package net.fawnoculus.ntm.items.custom;
 
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.server.world.ServerWorld;

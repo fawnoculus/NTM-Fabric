@@ -69,13 +69,25 @@
   "sound.ntm.item.syringe_injects": "Syringe Injects",
   "sound.ntm.item.iv_bag_injects": "RadAway Injects",
 
-  "genric.ntm.radiation.rad": "%1$s RAD",
-  "genric.ntm.radiation.rads": "%1$s RAD/s",
+  "generic.ntm.unit.0": "%1$s ",
+  "generic.ntm.unit.k": "%1$s k",
+  "generic.ntm.unit.m": "%1$s M",
+  "generic.ntm.unit.g": "%1$s G",
+  "generic.ntm.unit.t": "%1$s T",
+  "generic.ntm.unit.p": "%1$s P",
+  "generic.ntm.unit.e": "%1$s E",
+  "generic.ntm.energy": "NTE",
+  "generic.ntm.energy_t": "NTE/t",
+  "generic.ntm.radiation.rad": "%1$s RAD",
+  "generic.ntm.radiation.rads": "%1$s RAD/s",
+  "generic.ntm.amount_stored": "%1$s/%2$s",
 
   "key.category.ntm": "NTM-Fabric",
-
   "key.ntm.extra_info": "Display Extra Info",
 
+  "tooltip.ntm.energy.stored": "Energy stored: %1$s/%2$s",
+  "tooltip.ntm.energy.charge": "Charge rate: %1$s",
+  "tooltip.ntm.energy.discharge": "Discharge rate: %1$s",
   "tooltip.ntm.radioactive": "[Radioactive]",
   "tooltip.ntm.stack_rads": "Stack: %1$s RAD/s",
   "tooltip.ntm.radiation_resistance": "Radiation resistance: %1$s",
@@ -237,6 +249,7 @@
   "tag.item.ntm.meteoric_cobalt_ores": "Meteoric Cobalt Ores",
 
   "container.ntm.alloy_furnace": "Alloy Furnace",
+  "container.ntm.electric_furnace": "Electric Furnace",
 
   "block.ntm.uranium_ore": "Uranium Ore",
   "item.ntm.uranium_ore": "Uranium Ore",
@@ -642,6 +655,8 @@
   "item.ntm.alloy_furnace": "Alloy Furnace",
   "block.ntm.alloy_furnace_extension": "Alloy Furnace Extension",
   "item.ntm.alloy_furnace_extension": "Alloy Furnace Extension",
+  "item.ntm.electric_furnace": "Electric Furnace",
+  "block.ntm.electric_furnace": "Electric Furnace",
   "block.ntm.potato_battery_block": "Potato Battery Block",
   "item.ntm.potato_battery_block": "Potato Battery Block",
   "block.ntm.energy_storage_block": "Energy Storage Block",

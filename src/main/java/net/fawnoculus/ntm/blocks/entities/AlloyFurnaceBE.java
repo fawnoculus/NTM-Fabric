@@ -3,13 +3,11 @@ package net.fawnoculus.ntm.blocks.entities;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
-import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.fawnoculus.ntm.recipe.custom.AlloyFurnaceRecipe;
 import net.fawnoculus.ntm.recipe.custom.AlloyFurnaceRecipeInput;
 import net.fawnoculus.ntm.recipe.ModRecipes;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -38,7 +36,6 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     super(ModBlockEntities.ALLOY_FURNACE_BE, pos, state, 4);
   }
   
-  // max fuel is consistent with original, but translated to fuel burn ticks for consistency
   private static final int MAX_FUEL = 102400;
   private static final int FUEL_PER_TICK = 8;
   private int fuel = 0;
@@ -51,7 +48,7 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   public static final int INPUT_TOP_SLOT_INDEX = 2;
   public static final int INPUT_BOTTOM_SLOT_INDEX = 3;
   
-  private static final Text DISPLAY_NAME = Text.translatable("container."+ NTM.MOD_ID+".alloy_furnace");
+  private static final Text DISPLAY_NAME = Text.translatable("container.ntm.alloy_furnace");
   
   @Override
   public void onBlockReplaced(BlockPos pos, BlockState oldState) {
@@ -73,7 +70,6 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     }
     entity.resetProgress();
     entity.update();
-    
   }
   
   public boolean canCraft(){
@@ -104,7 +100,7 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   }
   
   public boolean showFireInGUI(){
-    assert this.world != null;
+    if(this.world == null) return false;
     return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
   }
   
@@ -170,11 +166,6 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   private boolean hasExtension(){
     assert this.getWorld() != null;
     return this.getWorld().getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
-  }
-  
-  private void update(){
-    markDirty();
-    if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
   }
   
   @Override

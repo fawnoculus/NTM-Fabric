@@ -21,7 +21,7 @@ public class EnergyNode extends BlockEntity implements Node<NetworkType.Energy> 
   private NodeNetwork<NetworkType.Energy> network;
   private NodeProperties nodeProperties;
   
-  public EnergyNode(BlockEntityType<?> type, Supplier<NodeProperties> properties, BlockPos pos, BlockState state){
+  public EnergyNode(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<NodeProperties> properties){
     super(type, pos, state);
     this.setNodeProperties(properties.get());
   }

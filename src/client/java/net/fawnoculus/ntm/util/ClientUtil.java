@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.util;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
@@ -22,6 +23,10 @@ public class ClientUtil {
   
   public static Window getWindow(){
     return getClient().getWindow();
+  }
+  
+  public static TextRenderer getTextRenderer(){
+    return getClient().textRenderer;
   }
   
   public static void onResourceReload(ResourceReloader reloader){

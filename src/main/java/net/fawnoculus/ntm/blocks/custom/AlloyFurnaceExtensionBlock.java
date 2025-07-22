@@ -2,10 +2,11 @@ package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.fawnoculus.ntm.blocks.entities.AdvancedModelBE;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceExtensionBE;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -14,13 +15,13 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 
-public class AlloyFurnaceExtensionBlock extends BlenderModelBlock {
+public class AlloyFurnaceExtensionBlock extends BlenderModelBlock implements BlockEntityProvider {
   public AlloyFurnaceExtensionBlock(Settings settings) {
     super(settings);
   }
   
   @Override
-  public @Nullable AdvancedModelBE createBlockEntity(BlockPos pos, BlockState state) {
+  public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     return new AlloyFurnaceExtensionBE(pos, state);
   }
   

@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.genric;
+package net.fawnoculus.ntm.items.custom;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;

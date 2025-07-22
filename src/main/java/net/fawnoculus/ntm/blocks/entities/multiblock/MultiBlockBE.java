@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.blocks.entities;
+package net.fawnoculus.ntm.blocks.entities.multiblock;
 
 import net.minecraft.util.math.BlockPos;
 

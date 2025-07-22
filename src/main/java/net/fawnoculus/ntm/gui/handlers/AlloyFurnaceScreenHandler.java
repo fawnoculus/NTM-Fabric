@@ -14,6 +14,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -22,11 +23,12 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
   private final ScreenHandlerContext screenContext;
   
   // Client Constructor
-  public AlloyFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, BlockPosS2CPayload payload) {
+  public AlloyFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosS2CPayload payload) {
     this(syncId, playerInventory, (AlloyFurnaceBE) playerInventory.player.getWorld().getBlockEntity(payload.pos()));
   }
   
-  public AlloyFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, AlloyFurnaceBE blockEntity) {
+  // Common Constructor
+  public AlloyFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, AlloyFurnaceBE blockEntity) {
     super(ModScreenHandlerType.ALLOY_FURNACE, syncId);
     
     this.blockEntity = blockEntity;
