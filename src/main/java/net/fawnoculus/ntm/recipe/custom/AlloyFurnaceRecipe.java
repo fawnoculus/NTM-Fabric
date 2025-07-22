@@ -1,7 +1,8 @@
-package net.fawnoculus.ntm.recipe;
+package net.fawnoculus.ntm.recipe.custom;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fawnoculus.ntm.recipe.ModRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -29,11 +30,8 @@ public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2,
       return false;
     }
     
-    if(ingredient1.test(input.getStackInSlot(1)) && ingredient2.test(input.getStackInSlot(0))){
-      return true;
-    }
-    
-    return ingredient1.test(input.getStackInSlot(0)) && ingredient2.test(input.getStackInSlot(1));
+    return ingredient1.test(input.getStackInSlot(1)) && ingredient2.test(input.getStackInSlot(0))
+        || ingredient1.test(input.getStackInSlot(0)) && ingredient2.test(input.getStackInSlot(1));
   }
   
   @Override
