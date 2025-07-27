@@ -18,6 +18,7 @@ public class ModDataComponentTypes {
   
   public static final ComponentType<Integer> SELECTED_ABILITY_COMPONENT_TYPE = register("ability_index", integerBuilder -> integerBuilder.codec(Codec.INT));
   public static final ComponentType<Integer> COOLDOWN_COMPONENT_TYPE = register("cooldown", integerBuilder -> integerBuilder.codec(Codec.INT));
+  public static final ComponentType<Long> ENERGY_COMPONENT_TYPE = register("energy", longBuilder -> longBuilder.codec(Codec.LONG));
   public static final ComponentType<BlockPos> BLOCK_POS_COMPONENT_TYPE = register("block_pos", blockPosBuilder -> blockPosBuilder.codec(BlockPos.CODEC));
   public static final ComponentType<BlockState> BLOCK_STATE_COMPONENT_TYPE = register("block", blockBuilder -> blockBuilder.codec(BlockState.CODEC));
   

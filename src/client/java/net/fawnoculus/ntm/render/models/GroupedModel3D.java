@@ -34,24 +34,9 @@ public class GroupedModel3D {
     drawAll(matrix, 15728880 ,texture);
   }
   public void drawAll(MatrixStack.Entry matrix, int light, Identifier texture) {
-    try{
-      ModRenderPipelines.drawTexture(getAllAsBuffer(matrix, light).end(), texture);
-    }catch (Throwable throwable){
-      ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render GroupedModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
+    for(Model3D model3D : MODELS.values()){
+      model3D.draw(matrix, light, texture);
     }
-  }
-  
-  public BufferBuilder getAllAsBuffer(MatrixStack.Entry matrix, int light) {
-    Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
-    return addAllToBuffer(matrix, light, buffer);
-  }
-  
-  public BufferBuilder addAllToBuffer(MatrixStack.Entry matrix, int light, BufferBuilder buffer){
-      for(Model3D model : MODELS.values()){
-        buffer = model.addToBuffer(matrix, light, buffer);
-      }
-    return buffer;
   }
   
   public @Nullable Model3D getNullable(String groupName){

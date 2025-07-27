@@ -3,8 +3,8 @@ package net.fawnoculus.ntm.items.custom.container.energy;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class InfiniteBattery extends Item implements EnergyContainingItem {
-  public InfiniteBattery(Settings settings) {
+public class InfiniteBatteryItem extends Item implements EnergyContainingItem {
+  public InfiniteBatteryItem(Settings settings) {
     super(settings);
   }
   

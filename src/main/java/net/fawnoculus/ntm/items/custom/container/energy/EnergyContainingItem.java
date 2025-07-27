@@ -1,13 +1,8 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
 import net.fawnoculus.ntm.blocks.node.NodeProperties;
-import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Range;
-
-import java.util.function.Consumer;
 
 public interface EnergyContainingItem {
   
@@ -26,7 +21,6 @@ public interface EnergyContainingItem {
   default void increaseEnergy(ItemStack stack, long energy){
     this.setEnergy(stack, this.getMaxEnergy(stack) + energy);
   }
-  
   /**
    * @param stack the Stack to be Charged
    * @param energy the amount of energy to be inserted
@@ -74,23 +68,5 @@ public interface EnergyContainingItem {
   
   default double getEnergyPercentage(ItemStack stack){
     return (double) this.getEnergy(stack) / (double) this.getMaxEnergy(stack) * 100;
-  }
-  
-  default int energyBarColor(ItemStack stack){
-    float f = Math.max(0.0F, (float) this.getEnergyPercentage(stack) / 100);
-    return MathHelper.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
-  }
-  default int energyBarStep(ItemStack stack){
-    return Math.clamp(this.getEnergy(stack) * 13 / this.getMaxEnergy(stack) , 0, 13);
-  }
-  
-  default void energyTooltip(ItemStack stack, Consumer<Text> tooltip){
-    Text energy = TextUtil.unit(getEnergy(stack));
-    Text maxEnergy = TextUtil.unit(getMaxEnergy(stack), "generic.ntm.energy");
-    Text chargeRate = TextUtil.unit(getChargeRate(stack), "generic.ntm.energy_t");
-    Text dischargeRate = TextUtil.unit(getDischargeRate(stack), "generic.ntm.energy_t");
-    tooltip.accept(Text.translatable("tooltip.ntm.energy.stored", energy, maxEnergy));
-    tooltip.accept(Text.translatable("tooltip.ntm.energy.charge", chargeRate));
-    tooltip.accept(Text.translatable("tooltip.ntm.energy.discharge", dischargeRate));
   }
 }

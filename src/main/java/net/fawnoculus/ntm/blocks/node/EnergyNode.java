@@ -72,11 +72,8 @@ public class EnergyNode extends BlockEntity implements Node<NetworkType.Energy> 
   }
   
   public void setNodeProperties(NodeProperties nodeProperties) {
+    this.onSetNodeProperties(nodeProperties);
     this.nodeProperties = nodeProperties;
-    if(this.network != null){
-      this.network.removeNode(this);
-      this.network.addNode(this);
-    }
   }
   @Override
   public NodeProperties getNodeProperties() {

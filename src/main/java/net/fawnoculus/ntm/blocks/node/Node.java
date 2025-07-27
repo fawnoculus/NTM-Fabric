@@ -95,11 +95,22 @@ public interface Node<T extends NetworkType>  {
     for(Object o : toBeChecked){
       try{
         Node<T> node = (Node<T>) o;
-        Objects.requireNonNull(node);
-        nodes.add(node);
-      }catch (ClassCastException | NullPointerException ignored){}
+        if(this.canConnectTo(node)){
+          nodes.add(node);
+        }
+      }catch (ClassCastException ignored){}
     }
     return nodes;
+  }
+  
+  default boolean canConnectTo(@Nullable Node<T> node){
+    return node != null;
+  }
+  
+  default void onSetNodeProperties(NodeProperties newNodeProperties){
+    if(this.getNetwork() != null){
+      this.getNetwork().onNodePropertiesChanged(this, newNodeProperties);
+    }
   }
   
   void setNodeProperties(NodeProperties nodeProperties);

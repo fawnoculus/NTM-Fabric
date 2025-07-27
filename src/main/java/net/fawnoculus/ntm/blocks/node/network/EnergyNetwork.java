@@ -18,7 +18,7 @@ public class EnergyNetwork extends NodeNetwork<NetworkType.Energy>{
   }
   
   @Override
-  public void tickNetwork() {
-    //TODO: this
+  public NetworkType.Energy getType() {
+    return new NetworkType.Energy();
   }
 }

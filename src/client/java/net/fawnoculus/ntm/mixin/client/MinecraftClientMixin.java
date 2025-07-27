@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.mixin.client;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.fawnoculus.ntm.misc.messages.MessageSystem;
 import net.fawnoculus.ntm.render.ModModelRender;
+import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

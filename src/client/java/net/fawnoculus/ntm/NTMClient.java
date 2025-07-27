@@ -30,7 +30,6 @@ public class NTMClient implements ClientModInitializer {
     ModHandledScreens.initialize();
     
     ModHudRender.initialize();
-    ModWorldRender.initialize();
     
     ClientRadiationManager.initialize();
     

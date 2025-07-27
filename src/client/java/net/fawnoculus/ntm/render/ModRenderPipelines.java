@@ -19,20 +19,13 @@ import net.minecraft.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.function.Function;
 
 public class ModRenderPipelines {
   public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Render");
   public static final Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
   
-  public static final RenderPipeline POSITION_COLOR_PIPELINE = RenderPipelines.register(
-      RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)
-          .withLocation(NTM.id("pipeline/position_color"))
-          .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.TRIANGLE_STRIP)
-          .build()
-  );
   public static final RenderPipeline TEXTURE_PIPELINE = RenderPipelines.register(
       RenderPipeline.builder()
           .withLocation(NTM.id("pipeline/texture"))
@@ -46,22 +39,10 @@ public class ModRenderPipelines {
   );
   
   
-  public static void drawTexture(BuiltBuffer buffer, Identifier texture){
+  public static void draw(BuiltBuffer buffer, Identifier texture){
     draw(buffer, TEXTURE_PIPELINE,
         ImmutableList.of(
             TEXTURE_FUNCTION.apply(texture),
-            RenderPhase.ENABLE_LIGHTMAP,
-            RenderPhase.ENABLE_OVERLAY_COLOR,
-            RenderPhase.MAIN_TARGET,
-            RenderPhase.DEFAULT_TEXTURING,
-            RenderPhase.FULL_LINE_WIDTH
-        )
-    );
-  }
-  public static void drawPositonColor(BuiltBuffer buffer){
-    draw(buffer, POSITION_COLOR_PIPELINE,
-        ImmutableList.of(
-            RenderPhase.NO_TEXTURE,
             RenderPhase.ENABLE_LIGHTMAP,
             RenderPhase.ENABLE_OVERLAY_COLOR,
             RenderPhase.MAIN_TARGET,

@@ -18,7 +18,7 @@ public class FluidNetwork extends NodeNetwork<NetworkType.Fluid>{
   }
   
   @Override
-  public void tickNetwork() {
-    //TODO: this
+  public NetworkType.Fluid getType() {
+    return new NetworkType.Fluid();
   }
 }

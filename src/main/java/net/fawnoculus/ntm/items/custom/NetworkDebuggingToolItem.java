@@ -54,26 +54,22 @@ public class NetworkDebuggingToolItem extends Item {
     
     if(player.isSneaking()){
       for(Node<?> a : node.getNetwork().LOADED_CONNECTORS){
-        player.sendMessage(Text.literal("CONEC: " + a.getPos().toShortString()), false);
+        player.sendMessage(Text.literal("Connector: " + a.getPos().toShortString()), false);
       }
       for(Node<?> a : node.getNetwork().LOADED_CONSUMERS){
-        player.sendMessage(Text.literal("CONSO: " + a.getPos().toShortString()), false);
+        player.sendMessage(Text.literal("Consumer: " + a.getPos().toShortString()), false);
       }
       for(Node<?> a : node.getNetwork().LOADED_PROVIDERS){
-        player.sendMessage(Text.literal("PROVI: " + a.getPos().toShortString()), false);
+        player.sendMessage(Text.literal("Provider: " + a.getPos().toShortString()), false);
       }
       for(Node<?> a : node.getNetwork().LOADED_STORAGES){
-        player.sendMessage(Text.literal("STORA: " + a.getPos().toShortString()), false);
+        player.sendMessage(Text.literal("Storage: " + a.getPos().toShortString()), false);
       }
       return ActionResult.SUCCESS_SERVER;
     }
     
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
-    switch (network){
-      case EnergyNetwork ignored -> player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.energy").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-      case FluidNetwork ignored -> player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.fluid").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-      default -> player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", Text.translatable("message.ntm.network_debug.network_type.unknown").formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    }
+    player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.getType().getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_provider_count", Text.literal(String.valueOf(network.LOADED_PROVIDERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);

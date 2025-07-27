@@ -2,7 +2,6 @@ package net.fawnoculus.ntm.render.models;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.fawnoculus.ntm.render.ModRenderPipelines;
-import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
@@ -39,17 +38,9 @@ public class Model3D {
     draw(matrix, 15728880, texture);
   }
   public void draw(MatrixStack.Entry matrix, int light, Identifier texture){
-    try{
-      ModRenderPipelines.drawTexture(this.getAsBuffer(matrix, light).end(), texture);
-    }catch (Throwable throwable){
-      ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render: {}\n\tException: {}", this, ExceptionUtil.makePretty(throwable, false));
-    }
-  }
-  
-  private BufferBuilder getAsBuffer(MatrixStack.Entry matrix, int light) {
     Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
-    return addToBuffer(matrix, light, buffer);
+    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+    ModRenderPipelines.draw(this.addToBuffer(matrix, light, buffer).end(), texture);
   }
   
   public BufferBuilder addToBuffer(MatrixStack.Entry matrix, int light, BufferBuilder buffer){

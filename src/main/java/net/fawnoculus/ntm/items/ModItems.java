@@ -6,6 +6,10 @@ import net.fawnoculus.ntm.items.components.ModConsumableComponents;
 import net.fawnoculus.ntm.items.components.ModFoodComponents;
 import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
+import net.fawnoculus.ntm.items.custom.container.energy.InfiniteBatteryItem;
+import net.fawnoculus.ntm.items.custom.container.energy.PotatOSItem;
+import net.fawnoculus.ntm.items.custom.container.energy.SelfChargingBatteryItem;
+import net.fawnoculus.ntm.items.custom.container.energy.SimpleBatteryItem;
 import net.fawnoculus.ntm.items.custom.tools.*;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.ModSounds;
@@ -631,6 +635,20 @@ public class ModItems {
   public static final Item NETWORK_DEBUG_TOOL = register("network_debug_tool", NetworkDebuggingToolItem::new, new Item.Settings());
   public static final Item GEIGER_COUNTER = register("geiger_counter", GeigerCounterItem::new, new Item.Settings());
   public static final Item DOSIMETER = register("dosimeter", DosimeterItem::new, new Item.Settings());
+  
+  // Batteries
+  public static final Item INFINITE_BATTERY = register("infinite_battery", InfiniteBatteryItem::new, new Item.Settings());
+  public static final Item SELF_CHARGING_URANIUM_238_BATTERY = register("self_charging_uranium_238_battery", settings -> new SelfChargingBatteryItem(settings, 5), new Item.Settings());
+  public static final Item SELF_CHARGING_TECHNETIUM_99_BATTERY = register("self_charging_technetium_99_battery", settings -> new SelfChargingBatteryItem(settings, 25), new Item.Settings());
+  public static final Item SELF_CHARGING_PLUTONIUM_238_BATTERY = register("self_charging_plutonium_238_battery", settings -> new SelfChargingBatteryItem(settings, 100), new Item.Settings());
+  public static final Item SELF_CHARGING_POLONIUM_210_BATTERY = register("self_charging_polonium_210_battery", settings -> new SelfChargingBatteryItem(settings, 500), new Item.Settings());
+  public static final Item SELF_CHARGING_GOLD_198_BATTERY = register("self_charging_gold_198_battery", settings -> new SelfChargingBatteryItem(settings, 2_500), new Item.Settings());
+  public static final Item SELF_CHARGING_LEAD_209_BATTERY = register("self_charging_lead_209_battery", settings -> new SelfChargingBatteryItem(settings, 5_000), new Item.Settings());
+  public static final Item SELF_CHARGING_AMERICIUM_241_BATTERY = register("self_charging_americium_241_battery", settings -> new SelfChargingBatteryItem(settings, 10_000), new Item.Settings());
+  public static final Item POTATO_BATTERY = register("potato_battery", settings -> new SimpleBatteryItem(settings, 1_000, 0, 100),
+      new Item.Settings().component(ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000L));
+  public static final Item POTATOS = register("potatos", settings -> new PotatOSItem(settings, 500_000, 0, 100),
+      new Item.Settings().component(ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 500_000L));
   
   // Consumables
   public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());

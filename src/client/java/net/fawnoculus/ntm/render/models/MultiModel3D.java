@@ -1,12 +1,5 @@
 package net.fawnoculus.ntm.render.models;
 
-
-import com.mojang.blaze3d.vertex.VertexFormat;
-import net.fawnoculus.ntm.render.ModRenderPipelines;
-import net.fawnoculus.ntm.util.ExceptionUtil;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -35,24 +28,9 @@ public class MultiModel3D {
   }
   
   public void drawAll(MatrixStack.Entry matrix, int light, Identifier texture) {
-    try{
-      ModRenderPipelines.drawTexture(getAllAsBuffer(matrix, light).end(), texture);
-    }catch (Throwable throwable){
-      ModRenderPipelines.LOGGER.warn("Exception occurred while trying to render MultiModel {}\nException:{}", this.NAME, ExceptionUtil.makePretty(throwable, false));
+    for (GroupedModel3D groupedModel : MODELS.values()){
+      groupedModel.drawAll(matrix, light, texture);
     }
-  }
-  
-  public BufferBuilder getAllAsBuffer(MatrixStack.Entry matrix, int light) {
-    Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
-    return addAllToBuffer(matrix, light, buffer);
-  }
-  
-  public BufferBuilder addAllToBuffer(MatrixStack.Entry matrix, int light, BufferBuilder buffer){
-    for(GroupedModel3D groupedModel : MODELS.values()){
-      buffer = groupedModel.addAllToBuffer(matrix, light, buffer);
-    }
-    return buffer;
   }
   
   public @Nullable GroupedModel3D getNullable(String objectName){
