@@ -52,13 +52,6 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
   
   @Override
   protected void onStateReplaced(@NotNull BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-    if(state.getBlock() == this || !(world.getBlockEntity(pos) instanceof ElectricFurnaceBE electricFurnaceBE)) {
-      super.onStateReplaced(state, world, pos, moved);
-      return;
-    }
-    if(!moved){
-      ItemScatterer.spawn(world, pos, electricFurnaceBE.getInventory());
-    }
     world.updateComparators(pos, this);
     super.onStateReplaced(state, world, pos, moved);
   }
@@ -109,7 +102,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
     
     
     double x = pos.getX();
-    double y = pos.getY() + 0.3 + random.nextDouble() * 0.4;
+    double y = pos.getY() + 0.1 + random.nextDouble() * 0.4;
     double z = pos.getZ();
     switch (state.get(AlloyFurnaceBlock.FACING)) {
       case Direction.NORTH -> {

@@ -11,6 +11,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
@@ -19,18 +21,22 @@ import org.jetbrains.annotations.NotNull;
 public class ElectricFurnaceScreenHandler extends ScreenHandler {
   private final ElectricFurnaceBE blockEntity;
   private final ScreenHandlerContext screenContext;
+  private final PropertyDelegate propertyDelegate;
   
   // Client Constructor
   public ElectricFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosS2CPayload payload) {
-    this(syncId, playerInventory, (ElectricFurnaceBE) playerInventory.player.getWorld().getBlockEntity(payload.pos()));
+    this(syncId, playerInventory, (ElectricFurnaceBE) playerInventory.player.getWorld().getBlockEntity(payload.pos()), new ArrayPropertyDelegate(2));
   }
   
   // Common Constructor
-  public ElectricFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, ElectricFurnaceBE blockEntity) {
+  public ElectricFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, ElectricFurnaceBE blockEntity, PropertyDelegate propertyDelegate) {
     super(ModScreenHandlerType.ELECTRIC_FURNACE, syncId);
     
     this.blockEntity = blockEntity;
     this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
+    checkDataCount(propertyDelegate, 2);
+    this.propertyDelegate = propertyDelegate;
+    addProperties(this.propertyDelegate);
     
     SimpleInventory blockInventory = this.blockEntity.getInventory();
     blockInventory.onOpen(playerInventory.player);
@@ -65,6 +71,12 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
   }
   
   @Override
+  public void onClosed(PlayerEntity player) {
+    super.onClosed(player);
+    this.blockEntity.getInventory().onClose(player);
+  }
+  
+  @Override
   public ItemStack quickMove(PlayerEntity player, int slot) {
     // TODO: fix this
     return ItemStack.EMPTY;
@@ -72,10 +84,13 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
   
   @Override
   public boolean canUse(PlayerEntity player) {
-    return canUse(screenContext, player, ModBlocks.ALLOY_FURNACE);
+    return canUse(screenContext, player, ModBlocks.ELECTRIC_FURNACE);
   }
   
   public ElectricFurnaceBE getBlockEntity(){
     return this.blockEntity;
+  }
+  public PropertyDelegate getPropertyDelegate(){
+    return this.propertyDelegate;
   }
 }

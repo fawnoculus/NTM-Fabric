@@ -50,32 +50,24 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   
   private static final Text DISPLAY_NAME = Text.translatable("container.ntm.alloy_furnace");
   
-  @Override
-  public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-    ItemScatterer.spawn(world, pos, this.getInventory());
-    super.onBlockReplaced(pos, oldState);
-  }
-  
   public static void tick(World world, BlockPos pos, BlockState state, AlloyFurnaceBE entity) {
     entity.processFuelInput();
     if(entity.canCraft()) {
       entity.addProgress();
-      entity.update();
       if(entity.progressFinished()) {
         entity.craftOutput();
         entity.resetProgress();
-        entity.update();
       }
-      return;
+    }else{
+      entity.resetProgress();
     }
-    entity.resetProgress();
     entity.update();
   }
   
   public boolean canCraft(){
     Optional<RecipeEntry<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
     return recipe.isPresent()
-        && this.canInsertIntoSlot(recipe.get().value().output(), OUTPUT_SLOT_INDEX)
+        && this.canInsertIntoSlot(OUTPUT_SLOT_INDEX, recipe.get().value().output())
         && this.hasEnoughFuel();
   }
   
@@ -89,19 +81,6 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
           .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
     }
     return Optional.empty();
-  }
-  
-  public float getFuel(){
-    return ((float) this.fuel) / ((float) MAX_FUEL);
-  }
-  
-  public float getProgress(){
-    return ((float) this.progress) / ((float) MAX_PROGESS);
-  }
-  
-  public boolean showFireInGUI(){
-    if(this.world == null) return false;
-    return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
   }
   
   private boolean progressFinished(){
@@ -130,17 +109,16 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
       this.progress++;
     }
     
-    
-    assert this.world != null;
-    BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
-    this.world.setBlockState(this.pos, state);
+    if(this.world != null){
+      BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
+      this.world.setBlockState(this.pos, state);
+    }
   }
   
   private void resetProgress(){
     this.progress = 0;
     
-    assert this.world != null;
-    if(!this.canCraft()){ // this is to avoid flickering
+    if(this.world != null && !this.canCraft()){ // this is to avoid flickering
       BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, false);
       this.world.setBlockState(this.pos, state);
     }
@@ -169,16 +147,6 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   }
   
   @Override
-  public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-    return new AlloyFurnaceScreenHandler(syncId, playerInventory, this);
-  }
-  
-  @Override
-  public BlockPosS2CPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
-    return new BlockPosS2CPayload(this.pos);
-  }
-  
-  @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     nbt.putInt("fuel", fuel);
     nbt.putInt("process", progress);
@@ -197,8 +165,31 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     return BlockEntityUpdateS2CPacket.create(this);
   }
   
+  public double getFuel(){
+    return (double) this.fuel / (double) MAX_FUEL;
+  }
+  
+  public double getProgress(){
+    return (double) this.progress / (double) MAX_PROGESS;
+  }
+  
+  public boolean showFireInGUI(){
+    if(this.world == null) return false;
+    return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
+  }
+  
   @Override
   public Text getDisplayName() {
     return DISPLAY_NAME;
+  }
+  
+  @Override
+  public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    return new AlloyFurnaceScreenHandler(syncId, playerInventory, this);
+  }
+  
+  @Override
+  public BlockPosS2CPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
+    return new BlockPosS2CPayload(this.pos);
   }
 }

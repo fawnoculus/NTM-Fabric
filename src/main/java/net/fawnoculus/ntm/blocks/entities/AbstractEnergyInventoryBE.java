@@ -10,7 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -18,14 +18,12 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
 
-public class AbstractEnergyInventoryBE extends EnergyNode implements SidedInventory {
+public class AbstractEnergyInventoryBE extends EnergyNode implements Inventory {
   private final SimpleInventory inventory;
   
   public AbstractEnergyInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<NodeProperties> properties, int inventorySlots) {
@@ -54,7 +52,7 @@ public class AbstractEnergyInventoryBE extends EnergyNode implements SidedInvent
     return this.inventory;
   }
   
-  public boolean canInsertIntoSlot(ItemStack stack, int slotIndex){
+  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack){
     ItemStack switchStack = this.getInventory().getStack(slotIndex);
     if(switchStack.isEmpty()) return true;
     
@@ -103,25 +101,6 @@ public class AbstractEnergyInventoryBE extends EnergyNode implements SidedInvent
   public void update(){
     markDirty();
     if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-  }
-  
-  @Override
-  public int[] getAvailableSlots(Direction side) {
-    int[] array = new int[this.size()];
-    for(int i = 0; i < array.length; i++){
-      array[i] = i;
-    }
-    return array;
-  }
-  
-  @Override
-  public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-    return true;
-  }
-  
-  @Override
-  public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-    return true;
   }
   
   @Override

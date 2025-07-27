@@ -69,7 +69,6 @@
   "sound.ntm.item.syringe_injects": "Syringe Injects",
   "sound.ntm.item.iv_bag_injects": "RadAway Injects",
 
-  "generic.ntm.unit.0": "%1$s ",
   "generic.ntm.unit.k": "%1$s k",
   "generic.ntm.unit.m": "%1$s M",
   "generic.ntm.unit.g": "%1$s G",

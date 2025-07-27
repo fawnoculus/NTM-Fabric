@@ -1,8 +1,12 @@
 package net.fawnoculus.ntm.gui.handled;
 
+import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.NTMClient;
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
 import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
 import net.fawnoculus.ntm.render.ModTextures;
+import net.fawnoculus.ntm.util.ClientUtil;
+import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;
@@ -10,6 +14,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+
+import java.util.List;
 
 public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHandler> {
   public ElectricFurnaceScreen(ElectricFurnaceScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -27,7 +33,9 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
     int energyBarSize = MathHelper.ceil(
         (double) entity.getNodeProperties().getValue() / (double) entity.getNodeProperties().getMaxValue() * 52
     );
-    int progressBarSize = MathHelper.ceil(entity.getProgress() * 24);
+    
+    int maxProgress = this.handler.getPropertyDelegate().get(1);
+    int progressBarSize = MathHelper.ceil(entity.getProgress(maxProgress) * 24);
     
     if(showFire) {
       context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x + 56, this.y + 35, 176, 0, 16, 16, 256, 256);
@@ -36,6 +44,21 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
     context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x + 79, this.y + 35, 176, 17, progressBarSize, 17, 256, 256);
     
     context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x + 20, this.y + 17 + 52 - energyBarSize, 200, 52 - energyBarSize, 18, energyBarSize, 256, 256);
+    
+    int relativeMouseX = mouseX - this.x;
+    int relativeMouseY = mouseY - this.y;
+    
+    if(
+        relativeMouseX > 19 && relativeMouseX < 36
+        && relativeMouseY > 16 && relativeMouseY < 69
+    ){
+      Text energyStored = TextUtil.unit(entity.getNodeProperties().getValue());
+      Text maxEnergy = TextUtil.unit(entity.getNodeProperties().getMaxValue(), "generic.ntm.energy");
+      
+      Text energyTooltip = Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy);
+      
+      context.drawTooltip(ClientUtil.getTextRenderer(), List.of(energyTooltip), mouseX, mouseY);
+    }
   }
   
   @Override

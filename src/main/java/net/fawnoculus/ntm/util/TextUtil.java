@@ -23,9 +23,12 @@ public class TextUtil {
     if(val >= 1_000L){
       return Text.translatable("generic.ntm.unit.k", String.format("%.1f", val / 1_000.0));
     }
-    return Text.translatable("generic.ntm.unit.0", String.format("%.1f", (double) val));
+    return Text.literal(String.valueOf(val));
+  }
+  public static MutableText unit(long val, String suffixKey, boolean spaceInBetween){
+    return unit(val).append(Text.literal(" ")).append(Text.translatable(suffixKey));
   }
   public static MutableText unit(long val, String suffixKey){
-    return unit(val).append(Text.translatable(suffixKey));
+    return unit(val, suffixKey, true);
   }
 }

@@ -9,7 +9,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -17,12 +17,10 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 
-public class AbstractInventoryBE extends BlockEntity implements SidedInventory {
+public class AbstractInventoryBE extends BlockEntity implements Inventory {
   private final SimpleInventory inventory;
   
   public AbstractInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
@@ -51,7 +49,7 @@ public class AbstractInventoryBE extends BlockEntity implements SidedInventory {
     return this.inventory;
   }
   
-  public boolean canInsertIntoSlot(ItemStack stack, int slotIndex){
+  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack){
     ItemStack switchStack = this.getInventory().getStack(slotIndex);
     if(switchStack.isEmpty()) return true;
     
@@ -100,25 +98,6 @@ public class AbstractInventoryBE extends BlockEntity implements SidedInventory {
   public void update(){
     markDirty();
     if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-  }
-  
-  @Override
-  public int[] getAvailableSlots(Direction side) {
-    int[] array = new int[this.size()];
-    for(int i = 0; i < array.length; i++){
-      array[i] = i;
-    }
-    return array;
-  }
-  
-  @Override
-  public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-    return true;
-  }
-  
-  @Override
-  public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-    return true;
   }
   
   @Override
