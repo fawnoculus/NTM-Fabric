@@ -16,10 +16,10 @@ public interface EnergyContainingItem {
     return this.getEnergy(stack) >= energy;
   }
   default void decreaseEnergy(ItemStack stack, long energy){
-    this.setEnergy(stack, this.getMaxEnergy(stack) - energy);
+    this.setEnergy(stack, this.getEnergy(stack) - energy);
   }
   default void increaseEnergy(ItemStack stack, long energy){
-    this.setEnergy(stack, this.getMaxEnergy(stack) + energy);
+    this.setEnergy(stack, this.getEnergy(stack) + energy);
   }
   /**
    * @param stack the Stack to be Charged

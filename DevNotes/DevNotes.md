@@ -20,8 +20,6 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - Basalt -> Volcanic Basalt (Basalt Already Exists)
 - Tantalium -> Tantalum
 - Lanthanium -> Lanthanum
-- Sandwich Garnished with TV Static -> TV Static Sandwich
-- Pancake made from Scrap Metal, Nails and Gem Dust -> Scrap Pancake
 - Ingot of "resource" -> "resource" Ingot
 - Bar of "resource" -> "resource" Bar
 - Block of "resource" -> "resource" Block
@@ -29,6 +27,11 @@ I'm going to be honest, this is not really coding documentation, this is more ju
 - HE (HBM Energy) -> NTE (Nuclear Tech Energy)
 - Reinforced Block of Desh -> Desh Block
 - Reinforced Block of High-Speed Steel -> High-Speed Steel Block
+- Sandwich Garnished with TV Static -> TV Static Sandwich
+- Pancake made from Scrap Metal, Nails and Gem Dust -> Scrap Pancake
+- Spark Ludicrous Physics-Defying Energy Storage Unit -> Spark Ludicrous Energy Storage Unit
+
+Main Reason for changing names is that the old names where really long & the item ids that we use are usually just the item name with underscores for spaces & in lowercase, however really long item ids can be very annoying so in order to not break consistency things with long names get renamed to have a shorter name
 
 #### Features:
 - Energy & Fluid Storages, Providers & Consumers will be able to connect to each other just like Cables/Pipes can (I implemented it this way & changing it would be a pain)

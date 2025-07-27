@@ -7,11 +7,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.function.Consumer;
 
 public class SimpleBatteryItem extends Item implements EnergyContainingItem {
+  public SimpleBatteryItem(Settings settings, long maxEnergy, long energyPerTick) {
+    this(settings, maxEnergy, energyPerTick, energyPerTick);
+  }
   public SimpleBatteryItem(Settings settings, long maxEnergy, long chargeRate, long dischargeRate) {
     super(settings);
     this.MAX_ENERGY = maxEnergy;
@@ -61,7 +65,7 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
   
   @Override
   public int getItemBarStep(ItemStack stack) {
-    return Math.clamp(this.getEnergy(stack) * 13 / this.getMaxEnergy(stack) , 0, 13);
+    return Math.clamp(this.getEnergy(stack) / this.getMaxEnergy(stack) * 13, 0, 13);
   }
   
   @Override @SuppressWarnings("deprecation")
@@ -70,8 +74,8 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
     Text maxEnergy = TextUtil.unit(getMaxEnergy(stack), "generic.ntm.energy");
     Text chargeRate = TextUtil.unit(getChargeRate(stack), "generic.ntm.energy_t");
     Text dischargeRate = TextUtil.unit(getDischargeRate(stack), "generic.ntm.energy_t");
-    tooltip.accept(Text.translatable("tooltip.ntm.energy.stored", energy, maxEnergy));
-    tooltip.accept(Text.translatable("tooltip.ntm.energy.charge", chargeRate));
-    tooltip.accept(Text.translatable("tooltip.ntm.energy.discharge", dischargeRate));
+    tooltip.accept(Text.translatable("tooltip.ntm.energy.stored", energy, maxEnergy).formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.energy.charge", chargeRate).formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.energy.discharge", dischargeRate).formatted(Formatting.GRAY));
   }
 }

@@ -32,6 +32,7 @@ import java.util.function.Function;
 public class ModItems {
   // Basic Items
   public static final Item NULL = register("null", Item::new, new Item.Settings());
+  public static final Item PLUTONIUM_238_RTG_PELLET = register("plutonium_238_rtg_pellet", Item::new, new Item.Settings()); // This is only here for the ItemGroup Icon, it will be fully added Later
   
   // Basic Resources split by Type sorted Alphabetically because I felt like it
   public static final Item ACTINIUM_227_INGOT = register("actinium_227_ingot", Item::new, new Item.Settings());
@@ -637,18 +638,70 @@ public class ModItems {
   public static final Item DOSIMETER = register("dosimeter", DosimeterItem::new, new Item.Settings());
   
   // Batteries
+  public static final Item BATTERY = register("battery",
+      settings -> new SimpleBatteryItem(settings, 5_000L, 100L), new Item.Settings());
+  public static final Item REDSTONE_POWER_CELL = register("redstone_power_cell",
+      settings -> new SimpleBatteryItem(settings, 15_000L, 100L), new Item.Settings());
+  public static final Item SIXFOLD_REDSTONE_POWER_CELL = register("sixfold_redstone_power_cell",
+      settings -> new SimpleBatteryItem(settings, 90_000L, 100L), new Item.Settings());
+  public static final Item TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL = register("twenty_four_fold_redstone_power_cell",
+      settings -> new SimpleBatteryItem(settings, 360_000L, 100L), new Item.Settings());
+  public static final Item ADVANCED_BATTERY = register("advanced_battery",
+      settings -> new SimpleBatteryItem(settings, 20_000L, 500L), new Item.Settings());
+  public static final Item ADVANCED_POWER_CELL = register("advanced_power_cell",
+      settings -> new SimpleBatteryItem(settings, 60_000L, 500L), new Item.Settings());
+  public static final Item QUADRUPLE_ADVANCED_POWER_CELL = register("quadruple_advanced_power_cell",
+      settings -> new SimpleBatteryItem(settings, 240_000L, 500L), new Item.Settings());
+  public static final Item TWELVEFOLD_ADVANCED_POWER_CELL = register("twelvefold_advanced_power_cell",
+      settings -> new SimpleBatteryItem(settings, 720_000L, 500L), new Item.Settings());
+  public static final Item LITHIUM_ION_BATTERY = register("lithium_ion_battery",
+      settings -> new SimpleBatteryItem(settings, 250_000L, 1_000L), new Item.Settings());
+  public static final Item LITHIUM_ION_POWER_CELL = register("lithium_ion_power_cell",
+      settings -> new SimpleBatteryItem(settings, 750_000L, 1_000L), new Item.Settings());
+  public static final Item TRIPLE_LITHIUM_ION_POWER_CELL = register("triple_lithium_ion_power_cell",
+      settings -> new SimpleBatteryItem(settings, 2_250_000L, 1_000L), new Item.Settings());
+  public static final Item SIXFOLD_LITHIUM_ION_POWER_CELL = register("sixfold_lithium_ion_power_cell",
+      settings -> new SimpleBatteryItem(settings, 4_500_000L, 1_000L), new Item.Settings());
+  public static final Item SCHRABIDIUM_BATTERY = register("schrabidium_battery",
+      settings -> new SimpleBatteryItem(settings, 1_000_000L, 5_000L), new Item.Settings());
+  public static final Item SCHRABIDIUM_POWER_CELL = register("schrabidium_power_cell",
+      settings -> new SimpleBatteryItem(settings, 3_000_000L, 5_000L), new Item.Settings());
+  public static final Item DOUBLE_SCHRABIDIUM_POWER_CELL = register("double_schrabidium_power_cell",
+      settings -> new SimpleBatteryItem(settings, 6_000_000L, 5_000L), new Item.Settings());
+  public static final Item QUADRUPLE_SCHRABIDIUM_POWER_CELL = register("quadruple_schrabidium_power_cell",
+      settings -> new SimpleBatteryItem(settings, 12_000_000L, 5_000L), new Item.Settings());
+  public static final Item SPARK_BATTERY = register("spark_battery",
+      settings -> new SimpleBatteryItem(settings, 100_000_000L, 2_000_000L), new Item.Settings());
+  public static final Item OFF_BRAND_SPARK_BATTERY = register("off_brand_spark_battery",
+      settings -> new SimpleBatteryItem(settings, 5_000_000L, 40_000L, 200_000L), new Item.Settings());
+  public static final Item SPARK_POWER_CELL = register("spark_power_cell",
+      settings -> new SimpleBatteryItem(settings, 600_000_000L, 2_000_000L), new Item.Settings());
+  public static final Item SPARK_ARCANE_CAR_BATTERY = register("spark_arcane_car_battery",
+      settings -> new SimpleBatteryItem(settings, 2_500_000_000L, 2_000_000L), new Item.Settings());
+  public static final Item SPARK_ARCANE_ENERGY_STORAGE_ARRAY = register("spark_arcane_energy_storage_array",
+      settings -> new SimpleBatteryItem(settings, 10_000_000_000L, 2_000_000L), new Item.Settings());
+  public static final Item SPARK_ARCANE_MASS_ENERGY_VOID = register("spark_arcane_mass_energy_void",
+      settings -> new SimpleBatteryItem(settings, 100_000_000_000L, 20_000_000L), new Item.Settings());
+  public static final Item SPARK_ARCANE_DIRAC_SEA = register("spark_arcane_dirac_sea",
+      settings -> new SimpleBatteryItem(settings, 250_000_000_000L, 20_000_000L), new Item.Settings());
+  public static final Item SPARK_SOLID_SPACE_TIME_CRYSTAL = register("spark_solid_space_time_crystal",
+      settings -> new SimpleBatteryItem(settings, 1_000_000_000_000L, 200_000_000L), new Item.Settings());
+  public static final Item SPARK_LUDICROUS_ENERGY_STORAGE_UNIT = register("spark_ludicrous_energy_storage_unit",
+      settings -> new SimpleBatteryItem(settings, 100_000_000_000_000L, 200_000_000L), new Item.Settings());
+  public static final Item ELECTRONIUM_CUBE = register("electronium_cube",
+      settings -> new SimpleBatteryItem(settings, 1_000_000_000_000_000_000L, 1_000_000_000_000_000L), new Item.Settings());
   public static final Item INFINITE_BATTERY = register("infinite_battery", InfiniteBatteryItem::new, new Item.Settings());
-  public static final Item SELF_CHARGING_URANIUM_238_BATTERY = register("self_charging_uranium_238_battery", settings -> new SelfChargingBatteryItem(settings, 5), new Item.Settings());
-  public static final Item SELF_CHARGING_TECHNETIUM_99_BATTERY = register("self_charging_technetium_99_battery", settings -> new SelfChargingBatteryItem(settings, 25), new Item.Settings());
-  public static final Item SELF_CHARGING_PLUTONIUM_238_BATTERY = register("self_charging_plutonium_238_battery", settings -> new SelfChargingBatteryItem(settings, 100), new Item.Settings());
-  public static final Item SELF_CHARGING_POLONIUM_210_BATTERY = register("self_charging_polonium_210_battery", settings -> new SelfChargingBatteryItem(settings, 500), new Item.Settings());
-  public static final Item SELF_CHARGING_GOLD_198_BATTERY = register("self_charging_gold_198_battery", settings -> new SelfChargingBatteryItem(settings, 2_500), new Item.Settings());
-  public static final Item SELF_CHARGING_LEAD_209_BATTERY = register("self_charging_lead_209_battery", settings -> new SelfChargingBatteryItem(settings, 5_000), new Item.Settings());
-  public static final Item SELF_CHARGING_AMERICIUM_241_BATTERY = register("self_charging_americium_241_battery", settings -> new SelfChargingBatteryItem(settings, 10_000), new Item.Settings());
-  public static final Item POTATO_BATTERY = register("potato_battery", settings -> new SimpleBatteryItem(settings, 1_000, 0, 100),
+  public static final Item POTATO_BATTERY = register("potato_battery", settings -> new SimpleBatteryItem(settings, 1_000L, 0L, 100L),
       new Item.Settings().component(ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000L));
-  public static final Item POTATOS = register("potatos", settings -> new PotatOSItem(settings, 500_000, 0, 100),
+  public static final Item POTATOS = register("potatos", settings -> new PotatOSItem(settings, 500_000L, 0L, 100L),
       new Item.Settings().component(ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 500_000L));
+  public static final Item SELF_CHARGING_URANIUM_238_BATTERY = register("self_charging_uranium_238_battery", settings -> new SelfChargingBatteryItem(settings, 5L), new Item.Settings());
+  public static final Item SELF_CHARGING_TECHNETIUM_99_BATTERY = register("self_charging_technetium_99_battery", settings -> new SelfChargingBatteryItem(settings, 25L), new Item.Settings());
+  public static final Item SELF_CHARGING_PLUTONIUM_238_BATTERY = register("self_charging_plutonium_238_battery", settings -> new SelfChargingBatteryItem(settings, 100L), new Item.Settings());
+  public static final Item SELF_CHARGING_POLONIUM_210_BATTERY = register("self_charging_polonium_210_battery", settings -> new SelfChargingBatteryItem(settings, 500L), new Item.Settings());
+  public static final Item SELF_CHARGING_GOLD_198_BATTERY = register("self_charging_gold_198_battery", settings -> new SelfChargingBatteryItem(settings, 2_500L), new Item.Settings());
+  public static final Item SELF_CHARGING_LEAD_209_BATTERY = register("self_charging_lead_209_battery", settings -> new SelfChargingBatteryItem(settings, 5_000L), new Item.Settings());
+  public static final Item SELF_CHARGING_AMERICIUM_241_BATTERY = register("self_charging_americium_241_battery", settings -> new SelfChargingBatteryItem(settings, 10_000L), new Item.Settings());
   
   // Consumables
   public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());

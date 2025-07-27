@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
+import net.fawnoculus.ntm.items.ModDataComponentTypes;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.Block;
@@ -291,6 +292,7 @@ public class ModelProvider extends FabricModelProvider {
     ItemModelCollector = itemModelGenerator.modelCollector;
     // Basic Items
     itemModelGenerator.register(ModItems.NULL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.PLUTONIUM_238_RTG_PELLET, Models.GENERATED);
     
     // Raw Resources
     itemModelGenerator.register(ModItems.ACTINIUM_227_INGOT, Models.GENERATED);
@@ -887,6 +889,44 @@ public class ModelProvider extends FabricModelProvider {
     itemModelGenerator.register(ModItems.NETWORK_DEBUG_TOOL, Models.GENERATED);
     itemModelGenerator.register(ModItems.GEIGER_COUNTER, Models.GENERATED);
     itemModelGenerator.register(ModItems.DOSIMETER, Models.GENERATED);
+    
+    // Batteries
+    itemModelGenerator.register(ModItems.BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.REDSTONE_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SIXFOLD_REDSTONE_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ADVANCED_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ADVANCED_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.QUADRUPLE_ADVANCED_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TWELVEFOLD_ADVANCED_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LITHIUM_ION_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.LITHIUM_ION_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.TRIPLE_LITHIUM_ION_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SIXFOLD_LITHIUM_ION_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SCHRABIDIUM_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.DOUBLE_SCHRABIDIUM_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.QUADRUPLE_SCHRABIDIUM_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.OFF_BRAND_SPARK_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_POWER_CELL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_ARCANE_CAR_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_ARCANE_ENERGY_STORAGE_ARRAY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_ARCANE_MASS_ENERGY_VOID, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_ARCANE_DIRAC_SEA, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_SOLID_SPACE_TIME_CRYSTAL, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SPARK_LUDICROUS_ENERGY_STORAGE_UNIT, Models.GENERATED);
+    itemModelGenerator.register(ModItems.ELECTRONIUM_CUBE, Models.GENERATED);
+    itemModelGenerator.register(ModItems.INFINITE_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POTATO_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.POTATOS, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_URANIUM_238_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_TECHNETIUM_99_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_PLUTONIUM_238_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_POLONIUM_210_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_GOLD_198_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_LEAD_209_BATTERY, Models.GENERATED);
+    itemModelGenerator.register(ModItems.SELF_CHARGING_AMERICIUM_241_BATTERY, Models.GENERATED);
     
     // Consumables
     itemModelGenerator.register(ModItems.EMPTY_SYRINGE, Models.GENERATED);

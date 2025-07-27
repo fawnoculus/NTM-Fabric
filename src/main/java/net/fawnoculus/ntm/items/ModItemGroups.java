@@ -4,6 +4,9 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.NTM;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -21,7 +24,7 @@ public class ModItemGroups {
       .build();
   public static final RegistryKey<ItemGroup> MACHINE_ITEMS_AND_FUEL_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("machine_items_and_fuel"));
   public static final ItemGroup MACHINE_ITEMS_AND_FUEL = FabricItemGroup.builder()
-      .icon(() -> new ItemStack(ModItems.NULL))
+      .icon(() -> new ItemStack(ModItems.PLUTONIUM_238_RTG_PELLET))
       .displayName(Text.translatable("itemGroup.ntm.machine_items_and_fuel"))
       .build();
   public static final RegistryKey<ItemGroup> TEMPLATES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("templates"));
@@ -647,14 +650,75 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.ZIRCONIUM_WIRE);
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINE_ITEMS_AND_FUEL_KEY).register(ItemGroup -> {
-      ItemGroup.add(ModItems.NULL);
-      ItemGroup.add(ModItems.NULL);
+      ItemGroup.add(ModItems.BATTERY);
+      ItemGroup.add(components(ModItems.BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 5_000L));
+      ItemGroup.add(ModItems.REDSTONE_POWER_CELL);
+      ItemGroup.add(components(ModItems.REDSTONE_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 15_000L));
+      ItemGroup.add(ModItems.SIXFOLD_REDSTONE_POWER_CELL);
+      ItemGroup.add(components(ModItems.SIXFOLD_REDSTONE_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 90_000L));
+      ItemGroup.add(ModItems.TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL);
+      ItemGroup.add(components(ModItems.TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 360_000L));
+      ItemGroup.add(ModItems.ADVANCED_BATTERY);
+      ItemGroup.add(components(ModItems.ADVANCED_BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 20_000L));
+      ItemGroup.add(ModItems.ADVANCED_POWER_CELL);
+      ItemGroup.add(components(ModItems.ADVANCED_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 60_000L));
+      ItemGroup.add(ModItems.QUADRUPLE_ADVANCED_POWER_CELL);
+      ItemGroup.add(components(ModItems.QUADRUPLE_ADVANCED_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 240_000L));
+      ItemGroup.add(ModItems.TWELVEFOLD_ADVANCED_POWER_CELL);
+      ItemGroup.add(components(ModItems.TWELVEFOLD_ADVANCED_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 720_000L));
+      ItemGroup.add(ModItems.LITHIUM_ION_BATTERY);
+      ItemGroup.add(components(ModItems.LITHIUM_ION_BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 250_000L));
+      ItemGroup.add(ModItems.LITHIUM_ION_POWER_CELL);
+      ItemGroup.add(components(ModItems.LITHIUM_ION_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 750_000L));
+      ItemGroup.add(ModItems.TRIPLE_LITHIUM_ION_POWER_CELL);
+      ItemGroup.add(components(ModItems.TRIPLE_LITHIUM_ION_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 2_250_000L));
+      ItemGroup.add(ModItems.SIXFOLD_LITHIUM_ION_POWER_CELL);
+      ItemGroup.add(components(ModItems.SIXFOLD_LITHIUM_ION_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 4_500_000L));
+      ItemGroup.add(ModItems.SCHRABIDIUM_BATTERY);
+      ItemGroup.add(components(ModItems.SCHRABIDIUM_BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000_000L));
+      ItemGroup.add(ModItems.SCHRABIDIUM_POWER_CELL);
+      ItemGroup.add(components(ModItems.SCHRABIDIUM_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 3_000_000L));
+      ItemGroup.add(ModItems.DOUBLE_SCHRABIDIUM_POWER_CELL);
+      ItemGroup.add(components(ModItems.DOUBLE_SCHRABIDIUM_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 6_000_000L));
+      ItemGroup.add(ModItems.QUADRUPLE_SCHRABIDIUM_POWER_CELL);
+      ItemGroup.add(components(ModItems.QUADRUPLE_SCHRABIDIUM_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 12_000_000L));
+      ItemGroup.add(ModItems.SPARK_BATTERY);
+      ItemGroup.add(components(ModItems.SPARK_BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 100_000_000L));
+      ItemGroup.add(ModItems.OFF_BRAND_SPARK_BATTERY);
+      ItemGroup.add(components(ModItems.OFF_BRAND_SPARK_BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 5_000_000L));
+      ItemGroup.add(ModItems.SPARK_POWER_CELL);
+      ItemGroup.add(components(ModItems.SPARK_POWER_CELL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 600_000_000L));
+      ItemGroup.add(ModItems.SPARK_ARCANE_CAR_BATTERY);
+      ItemGroup.add(components(ModItems.SPARK_ARCANE_CAR_BATTERY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 2_500_000_000L));
+      ItemGroup.add(ModItems.SPARK_ARCANE_ENERGY_STORAGE_ARRAY);
+      ItemGroup.add(components(ModItems.SPARK_ARCANE_ENERGY_STORAGE_ARRAY, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 10_000_000_000L));
+      ItemGroup.add(ModItems.SPARK_ARCANE_MASS_ENERGY_VOID);
+      ItemGroup.add(components(ModItems.SPARK_ARCANE_MASS_ENERGY_VOID, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 100_000_000_000L));
+      ItemGroup.add(ModItems.SPARK_ARCANE_DIRAC_SEA);
+      ItemGroup.add(components(ModItems.SPARK_ARCANE_DIRAC_SEA, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 250_000_000_000L));
+      ItemGroup.add(ModItems.SPARK_SOLID_SPACE_TIME_CRYSTAL);
+      ItemGroup.add(components(ModItems.SPARK_SOLID_SPACE_TIME_CRYSTAL, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000_000_000_000L));
+      ItemGroup.add(ModItems.SPARK_LUDICROUS_ENERGY_STORAGE_UNIT);
+      ItemGroup.add(components(ModItems.SPARK_LUDICROUS_ENERGY_STORAGE_UNIT, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 100_000_000_000_000L));
+      ItemGroup.add(ModItems.ELECTRONIUM_CUBE);
+      ItemGroup.add(components(ModItems.ELECTRONIUM_CUBE, ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000_000_000_000_000_000L));
+      ItemGroup.add(ModItems.INFINITE_BATTERY);
+      ItemGroup.add(ModItems.POTATO_BATTERY);
+      ItemGroup.add(ModItems.POTATOS);
+      ItemGroup.add(ModItems.SELF_CHARGING_URANIUM_238_BATTERY);
+      ItemGroup.add(ModItems.SELF_CHARGING_TECHNETIUM_99_BATTERY);
+      ItemGroup.add(ModItems.SELF_CHARGING_PLUTONIUM_238_BATTERY);
+      ItemGroup.add(ModItems.SELF_CHARGING_POLONIUM_210_BATTERY);
+      ItemGroup.add(ModItems.SELF_CHARGING_GOLD_198_BATTERY);
+      ItemGroup.add(ModItems.SELF_CHARGING_LEAD_209_BATTERY);
+      ItemGroup.add(ModItems.SELF_CHARGING_AMERICIUM_241_BATTERY);
     });
     ItemGroupEvents.modifyEntriesEvent(TEMPLATES_KEY).register(ItemGroup -> {
       ItemGroup.add(ModItems.NULL);
       ItemGroup.add(ModItems.NULL);
     });
     ItemGroupEvents.modifyEntriesEvent(ORES_AND_BLOCKS_KEY).register(ItemGroup -> {
+      ItemGroup.add(new ItemStack(ModItems.BATTERY));
       ItemGroup.add(ModBlocks.URANIUM_ORE);
       ItemGroup.add(ModBlocks.SCORCHED_URANIUM_ORE);
       ItemGroup.add(ModBlocks.TITANIUM_ORE);
@@ -1009,5 +1073,41 @@ public class ModItemGroups {
       ItemGroup.add(ModItems.MESE_PICKAXE);
       ItemGroup.add(ModItems.MESE_AXE);
     });
+  }
+  
+  private static <T> ItemStack components(ItemConvertible item, ComponentType<T> componentType, T value){
+    ItemStack stack = new ItemStack(item);
+    stack.set(componentType, value);
+    return stack;
+  }
+  private static <T, U> ItemStack components(ItemConvertible item, ComponentType<T> componentType, T value, ComponentType<U> componentType2, U value2){
+    ItemStack stack = new ItemStack(item);
+    stack.set(componentType, value);
+    stack.set(componentType2, value2);
+    return stack;
+  }
+  private static <T, U, V> ItemStack components(ItemConvertible item,
+                                                   ComponentType<T> componentType, T value,
+                                                   ComponentType<U> componentType2, U value2,
+                                                   ComponentType<V> componentType3, V value3
+  ){
+    ItemStack stack = new ItemStack(item);
+    stack.set(componentType, value);
+    stack.set(componentType2, value2);
+    stack.set(componentType3, value3);
+    return stack;
+  }
+  private static <T, U, V, R> ItemStack components(ItemConvertible item,
+                                                   ComponentType<T> componentType, T value,
+                                                   ComponentType<U> componentType2, U value2,
+                                                   ComponentType<V> componentType3, V value3,
+                                                   ComponentType<R> componentType4, R value4
+  ){
+    ItemStack stack = new ItemStack(item);
+    stack.set(componentType, value);
+    stack.set(componentType2, value2);
+    stack.set(componentType3, value3);
+    stack.set(componentType4, value4);
+    return stack;
   }
 }
