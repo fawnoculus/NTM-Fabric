@@ -6,10 +6,7 @@ import net.fawnoculus.ntm.items.components.ModConsumableComponents;
 import net.fawnoculus.ntm.items.components.ModFoodComponents;
 import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
-import net.fawnoculus.ntm.items.custom.container.energy.InfiniteBatteryItem;
-import net.fawnoculus.ntm.items.custom.container.energy.PotatOSItem;
-import net.fawnoculus.ntm.items.custom.container.energy.SelfChargingBatteryItem;
-import net.fawnoculus.ntm.items.custom.container.energy.SimpleBatteryItem;
+import net.fawnoculus.ntm.items.custom.container.energy.*;
 import net.fawnoculus.ntm.items.custom.tools.*;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.ModSounds;
@@ -658,8 +655,8 @@ public class ModItems {
       settings -> new SimpleBatteryItem(settings, 250_000L, 1_000L), new Item.Settings());
   public static final Item LITHIUM_ION_POWER_CELL = register("lithium_ion_power_cell",
       settings -> new SimpleBatteryItem(settings, 750_000L, 1_000L), new Item.Settings());
-  public static final Item TRIPLE_LITHIUM_ION_POWER_CELL = register("triple_lithium_ion_power_cell",
-      settings -> new SimpleBatteryItem(settings, 2_250_000L, 1_000L), new Item.Settings());
+  // Triple TRIPLE_LITHIUM_ION_POWER_CELL has one extra comma digit because its max energy would be rounded otherwise, that's why it has an extra class
+  public static final Item TRIPLE_LITHIUM_ION_POWER_CELL = register("triple_lithium_ion_power_cell", TripleLithiumIonBatteryItem::new, new Item.Settings());
   public static final Item SIXFOLD_LITHIUM_ION_POWER_CELL = register("sixfold_lithium_ion_power_cell",
       settings -> new SimpleBatteryItem(settings, 4_500_000L, 1_000L), new Item.Settings());
   public static final Item SCHRABIDIUM_BATTERY = register("schrabidium_battery",

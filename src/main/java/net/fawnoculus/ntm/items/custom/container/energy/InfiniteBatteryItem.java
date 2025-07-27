@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 public class InfiniteBatteryItem extends Item implements EnergyContainingItem {
   public InfiniteBatteryItem(Settings settings) {
-    super(settings);
+    super(settings.maxCount(1));
   }
   
   @Override

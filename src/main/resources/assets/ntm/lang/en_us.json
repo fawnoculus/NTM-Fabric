@@ -72,8 +72,8 @@
   "generic.ntm.unit.t": "%1$sT",
   "generic.ntm.unit.p": "%1$sP",
   "generic.ntm.unit.e": "%1$sE",
-  "generic.ntm.energy": "NTE",
-  "generic.ntm.energy_t": "NTE/t",
+  "generic.ntm.energy": "NE",
+  "generic.ntm.energy_t": "NE/t",
   "generic.ntm.radiation.rad": "%1$s RAD",
   "generic.ntm.radiation.rads": "%1$s RAD/s",
   "generic.ntm.amount_stored": "%1$s/%2$s",
@@ -82,7 +82,6 @@
   "generic.ntm.network_type.fluid": "Fluid Network",
 
   "error.ntm.while.block_hover_tooltip": "An Exception occurred while trying to get Block Hover Tooltip Text",
-  "error.ntm.while.block_hover_tooltip_override": "An Exception occurred while trying to get Block Hover Tooltip Text for Override",
   "error.ntm.exception": "Exception: %1$s",
 
   "key.category.ntm": "NTM-Fabric",

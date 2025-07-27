@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fawnoculus.ntm.blocks.ModBlocks;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
 import net.fawnoculus.ntm.items.ModItems;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.Block;

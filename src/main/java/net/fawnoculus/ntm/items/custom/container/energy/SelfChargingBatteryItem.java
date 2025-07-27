@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class SelfChargingBatteryItem extends Item implements EnergyContainingItem {
   public SelfChargingBatteryItem(Settings settings, long energyPerTick) {
-    super(settings);
+    super(settings.maxCount(1));
     this.ENERGY_PER_TICK = energyPerTick;
   }
   

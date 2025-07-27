@@ -17,7 +17,7 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
     this(settings, maxEnergy, energyPerTick, energyPerTick);
   }
   public SimpleBatteryItem(Settings settings, long maxEnergy, long chargeRate, long dischargeRate) {
-    super(settings);
+    super(settings.maxCount(1));
     this.MAX_ENERGY = maxEnergy;
     this.CHARGE = chargeRate;
     this.DISCHARGE = dischargeRate;
@@ -65,7 +65,7 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
   
   @Override
   public int getItemBarStep(ItemStack stack) {
-    return Math.clamp(this.getEnergy(stack) / this.getMaxEnergy(stack) * 13, 0, 13);
+    return (int) Math.clamp((double) this.getEnergy(stack) / (double) this.getMaxEnergy(stack) * 13, 0, 13);
   }
   
   @Override @SuppressWarnings("deprecation")
