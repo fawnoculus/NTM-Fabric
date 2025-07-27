@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.blocks.entities;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.ModBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
@@ -9,9 +8,7 @@ import net.fawnoculus.ntm.blocks.node.NodeProperties;
 import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
-import net.fawnoculus.ntm.recipe.custom.AlloyFurnaceRecipe;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;

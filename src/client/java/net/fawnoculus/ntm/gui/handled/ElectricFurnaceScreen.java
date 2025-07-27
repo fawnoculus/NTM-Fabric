@@ -1,7 +1,5 @@
 package net.fawnoculus.ntm.gui.handled;
 
-import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.NTMClient;
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
 import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
 import net.fawnoculus.ntm.render.ModTextures;
