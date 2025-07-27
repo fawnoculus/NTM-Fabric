@@ -17,9 +17,9 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class EnergyNode extends BlockEntity implements Node<NetworkType.Energy> {
-  private boolean shouldAssignNetwork = true;
-  private NodeNetwork<NetworkType.Energy> network;
-  private NodeProperties nodeProperties;
+  private boolean shouldAssignNetwork = false;
+  public NodeNetwork<NetworkType.Energy> network;
+  public NodeProperties nodeProperties;
   
   public EnergyNode(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<NodeProperties> properties){
     super(type, pos, state);
@@ -49,6 +49,7 @@ public class EnergyNode extends BlockEntity implements Node<NetworkType.Energy> 
   
   @Override
   public void setWorld(World world) {
+    this.setShouldAssignNetwork(true);
     super.setWorld(world);
     if(world.isClient){
       return;

@@ -7,19 +7,10 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class Model3D {
-  @Contract(value = " -> new", pure = true)
-  public static @NotNull Model3D empty(){
-    // Empty Models can not be rendered
-    // BE CAREFUL
-    return new Model3D(List.of());
-  }
-  
   private List<PolygonalFace> FACES;
   
   public Model3D(List<PolygonalFace> faces){
@@ -67,10 +58,6 @@ public class Model3D {
     }
     
     return buffer;
-  }
-  
-  public boolean isEmpty(){
-    return this.FACES.isEmpty();
   }
   
   @Override

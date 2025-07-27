@@ -1,12 +1,6 @@
 package net.fawnoculus.ntm.render.models;
 
 
-import com.mojang.blaze3d.vertex.VertexFormat;
-import net.fawnoculus.ntm.render.ModRenderPipelines;
-import net.fawnoculus.ntm.util.ExceptionUtil;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -19,9 +13,6 @@ public class GroupedModel3D {
   public final String NAME;
   public final HashMap<String, Model3D> MODELS = new HashMap<>();
   
-  public GroupedModel3D(){
-    this("Empty");
-  }
   public GroupedModel3D(String name){
     this.NAME = name;
   }

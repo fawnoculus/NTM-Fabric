@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 
 public class SimpleEnergyStorageBE extends EnergyNode {
   public SimpleEnergyStorageBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, NodeProperties.Connector::new);
-    this.setNodeProperties(new NodeProperties.Storge());
+    super(ModBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, NodeProperties.Storge::new);
   }
 }

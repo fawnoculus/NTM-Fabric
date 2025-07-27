@@ -25,10 +25,7 @@ public class TextUtil {
     }
     return Text.literal(String.valueOf(val));
   }
-  public static MutableText unit(long val, String suffixKey, boolean spaceInBetween){
-    return unit(val).append(Text.literal(" ")).append(Text.translatable(suffixKey));
-  }
   public static MutableText unit(long val, String suffixKey){
-    return unit(val, suffixKey, true);
+    return unit(val).append(Text.translatable(suffixKey));
   }
 }

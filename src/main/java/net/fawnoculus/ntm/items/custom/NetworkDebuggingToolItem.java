@@ -1,8 +1,6 @@
 package net.fawnoculus.ntm.items.custom;
 
 import net.fawnoculus.ntm.blocks.node.Node;
-import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
-import net.fawnoculus.ntm.blocks.node.network.FluidNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;

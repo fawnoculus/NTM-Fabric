@@ -390,7 +390,7 @@ public abstract class NodeNetwork<T extends NetworkType> {
       }
       if(toBeRemoved == 0) break;
     }
-  };
+  }
   
   
   @Override
