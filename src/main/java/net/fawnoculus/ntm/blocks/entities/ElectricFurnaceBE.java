@@ -112,6 +112,8 @@ public class ElectricFurnaceBE extends AbstractEnergyInventoryBE implements Exte
     
     output.setCount(getStack(OUTPUT_SLOT_INDEX).getCount() + 1);
     setStack(OUTPUT_SLOT_INDEX, output);
+    
+    getStack(INPUT_SLOT_INDEX).decrement(1);
   }
   
   private boolean canCraft(){
