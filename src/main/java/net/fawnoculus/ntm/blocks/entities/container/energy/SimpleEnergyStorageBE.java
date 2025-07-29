@@ -100,16 +100,14 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   public Text getEnergyPerSec(){
     OptionalDouble optional = Arrays.stream(energyChange).average();
     long energyPerSec = (long) optional.orElse(0);
-    
-    MutableText prefix = Text.literal("+");
-    Formatting formatting = Formatting.YELLOW;
-    if(energyPerSec > 0) formatting = Formatting.GREEN;
     if(energyPerSec < 0) {
-      prefix = Text.literal("-");
-      formatting = Formatting.RED;
+      return TextUtil.unit(energyPerSec, "generic.ntm.energy_s").formatted(Formatting.RED);
     }
     
-    return prefix.append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).formatted(formatting);
+    Formatting formatting = Formatting.YELLOW;
+    if(energyPerSec > 0) formatting = Formatting.GREEN;
+    
+    return Text.literal("+").append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).formatted(formatting);
   }
   
   @Override

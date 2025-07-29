@@ -20,14 +20,6 @@ public class ClientUtil {
     return getClient().world;
   }
   
-  public static void setScreen(Screen screen){
-    getClient().setScreen(screen);
-  }
-  
-  public static Window getWindow(){
-    return getClient().getWindow();
-  }
-  
   public static TextRenderer getTextRenderer(){
     return getClient().textRenderer;
   }

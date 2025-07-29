@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.blocks.entities.container.energy;
 
 import net.fawnoculus.ntm.blocks.node.NodeWithValue;
-import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.type.EnergyNode;
 import net.minecraft.block.BlockState;

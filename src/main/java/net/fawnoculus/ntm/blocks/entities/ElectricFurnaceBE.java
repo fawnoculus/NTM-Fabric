@@ -170,11 +170,6 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
     super.writeNbt(nbt, registryLookup);
   }
   
-  @Override
-  public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
-    return BlockEntityUpdateS2CPacket.create(this);
-  }
-  
   public double getProgress(int requiredProgress) {
     return progress / requiredProgress;
   }
