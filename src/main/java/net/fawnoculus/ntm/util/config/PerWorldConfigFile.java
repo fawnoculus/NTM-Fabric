@@ -25,7 +25,6 @@ public class PerWorldConfigFile extends ConfigFile{
   
   private static final List<PerWorldConfigFile> perWorldConfigFiles = new ArrayList<>();
   private final String SUB_PATH;
-  private final HashMap<Option<?>, Option<?>> PER_WORLD_TO_REGULAR = new HashMap<>();
   private final HashMap<Option<?>, Option<?>> REGULAR_TO_PER_WORLD = new HashMap<>();
   private List<Option<?>> perWorldOptions = new ArrayList<>();
   private File perWorldConfigFile;
@@ -124,7 +123,6 @@ public class PerWorldConfigFile extends ConfigFile{
     this.OPTION_NAMES.add(name);
     this.options.add(defaultOption);
     this.perWorldOptions.add(perWorldOption);
-    this.PER_WORLD_TO_REGULAR.put(perWorldOption, defaultOption);
     this.REGULAR_TO_PER_WORLD.put(defaultOption, perWorldOption);
   }
   

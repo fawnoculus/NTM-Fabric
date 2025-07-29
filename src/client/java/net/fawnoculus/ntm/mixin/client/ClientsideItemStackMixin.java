@@ -60,8 +60,8 @@ public abstract class ClientsideItemStackMixin {
     }
     
     if(this.getItem() instanceof ExtraInfo extraInfo){
-      if(!ModKeybinds.displayExtraInfo.isPressed()){
-        tooltip.accept(extraInfo.getHelpText());
+      if(!ModKeybinds.DISPLAY_EXTRA_INFO.isPressed()){
+        tooltip.accept(extraInfo.getHelpText(ModKeybinds.DISPLAY_EXTRA_INFO.getBoundKeyLocalizedText()));
       }else {
         extraInfo.getInfo().forEach(tooltip);
       }

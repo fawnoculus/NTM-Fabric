@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.blocks.entities.SimpleEnergyConnectorBE;
+import net.fawnoculus.ntm.blocks.entities.EnergyConnectorBE;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -20,6 +20,6 @@ public class TempCableBlock extends BlockWithEntity {
   
   @Override
   public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    return new SimpleEnergyConnectorBE(pos, state);
+    return new EnergyConnectorBE(pos, state);
   }
 }

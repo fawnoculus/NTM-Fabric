@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.blocks.node.network;
 
 import java.util.UUID;
 
-public class EnergyNetwork extends NodeNetwork<NetworkType.Energy>{
+public class EnergyNetwork extends NodeNetwork{
   public EnergyNetwork() {
     super();
     NodeNetworkManager.addEnergyNetwork(this);

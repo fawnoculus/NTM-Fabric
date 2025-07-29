@@ -45,7 +45,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
   @Override
   public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     ElectricFurnaceBE be = new ElectricFurnaceBE(pos, state);
-    be.getNodeProperties().setMaxValue(100_000);
+    be.setMaxValue(100_000);
     return be;
   }
   

@@ -44,10 +44,10 @@
   "message.ntm.version": "NTM Version: %1$s",
   "message.ntm.version.server": "NTM-Server Version: %1$s",
   "message.ntm.version.client": "NTM-Client Version: %1$s",
-  "message.ntm.version.not_installed1": "The Server does not have NTM-Fabric",
+  "message.ntm.version.not_installed1": "The Server does not have NTM-Fabric installed",
   "message.ntm.version.not_installed2": "NTM-Fabric features will not be available",
   "message.ntm.version.mismatch1": "The Server & Client have different NTM-Fabric Versions",
-  "message.ntm.version.mismatch2": "This is not recommended",
+  "message.ntm.version.mismatch2": "This is not recommended & may cause problems!",
 
   "death.attack.ntm.euthanized": "%1$s euthanized himself",
   "death.attack.ntm.euthanized.player": "%1$s was euthanized while fighting %2$s",
@@ -74,12 +74,17 @@
   "generic.ntm.unit.e": "%1$sE",
   "generic.ntm.energy": "NE",
   "generic.ntm.energy_t": "NE/t",
+  "generic.ntm.energy_s": "NE/s",
   "generic.ntm.radiation.rad": "%1$s RAD",
   "generic.ntm.radiation.rads": "%1$s RAD/s",
   "generic.ntm.amount_stored": "%1$s/%2$s",
   "generic.ntm.spaced_amount_stored": "%1$s / %2$s",
   "generic.ntm.network_type.energy": "Energy Network",
   "generic.ntm.network_type.fluid": "Fluid Network",
+  "generic.ntm.node_type.connector": "Connector",
+  "generic.ntm.node_type.consumer": "Consumer",
+  "generic.ntm.node_type.provider": "Provider",
+  "generic.ntm.node_type.storage": "Storage",
 
   "error.ntm.while.block_hover_tooltip": "An Exception occurred while trying to get Block Hover Tooltip Text",
   "error.ntm.exception": "Exception: %1$s",
@@ -94,7 +99,7 @@
   "tooltip.ntm.stack_rads": "Stack: %1$s RAD/s",
   "tooltip.ntm.radiation_resistance": "Radiation resistance: %1$s",
   "tooltip.ntm.dangerous_drop": "[Dangerous Drop]",
-  "tooltip.ntm.hold_for_info": "Hold 'Extra Info Keybind' to display more info",
+  "tooltip.ntm.hold_for_info": "Hold <%1$s> to display more info",
 
   "tooltip.ntm.cmb_steel_ingot": "*insert civil protection reference here*",
   "tooltip.ntm.asbestos_sheet": "\"Filled with life, self-doubt and asbestos. That comes with the air.\"",
@@ -252,6 +257,7 @@
 
   "container.ntm.alloy_furnace": "Alloy Furnace",
   "container.ntm.electric_furnace": "Electric Furnace",
+  "container.ntm.energy_storage": "Energy Storage",
 
   "block.ntm.uranium_ore": "Uranium Ore",
   "item.ntm.uranium_ore": "Uranium Ore",

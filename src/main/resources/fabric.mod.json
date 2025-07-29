@@ -46,7 +46,7 @@
       "net.fawnoculus.ntm.compat.NTMJadePlugin"
     ],
     "modmenu": [
-      "net.fawnoculus.ntm.compat.NTMModmenuPlugin"
+      "net.fawnoculus.ntm.compat.NTMModMenuPlugin"
     ],
     "emi": [
       "net.fawnoculus.ntm.compat.NTMEmiPlugin"

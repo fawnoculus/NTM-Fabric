@@ -1,6 +1,8 @@
 # V0.0.2-alpha
 ## Added:
 * Advanced Message System
+* Energy System (aka: NodeNetworks)
+* Batteries
 * Radiation System
 * Node Network System (aka: Energy Cables & Fluid Pipes)
 * Ore Drops
@@ -8,10 +10,10 @@
 * Some Consumables
 * Debug & Construction Wand
 * Geiger Counter & Dosimeter
+* Electric Furnace
 * Ingots
 * Billets
 * Nuggets
-* The Beginning of the Radiation System
 * Consumables (Bottles, Syringes, ...)
 ## Fixed:
 * Alloy Furnace Model

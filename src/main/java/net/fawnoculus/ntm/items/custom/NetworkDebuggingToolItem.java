@@ -40,27 +40,27 @@ public class NetworkDebuggingToolItem extends Item {
     PlayerEntity player = context.getPlayer();
     assert player != null;
     
-    if (!(world.getBlockEntity(pos) instanceof Node<?> node)) {
+    if (!(world.getBlockEntity(pos) instanceof Node node)) {
       player.sendMessage(Text.translatable("message.ntm.network_debug.not_node").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
-    NodeNetwork<?> network = node.getNetwork();
+    NodeNetwork network = node.getNetwork();
     if(network == null){
       player.sendMessage(Text.translatable("message.ntm.network_debug.node_no_network").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
     
     if(player.isSneaking()){
-      for(Node<?> a : node.getNetwork().LOADED_CONNECTORS){
+      for(Node a : node.getNetwork().LOADED_CONNECTORS){
         player.sendMessage(Text.literal("Connector: " + a.getPos().toShortString()), false);
       }
-      for(Node<?> a : node.getNetwork().LOADED_CONSUMERS){
+      for(Node a : node.getNetwork().LOADED_CONSUMERS){
         player.sendMessage(Text.literal("Consumer: " + a.getPos().toShortString()), false);
       }
-      for(Node<?> a : node.getNetwork().LOADED_PROVIDERS){
+      for(Node a : node.getNetwork().LOADED_PROVIDERS){
         player.sendMessage(Text.literal("Provider: " + a.getPos().toShortString()), false);
       }
-      for(Node<?> a : node.getNetwork().LOADED_STORAGES){
+      for(Node a : node.getNetwork().LOADED_STORAGES){
         player.sendMessage(Text.literal("Storage: " + a.getPos().toShortString()), false);
       }
       return ActionResult.SUCCESS_SERVER;

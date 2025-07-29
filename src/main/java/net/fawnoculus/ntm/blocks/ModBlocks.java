@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.blocks;
 
 import net.fawnoculus.ntm.blocks.custom.*;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.blocks.custom.container.energy.SimpleEnergyStorageBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -224,11 +225,11 @@ public class ModBlocks {
   
   // Energy Stuff
   public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create());
-  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(10_000L), AbstractBlock.Settings.create());
-  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000L), AbstractBlock.Settings.create());
-  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(50_000_000L), AbstractBlock.Settings.create());
-  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(25_000_000_000L), AbstractBlock.Settings.create());
-  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings).maxEnergy(1_000_000_000_000L), AbstractBlock.Settings.create());
+  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings, 10_000L), AbstractBlock.Settings.create());
+  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000L), AbstractBlock.Settings.create());
+  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 50_000_000L), AbstractBlock.Settings.create());
+  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), AbstractBlock.Settings.create());
+  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), AbstractBlock.Settings.create());
   
   
   

@@ -1,9 +1,7 @@
-package net.fawnoculus.ntm.blocks.entities;
+package net.fawnoculus.ntm.blocks.entities.container.energy;
 
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.blocks.node.EnergyNode;
-import net.fawnoculus.ntm.blocks.node.NodeProperties;
 import net.fawnoculus.ntm.network.custom.InventorySyncS2CPayload;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,14 +18,12 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.function.Supplier;
 
-
-public class AbstractEnergyInventoryBE extends EnergyNode implements Inventory {
+public abstract class EnergyInventoryBE extends EnergyContainerBE implements Inventory {
   private final SimpleInventory inventory;
   
-  public AbstractEnergyInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, Supplier<NodeProperties> properties, int inventorySlots) {
-    super(type, pos, state, properties);
+  public EnergyInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
+    super(type, pos, state);
     
     this.inventory = new SimpleInventory(inventorySlots){
       @Override
@@ -126,10 +122,5 @@ public class AbstractEnergyInventoryBE extends EnergyNode implements Inventory {
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
     Inventories.readNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
-  }
-  
-  @Override
-  public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-    return createNbt(registryLookup);
   }
 }

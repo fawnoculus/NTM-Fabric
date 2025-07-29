@@ -13,7 +13,7 @@ NTM-Fabric is a Mod all about technology, atomic science and nuclear weapons. Fe
 - Abandoned structures and dungeons to explore
 - Hazards such as radiation, flammable gasses and lung diseases
 
-For a Better Experience I recommend Installing a Recipe Viewer like [JEI](https://modrinth.com/mod/jei), [REI](https://modrinth.com/mod/rei) or [EMI](https://modrinth.com/mod/emi). NTM-Fabric comes with Recipe support for all 3.
+For a Better Experience I recommend Installing a Recipe Viewer like [JEI](https://modrinth.com/mod/jei), [REI](https://modrinth.com/mod/rei) or [EMI](https://modrinth.com/mod/emi).
 
 ## Installation
 <a href="https://modrinth.com/mod/fabric-api"><img src="https://i.imgur.com/Ol1Tcf8.png" alt="Requires Fabric API" width="200"></a>
@@ -33,6 +33,6 @@ for 1.12.2 Forge use one of these Mods:
 - [NTM Reloaded](https://modrinth.com/mod/hbm-reloaded)
 - [NTM Extended Edition](https://modrinth.com/mod/ntm-extended)
 
-For a more up to date 1.12.2 version try [NTM Community Edition](https://codeberg.org/MrNorwood/Hbm-s-Nuclear-Tech-CE)
+For a more up to date 1.12.2 version there is the [NTM Community Edition](https://codeberg.org/MrNorwood/Hbm-s-Nuclear-Tech-CE)
 
 For 1.18 Forge try [Martin's Remake](https://codeberg.org/MartinTheDragon/Nuclear-Tech-Mod-Remake)

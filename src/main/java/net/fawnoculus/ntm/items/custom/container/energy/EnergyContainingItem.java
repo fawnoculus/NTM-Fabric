@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
-import net.fawnoculus.ntm.blocks.node.NodeProperties;
+import net.fawnoculus.ntm.blocks.node.NodeWithValue;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Range;
 
@@ -38,10 +38,10 @@ public interface EnergyContainingItem {
     this.setEnergy(stack, this.getEnergy(stack) + energy);
     return 0;
   }
-  default void charge(ItemStack stack, NodeProperties nodeProperties){
-    long energy = nodeProperties.getValue();
+  default void charge(ItemStack stack, NodeWithValue node){
+    long energy = node.getValue();
     energy = this.charge(stack, energy);
-    nodeProperties.setValue(energy);
+    node.setValue(energy);
   }
   /**
    * @param stack the Stack to be Discharged
@@ -60,10 +60,10 @@ public interface EnergyContainingItem {
     this.setEnergy(stack, this.getEnergy(stack) - energy);
     return 0;
   }
-  default void discharge(ItemStack stack, NodeProperties nodeProperties){
-    long missingEnergy = nodeProperties.getMaxValue() - nodeProperties.getValue();
+  default void discharge(ItemStack stack, NodeWithValue node){
+    long missingEnergy = node.getMaxValue() - node.getValue();
     missingEnergy = this.discharge(stack, missingEnergy);
-    nodeProperties.setValue(nodeProperties.getMaxValue() - missingEnergy);
+    node.setValue(node.getMaxValue() - missingEnergy);
   }
   
   default double getEnergyPercentage(ItemStack stack){

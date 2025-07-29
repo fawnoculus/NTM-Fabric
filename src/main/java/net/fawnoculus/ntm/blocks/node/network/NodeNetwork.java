@@ -3,25 +3,27 @@ package net.fawnoculus.ntm.blocks.node.network;
 import com.google.common.collect.ImmutableList;
 import io.netty.util.collection.LongObjectHashMap;
 import io.netty.util.collection.LongObjectMap;
-import net.fawnoculus.ntm.blocks.node.Node;
-import net.fawnoculus.ntm.blocks.node.NodeProperties;
+import net.fawnoculus.ntm.blocks.node.*;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.blocks.node.type.ConnectorNode;
+import net.fawnoculus.ntm.blocks.node.type.ConsumerNode;
+import net.fawnoculus.ntm.blocks.node.type.ProviderNode;
+import net.fawnoculus.ntm.blocks.node.type.StorageNode;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public abstract class NodeNetwork<T extends NetworkType> {
+public abstract class NodeNetwork {
   public final UUID ID;
-  public final HashSet<Node<T>> LOADED_CONNECTORS = new HashSet<>();
-  public final HashSet<Node<T>> LOADED_CONSUMERS = new HashSet<>();
-  public final HashSet<Node<T>> LOADED_PROVIDERS = new HashSet<>();
-  public final HashSet<Node<T>> LOADED_STORAGES = new HashSet<>();
+  public final HashSet<ConnectorNode> LOADED_CONNECTORS = new HashSet<>();
+  public final HashSet<ConsumerNode> LOADED_CONSUMERS = new HashSet<>();
+  public final HashSet<ProviderNode> LOADED_PROVIDERS = new HashSet<>();
+  public final HashSet<StorageNode> LOADED_STORAGES = new HashSet<>();
   public final Set<Long> REVERSED_CONSUMER_PRIORITIES = new TreeSet<Long>().reversed();
-  public final LongObjectMap<List<Node<T>>> PRIORITISED_CONSUMERS = new LongObjectHashMap<>();
+  public final LongObjectMap<List<NodeWithValue>> PRIORITISED_CONSUMERS = new LongObjectHashMap<>();
   public final Set<Long> REVERSED_PROVIDER_PRIORITIES = new TreeSet<Long>().reversed();
-  public final LongObjectMap<List<Node<T>>> PRIORITISED_PROVIDERS = new LongObjectHashMap<>();
+  public final LongObjectMap<List<NodeWithValue>> PRIORITISED_PROVIDERS = new LongObjectHashMap<>();
   
   public NodeNetwork(){
     this(UUID.randomUUID());
@@ -31,40 +33,44 @@ public abstract class NodeNetwork<T extends NetworkType> {
     NodeNetworkManager.addNetwork(this);
   }
   
-  public abstract NodeNetwork<T> makeNewNetwork();
-  public abstract T getType();
+  public abstract NodeNetwork makeNewNetwork();
+  public abstract NetworkType getType();
   
   
-  public void addNode(@NotNull Node<T> node){
+  public void addNode(@NotNull Node node){
     if(this.containsNode(node)){
       NTM.LOGGER.warn("Added Node {} twice to Network {}", node, this.ID);
     }
-    switch (node.getNodeProperties()){
-      case NodeProperties.Connector ignored -> LOADED_CONNECTORS.add(node);
-      case NodeProperties.Consumer ignored -> LOADED_CONSUMERS.add(node);
-      case NodeProperties.Provider ignored -> LOADED_PROVIDERS.add(node);
-      case NodeProperties.Storge ignored -> LOADED_STORAGES.add(node);
-      default -> NTM.LOGGER.warn("Tired to add Node with Unknown Type ({}) to network {}", node.getNodeProperties().getClass().getName(), this.ID);
+    switch (node){
+      case ConnectorNode connectorNode -> LOADED_CONNECTORS.add(connectorNode);
+      case ConsumerNode consumerNode -> LOADED_CONSUMERS.add(consumerNode);
+      case ProviderNode providerNode -> LOADED_PROVIDERS.add(providerNode);
+      case StorageNode storageNode -> LOADED_STORAGES.add(storageNode);
+      default -> NTM.LOGGER.warn("Tired to add Node with Unknown Type ({}) to network {}", node.getClass().getName(), this.ID);
     }
-    addNodeToSorted(node, node.getNodeProperties());
+    if(node instanceof NodeWithValue nodeWithValue){
+      addNodeToSorted(nodeWithValue);
+    }
   }
   
   /**
    * Removes a Node from the Network, if the node is permanently removed & not just unloaded, please use disconnect Node instead!
    * @param node the Node to be removed
    */
-  public void removeNode(@NotNull Node<T> node){
-    switch (node.getNodeProperties()){
-      case NodeProperties.Connector ignored -> LOADED_CONNECTORS.remove(node);
-      case NodeProperties.Consumer ignored -> LOADED_CONSUMERS.remove(node);
-      case NodeProperties.Provider ignored -> LOADED_PROVIDERS.remove(node);
-      case NodeProperties.Storge ignored -> LOADED_STORAGES.remove(node);
-      default -> NTM.LOGGER.warn("Tired to remove Node with Unknown Type ({}) from network {}", node.getNodeProperties().getClass().getName(), this.ID);
+  public void removeNode(@NotNull Node node){
+    switch (node){
+      case ConnectorNode connectorNode -> LOADED_CONNECTORS.remove(connectorNode);
+      case ConsumerNode consumerNode -> LOADED_CONSUMERS.remove(consumerNode);
+      case ProviderNode providerNode -> LOADED_PROVIDERS.remove(providerNode);
+      case StorageNode storageNode -> LOADED_STORAGES.remove(storageNode);
+      default -> NTM.LOGGER.warn("Tired to remove Node of Unknown Type ({}) from network {}", node.getClass().getName(), this.ID);
     }
-    removeNodeFromSorted(node, node.getNodeProperties());
+    if(node instanceof NodeWithValue nodeWithValue){
+      removeNodeFromSorted(nodeWithValue);
+    }
   }
   /**
-   * removes all nodes from a network, this will cause the network to get removed if no nodes are added back to the network before the next tick
+   * Removes all data from a network, this will cause the network to get removed if no nodes are added back to the network before the next tick
    */
   public void clearNetwork(){
     this.LOADED_CONNECTORS.clear();
@@ -93,37 +99,40 @@ public abstract class NodeNetwork<T extends NetworkType> {
    * @param node the node to be checked
    * @return whether the network contains the node
    */
-  public boolean containsNode(Node<T> node){
-    return LOADED_CONNECTORS.contains(node)
-        || LOADED_CONSUMERS.contains(node)
-        || LOADED_PROVIDERS.contains(node)
-        || LOADED_STORAGES.contains(node);
+  public boolean containsNode(@NotNull Node node){
+    return switch (node){
+      case ConnectorNode connectorNode -> LOADED_CONNECTORS.contains(connectorNode);
+      case ConsumerNode consumerNode -> LOADED_CONSUMERS.contains(consumerNode);
+      case ProviderNode providerNode -> LOADED_PROVIDERS.contains(providerNode);
+      case StorageNode storageNode -> LOADED_STORAGES.contains(storageNode);
+      default -> false;
+    };
   }
   /**
    * removes all connections from a node & removes the node from the network
    * @param originNode the Node to me removed
    */
-  public void disconnectNode(@NotNull Node<T> originNode){
+  public void disconnectNode(@NotNull Node originNode){
     this.clearNetwork();
     
-    final ImmutableList<Node<T>> disconnectedNodeList = ImmutableList.copyOf(originNode.getConnectedNodes());
-    Stack<Node<T>> disconnectedNodes = new Stack<>();
-    for(Node<T> disconectedNode : disconnectedNodeList){
+    final ImmutableList<Node> disconnectedNodeList = ImmutableList.copyOf(originNode.getConnectedNodes());
+    Stack<Node> disconnectedNodes = new Stack<>();
+    for(Node disconectedNode : disconnectedNodeList){
       disconnectedNodes.push(disconectedNode);
     }
     
-    HashSet<Node<T>> alreadyScannedNodes = new HashSet<>();
+    HashSet<Node> alreadyScannedNodes = new HashSet<>();
     alreadyScannedNodes.add(originNode);
     
     boolean isFirst = true;
     
     while(!disconnectedNodes.isEmpty()){
-      Node<T> disconectedNode = disconnectedNodes.pop();
+      Node disconectedNode = disconnectedNodes.pop();
       
-      NodeNetwork<T> assignedNetwork = isFirst ? this : this.makeNewNetwork();
+      NodeNetwork assignedNetwork = isFirst ? this : this.makeNewNetwork();
       isFirst = false;
       
-      Stack<Node<T>> toBeScannedNodes = new Stack<>();
+      Stack<Node> toBeScannedNodes = new Stack<>();
       toBeScannedNodes.push(disconectedNode);
       
       alreadyScannedNodes.add(disconectedNode);
@@ -131,9 +140,9 @@ public abstract class NodeNetwork<T extends NetworkType> {
       assignedNetwork.addNode(disconectedNode);
       
       while(!toBeScannedNodes.isEmpty()){
-        Node<T> scannedNode = toBeScannedNodes.pop();
+        Node scannedNode = toBeScannedNodes.pop();
         
-        for(Node<T> node : scannedNode.getConnectedNodes()){
+        for(Node node : scannedNode.getConnectedNodes()){
           if(alreadyScannedNodes.contains(node)) continue;
           if(disconnectedNodeList.contains(node)) {
             disconnectedNodes.remove(node);
@@ -163,26 +172,26 @@ public abstract class NodeNetwork<T extends NetworkType> {
    * removes the connection between multiple nodes, will only remove them from the network if necessary
    * @param providedNodes the nodes whose connection with each other will be severed
    */
-  public void disconnectNodes(Collection<Node<T>> providedNodes){
+  public void disconnectNodes(Collection<Node> providedNodes){
     this.clearNetwork();
     
-    final ImmutableList<Node<T>> disconnectedNodeList = ImmutableList.copyOf(providedNodes);
-    Stack<Node<T>> disconnectedNodes = new Stack<>();
-    for(Node<T> disconectedNode : disconnectedNodeList){
+    final ImmutableList<Node> disconnectedNodeList = ImmutableList.copyOf(providedNodes);
+    Stack<Node> disconnectedNodes = new Stack<>();
+    for(Node disconectedNode : disconnectedNodeList){
       disconnectedNodes.push(disconectedNode);
     }
     
-    HashSet<Node<T>> alreadyScannedNodes = new HashSet<>();
+    HashSet<Node> alreadyScannedNodes = new HashSet<>();
     
     boolean isFirst = true;
     
     while(!disconnectedNodes.isEmpty()){
-      Node<T> disconectedNode = disconnectedNodes.pop();
+      Node disconectedNode = disconnectedNodes.pop();
       
-      NodeNetwork<T> assignedNetwork = isFirst ? this : this.makeNewNetwork();
+      NodeNetwork assignedNetwork = isFirst ? this : this.makeNewNetwork();
       isFirst = false;
       
-      Stack<Node<T>> toBeScannedNodes = new Stack<>();
+      Stack<Node> toBeScannedNodes = new Stack<>();
       toBeScannedNodes.push(disconectedNode);
       
       alreadyScannedNodes.add(disconectedNode);
@@ -190,9 +199,9 @@ public abstract class NodeNetwork<T extends NetworkType> {
       assignedNetwork.addNode(disconectedNode);
       
       while(!toBeScannedNodes.isEmpty()){
-        Node<T> scannedNode = toBeScannedNodes.pop();
+        Node scannedNode = toBeScannedNodes.pop();
         
-        for(Node<T> node : scannedNode.getConnectedNodes()){
+        for(Node node : scannedNode.getConnectedNodes()){
           if(alreadyScannedNodes.contains(node)) continue;
           if(disconnectedNodeList.contains(node)) {
             disconnectedNodes.remove(node);
@@ -222,16 +231,16 @@ public abstract class NodeNetwork<T extends NetworkType> {
    * Merges Multiple Networks when a Node is added which ends up connecting multiple Networks
    * @param originNode the Node that was added
    */
-  public void mergeNetworksAt(@NotNull Node<T> originNode){
-    Stack<Node<T>> toBeScanned = new Stack<>();
-    Set<Node<T>> scannedNodes = new HashSet<>();
+  public void mergeNetworksAt(@NotNull Node originNode){
+    Stack<Node> toBeScanned = new Stack<>();
+    Set<Node> scannedNodes = new HashSet<>();
     
     toBeScanned.push(originNode);
     
     while(!toBeScanned.isEmpty()){
-      Node<T> scaningNode = toBeScanned.pop();
+      Node scaningNode = toBeScanned.pop();
       
-      for(Node<T> connectedNode : scaningNode.getConnectedNodes()){
+      for(Node connectedNode : scaningNode.getConnectedNodes()){
         if(scannedNodes.contains(connectedNode)) continue;
         if(connectedNode.getNetwork() == null) continue;
         if(connectedNode.getNetwork().equals(this)) continue;
@@ -257,50 +266,42 @@ public abstract class NodeNetwork<T extends NetworkType> {
   }
   
   /**
-   * Called before a Node Changes it's Properties
+   * Called before a Storage Node changes it Priority
    */
-  public void onNodePropertiesChanged(@NotNull Node<T> node, @Nullable NodeProperties newProperties){
-    NodeProperties oldProperties = node.getNodeProperties();
-    if(newProperties == null){
-      removeNodeFromSorted(node, node.getNodeProperties());
-      return;
-    }
-    if(oldProperties.getClass() != newProperties.getClass()){
-      this.removeNode(node);
-      switch (newProperties){
-        case NodeProperties.Connector ignored -> LOADED_CONNECTORS.add(node);
-        case NodeProperties.Consumer ignored -> LOADED_CONSUMERS.add(node);
-        case NodeProperties.Provider ignored -> LOADED_PROVIDERS.add(node);
-        case NodeProperties.Storge ignored -> LOADED_STORAGES.add(node);
-        default -> NTM.LOGGER.warn("Tired to update Node to Unknown Type ({}) could not re-add it to network {}", node.getNodeProperties().getClass().getName(), this.ID);
-      }
-      addNodeToSorted(node, newProperties);
-    }else if(oldProperties.getPriority() != newProperties.getPriority()
-        || oldProperties.getStorageMode() != newProperties.getStorageMode()
-    ){
-      removeNodeFromSorted(node, node.getNodeProperties());
-      addNodeToSorted(node, newProperties);
-    }
+  public void onPriorityChange(@NotNull NodeWithValue node, long newPriority){
+    long oldPriority = node.getPriority();
+    if(oldPriority == newPriority) return;
+    if(node.provides()) removeNodeFromSortedProviders(node ,node.getPriority());
+    if(node.consumes()) removeNodeFromSortedConsumers(node ,node.getPriority());
+  }
+  /**
+   * Called before a Storage Node changes it Mode
+   */
+  public void onStorageModeChange(@NotNull StorageNode node, StorageNode.StorageMode newMode){
+    StorageNode.StorageMode oldMode = node.getStorageMode();
+    if(oldMode == newMode) return;
+    if(oldMode.provides) removeNodeFromSortedProviders(node ,node.getPriority());
+    if(oldMode.consumes) removeNodeFromSortedConsumers(node ,node.getPriority());
+    if(newMode.provides) addNodeToSortedProviders(node ,node.getPriority());
+    if(newMode.consumes) addNodeToSortedConsumers(node ,node.getPriority());
   }
   
-  public void addNodeToSorted(Node<T> node, NodeProperties properties){
-    boolean isProvider = properties instanceof NodeProperties.Provider
-        || (properties instanceof NodeProperties.Storge storge
-        && (storge.getStorageMode() == NodeProperties.StorageMode.Provide || storge.getStorageMode() == NodeProperties.StorageMode.Share));
-    boolean isConsumer = properties instanceof NodeProperties.Consumer
-        || (properties instanceof NodeProperties.Storge storge
-        && (storge.getStorageMode() == NodeProperties.StorageMode.Consume || storge.getStorageMode() == NodeProperties.StorageMode.Share));
-    if(isConsumer) addNodeToSortedConsumers(node, properties.getPriority());
-    if(isProvider) addNodeToSortedProviders(node, properties.getPriority());
+  public void addNodeToSorted(NodeWithValue node){
+    if(node.provides()){
+      addNodeToSortedProviders(node, node.getPriority());
+    }
+    if(node.consumes()){
+      addNodeToSortedConsumers(node, node.getPriority());
+    }
   }
-  public void addNodeToSortedConsumers(Node<T> node, long priority){
+  public void addNodeToSortedConsumers(NodeWithValue node, long priority){
     this.REVERSED_CONSUMER_PRIORITIES.add(priority);
     if(!this.PRIORITISED_CONSUMERS.containsKey(priority)){
       this.PRIORITISED_CONSUMERS.put(priority, new ArrayList<>());
     }
     this.PRIORITISED_CONSUMERS.get(priority).add(node);
   }
-  public void addNodeToSortedProviders(Node<T> node, long priority){
+  public void addNodeToSortedProviders(NodeWithValue node, long priority){
     this.REVERSED_PROVIDER_PRIORITIES.add(priority);
     if(!this.PRIORITISED_PROVIDERS.containsKey(priority)){
       this.PRIORITISED_PROVIDERS.put(priority, new ArrayList<>());
@@ -308,25 +309,23 @@ public abstract class NodeNetwork<T extends NetworkType> {
     this.PRIORITISED_PROVIDERS.get(priority).add(node);
   }
   
-  public void removeNodeFromSorted(Node<T> node, NodeProperties properties){
-    boolean isProvider = properties instanceof NodeProperties.Provider
-        || (properties instanceof NodeProperties.Storge storge
-        && (storge.getStorageMode() == NodeProperties.StorageMode.Provide || storge.getStorageMode() == NodeProperties.StorageMode.Share));
-    boolean isConsumer = properties instanceof NodeProperties.Consumer
-        || (properties instanceof NodeProperties.Storge storge
-        && (storge.getStorageMode() == NodeProperties.StorageMode.Consume || storge.getStorageMode() == NodeProperties.StorageMode.Share));
-    if(isConsumer) removeNodeFromSortedConsumers(node, properties.getPriority());
-    if(isProvider) removeNodeFromSortedProviders(node, properties.getPriority());
+  public void removeNodeFromSorted(NodeWithValue node){
+    if(node.provides()){
+      removeNodeFromSortedProviders(node, node.getPriority());
+    }
+    if(node.consumes()){
+      removeNodeFromSortedConsumers(node, node.getPriority());
+    }
   }
-  public void removeNodeFromSortedConsumers(Node<T> node, long priority){
+  public void removeNodeFromSortedConsumers(NodeWithValue node, long priority){
     this.REVERSED_CONSUMER_PRIORITIES.remove(priority);
-    List<Node<T>> nodes = this.PRIORITISED_CONSUMERS.get(priority);
+    List<NodeWithValue> nodes = this.PRIORITISED_CONSUMERS.get(priority);
     nodes.remove(node);
     if(nodes.isEmpty()) this.PRIORITISED_CONSUMERS.remove(priority);
   }
-  public void removeNodeFromSortedProviders(Node<T> node, long priority){
+  public void removeNodeFromSortedProviders(NodeWithValue node, long priority){
     this.REVERSED_PROVIDER_PRIORITIES.remove(priority);
-    List<Node<T>> nodes = this.PRIORITISED_PROVIDERS.get(priority);
+    List<NodeWithValue> nodes = this.PRIORITISED_PROVIDERS.get(priority);
     nodes.remove(node);
     if(nodes.isEmpty()) this.PRIORITISED_PROVIDERS.remove(priority);
   }
@@ -336,8 +335,8 @@ public abstract class NodeNetwork<T extends NetworkType> {
     long available = 0;
     for(long priority : REVERSED_PROVIDER_PRIORITIES){
       try{
-        for(Node<T> node : PRIORITISED_PROVIDERS.get(priority)){
-          available = Math.addExact(available, node.getNodeProperties().getValue());
+        for(NodeWithValue node : PRIORITISED_PROVIDERS.get(priority)){
+          available = Math.addExact(available, node.getValue());
         }
       }catch (ArithmeticException exception){
         // Break the Loop if we overflow
@@ -352,15 +351,15 @@ public abstract class NodeNetwork<T extends NetworkType> {
     // Add Available Energy to all Consumers
     long toBeDistributed = available;
     for(long priority : REVERSED_CONSUMER_PRIORITIES){
-      List<Node<T>> nodes = new ArrayList<>(PRIORITISED_CONSUMERS.get(priority));
+      List<NodeWithValue> nodes = new ArrayList<>(PRIORITISED_CONSUMERS.get(priority));
       while(toBeDistributed > 0 && !nodes.isEmpty()){
         long energyPerNode = toBeDistributed / nodes.size();
         toBeDistributed %= nodes.size();
         
-        List<Node<T>> removedNodes = new ArrayList<>();
-        for(Node<T> node : nodes){
-          toBeDistributed += node.getNodeProperties().add(energyPerNode);
-          if(node.getNodeProperties().getValue() == node.getNodeProperties().getMaxValue()){
+        List<NodeWithValue> removedNodes = new ArrayList<>();
+        for(NodeWithValue node : nodes){
+          toBeDistributed += node.add(energyPerNode);
+          if(node.getValue() == node.getMaxValue()){
             removedNodes.add(node);
           }
         }
@@ -373,15 +372,15 @@ public abstract class NodeNetwork<T extends NetworkType> {
     // Remove all energy that was consumed
     long toBeRemoved = available - toBeDistributed;
     for(long priority : REVERSED_PROVIDER_PRIORITIES) {
-      List<Node<T>> nodes = new ArrayList<>(PRIORITISED_PROVIDERS.get(priority));
+      List<NodeWithValue> nodes = new ArrayList<>(PRIORITISED_PROVIDERS.get(priority));
       while(toBeRemoved > 0 && !nodes.isEmpty()){
         long energyPerNode = toBeDistributed / nodes.size();
         toBeRemoved %= nodes.size();
         
-        List<Node<T>> removedNodes = new ArrayList<>();
-        for(Node<T> node : nodes){
-          toBeDistributed += node.getNodeProperties().add(energyPerNode);
-          if(node.getNodeProperties().getValue() == 0){
+        List<NodeWithValue> removedNodes = new ArrayList<>();
+        for(NodeWithValue node : nodes){
+          toBeDistributed += node.add(energyPerNode);
+          if(node.getValue() == 0){
             removedNodes.add(node);
           }
         }
@@ -395,8 +394,8 @@ public abstract class NodeNetwork<T extends NetworkType> {
   
   @Override
   public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-    NodeNetwork<?> that = (NodeNetwork<?>) object;
+    if (object == null || this.getClass() != object.getClass()) return false;
+    NodeNetwork that = (NodeNetwork) object;
     return this.ID.equals(that.ID);
   }
   @Override

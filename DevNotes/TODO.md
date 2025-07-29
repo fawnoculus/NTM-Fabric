@@ -1,12 +1,13 @@
 # Important Features
-- Custom Render Code for advanced Models (compatible with the format of the Original Mod if Posible)
+- Custom Render Code for advanced Models (compatible with the format of the Original Mod if Possible)
 - Energy System (HE) & Cables/Pylons
 - Fluid/Gas System & Pipes
 - Atmosphere System & Gases in the Environment
-- Radioactivity
+- ~~Radioactivity~~
+- MuliBlock Machine System
 - Heat System for Machines
 - Working Ores and Deposits
-- Advanced Tools (Abilities, Weapon modifiers, ...)
+- ~~Advanced Tools (Abilities, Weapon modifiers, ...)~~
 - Special Text Box in the Top Left
 - Item Help (aka: [Press F1 for Help])
 - Conveyor Belts, Pneumatic Tubes & Drones
@@ -65,12 +66,13 @@
 - Pumpjack
 - Hydraulic Fracking Tower
 - Large Mining Drill
+- ...
 
 ### WorldGen
 - Ores
 - Deposits with Fluids (for Oil)
-- Structures
-- 
+- Structures (maybe make a tool to transform the originals structure format modern Minecrafts standard structure format)
+
 ### Storing Stuff
 - Crates
 - Mass Storage Units

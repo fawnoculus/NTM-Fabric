@@ -1,12 +1,16 @@
-## Coding Documentation
+# Coding Documentation
 I'm going to be honest, this is not really coding documentation, this is more just a recording of decisions that I made during development that I wrote down so that I remember them.
-- Datagen will be used for advancements, loot-tables, recipes & tags (where possible)
-- A lot of Models will be done with Datagen, but obviously custom/advanced Models will remain as Json/Blender Files
-- Translation will be done with lang files, not with Datagen
+But it may also be helpful to anyone trying to understand my absolute insanity.
+
+## Don't forget this Future Me (I will probably still forget it)
+- Data Generation will be used for advancements, loot-tables, recipes & tags (where possible)
+- A lot of Models will be done with Data Generation, but obviously custom/complex Models will remain as Json/Blender Files
+- Translation will be done with lang files
 - Don't forget to add EMI & JEI compatibility once they port to whatever version we are at
 
-### Some Stuff will be changed to fit into modern Versions (or because i felt like it):
-(Maybe make the old names & textures advisable through a resource pack)
+
+## Stuff that was changed from the Original:
+(Maybe we'll make the old names & textures available through a built-in resource pack)
 
 #### Textures:
 - Industrial Copper -> Standard Minecraft Copper
@@ -36,3 +40,26 @@ Main Reason for changing names is that the old names where really long & the ite
 #### Features:
 - Energy & Fluid Storages, Providers & Consumers will be able to connect to each other just like Cables/Pipes can (I implemented it this way & changing it would be a pain)
 - Features that already have *"replacements"* (Example: old Particle Accelerator) will not be implemented ... yet (maybe we'll do it once the more important stuff is working)
+
+# *"Brief"* Explanations of how some of the Features work
+
+## Node Networks
+As a brief explanation, in the original Mod "Node Networks" simply referred to any system using "Nodespace" which was essentially a 
+shadow dimension saved to a world file in which things like locations of cables & pipes would be stored in order to be quickly accessed.
+In my version of Node Networks there is no such thing as Nodespace, instead there is NodeNetworks that keep track of all loaded Nodes which are identified by UUIDs,
+all a node in a network has to do is store the UUID of it's assigned Network once it is unloaded so it can be loaded again once the Node is loaded.
+When a Node is placed it checks it neighbour blocks for Nodes, if it finds one then this Node will use its Network & if it finds multiple, it will merge all the Networks Together.
+Once a Node is Removed, it will check if it was Connecting Multiple Nodes, if it was then it Splits the Network at its current location 
+(if the Network is large then this can take some time, this is the one Downside of not having Nodespace).
+A Node in this context refers to a BlockEntity.
+In this Version of Node Networks a Node is responsible for every task, Connection, Consumption, Providing & Storing, the only thing keeping these types of Node apart are the type of their NodeProperties.
+The Downside of this is that you could technically try to get or set the energy contained in a cable or get the Storage mode of a consumer, however in most cases this should not be a problem (maybe ... hopefully)
+
+## Advanced Models (aka: Blender Models / Wavefront OBJ Files)
+OBJ Files are loaded from the Resource Manager (technically you could replace them with a resource pack, thou you would have to restart your game as there is no code for reloading them).
+They are converted to a "MultiModel3D" which contains multiple "GroupedModel3D" which then contain multiple "Model3D", this follows OBJ file standards, they are GroupedModel3D are grouped by object and Model3D are grouped by group.
+When Rendered a Model is added to a BufferBuilder and then send to the TexturedRenderPipeline in ModRenderPipelines which uses a custom shader code that is basically just the Block Render shader but i renamed it.
+These Models can then be Rendered whenever needed. The Current Way they are rendered is fucking horrible, so i still have to think of a way to do that properly.
+Currently, all things that want to have advanced Models need to make a block entity and give it a block entity render and that render needs to call .render() on the model, 
+this is extremely laggy, as in: 1000 Alloy Furnace Extensions bring my computer from  ~500 Fps to 10.
+However, after looking into this, this simply appears to be a SkillIssue considering the original does this exactly the same & they have no lag problem. maybe it's some post 1.12 type shit, i have no clue.

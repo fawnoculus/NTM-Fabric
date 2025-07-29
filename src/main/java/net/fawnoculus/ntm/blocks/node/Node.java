@@ -3,6 +3,9 @@ package net.fawnoculus.ntm.blocks.node;
 import net.fawnoculus.ntm.blocks.node.network.NetworkType;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.NTM;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -10,28 +13,41 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A Node serves as the base Part of a Node-Network.
- * It can be a connector, provider, consumer or storage for a specific integer based value (Energy/Fluid)
  */
-public interface Node<T extends NetworkType>  {
-  default Node<T> getNode(){
-    return this;
-  }
+public interface Node {
+  MutableText getNodeType();
+  NetworkType getNetworkType();
   
   void setShouldAssignNetwork(boolean value);
   boolean shouldAssignNetwork();
   
-  void setNetwork(NodeNetwork<T> network);
-  @Nullable NodeNetwork<T> getNetwork();
-  NodeNetwork<T> makeNewNetwork();
+  void setNetwork(NodeNetwork network);
+  @Nullable NodeNetwork getNetwork();
   
-  default List<Node<T>> getConnectedNodes(){
+  BlockPos getPos();
+  World getWorld();
+  
+  default Node getNode(){
+    return this;
+  }
+  
+  default NodeNetwork makeNewNetwork(){
+    return this.getNetworkType().makeNewNetwork();
+  }
+  
+  /**
+   * this can be overwritten to allow a node to connect to things that are not directly next to itself
+   * @return a List of all Nodes this Node is connected to
+   */
+  default List<Node> getConnectedNodes(){
     World world = this.getWorld();
     assert world != null;
     BlockPos pos = this.getPos();
-    List<Node<T>> nodes = new ArrayList<>();
+    List<Node> nodes = new ArrayList<>();
     nodes.addAll(this.checkForNode(world.getBlockEntity(pos.up())));
     nodes.addAll(this.checkForNode(world.getBlockEntity(pos.down())));
     nodes.addAll(this.checkForNode(world.getBlockEntity(pos.north())));
@@ -44,8 +60,8 @@ public interface Node<T extends NetworkType>  {
   default void assignNetwork() {
     if (!this.shouldAssignNetwork()) return;
     try {
-      NodeNetwork<T> detectedNetwork = null;
-      for (Node<T> connectedNode : this.getConnectedNodes()) {
+      NodeNetwork detectedNetwork = null;
+      for (Node connectedNode : this.getConnectedNodes()) {
         detectedNetwork = this.findNetwork(connectedNode, detectedNetwork);
       }
       if (detectedNetwork == null) {
@@ -65,8 +81,8 @@ public interface Node<T extends NetworkType>  {
     }
   }
   
-  default NodeNetwork<T> findNetwork(Node<T> node, NodeNetwork<T> detectedNetwork){
-    NodeNetwork<T> foundNetwork;
+  default NodeNetwork findNetwork(Node node, NodeNetwork detectedNetwork){
+    NodeNetwork foundNetwork;
     try{
       foundNetwork = Objects.requireNonNull(
           Objects.requireNonNull(node).getNetwork()
@@ -83,18 +99,17 @@ public interface Node<T extends NetworkType>  {
     return foundNetwork;
   }
   
-  @SuppressWarnings("unchecked")
-  default List<Node<T>> checkForNode(Object object){
+  default List<Node> checkForNode(Object object){
     List<Object> toBeChecked = new ArrayList<>();
     toBeChecked.add(object);
     if(object instanceof MultiNode multiNode){
       toBeChecked.addAll(multiNode.getNodes());
     }
     
-    List<Node<T>> nodes = new ArrayList<>();
+    List<Node> nodes = new ArrayList<>();
     for(Object o : toBeChecked){
       try{
-        Node<T> node = (Node<T>) o;
+        Node node = (Node) o;
         if(this.canConnectTo(node)){
           nodes.add(node);
         }
@@ -103,21 +118,29 @@ public interface Node<T extends NetworkType>  {
     return nodes;
   }
   
-  default boolean canConnectTo(@Nullable Node<T> node){
-    return node != null;
+  default boolean canConnectTo(@Nullable Node node){
+    if(node == null) return false;
+    return node.getNetworkType().sameAs(this.getNetworkType());
   }
   
-  default void onSetNodeProperties(NodeProperties newNodeProperties){
-    if(this.getNetwork() != null){
-      this.getNetwork().onNodePropertiesChanged(this, newNodeProperties);
+  default void readNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+    UUID uuid = null;
+    try {
+      uuid = UUID.fromString(nbt.getString("network", null));
+    } catch (IllegalArgumentException | NullPointerException ignored) {}
+    if (uuid != null) {
+      NodeNetwork network = this.getNetworkType().getNetwork(uuid);
+      this.setNetwork(network);
+      if (!network.containsNode(this)) {
+        network.addNode(this);
+      }
     }
   }
-  
-  void setNodeProperties(NodeProperties nodeProperties);
-  NodeProperties getNodeProperties();
-  
-  BlockPos getPos();
-  World getWorld();
+  default void writeNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries){
+    if(this.getNetwork() != null){
+      nbt.putString("network", this.getNetwork().ID.toString());
+    }
+  }
   
   default void onBreak(){
     if(this.getConnectedNodes().size() > 1 && this.getNetwork() != null){

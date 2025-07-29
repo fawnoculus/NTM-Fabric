@@ -4,10 +4,10 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
 
-public class NTMModmenuPlugin implements ModMenuApi {
+public class NTMModMenuPlugin implements ModMenuApi {
   @Override
   public ConfigScreenFactory<?> getModConfigScreenFactory() {
-    // TODO: make a config Screen (or at least make a Config File)
+    // TODO: make a config Screen
     return screen -> null;
   }
 }
