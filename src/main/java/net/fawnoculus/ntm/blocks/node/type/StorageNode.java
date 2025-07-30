@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.blocks.node.type;
 
+import com.mojang.serialization.Codec;
 import net.fawnoculus.ntm.blocks.node.NodeWithValue;
+import net.fawnoculus.ntm.misc.data.NTMCodecs;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.MutableText;
@@ -56,6 +58,8 @@ public interface StorageNode extends NodeWithValue {
     Consume(false, true),
     Share(true, true),
     None(false, false);
+    
+    public static final Codec<StorageMode> CODEC = NTMCodecs.getEnumCodec(StorageMode.class);
     
     public final boolean provides;
     public final boolean consumes;

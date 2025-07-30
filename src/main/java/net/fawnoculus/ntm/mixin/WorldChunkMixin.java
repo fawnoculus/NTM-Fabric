@@ -35,6 +35,7 @@ public abstract class WorldChunkMixin extends ChunkMixin {
       "Lnet/minecraft/world/chunk/WorldChunk$EntityLoader;" +
       "Lnet/minecraft/world/gen/chunk/BlendingData;)V"
   )
+  @SuppressWarnings("rawtypes")
   private void addRadiationProcessor(
       World world,
       ChunkPos pos,
@@ -48,8 +49,8 @@ public abstract class WorldChunkMixin extends ChunkMixin {
       CallbackInfo ci
   ) {
     if(world instanceof ServerWorld serverWorld){
-      this.radiationProcessor = RadiationManager.getInstance().makeNewRadiationProcessor(serverWorld, pos);
-      RadiationProcessorMultiHolder.from(serverWorld).NTM$addRadiationProcessors(this.radiationProcessor, pos);
+      this.NTM$radiationProcessor = RadiationManager.getInstance().makeNewRadiationProcessor(serverWorld, pos);
+      RadiationProcessorMultiHolder.from(serverWorld).NTM$addRadiationProcessors(this.NTM$radiationProcessor, pos);
     }
   }
   

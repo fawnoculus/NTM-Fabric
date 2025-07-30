@@ -26,16 +26,17 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
   public AbstractInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
     super(type, pos, state);
     
+    AbstractInventoryBE be = this;
     this.inventory = new SimpleInventory(inventorySlots){
       @Override
       public void markDirty() {
         super.markDirty();
-        update();
+        be.markDirty();
       }
     };
   }
   
-  public static void sendSyncPacket(World world, BlockPos pos, SimpleInventory inventory){
+  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory){
     if(!(world instanceof ServerWorld serverWorld)) return;
     InventorySyncS2CPayload payload = new InventorySyncS2CPayload(pos, inventory);
     
@@ -95,11 +96,6 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
     return this.getInventory().canPlayerUse(player);
   }
   
-  public void update(){
-    markDirty();
-    if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-  }
-  
   @Override
   public void clear() {
     inventory.clear();
@@ -108,8 +104,9 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
   @Override
   public void markDirty() {
     super.markDirty();
+    if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
     if(this.world != null && !this.world.isClient()){
-      sendSyncPacket(this.world, this.pos, this.getInventory());
+      sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
     }
   }
   

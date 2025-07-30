@@ -21,13 +21,6 @@ public class Model3D {
     return this.FACES;
   }
   
-  public void replaceFaces(List<PolygonalFace> faces){
-    this.FACES = faces;
-  }
-  
-  public void draw(MatrixStack.Entry matrix, Identifier texture){
-    draw(matrix, 15728880, texture);
-  }
   public void draw(MatrixStack.Entry matrix, int light, Identifier texture){
     Tessellator tessellator = Tessellator.getInstance();
     BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);

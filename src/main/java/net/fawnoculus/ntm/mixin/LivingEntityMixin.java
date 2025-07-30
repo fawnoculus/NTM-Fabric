@@ -14,30 +14,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements CustomDataHolder {
   @Unique
-  NbtCompound customData = new NbtCompound();
+  NbtCompound NTM$customData = new NbtCompound();
   
   @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
   protected void readCustomData(NbtCompound nbt, CallbackInfo ci){
     NbtElement data = nbt.get(CustomDataHolder.KEY);
     if(data instanceof NbtCompound nbtCompound){
-      customData =nbtCompound;
+      NTM$customData = nbtCompound;
     }
   }
   
   @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
   protected void writeCustomData(NbtCompound nbt, CallbackInfo ci){
-    nbt.put(CustomDataHolder.KEY, customData);
+    nbt.put(CustomDataHolder.KEY, NTM$customData);
   }
   
   @Override
   public @NotNull NbtCompound NTM$getCustomData() {
-    if(customData == null){
-      customData = new NbtCompound();
+    if(NTM$customData == null){
+      NTM$customData = new NbtCompound();
     }
-    return customData;
+    return NTM$customData;
   }
   @Override
   public void NTM$setCustomData(NbtCompound customData) {
-    this.customData = customData;
+    this.NTM$customData = customData;
   }
 }

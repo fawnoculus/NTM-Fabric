@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.blocks.entities.EnergyConnectorBE;
+import net.fawnoculus.ntm.blocks.entities.container.energy.EnergyConnectorBE;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;

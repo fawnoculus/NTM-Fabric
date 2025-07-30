@@ -16,21 +16,21 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(Chunk.class)
 public class ChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
   @Shadow @Final protected ChunkPos pos;
-  @Unique protected RadiationProcessor radiationProcessor = new EmptyRadiationProcessor(); // RadiationProcessors are set in WorldChunk
-  @Unique protected NbtCompound customData = new NbtCompound();
+  @Unique protected RadiationProcessor NTM$radiationProcessor = new EmptyRadiationProcessor(); // RadiationProcessors are set in WorldChunk
+  @Unique protected NbtCompound NTM$customData = new NbtCompound();
   
   @Override
   public RadiationProcessor NTM$getRadiationProcessor() {
-    return radiationProcessor;
+    return NTM$radiationProcessor;
   }
   
   @Override
   public @NotNull NbtCompound NTM$getCustomData() {
-    return customData;
+    return NTM$customData;
   }
   
   @Override
   public void NTM$setCustomData(NbtCompound customData) {
-    this.customData = customData;
+    this.NTM$customData = customData;
   }
 }

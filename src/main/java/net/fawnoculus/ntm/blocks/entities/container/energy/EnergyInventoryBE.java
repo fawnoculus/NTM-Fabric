@@ -19,22 +19,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public abstract class EnergyInventoryBE extends EnergyContainerBE implements Inventory {
+public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
   private final SimpleInventory inventory;
   
   public EnergyInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
     super(type, pos, state);
     
+    EnergyInventoryBE be = this;
     this.inventory = new SimpleInventory(inventorySlots){
       @Override
       public void markDirty() {
         super.markDirty();
-        update();
+        be.markDirty();
       }
     };
   }
   
-  public static void sendSyncPacket(World world, BlockPos pos, SimpleInventory inventory){
+  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory){
     if(!(world instanceof ServerWorld serverWorld)) return;
     InventorySyncS2CPayload payload = new InventorySyncS2CPayload(pos, inventory);
     
@@ -94,22 +95,18 @@ public abstract class EnergyInventoryBE extends EnergyContainerBE implements Inv
     return this.getInventory().canPlayerUse(player);
   }
   
-  public void update(){
-    markDirty();
+  @Override
+  public void markDirty() {
+    super.markDirty();
     if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+    if(this.world != null && !this.world.isClient()){
+      sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
+    }
   }
   
   @Override
   public void clear() {
     inventory.clear();
-  }
-  
-  @Override
-  public void markDirty() {
-    super.markDirty();
-    if(this.world != null && !this.world.isClient()){
-      sendSyncPacket(this.world, this.pos, this.getInventory());
-    }
   }
   
   @Override

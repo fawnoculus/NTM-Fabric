@@ -60,7 +60,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   public static void tick(World world, BlockPos pos, BlockState state, SimpleEnergyStorageBE entity) {
     entity.processBatteries();
     entity.updateEnergyChange();
-    entity.update();
+    entity.markDirty();
   }
   
   private void processBatteries(){
@@ -111,8 +111,8 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    nbt.putString("powered_mode", this.poweredMode.name());
-    nbt.putString("unpowered_mode", this.unpoweredMode.name());
+    nbt.put("powered_mode", StorageMode.CODEC, this.poweredMode);
+    nbt.put("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
     nbt.putBoolean("is_powered", this.isPowered);
     nbt.putInt("energy_change_index", this.energyChangeIndex);
     nbt.putLongArray("energy_change", energyChange);
@@ -122,17 +122,12 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
-    this.poweredMode = StorageMode.getOrDefault(
-        nbt.getString("powered_mode", StorageMode.Consume.name()),
-        StorageMode.Consume
-    );
-    this.unpoweredMode = StorageMode.getOrDefault(
-        nbt.getString("unpowered_mode", StorageMode.Provide.name()),
-        StorageMode.Provide
-    );
-    this.isPowered = nbt.getBoolean("is_powered", false);
-    this.energyChangeIndex = nbt.getInt("energy_change_index", 0);
     
+    nbt.get("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
+    nbt.get("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
+    this.isPowered = nbt.getBoolean("is_powered", false);
+    
+    this.energyChangeIndex = nbt.getInt("energy_change_index", 0);
     Optional<long[]> optional = nbt.getLongArray("energy_change");
     if(optional.isPresent() && optional.get().length == this.energyChange.length){
       this.energyChange = optional.get();

@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.render.model3d;
 
 import net.fawnoculus.ntm.NTMClient;
-import net.fawnoculus.ntm.render.NTMRenderPipelines;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.Resource;

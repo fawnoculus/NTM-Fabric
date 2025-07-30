@@ -60,7 +60,7 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     }else{
       entity.resetProgress();
     }
-    entity.update();
+    entity.markDirty();
   }
   
   public boolean canCraft(){

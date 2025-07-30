@@ -12,7 +12,9 @@ public class ExceptionUtil {
     
     if(stacktrace){
       for(StackTraceElement element : throwable.getStackTrace()){
-        Exception.append("\n\t").append(element);
+        Exception
+            .append("\n\t")
+            .append(element);
       }
     }
     

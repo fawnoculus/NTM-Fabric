@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fawnoculus.ntm.blocks.entities.*;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.blocks.entities.container.energy.EnergyConnectorBE;
 import net.fawnoculus.ntm.blocks.entities.container.energy.SimpleEnergyStorageBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
