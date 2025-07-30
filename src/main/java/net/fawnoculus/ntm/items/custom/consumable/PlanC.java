@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.entity.ModDamageTypes;
+import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.items.custom.TooltipItem;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.entity.LivingEntity;
@@ -17,9 +17,9 @@ public class PlanC extends TooltipItem {
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
     if(world instanceof ServerWorld serverWorld){
       if(!user.isInCreativeMode()){
-        EntityUtil.applyDamage(user, serverWorld, ModDamageTypes.EUTHANIZED, Float.MAX_VALUE);
+        EntityUtil.applyDamage(user, serverWorld, NTMDamageTypes.EUTHANIZED, Float.MAX_VALUE);
       }else {
-        EntityUtil.applyDamage(user, serverWorld, ModDamageTypes.EUTHANIZED, 10);
+        EntityUtil.applyDamage(user, serverWorld, NTMDamageTypes.EUTHANIZED, 10);
       }
     }
     return super.finishUsing(stack, world, user);

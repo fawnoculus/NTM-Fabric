@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.items.components.ModFoodComponents;
+import net.fawnoculus.ntm.items.components.NTMFoodComponents;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class TemFlakesItem extends Item {
   public TemFlakesItem(Settings settings) {
-    super(settings.food(ModFoodComponents.ALWAYS_EDIBLE));
+    super(settings.food(NTMFoodComponents.ALWAYS_EDIBLE));
   }
   
   @Override

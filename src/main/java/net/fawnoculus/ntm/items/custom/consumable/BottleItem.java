@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ConsumableComponents;
@@ -37,7 +37,7 @@ public class BottleItem extends Item {
 
   @Override
   public ActionResult use(World world, PlayerEntity playerEntity, Hand hand) {
-    if(!PlayerUtil.hasItem(playerEntity, ModItems.BOTTLE_OPENER)) {
+    if(!PlayerUtil.hasItem(playerEntity, NTMItems.BOTTLE_OPENER)) {
       return ActionResult.FAIL;
     }
     return super.use(world, playerEntity, hand);

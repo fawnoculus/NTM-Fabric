@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.entities;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
 import net.fawnoculus.ntm.blocks.entities.container.energy.EnergyInventoryBE;
@@ -14,9 +14,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ServerRecipeManager;
@@ -47,7 +44,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
   private double progress = 0;
   
   public ElectricFurnaceBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.ELECTRIC_FURNACE_BE, pos, state, 4);
+    super(NTMBlockEntities.ELECTRIC_FURNACE_BE, pos, state, 4);
     this.propertyDelegate = new PropertyDelegate() {
       @Override
       public int get(int index) {

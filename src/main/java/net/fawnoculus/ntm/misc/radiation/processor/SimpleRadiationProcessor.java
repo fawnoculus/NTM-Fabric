@@ -1,10 +1,9 @@
 package net.fawnoculus.ntm.misc.radiation.processor;
 
-import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -74,18 +73,18 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
   }
   
   @Override
-  public void writeData(CustomData data) {
-    data.set(NTM.id("radiation_processor_type"), "simple");
-    data.set(NTM.id("active_radiation"), this.activeRadiation);
-    data.set(NTM.id("passive_radiation"), this.passiveRadiation);
+  public void writeData(NbtCompound data) {
+    data.putString("radiation_processor_type", "simple");
+    data.putDouble("active_radiation", this.activeRadiation);
+    data.putDouble("passive_radiation", this.passiveRadiation);
   }
   
   @Override
-  public void readData(CustomData data) {
-    String type = data.getOrDefaultString(NTM.id("radiation_processor_type"), "no_processor");
+  public void readData(NbtCompound data) {
+    String type = data.getString("radiation_processor_type", "no_processor");
     if(type.equals("simple")){
-      this.activeRadiation = data.getOrDefaultDouble(NTM.id("active_radiation"), 0.0);
-      this.passiveRadiation = data.getOrDefaultDouble(NTM.id("passive_radiation"), 0.0);
+      this.activeRadiation = data.getDouble("active_radiation", 0.0);
+      this.passiveRadiation = data.getDouble("passive_radiation", 0.0);
     }
   }
 }

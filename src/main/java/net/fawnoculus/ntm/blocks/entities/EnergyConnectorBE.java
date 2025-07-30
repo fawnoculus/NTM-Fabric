@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.blocks.entities;
 
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.type.ConnectorNode;
 import net.fawnoculus.ntm.blocks.node.type.EnergyNode;
@@ -17,7 +17,7 @@ public class EnergyConnectorBE extends BlockEntity implements EnergyNode, Connec
   public NodeNetwork network;
   
   public EnergyConnectorBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.SIMPLE_ENERGY_CONNECTOR_BE, pos, state);
+    super(NTMBlockEntities.SIMPLE_ENERGY_CONNECTOR_BE, pos, state);
   }
   
   @Override

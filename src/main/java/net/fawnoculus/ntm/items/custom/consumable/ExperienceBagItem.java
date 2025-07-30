@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.misc.ModSounds;
+import net.fawnoculus.ntm.items.NTMItems;
+import net.fawnoculus.ntm.misc.NTMSounds;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,8 +25,8 @@ public class ExperienceBagItem  extends Item {
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }
-    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
-    player.getInventory().offerOrDrop(new ItemStack(ModItems.EMPTY_EXPERIENCE_BAG));
+    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_EXPERIENCE_BAG));
     player.addExperience(EmptyExperienceBagItem.XP_PER_BAG);
     
     return ActionResult.SUCCESS_SERVER;

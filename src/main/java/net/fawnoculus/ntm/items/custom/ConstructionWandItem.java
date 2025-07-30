@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
+import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -21,8 +21,8 @@ import java.util.function.Consumer;
 public class ConstructionWandItem extends Item {
   public ConstructionWandItem(Settings settings) {
     super(settings
-        .component(ModDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null)
-        .component(ModDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.getDefaultState()));
+        .component(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null)
+        .component(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.getDefaultState()));
   }
   
   @Override
@@ -38,7 +38,7 @@ public class ConstructionWandItem extends Item {
     ServerWorld world = (ServerWorld) context.getWorld();
     
     if(player.isSneaking()){
-      stack.set(ModDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, world.getBlockState(context.getBlockPos()));
+      stack.set(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, world.getBlockState(context.getBlockPos()));
       player.sendMessage(Text.translatable(
           "message.ntm.construction_wand.set_block",
           world.getBlockState(context.getBlockPos()).getBlock().getName()
@@ -48,7 +48,7 @@ public class ConstructionWandItem extends Item {
     
     BlockPos selectedPos = getBlockPos(stack);
     if(selectedPos == null){
-      stack.set(ModDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, context.getBlockPos());
+      stack.set(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, context.getBlockPos());
       player.sendMessage(Text.translatable(
           "message.ntm.construction_wand.set_pos",
           context.getBlockPos().getX(),
@@ -74,17 +74,17 @@ public class ConstructionWandItem extends Item {
         }
       }
     }
-    stack.set(ModDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
+    stack.set(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
     player.sendMessage(Text.translatable("message.ntm.construction_wand.filled", blocks), false);
     return ActionResult.SUCCESS_SERVER;
   }
   
   private BlockState getBlockState(ItemStack stack){
-    return stack.getOrDefault(ModDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.getDefaultState());
+    return stack.getOrDefault(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.getDefaultState());
   }
   
   private BlockPos getBlockPos(ItemStack stack){
-    return stack.getOrDefault(ModDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
+    return stack.getOrDefault(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
   }
   
   @Override  @SuppressWarnings("deprecation")

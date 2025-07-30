@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.gui.handlers;
 
-import net.fawnoculus.ntm.blocks.ModBlocks;
+import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
-import net.fawnoculus.ntm.gui.ModScreenHandlerType;
+import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import net.fawnoculus.ntm.gui.slots.BatterySlot;
 import net.fawnoculus.ntm.gui.slots.OutputSlot;
 import net.fawnoculus.ntm.gui.slots.UpgradeSlot;
@@ -30,7 +30,7 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
   
   // Common Constructor
   public ElectricFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, ElectricFurnaceBE blockEntity, PropertyDelegate propertyDelegate) {
-    super(ModScreenHandlerType.ELECTRIC_FURNACE, syncId);
+    super(NTMScreenHandlerType.ELECTRIC_FURNACE, syncId);
     
     this.blockEntity = blockEntity;
     this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
@@ -84,7 +84,7 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
   
   @Override
   public boolean canUse(PlayerEntity player) {
-    return canUse(screenContext, player, ModBlocks.ELECTRIC_FURNACE);
+    return canUse(screenContext, player, NTMBlocks.ELECTRIC_FURNACE);
   }
   
   public ElectricFurnaceBE getBlockEntity(){

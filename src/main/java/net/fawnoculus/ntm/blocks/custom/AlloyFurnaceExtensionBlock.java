@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.blocks.ModBlocks;
+import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceExtensionBE;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -33,7 +33,7 @@ public class AlloyFurnaceExtensionBlock extends BlenderModelBlock implements Blo
   @Override
   public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
     BlockState bellowState = world.getBlockState(pos.down());
-    if(bellowState.getBlock() != ModBlocks.ALLOY_FURNACE) return;
+    if(bellowState.getBlock() != NTMBlocks.ALLOY_FURNACE) return;
     
     bellowState = bellowState.with(AlloyFurnaceBlock.EXTENSION, true);
     world.setBlockState(pos.down(), bellowState);
@@ -42,7 +42,7 @@ public class AlloyFurnaceExtensionBlock extends BlenderModelBlock implements Blo
   @Override
   public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
     BlockState bellowState = world.getBlockState(pos.down());
-    if(bellowState.getBlock() != ModBlocks.ALLOY_FURNACE) return super.onBreak(world, pos, state, player);
+    if(bellowState.getBlock() != NTMBlocks.ALLOY_FURNACE) return super.onBreak(world, pos, state, player);
     
     bellowState = bellowState.with(AlloyFurnaceBlock.EXTENSION, false);
     world.setBlockState(pos.down(), bellowState);

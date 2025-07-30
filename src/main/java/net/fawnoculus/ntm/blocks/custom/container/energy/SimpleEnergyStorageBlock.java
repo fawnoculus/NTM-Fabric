@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.custom.container.energy;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.HoverTooltipBlock;
 import net.fawnoculus.ntm.blocks.entities.container.energy.SimpleEnergyStorageBE;
 import net.fawnoculus.ntm.util.TextUtil;
@@ -58,7 +58,7 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
     if(world.isClient) return null;
-    return validateTicker(type, ModBlockEntities.SIMPLE_ENERGY_STORAGE_BE, SimpleEnergyStorageBE::tick);
+    return validateTicker(type, NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, SimpleEnergyStorageBE::tick);
   }
   
   @Override

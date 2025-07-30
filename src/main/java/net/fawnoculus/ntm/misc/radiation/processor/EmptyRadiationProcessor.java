@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.misc.radiation.processor;
 
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -26,8 +26,8 @@ public class EmptyRadiationProcessor implements RadiationProcessor {
   public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {}
   
   @Override
-  public void writeData(CustomData data) {}
+  public void writeData(NbtCompound data) {}
   
   @Override
-  public void readData(CustomData data) {}
+  public void readData(NbtCompound data) {}
 }

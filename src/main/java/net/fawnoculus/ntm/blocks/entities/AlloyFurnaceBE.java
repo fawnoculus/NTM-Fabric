@@ -1,13 +1,13 @@
 package net.fawnoculus.ntm.blocks.entities;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
 import net.fawnoculus.ntm.recipe.custom.AlloyFurnaceRecipe;
 import net.fawnoculus.ntm.recipe.custom.AlloyFurnaceRecipeInput;
-import net.fawnoculus.ntm.recipe.ModRecipes;
+import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScreenHandlerFactory<BlockPosS2CPayload> {
   public AlloyFurnaceBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.ALLOY_FURNACE_BE, pos, state, 4);
+    super(NTMBlockEntities.ALLOY_FURNACE_BE, pos, state, 4);
   }
   
   private static final int MAX_FUEL = 102400;
@@ -77,7 +77,7 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
     if(this.getWorld() instanceof ServerWorld serverWorld) {
       return serverWorld.getRecipeManager()
-          .getFirstMatch(ModRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
+          .getFirstMatch(NTMRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
     }
     return Optional.empty();
   }

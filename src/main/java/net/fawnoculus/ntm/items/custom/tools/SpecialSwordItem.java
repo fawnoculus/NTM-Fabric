@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
+import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 
 public class SpecialSwordItem extends Item implements SpecialTool {
   public SpecialSwordItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    super(settings.sword(material, attackDamage, attackSpeed).component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1));
+    super(settings.sword(material, attackDamage, attackSpeed).component(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1));
   }
   
   public final AtomicBoolean canBreakDepthRock = new AtomicBoolean(false);

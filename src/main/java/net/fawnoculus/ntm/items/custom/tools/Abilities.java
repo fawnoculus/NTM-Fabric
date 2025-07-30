@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
-import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.util.EnchantmentUtil;
 import net.minecraft.block.Block;
@@ -323,7 +323,7 @@ public abstract class Abilities {
       
       if(mercury > 0) {
         world.breakBlock(pos, false);
-        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
+        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(NTMItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
         
         stack.damage(1, miner);
       }

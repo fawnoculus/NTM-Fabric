@@ -2,21 +2,21 @@ package net.fawnoculus.ntm;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fawnoculus.ntm.datagen.AdvancementProvider;
-import net.fawnoculus.ntm.datagen.EnchantmentProvider;
-import net.fawnoculus.ntm.datagen.ModelProvider;
-import net.fawnoculus.ntm.datagen.RegistryProvider;
-import net.fawnoculus.ntm.datagen.loot.BlockLootProvider;
-import net.fawnoculus.ntm.datagen.loot.ChestLootProvider;
-import net.fawnoculus.ntm.datagen.loot.EntityLootProvider;
-import net.fawnoculus.ntm.datagen.recipes.CraftingRecipeProvider;
-import net.fawnoculus.ntm.datagen.recipes.SmeltingRecipeProvider;
-import net.fawnoculus.ntm.datagen.tags.BlockTagProvider;
-import net.fawnoculus.ntm.datagen.tags.DamageTypeTagProvider;
-import net.fawnoculus.ntm.datagen.tags.EntityTypeTagProvider;
-import net.fawnoculus.ntm.datagen.tags.ItemTagProvider;
-import net.fawnoculus.ntm.world.ModConfiguredFeatures;
-import net.fawnoculus.ntm.world.ModPlacedFeatures;
+import net.fawnoculus.ntm.datagen.NTMAdvancementProvider;
+import net.fawnoculus.ntm.datagen.NTMEnchantmentProvider;
+import net.fawnoculus.ntm.datagen.NTMModelProvider;
+import net.fawnoculus.ntm.datagen.NTMRegistryProvider;
+import net.fawnoculus.ntm.datagen.loot.NTMBlockLootProvider;
+import net.fawnoculus.ntm.datagen.loot.NTMChestLootProvider;
+import net.fawnoculus.ntm.datagen.loot.NTMEntityLootProvider;
+import net.fawnoculus.ntm.datagen.recipes.NTMCraftingRecipeProvider;
+import net.fawnoculus.ntm.datagen.recipes.NTMSmeltingRecipeProvider;
+import net.fawnoculus.ntm.datagen.tags.NTMBlockTagProvider;
+import net.fawnoculus.ntm.datagen.tags.NTMDamageTypeTagProvider;
+import net.fawnoculus.ntm.datagen.tags.NTMEntityTypeTagProvider;
+import net.fawnoculus.ntm.datagen.tags.NTMItemTagProvider;
+import net.fawnoculus.ntm.world.NTMConfiguredFeatures;
+import net.fawnoculus.ntm.world.NTMPlacedFeatures;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 
@@ -26,30 +26,30 @@ public class NTMDataGen implements DataGeneratorEntrypoint {
   public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
     FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
     
-    pack.addProvider(RegistryProvider::new);
+    pack.addProvider(NTMRegistryProvider::new);
     
-    pack.addProvider(ItemTagProvider::new);
-    pack.addProvider(BlockTagProvider::new);
-    pack.addProvider(EntityTypeTagProvider::new);
-    pack.addProvider(DamageTypeTagProvider::new);
+    pack.addProvider(NTMItemTagProvider::new);
+    pack.addProvider(NTMBlockTagProvider::new);
+    pack.addProvider(NTMEntityTypeTagProvider::new);
+    pack.addProvider(NTMDamageTypeTagProvider::new);
     
-    pack.addProvider(BlockLootProvider::new);
-    pack.addProvider(ChestLootProvider::new);
-    pack.addProvider(EntityLootProvider::new);
+    pack.addProvider(NTMBlockLootProvider::new);
+    pack.addProvider(NTMChestLootProvider::new);
+    pack.addProvider(NTMEntityLootProvider::new);
     
-    pack.addProvider(AdvancementProvider::new);
+    pack.addProvider(NTMAdvancementProvider::new);
     
-    pack.addProvider(CraftingRecipeProvider::new);
-    pack.addProvider(SmeltingRecipeProvider::new);
+    pack.addProvider(NTMCraftingRecipeProvider::new);
+    pack.addProvider(NTMSmeltingRecipeProvider::new);
     
-    pack.addProvider(EnchantmentProvider::new);
+    pack.addProvider(NTMEnchantmentProvider::new);
     
-    pack.addProvider(ModelProvider::new);
+    pack.addProvider(NTMModelProvider::new);
   }
   
   @Override
   public void buildRegistry(RegistryBuilder registryBuilder) {
-    registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModConfiguredFeatures::initialize);
-    registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::initialize);
+    registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NTMConfiguredFeatures::initialize);
+    registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NTMPlacedFeatures::initialize);
   }
 }

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -58,7 +58,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
     if(world.isClient()) return null;
-    return validateTicker(type, ModBlockEntities.ELECTRIC_FURNACE_BE, ElectricFurnaceBE::tick);
+    return validateTicker(type, NTMBlockEntities.ELECTRIC_FURNACE_BE, ElectricFurnaceBE::tick);
   }
   
   @Override

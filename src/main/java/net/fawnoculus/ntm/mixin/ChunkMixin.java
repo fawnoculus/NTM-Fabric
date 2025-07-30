@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.misc.radiation.processor.EmptyRadiationProcessor;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessor;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorHolder;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 public class ChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
   @Shadow @Final protected ChunkPos pos;
   @Unique protected RadiationProcessor radiationProcessor = new EmptyRadiationProcessor(); // RadiationProcessors are set in WorldChunk
-  @Unique protected CustomData customData = new CustomData();
+  @Unique protected NbtCompound customData = new NbtCompound();
   
   @Override
   public RadiationProcessor NTM$getRadiationProcessor() {
@@ -25,12 +25,12 @@ public class ChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
   }
   
   @Override
-  public @NotNull CustomData NTM$getCustomData() {
+  public @NotNull NbtCompound NTM$getCustomData() {
     return customData;
   }
   
   @Override
-  public void NTM$setCustomData(CustomData customData) {
+  public void NTM$setCustomData(NbtCompound customData) {
     this.customData = customData;
   }
 }

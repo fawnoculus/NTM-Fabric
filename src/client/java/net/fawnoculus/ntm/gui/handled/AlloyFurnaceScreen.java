@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.gui.handled;
 
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
-import net.fawnoculus.ntm.render.ModTextures;
+import net.fawnoculus.ntm.render.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;
@@ -16,7 +16,7 @@ public class AlloyFurnaceScreen extends HandledScreen<AlloyFurnaceScreenHandler>
     super(handler, inventory, title);
   }
   
-  private static final Identifier TEXTURE = ModTextures.ALLOY_FURNACE_GUI;
+  private static final Identifier TEXTURE = NTMTextures.ALLOY_FURNACE_GUI;
   
   @Override
   protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {

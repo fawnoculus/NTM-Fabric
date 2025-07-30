@@ -5,21 +5,21 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fawnoculus.ntm.blocks.ExtraBlockData;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
-import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.fawnoculus.ntm.commands.ModCommandArguments;
-import net.fawnoculus.ntm.commands.ModCommands;
-import net.fawnoculus.ntm.entity.ModDamageTypes;
-import net.fawnoculus.ntm.entity.ModStatusEffects;
-import net.fawnoculus.ntm.fluid.ModFluids;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlocks;
+import net.fawnoculus.ntm.commands.NTMCommandArguments;
+import net.fawnoculus.ntm.commands.NTMCommands;
+import net.fawnoculus.ntm.entity.NTMDamageTypes;
+import net.fawnoculus.ntm.entity.NTMStatusEffects;
+import net.fawnoculus.ntm.fluid.NTMFluids;
 import net.fawnoculus.ntm.items.*;
 import net.fawnoculus.ntm.misc.radiation.HazmatRegistry;
-import net.fawnoculus.ntm.network.ModServerPayloadHandler;
-import net.fawnoculus.ntm.network.ModPayloads;
-import net.fawnoculus.ntm.recipe.ModRecipes;
-import net.fawnoculus.ntm.misc.ModSounds;
-import net.fawnoculus.ntm.misc.ModParticles;
-import net.fawnoculus.ntm.world.gen.ModWorldGeneration;
+import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
+import net.fawnoculus.ntm.network.NTMPayloads;
+import net.fawnoculus.ntm.recipe.NTMRecipes;
+import net.fawnoculus.ntm.misc.NTMSounds;
+import net.fawnoculus.ntm.misc.NTMParticles;
+import net.fawnoculus.ntm.world.gen.NTMWorldGeneration;
 import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.util.Identifier;
@@ -39,38 +39,38 @@ public class NTM implements ModInitializer {
     
     NTMConfig.initialize();
     
-    ModDamageTypes.initialize();
-    ModStatusEffects.initialize();
+    NTMDamageTypes.initialize();
+    NTMStatusEffects.initialize();
     
-    ModSounds.initialize();
-    ModParticles.initialize();
+    NTMSounds.initialize();
+    NTMParticles.initialize();
     
-    ModToolMaterials.initialize();
-    ModDataComponentTypes.initialize();
-    ModItems.initialize();
-    ModItemGroups.initialize();
+    NTMToolMaterials.initialize();
+    NTMDataComponentTypes.initialize();
+    NTMItems.initialize();
+    NTMItemGroups.initialize();
     ExtraItemData.initialize();
-    ModEnchantmentEffects.initialize();
+    NTMEnchantmentEffects.initialize();
     
-    ModFluids.initialize();
+    NTMFluids.initialize();
     
-    ModBlocks.initialize();
-    ModBlockEntities.initialize();
+    NTMBlocks.initialize();
+    NTMBlockEntities.initialize();
     ExtraBlockData.initialize();
     
     RadiationManager.initialize();
     RadiationRegistry.initialize();
     HazmatRegistry.initialize();
     
-    ModRecipes.initialize();
+    NTMRecipes.initialize();
     
-    ModCommandArguments.initialize();
-    ModCommands.initialize();
+    NTMCommandArguments.initialize();
+    NTMCommands.initialize();
     
-    ModWorldGeneration.initialize();
+    NTMWorldGeneration.initialize();
     
-    ModPayloads.initialize();
-    ModServerPayloadHandler.initialize();
+    NTMPayloads.initialize();
+    NTMServerPayloadHandler.initialize();
     
     NTM.LOGGER.info("Finished {} Initialization", NTM.MOD_NAME);
   }

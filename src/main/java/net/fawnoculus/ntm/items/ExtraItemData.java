@@ -8,6 +8,6 @@ public class ExtraItemData {
   private static final HazmatRegistry hazmatRegistry = HazmatRegistry.getInstance();
   
   public static void initialize(){
-    radiationRegistry.register(ModItems.URANIUM_INGOT, 350);
+    radiationRegistry.register(NTMItems.URANIUM_INGOT, 350);
   }
 }

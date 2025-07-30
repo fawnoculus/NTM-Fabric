@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.gui.handlers;
 
-import net.fawnoculus.ntm.blocks.ModBlocks;
+import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
-import net.fawnoculus.ntm.gui.ModScreenHandlerType;
+import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import net.fawnoculus.ntm.gui.slots.ItemFuelSlot;
 import net.fawnoculus.ntm.gui.slots.OutputSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +29,7 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
   
   // Common Constructor
   public AlloyFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, AlloyFurnaceBE blockEntity) {
-    super(ModScreenHandlerType.ALLOY_FURNACE, syncId);
+    super(NTMScreenHandlerType.ALLOY_FURNACE, syncId);
     
     this.blockEntity = blockEntity;
     this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
@@ -111,7 +111,7 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
   
   @Override
   public boolean canUse(PlayerEntity player) {
-    return canUse(screenContext, player, ModBlocks.ALLOY_FURNACE);
+    return canUse(screenContext, player, NTMBlocks.ALLOY_FURNACE);
   }
   
   public AlloyFurnaceBE getBlockEntity(){

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.be;
 
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceExtensionBE;
-import net.fawnoculus.ntm.render.ModModelRender;
+import net.fawnoculus.ntm.render.NTMModelRender;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -16,7 +16,7 @@ public class AlloyFurnaceExtensionBERenderer implements BlockEntityRenderer<Allo
   public void render(AlloyFurnaceExtensionBE entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
     matrices.push();
     matrices.translate(0.5, 0, 0.5);
-    ModModelRender.AlloyFurnaceExtension.render(matrices, light);
+    NTMModelRender.AlloyFurnaceExtension.render(matrices, light);
     matrices.pop();
   }
 }

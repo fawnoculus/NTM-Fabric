@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.entity.ModDamageTypes;
-import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.misc.ModSounds;
+import net.fawnoculus.ntm.entity.NTMDamageTypes;
+import net.fawnoculus.ntm.items.NTMItems;
+import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,12 +27,12 @@ public class IvBagItem  extends Item {
       return ActionResult.SUCCESS;
     }
     if(!player.isCreative()){
-      EntityUtil.applyDamage(player, (ServerWorld) world, ModDamageTypes.BLOOD_LOSS, 5F);
+      EntityUtil.applyDamage(player, (ServerWorld) world, NTMDamageTypes.BLOOD_LOSS, 5F);
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }
-    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
-    player.getInventory().offerOrDrop(new ItemStack(ModItems.BLOOD_BAG));
+    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
     
     return ActionResult.SUCCESS_SERVER;
   }
@@ -43,10 +43,10 @@ public class IvBagItem  extends Item {
       return;
     }
     if(!player.isCreative()){
-      EntityUtil.applyDamage(target, world, ModDamageTypes.BLOOD_LOSS, 5F);
+      EntityUtil.applyDamage(target, world, NTMDamageTypes.BLOOD_LOSS, 5F);
       stack.decrement(1);
     }
-    world.playSound(null, BlockPos.ofFloored(target.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
-    player.getInventory().offerOrDrop(new ItemStack(ModItems.BLOOD_BAG));
+    world.playSound(null, BlockPos.ofFloored(target.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
   }
 }

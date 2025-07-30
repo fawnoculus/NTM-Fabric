@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.mixin.client;
 
 import net.fawnoculus.ntm.items.custom.DangerousDrop;
 import net.fawnoculus.ntm.items.custom.ExtraInfo;
-import net.fawnoculus.ntm.misc.ModKeybinds;
+import net.fawnoculus.ntm.misc.NTMKeybinds;
 import net.fawnoculus.ntm.misc.radiation.ClientHazmatRegistry;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationRegistry;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -60,8 +60,8 @@ public abstract class ClientsideItemStackMixin {
     }
     
     if(this.getItem() instanceof ExtraInfo extraInfo){
-      if(!ModKeybinds.DISPLAY_EXTRA_INFO.isPressed()){
-        tooltip.accept(extraInfo.getHelpText(ModKeybinds.DISPLAY_EXTRA_INFO.getBoundKeyLocalizedText()));
+      if(!NTMKeybinds.DISPLAY_EXTRA_INFO.isPressed()){
+        tooltip.accept(extraInfo.getHelpText(NTMKeybinds.DISPLAY_EXTRA_INFO.getBoundKeyLocalizedText()));
       }else {
         extraInfo.getInfo().forEach(tooltip);
       }

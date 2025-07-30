@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.gui.handlers;
 
 import net.fawnoculus.ntm.blocks.entities.container.energy.SimpleEnergyStorageBE;
-import net.fawnoculus.ntm.gui.ModScreenHandlerType;
+import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import net.fawnoculus.ntm.gui.slots.BatterySlot;
 import net.fawnoculus.ntm.network.custom.BlockPosS2CPayload;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +24,7 @@ public class EnergyStorageScreenHandler extends ScreenHandler {
   
   // Common Constructor
   public EnergyStorageScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, SimpleEnergyStorageBE blockEntity) {
-    super(ModScreenHandlerType.ENERGY_STORAGE, syncId);
+    super(NTMScreenHandlerType.ENERGY_STORAGE, syncId);
     
     this.blockEntity = blockEntity;
     this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.hud;
 
-import net.fawnoculus.ntm.items.ModItems;
-import net.fawnoculus.ntm.render.ModTextures;
+import net.fawnoculus.ntm.items.NTMItems;
+import net.fawnoculus.ntm.render.NTMTextures;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
 public class GeigerCounterRender {
-  private static final Identifier TEXTURE = ModTextures.GEIGER_COUNTER_HUD;
+  private static final Identifier TEXTURE = NTMTextures.GEIGER_COUNTER_HUD;
   private static final int THRESHOLD_1 =  10_000;
   private static final int THRESHOLD_2 =  50_000;
   private static final int THRESHOLD_3 = 100_000;
@@ -25,7 +25,7 @@ public class GeigerCounterRender {
   private static boolean shouldDraw(){
     if(ClientUtil.getClient() == null) return false;
     if(ClientUtil.getPlayer() == null) return false;
-    return PlayerUtil.hasItem(ClientUtil.getPlayer(), ModItems.GEIGER_COUNTER);
+    return PlayerUtil.hasItem(ClientUtil.getPlayer(), NTMItems.GEIGER_COUNTER);
   }
   
   public static void drawGeigerCounter(DrawContext context, RenderTickCounter tickCounter) {

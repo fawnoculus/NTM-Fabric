@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
+import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
@@ -56,7 +56,7 @@ public interface SpecialTool {
   }
   
   default ItemAbility getSelectedAbility(ItemStack stack){
-    int selectedAbility = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
+    int selectedAbility = stack.getOrDefault(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
     if(selectedAbility < 0){return null;}
     return this.getAbilities().get(selectedAbility);
   }
@@ -68,12 +68,12 @@ public interface SpecialTool {
       return;
     }
     
-    int NewAbilityIndex = stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
+    int NewAbilityIndex = stack.getOrDefault(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
     NewAbilityIndex++;
     
     if (NewAbilityIndex >= AbilityAmount || player.isSneaking() || NewAbilityIndex < -1) {
       // Ability Unselected
-      stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
+      stack.set(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
       stack.remove(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
       
@@ -83,7 +83,7 @@ public interface SpecialTool {
           1000.0f)));
     } else {
       // Ability switched
-      stack.set(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, NewAbilityIndex);
+      stack.set(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, NewAbilityIndex);
       stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
       
@@ -104,7 +104,7 @@ public interface SpecialTool {
         ItemAbility ability = abilities.get(i);
         
         MutableText prefix = Text.literal("  ");
-        if (i == stack.getOrDefault(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1)) {
+        if (i == stack.getOrDefault(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1)) {
           prefix = Text.literal(" >").formatted(Formatting.GRAY);
         }
         

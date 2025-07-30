@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
-import net.fawnoculus.ntm.misc.tags.ModBlockTags;
+import net.fawnoculus.ntm.items.NTMDataComponentTypes;
+import net.fawnoculus.ntm.misc.tags.NTMBlockTags;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,8 +24,8 @@ import java.util.function.Consumer;
 public class SpecialBigPickaxeItem extends Item implements SpecialTool {
   public SpecialBigPickaxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
     super(settings
-        .tool(material, ModBlockTags.BIG_PICKAXE_MINEABLE, attackDamage, attackSpeed, 0.0F)
-        .component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1)
+        .tool(material, NTMBlockTags.BIG_PICKAXE_MINEABLE, attackDamage, attackSpeed, 0.0F)
+        .component(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1)
     );
   }
   

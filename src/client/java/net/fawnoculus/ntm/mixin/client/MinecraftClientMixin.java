@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.mixin.client;
 
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.fawnoculus.ntm.misc.messages.MessageSystem;
-import net.fawnoculus.ntm.render.ModModelRender;
+import net.fawnoculus.ntm.render.NTMModelRender;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -50,6 +50,6 @@ public abstract class MinecraftClientMixin {
       shift = At.Shift.AFTER
   ), method = "<init>")
   private static void initializeModels(CallbackInfo ci) {
-    ModModelRender.initialize();
+    NTMModelRender.initialize();
   }
 }

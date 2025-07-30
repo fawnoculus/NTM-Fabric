@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
+import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
@@ -29,12 +29,12 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
   
   @Override
   public long getEnergy(ItemStack stack) {
-    return stack.getOrDefault(ModDataComponentTypes.ENERGY_COMPONENT_TYPE, 0L);
+    return stack.getOrDefault(NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 0L);
   }
   
   @Override
   public void setEnergy(ItemStack stack, long energy) {
-    stack.set(ModDataComponentTypes.ENERGY_COMPONENT_TYPE, energy);
+    stack.set(NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, energy);
   }
   
   @Override

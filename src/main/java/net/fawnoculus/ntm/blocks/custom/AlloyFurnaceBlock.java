@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
-import net.fawnoculus.ntm.blocks.ModBlockProperties;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockProperties;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -34,7 +34,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   }
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final BooleanProperty LIT = Properties.LIT;
-  public static final BooleanProperty EXTENSION = ModBlockProperties.EXTENSION;
+  public static final BooleanProperty EXTENSION = NTMBlockProperties.EXTENSION;
   
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {
@@ -49,7 +49,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
     if(world.isClient) return null;
-    return validateTicker(type, ModBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
+    return validateTicker(type, NTMBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
   }
   
   @Override

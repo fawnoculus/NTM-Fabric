@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.items.components.ModFoodComponents;
+import net.fawnoculus.ntm.items.components.NTMFoodComponents;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class ScrapPancakeItem extends Item {
   public ScrapPancakeItem(Settings settings) {
-    super(settings.food(ModFoodComponents.SCRAP_PANCAKE));
+    super(settings.food(NTMFoodComponents.SCRAP_PANCAKE));
   }
   
   @Override

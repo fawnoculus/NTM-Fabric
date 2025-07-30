@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorHolder;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
@@ -22,23 +22,23 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Optional;
-
 @Mixin(SerializedChunk.class)
 public class SerializedChunkMixin implements CustomDataHolder {
   @Shadow @Final private ChunkPos chunkPos;
   @Unique
-  private CustomData customData = new CustomData();
+  private NbtCompound customData = new NbtCompound();
   
   @Inject(method = "fromNbt", at = @At("RETURN"))
   private static void readCustomData(HeightLimitView world, DynamicRegistryManager registryManager, NbtCompound nbt, CallbackInfoReturnable<SerializedChunk> cir){
-    Optional<String> string = nbt.getString(CustomData.KEY);
-    CustomDataHolder.from(cir.getReturnValue()).NTM$setCustomData(string.map(CustomData::new).orElseGet(CustomData::new));
+    NbtElement data = nbt.get(CustomDataHolder.KEY);
+    if(data instanceof NbtCompound nbtCompound){
+      CustomDataHolder.from(cir.getReturnValue()).NTM$setCustomData(nbtCompound);
+    }
   }
   
   @Inject(method = "fromChunk", at = @At("RETURN"))
   private static void convertRadiationProcessor(ServerWorld world, Chunk chunk, CallbackInfoReturnable<SerializedChunk> cir){
-    CustomData data = CustomDataHolder.from(chunk).NTM$getCustomData();
+    NbtCompound data = CustomDataHolder.from(chunk).NTM$getCustomData();
     RadiationProcessorHolder.from(chunk).NTM$getRadiationProcessor().writeData(data);
     CustomDataHolder.from(cir.getReturnValue()).NTM$setCustomData(data);
   }
@@ -50,16 +50,16 @@ public class SerializedChunkMixin implements CustomDataHolder {
   
   @Inject(method = "serialize", at = @At("RETURN"))
   protected void writeCustomData(CallbackInfoReturnable<NbtCompound> cir){
-    cir.getReturnValue().putString(CustomData.KEY, customData.getDataAsString());
+    cir.getReturnValue().put(CustomDataHolder.KEY, customData);
   }
   
   @Override
-  public @NotNull CustomData NTM$getCustomData() {
+  public @NotNull NbtCompound NTM$getCustomData() {
     return customData;
   }
   
   @Override
-  public void NTM$setCustomData(CustomData customData) {
+  public void NTM$setCustomData(NbtCompound customData) {
     this.customData = customData;
   }
 }

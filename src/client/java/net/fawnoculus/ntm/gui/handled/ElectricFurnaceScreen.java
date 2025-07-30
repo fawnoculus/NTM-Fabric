@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.gui.handled;
 
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
 import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
-import net.fawnoculus.ntm.render.ModTextures;
+import net.fawnoculus.ntm.render.NTMTextures;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.client.gui.DrawContext;
@@ -20,7 +20,7 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
     super(handler, inventory, title);
   }
   
-  private static final Identifier TEXTURE = ModTextures.ELECTRIC_FURNACE_GUI;
+  private static final Identifier TEXTURE = NTMTextures.ELECTRIC_FURNACE_GUI;
   
   @Override
   protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {

@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -11,33 +11,33 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements CustomDataHolder {
   @Unique
-  CustomData customData = new CustomData();
+  NbtCompound customData = new NbtCompound();
   
   @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
   protected void readCustomData(NbtCompound nbt, CallbackInfo ci){
-    Optional<String> string = nbt.getString(CustomData.KEY);
-    customData = string.map(CustomData::new).orElseGet(CustomData::new);
+    NbtElement data = nbt.get(CustomDataHolder.KEY);
+    if(data instanceof NbtCompound nbtCompound){
+      customData =nbtCompound;
+    }
   }
   
   @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
   protected void writeCustomData(NbtCompound nbt, CallbackInfo ci){
-    nbt.putString(CustomData.KEY, customData.getDataAsString());
+    nbt.put(CustomDataHolder.KEY, customData);
   }
   
   @Override
-  public @NotNull CustomData NTM$getCustomData() {
+  public @NotNull NbtCompound NTM$getCustomData() {
     if(customData == null){
-      customData = new CustomData();
+      customData = new NbtCompound();
     }
     return customData;
   }
   @Override
-  public void NTM$setCustomData(CustomData customData) {
+  public void NTM$setCustomData(NbtCompound customData) {
     this.customData = customData;
   }
 }

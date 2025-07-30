@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.entity.effects;
 
-import net.fawnoculus.ntm.entity.ModDamageTypes;
+import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
@@ -19,9 +19,9 @@ public class LeadPoisoningEffect extends StatusEffect {
   
   @Override
   public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-    EntityUtil.applyDamage(entity, world, ModDamageTypes.LEAD_POISONING, amplifier);
+    EntityUtil.applyDamage(entity, world, NTMDamageTypes.LEAD_POISONING, amplifier);
     if(amplifier >= 255){
-      EntityUtil.applyDamage(entity, world, ModDamageTypes.LEAD_POISONING, Integer.MAX_VALUE);
+      EntityUtil.applyDamage(entity, world, NTMDamageTypes.LEAD_POISONING, Integer.MAX_VALUE);
     }
     return super.applyUpdateEffect(world, entity, amplifier);
   }

@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
-import net.fawnoculus.ntm.misc.ModSounds;
+import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,9 +43,9 @@ public class EmptyExperienceBagItem extends Item {
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }
-    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), ModSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
     PlayerUtil.removeExperience(player, XP_PER_BAG);
-    player.getInventory().offerOrDrop(new ItemStack(ModItems.EXPERIENCE_BAG));
+    player.getInventory().offerOrDrop(new ItemStack(NTMItems.EXPERIENCE_BAG));
     
     return ActionResult.SUCCESS_SERVER;
   }

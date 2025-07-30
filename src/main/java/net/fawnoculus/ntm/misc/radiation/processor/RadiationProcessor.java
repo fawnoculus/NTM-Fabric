@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.misc.radiation.processor;
 
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
@@ -20,6 +20,6 @@ public interface RadiationProcessor {
   
   void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos);
   
-  void writeData(CustomData data);
-  void readData(CustomData data);
+  void writeData(NbtCompound data);
+  void readData(NbtCompound data);
 }

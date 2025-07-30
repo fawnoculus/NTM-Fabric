@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks.entities.container.energy;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fawnoculus.ntm.blocks.ModBlockEntities;
+import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.node.type.StorageNode;
 import net.fawnoculus.ntm.gui.handlers.EnergyStorageScreenHandler;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
@@ -15,7 +15,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +33,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   public static final int CHARGE_SLOT_INDEX = 1;
   
   public SimpleEnergyStorageBE(BlockPos pos, BlockState state) {
-    super(ModBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, 2);
+    super(NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, 2);
   }
   
   public boolean isPowered = false;

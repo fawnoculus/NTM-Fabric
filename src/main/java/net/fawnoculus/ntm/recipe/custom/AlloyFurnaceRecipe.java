@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.recipe.custom;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.fawnoculus.ntm.recipe.ModRecipes;
+import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -41,12 +41,12 @@ public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2,
   
   @Override
   public RecipeSerializer<? extends Recipe<AlloyFurnaceRecipeInput>> getSerializer() {
-    return ModRecipes.ALLOY_FURNACE_RECIPE_SERIALIZER;
+    return NTMRecipes.ALLOY_FURNACE_RECIPE_SERIALIZER;
   }
   
   @Override
   public RecipeType<? extends Recipe<AlloyFurnaceRecipeInput>> getType() {
-    return ModRecipes.ALLOY_FURNACE_RECIPE_TYPE;
+    return NTMRecipes.ALLOY_FURNACE_RECIPE_TYPE;
   }
   
   @Override

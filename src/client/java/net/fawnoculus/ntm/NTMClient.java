@@ -1,12 +1,12 @@
 package net.fawnoculus.ntm;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fawnoculus.ntm.commands.ModClientCommands;
-import net.fawnoculus.ntm.misc.ModKeybinds;
-import net.fawnoculus.ntm.network.ModClientPayloadHandler;
+import net.fawnoculus.ntm.commands.NTMClientCommands;
+import net.fawnoculus.ntm.misc.NTMKeybinds;
+import net.fawnoculus.ntm.network.NTMClientPayloadHandler;
 import net.fawnoculus.ntm.render.*;
-import net.fawnoculus.ntm.gui.ModHandledScreens;
-import net.fawnoculus.ntm.gui.ModScreenHandlerType;
+import net.fawnoculus.ntm.gui.NTMHandledScreens;
+import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,21 +19,22 @@ public class NTMClient implements ClientModInitializer {
     
     NTMClientConfig.initialize();
     
-    ModKeybinds.initialize();
+    NTMKeybinds.initialize();
     
-    ModClientCommands.initialize();
+    NTMClientCommands.initialize();
     
-    ModBlockEntityRender.initialize();
-    ModParticleRender.initialize();
+    NTMBlockEntityRender.initialize();
+    NTMParticleRender.initialize();
+    NTMModelLoadingPlugin.initialize();
     
-    ModScreenHandlerType.initialize();
-    ModHandledScreens.initialize();
+    NTMScreenHandlerType.initialize();
+    NTMHandledScreens.initialize();
     
-    ModHudRender.initialize();
+    NTMHudRender.initialize();
     
     ClientRadiationManager.initialize();
     
-    ModClientPayloadHandler.initialize();
+    NTMClientPayloadHandler.initialize();
     
     LOGGER.info("Finished {} Client Initialization", NTM.MOD_NAME);
   }

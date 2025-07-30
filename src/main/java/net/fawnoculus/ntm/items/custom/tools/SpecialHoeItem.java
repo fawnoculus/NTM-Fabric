@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
-import net.fawnoculus.ntm.items.ModDataComponentTypes;
+import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 
 public class SpecialHoeItem extends HoeItem implements SpecialTool {
   public SpecialHoeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    super(material, attackDamage, attackSpeed, settings.component(ModDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1));
+    super(material, attackDamage, attackSpeed, settings.component(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1));
   }
   
   public final AtomicBoolean canBreakDepthRock = new AtomicBoolean(false);

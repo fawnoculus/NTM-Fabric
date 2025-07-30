@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.misc.radiation;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.entity.ModDamageTypes;
-import net.fawnoculus.ntm.entity.ModStatusEffects;
-import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.entity.NTMDamageTypes;
+import net.fawnoculus.ntm.entity.NTMStatusEffects;
+import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.misc.radiation.processor.SimpleRadiationProcessor;
@@ -11,7 +11,6 @@ import net.fawnoculus.ntm.network.custom.RadiationInformationS2CPayload;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.util.WorldUtil;
-import net.fawnoculus.ntm.misc.data.CustomData;
 import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.misc.radiation.processor.EmptyRadiationProcessor;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorMultiHolder;
@@ -20,6 +19,7 @@ import net.minecraft.entity.InventoryOwner;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -45,7 +45,7 @@ public class RadiationManager {
   }
   
   public static void initialize(){
-    INSTANCE.addPacketReason(NTM.id("has_geiger_counter"), player -> PlayerUtil.hasItem(player, ModItems.GEIGER_COUNTER));
+    INSTANCE.addPacketReason(NTM.id("has_geiger_counter"), player -> PlayerUtil.hasItem(player, NTMItems.GEIGER_COUNTER));
   }
   
   private final HashMap<Identifier, Function<ServerPlayerEntity, Boolean>> packetReasons = new HashMap<>();
@@ -89,17 +89,17 @@ public class RadiationManager {
   
   // Radiation Helpers
   public double getRadiationExposure(LivingEntity entity){
-    CustomData entityData = CustomDataHolder.from(entity).NTM$getCustomData();
-    return entityData.getOrDefaultDouble(NTM.id("radiation_exposure"), 0.0);
+    NbtCompound entityData = CustomDataHolder.from(entity).NTM$getCustomData();
+    return entityData.getDouble("radiation_exposure", 0.0);
   }
   public void setRadiationExposure(LivingEntity entity, double radiation){
-    CustomData entityData = CustomDataHolder.from(entity).NTM$getCustomData();
-    entityData.set(NTM.id("radiation_exposure"), radiation);
+    NbtCompound entityData = CustomDataHolder.from(entity).NTM$getCustomData();
+    entityData.putDouble("radiation_exposure", radiation);
   }
   
   public double getRadiationResistance(LivingEntity entity){
     double resistance = hazmatRegistry.getResistance(entity);
-    if(entity.hasStatusEffect(ModStatusEffects.RAD_X)){
+    if(entity.hasStatusEffect(NTMStatusEffects.RAD_X)){
       resistance += 0.2;
     }
     return resistance;
@@ -170,7 +170,7 @@ public class RadiationManager {
     radiationExposure += amount;
     
     if(radiationExposure >= 1_000_000){
-      EntityUtil.applyDamage(entity, serverWorld, ModDamageTypes.RADIATION, Float.MAX_VALUE);
+      EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.RADIATION, Float.MAX_VALUE);
       setRadiationExposure(entity, 0);
     }else {
       setRadiationExposure(entity, radiationExposure);

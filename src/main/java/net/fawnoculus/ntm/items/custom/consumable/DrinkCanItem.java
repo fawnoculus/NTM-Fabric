@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.fawnoculus.ntm.items.ModItems;
+import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.items.custom.TooltipItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ConsumableComponents;
@@ -30,8 +30,8 @@ public class DrinkCanItem extends TooltipItem {
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
     if(user instanceof PlayerEntity player && !player.isCreative()){
       stack.decrement(1);
-      player.getInventory().offerOrDrop(new ItemStack(ModItems.EMPTY_CAN));
-      player.getInventory().offerOrDrop(new ItemStack(ModItems.RING_PULL));
+      player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_CAN));
+      player.getInventory().offerOrDrop(new ItemStack(NTMItems.RING_PULL));
     }
     
     for(StatusEffectInstance effect : EFFECTS){

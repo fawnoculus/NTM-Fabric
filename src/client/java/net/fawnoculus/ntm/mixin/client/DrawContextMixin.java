@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin.client;
 
-import net.fawnoculus.ntm.render.ModModelRender;
+import net.fawnoculus.ntm.render.NTMModelRender;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +27,7 @@ public abstract class DrawContextMixin {
       "IIII" +
       ")V")
   private void renderOverrideModels(LivingEntity entity, World world, ItemStack stack, int x, int y, int seed, int z, CallbackInfo ci){
-    Consumer<MatrixStack> renderOverride = ModModelRender.ITEM_RENDERERS.get(stack.getItem());
+    Consumer<MatrixStack> renderOverride = NTMModelRender.ITEM_RENDERERS.get(stack.getItem());
     if(renderOverride != null){
       renderOverride.accept(this.matrices);
       this.matrices.push();
@@ -42,7 +42,7 @@ public abstract class DrawContextMixin {
           "IIII" +
           ")V")
   private void resetMatrix(LivingEntity entity, World world, ItemStack stack, int x, int y, int seed, int z, CallbackInfo ci){
-    if(ModModelRender.ITEM_RENDERERS.containsKey(stack.getItem())){
+    if(NTMModelRender.ITEM_RENDERERS.containsKey(stack.getItem())){
       this.matrices.pop();
     }
   }
