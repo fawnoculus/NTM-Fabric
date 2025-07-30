@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render;
 
 import net.fawnoculus.ntm.blocks.ModBlocks;
-import net.fawnoculus.ntm.render.models.Model3D;
+import net.fawnoculus.ntm.render.model3d.Model3D;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;

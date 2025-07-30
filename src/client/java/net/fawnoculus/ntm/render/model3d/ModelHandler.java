@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.render.models;
+package net.fawnoculus.ntm.render.model3d;
 
 import net.fawnoculus.ntm.render.ModRenderPipelines;
 import net.fawnoculus.ntm.util.ExceptionUtil;

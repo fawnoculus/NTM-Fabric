@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.render.models;
+package net.fawnoculus.ntm.render.model3d;
 
 import org.jetbrains.annotations.NotNull;
 

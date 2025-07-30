@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.model;
 
-import net.fawnoculus.ntm.render.models.FaceIndex;
-import net.fawnoculus.ntm.render.models.ModelHandler;
+import net.fawnoculus.ntm.render.model3d.FaceIndex;
+import net.fawnoculus.ntm.render.model3d.ModelHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

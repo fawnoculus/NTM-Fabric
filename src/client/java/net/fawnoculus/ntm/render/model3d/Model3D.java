@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.render.models;
+package net.fawnoculus.ntm.render.model3d;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.fawnoculus.ntm.render.ModRenderPipelines;

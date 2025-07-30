@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.render;
 
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.render.models.ModelHandler;
-import net.fawnoculus.ntm.render.models.MultiModel3D;
+import net.fawnoculus.ntm.render.model3d.ModelHandler;
+import net.fawnoculus.ntm.render.model3d.MultiModel3D;
 
 public class ModModels {
   public static final MultiModel3D ALLOY_FURNACE_EXTENSION = of("block/alloy_furnace_extension");
