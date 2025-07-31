@@ -31,10 +31,6 @@ bin/
 # fabric
 
 run/
-config/
-logs/
-mods/
-world/
 
 # java
 
