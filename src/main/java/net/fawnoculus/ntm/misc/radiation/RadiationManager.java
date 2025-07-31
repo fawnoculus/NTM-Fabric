@@ -15,10 +15,13 @@ import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.misc.radiation.processor.EmptyRadiationProcessor;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorMultiHolder;
 import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessor;
-import net.minecraft.entity.InventoryOwner;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.passive.CowEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -26,6 +29,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.EntityList;
 
 import java.util.Collection;
@@ -102,6 +106,10 @@ public class RadiationManager {
     if(entity.hasStatusEffect(NTMStatusEffects.RAD_X)){
       resistance += 0.2;
     }
+    if(entity.hasStatusEffect(NTMStatusEffects.TAINTED_HEART)){
+      // Gives 100% resistance to all radiation
+      resistance += 1000;
+    }
     return resistance;
   }
   public double getRadiationResistancePercentage(LivingEntity entity){
@@ -111,20 +119,13 @@ public class RadiationManager {
     return Math.pow(10.0, -getRadiationResistance(entity));
   }
   
+  // All Radiation values are in RAD/s not RAD/t so don't forget to divide by 20 when applying radiation per tick!
   public double getInventoryRadiation(LivingEntity entity){
     if(entity instanceof InventoryOwner inventoryOwner){
-      double radioactivity = 0;
-      for(ItemStack stack : inventoryOwner.getInventory()){
-        radioactivity += radiationRegistry.getRadioactivity(stack);
-      }
-      return radioactivity;
+      return radiationRegistry.getRadioactivity(inventoryOwner.getInventory());
     }
     if(entity instanceof PlayerEntity player){
-      double radioactivity = 0;
-      for(ItemStack stack : player.getInventory()){
-        radioactivity += radiationRegistry.getRadioactivity(stack);
-      }
-      return radioactivity;
+      return radiationRegistry.getRadioactivity(player.getInventory());
     }
     return 0;
   }
@@ -155,7 +156,11 @@ public class RadiationManager {
     return getRadiationProcessor(world, WorldUtil.getChunkPos(pos));
   }
   public RadiationProcessor getRadiationProcessor(ServerWorld world, ChunkPos pos){
-    return RadiationProcessorMultiHolder.from(world).NTM$getRadiationProcessor(pos);
+    RadiationProcessor radiationProcessor = RadiationProcessorMultiHolder.from(world).NTM$getRadiationProcessor(pos);
+    if(radiationProcessor == null){
+      radiationProcessor = new EmptyRadiationProcessor();
+    }
+    return radiationProcessor;
   }
   
   // Radiation Modifiers
@@ -195,7 +200,106 @@ public class RadiationManager {
   public void processEntityRadiation(LivingEntity entity){
     if(NTMConfig.DisableEntityRadiation.getValue()) return;
     if(entity.isInvulnerable() || entity.isInCreativeMode()) return;
+    if(!(entity.getWorld() instanceof ServerWorld serverWorld)) return;
     increaseRadiationExposure(entity, getTotalRadiation(entity) * getRadiationModifier(entity) / 20.0);
+    
+    Random random = serverWorld.getRandom();
+    double radiationExposure = getRadiationExposure(entity);
+    
+    // Special Entity events
+    switch (entity){
+      case CowEntity cow -> {
+        if(radiationExposure >= 50){
+          EntityType.MOOSHROOM.spawn(serverWorld, cow.getBlockPos(), SpawnReason.EVENT);
+          cow.setRemoved(Entity.RemovalReason.KILLED);
+        }
+      }
+      case CreeperEntity creeper -> {
+        if(radiationExposure >= 200){
+          /* TODO: Nuclear Creeper
+           if(random.nextInt(3) == 0){
+             ModEntityType.NUCLEAR_CREEPER.spawn(serverWorld, creeper.getBlockPos(), SpawnReason.EVENT);
+           }
+          */
+          creeper.setRemoved(Entity.RemovalReason.KILLED);
+        }
+      }
+      /* TODO: duck & Quackos
+      case DuckEntity duck -> {
+        if(radiationExposure >= 200){
+          ModEntityType.QUACKOS.spawn(serverWorld, duck.getBlockPos(), SpawnReason.EVENT);
+          duck.setRemoved(Entity.RemovalReason.KILLED);
+        }
+      }
+       */
+      case VillagerEntity villager -> {
+        if(radiationExposure >= 500){
+          EntityType.ZOMBIE.spawn(serverWorld, villager.getBlockPos(), SpawnReason.EVENT);
+          villager.setRemoved(Entity.RemovalReason.KILLED);
+        }
+      }
+      default -> {}
+    }
+    
+    // Regular Radiation Effects
+    if(radiationExposure >= 1_000_000){
+      EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.RADIATION, Float.MAX_VALUE);
+      setRadiationExposure(entity, 0);
+      return;
+    }
+    if(radiationExposure >= 800_000){
+      if(random.nextInt(1000) == 0){
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 5, 0, false, false ,true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20 * 5, 2, false, false, true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 5, 2, false, false, true));
+      }
+      if(random.nextInt(2500) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20 * 5, 2, false, false, true));
+      }
+      if(random.nextInt(5000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 20 * 5, 1, false, false, true));
+      }
+      return;
+    }
+    if(radiationExposure >= 600_000){
+      if(random.nextInt(1000) == 0){
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 5, 0, false, false ,true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20 * 5, 2, false, false, true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 5, 2, false, false, true));
+      }
+      if(random.nextInt(15000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20 * 5, 1, false, false, true));
+      }
+      return;
+    }
+    if(radiationExposure >= 400_000){
+      if(random.nextInt(1000) == 0){
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 5, 0, false, false ,true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20 * 5, 1, false, false, true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 5, 1, false, false, true));
+      }
+      return;
+    }
+    if(radiationExposure >= 200_000){
+      if(random.nextInt(1000) == 0){
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 5, 0, false, false ,true));
+      }
+      if(random.nextInt(1000) == 0) {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20 * 5, 0, false, false, true));
+      }
+    }
   }
   
   public RadiationProcessor makeNewRadiationProcessor(ServerWorld world, ChunkPos pos){

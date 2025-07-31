@@ -30,14 +30,14 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
   
   @Override
   public void tick() {
-    double toBeSpreadRadiation = (this.activeRadiation + this.passiveRadiation) / 3; // one third of total radiation is to be spread
+    double toBeSpreadRadiation = (this.activeRadiation + this.passiveRadiation) / 5; // one fifth of total radiation is to be spread
     
-    this.activeRadiation = (this.activeRadiation / 3) * 2; // remove one third of active radiation
+    this.activeRadiation = (this.activeRadiation / 5) * 4; // remove one third of active radiation
     if(this.activeRadiation < 1){
       this.activeRadiation = 0; // remove all active radiation of there is less than 1 milliRAD/s
     }
     
-    double spreadRadiationPerChunk = toBeSpreadRadiation / 5; // one fifth of the to be spread radiation is lost
+    double spreadRadiationPerChunk = toBeSpreadRadiation / 4; // one fifth of the to be spread radiation is lost
     
     if(radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x - 1, this.POS.z)) instanceof SimpleRadiationProcessor processor){
       processor.activeRadiation += spreadRadiationPerChunk;

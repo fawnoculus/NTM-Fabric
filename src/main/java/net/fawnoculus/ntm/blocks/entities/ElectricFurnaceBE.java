@@ -80,7 +80,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
     }else{
       entity.resetProgress();
     }
-    entity.update();
+    entity.markDirty();
   }
   
   private Optional<RecipeEntry<SmeltingRecipe>> getRecipe(){

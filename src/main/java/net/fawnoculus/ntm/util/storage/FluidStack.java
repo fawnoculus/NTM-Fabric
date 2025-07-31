@@ -23,12 +23,12 @@ public class FluidStack extends SingleVariantStorage<FluidVariant> {
     @Override
     public void encode(RegistryByteBuf buf, FluidStack value) {
       buf.writeLong(value.amount);
-      buf.writeLong(value.maxMilliBuckets);
+      buf.writeLong(value.maxDropletsBuckets);
       FluidVariant.PACKET_CODEC.encode(buf, value.variant);
     }
   };
   
-  private long maxMilliBuckets = 0;
+  private long maxDropletsBuckets = 0;
   private Runnable onFinalCommit = () -> {};
   
   @Override
@@ -49,7 +49,7 @@ public class FluidStack extends SingleVariantStorage<FluidVariant> {
   }
   
   public long getAmount(FluidVariant variant, Unit unit) {
-    return FluidUtil.convert(this.maxMilliBuckets, Unit.MILLI_BUCKET, unit);
+    return FluidUtil.convert(this.maxDropletsBuckets, Unit.DROPLET, unit);
   }
   
   public FluidStack addAmount(long milliBuckets) {
@@ -57,30 +57,30 @@ public class FluidStack extends SingleVariantStorage<FluidVariant> {
     return this;
   }
   public FluidStack addAmount(long amount, Unit unit) {
-    return this.addAmount(FluidUtil.convert(amount, unit, Unit.MILLI_BUCKET));
+    return this.addAmount(FluidUtil.convert(amount, unit, Unit.DROPLET));
   }
   public FluidStack setAmount(long milliBuckets) {
     this.amount = milliBuckets;
     return this;
   }
   public FluidStack setAmount(long amount, Unit unit) {
-    return this.setCapacity(FluidUtil.convert(amount, unit, Unit.MILLI_BUCKET));
+    return this.setCapacity(FluidUtil.convert(amount, unit, Unit.DROPLET));
   }
   
   @Override
   public long getCapacity(FluidVariant variant) {
-    return this.maxMilliBuckets;
+    return this.maxDropletsBuckets;
   }
   public long getCapacity(Unit unit) {
-    return FluidUtil.convert(this.maxMilliBuckets, Unit.MILLI_BUCKET, unit);
+    return FluidUtil.convert(this.maxDropletsBuckets, Unit.DROPLET, unit);
   }
   
   public FluidStack setCapacity(long maxMilliBuckets) {
-    this.maxMilliBuckets = maxMilliBuckets;
+    this.maxDropletsBuckets = maxMilliBuckets;
     return this;
   }
   public FluidStack setCapacity(long maxAmount, Unit unit) {
-    return this.setCapacity(FluidUtil.convert(maxAmount, unit, Unit.MILLI_BUCKET));
+    return this.setCapacity(FluidUtil.convert(maxAmount, unit, Unit.DROPLET));
   }
   
   public FluidStack onFinalCommit(Runnable runnable) {

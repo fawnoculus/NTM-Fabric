@@ -292,6 +292,7 @@ public class NTMModelProvider extends FabricModelProvider {
     // Basic Items
     itemModelGenerator.register(NTMItems.NULL, Models.GENERATED);
     itemModelGenerator.register(NTMItems.PLUTONIUM_238_RTG_PELLET, Models.GENERATED);
+    itemModelGenerator.register(NTMItems.TUNGSTEN_REACHER, Models.GENERATED);
     
     // Raw Resources
     itemModelGenerator.register(NTMItems.ACTINIUM_227_INGOT, Models.GENERATED);

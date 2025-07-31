@@ -30,6 +30,7 @@ public class NTMItems {
   // Basic Items
   public static final Item NULL = register("null", Item::new, new Item.Settings());
   public static final Item PLUTONIUM_238_RTG_PELLET = register("plutonium_238_rtg_pellet", Item::new, new Item.Settings()); // This is only here for the ItemGroup Icon, it will be fully added Later
+  public static final Item TUNGSTEN_REACHER = register("tungsten_reacher", Item::new, new Item.Settings());
   
   // Basic Resources split by Type sorted Alphabetically because I felt like it
   public static final Item ACTINIUM_227_INGOT = register("actinium_227_ingot", Item::new, new Item.Settings());

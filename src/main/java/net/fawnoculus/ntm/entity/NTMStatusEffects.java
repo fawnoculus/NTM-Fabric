@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.entity;
 
+import net.fawnoculus.ntm.entity.effects.GenericStatusEffect;
 import net.fawnoculus.ntm.entity.effects.LeadPoisoningEffect;
 import net.fawnoculus.ntm.entity.effects.RadAwayEffect;
-import net.fawnoculus.ntm.entity.effects.RadXEffect;
 import net.fawnoculus.ntm.entity.effects.TaintEffect;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.entity.effect.StatusEffect;
@@ -18,11 +18,15 @@ public class NTMStatusEffects {
   );
   
   public static final RegistryEntry<StatusEffect> RAD_X = of("rad_x",
-      new RadXEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(230, 75, 30))
+      new GenericStatusEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(250, 100, 40))
   );
   
   public static final RegistryEntry<StatusEffect> TAINT = of("taint",
       new TaintEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(120, 40, 200))
+  );
+  
+  public static final RegistryEntry<StatusEffect> TAINTED_HEART = of("tainted_heart",
+      new GenericStatusEffect(StatusEffectCategory.BENEFICIAL, ColorHelper.getArgb(200, 40, 75))
   );
   
   public static final RegistryEntry<StatusEffect> LEAD_POISONING = of("lead_poisoning",

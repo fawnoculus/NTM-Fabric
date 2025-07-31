@@ -5,10 +5,13 @@ import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.JsonUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -88,6 +91,25 @@ public class RadiationRegistry {
     NTM.LOGGER.info("Successfully loaded Radioactivity Overrides for {} identifier(s)", radioactivityOverrides.size());
   }
   
+  public double getRadioactivity(Iterable<ItemStack> stacks) {
+    double radioactivity = 0;
+    boolean hasTungstenReacher = false;
+    for(ItemStack stack : stacks){
+      radioactivity += getRadioactivity(stack);
+      if(stack.getItem() == NTMItems.TUNGSTEN_REACHER){
+        hasTungstenReacher = true;
+      }
+      if(stack.contains(DataComponentTypes.CONTAINER)){
+        radioactivity += getRadioactivity(
+            stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).stream().toList()
+        );
+      }
+    }
+    if(hasTungstenReacher){
+      radioactivity = Math.sqrt(radioactivity);
+    }
+    return radioactivity;
+  }
   public double getRadioactivity(World world) {
     try{
       return getRadioactivity(world.getRegistryManager().getOrThrow(RegistryKeys.DIMENSION_TYPE).getId(world.getDimension()));

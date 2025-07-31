@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.misc.radiation;
 
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -28,7 +29,7 @@ public class ClientRadiationRegistry extends RadiationRegistry {
     throw new RuntimeException("Tried to register radioactivity in ClientRadiationRegistry");
   }
   
-  public void updateFromPacket(Serialized serializedRegistry){
+  public void updateFromPacket(@NotNull Serialized serializedRegistry){
     this.radioactivityGetter = serializedRegistry.radioactivityGetter();
     this.radioactivityOverrides = serializedRegistry.radioactivityOverrides();
   }
