@@ -1,4 +1,4 @@
-<h1 style="text-align: center;"> NTM-Fabric <br>
+<h1 align="center"> NTM-Fabric <br>
     <a href="https://fabricmc.net/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_64h.png" alt="Available on Fabric" width="200"></a>
     <a href="https://quiltmc.org/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/quilt_64h.png" alt="Available on Quilt" width="200"></a>
     <br>
