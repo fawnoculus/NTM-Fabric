@@ -40,7 +40,7 @@ public class NTMConfig {
       "The required Permission-Level for Operator NTM Commands"
   );
   public static final StringOption FluidUnit = CommonConfig.newStringOption(
-    "FluidUnit", "false",
+    "FluidUnit", "MilliBuckets",
     "What fluid unit should be used",
     "MilliBuckets", "Droplets"
   );
