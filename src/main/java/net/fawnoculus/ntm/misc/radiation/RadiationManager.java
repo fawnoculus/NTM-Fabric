@@ -60,6 +60,7 @@ public class RadiationManager {
   public void addPacketReason(Identifier identifier, Function<ServerPlayerEntity, Boolean> reason){
     this.packetReasons.put(identifier, reason);
   }
+  @SuppressWarnings("unused")
   public void removePacketReason(Identifier identifier){
     this.packetReasons.remove(identifier);
   }

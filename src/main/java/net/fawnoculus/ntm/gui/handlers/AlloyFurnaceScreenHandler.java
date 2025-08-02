@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -74,12 +73,6 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
 
   @Override
   public ItemStack quickMove(PlayerEntity player, int slotIndex) {
-    ItemStack clickedStack = player.getInventory().getStack(slotIndex);
-    if (clickedStack.isEmpty()) return ItemStack.EMPTY;
-
-    World world = Objects.requireNonNull(blockEntity.getWorld());
-    //if(world.getFuelRegistry().isFuel(clickedStack) && blockEntity.getInventory().getStack(ALLOY_FURNACE_BE.FUEL_SLOT_INDEX)
-
     return ItemStack.EMPTY;
     /* TODO: fix this
     ItemStack stack = ItemStack.EMPTY;

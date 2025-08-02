@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.util.fluid;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fawnoculus.ntm.NTMConfig;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
@@ -13,21 +14,21 @@ public enum FluidUnit {
   INGOT(FluidConstants.INGOT),
   NUGGET(FluidConstants.NUGGET),
   DROPLET(FluidConstants.DROPLET);
-  
+
   public final long DROPLETS;
-  
+
   FluidUnit(long droplets){
     this.DROPLETS = droplets;
   }
-  
+
   public static long convert(long amount, FluidUnit from, FluidUnit to){
     // Could get Inaccurate with huge amounts
     // Am to lazy to do smth about it tho
     return amount * from.DROPLETS / to.DROPLETS;
   }
-  
+
   public static MutableText text(long droplets){
-    if(false){
+    if(NTMConfig.FluidUnit.getValue().equals("Droplets")){
       return textDroplets(droplets);
     }
     return textMB(droplets);
