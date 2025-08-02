@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.items.custom.consumable;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.items.components.NTMFoodComponents;
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,17 +20,17 @@ public class ScrapPancakeItem extends Item {
   public ScrapPancakeItem(Settings settings) {
     super(settings.food(NTMFoodComponents.SCRAP_PANCAKE));
   }
-  
+
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
     // TODO: this, once we have lunar cybernetic armor
-    ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessageS2CPayload(new AdvancedMessage(
+    ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessagePayload(new AdvancedMessage(
         NTM.id("scrap_pancake"),
         Text.translatable("message.ntm.teeth_to_soft").formatted(Formatting.YELLOW),
         1000.0f)));
     return ActionResult.FAIL;
   }
-  
+
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
     // TODO: this, once we have lunar cybernetic armor

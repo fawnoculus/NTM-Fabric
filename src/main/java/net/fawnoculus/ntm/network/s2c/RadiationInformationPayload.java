@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.network.custom;
+package net.fawnoculus.ntm.network.s2c;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -14,12 +14,12 @@ import org.jetbrains.annotations.Range;
 
 import java.nio.charset.StandardCharsets;
 
-public record RadiationInformationS2CPayload(RadiationInfo info) implements CustomPayload {
+public record RadiationInformationPayload(RadiationInfo info) implements CustomPayload {
   public static final Identifier RADIATION_INFORMATION_PAYLOAD_ID = NTM.id("radiation_information");
-  public static final Id<RadiationInformationS2CPayload> ID = new Id<>(RADIATION_INFORMATION_PAYLOAD_ID);
-  
-  public static final PacketCodec<RegistryByteBuf, RadiationInformationS2CPayload> PACKET_CODEC = PacketCodec.tuple(RadiationInfo.PACKET_CODEC, RadiationInformationS2CPayload::info, RadiationInformationS2CPayload::new);
-  
+  public static final Id<RadiationInformationPayload> ID = new Id<>(RADIATION_INFORMATION_PAYLOAD_ID);
+
+  public static final PacketCodec<RegistryByteBuf, RadiationInformationPayload> PACKET_CODEC = PacketCodec.tuple(RadiationInfo.PACKET_CODEC, RadiationInformationPayload::info, RadiationInformationPayload::new);
+
   public record RadiationInfo(
       @Range(from = 0, to = 1_000_000) double radiationExposure,
       double inventoryRadiation,
@@ -31,13 +31,13 @@ public record RadiationInformationS2CPayload(RadiationInfo info) implements Cust
         String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
         return RadiationInfo.decode(JsonUtil.jsonFromString(string));
       }
-      
+
       public void encode(ByteBuf byteBuf, RadiationInfo message) {
         JsonObject json = RadiationInfo.encode(message);
         PacketByteBuf.writeByteArray(byteBuf, json.toString().getBytes(StandardCharsets.UTF_8));
       }
     };
-    
+
     private static JsonObject encode(RadiationInfo info) {
       JsonObject jsonObject = new JsonObject();
       jsonObject.add("radiationExposure", new JsonPrimitive(info.radiationExposure));
@@ -45,9 +45,9 @@ public record RadiationInformationS2CPayload(RadiationInfo info) implements Cust
       jsonObject.add("passiveChunkRadiation", new JsonPrimitive(info.passiveChunkRadiation));
       jsonObject.add("activeChunkRadiation", new JsonPrimitive(info.activeChunkRadiation));
       return jsonObject;
-      
+
     }
-    
+
     private static RadiationInfo decode(JsonObject json) {
       double radiationExposure = json.get("radiationExposure").getAsJsonPrimitive().getAsDouble();
       double inventoryRadiation = json.get("inventoryRadiation").getAsJsonPrimitive().getAsDouble();
@@ -55,10 +55,10 @@ public record RadiationInformationS2CPayload(RadiationInfo info) implements Cust
       double activeChunkRadiation = json.get("activeChunkRadiation").getAsJsonPrimitive().getAsDouble();
       return new RadiationInfo(radiationExposure, inventoryRadiation, passiveChunkRadiation, activeChunkRadiation);
     }
-    
-    
+
+
   }
-  
+
   @Override
   public Id<? extends CustomPayload> getId() {
     return ID;

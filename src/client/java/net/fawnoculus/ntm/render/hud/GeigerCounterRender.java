@@ -59,7 +59,7 @@ public class GeigerCounterRender {
       }
       
       TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-      Text text = Text.translatable("generic.ntm.radiation.rads", rads).formatted(Formatting.RED);
+      Text text = Text.translatable("generic.ntm.radiation.rad_s", rads).formatted(Formatting.RED);
       context.drawText(textRenderer, text, x + 2, y - textRenderer.fontHeight, COLOR, true);
     }
   }

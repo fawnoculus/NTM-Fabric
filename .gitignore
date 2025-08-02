@@ -7,11 +7,23 @@ classes/
 
 # eclipse
 
+eclipse/
+*.pydevproject
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
 *.launch
 
 # idea
 
-.idea/
+.idea/**
+!.idea/icon.svg
 *.iml
 *.ipr
 *.iws

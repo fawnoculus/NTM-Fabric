@@ -21,15 +21,15 @@ public class DosimeterItem extends Item {
   
   private Text getRadsText(double milliRads){
     if(milliRads > 3_600){
-      return Text.translatable("generic.ntm.radiation.rads", ">3.6").formatted(Formatting.GOLD);
+      return Text.translatable("generic.ntm.radiation.rad_s", ">3.6").formatted(Formatting.GOLD);
     }
     if(milliRads > 1_000){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
     }
     if(milliRads > 0){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
     }
-    return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
+    return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
   }
   
   @Override

@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.custom.multiblock.MultiblockBlock;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
-import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
@@ -21,9 +21,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {
-  
+
   @Shadow public abstract Block getBlock();
-  
+
   @Inject(
       method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",
       at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BlockItem;getPlacementState(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;", shift = At.Shift.AFTER),
@@ -35,7 +35,7 @@ public abstract class BlockItemMixin {
         && context.getStack().getItem() instanceof BlockItem blockItem
         && blockItem.getBlock() instanceof MultiblockBlock multiblockBlock) {
       if(!multiblockBlock.getStructure().canPlaceStructure(serverWorld, context.getBlockPos(), player.getFacing())){
-        ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(
+        ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(
             NTM.id("place_multiblock"),
             Text.translatable("message.ntm.multiblock.not_enough_space").formatted(Formatting.RED),
             2000.0f))

@@ -271,8 +271,10 @@ public abstract class NodeNetwork {
   public void onPriorityChange(@NotNull NodeWithValue node, long newPriority){
     long oldPriority = node.getPriority();
     if(oldPriority == newPriority) return;
-    if(node.provides()) removeNodeFromSortedProviders(node ,node.getPriority());
-    if(node.consumes()) removeNodeFromSortedConsumers(node ,node.getPriority());
+    if(node.provides()) removeNodeFromSortedProviders(node, node.getPriority());
+    if(node.consumes()) removeNodeFromSortedConsumers(node, node.getPriority());
+    if(node.provides()) addNodeToSortedProviders(node, newPriority);
+    if(node.consumes()) addNodeToSortedConsumers(node, newPriority);
   }
   /**
    * Called before a Storage Node changes it Mode
@@ -280,10 +282,29 @@ public abstract class NodeNetwork {
   public void onStorageModeChange(@NotNull StorageNode node, StorageNode.StorageMode newMode){
     StorageNode.StorageMode oldMode = node.getStorageMode();
     if(oldMode == newMode) return;
-    if(oldMode.provides) removeNodeFromSortedProviders(node ,node.getPriority());
-    if(oldMode.consumes) removeNodeFromSortedConsumers(node ,node.getPriority());
-    if(newMode.provides) addNodeToSortedProviders(node ,node.getPriority());
-    if(newMode.consumes) addNodeToSortedConsumers(node ,node.getPriority());
+    if(oldMode.provides) removeNodeFromSortedProviders(node, node.getPriority());
+    if(oldMode.consumes) removeNodeFromSortedConsumers(node, node.getPriority());
+    if(newMode.provides) addNodeToSortedProviders(node, node.getPriority());
+    if(newMode.consumes) addNodeToSortedConsumers(node, node.getPriority());
+  }
+  
+  public @NotNull List<NodeWithValue> getProviders(long priority){
+    List<NodeWithValue> nodes = PRIORITISED_PROVIDERS.get(priority);
+    if(nodes == null){
+      nodes = new ArrayList<>();
+      PRIORITISED_PROVIDERS.put(priority, nodes);
+      REVERSED_PROVIDER_PRIORITIES.add(priority);
+    }
+    return nodes;
+  }
+  public @NotNull List<NodeWithValue> getConsumers(long priority){
+    List<NodeWithValue> nodes = PRIORITISED_CONSUMERS.get(priority);
+    if(nodes == null){
+      nodes = new ArrayList<>();
+      PRIORITISED_CONSUMERS.put(priority, nodes);
+      REVERSED_CONSUMER_PRIORITIES.add(priority);
+    }
+    return nodes;
   }
   
   public void addNodeToSorted(NodeWithValue node){
@@ -295,18 +316,10 @@ public abstract class NodeNetwork {
     }
   }
   public void addNodeToSortedConsumers(NodeWithValue node, long priority){
-    this.REVERSED_CONSUMER_PRIORITIES.add(priority);
-    if(!this.PRIORITISED_CONSUMERS.containsKey(priority)){
-      this.PRIORITISED_CONSUMERS.put(priority, new ArrayList<>());
-    }
-    this.PRIORITISED_CONSUMERS.get(priority).add(node);
+    this.getConsumers(priority).add(node);
   }
   public void addNodeToSortedProviders(NodeWithValue node, long priority){
-    this.REVERSED_PROVIDER_PRIORITIES.add(priority);
-    if(!this.PRIORITISED_PROVIDERS.containsKey(priority)){
-      this.PRIORITISED_PROVIDERS.put(priority, new ArrayList<>());
-    }
-    this.PRIORITISED_PROVIDERS.get(priority).add(node);
+    this.getProviders(priority).add(node);
   }
   
   public void removeNodeFromSorted(NodeWithValue node){
@@ -318,16 +331,20 @@ public abstract class NodeNetwork {
     }
   }
   public void removeNodeFromSortedConsumers(NodeWithValue node, long priority){
-    this.REVERSED_CONSUMER_PRIORITIES.remove(priority);
-    List<NodeWithValue> nodes = this.PRIORITISED_CONSUMERS.get(priority);
+    List<NodeWithValue> nodes = this.getConsumers(priority);
     nodes.remove(node);
-    if(nodes.isEmpty()) this.PRIORITISED_CONSUMERS.remove(priority);
+    if(nodes.isEmpty()) {
+      this.PRIORITISED_CONSUMERS.remove(priority);
+      this.REVERSED_CONSUMER_PRIORITIES.remove(priority);
+    }
   }
   public void removeNodeFromSortedProviders(NodeWithValue node, long priority){
-    this.REVERSED_PROVIDER_PRIORITIES.remove(priority);
-    List<NodeWithValue> nodes = this.PRIORITISED_PROVIDERS.get(priority);
+    List<NodeWithValue> nodes = this.getProviders(priority);
     nodes.remove(node);
-    if(nodes.isEmpty()) this.PRIORITISED_PROVIDERS.remove(priority);
+    if(nodes.isEmpty()) {
+      this.PRIORITISED_PROVIDERS.remove(priority);
+      this.REVERSED_PROVIDER_PRIORITIES.remove(priority);
+    }
   }
   
   public void tickNetwork(){

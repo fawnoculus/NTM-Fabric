@@ -21,21 +21,21 @@ public class GeigerCounterItem extends Item {
   
   private Text getRadsText(double milliRads){
     if(milliRads > 1_000_000){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
     }
     if(milliRads > 100_000){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_RED);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_RED);
     }
     if(milliRads > 10_000){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.RED);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.RED);
     }
     if(milliRads > 1_000){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
     }
     if(milliRads > 0){
-      return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
+      return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
     }
-    return Text.translatable("generic.ntm.radiation.rads", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
+    return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
   }
   
   private Text getRadText(double milliRad){

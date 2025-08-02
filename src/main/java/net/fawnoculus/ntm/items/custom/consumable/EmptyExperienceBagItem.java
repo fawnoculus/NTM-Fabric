@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.items.custom.consumable;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
@@ -24,12 +24,12 @@ public class EmptyExperienceBagItem extends Item {
     super(settings);
   }
   public static final int XP_PER_BAG = 500;
-  
+
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
     if(player.totalExperience < XP_PER_BAG){
       if(!world.isClient()){
-        ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessageS2CPayload(new AdvancedMessage(
+        ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessagePayload(new AdvancedMessage(
             NTM.id("empty_xp_bag"),
             Text.translatable("message.ntm.not_enough_xp").formatted(Formatting.RED),
             1000.0f)));
@@ -46,7 +46,7 @@ public class EmptyExperienceBagItem extends Item {
     world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
     PlayerUtil.removeExperience(player, XP_PER_BAG);
     player.getInventory().offerOrDrop(new ItemStack(NTMItems.EXPERIENCE_BAG));
-    
+
     return ActionResult.SUCCESS_SERVER;
   }
 }

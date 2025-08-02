@@ -3,6 +3,8 @@ package net.fawnoculus.ntm.misc.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
@@ -18,5 +20,35 @@ public class NTMCodecs {
         },
         Enum::name
     );
+  }
+  public static <T extends Enum<T>> PacketCodec<RegistryByteBuf,T> getThrowingEnumCPacketCodec(Class<T> enumClass) {
+    return new PacketCodec<RegistryByteBuf, T>() {
+      @Override
+      public T decode(RegistryByteBuf buf) {
+        return T.valueOf(enumClass, buf.readString());
+      }
+      
+      @Override
+      public void encode(RegistryByteBuf buf, T value) {
+        buf.writeString(value.name());
+      }
+    };
+  }
+  public static <T extends Enum<T>> PacketCodec<RegistryByteBuf,T> getNullableEnumCPacketCodec(Class<T> enumClass) {
+    return new PacketCodec<RegistryByteBuf, T>() {
+      @Override
+      public T decode(RegistryByteBuf buf) {
+        try {
+          return T.valueOf(enumClass, buf.readString());
+        }catch (Throwable throwable){
+          return null;
+        }
+      }
+      
+      @Override
+      public void encode(RegistryByteBuf buf, T value) {
+        buf.writeString(value.name());
+      }
+    };
   }
 }

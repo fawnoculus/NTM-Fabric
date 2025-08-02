@@ -11,6 +11,7 @@ public class UpgradeSlot extends Slot {
   
   @Override
   public boolean canInsert(ItemStack stack) {
+    // TODO: Upgraded people, upgrades!
     return false;
   }
 }

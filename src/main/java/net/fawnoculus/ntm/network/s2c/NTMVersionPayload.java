@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.network.custom;
+package net.fawnoculus.ntm.network.s2c;
 
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
@@ -11,10 +11,10 @@ import net.minecraft.util.Identifier;
 
 import java.nio.charset.StandardCharsets;
 
-public record NTMVersionS2CPayload(Version version) implements CustomPayload {
+public record NTMVersionPayload(Version version) implements CustomPayload {
   public static final Identifier NTM_VERSION_PAYLOAD_ID = NTM.id("version");
-  public static final CustomPayload.Id<NTMVersionS2CPayload> ID = new CustomPayload.Id<>(NTM_VERSION_PAYLOAD_ID);
-  
+  public static final CustomPayload.Id<NTMVersionPayload> ID = new CustomPayload.Id<>(NTM_VERSION_PAYLOAD_ID);
+
   private static final PacketCodec<RegistryByteBuf, Version> VERSION_PACKET_CODEC = new PacketCodec<>() {
     @Override
     public Version decode(RegistryByteBuf byteBuf) {
@@ -26,15 +26,15 @@ public record NTMVersionS2CPayload(Version version) implements CustomPayload {
         return null;
       }
     }
-    
+
     @Override
     public void encode(RegistryByteBuf byteBuf, Version version) {
       byteBuf.writeByteArray(version.getFriendlyString().getBytes(StandardCharsets.UTF_8));
     }
   };
-  
-  public static final PacketCodec<RegistryByteBuf, NTMVersionS2CPayload> PACKET_CODEC = PacketCodec.tuple(VERSION_PACKET_CODEC, NTMVersionS2CPayload::version, NTMVersionS2CPayload::new);
-  
+
+  public static final PacketCodec<RegistryByteBuf, NTMVersionPayload> PACKET_CODEC = PacketCodec.tuple(VERSION_PACKET_CODEC, NTMVersionPayload::version, NTMVersionPayload::new);
+
   @Override
   public Id<? extends CustomPayload> getId() {
     return ID;

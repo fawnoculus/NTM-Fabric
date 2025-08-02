@@ -12,9 +12,9 @@ import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
-import net.fawnoculus.ntm.network.custom.AdvancedMessageS2CPayload;
-import net.fawnoculus.ntm.network.custom.RemoveAllMessagesS2CPayload;
-import net.fawnoculus.ntm.network.custom.RemoveMessageS2CPayload;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
+import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
+import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.minecraft.SharedConstants;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -41,7 +41,7 @@ import java.util.UUID;
 
 public class NTMCommands {
   public static void initialize() {
-    
+
     CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
         CommandManager.literal("ntm")
             .then(CommandManager.literal("config")
@@ -134,12 +134,12 @@ public class NTMCommands {
             )
     ));
   }
-  
+
   private static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment){
     if(environment != null && environment.integrated) return true;
     return source.hasPermissionLevel(NTMConfig.RequiredCommandPermission.getValue());
   }
-  
+
   private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment){
     if(environment.dedicated) {
       context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version.server", NTM.METADATA.getVersion()), false);
@@ -149,10 +149,10 @@ public class NTMCommands {
     }
     return 1;
   }
-  
+
   private static int removeMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier){
     for(ServerPlayerEntity player : targets){
-      ServerPlayNetworking.send(player, new RemoveMessageS2CPayload(identifier));
+      ServerPlayNetworking.send(player, new RemoveMessagePayload(identifier));
     }
     if(identifier.toString().equals("special:all_messages")){
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
@@ -161,22 +161,22 @@ public class NTMCommands {
     }
     return 1;
   }
-  
+
   private static int removeAllMessages(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets){
     for(ServerPlayerEntity player : targets){
-      ServerPlayNetworking.send(player, new RemoveAllMessagesS2CPayload());
+      ServerPlayNetworking.send(player, new RemoveAllMessagesPayload());
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
     return 1;
   }
   private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float millis){
     for(ServerPlayerEntity player : targets){
-      ServerPlayNetworking.send(player, new AdvancedMessageS2CPayload(new AdvancedMessage(identifier, text, millis)));
+      ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(identifier, text, millis)));
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.sent", targets.size()), true);
     return 1;
   }
-  
+
   private static int funny(CommandContext<ServerCommandSource> context){
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.the_funny"), false);
     // This doesn't actually do anything
@@ -187,24 +187,24 @@ public class NTMCommands {
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_dev_constant", value), false);
     return 1;
   }
-  
+
   private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, UUID networkID){
     NodeNetwork network = NodeNetworkManager.getNetwork(networkID);
     if(network == null){
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.no_network").formatted(Formatting.RED), false);
       return -1;
     }
-    
+
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", network.getType().getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_provider_count", Text.literal(String.valueOf(network.LOADED_PROVIDERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_storage_count", Text.literal(String.valueOf(network.LOADED_STORAGES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    
+
     return 1;
   }
-  
+
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context) {
     List<NodeNetwork> otherNetworks = new ArrayList<>();
     List<FluidNetwork> fluidNetworks = new ArrayList<>();
@@ -216,7 +216,7 @@ public class NTMCommands {
         default -> otherNetworks.add(network);
       }
     }
-    
+
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.other").formatted(Formatting.GOLD), false);
     if (otherNetworks.isEmpty()) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
@@ -224,7 +224,7 @@ public class NTMCommands {
     for (NodeNetwork network : otherNetworks) {
       context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
     }
-    
+
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.fluid").formatted(Formatting.GOLD), false);
     if (fluidNetworks.isEmpty()) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
@@ -232,7 +232,7 @@ public class NTMCommands {
     for (FluidNetwork network : fluidNetworks) {
       context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
     }
-    
+
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.energy").formatted(Formatting.GOLD), false);
     if (energyNetworks.isEmpty()) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
@@ -242,7 +242,7 @@ public class NTMCommands {
     }
     return 1;
   }
-  
+
   private static int deleteLogs(CommandContext<ServerCommandSource> context){
     File[] logs = context.getSource().getServer().getPath("logs").toFile().listFiles();
     long files = 0;
@@ -262,14 +262,14 @@ public class NTMCommands {
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.clean_logs", finalFiles, finalData), true);
     return 1;
   }
-  
+
   private static int getDataComponents(CommandContext<ServerCommandSource> context, int maxSize){
     PlayerEntity player = context.getSource().getPlayer();
     if(player == null || player.getMainHandStack() == ItemStack.EMPTY){
       context.getSource().sendError(Text.translatable("message.ntm.get_components.could_not_get_item"));
       return -1;
     }
-    
+
     for(Component<?> component : player.getMainHandStack().getComponents()){
       String type = component.type().toString();
       String value = component.value().toString();

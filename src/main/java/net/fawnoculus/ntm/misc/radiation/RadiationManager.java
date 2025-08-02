@@ -7,7 +7,7 @@ import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.misc.radiation.processor.SimpleRadiationProcessor;
-import net.fawnoculus.ntm.network.custom.RadiationInformationS2CPayload;
+import net.fawnoculus.ntm.network.s2c.RadiationInformationPayload;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.util.WorldUtil;
@@ -43,19 +43,19 @@ import java.util.function.Function;
  */
 public class RadiationManager {
   private static final RadiationManager INSTANCE = new RadiationManager();
-  
+
   public static RadiationManager getInstance(){
     return INSTANCE;
   }
-  
+
   public static void initialize(){
     INSTANCE.addPacketReason(NTM.id("has_geiger_counter"), player -> PlayerUtil.hasItem(player, NTMItems.GEIGER_COUNTER));
   }
-  
+
   private final HashMap<Identifier, Function<ServerPlayerEntity, Boolean>> packetReasons = new HashMap<>();
   private final RadiationRegistry radiationRegistry = RadiationRegistry.getInstance();
   private final HazmatRegistry hazmatRegistry = HazmatRegistry.getInstance();
-  
+
   // Packets
   public void addPacketReason(Identifier identifier, Function<ServerPlayerEntity, Boolean> reason){
     this.packetReasons.put(identifier, reason);
@@ -63,16 +63,16 @@ public class RadiationManager {
   public void removePacketReason(Identifier identifier){
     this.packetReasons.remove(identifier);
   }
-  
+
   public void sendPacket(ServerPlayerEntity player){
-    ServerPlayNetworking.send(player, new RadiationInformationS2CPayload(new RadiationInformationS2CPayload.RadiationInfo(
+    ServerPlayNetworking.send(player, new RadiationInformationPayload(new RadiationInformationPayload.RadiationInfo(
         getRadiationExposure(player),
         getInventoryRadiation(player),
         getPassiveChunkRadiation(player.getServerWorld(), player.getPos()),
         getActiveChunkRadiation(player.getServerWorld(), player.getPos())
     )));
   }
-  
+
   public void sendPacketIfNeeded(Collection<ServerPlayerEntity> players){
     for (ServerPlayerEntity player : players){
       if(shouldSendPacket(player)){
@@ -80,7 +80,7 @@ public class RadiationManager {
       }
     }
   }
-  
+
   public boolean shouldSendPacket(ServerPlayerEntity player){
     if(NTMConfig.AlwaysSendRadiationPacket.getValue()){
       return true;
@@ -90,7 +90,7 @@ public class RadiationManager {
     }
     return false;
   }
-  
+
   // Radiation Helpers
   public double getRadiationExposure(LivingEntity entity){
     NbtCompound entityData = CustomDataHolder.from(entity).NTM$getCustomData();
@@ -100,7 +100,7 @@ public class RadiationManager {
     NbtCompound entityData = CustomDataHolder.from(entity).NTM$getCustomData();
     entityData.putDouble("radiation_exposure", radiation);
   }
-  
+
   public double getRadiationResistance(LivingEntity entity){
     double resistance = hazmatRegistry.getResistance(entity);
     if(entity.hasStatusEffect(NTMStatusEffects.RAD_X)){
@@ -118,7 +118,7 @@ public class RadiationManager {
   public double getRadiationModifier(LivingEntity entity){
     return Math.pow(10.0, -getRadiationResistance(entity));
   }
-  
+
   // All Radiation values are in RAD/s not RAD/t so don't forget to divide by 20 when applying radiation per tick!
   public double getInventoryRadiation(LivingEntity entity){
     if(entity instanceof InventoryOwner inventoryOwner){
@@ -148,7 +148,7 @@ public class RadiationManager {
     }
     return 0;
   }
-  
+
   public RadiationProcessor getRadiationProcessor(ServerWorld world, Vec3d pos){
     return getRadiationProcessor(world, WorldUtil.getChunkPos(pos));
   }
@@ -162,7 +162,7 @@ public class RadiationManager {
     }
     return radiationProcessor;
   }
-  
+
   // Radiation Modifiers
   public void decreaseRadiationExposure(LivingEntity entity, double amount){
     double radiationExposure = getRadiationExposure(entity);
@@ -170,10 +170,10 @@ public class RadiationManager {
   }
   public void increaseRadiationExposure(LivingEntity entity, double amount){
     if(!(entity.getWorld() instanceof ServerWorld serverWorld)) return;
-    
+
     double radiationExposure = getRadiationExposure(entity);
     radiationExposure += amount;
-    
+
     if(radiationExposure >= 1_000_000){
       EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.RADIATION, Float.MAX_VALUE);
       setRadiationExposure(entity, 0);
@@ -181,31 +181,31 @@ public class RadiationManager {
       setRadiationExposure(entity, radiationExposure);
     }
   }
-  
+
   // Radiation Ticking
   public void tick(ServerWorld world, EntityList entityList){
     for(RadiationProcessor processor : RadiationProcessorMultiHolder.from(world).NTM$getRadiationProcessors()){
       processor.tick();
     }
-    
+
     entityList.forEach(entity -> {
       if(entity instanceof LivingEntity livingEntity){
         this.processEntityRadiation(livingEntity);
       }
     });
-    
+
     this.sendPacketIfNeeded(world.getPlayers());
   }
-  
+
   public void processEntityRadiation(LivingEntity entity){
     if(NTMConfig.DisableEntityRadiation.getValue()) return;
     if(entity.isInvulnerable() || entity.isInCreativeMode()) return;
     if(!(entity.getWorld() instanceof ServerWorld serverWorld)) return;
     increaseRadiationExposure(entity, getTotalRadiation(entity) * getRadiationModifier(entity) / 20.0);
-    
+
     Random random = serverWorld.getRandom();
     double radiationExposure = getRadiationExposure(entity);
-    
+
     // Special Entity events
     switch (entity){
       case CowEntity cow -> {
@@ -240,7 +240,7 @@ public class RadiationManager {
       }
       default -> {}
     }
-    
+
     // Regular Radiation Effects
     if(radiationExposure >= 1_000_000){
       EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.RADIATION, Float.MAX_VALUE);
@@ -301,7 +301,7 @@ public class RadiationManager {
       }
     }
   }
-  
+
   public RadiationProcessor makeNewRadiationProcessor(ServerWorld world, ChunkPos pos){
     if(NTMConfig.DisableChunkRadiation.getValue()){
       return new EmptyRadiationProcessor();

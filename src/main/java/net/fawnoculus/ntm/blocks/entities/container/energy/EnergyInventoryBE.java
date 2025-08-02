@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.blocks.entities.container.energy;
 
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.network.custom.InventorySyncS2CPayload;
+import net.fawnoculus.ntm.network.s2c.InventorySyncPayload;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -21,10 +21,10 @@ import net.minecraft.world.World;
 
 public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
   private final SimpleInventory inventory;
-  
+
   public EnergyInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
     super(type, pos, state);
-    
+
     EnergyInventoryBE be = this;
     this.inventory = new SimpleInventory(inventorySlots){
       @Override
@@ -34,67 +34,67 @@ public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
       }
     };
   }
-  
+
   public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory){
     if(!(world instanceof ServerWorld serverWorld)) return;
-    InventorySyncS2CPayload payload = new InventorySyncS2CPayload(pos, inventory);
-    
+    InventorySyncPayload payload = new InventorySyncPayload(pos, inventory);
+
     int viewDistance = serverWorld.getServer().getPlayerManager().getViewDistance();
     for(ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)){
       ServerPlayNetworking.send(player, payload);
     }
   }
-  
+
   public SimpleInventory getInventory(){
     return this.inventory;
   }
-  
+
   public boolean canInsertIntoSlot(int slotIndex, ItemStack stack){
     ItemStack switchStack = this.getInventory().getStack(slotIndex);
     if(switchStack.isEmpty()) return true;
-    
+
     if(switchStack.getItem() == stack.getItem()){
       return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
     }
-    
+
     return false;
   }
-  
+
   @Override
   public int size() {
     return this.getInventory().size();
   }
-  
+
   @Override
   public boolean isEmpty() {
     return this.getInventory().isEmpty();
   }
-  
+
   @Override
   public ItemStack getStack(int slot) {
     return this.getInventory().getStack(slot);
   }
-  
+
   @Override
   public ItemStack removeStack(int slot, int amount) {
     return this.getInventory().removeStack(slot, amount);
   }
-  
+
   @Override
   public ItemStack removeStack(int slot) {
     return this.getInventory().removeStack(slot);
   }
-  
+
   @Override
   public void setStack(int slot, ItemStack stack) {
     this.getInventory().setStack(slot, stack);
   }
-  
+
   @Override
   public boolean canPlayerUse(PlayerEntity player) {
     return this.getInventory().canPlayerUse(player);
   }
-  
+
   @Override
   public void markDirty() {
     super.markDirty();
@@ -103,18 +103,18 @@ public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
       sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
     }
   }
-  
+
   @Override
   public void clear() {
     inventory.clear();
   }
-  
+
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     Inventories.writeNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
     super.writeNbt(nbt, registryLookup);
   }
-  
+
   @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);

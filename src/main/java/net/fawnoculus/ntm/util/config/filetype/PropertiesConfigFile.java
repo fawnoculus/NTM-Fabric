@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.util.config.filetype;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
 import net.fawnoculus.ntm.util.config.options.*;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.io.*;
@@ -15,14 +16,14 @@ public class PropertiesConfigFile implements ConfigFileType {
   public String getFileExtension() {
     return ".properties";
   }
-  
+
   @Override
-  public Boolean isValidOption(Option<?> option) {
+  public Boolean isValidOption(@NotNull Option<?> option) {
     return !isStringInvalid(option.NAME);
   }
-  
+
   @Override
-  public Boolean isValidValue(Object value) {
+  public Boolean isValidValue(@NotNull Object value) {
     switch (value){
       case String string ->{
         return !isStringInvalid(string);
@@ -38,13 +39,13 @@ public class PropertiesConfigFile implements ConfigFileType {
       }
     }
   }
-  
-  private boolean isStringInvalid(String string){
+
+  private boolean isStringInvalid(@NotNull String string){
     return string.contains("\n")
         || string.contains("=")
         || string.contains("#");
   }
-  
+
   @Override
   public List<Option<?>> readFile(File configFile, Logger LOGGER, List<Option<?>> expectedOptions){
     Properties properties = new Properties();
@@ -54,14 +55,14 @@ public class PropertiesConfigFile implements ConfigFileType {
       LOGGER.error("Failed to parse Properties Config File '{}' \nException: {}", configFile.getPath(), ExceptionUtil.makePretty(e));
       return expectedOptions;
     }
-    
+
     for(Option<?> expectedOption : expectedOptions){
       String readValue = properties.getProperty(expectedOption.NAME);
       if(readValue == null) {
         LOGGER.warn("Didn't find option '{}' of type '{}' in Config File '{}', using default value", expectedOption.NAME, expectedOption.getClass().getName(), configFile.getPath());
         continue;
       }
-      
+
       switch (expectedOption){
         case BooleanOption booleanOption -> booleanOption.setValue(Boolean.parseBoolean(readValue));
         case DoubleOption doubleOption -> {
@@ -84,12 +85,12 @@ public class PropertiesConfigFile implements ConfigFileType {
           } catch (Exception exception){
             LOGGER.error("Failed to parse Integer Option '{}' in Config File '{}' Exception: {}", integerOption.NAME ,configFile.getPath(), exception);
           }
-        
+
         }
         case StringOption stringOption -> stringOption.setValue(readValue);
         case StringListOption stringListOption -> {
           char[] Chars = readValue.toCharArray();
-          
+
           List<String> stringList = new ArrayList<>();
           StringBuilder currentString = new StringBuilder();
           for (char currentChar : Chars) {
@@ -102,7 +103,7 @@ public class PropertiesConfigFile implements ConfigFileType {
               currentString.append(currentChar);
               continue;
             }
-            
+
             // Only allow valid Entries
             if(stringListOption.isEntryValid(currentString.toString())) {
               stringList.add(currentString.toString());
@@ -119,27 +120,27 @@ public class PropertiesConfigFile implements ConfigFileType {
         }
       }
     }
-    
+
     return expectedOptions;
   }
-  
+
   @Override
-  public void writeFile(File configFile, Logger LOGGER, List<Option<?>> options) throws IOException {
+  public void writeFile(File configFile, Logger LOGGER, @NotNull List<Option<?>> options) throws IOException {
     FileWriter writer = new FileWriter(configFile);
-    
+
     for(Option<?> option : options){
       if(option.COMMENT != null) writer.write(String.format("#%s\n", option.COMMENT));
-      
+
       switch (option){
         case StringListOption stringListOption ->{
           List<String> stringList = stringListOption.getValue();
-          
+
           writer.write(String.format("%s=%s", option.NAME, stringList.getFirst()));
-          
+
           for (int i = 1; i < stringList.size(); i++) {
             writer.write(String.format(";%s", stringList.get(i)));
           }
-          
+
           writer.write("\n");
         }
         case BooleanOption ignored -> writer.write(String.format("%s=%s\n", option.NAME, option.getValue()));

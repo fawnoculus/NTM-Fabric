@@ -23,6 +23,8 @@ import net.fawnoculus.ntm.world.gen.NTMWorldGeneration;
 import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,50 +34,51 @@ public class NTM implements ModInitializer {
   public static final String MOD_NAME = METADATA.getName();
   public static final Version MOD_VERSION = METADATA.getVersion();
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
-  
+
   @Override
   public void onInitialize() {
     LOGGER.info("Initializing {} ...", NTM.MOD_NAME);
-    
+
     NTMConfig.initialize();
-    
+
     NTMDamageTypes.initialize();
     NTMStatusEffects.initialize();
-    
+
     NTMSounds.initialize();
     NTMParticles.initialize();
-    
+
     NTMToolMaterials.initialize();
     NTMDataComponentTypes.initialize();
     NTMItems.initialize();
     NTMItemGroups.initialize();
     ExtraItemData.initialize();
     NTMEnchantmentEffects.initialize();
-    
+
     NTMFluids.initialize();
-    
+
     NTMBlocks.initialize();
     NTMBlockEntities.initialize();
     ExtraBlockData.initialize();
-    
+
     RadiationManager.initialize();
     RadiationRegistry.initialize();
     HazmatRegistry.initialize();
-    
+
     NTMRecipes.initialize();
-    
+
     NTMCommandArguments.initialize();
     NTMCommands.initialize();
-    
+
     NTMWorldGeneration.initialize();
-    
+
     NTMPayloads.initialize();
     NTMServerPayloadHandler.initialize();
-    
+
     NTM.LOGGER.info("Finished {} Initialization", NTM.MOD_NAME);
   }
-  
-  public static Identifier id(String name){
+
+  @Contract("_ -> new")
+  public static @NotNull Identifier id(String name){
     return Identifier.of(MOD_ID, name);
   }
 }

@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.blocks.entities.container.fluid;
 
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.blocks.node.type.FluidNodeWithValue;
-import net.fawnoculus.ntm.util.storage.FluidStack;
+import net.fawnoculus.ntm.util.fluid.FluidStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

@@ -49,7 +49,7 @@ public abstract class ClientsideItemStackMixin {
     double milliRads = clientRadiationRegistry.getRadioactivity(this.getItem());
     if(milliRads > 0){
       tooltip.accept(Text.translatable("tooltip.ntm.radioactive").formatted(Formatting.GREEN));
-      tooltip.accept(Text.translatable("generic.ntm.radiation.rads", milliRads / 1000.0).formatted(Formatting.YELLOW));
+      tooltip.accept(Text.translatable("generic.ntm.radiation.rad_s", milliRads / 1000.0).formatted(Formatting.YELLOW));
       if(this.count > 1){
         tooltip.accept(Text.translatable("tooltip.ntm.stack_rads", milliRads * this.count / 1000.0).formatted(Formatting.YELLOW));
       }

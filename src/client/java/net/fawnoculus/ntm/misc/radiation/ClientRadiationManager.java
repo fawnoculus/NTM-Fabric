@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.misc.radiation;
 
 import net.fawnoculus.ntm.NTMConfig;
-import net.fawnoculus.ntm.network.custom.RadiationInformationS2CPayload;
+import net.fawnoculus.ntm.network.s2c.RadiationInformationPayload;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
 
@@ -19,24 +19,24 @@ import java.util.function.Function;
  */
 public class ClientRadiationManager {
   private static ClientRadiationManager INSTANCE;
-  
+
   public static void initialize(){
     ClientRadiationManager.INSTANCE = new ClientRadiationManager();
   }
-  
+
   public static ClientRadiationManager getInstance(){
     return ClientRadiationManager.INSTANCE;
   }
-  
+
   public @Range(from = 0, to = 1000000) double radiationExposure = 0;
   public double inventoryRadiation = 0;
   public double activeChunkRadiation = 0;
   public double passiveChunkRadiation = 0;
   public double totalChunkRadiation = 0;
   public double totalRadiation = 0;
-  
-  public void handlePacked(RadiationInformationS2CPayload payload){
-    RadiationInformationS2CPayload.RadiationInfo info = payload.info();
+
+  public void handlePacked(RadiationInformationPayload payload){
+    RadiationInformationPayload.RadiationInfo info = payload.info();
     this.radiationExposure = info.radiationExposure();
     this.inventoryRadiation = info.inventoryRadiation();
     this.activeChunkRadiation = info.activeChunkRadiation();
@@ -44,5 +44,5 @@ public class ClientRadiationManager {
     this.totalChunkRadiation = this.activeChunkRadiation + this.passiveChunkRadiation;
     this.totalRadiation = this.inventoryRadiation + this.totalChunkRadiation;
   }
-  
+
 }

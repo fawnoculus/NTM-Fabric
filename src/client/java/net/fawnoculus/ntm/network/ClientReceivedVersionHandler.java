@@ -3,18 +3,18 @@ package net.fawnoculus.ntm.network;
 import net.fabricmc.loader.api.Version;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMClient;
-import net.fawnoculus.ntm.network.custom.NTMVersionS2CPayload;
+import net.fawnoculus.ntm.network.s2c.NTMVersionPayload;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.Text;
 
 public class ClientReceivedVersionHandler {
   public static boolean hasReceivedVersion = false;
-  
+
   public static Version serverVersion = null;
   public static final Version clientVersion = NTM.MOD_VERSION;
-  
-  public static void handlePacket(NTMVersionS2CPayload payload){
+
+  public static void handlePacket(NTMVersionPayload payload){
     hasReceivedVersion = true;
     serverVersion = payload.version();
   }

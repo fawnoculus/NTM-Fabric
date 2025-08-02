@@ -1,0 +1,18 @@
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[{*.markdown,*.md}]
+ij_markdown_wrap_text_if_long = false
+
+[*.java]
+ij_continuation_indent_size = 2
+ij_java_blank_lines_before_class_end = 0
+ij_java_blank_lines_after_anonymous_class_header = 0
+ij_java_blank_lines_after_class_header = 0
+ij_java_blank_lines_before_method_body = 0
+ij_java_else_on_new_line = false

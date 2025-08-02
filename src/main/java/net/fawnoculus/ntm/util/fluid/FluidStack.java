@@ -1,9 +1,7 @@
-package net.fawnoculus.ntm.util.storage;
+package net.fawnoculus.ntm.util.fluid;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
-import net.fawnoculus.ntm.util.FluidUtil;
-import net.fawnoculus.ntm.util.FluidUtil.Unit;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.RegistryByteBuf;
@@ -48,39 +46,39 @@ public class FluidStack extends SingleVariantStorage<FluidVariant> {
     return this;
   }
   
-  public long getAmount(FluidVariant variant, Unit unit) {
-    return FluidUtil.convert(this.maxDropletsBuckets, Unit.DROPLET, unit);
+  public long getAmount(FluidVariant variant, FluidUnit unit) {
+    return FluidUnit.convert(this.maxDropletsBuckets, FluidUnit.DROPLET, unit);
   }
   
   public FluidStack addAmount(long milliBuckets) {
     this.amount += milliBuckets;
     return this;
   }
-  public FluidStack addAmount(long amount, Unit unit) {
-    return this.addAmount(FluidUtil.convert(amount, unit, Unit.DROPLET));
+  public FluidStack addAmount(long amount, FluidUnit unit) {
+    return this.addAmount(FluidUnit.convert(amount, unit, FluidUnit.DROPLET));
   }
   public FluidStack setAmount(long milliBuckets) {
     this.amount = milliBuckets;
     return this;
   }
-  public FluidStack setAmount(long amount, Unit unit) {
-    return this.setCapacity(FluidUtil.convert(amount, unit, Unit.DROPLET));
+  public FluidStack setAmount(long amount, FluidUnit unit) {
+    return this.setCapacity(FluidUnit.convert(amount, unit, FluidUnit.DROPLET));
   }
   
   @Override
   public long getCapacity(FluidVariant variant) {
     return this.maxDropletsBuckets;
   }
-  public long getCapacity(Unit unit) {
-    return FluidUtil.convert(this.maxDropletsBuckets, Unit.DROPLET, unit);
+  public long getCapacity(FluidUnit unit) {
+    return FluidUnit.convert(this.maxDropletsBuckets, FluidUnit.DROPLET, unit);
   }
   
   public FluidStack setCapacity(long maxMilliBuckets) {
     this.maxDropletsBuckets = maxMilliBuckets;
     return this;
   }
-  public FluidStack setCapacity(long maxAmount, Unit unit) {
-    return this.setCapacity(FluidUtil.convert(maxAmount, unit, Unit.DROPLET));
+  public FluidStack setCapacity(long maxAmount, FluidUnit unit) {
+    return this.setCapacity(FluidUnit.convert(maxAmount, unit, FluidUnit.DROPLET));
   }
   
   public FluidStack onFinalCommit(Runnable runnable) {

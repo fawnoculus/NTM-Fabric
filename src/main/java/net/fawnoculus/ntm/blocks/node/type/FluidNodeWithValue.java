@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.blocks.node.type;
 
 import net.fawnoculus.ntm.blocks.node.NodeWithValue;
 import net.fawnoculus.ntm.misc.data.NTMCodecs;
-import net.fawnoculus.ntm.util.storage.FluidContainer;
+import net.fawnoculus.ntm.util.fluid.FluidContainer;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;

@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonReader;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.config.ConfigFileType;
 import net.fawnoculus.ntm.util.config.options.*;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -23,14 +24,14 @@ public class JsonConfigFile implements ConfigFileType {
   public String getFileExtension() {
     return ".json";
   }
-  
+
   @Override
-  public Boolean isValidOption(Option<?> option) {
+  public Boolean isValidOption(@NotNull Option<?> option) {
     return !isStringInvalid(option.NAME);
   }
-  
+
   @Override
-  public Boolean isValidValue(Object value) {
+  public Boolean isValidValue(@NotNull Object value) {
     switch (value){
       case String string ->{
         return !isStringInvalid(string);
@@ -46,12 +47,12 @@ public class JsonConfigFile implements ConfigFileType {
       }
     }
   }
-  
-  private boolean isStringInvalid(String string){
+
+  private boolean isStringInvalid(@NotNull String string){
     return string.contains("\n")
         || string.contains("\"");
   }
-  
+
   @Override
   public List<Option<?>> readFile(File configFile, Logger LOGGER, List<Option<?>> expectedOptions) {
     Gson gson = new Gson();
@@ -66,7 +67,7 @@ public class JsonConfigFile implements ConfigFileType {
       LOGGER.error("Failed to parse Json Config File '{}' \nException: {}", configFile.getPath(), ExceptionUtil.makePretty(e));
       return expectedOptions;
     }
-    
+
     // Setting Option Values to the read Values
     for (Option<?> option : expectedOptions) {
       JsonElement readValue = jsonObject.get(option.NAME);
@@ -134,11 +135,11 @@ public class JsonConfigFile implements ConfigFileType {
     }
     return expectedOptions;
   }
-  
+
   @Override
-  public void writeFile(File configFile, Logger LOGGER, List<Option<?>> options) throws IOException {
+  public void writeFile(File configFile, Logger LOGGER, @NotNull List<Option<?>> options) throws IOException {
     FileWriter writer = new FileWriter(configFile);
-    
+
     writer.write("{\n");
     for (int i = 0; i < options.size(); i++) {
       Option<?> option = options.get(i);
@@ -148,52 +149,52 @@ public class JsonConfigFile implements ConfigFileType {
     writer.flush();
     writer.close();
   }
-  
+
   private void writeOption(FileWriter writer, Logger LOGGER, Option<?> option, boolean lastOption) throws IOException {
     String suffix = ",\n";
     if(lastOption) suffix = "";
-    
+
     switch (option) {
       case BooleanOption booleanOption -> {
-        if(booleanOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, booleanOption.COMMENT));
-        writer.write(String.format("\t\"%s\": %b%s", option.NAME, booleanOption.getValue(), suffix));
+        if(booleanOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, booleanOption.COMMENT));
+        writer.write(String.format("  \"%s\": %b%s", option.NAME, booleanOption.getValue(), suffix));
       }
       case DoubleOption doubleOption -> {
-        if(doubleOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, doubleOption.COMMENT));
-        writer.write(String.format("\t\"%s\": %f%s", option.NAME, doubleOption.getValue(), suffix));
+        if(doubleOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, doubleOption.COMMENT));
+        writer.write(String.format("  \"%s\": %f%s", option.NAME, doubleOption.getValue(), suffix));
       }
       case FloatOption floatOption -> {
-        if(floatOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, floatOption.COMMENT));
-        writer.write(String.format("\t\"%s\": %f%s", option.NAME, floatOption.getValue(), suffix));
+        if(floatOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, floatOption.COMMENT));
+        writer.write(String.format("  \"%s\": %f%s", option.NAME, floatOption.getValue(), suffix));
       }
       case IntegerOption integerOption -> {
-        if(integerOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, integerOption.COMMENT));
-        writer.write(String.format("\t\"%s\": %d%s", option.NAME, integerOption.getValue(), suffix));
+        if(integerOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, integerOption.COMMENT));
+        writer.write(String.format("  \"%s\": %d%s", option.NAME, integerOption.getValue(), suffix));
       }
       case StringOption stringOption -> {
-        if(stringOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, stringOption.COMMENT));
-        writer.write(String.format("\t\"%s\": \"%s\"%s", option.NAME, stringOption.getValue(), suffix));
+        if(stringOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, stringOption.COMMENT));
+        writer.write(String.format("  \"%s\": \"%s\"%s", option.NAME, stringOption.getValue(), suffix));
       }
       case StringListOption stringListOption -> {
-        if(stringListOption.COMMENT != null) writer.write(String.format("\t\"__%s_comment\": \"%s\",\n", option.NAME, stringListOption.COMMENT));
-        writer.write(String.format("\t\"%s\": [\n", option.NAME));
+        if(stringListOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, stringListOption.COMMENT));
+        writer.write(String.format("  \"%s\": [\n", option.NAME));
         String[] strings = stringListOption.getValue().toArray(new String[0]);
         for (int i = 0; i < strings.length ; i++) {
           // Last String
           if(i == strings.length - 1){
-            writer.write(String.format("\t\t\"%s\"\n", strings[i]));
+            writer.write(String.format("    \"%s\"\n", strings[i]));
             break;
           }
           // All other Strings
-          writer.write(String.format("\t\t\"%s\",\n", strings[i]));
+          writer.write(String.format("    \"%s\",\n", strings[i]));
         }
-        writer.write(String.format("\t]%s", suffix));
+        writer.write(String.format("  ]%s", suffix));
       }
       default -> {
         LOGGER.error("Tried to write Option with unknown Option Type: {}", option.getClass());
         LOGGER.error("To whichever Developer did this, don't forget to add write & read methods for your option types to all filetypes when you add option types when you add them!");
       }
     }
-    
+
   }
 }

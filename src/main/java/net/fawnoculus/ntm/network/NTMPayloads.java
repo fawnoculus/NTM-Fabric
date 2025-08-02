@@ -1,17 +1,20 @@
 package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fawnoculus.ntm.network.custom.*;
+import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
+import net.fawnoculus.ntm.network.s2c.*;
 
 public class NTMPayloads {
   public static void initialize(){
-    PayloadTypeRegistry.playS2C().register(AdvancedMessageS2CPayload.ID, AdvancedMessageS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(RemoveMessageS2CPayload.ID, RemoveMessageS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(RemoveAllMessagesS2CPayload.ID, RemoveAllMessagesS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(RadiationInformationS2CPayload.ID, RadiationInformationS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(RadiationRegistryS2CPayload.ID, RadiationRegistryS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(HazmatRegistryS2CPayload.ID, HazmatRegistryS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(NTMVersionS2CPayload.ID, NTMVersionS2CPayload.PACKET_CODEC);
-    PayloadTypeRegistry.playS2C().register(InventorySyncS2CPayload.ID, InventorySyncS2CPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(AdvancedMessagePayload.ID, AdvancedMessagePayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(RemoveMessagePayload.ID, RemoveMessagePayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(RemoveAllMessagesPayload.ID, RemoveAllMessagesPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(RadiationInformationPayload.ID, RadiationInformationPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(RadiationRegistryPayload.ID, RadiationRegistryPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(HazmatRegistryPayload.ID, HazmatRegistryPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(NTMVersionPayload.ID, NTMVersionPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(InventorySyncPayload.ID, InventorySyncPayload.PACKET_CODEC);
+
+    PayloadTypeRegistry.playC2S().register(BEInteractionPayload.ID, BEInteractionPayload.PACKET_CODEC);
   }
 }
