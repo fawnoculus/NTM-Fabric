@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public class NTMModelRender {
   public static final HashMap<Item, Consumer<MatrixStack>> ITEM_RENDERERS = new HashMap<>();
   public static final HashMap<Item, BiConsumer<MatrixStack, Integer>> ITEM_LIGHT_RENDERERS = new HashMap<>();
-  
+
   private static void register(BiConsumer<MatrixStack, Integer> renderFunc, @NotNull Block block){
     register(renderFunc, block.asItem());
   }
@@ -23,16 +23,16 @@ public class NTMModelRender {
     ITEM_LIGHT_RENDERERS.put(item, renderFunc);
     ITEM_RENDERERS.put(item, matrixStack -> renderFunc.accept(matrixStack, 15728880));
   }
-  
+
   public static void initialize(){
     register(NTMModelRender.AlloyFurnaceExtension::renderItem, NTMBlocks.ALLOY_FURNACE_EXTENSION);
   }
-  
+
   public static class AlloyFurnaceExtension{
-    public final static Model3D TOP = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
-    public final static Model3D SIDE = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
-    public final static Model3D BOTTOM = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
-    
+    public final static Model3D TOP = NTMResources.Model.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
+    public final static Model3D SIDE = NTMResources.Model.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
+    public final static Model3D BOTTOM = NTMResources.Model.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
+
     public static void renderItem(@NotNull MatrixStack matrices, int light) {
       matrices.push();
       matrices.translate(0, -0.25f, 0);
@@ -45,9 +45,9 @@ public class NTMModelRender {
     }
     public static void render(@NotNull MatrixStack matrices, int light) {
       matrices.push();
-      TOP.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_TOP);
-      SIDE.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_SIDE);
-      BOTTOM.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_BOTTOM);
+      TOP.draw(matrices.peek(), light, NTMResources.Textures.ALLOY_FURNACE_EXTENSION_TOP);
+      SIDE.draw(matrices.peek(), light, NTMResources.Textures.ALLOY_FURNACE_EXTENSION_SIDE);
+      BOTTOM.draw(matrices.peek(), light, NTMResources.Textures.ALLOY_FURNACE_EXTENSION_BOTTOM);
       matrices.pop();
     }
   }

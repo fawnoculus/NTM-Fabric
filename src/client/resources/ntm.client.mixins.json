@@ -7,8 +7,6 @@
     "ClientConnectionMixin",
     "ClientPlayNetworkingHandlerMixin",
     "ClientsideItemStackMixin",
-    "DrawContextMixin",
-    "ItemRendererMixin",
     "MinecraftClientMixin"
   ],
   "injectors": {

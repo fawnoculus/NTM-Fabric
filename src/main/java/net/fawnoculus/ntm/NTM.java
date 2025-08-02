@@ -2,6 +2,7 @@ package net.fawnoculus.ntm;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fawnoculus.ntm.blocks.ExtraBlockData;
@@ -30,14 +31,15 @@ import org.slf4j.LoggerFactory;
 
 public class NTM implements ModInitializer {
   public static final String MOD_ID = "ntm";
-  public static final ModMetadata METADATA = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
+  public static final ModContainer MOD_CONTAINER = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
+  public static final ModMetadata METADATA = MOD_CONTAINER.getMetadata();
   public static final String MOD_NAME = METADATA.getName();
   public static final Version MOD_VERSION = METADATA.getVersion();
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
   @Override
   public void onInitialize() {
-    LOGGER.info("Initializing {} ...", NTM.MOD_NAME);
+    LOGGER.info("Initializing...");
 
     NTMConfig.initialize();
 
@@ -74,7 +76,7 @@ public class NTM implements ModInitializer {
     NTMPayloads.initialize();
     NTMServerPayloadHandler.initialize();
 
-    NTM.LOGGER.info("Finished {} Initialization", NTM.MOD_NAME);
+    NTM.LOGGER.info("Finished Initialization");
   }
 
   @Contract("_ -> new")

@@ -5,6 +5,7 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.custom.container.energy.SimpleEnergyStorageBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
@@ -38,7 +39,11 @@ public class NTMBlocks {
       .sounds(BlockSoundGroup.STONE)
       .mapColor(MapColor.GRAY)
       .strength(2f, 6.0f);
-		
+
+  private static AbstractBlock.Settings advancedModel(AbstractBlock.Settings settings){
+    return settings.nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never);
+  }
+
   // Ore Blocks
   public static final Block URANIUM_ORE = register("uranium_ore", Block::new, STONE_SETTINGS);
   public static final Block SCORCHED_URANIUM_ORE = register("scorched_uranium_ore", Block::new, STONE_SETTINGS);
@@ -65,7 +70,7 @@ public class NTMBlocks {
   public static final Block COPPER_ORE_CLUSTER = register("copper_ore_cluster", Block::new, STONE_SETTINGS);
   public static final Block IRON_ORE_CLUSTER = register("iron_ore_cluster", Block::new, STONE_SETTINGS);
   public static final Block TITANIUM_ORE_CLUSTER = register("titanium_ore_cluster", Block::new, STONE_SETTINGS);
-  
+
   public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
   public static final Block OILY_DIRT = register("oily_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
   public static final Block OILY_SAND = register("oily_sand", Block::new, SAND_SETTINGS.hardness(2f));
@@ -122,18 +127,18 @@ public class NTMBlocks {
   public static final Block SCHIST_SCHRABIDIUM_ORE = register("schist_schrabidium_ore", Block::new, STONE_SETTINGS);
   public static final Block SCHIST_RARE_EARTH_ORE = register("schist_rare_earth_ore", Block::new, STONE_SETTINGS);
   public static final Block GAS_SHALE = register("gas_shale", Block::new, STONE_SETTINGS);
-  
+
   public static final Block BAUXITE = register("bauxite", Block::new, STONE_SETTINGS);
   public static final Block CHRYSOTILE = register("chrysotile", Block::new, STONE_SETTINGS);
   public static final Block HEMATITE = register("hematite", Block::new, STONE_SETTINGS);
   public static final Block LIMESTONE = register("limestone", Block::new, STONE_SETTINGS);
   public static final Block MALACHITE = register("malachite", Block::new, STONE_SETTINGS);
   public static final Block SULFUROUS_STONE = register("sulfurous_stone", Block::new, STONE_SETTINGS);
-  
+
   public static final Block TEKTITE = register("tektite", Block::new, STONE_SETTINGS);
   public static final Block OSMIRIDIUM_INFUSED_TEKTITE = register("osmiridium_infused_tektite", Block::new, STONE_SETTINGS);
   public static final Block TRIXITE_ORE = register("trixite_ore", Block::new, STONE_SETTINGS);
-  
+
   public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, STONE_SETTINGS);
   public static final Block BEDROCK_OIL_DEPOSIT = register("bedrock_oil_deposit", Block::new, STONE_SETTINGS);
   public static final Block BEDROCK_ORE = register("bedrock_ore", Block::new, STONE_SETTINGS);
@@ -211,18 +216,18 @@ public class NTMBlocks {
 
 
   public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new, AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.STONE)
-      .strength(2f, 6.0f)
-      .mapColor(MapColor.TERRACOTTA_ORANGE)
+    .sounds(BlockSoundGroup.STONE)
+    .strength(2f, 6.0f)
+    .mapColor(MapColor.TERRACOTTA_ORANGE)
   );
-  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, AbstractBlock.Settings.create()
-          .strength(1.5F, 6.0F)
-          .sounds(BlockSoundGroup.STONE)
-          .mapColor(MapColor.TERRACOTTA_ORANGE)
+  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, advancedModel(AbstractBlock.Settings.create())
+    .strength(1.5F, 6.0F)
+    .sounds(BlockSoundGroup.STONE)
+    .mapColor(MapColor.TERRACOTTA_ORANGE)
   );
   public static final Block ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlock::new, MACHINE_SETTINGS);
   public static final Block PWR_CONTROLLER = register("pwr_controller", PWRControllerBlock::new, MACHINE_SETTINGS);
-  
+
   // Energy Stuff
   public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create());
   public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings, 10_000L), AbstractBlock.Settings.create());
@@ -230,22 +235,22 @@ public class NTMBlocks {
   public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 50_000_000L), AbstractBlock.Settings.create());
   public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), AbstractBlock.Settings.create());
   public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), AbstractBlock.Settings.create());
-  
-  
-  
+
+
+
   private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings){
     return register(name, blockFactory, settings, true);
   }
   private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean registerItem){
     RegistryKey<Block> blockKey = keyOfBlock(name);
     Block block = blockFactory.apply(settings.registryKey(blockKey));
-    
+
     if (registerItem) {
       RegistryKey<Item> itemKey = keyOfItem(name);
       BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
       Registry.register(Registries.ITEM, itemKey, blockItem);
     }
-    
+
     return Registry.register(Registries.BLOCK, blockKey, block);
   }
   private static RegistryKey<Block> keyOfBlock(String name){
@@ -254,6 +259,6 @@ public class NTMBlocks {
   private static RegistryKey<Item> keyOfItem(String name) {
     return RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));
   }
-  
+
   public static void initialize() {}
 }

@@ -97,6 +97,11 @@
   "generic.ntm.node_type.provider": "Provider",
   "generic.ntm.node_type.storage": "Storage",
 
+  "resourcePack.ntm_legacy_names.name": "NTM Legacy Translations",
+  "resourcePack.ntm_legacy_names.description": "Original Translations of HBM's NTM (built-in)",
+  "resourcePack.ntm_legacy_textures.name": "NTM Legacy Textures",
+  "resourcePack.ntm_legacy_textures.description": "Original Textures of HBM's NTM (built-in)",
+
   "error.ntm.while.block_hover_tooltip": "An Exception occurred while trying to get Block Hover Tooltip Text",
   "error.ntm.exception": "Exception: %1$s",
 

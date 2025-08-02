@@ -18,11 +18,7 @@ import java.util.function.Function;
  * <br>The Server Radiation Manager will only send Radiation Info to the Client Radiation Manager if one of the {@link RadiationManager#addPacketReason(Identifier, Function)  Added Packed Reasons} returns true or the {@link NTMConfig#AlwaysSendRadiationPacket Option for it} is enabled
  */
 public class ClientRadiationManager {
-  private static ClientRadiationManager INSTANCE;
-
-  public static void initialize(){
-    ClientRadiationManager.INSTANCE = new ClientRadiationManager();
-  }
+  private static final ClientRadiationManager INSTANCE = new ClientRadiationManager();
 
   public static ClientRadiationManager getInstance(){
     return ClientRadiationManager.INSTANCE;

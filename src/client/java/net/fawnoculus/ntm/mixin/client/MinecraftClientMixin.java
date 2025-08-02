@@ -2,7 +2,6 @@ package net.fawnoculus.ntm.mixin.client;
 
 import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
 import net.fawnoculus.ntm.misc.messages.MessageSystem;
-import net.fawnoculus.ntm.render.NTMModelRender;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,16 +14,16 @@ import java.util.List;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-  
+
   @Unique
   private long LastNanoTime = System.nanoTime();
-  
+
   @Inject(at = @At("HEAD"), method = "render")
   private void updateAdvancedMessages(CallbackInfo ci) {
     List<AdvancedMessage> messageList = MessageSystem.getAllMessages();
-    
+
     float deltaMillis = (float) ((System.nanoTime() - LastNanoTime) / 1000000);
-    
+
     List<AdvancedMessage> toBeRemovedMessages = new ArrayList<>();
     for(AdvancedMessage message : messageList){
       float millisLeft = message.getMillisLeft();
@@ -37,19 +36,7 @@ public abstract class MinecraftClientMixin {
     for(AdvancedMessage message : toBeRemovedMessages){
       MessageSystem.removeMessage(message.getID());
     }
-    
+
     LastNanoTime = System.nanoTime();
-  }
-  
-  @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/ReloadableResourceManagerImpl;reload(" +
-      "Ljava/util/concurrent/Executor;" +
-      "Ljava/util/concurrent/Executor;" +
-      "Ljava/util/concurrent/CompletableFuture;" +
-      "Ljava/util/List;" +
-      ")Lnet/minecraft/resource/ResourceReload;",
-      shift = At.Shift.AFTER
-  ), method = "<init>")
-  private static void initializeModels(CallbackInfo ci) {
-    NTMModelRender.initialize();
   }
 }

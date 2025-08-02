@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.gui.widget;
 
 import net.fawnoculus.ntm.blocks.node.type.StorageNode;
-import net.fawnoculus.ntm.render.NTMTextures;
+import net.fawnoculus.ntm.render.NTMResources;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
@@ -19,20 +19,20 @@ public class StorageModeWidget extends ClickableWidget {
     this.STORAGE_MODE = storageMode;
     this.ON_CLICKED = onClicked;
   }
-  
+
   private final Supplier<StorageNode.StorageMode> STORAGE_MODE;
   private final Runnable ON_CLICKED;
-  
+
   @Override
   public void onClick(double mouseX, double mouseY) {
     super.onClick(mouseX, mouseY);
     this.ON_CLICKED.run();
   }
-  
+
   @Override
   protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
     context.drawTexture(RenderLayer::getGuiTextured,
-        NTMTextures.GENERIC_STORAGE_MODE,
+        NTMResources.Textures.GENERIC_STORAGE_MODE,
         this.getX(),
         this.getY(),
         this.getU(STORAGE_MODE.get()),
@@ -43,7 +43,7 @@ public class StorageModeWidget extends ClickableWidget {
         36
     );
   }
-  
+
   @Contract(pure = true)
   private float getU(StorageNode.@NotNull StorageMode storageMode){
     return switch (storageMode){
@@ -58,7 +58,7 @@ public class StorageModeWidget extends ClickableWidget {
       default -> 0;
     };
   }
-  
+
   @Override
   protected void appendClickableNarrations(@NotNull NarrationMessageBuilder builder) {
     builder.put(NarrationPart.HINT, Text.translatable(this.STORAGE_MODE.get().translationKey));

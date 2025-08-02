@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.hud;
 
 import net.fawnoculus.ntm.items.NTMItems;
-import net.fawnoculus.ntm.render.NTMTextures;
+import net.fawnoculus.ntm.render.NTMResources;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
@@ -16,32 +16,32 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
 public class GeigerCounterRender {
-  private static final Identifier TEXTURE = NTMTextures.GEIGER_COUNTER_HUD;
+  private static final Identifier TEXTURE = NTMResources.Textures.GEIGER_COUNTER_HUD;
   private static final int THRESHOLD_1 =  10_000;
   private static final int THRESHOLD_2 =  50_000;
   private static final int THRESHOLD_3 = 100_000;
   private static final int COLOR = ColorHelper.getArgb(256, 256, 256);
-  
+
   private static boolean shouldDraw(){
     if(ClientUtil.getClient() == null) return false;
     if(ClientUtil.getPlayer() == null) return false;
     return PlayerUtil.hasItem(ClientUtil.getPlayer(), NTMItems.GEIGER_COUNTER);
   }
-  
+
   public static void drawGeigerCounter(DrawContext context, RenderTickCounter tickCounter) {
     if(!shouldDraw()) return;
-    
+
     final int x = 5;
     final int y = context.getScaledWindowHeight() - 20;
-    
-    
+
+
     ClientRadiationManager radiationManager = ClientRadiationManager.getInstance();
     final double radPercentage = radiationManager.radiationExposure / 1000000;
     final double incomingMilliRads = radiationManager.totalRadiation;
-    
+
     context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0, 94, 18, 128, 128);
     context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x+1, y+1, 1, 19, (int) (radPercentage*73), 16, 128, 128);
-    
+
     if(incomingMilliRads >= THRESHOLD_1){
       int u = 0;
       if(incomingMilliRads >= THRESHOLD_2){
@@ -57,7 +57,7 @@ public class GeigerCounterRender {
       if(incomingMilliRads < 1000){
         rads = "<1";
       }
-      
+
       TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
       Text text = Text.translatable("generic.ntm.radiation.rad_s", rads).formatted(Formatting.RED);
       context.drawText(textRenderer, text, x + 2, y - textRenderer.fontHeight, COLOR, true);

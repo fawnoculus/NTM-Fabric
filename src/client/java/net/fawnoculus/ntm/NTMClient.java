@@ -7,7 +7,6 @@ import net.fawnoculus.ntm.network.NTMClientPayloadHandler;
 import net.fawnoculus.ntm.render.*;
 import net.fawnoculus.ntm.gui.NTMHandledScreens;
 import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
-import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,27 +14,25 @@ public class NTMClient implements ClientModInitializer {
   public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client");
   @Override
   public void onInitializeClient() {
-    LOGGER.info("Initializing {} Client Components", NTM.MOD_NAME);
-    
+    LOGGER.info("Initializing Client Components");
+
     NTMClientConfig.initialize();
-    
+
     NTMKeybinds.initialize();
-    
+
     NTMClientCommands.initialize();
-    
+
+    NTMResources.initialize();
+
     NTMBlockEntityRender.initialize();
     NTMParticleRender.initialize();
-    NTMModelLoadingPlugin.initialize();
-    
+    NTMHudRender.initialize();
+
     NTMScreenHandlerType.initialize();
     NTMHandledScreens.initialize();
-    
-    NTMHudRender.initialize();
-    
-    ClientRadiationManager.initialize();
-    
+
     NTMClientPayloadHandler.initialize();
-    
-    LOGGER.info("Finished {} Client Initialization", NTM.MOD_NAME);
+
+    LOGGER.info("Finished Client Initialization");
   }
 }
