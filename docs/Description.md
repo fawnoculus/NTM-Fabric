@@ -1,4 +1,5 @@
 Mod Description for Modrinth & Curseforge, just copy everything bellow & change modrinth links to Curseforge Links for Curseforge:
+(this is for future me when this mod is released on Modrinth/Curseforge)
 
 # NTM-Fabric
 ## About
@@ -15,8 +16,12 @@ NTM-Fabric is a Mod all about technology, atomic science and nuclear weapons. Fe
 
 For a Better Experience I recommend Installing a Recipe Viewer like [JEI](https://modrinth.com/mod/jei), [REI](https://modrinth.com/mod/rei) or [EMI](https://modrinth.com/mod/emi).
 
+## Disclaimer
+This mod is in no way associated [HBM's Nuclear Tech Mod](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT), it is simply a recreation of the original for new versions, nothing else!
+Please don't bother the creators of the original Mod with issues & bugs of this one.
+
 ## Installation
-NTM-Fabric requires [Fabric-API](https://modrinth.com/mod/fabric-api) and only works on [Fabric](https://fabricmc.net/) & [Quilt](https://quiltmc.org/).
+NTM-Fabric requires [Fabric-API](https://modrinth.com/mod/fabric-api) and only works on [Fabric](https://fabricmc.net/) or [Quilt](https://quiltmc.org/).
 
 For Forge Versions you can check out these Projects:
 

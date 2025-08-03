@@ -7,7 +7,7 @@
 - MuliBlock Machine System
 - Heat System for Machines
 - Working Ores and Deposits
-- ~~Advanced Tools (Abilities, Weapon modifiers, ...)~~
+- ~~Advanced Tools (Abilities, Weapon modifiers, ...)~~ (THEY CHANGED IT, this needs a rework already)
 - Special Text Box in the Top Left
 - Item Help (aka: [Press F1 for Help])
 - Conveyor Belts, Pneumatic Tubes & Drones
@@ -96,7 +96,7 @@
 - Combined Cycle Gas Turbine
 
 ### Reactors
-- PWR 
+- PWR
 - Zirnox
 - RBMK
 - Research & Breading Reactor

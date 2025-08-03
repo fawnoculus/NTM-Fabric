@@ -13,69 +13,52 @@
 NTM-Fabric is an Attempt to recreate [HBM's NTM](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT) (a mod for 1.7.10) on modern Versions of Minecraft in Fabric.
 Depending on how development plays out some features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
 
-## **DISCLAIMER, NTM-Fabric is not even remotely finished!**
-Most Features are still missing, unfinished or barely functioning.
-I will not be publishing the mod in any official capacity (aka: Modrinth / CurseForge) until I feel like the mod is at least in a *"playable"* State
+## DISCLAIMERS
+1. I am not in any way associated with HBM (aka Bob), I am developing this Recreation purely because I liked HBM's NTM and at some point thought "Wow, this would be really cool in newer Versions"
+2. NTM-Fabric is not even remotely finished!
+  Most Features are still missing, unfinished, unpolished or barely functioning.
+  There will be no release of mod on Modrinth / CurseForge until It is at least in a *"playable"* State
+3. Don't bother contributors of the original mod with problems of this one! (technically not a disclaimer but still, don't do it)
 
 ## Installing NTM-Fabric
-In the future there may also be Releases on Modrinth & CurseForge (refer to the Disclaimer).
-For now your Options for getting the mod are:
+In the future there may also be Releases on Modrinth & CurseForge.
+For now your Options for getting this mod are:
 - ~~Modrinth~~ (maybe someday)
 - ~~CurseForge~~ (maybe someday)
 - [GitHub Releases](https://github.com/fawnoculus/NTM-Fabric/releases/latest)
-- [GitHub Actions](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml) (automatically complies jar every commit)
+- [GitHub Actions](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml) (refer to the Section Below)
 - Building it from Source (refer to the Section Below)
 
+## Downloading from GitHub actions
+1. Navigate to the Latest (topmost) successfully ran (green check) [Action](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml)
+2. Click on that bad boy
+3. On the bottom right there should be a button for downloading the Artifact (you may need to scroll down)
+4. If you unzip the File you should now have a working version of the mod (you don't want the file that ends in "-sources.jar")
 
 ## Building it from Source
-Building it from source should be unnecessary as you can download the jar of the latest commit from [GitHub Actions](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml)
-1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
-2. Open PowerShell (or Bash if you are using Linux)
-3. Navigate to the Directory you wish to copy the Sources to
+Building it from source should be unnecessary as you can download a jar of the latest commit from [GitHub Actions](https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml)
+* Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
+* Open PowerShell (or Bash if you are using Linux)
+* Navigate to the Directory you wish to copy the Sources to
 ```bash
 cd $HOME/Downloads/
 ```
-4. Download the Sources
+* Download the Sources
 ```bash
 git clone https://github.com/fawnoculus/NTM-Fabric
 ```
-5. enter the sources directory
+* enter the sources directory
 ```bash
 cd NTM-Fabric
 ```
-5. build the Mod
+* build the Mod
 ```bash
 ./gradlew build
 ```
-6. If the Command Returns with saying **BUILD SUCCESSFUL** then you should be able to find the mod file at "Downloads/NTM-Fabric/build/libs/ntm-fabric-VERSION.jar"
+If the Command Returns with saying **BUILD SUCCESSFUL** then you should be able to find the mod file at "Downloads/NTM-Fabric/build/libs/ntm-fabric-VERSION.jar"
 
 ## Contributing
-1. Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
-2. clone the Repository to where you would like to have it
-```bash
-git clone https://github.com/fawnoculus/NTM-Fabric
-```
-- If you are using IntelliJ you can simply choose **Clone Repository** on the Projects Screen
-4. Set up the Dev-Environment
-```bash
-    ./gradlew genSources
-```
-
-* For Eclipse also run
-```bash
-    ./gradlew eclipse
-    ./gradlew genEclipseRuns
-```
-* For VS Code also run
-```bash
-    ./gradlew vscode
-```
-5. Make the Code Changes you with to make (don't forget to update the Changelog &/or the DevNotes)
-6. Make sure that the Code works
-```bash
-    ./gradlew runClient
-```
-7. Open a Pull request right here on [GitHub](https://github.com/fawnoculus/NTM-Fabric)
+Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for information of how you can aid in development.
 
 ## Licence
 This software is licensed under the GNU Public License version 3. In short: This software is free, you may run the software freely, create modified versions,

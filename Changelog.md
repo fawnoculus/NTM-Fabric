@@ -15,12 +15,12 @@
 * Billets
 * Nuggets
 * Consumables (Bottles, Syringes, ...)
-## Fixed:
-* Alloy Furnace Model
-* Alloy Furnace Recipes
 ## Changed:
 * Mod Description for better Clarity
 * Advanced Tools (they now use the new Message System)
+## Fixed:
+* Alloy Furnace Model
+* Alloy Furnace Recipes
 
 # v0.0.1-alpha
 ## Added:
@@ -28,3 +28,8 @@
 * Alloy Furnace (aka: Blast Furnace) (also not functional yet)
 * A bunch of blocks that generate naturally (they don't actually generate yet)
 
+# Changelog Order:
+1. Added
+2. Changed
+3. Fixed
+4. Other (everything else)
