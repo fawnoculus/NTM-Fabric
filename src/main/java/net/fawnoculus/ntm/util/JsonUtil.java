@@ -10,7 +10,7 @@ import java.io.StringReader;
 
 public class JsonUtil {
   private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-  
+
   public static JsonObject jsonFromString(String string){
     return JsonUtil.jsonFromReader(new StringReader(string));
   }

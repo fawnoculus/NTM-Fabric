@@ -5,9 +5,9 @@
 855d4791ae3de65d1ec6bb37b56c808a38801980 data/minecraft/tags/block/incorrect_for_wooden_tool.json
 1c80c70ac6f1af1b1db4ec108dda88f969d75ab1 data/minecraft/tags/block/mineable/big_axe.json
 d444197bfa15ab91774548ca604f9905ab61c596 data/minecraft/tags/block/mineable/big_pickaxe.json
-44c850ff5a299bdd138b1f8aa9ddb187bd37c44f data/minecraft/tags/block/mineable/pickaxe.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/block/needs_diamond_tool.json
-f1f479c5a0baad1751d953e59923d259808b477c data/minecraft/tags/block/needs_iron_tool.json
+104d942265ff245e097b1c54b4caf4a726a0f6ca data/minecraft/tags/block/mineable/pickaxe.json
+7e488be0662a55f4e9aa38284daa1d92ac9d247f data/minecraft/tags/block/needs_diamond_tool.json
+64ecf752e1cf1ec474fb14f7d890d6334180840f data/minecraft/tags/block/needs_iron_tool.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/block/needs_stone_tool.json
 20fccc9f8b6e3830f8a150a8c23bf98085fbbf96 data/ntm/tags/block/depth_rock.json
 1078bc3da1039b21f51cb6e019222d55c7d9d89e data/ntm/tags/block/incorrect_for_advanced_alloy_tool.json

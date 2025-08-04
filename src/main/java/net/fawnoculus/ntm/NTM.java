@@ -20,7 +20,7 @@ import net.fawnoculus.ntm.network.NTMPayloads;
 import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.misc.NTMParticles;
-import net.fawnoculus.ntm.world.gen.NTMWorldGeneration;
+import net.fawnoculus.ntm.world.NTMWorldGeneration;
 import net.fawnoculus.ntm.misc.radiation.RadiationManager;
 import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
 import net.minecraft.util.Identifier;

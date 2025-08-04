@@ -1,7 +1,9 @@
 package net.fawnoculus.ntm.render;
 
 import net.fawnoculus.ntm.blocks.NTMBlocks;
-import net.fawnoculus.ntm.render.model3d.Model3D;
+import net.fawnoculus.ntm.render.resources.NTMModels;
+import net.fawnoculus.ntm.render.resources.NTMTextures;
+import net.fawnoculus.ntm.render.wavefront.Model3D;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
@@ -29,9 +31,9 @@ public class NTMModelRender {
   }
 
   public static class AlloyFurnaceExtension{
-    public final static Model3D TOP = NTMResources.Model.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
-    public final static Model3D SIDE = NTMResources.Model.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
-    public final static Model3D BOTTOM = NTMResources.Model.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
+    public final static Model3D TOP = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
+    public final static Model3D SIDE = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
+    public final static Model3D BOTTOM = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
 
     public static void renderItem(@NotNull MatrixStack matrices, int light) {
       matrices.push();
@@ -45,9 +47,9 @@ public class NTMModelRender {
     }
     public static void render(@NotNull MatrixStack matrices, int light) {
       matrices.push();
-      TOP.draw(matrices.peek(), light, NTMResources.Textures.ALLOY_FURNACE_EXTENSION_TOP);
-      SIDE.draw(matrices.peek(), light, NTMResources.Textures.ALLOY_FURNACE_EXTENSION_SIDE);
-      BOTTOM.draw(matrices.peek(), light, NTMResources.Textures.ALLOY_FURNACE_EXTENSION_BOTTOM);
+      TOP.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_TOP);
+      SIDE.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_SIDE);
+      BOTTOM.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_BOTTOM);
       matrices.pop();
     }
   }

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.gui.widget;
 
 import net.fawnoculus.ntm.blocks.node.type.StorageNode;
-import net.fawnoculus.ntm.render.NTMResources;
+import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
@@ -32,7 +32,7 @@ public class StorageModeWidget extends ClickableWidget {
   @Override
   protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
     context.drawTexture(RenderLayer::getGuiTextured,
-        NTMResources.Textures.GENERIC_STORAGE_MODE,
+        NTMTextures.GENERIC_STORAGE_MODE,
         this.getX(),
         this.getY(),
         this.getU(STORAGE_MODE.get()),

@@ -15,7 +15,7 @@ import net.minecraft.text.Text;
 
 
 public class NTMItemGroups {
-  
+
   public static final RegistryKey<ItemGroup> RESOURCES_AND_PARTS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), NTM.id("resources_and_parts"));
   public static final ItemGroup RESOURCES_AND_PARTS = FabricItemGroup.builder()
       .icon(() -> new ItemStack(NTMItems.URANIUM_INGOT))
@@ -67,7 +67,7 @@ public class NTMItemGroups {
       .icon(() -> new ItemStack(NTMItems.ADVANCED_ALLOY_PICKAXE))
       .displayName(Text.translatable("itemGroup.ntm.tools"))
       .build();
-  
+
   public static void initialize() {
     Registry.register(Registries.ITEM_GROUP, RESOURCES_AND_PARTS_KEY, RESOURCES_AND_PARTS);
     Registry.register(Registries.ITEM_GROUP, MACHINE_ITEMS_AND_FUEL_KEY, MACHINE_ITEMS_AND_FUEL);
@@ -79,7 +79,7 @@ public class NTMItemGroups {
     Registry.register(Registries.ITEM_GROUP, WEAPONS_AND_TURRETS_KEY, WEAPONS_AND_TURRETS);
     Registry.register(Registries.ITEM_GROUP, CONSUMABLES_AND_GEAR_KEY, CONSUMABLES_AND_GEAR);
     Registry.register(Registries.ITEM_GROUP, TOOLS_KEY, TOOLS);
-    
+
     ItemGroupEvents.modifyEntriesEvent(RESOURCES_AND_PARTS_KEY).register(ItemGroup -> {
       ItemGroup.add(NTMItems.ACTINIUM_227_INGOT);
       ItemGroup.add(NTMItems.ACTINIUM_227_BILLET);
@@ -87,16 +87,16 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.TINY_PILE_OF_ACTINIUM_227_POWDER);
       ItemGroup.add(NTMItems.ACTINIUM_227_NUGGET);
       ItemGroup.add(NTMItems.ACTINIUM_227_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.ADVANCED_ALLOY_INGOT);
       ItemGroup.add(NTMItems.ADVANCED_ALLOY_POWDER);
       ItemGroup.add(NTMItems.ADVANCED_ALLOY_PLATE);
       ItemGroup.add(NTMItems.CAST_ADVANCED_ALLOY_PLATE);
       ItemGroup.add(NTMItems.ADVANCED_ALLOY_WIRE);
       ItemGroup.add(NTMItems.DENSE_ADVANCED_ALLOY_WIRE);
-      
+
       ItemGroup.add(NTMItems.ALEXANDRITE);
-      
+
       ItemGroup.add(NTMItems.ALUMINIUM_INGOT);
       ItemGroup.add(NTMItems.ALUMINIUM_POWDER);
       ItemGroup.add(NTMItems.ALUMINIUM_PLATE);
@@ -106,7 +106,7 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.ALUMINIUM_PIPE);
       ItemGroup.add(NTMItems.ALUMINIUM_WIRE);
       ItemGroup.add(NTMItems.ALUMINIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.AMERICIUM_241_INGOT);
       ItemGroup.add(NTMItems.AMERICIUM_241_BILLET);
       ItemGroup.add(NTMItems.AMERICIUM_241_NUGGET);
@@ -120,21 +120,21 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.REACTOR_GRADE_AMERICIUM_BILLET);
       ItemGroup.add(NTMItems.REACTOR_GRADE_AMERICIUM_ZFB_BILLET);
       ItemGroup.add(NTMItems.REACTOR_GRADE_AMERICIUM_NUGGET);
-      
+
       ItemGroup.add(NTMItems.ARSENIC_INGOT);
       ItemGroup.add(NTMItems.ARSENIC_NUGGET);
       ItemGroup.add(NTMItems.ARSENIC_BRONZE_INGOT);
       ItemGroup.add(NTMItems.CAST_ARSENIC_BRONZE_PLATE);
-      
+
       ItemGroup.add(NTMItems.ASBESTOS_SHEET);
       ItemGroup.add(NTMItems.ASBESTOS_POWDER);
-      
+
       ItemGroup.add(NTMItems.ASH);
       ItemGroup.add(NTMItems.WOOD_ASH);
       ItemGroup.add(NTMItems.COAL_ASH);
       ItemGroup.add(NTMItems.FLY_ASH);
       ItemGroup.add(NTMItems.FINE_SOOT);
-      
+
       ItemGroup.add(NTMItems.AUSTRALIUM_INGOT);
       ItemGroup.add(NTMItems.AUSTRALIUM_BILLET);
       ItemGroup.add(NTMItems.AUSTRALIUM_NUGGET);
@@ -143,20 +143,20 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.GREATER_AUSTRALIUM_BILLET);
       ItemGroup.add(NTMItems.GREATER_AUSTRALIUM_NUGGET);
       ItemGroup.add(NTMItems.AUSTRALIUM_POWDER);
-      
+
       ItemGroup.add(NTMItems.BAKELITE_BAR);
       ItemGroup.add(NTMItems.BAKELITE_POWDER);
-      
+
       ItemGroup.add(NTMItems.BALEFIRE_EGG);
       ItemGroup.add(NTMItems.BALEFIRE_SHARD);
       ItemGroup.add(NTMItems.THERMONUCLEAR_ASHES);
-      
+
       ItemGroup.add(NTMItems.BERYLLIUM_INGOT);
       ItemGroup.add(NTMItems.BERYLLIUM_BILLET);
       ItemGroup.add(NTMItems.BERYLLIUM_NUGGET);
       ItemGroup.add(NTMItems.BERYLLIUM_POWDER);
       ItemGroup.add(NTMItems.BERYLLIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.BISMUTH_INGOT);
       ItemGroup.add(NTMItems.BISMUTH_BILLET);
       ItemGroup.add(NTMItems.BISMUTH_ZFB_BILLET);
@@ -164,58 +164,58 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.BISMUTH_NUGGET);
       ItemGroup.add(NTMItems.BISMUTH_BRONZE_INGOT);
       ItemGroup.add(NTMItems.CAST_BISMUTH_BRONZE_PLATE);
-      
+
       ItemGroup.add(NTMItems.BORAX_POWDER);
-      
+
       ItemGroup.add(NTMItems.BORON_INGOT);
       ItemGroup.add(NTMItems.BORON_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_BORON_POWDER);
       ItemGroup.add(NTMItems.BORON_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.BROMINE_POWDER);
-      
+
       ItemGroup.add(NTMItems.BSCCO_INGOT);
       ItemGroup.add(NTMItems.DENSE_BSCCO_WIRE);
-      
+
       ItemGroup.add(NTMItems.CADMIUM_INGOT);
       ItemGroup.add(NTMItems.CADMIUM_POWDER);
-      
+
       ItemGroup.add(NTMItems.CAESIUM_POWDER);
       ItemGroup.add(NTMItems.CAESIUM_137_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_CAESIUM_137_POWDER);
-      
+
       ItemGroup.add(NTMItems.CALCIUM_INGOT);
       ItemGroup.add(NTMItems.CALCIUM_POWDER);
-      
+
       ItemGroup.add(NTMItems.CADMIUM_STEEL_INGOT);
       ItemGroup.add(NTMItems.CAST_CADMIUM_STEEL_PLATE);
       ItemGroup.add(NTMItems.WELDED_CADMIUM_STEEL_PLATE);
-      
+
       ItemGroup.add(NTMItems.CEMENT);
-      
+
       ItemGroup.add(NTMItems.CERIUM_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_CERIUM_POWDER);
       ItemGroup.add(NTMItems.CERIUM_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.CHLOROCALCITE);
-      
+
       ItemGroup.add(NTMItems.CHLOROPHYTE_POWDER);
-      
+
       ItemGroup.add(NTMItems.CINNABAR);
       ItemGroup.add(NTMItems.CINNABAR_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.CMB_STEEL_INGOT);
       ItemGroup.add(NTMItems.CMB_STEEL_POWDER);
       ItemGroup.add(NTMItems.CAST_CMB_STEEL_PLATE);
       ItemGroup.add(NTMItems.WELDED_CMB_STEEL_PLATE);
       ItemGroup.add(NTMItems.CMB_STEEL_PLATE);
-      
+
       ItemGroup.add(NTMItems.COAL_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_COAL_POWDER);
       ItemGroup.add(NTMItems.CARBON_WIRE);
       ItemGroup.add(NTMItems.COAL_BRIQUETTE);
       ItemGroup.add(NTMItems.COAL_COKE);
-      
+
       ItemGroup.add(NTMItems.COBALT_INGOT);
       ItemGroup.add(NTMItems.COBALT_BILLET);
       ItemGroup.add(NTMItems.COBALT_POWDER);
@@ -227,10 +227,10 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.COBALT_60_NUGGET);
       ItemGroup.add(NTMItems.COBALT_FRAGMENT);
       ItemGroup.add(NTMItems.COBALT_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.COLTAN);
       ItemGroup.add(NTMItems.CRUSHED_COLTAN);
-      
+
       ItemGroup.add(NTMItems.COPPER_POWDER);
       ItemGroup.add(NTMItems.COPPER_PLATE);
       ItemGroup.add(NTMItems.CAST_COPPER_PLATE);
@@ -240,60 +240,60 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.COPPER_WIRE);
       ItemGroup.add(NTMItems.DENSE_COPPER_WIRE);
       ItemGroup.add(NTMItems.COPPER_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.CRYO_POWDER);
-      
+
       ItemGroup.add(NTMItems.CRYOLITE_CHUNK);
-      
+
       ItemGroup.add(NTMItems.DESH_INGOT);
       ItemGroup.add(NTMItems.DESH_BLEND);
       ItemGroup.add(NTMItems.DESHREADY_BLEND);
       ItemGroup.add(NTMItems.DESH_POWDER);
       ItemGroup.add(NTMItems.DESH_NUGGET);
       ItemGroup.add(NTMItems.CAST_DESH_PLATE);
-      
+
       ItemGroup.add(NTMItems.DIAMOND_POWDER);
       ItemGroup.add(NTMItems.DIAMOND_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.DINEUTRONIUM_INGOT);
       ItemGroup.add(NTMItems.DINEUTRONIUM_POWDER);
       ItemGroup.add(NTMItems.DINEUTRONIUM_NUGGET);
       ItemGroup.add(NTMItems.DENSE_DINEUTRONIUM_WIRE);
-      
+
       ItemGroup.add(NTMItems.ELECTRONIUM_INGOT);
-      
+
       ItemGroup.add(NTMItems.EMERALD_POWDER);
-      
+
       ItemGroup.add(NTMItems.ENERGY_POWDER);
-      
+
       ItemGroup.add(NTMItems.EUPHEMIUM_INGOT);
       ItemGroup.add(NTMItems.EUPHEMIUM_POWDER);
       ItemGroup.add(NTMItems.EUPHEMIUM_NUGGET);
-      
+
       ItemGroup.add(NTMItems.FERRIC_SCHARBIDATE_INGOT);
       ItemGroup.add(NTMItems.FERRIC_SCHARBIDATE_POWDER);
       ItemGroup.add(NTMItems.CAST_FERRIC_SCHARBIDATE_PLATE);
       ItemGroup.add(NTMItems.DENSE_FERRIC_SCHARBIDATE_WIRE);
-      
+
       ItemGroup.add(NTMItems.FERROURANIUM_INGOT);
       ItemGroup.add(NTMItems.CAST_FERROURANIUM_PLATE);
-      
+
       ItemGroup.add(NTMItems.FLASH_GOLD);
-      
+
       ItemGroup.add(NTMItems.FLASH_LEAD);
-      
+
       ItemGroup.add(NTMItems.FLUORITE);
       ItemGroup.add(NTMItems.FLUORITE_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.FLUX);
-      
+
       ItemGroup.add(NTMItems.FULLERENE);
       ItemGroup.add(NTMItems.CRYSTALLINE_FULLERENE);
-      
+
       ItemGroup.add(NTMItems.GHIORSIUM_336_INGOT);
       ItemGroup.add(NTMItems.GHIORSIUM_336_BILLET);
       ItemGroup.add(NTMItems.GHIORSIUM_336_NUGGET);
-      
+
       ItemGroup.add(NTMItems.GOLD_POWDER);
       ItemGroup.add(NTMItems.GOLD_PLATE);
       ItemGroup.add(NTMItems.CAST_GOLD_PLATE);
@@ -304,47 +304,47 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.GOLD_198_BILLET);
       ItemGroup.add(NTMItems.GOLD_198_POWDER);
       ItemGroup.add(NTMItems.GOLD_198_NUGGET);
-      
+
       ItemGroup.add(NTMItems.GRAPHITE_INGOT);
-      
+
       ItemGroup.add(NTMItems.GUNMETAL_INGOT);
       ItemGroup.add(NTMItems.GUNMETAL_PLATE);
-      
+
       ItemGroup.add(NTMItems.HARD_PLASTIC_BAR);
-      
+
       ItemGroup.add(NTMItems.HIGH_SPEED_STEEL_INGOT);
       ItemGroup.add(NTMItems.HIGH_SPEED_STEEL_POWDER);
       ItemGroup.add(NTMItems.CAST_HIGH_SPEED_STEEL_PLATE);
       ItemGroup.add(NTMItems.HIGH_SPEED_STEEL_PLATE);
       ItemGroup.add(NTMItems.HIGH_SPEED_STEEL_BOLT);
       ItemGroup.add(NTMItems.HIGH_SPEED_STEEL_PIPE);
-      
+
       ItemGroup.add(NTMItems.IODINE_POWDER);
       ItemGroup.add(NTMItems.IODINE_131_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_IODINE_131_POWDER);
-      
+
       ItemGroup.add(NTMItems.IRON_POWDER);
       ItemGroup.add(NTMItems.IRON_PLATE);
       ItemGroup.add(NTMItems.CAST_IRON_PLATE);
       ItemGroup.add(NTMItems.WELDED_IRON_PLATE);
       ItemGroup.add(NTMItems.IRON_PIPE);
       ItemGroup.add(NTMItems.IRON_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.INDUSTRIAL_FERTILIZER);
-      
+
       ItemGroup.add(NTMItems.INFERNAL_COAL);
-      
+
       ItemGroup.add(NTMItems.SEMI_STABLE_LANTHANUM_INGOT);
       ItemGroup.add(NTMItems.LANTHANUM_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_LANTHANUM_POWDER);
       ItemGroup.add(NTMItems.LANTHANUM_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.LAPIS_POWDER);
       ItemGroup.add(NTMItems.LAPIS_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.LATEX);
       ItemGroup.add(NTMItems.LATEX_BAR);
-      
+
       ItemGroup.add(NTMItems.LEAD_INGOT);
       ItemGroup.add(NTMItems.LEAD_NUGGET);
       ItemGroup.add(NTMItems.LEAD_209_INGOT);
@@ -357,40 +357,40 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.LEAD_BOLT);
       ItemGroup.add(NTMItems.LEAD_WIRE);
       ItemGroup.add(NTMItems.LEAD_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.LIGNITE);
       ItemGroup.add(NTMItems.LIGNITE_POWDER);
       ItemGroup.add(NTMItems.LIGNITE_COKE);
       ItemGroup.add(NTMItems.LIGNITE_BRIQUETTE);
-      
+
       ItemGroup.add(NTMItems.LIMESTONE_POWDER);
-      
+
       ItemGroup.add(NTMItems.LITHIUM_CUBE);
       ItemGroup.add(NTMItems.LITHIUM_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_LITHIUM_POWDER);
       ItemGroup.add(NTMItems.LITHIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.MAGNETIZED_TUNGSTEN_INGOT);
       ItemGroup.add(NTMItems.MAGNETIZED_TUNGSTEN_POWDER);
       ItemGroup.add(NTMItems.MAGNETIZED_TUNGSTEN_WIRE);
       ItemGroup.add(NTMItems.DENSE_MAGNETIZED_TUNGSTEN_WIRE);
-      
+
       ItemGroup.add(NTMItems.METEORITE_INGOT);
       ItemGroup.add(NTMItems.METEORITE_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_METEORITE_POWDER);
       ItemGroup.add(NTMItems.METEORITE_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.MOLYSITE);
-      
+
       ItemGroup.add(NTMItems.MOX_FUEL_INGOT);
       ItemGroup.add(NTMItems.MOX_FUEL_BILLET);
       ItemGroup.add(NTMItems.MOX_FUEL_NUGGET);
-      
+
       ItemGroup.add(NTMItems.NEODYMIUM_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_NEODYMIUM_POWDER);
       ItemGroup.add(NTMItems.DENSE_NEODYMIUM_WIRE);
       ItemGroup.add(NTMItems.NEODYMIUM_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.NEPTUNIUM_INGOT);
       ItemGroup.add(NTMItems.NEPTUNIUM_BILLET);
       ItemGroup.add(NTMItems.NEPTUNIUM_POWDER);
@@ -398,35 +398,35 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.NEPTUNIUM_FUEL_INGOT);
       ItemGroup.add(NTMItems.NEPTUNIUM_FUEL_BILLET);
       ItemGroup.add(NTMItems.NEPTUNIUM_FUEL_NUGGET);
-      
+
       ItemGroup.add(NTMItems.NIOBIUM_INGOT);
       ItemGroup.add(NTMItems.NIOBIUM_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_NIOBIUM_POWDER);
       ItemGroup.add(NTMItems.NIOBIUM_NUGGET);
       ItemGroup.add(NTMItems.DENSE_NIOBIUM_WIRE);
       ItemGroup.add(NTMItems.NIOBIUM_FRAGMENT);
-      
+
       ItemGroup.add(NTMItems.NITAN_BLEND);
-      
+
       ItemGroup.add(NTMItems.NITER);
       ItemGroup.add(NTMItems.NITER_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.OSMIRIDIUM_INGOT);
       ItemGroup.add(NTMItems.OSMIRIDIUM_NUGGET);
       ItemGroup.add(NTMItems.IMPURE_OSMIRIDIUM_POWDER);
       ItemGroup.add(NTMItems.CAST_OSMIRIDIUM_PLATE);
       ItemGroup.add(NTMItems.WELDED_OSMIRIDIUM_PLATE);
       ItemGroup.add(NTMItems.OSMIRIDIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.PALEOGENITE_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_PALEOGENITE_POWDER);
-      
+
       ItemGroup.add(NTMItems.RED_PHOSPHORUS);
       ItemGroup.add(NTMItems.WHITE_PHOSPHORUS_BAR);
       ItemGroup.add(NTMItems.PHOSPHORUS_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.PETROLEUM_COKE);
-      
+
       ItemGroup.add(NTMItems.PLUTONIUM_INGOT);
       ItemGroup.add(NTMItems.PLUTONIUM_BILLET);
       ItemGroup.add(NTMItems.PLUTONIUM_NUGGET);
@@ -452,50 +452,50 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.PLUTONIUM_241_NUGGET);
       ItemGroup.add(NTMItems.PLUTONIUM_POWDER);
       ItemGroup.add(NTMItems.PLUTONIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.POISON_POWDER);
-      
+
       ItemGroup.add(NTMItems.POLONIUM_210_INGOT);
       ItemGroup.add(NTMItems.POLONIUM_210_BILLET);
       ItemGroup.add(NTMItems.POLONIUM_210_BE_BILLET);
       ItemGroup.add(NTMItems.POLONIUM_210_NUGGET);
       ItemGroup.add(NTMItems.POLONIUM_210_POWDER);
-      
+
       ItemGroup.add(NTMItems.POLYMER_BAR);
       ItemGroup.add(NTMItems.POLYMER_POWDER);
-      
+
       ItemGroup.add(NTMItems.PULVERIZED_ENCHANTMENT);
-      
+
       ItemGroup.add(NTMItems.PVC_BAR);
-      
+
       ItemGroup.add(NTMItems.QUARTZ_POWDER);
-      
+
       ItemGroup.add(NTMItems.RADIUM_226_INGOT);
       ItemGroup.add(NTMItems.RADIUM_226_BILLET);
       ItemGroup.add(NTMItems.RADIUM_226_BE_BILLET);
       ItemGroup.add(NTMItems.RADIUM_226_POWDER);
       ItemGroup.add(NTMItems.RADIUM_226_NUGGET);
-      
+
       ItemGroup.add(NTMItems.RARE_EARTH_ORE_CHUNK);
       ItemGroup.add(NTMItems.RARE_EARTH_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.RED_COPPER_INGOT);
       ItemGroup.add(NTMItems.RED_COPPER_POWDER);
       ItemGroup.add(NTMItems.RED_COPPER_WIRE);
-      
+
       ItemGroup.add(NTMItems.REDSTONE_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.RUBBER_BAR);
       ItemGroup.add(NTMItems.RUBBER_PIPE);
-      
+
       ItemGroup.add(NTMItems.SATURNITE_INGOT);
       ItemGroup.add(NTMItems.SATURNITE_PLATE);
       ItemGroup.add(NTMItems.CAST_SATURNITE_PLATE);
       ItemGroup.add(NTMItems.SATURNITE_SHELL);
-      
+
       ItemGroup.add(NTMItems.SAWDUST_POWDER);
       ItemGroup.add(NTMItems.SAWDUST_BRIQUETTE);
-      
+
       ItemGroup.add(NTMItems.SCHRABIDIUM_INGOT);
       ItemGroup.add(NTMItems.SCHRABIDIUM_BILLET);
       ItemGroup.add(NTMItems.SCHRABIDIUM_NUGGET);
@@ -514,38 +514,38 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.SCHRABIDIUM_WIRE);
       ItemGroup.add(NTMItems.DENSE_SCHRABIDIUM_WIRE);
       ItemGroup.add(NTMItems.SCHRABIDIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.SCHRARANIUM_INGOT);
       ItemGroup.add(NTMItems.SCHRARANIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.SEMTEX_BLEND);
       ItemGroup.add(NTMItems.SEMTEX_BAR);
-      
+
       ItemGroup.add(NTMItems.SILICON_BOULE);
       ItemGroup.add(NTMItems.SILICON_WAFER);
       ItemGroup.add(NTMItems.PRINTED_SILICON_WAFER);
       ItemGroup.add(NTMItems.SILICON_NUGGET);
-      
+
       ItemGroup.add(NTMItems.SODIUM_POWDER);
-      
+
       ItemGroup.add(NTMItems.SOLINIUM_INGOT);
       ItemGroup.add(NTMItems.SOLINIUM_BILLET);
       ItemGroup.add(NTMItems.SOLINIUM_NUGGET);
-      
+
       ItemGroup.add(NTMItems.SPARK_BLEND);
-      
+
       ItemGroup.add(NTMItems.STARMETAL_INGOT);
       ItemGroup.add(NTMItems.DENSE_STARMETAL_WIRE);
       ItemGroup.add(NTMItems.STARMETAL_RING);
       ItemGroup.add(NTMItems.STARMETAL_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.STRONTIUM_POWDER);
       ItemGroup.add(NTMItems.STRONTIUM_90_INGOT);
       ItemGroup.add(NTMItems.STRONTIUM_90_BILLET);
       ItemGroup.add(NTMItems.STRONTIUM_90_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_STRONTIUM_90_POWDER);
       ItemGroup.add(NTMItems.STRONTIUM_90_NUGGET);
-      
+
       ItemGroup.add(NTMItems.STEEL_INGOT);
       ItemGroup.add(NTMItems.STEEL_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_STEEL_POWDER);
@@ -556,31 +556,31 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.STEEL_PIPE);
       ItemGroup.add(NTMItems.STEEL_SHELL);
       ItemGroup.add(NTMItems.STEEL_WIRE);
-      
+
       ItemGroup.add(NTMItems.SULFUR);
       ItemGroup.add(NTMItems.SULFUR_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.PURIFIED_TANTALITE);
       ItemGroup.add(NTMItems.TANTALUM_INGOT);
       ItemGroup.add(NTMItems.TANTALUM_POWDER);
       ItemGroup.add(NTMItems.TANTALUM_NUGGET);
       ItemGroup.add(NTMItems.TANTALUM_POLYCRYSTAL);
-      
+
       ItemGroup.add(NTMItems.TECHNETIUM_99_INGOT);
       ItemGroup.add(NTMItems.TECHNETIUM_99_BILLET);
       ItemGroup.add(NTMItems.TECHNETIUM_99_NUGGET);
-      
+
       ItemGroup.add(NTMItems.TECHNETIUM_STEEL_INGOT);
       ItemGroup.add(NTMItems.TECHNETIUM_STEEL_POWDER);
       ItemGroup.add(NTMItems.CAST_TECHNETIUM_STEEL_PLATE);
       ItemGroup.add(NTMItems.WELDED_TECHNETIUM_STEEL_PLATE);
-      
+
       ItemGroup.add(NTMItems.TEKTITE_POWDER);
-      
+
       ItemGroup.add(NTMItems.TENNESSINE_POWDER);
-      
+
       ItemGroup.add(NTMItems.THERMITE);
-      
+
       ItemGroup.add(NTMItems.THORIUM_232_INGOT);
       ItemGroup.add(NTMItems.THORIUM_FUEL_INGOT);
       ItemGroup.add(NTMItems.THORIUM_232_BILLET);
@@ -589,7 +589,7 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.THORIUM_FUEL_NUGGET);
       ItemGroup.add(NTMItems.THORIUM_POWDER);
       ItemGroup.add(NTMItems.THORIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.TITANIUM_INGOT);
       ItemGroup.add(NTMItems.TITANIUM_PLATE);
       ItemGroup.add(NTMItems.CAST_TITANIUM_PLATE);
@@ -598,16 +598,16 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.TITANIUM_SHELL);
       ItemGroup.add(NTMItems.DENSE_TITANIUM_WIRE);
       ItemGroup.add(NTMItems.TITANIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.TRIXITE_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.TUNGSTEN_INGOT);
       ItemGroup.add(NTMItems.TUNGSTEN_POWDER);
       ItemGroup.add(NTMItems.TUNGSTEN_BOLT);
       ItemGroup.add(NTMItems.TUNGSTEN_WIRE);
       ItemGroup.add(NTMItems.DENSE_TUNGSTEN_WIRE);
       ItemGroup.add(NTMItems.TUNGSTEN_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.URANIUM_INGOT);
       ItemGroup.add(NTMItems.URANIUM_BILLET);
       ItemGroup.add(NTMItems.URANIUM_NUGGET);
@@ -625,21 +625,21 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.URANIUM_238_NUGGET);
       ItemGroup.add(NTMItems.URANIUM_POWDER);
       ItemGroup.add(NTMItems.URANIUM_CRYSTALS);
-      
+
       ItemGroup.add(NTMItems.VOLCANIC_GEM);
-      
+
       ItemGroup.add(NTMItems.WEAPON_STEEL_INGOT);
       ItemGroup.add(NTMItems.WEAPON_STEEL_PLATE);
       ItemGroup.add(NTMItems.CAST_WEAPON_STEEL_PLATE);
       ItemGroup.add(NTMItems.WEAPON_STEEL_SHELL);
-      
+
       ItemGroup.add(NTMItems.XENON_135_POWDER);
       ItemGroup.add(NTMItems.TINY_PILE_OF_XENON_135_POWDER);
-      
+
       ItemGroup.add(NTMItems.YHARONITE_BILLET);
-      
+
       ItemGroup.add(NTMItems.YELLOWCAKE);
-      
+
       ItemGroup.add(NTMItems.ZIRCONIUM_SPLINTER);
       ItemGroup.add(NTMItems.ZIRCONIUM_CUBE);
       ItemGroup.add(NTMItems.ZIRCONIUM_BILLET);
@@ -719,30 +719,55 @@ public class NTMItemGroups {
     ItemGroupEvents.modifyEntriesEvent(ORES_AND_BLOCKS_KEY).register(ItemGroup -> {
       ItemGroup.add(new ItemStack(NTMItems.BATTERY));
       ItemGroup.add(NTMBlocks.URANIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_URANIUM_ORE);
       ItemGroup.add(NTMBlocks.SCORCHED_URANIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_SCORCHED_URANIUM_ORE);
       ItemGroup.add(NTMBlocks.TITANIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_TITANIUM_ORE);
       ItemGroup.add(NTMBlocks.SULFUR_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_SULFUR_ORE);
       ItemGroup.add(NTMBlocks.THORIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_THORIUM_ORE);
       ItemGroup.add(NTMBlocks.NITER_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_NITER_ORE);
       ItemGroup.add(NTMBlocks.TUNGSTEN_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_TUNGSTEN_ORE);
       ItemGroup.add(NTMBlocks.ALUMINIUM_BEARING_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_ALUMINIUM_BEARING_ORE);
       ItemGroup.add(NTMBlocks.FLUORITE_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_FLUORITE_ORE);
       ItemGroup.add(NTMBlocks.LEAD_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_LEAD_ORE);
       ItemGroup.add(NTMBlocks.SCHRABIDIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_SCHRABIDIUM_ORE);
       ItemGroup.add(NTMBlocks.BERYLLIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_BERYLLIUM_ORE);
       ItemGroup.add(NTMBlocks.AUSTRALIUM_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_AUSTRALIUM_ORE);
       ItemGroup.add(NTMBlocks.RARE_EARTH_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_RARE_EARTH_ORE);
       ItemGroup.add(NTMBlocks.COBALT_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_COBALT_ORE);
       ItemGroup.add(NTMBlocks.CINNEBAR_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_CINNEBAR_ORE);
       ItemGroup.add(NTMBlocks.COLTAN_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_COLTAN_ORE);
       ItemGroup.add(NTMBlocks.LIGNITE_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_LIGNITE_ORE);
       ItemGroup.add(NTMBlocks.ASBESTOS_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_ASBESTOS_ORE);
       ItemGroup.add(NTMBlocks.OIL_DEPOSIT);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_OIL_DEPOSIT);
       ItemGroup.add(NTMBlocks.EMPTY_OIL_DEPOSIT);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_EMPTY_OIL_DEPOSIT);
       ItemGroup.add(NTMBlocks.ALUMINIUM_ORE_CLUSTER);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_ALUMINIUM_ORE_CLUSTER);
       ItemGroup.add(NTMBlocks.COPPER_ORE_CLUSTER);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_COPPER_ORE_CLUSTER);
       ItemGroup.add(NTMBlocks.IRON_ORE_CLUSTER);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_IRON_ORE_CLUSTER);
       ItemGroup.add(NTMBlocks.TITANIUM_ORE_CLUSTER);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_TITANIUM_ORE_CLUSTER);
       ItemGroup.add(NTMBlocks.DEAD_DIRT);
       ItemGroup.add(NTMBlocks.OILY_DIRT);
       ItemGroup.add(NTMBlocks.OILY_SAND);
@@ -754,6 +779,7 @@ public class NTMItemGroups {
       ItemGroup.add(NTMBlocks.DEPTH_TITANIUM_ORE_CLUSTER);
       ItemGroup.add(NTMBlocks.DEPTH_TUNGSTEN_ORE_CLUSTER);
       ItemGroup.add(NTMBlocks.ALEXANDRITE_ORE);
+      ItemGroup.add(NTMBlocks.DEEPSLATE_ALEXANDRITE_ORE);
       ItemGroup.add(NTMBlocks.VOLCANIC_BASALT);
       ItemGroup.add(NTMBlocks.SULFUR_RICH_VOLCANIC_BASALT);
       ItemGroup.add(NTMBlocks.FLUORITE_RICH_VOLCANIC_BASALT);
@@ -822,7 +848,7 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.RAW_METEORIC_COBALT);
       ItemGroup.add(NTMItems.RAW_TRIXITE);
       ItemGroup.add(NTMItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE);
-      
+
       ItemGroup.add(NTMBlocks.ACTINIUM_227_BLOCK);
       ItemGroup.add(NTMBlocks.ADVANCED_ALLOY_BLOCK);
       ItemGroup.add(NTMBlocks.ALUMINIUM_BLOCK);
@@ -916,7 +942,7 @@ public class NTMItemGroups {
     ItemGroupEvents.modifyEntriesEvent(CONSUMABLES_AND_GEAR_KEY).register(ItemGroup -> {
       ItemGroup.add(NTMItems.DOSIMETER);
       ItemGroup.add(NTMItems.GEIGER_COUNTER);
-      
+
       ItemGroup.add(NTMItems.EMPTY_SYRINGE);
       ItemGroup.add(NTMItems.POISONOUS_INJECTION);
       ItemGroup.add(NTMItems.ANTIDOTE);
@@ -937,9 +963,9 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.ELITE_RAD_AWAY);
       ItemGroup.add(NTMItems.RAD_X);
       ItemGroup.add(NTMItems.IODINE_PILL);
-      
+
       ItemGroup.add(NTMItems.PLAN_C);
-      
+
       ItemGroup.add(NTMItems.WAFFLE_OF_MASS_DESTRUCTION);
       ItemGroup.add(NTMItems.VEGAN_SCHNITZEL);
       ItemGroup.add(NTMItems.RADIOACTIVE_COTTON_CANDY);
@@ -1011,7 +1037,7 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.BOTTLE_OF_FRITZ_COLA);
       ItemGroup.add(NTMItems.FIRST_BOTTLE_OF_FRITZ_COLA);
       ItemGroup.add(NTMItems.BOTTLE_OPENER);
-      
+
       ItemGroup.add(NTMItems.CONSTRUCTION_WAND);
       ItemGroup.add(NTMItems.DEBUG_WAND);
       ItemGroup.add(NTMItems.NETWORK_DEBUG_TOOL);
@@ -1073,40 +1099,10 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.MESE_AXE);
     });
   }
-  
+
   private static <T> ItemStack components(ItemConvertible item, ComponentType<T> componentType, T value){
     ItemStack stack = new ItemStack(item);
     stack.set(componentType, value);
-    return stack;
-  }
-  private static <T, U> ItemStack components(ItemConvertible item, ComponentType<T> componentType, T value, ComponentType<U> componentType2, U value2){
-    ItemStack stack = new ItemStack(item);
-    stack.set(componentType, value);
-    stack.set(componentType2, value2);
-    return stack;
-  }
-  private static <T, U, V> ItemStack components(ItemConvertible item,
-                                                   ComponentType<T> componentType, T value,
-                                                   ComponentType<U> componentType2, U value2,
-                                                   ComponentType<V> componentType3, V value3
-  ){
-    ItemStack stack = new ItemStack(item);
-    stack.set(componentType, value);
-    stack.set(componentType2, value2);
-    stack.set(componentType3, value3);
-    return stack;
-  }
-  private static <T, U, V, R> ItemStack components(ItemConvertible item,
-                                                   ComponentType<T> componentType, T value,
-                                                   ComponentType<U> componentType2, U value2,
-                                                   ComponentType<V> componentType3, V value3,
-                                                   ComponentType<R> componentType4, R value4
-  ){
-    ItemStack stack = new ItemStack(item);
-    stack.set(componentType, value);
-    stack.set(componentType2, value2);
-    stack.set(componentType3, value3);
-    stack.set(componentType4, value4);
     return stack;
   }
 }

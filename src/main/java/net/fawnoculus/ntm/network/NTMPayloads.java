@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
+import net.fawnoculus.ntm.network.c2s.ItemInteractionPayload;
 import net.fawnoculus.ntm.network.s2c.*;
 
 public class NTMPayloads {
@@ -16,5 +17,6 @@ public class NTMPayloads {
     PayloadTypeRegistry.playS2C().register(InventorySyncPayload.ID, InventorySyncPayload.PACKET_CODEC);
 
     PayloadTypeRegistry.playC2S().register(BEInteractionPayload.ID, BEInteractionPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playC2S().register(ItemInteractionPayload.ID, ItemInteractionPayload.PACKET_CODEC);
   }
 }

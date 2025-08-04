@@ -46,30 +46,55 @@ public class NTMBlocks {
 
   // Ore Blocks
   public static final Block URANIUM_ORE = register("uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_URANIUM_ORE = register("deepslate_uranium_ore", Block::new, STONE_SETTINGS);
   public static final Block SCORCHED_URANIUM_ORE = register("scorched_uranium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_SCORCHED_URANIUM_ORE = register("deepslate_scorched_uranium_ore", Block::new, STONE_SETTINGS);
   public static final Block TITANIUM_ORE = register("titanium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_TITANIUM_ORE = register("deepslate_titanium_ore", Block::new, STONE_SETTINGS);
   public static final Block SULFUR_ORE = register("sulfur_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_SULFUR_ORE = register("deepslate_sulfur_ore", Block::new, STONE_SETTINGS);
   public static final Block THORIUM_ORE = register("thorium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_THORIUM_ORE = register("deepslate_thorium_ore", Block::new, STONE_SETTINGS);
   public static final Block NITER_ORE = register("niter_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_NITER_ORE = register("deepslate_niter_ore", Block::new, STONE_SETTINGS);
   public static final Block TUNGSTEN_ORE = register("tungsten_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_TUNGSTEN_ORE = register("deepslate_tungsten_ore", Block::new, STONE_SETTINGS);
   public static final Block ALUMINIUM_BEARING_ORE = register("aluminium_bearing_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_ALUMINIUM_BEARING_ORE = register("deepslate_aluminium_bearing_ore", Block::new, STONE_SETTINGS);
   public static final Block FLUORITE_ORE = register("fluorite_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_FLUORITE_ORE = register("deepslate_fluorite_ore", Block::new, STONE_SETTINGS);
   public static final Block LEAD_ORE = register("lead_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_LEAD_ORE = register("deepslate_lead_ore", Block::new, STONE_SETTINGS);
   public static final Block SCHRABIDIUM_ORE = register("schrabidium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_SCHRABIDIUM_ORE = register("deepslate_schrabidium_ore", Block::new, STONE_SETTINGS);
   public static final Block BERYLLIUM_ORE = register("beryllium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_BERYLLIUM_ORE = register("deepslate_beryllium_ore", Block::new, STONE_SETTINGS);
   public static final Block AUSTRALIUM_ORE = register("australium_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_AUSTRALIUM_ORE = register("deepslate_australium_ore", Block::new, STONE_SETTINGS);
   public static final Block RARE_EARTH_ORE = register("rare_earth_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_RARE_EARTH_ORE = register("deepslate_rare_earth_ore", Block::new, STONE_SETTINGS);
   public static final Block COBALT_ORE = register("cobalt_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_COBALT_ORE = register("deepslate_cobalt_ore", Block::new, STONE_SETTINGS);
   public static final Block CINNEBAR_ORE = register("cinnebar_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_CINNEBAR_ORE = register("deepslate_cinnebar_ore", Block::new, STONE_SETTINGS);
   public static final Block COLTAN_ORE = register("coltan_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_COLTAN_ORE = register("deepslate_coltan_ore", Block::new, STONE_SETTINGS);
   public static final Block LIGNITE_ORE = register("lignite_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_LIGNITE_ORE = register("deepslate_lignite_ore", Block::new, STONE_SETTINGS);
   public static final Block ASBESTOS_ORE = register("asbestos_ore", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_ASBESTOS_ORE = register("deepslate_asbestos_ore", Block::new, STONE_SETTINGS);
   public static final Block OIL_DEPOSIT = register("oil_deposit", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_OIL_DEPOSIT = register("deepslate_oil_deposit", Block::new, STONE_SETTINGS);
   public static final Block EMPTY_OIL_DEPOSIT = register("empty_oil_deposit", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_EMPTY_OIL_DEPOSIT = register("deepslate_empty_oil_deposit", Block::new, STONE_SETTINGS);
   public static final Block ALUMINIUM_ORE_CLUSTER = register("aluminium_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_ALUMINIUM_ORE_CLUSTER = register("deepslate_aluminium_ore_cluster", Block::new, STONE_SETTINGS);
   public static final Block COPPER_ORE_CLUSTER = register("copper_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_COPPER_ORE_CLUSTER = register("deepslate_copper_ore_cluster", Block::new, STONE_SETTINGS);
   public static final Block IRON_ORE_CLUSTER = register("iron_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_IRON_ORE_CLUSTER = register("deepslate_iron_ore_cluster", Block::new, STONE_SETTINGS);
   public static final Block TITANIUM_ORE_CLUSTER = register("titanium_ore_cluster", Block::new, STONE_SETTINGS);
+  public static final Block DEEPSLATE_TITANIUM_ORE_CLUSTER = register("deepslate_titanium_ore_cluster", Block::new, STONE_SETTINGS);
 
   public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
   public static final Block OILY_DIRT = register("oily_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
@@ -83,6 +108,7 @@ public class NTMBlocks {
   public static final Block DEPTH_TITANIUM_ORE_CLUSTER = register("depth_titanium_ore_cluster", Block::new, DEPTH_STONE_SETTINGS);
   public static final Block DEPTH_TUNGSTEN_ORE_CLUSTER = register("depth_tungsten_ore_cluster", Block::new, DEPTH_STONE_SETTINGS);
   public static final Block ALEXANDRITE_ORE = register("alexandrite_ore", Block::new, DEPTH_STONE_SETTINGS);
+  public static final Block DEEPSLATE_ALEXANDRITE_ORE = register("deepslate_alexandrite_ore", Block::new, DEPTH_STONE_SETTINGS);
 
   public static final Block VOLCANIC_BASALT = register("volcanic_basalt", Block::new, STONE_SETTINGS);
   public static final Block SULFUR_RICH_VOLCANIC_BASALT = register("sulfur_rich_volcanic_basalt", Block::new, STONE_SETTINGS);

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.gui.area;
 
 import net.fawnoculus.ntm.blocks.node.NodeWithValue;
-import net.fawnoculus.ntm.render.NTMResources;
+import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -28,7 +28,7 @@ public class EnergyBar implements InfoBar{
   private final NodeWithValue NODE;
   private final Supplier<Text>[] EXTRA_TEXT;
 
-  private Identifier TEXTURE = NTMResources.Textures.GENERIC_ENERGY_BAR;
+  private Identifier TEXTURE = NTMTextures.GENERIC_ENERGY_BAR;
   private int U = 0;
   private int V = 0;
   private int TEXTURE_WIDTH = 52;
