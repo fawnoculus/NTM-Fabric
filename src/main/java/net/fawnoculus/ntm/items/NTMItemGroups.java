@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.component.ComponentType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -650,57 +651,57 @@ public class NTMItemGroups {
     });
     ItemGroupEvents.modifyEntriesEvent(MACHINE_ITEMS_AND_FUEL_KEY).register(ItemGroup -> {
       ItemGroup.add(NTMItems.BATTERY);
-      ItemGroup.add(components(NTMItems.BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 5_000L));
+      ItemGroup.add(charged(NTMItems.BATTERY, 5_000L));
       ItemGroup.add(NTMItems.REDSTONE_POWER_CELL);
-      ItemGroup.add(components(NTMItems.REDSTONE_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 15_000L));
+      ItemGroup.add(charged(NTMItems.REDSTONE_POWER_CELL, 15_000L));
       ItemGroup.add(NTMItems.SIXFOLD_REDSTONE_POWER_CELL);
-      ItemGroup.add(components(NTMItems.SIXFOLD_REDSTONE_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 90_000L));
+      ItemGroup.add(charged(NTMItems.SIXFOLD_REDSTONE_POWER_CELL, 90_000L));
       ItemGroup.add(NTMItems.TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL);
-      ItemGroup.add(components(NTMItems.TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 360_000L));
+      ItemGroup.add(charged(NTMItems.TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL, 360_000L));
       ItemGroup.add(NTMItems.ADVANCED_BATTERY);
-      ItemGroup.add(components(NTMItems.ADVANCED_BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 20_000L));
+      ItemGroup.add(charged(NTMItems.ADVANCED_BATTERY, 20_000L));
       ItemGroup.add(NTMItems.ADVANCED_POWER_CELL);
-      ItemGroup.add(components(NTMItems.ADVANCED_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 60_000L));
+      ItemGroup.add(charged(NTMItems.ADVANCED_POWER_CELL, 60_000L));
       ItemGroup.add(NTMItems.QUADRUPLE_ADVANCED_POWER_CELL);
-      ItemGroup.add(components(NTMItems.QUADRUPLE_ADVANCED_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 240_000L));
+      ItemGroup.add(charged(NTMItems.QUADRUPLE_ADVANCED_POWER_CELL, 240_000L));
       ItemGroup.add(NTMItems.TWELVEFOLD_ADVANCED_POWER_CELL);
-      ItemGroup.add(components(NTMItems.TWELVEFOLD_ADVANCED_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 720_000L));
+      ItemGroup.add(charged(NTMItems.TWELVEFOLD_ADVANCED_POWER_CELL, 720_000L));
       ItemGroup.add(NTMItems.LITHIUM_ION_BATTERY);
-      ItemGroup.add(components(NTMItems.LITHIUM_ION_BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 250_000L));
+      ItemGroup.add(charged(NTMItems.LITHIUM_ION_BATTERY, 250_000L));
       ItemGroup.add(NTMItems.LITHIUM_ION_POWER_CELL);
-      ItemGroup.add(components(NTMItems.LITHIUM_ION_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 750_000L));
+      ItemGroup.add(charged(NTMItems.LITHIUM_ION_POWER_CELL, 750_000L));
       ItemGroup.add(NTMItems.TRIPLE_LITHIUM_ION_POWER_CELL);
-      ItemGroup.add(components(NTMItems.TRIPLE_LITHIUM_ION_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 2_250_000L));
+      ItemGroup.add(charged(NTMItems.TRIPLE_LITHIUM_ION_POWER_CELL, 2_250_000L));
       ItemGroup.add(NTMItems.SIXFOLD_LITHIUM_ION_POWER_CELL);
-      ItemGroup.add(components(NTMItems.SIXFOLD_LITHIUM_ION_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 4_500_000L));
+      ItemGroup.add(charged(NTMItems.SIXFOLD_LITHIUM_ION_POWER_CELL, 4_500_000L));
       ItemGroup.add(NTMItems.SCHRABIDIUM_BATTERY);
-      ItemGroup.add(components(NTMItems.SCHRABIDIUM_BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000_000L));
+      ItemGroup.add(charged(NTMItems.SCHRABIDIUM_BATTERY, 1_000_000L));
       ItemGroup.add(NTMItems.SCHRABIDIUM_POWER_CELL);
-      ItemGroup.add(components(NTMItems.SCHRABIDIUM_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 3_000_000L));
+      ItemGroup.add(charged(NTMItems.SCHRABIDIUM_POWER_CELL, 3_000_000L));
       ItemGroup.add(NTMItems.DOUBLE_SCHRABIDIUM_POWER_CELL);
-      ItemGroup.add(components(NTMItems.DOUBLE_SCHRABIDIUM_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 6_000_000L));
+      ItemGroup.add(charged(NTMItems.DOUBLE_SCHRABIDIUM_POWER_CELL, 6_000_000L));
       ItemGroup.add(NTMItems.QUADRUPLE_SCHRABIDIUM_POWER_CELL);
-      ItemGroup.add(components(NTMItems.QUADRUPLE_SCHRABIDIUM_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 12_000_000L));
+      ItemGroup.add(charged(NTMItems.QUADRUPLE_SCHRABIDIUM_POWER_CELL, 12_000_000L));
       ItemGroup.add(NTMItems.SPARK_BATTERY);
-      ItemGroup.add(components(NTMItems.SPARK_BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 100_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_BATTERY, 100_000_000L));
       ItemGroup.add(NTMItems.OFF_BRAND_SPARK_BATTERY);
-      ItemGroup.add(components(NTMItems.OFF_BRAND_SPARK_BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 5_000_000L));
+      ItemGroup.add(charged(NTMItems.OFF_BRAND_SPARK_BATTERY, 5_000_000L));
       ItemGroup.add(NTMItems.SPARK_POWER_CELL);
-      ItemGroup.add(components(NTMItems.SPARK_POWER_CELL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 600_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_POWER_CELL, 600_000_000L));
       ItemGroup.add(NTMItems.SPARK_ARCANE_CAR_BATTERY);
-      ItemGroup.add(components(NTMItems.SPARK_ARCANE_CAR_BATTERY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 2_500_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_ARCANE_CAR_BATTERY, 2_500_000_000L));
       ItemGroup.add(NTMItems.SPARK_ARCANE_ENERGY_STORAGE_ARRAY);
-      ItemGroup.add(components(NTMItems.SPARK_ARCANE_ENERGY_STORAGE_ARRAY, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 10_000_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_ARCANE_ENERGY_STORAGE_ARRAY, 10_000_000_000L));
       ItemGroup.add(NTMItems.SPARK_ARCANE_MASS_ENERGY_VOID);
-      ItemGroup.add(components(NTMItems.SPARK_ARCANE_MASS_ENERGY_VOID, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 100_000_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_ARCANE_MASS_ENERGY_VOID, 100_000_000_000L));
       ItemGroup.add(NTMItems.SPARK_ARCANE_DIRAC_SEA);
-      ItemGroup.add(components(NTMItems.SPARK_ARCANE_DIRAC_SEA, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 250_000_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_ARCANE_DIRAC_SEA, 250_000_000_000L));
       ItemGroup.add(NTMItems.SPARK_SOLID_SPACE_TIME_CRYSTAL);
-      ItemGroup.add(components(NTMItems.SPARK_SOLID_SPACE_TIME_CRYSTAL, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000_000_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_SOLID_SPACE_TIME_CRYSTAL, 1_000_000_000_000L));
       ItemGroup.add(NTMItems.SPARK_LUDICROUS_ENERGY_STORAGE_UNIT);
-      ItemGroup.add(components(NTMItems.SPARK_LUDICROUS_ENERGY_STORAGE_UNIT, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 100_000_000_000_000L));
+      ItemGroup.add(charged(NTMItems.SPARK_LUDICROUS_ENERGY_STORAGE_UNIT, 100_000_000_000_000L));
       ItemGroup.add(NTMItems.ELECTRONIUM_CUBE);
-      ItemGroup.add(components(NTMItems.ELECTRONIUM_CUBE, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000_000_000_000_000_000L));
+      ItemGroup.add(charged(NTMItems.ELECTRONIUM_CUBE, 1_000_000_000_000_000_000L));
       ItemGroup.add(NTMItems.INFINITE_BATTERY);
       ItemGroup.add(NTMItems.POTATO_BATTERY);
       ItemGroup.add(NTMItems.POTATOS);
@@ -717,7 +718,6 @@ public class NTMItemGroups {
       ItemGroup.add(NTMItems.NULL);
     });
     ItemGroupEvents.modifyEntriesEvent(ORES_AND_BLOCKS_KEY).register(ItemGroup -> {
-      ItemGroup.add(new ItemStack(NTMItems.BATTERY));
       ItemGroup.add(NTMBlocks.URANIUM_ORE);
       ItemGroup.add(NTMBlocks.DEEPSLATE_URANIUM_ORE);
       ItemGroup.add(NTMBlocks.SCORCHED_URANIUM_ORE);
@@ -1100,7 +1100,10 @@ public class NTMItemGroups {
     });
   }
 
-  private static <T> ItemStack components(ItemConvertible item, ComponentType<T> componentType, T value){
+  private static <T extends Item> ItemStack charged(T item, long charge){
+    return component(item, NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, charge);
+  }
+  private static <T> ItemStack component(ItemConvertible item, ComponentType<T> componentType, T value){
     ItemStack stack = new ItemStack(item);
     stack.set(componentType, value);
     return stack;

@@ -7,6 +7,8 @@
 * Node Network System (aka: Energy Cables & Fluid Pipes)
 * Ore Drops
 * Raw Ores
+* Deepslate Ore Versions
+* Ore Generation
 * Some Consumables
 * Debug & Construction Wand
 * Geiger Counter & Dosimeter
