@@ -42,6 +42,18 @@ public class NTMPOrePlacedFeatures {
   public static final RegistryKey<PlacedFeature> IRON_ORE_CLUSTER_PLACED_KEY = registryKey("iron_ore_cluster_placed");
   public static final RegistryKey<PlacedFeature> TITANIUM_ORE_CLUSTER_PLACED_KEY = registryKey("titanium_ore_cluster_placed");
 
+  public static final RegistryKey<PlacedFeature> SMOLDERING_NETHERRACK_PLACED_KEY = registryKey("smoldering_netherrack_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_COAL_ORE_PLACED_KEY = registryKey("nether_coal_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_URANIUM_ORE_PLACED_KEY = registryKey("nether_uranium_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_PLUTONIUM_ORE_PLACED_KEY = registryKey("nether_plutonium_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_TUNGSTEN_ORE_PLACED_KEY = registryKey("nether_tungsten_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_SULFUR_ORE_PLACED_KEY = registryKey("nether_sulfur_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_PHOSPHORUS_ORE_PLACED_KEY = registryKey("nether_phosphorus_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_COBALT_ORE_PLACED_KEY = registryKey("nether_cobalt_ore_placed");
+  public static final RegistryKey<PlacedFeature> NETHER_SCHRABIDIUM_ORE_PLACED_KEY = registryKey("nether_schrabidium_ore_placed");
+
+  public static final RegistryKey<PlacedFeature> TRIXITE_ORE_PLACED_KEY = registryKey("trixite_ore_placed");
+
 
   public static void initialize(@NotNull Registerable<PlacedFeature> context){
     var configuredFeatures = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
@@ -174,6 +186,68 @@ public class NTMPOrePlacedFeatures {
       )
     );
     register(context, TITANIUM_ORE_CLUSTER_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+
+    register(context, SMOLDERING_NETHERRACK_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_COAL_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_URANIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_PLUTONIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_TUNGSTEN_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_SULFUR_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_PHOSPHORUS_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_COBALT_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+    register(context, NETHER_SCHRABIDIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
+      modifiersWithCount(14,
+        HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
+
+      )
+    );
+
+    register(context, TRIXITE_ORE_PLACED_KEY, configuredFeatures.getOrThrow(NTMOreConfiguredFeatures.TITANIUM_ORE_CLUSTER_KEY),
       modifiersWithCount(14,
         HeightRangePlacementModifier.uniform(YOffset.fixed(-80), YOffset.fixed(80))
 

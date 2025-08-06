@@ -15,6 +15,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -71,7 +72,7 @@ public class NTMBlocks {
     .sounds(BlockSoundGroup.STONE)
     .mapColor(MapColor.GRAY)
     .strength(2f, 6.0f);
-  private static AbstractBlock.Settings advancedModel(AbstractBlock.Settings settings){
+  private static AbstractBlock.Settings advancedModel(AbstractBlock.@NotNull Settings settings){
     return settings.nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never);
   }
 

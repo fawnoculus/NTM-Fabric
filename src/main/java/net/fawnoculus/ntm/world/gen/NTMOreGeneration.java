@@ -29,5 +29,17 @@ public class NTMOreGeneration {
     BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.COPPER_ORE_CLUSTER_PLACED_KEY);
     BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.IRON_ORE_CLUSTER_PLACED_KEY);
     BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.TITANIUM_ORE_CLUSTER_PLACED_KEY);
+
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.SMOLDERING_NETHERRACK_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_COAL_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_URANIUM_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_PLUTONIUM_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_TUNGSTEN_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_SULFUR_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_PHOSPHORUS_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_COBALT_ORE_PLACED_KEY);
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.NETHER_SCHRABIDIUM_ORE_PLACED_KEY);
+
+    BiomeModifications.addFeature(BiomeSelectors.foundInTheEnd(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.TRIXITE_ORE_PLACED_KEY);
   }
 }

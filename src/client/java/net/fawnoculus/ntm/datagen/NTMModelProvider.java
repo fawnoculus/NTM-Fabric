@@ -1137,6 +1137,6 @@ public class NTMModelProvider extends FabricModelProvider {
 
   @Override
   public String getName() {
-    return NTM.MOD_NAME+" Model3D Provider";
+    return NTM.MOD_NAME+" Model Provider";
   }
 }

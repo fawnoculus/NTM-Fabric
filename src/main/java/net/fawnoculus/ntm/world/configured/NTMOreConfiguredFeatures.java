@@ -42,6 +42,18 @@ public class NTMOreConfiguredFeatures {
   public static final RegistryKey<ConfiguredFeature<?, ?>> IRON_ORE_CLUSTER_KEY = registryKey("iron_ore_cluster");
   public static final RegistryKey<ConfiguredFeature<?, ?>> TITANIUM_ORE_CLUSTER_KEY = registryKey("titanium_ore_cluster");
 
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SMOLDERING_NETHERRACK_KEY = registryKey("smoldering_netherrack");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_COAL_ORE_KEY = registryKey("nether_coal_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_URANIUM_ORE_KEY = registryKey("nether_uranium_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_PLUTONIUM_ORE_KEY = registryKey("nether_plutonium_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_TUNGSTEN_ORE_KEY = registryKey("nether_tungsten_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_SULFUR_ORE_KEY = registryKey("nether_sulfur_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_PHOSPHORUS_ORE_KEY = registryKey("nether_phosphorus_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_COBALT_ORE_KEY = registryKey("nether_cobalt_ore");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_SCHRABIDIUM_ORE_KEY = registryKey("nether_schrabidium_ore");
+
+  public static final RegistryKey<ConfiguredFeature<?, ?>> TRIXITE_ORE_KEY = registryKey("trixite_ore");
+
   public static void initialize(Registerable<ConfiguredFeature<?, ?>> context){
     final RuleTest StoneReplaceable = new TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES);
     final RuleTest DeepslateReplaceable = new TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
@@ -138,6 +150,38 @@ public class NTMOreConfiguredFeatures {
       OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TITANIUM_ORE_CLUSTER.getDefaultState())
     );
 
+    List<OreFeatureConfig.Target> smolderingNetherrack = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.SMOLDERING_NETHERRACK.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherCoalOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_COAL_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherUraniumOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_URANIUM_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherPlutoniumOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_PLUTONIUM_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherTungstenOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_TUNGSTEN_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherSulfurOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_SULFUR_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherPhosphorusOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_PHOSPHORUS_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherCobaltOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_COBALT_ORE.getDefaultState())
+    );
+    List<OreFeatureConfig.Target> netherSchrabidiumOres = List.of(
+      OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_SCHRABIDIUM_ORE.getDefaultState())
+    );
+
+    List<OreFeatureConfig.Target> trixiteOres = List.of(
+      OreFeatureConfig.createTarget(EndStoneReplaceable, NTMBlocks.TRIXITE_ORE.getDefaultState())
+    );
+
     register(context, URANIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(uraniumOres, 10));
     register(context, TITANIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(titaniumOres, 10));
     register(context, SULFUR_ORE_KEY, Feature.ORE, new OreFeatureConfig(sulfurOres, 10));
@@ -160,6 +204,18 @@ public class NTMOreConfiguredFeatures {
     register(context, COPPER_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(copperOreClusters, 10));
     register(context, IRON_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(ironOreClusters, 10));
     register(context, TITANIUM_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(titaniumOreClusters, 10));
+
+    register(context, SMOLDERING_NETHERRACK_KEY, Feature.ORE, new OreFeatureConfig(smolderingNetherrack, 1));
+    register(context, NETHER_COAL_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherCoalOres, 1));
+    register(context, NETHER_URANIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherUraniumOres, 1));
+    register(context, NETHER_PLUTONIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherPlutoniumOres, 1));
+    register(context, NETHER_TUNGSTEN_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherTungstenOres, 1));
+    register(context, NETHER_SULFUR_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherSulfurOres, 1));
+    register(context, NETHER_PHOSPHORUS_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherPhosphorusOres, 1));
+    register(context, NETHER_COBALT_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherCobaltOres, 1));
+    register(context, NETHER_SCHRABIDIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherSchrabidiumOres, 1));
+
+    register(context, TRIXITE_ORE_KEY, Feature.ORE, new OreFeatureConfig(trixiteOres, 1));
   }
 
 
