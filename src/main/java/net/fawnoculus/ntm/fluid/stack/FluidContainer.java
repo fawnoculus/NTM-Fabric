@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.util.fluid;
+package net.fawnoculus.ntm.fluid.stack;
 
 public interface FluidContainer {
   FluidStack getFluidStorage();

@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.blocks.node;
 import net.fawnoculus.ntm.blocks.node.network.NetworkType;
 import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.MutableText;
@@ -21,24 +22,24 @@ import java.util.UUID;
 public interface Node {
   MutableText getNodeType();
   NetworkType getNetworkType();
-  
+
   void setShouldAssignNetwork(boolean value);
   boolean shouldAssignNetwork();
-  
+
   void setNetwork(NodeNetwork network);
   @Nullable NodeNetwork getNetwork();
-  
+
   BlockPos getPos();
   World getWorld();
-  
+
   default Node getNode(){
     return this;
   }
-  
+
   default NodeNetwork makeNewNetwork(){
     return this.getNetworkType().makeNewNetwork();
   }
-  
+
   /**
    * this can be overwritten to allow a node to connect to things that are not directly next to itself
    * @return a List of all Nodes this Node is connected to
@@ -56,7 +57,7 @@ public interface Node {
     nodes.addAll(this.checkForNode(world.getBlockEntity(pos.west())));
     return nodes;
   }
-  
+
   default void assignNetwork() {
     if (!this.shouldAssignNetwork()) return;
     try {
@@ -70,17 +71,13 @@ public interface Node {
       if (!detectedNetwork.containsNode(this)) {
         detectedNetwork.addNode(this);
       }
-      
+
       this.setNetwork(detectedNetwork);
-    } catch (Throwable e) {
-      StringBuilder Exception = new StringBuilder(e.toString());
-      for (StackTraceElement element : e.getStackTrace()) {
-        Exception.append("\n\t").append(element.toString());
-      }
-      NTM.LOGGER.error("Failed assigning Network to Node at {}\nException: {}", this.getPos().toShortString(), Exception);
+    } catch (Throwable throwable) {
+      NTM.LOGGER.error("Failed assigning Network to Node at {}\nException: {}", this.getPos().toShortString(), ExceptionUtil.makePretty(throwable));
     }
   }
-  
+
   default NodeNetwork findNetwork(Node node, NodeNetwork detectedNetwork){
     NodeNetwork foundNetwork;
     try{
@@ -90,22 +87,22 @@ public interface Node {
     }catch (Exception ignored){
       return detectedNetwork;
     }
-    
+
     if(detectedNetwork != null && !foundNetwork.equals(detectedNetwork)) {
       detectedNetwork.mergeNetworksAt(this);
       return detectedNetwork;
     }
-    
+
     return foundNetwork;
   }
-  
+
   default List<Node> checkForNode(Object object){
     List<Object> toBeChecked = new ArrayList<>();
     toBeChecked.add(object);
     if(object instanceof MultiNode multiNode){
       toBeChecked.addAll(multiNode.getNodes());
     }
-    
+
     List<Node> nodes = new ArrayList<>();
     for(Object o : toBeChecked){
       try{
@@ -117,12 +114,12 @@ public interface Node {
     }
     return nodes;
   }
-  
+
   default boolean canConnectTo(@Nullable Node node){
     if(node == null) return false;
     return node.getNetworkType().sameAs(this.getNetworkType());
   }
-  
+
   default void readNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     UUID uuid = null;
     try {
@@ -141,7 +138,7 @@ public interface Node {
       nbt.putString("network", this.getNetwork().ID.toString());
     }
   }
-  
+
   default void onBreak(){
     if(this.getConnectedNodes().size() > 1 && this.getNetwork() != null){
       this.getNetwork().disconnectNode(this);
@@ -150,11 +147,11 @@ public interface Node {
   }
   default void onUnload(){
     setShouldAssignNetwork(false);
-    
+
     if(this.getNetwork() != null){
       this.getNetwork().removeNode(this);
     }
-    
+
     this.setNetwork(null);
   }
 }

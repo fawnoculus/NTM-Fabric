@@ -5,16 +5,15 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BlockItemMixin",
-    "ChunkMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "PlayerManagerMixin",
     "SerializedChunkMixin",
-    "ServerChunkLoadingManagerMixin",
     "ServerPlayerInteractionManagerMixin",
     "ServerWorldMixin",
-    "WorldChunkMixin"
+    "WorldChunkMixin",
+    "accessor.PersistentStateManagerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

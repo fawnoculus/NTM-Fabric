@@ -11,12 +11,12 @@ import org.jetbrains.annotations.Nullable;
 public interface FluidNode extends Node {
   Fluid getFluidType();
   void setFluidType(Fluid fluid);
-  
+
   @Override
   default NetworkType getNetworkType(){
     return new NetworkType.Fluid();
   }
-  
+
   @Override
   default boolean canConnectTo(@Nullable Node node) {
     if(node instanceof FluidNode fluidNode){
@@ -24,15 +24,15 @@ public interface FluidNode extends Node {
     }
     return Node.super.canConnectTo(node);
   }
-  
+
   default void readFluidNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries){
     nbt.get("fluid_type", NTMCodecs.FLUID_CODEC).ifPresent(this::setFluidType);
   }
-  
+
   default void writeFluidNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries){
     if(this.getFluidType() != null){
       nbt.put("fluid_type", NTMCodecs.FLUID_CODEC, this.getFluidType());
     }
   }
-  
+
 }

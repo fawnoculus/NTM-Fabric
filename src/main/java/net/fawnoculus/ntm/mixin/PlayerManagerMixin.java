@@ -2,7 +2,9 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.fluid.data.FluidDataRegistry;
 import net.fawnoculus.ntm.misc.radiation.HazmatRegistry;
+import net.fawnoculus.ntm.network.s2c.FluidDataRegistryPayload;
 import net.fawnoculus.ntm.network.s2c.HazmatRegistryPayload;
 import net.fawnoculus.ntm.network.s2c.NTMVersionPayload;
 import net.fawnoculus.ntm.network.s2c.RadiationRegistryPayload;
@@ -29,5 +31,9 @@ public abstract class PlayerManagerMixin {
   @Inject(method = "onPlayerConnect", at = @At("TAIL"))
   private void sendHazmatRegistry(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
     ServerPlayNetworking.send(player, new HazmatRegistryPayload(HazmatRegistry.getInstance().serialize()));
+  }
+  @Inject(method = "onPlayerConnect", at = @At("TAIL"))
+  private void sendFluidDataRegistry(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
+    ServerPlayNetworking.send(player, new FluidDataRegistryPayload(FluidDataRegistry.encodeAllFluidData()));
   }
 }

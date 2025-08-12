@@ -294,6 +294,16 @@ public class NTMBlocks {
   public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), AbstractBlock.Settings.create());
   public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), AbstractBlock.Settings.create());
 
+  // Fluid Stuff
+  /* FIXME
+  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+   */
+
   private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings){
     return register(name, blockFactory, settings, true);
   }

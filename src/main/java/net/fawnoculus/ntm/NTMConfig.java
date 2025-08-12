@@ -44,6 +44,15 @@ public class NTMConfig {
     "What fluid unit should be used",
     "MilliBuckets", "Droplets"
   );
+  public static final StringOption TempUnit = CommonConfig.newStringOption(
+    "TempUnit", "Celsius",
+    "What Temperature unit should be used",
+    "Celsius", "Fahrenheit", "Kelvin"
+  );
+  public static final IntegerOption MaxRegionDataCache = CommonConfig.newIntegerOption(
+    "MaxRegionDataCache", 512,
+    "The max Custom Data Regions the Custom Data System will keep cached before flushing it to the world file"
+  );
   public static final IntegerOption MaxNodeScanDepth = CommonConfig.newIntegerOption(
       "MaxNodeScanDepth", 100000,
       "The max Amount of Blocks a node-network will scan through when nodes are added/removed. Set to 0 to disable limit"

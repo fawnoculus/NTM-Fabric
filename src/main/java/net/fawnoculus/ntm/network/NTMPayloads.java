@@ -13,6 +13,7 @@ public class NTMPayloads {
     PayloadTypeRegistry.playS2C().register(RadiationInformationPayload.ID, RadiationInformationPayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(RadiationRegistryPayload.ID, RadiationRegistryPayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(HazmatRegistryPayload.ID, HazmatRegistryPayload.PACKET_CODEC);
+    PayloadTypeRegistry.playS2C().register(FluidDataRegistryPayload.ID, FluidDataRegistryPayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(NTMVersionPayload.ID, NTMVersionPayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(InventorySyncPayload.ID, InventorySyncPayload.PACKET_CODEC);
 

@@ -1,0 +1,25 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [48, 28],
+	"textures": {
+		"0": "corroded_barrel",
+		"particle": "corroded_barrel"
+	},
+	"elements": [
+		{
+			"name": "barrel",
+			"from": [2, 0, 2],
+			"to": [14, 16, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
+			"faces": {
+				"north": {"uv": [0, 7.04762, 4, 16], "texture": "#0"},
+				"east": {"uv": [4, 7.04762, 8, 16], "texture": "#0"},
+				"south": {"uv": [8, 7.04762, 12, 16], "texture": "#0"},
+				"west": {"uv": [12, 7.04762, 16, 16], "texture": "#0"},
+				"up": {"uv": [4, 0, 8, 6.85714], "texture": "#0"},
+				"down": {"uv": [8, 0, 12, 6.85714], "texture": "#0"}
+			}
+		}
+	]
+}

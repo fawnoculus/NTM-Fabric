@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.fluid;
+package net.fawnoculus.ntm.fluid.data;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler;
@@ -18,7 +18,7 @@ public class FluidAttributeBuilder {
   public static FluidAttributeBuilder create(){
     return new FluidAttributeBuilder();
   }
-  
+
   private @Nullable Function<FluidVariant, Text> name = null;
   private @Nullable Function<FluidVariant, Optional<SoundEvent>> fillSound = null;
   private @Nullable Function<FluidVariant, Optional<SoundEvent>> emptySound = null;
@@ -26,7 +26,7 @@ public class FluidAttributeBuilder {
   private @Nullable Function<FluidVariant, Integer> temperature = null;
   private @Nullable BiFunction<FluidVariant, @Nullable World, Integer> viscosity = null;
   private @Nullable Function<FluidVariant, Boolean> isLighterThanAir = null;
-  
+
   public FluidAttributeBuilder name(@Nullable Function<FluidVariant, Text> name) {
     this.name = name;
     return this;
@@ -35,7 +35,7 @@ public class FluidAttributeBuilder {
     this.name = (fluidVariant) -> name;
     return this;
   }
-  
+
   public FluidAttributeBuilder fillSound(@Nullable Function<FluidVariant, Optional<SoundEvent>> fillSound) {
     this.fillSound = fillSound;
     return this;
@@ -44,7 +44,7 @@ public class FluidAttributeBuilder {
     this.fillSound = (fluidVariant) -> Optional.ofNullable(fillSound);
     return this;
   }
-  
+
   public FluidAttributeBuilder emptySound(@Nullable Function<FluidVariant, Optional<SoundEvent>> emptySound) {
     this.emptySound = emptySound;
     return this;
@@ -53,7 +53,7 @@ public class FluidAttributeBuilder {
     this.emptySound = (fluidVariant) -> Optional.ofNullable(emptySound);
     return this;
   }
-  
+
   public FluidAttributeBuilder luminance(@Nullable Function<FluidVariant, Integer> luminance) {
     this.luminance = luminance;
     return this;
@@ -62,7 +62,7 @@ public class FluidAttributeBuilder {
     this.luminance = (fluidVariant) -> luminance;
     return this;
   }
-  
+
   public FluidAttributeBuilder temperature(@Nullable Function<FluidVariant, Integer> temperature) {
     this.temperature = temperature;
     return this;
@@ -78,7 +78,7 @@ public class FluidAttributeBuilder {
   public FluidAttributeBuilder temperatureFahrenheit(@NotNull Integer fahrenheit) {
     return this.temperatureCelsius((int) ((fahrenheit - 32.0) / 1.8));
   }
-  
+
   public FluidAttributeBuilder viscosity(@Nullable BiFunction<FluidVariant, @Nullable World, Integer> viscosity) {
     this.viscosity = viscosity;
     return this;
@@ -87,7 +87,7 @@ public class FluidAttributeBuilder {
     this.viscosity = (fluidVariant, world) -> viscosity;
     return this;
   }
-  
+
   public FluidAttributeBuilder isLighterThanAir(@Nullable Function<FluidVariant, Boolean> isLighterThanAir) {
     this.isLighterThanAir = isLighterThanAir;
     return this;
@@ -96,7 +96,7 @@ public class FluidAttributeBuilder {
     this.isLighterThanAir = (fluidVariant) -> isLighterThanAir;
     return this;
   }
-  
+
   public FluidVariantAttributeHandler build() {
     return new FluidVariantAttributeHandler() {
       @Override
@@ -106,7 +106,7 @@ public class FluidAttributeBuilder {
         }
         return name.apply(fluidVariant);
       }
-      
+
       @Override
       public Optional<SoundEvent> getFillSound(FluidVariant variant) {
         if (fillSound == null) {
@@ -114,7 +114,7 @@ public class FluidAttributeBuilder {
         }
         return fillSound.apply(variant);
       }
-      
+
       @Override
       public Optional<SoundEvent> getEmptySound(FluidVariant variant) {
         if (emptySound == null) {
@@ -122,7 +122,7 @@ public class FluidAttributeBuilder {
         }
         return emptySound.apply(variant);
       }
-      
+
       @Override
       public int getLuminance(FluidVariant variant) {
         if (luminance == null) {
@@ -130,7 +130,7 @@ public class FluidAttributeBuilder {
         }
         return luminance.apply(variant);
       }
-      
+
       @Override
       public int getTemperature(FluidVariant variant) {
         if (temperature == null) {
@@ -138,7 +138,7 @@ public class FluidAttributeBuilder {
         }
         return temperature.apply(variant);
       }
-      
+
       @Override
       public int getViscosity(FluidVariant variant, @Nullable World world) {
         if (viscosity == null) {
@@ -146,7 +146,7 @@ public class FluidAttributeBuilder {
         }
         return viscosity.apply(variant, world);
       }
-      
+
       @Override
       public boolean isLighterThanAir(FluidVariant variant) {
         if (isLighterThanAir == null) {
@@ -156,7 +156,7 @@ public class FluidAttributeBuilder {
       }
     };
   }
-  
+
   public void register(Fluid fluid){
     FluidVariantAttributes.register(fluid, this.build());
   }

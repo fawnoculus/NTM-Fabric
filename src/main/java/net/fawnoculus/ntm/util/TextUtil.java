@@ -40,6 +40,7 @@ public class TextUtil {
     }
     return Text.translatable("generic.ntm.unit.p", String.format("%.1f", val / 1_000_000_000_000_000.0));
   }
+
   public static MutableText unit(long val, String suffixKey){
     return unit(val).append(Text.translatable(suffixKey));
   }
