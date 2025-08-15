@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WorldChunk.class)
 public abstract class WorldChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
-  @Shadow abstract public BlockState getBlockState(BlockPos pos);
+  @Shadow public abstract BlockState getBlockState(BlockPos pos);
   @Shadow public abstract World getWorld();
   @Unique private RadiationProcessor NTM$radiationProcessor = new EmptyRadiationProcessor();
 

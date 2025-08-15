@@ -1,9 +1,10 @@
 package net.fawnoculus.ntm.gui.area;
 
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
-import net.fawnoculus.ntm.blocks.node.type.FluidNodeWithValue;
+import net.fawnoculus.ntm.fluid.data.ClientFluidDataRegistry;
 import net.fawnoculus.ntm.fluid.stack.FluidStack;
 import net.fawnoculus.ntm.fluid.stack.FluidUnit;
+import net.fawnoculus.ntm.misc.NTMKeybinds;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -11,21 +12,14 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class FluidBar implements InfoBar{
-  @SafeVarargs
-  public FluidBar(int x, int y, int width, int height, FluidNodeWithValue fluidNode, Supplier<Text>... extraText){
-    this(x, y, width, height, fluidNode.getFluidStorage(), extraText);
-  }
-  @SafeVarargs
-  public FluidBar(int x, int y, int width, int height, FluidStack fluidStack, Supplier<Text>... extraText){
+  public FluidBar(int x, int y, int width, int height, FluidStack fluidStack){
     this.X = x;
     this.Y = y;
     this.WIDTH = width;
     this.HEIGHT = height;
     this.FLUID_STACK = fluidStack;
-    this.EXTRA_TEXT = extraText;
   }
 
   private final int X;
@@ -33,7 +27,6 @@ public class FluidBar implements InfoBar{
   private final int WIDTH;
   private final int HEIGHT;
   private final FluidStack FLUID_STACK;
-  private final Supplier<Text>[] EXTRA_TEXT;
 
   private int OFFSET_X;
   private int OFFSET_Y;
@@ -115,9 +108,7 @@ public class FluidBar implements InfoBar{
 
     tooltip.accept(Text.translatable("generic.ntm.amount_stored", amount, capacity));
 
-    for(Supplier<Text> supplier : EXTRA_TEXT){
-      tooltip.accept(supplier.get());
-    }
+    ClientFluidDataRegistry.getOrCreate(this.FLUID_STACK.getFluid()).appendTooltip(NTMKeybinds.DISPLAY_EXTRA_INFO.isPressed(), tooltip);
   }
 
   @Override

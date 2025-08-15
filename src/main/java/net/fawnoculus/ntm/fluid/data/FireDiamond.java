@@ -15,7 +15,7 @@ public class FireDiamond {
   public static final FluidDataType<SpecialNotice> WHITE = register("special_notice", SpecialNotice.CODEC, SpecialNotice.NONE);        // SPECIAL_NOTICE
 
   private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue){
-    return new FluidDataType<>(NTM.id(name), codec, defaultValue, null).register();
+    return new FluidDataType<>(NTM.id(name), codec, defaultValue, null, false).register();
   }
 
   public enum SpecialNotice {

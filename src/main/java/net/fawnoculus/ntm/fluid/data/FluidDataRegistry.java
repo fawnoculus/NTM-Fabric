@@ -62,9 +62,6 @@ public class FluidDataRegistry {
         return Optional.empty();
       }
     }
-    public <T> T getOrDefault(@NotNull FluidDataType<T> type, T fallback){
-      return get(type).orElse(fallback);
-    }
     public <T> T getOrDefault(@NotNull FluidDataType<T> type){
       return get(type).orElse(type.defaultValue());
     }

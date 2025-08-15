@@ -27,34 +27,37 @@ public class FluidDataTypes {
   public static final FluidDataType<Double> TEMPERATURE = register("temperature", Codec.DOUBLE, 20.0, Tooltips::temperature);
   public static final FluidDataType<Long> FLAMMABLE = register("flammable", Codec.LONG, 0L, Tooltips::flammable);
   public static final FluidDataType<Combustible> COMBUSTIBLE = register("combustible", Combustible.CODEC, Combustible.DEFAULT, Tooltips::combustible);
-  public static final FluidDataType<Polluting> POLLUTING = register("polluting", Polluting.CODEC, Polluting.DEFAULT, Tooltips::polluting);
+  public static final FluidDataType<Polluting> POLLUTING = register("polluting", Polluting.CODEC, Polluting.DEFAULT, Tooltips::polluting, true);
   public static final FluidDataType<Boolean> RADIOACTIVE = register("radioactive", Codec.BOOL, false, Tooltips::radioactive);
-  public static final FluidDataType<Boolean> TOXIC_FUMES = register("toxic_fumes", Codec.BOOL, false, Tooltips::toxicFumes);
-  public static final FluidDataType<ToxinData> TOXIN = register("toxin", ToxinData.CODEC, ToxinData.DEFAULT, Tooltips::toxin);
+  public static final FluidDataType<Boolean> TOXIC_FUMES = register("toxic_fumes", Codec.BOOL, false, Tooltips::toxicFumes, true);
+  public static final FluidDataType<ToxinData> TOXIN = register("toxin", ToxinData.CODEC, ToxinData.DEFAULT, Tooltips::toxin, true);
   public static final FluidDataType<Boolean> GLYPHID_PHEROMONES = register("glyphid_pheromones", Codec.BOOL, false, Tooltips::glyphidPheromones);
   public static final FluidDataType<Boolean> MODIFIED_PHEROMONES = register("modified_pheromones", Codec.BOOL, false, Tooltips::modifiedPheromones);
-  public static final FluidDataType<StateOfMatter> STATE_OF_MATTER = register("state_of_matter", StateOfMatter.CODEC, StateOfMatter.LIQUID, Tooltips::stateOfMatter);
-  public static final FluidDataType<Boolean> BREATHABLE = register("breathable", Codec.BOOL, false, Tooltips::breathable);
-  public static final FluidDataType<Boolean> VISCOUS = register("viscous", Codec.BOOL, false, Tooltips::viscous);
-  public static final FluidDataType<Boolean> DELICIOUS = register("delicious", Codec.BOOL, false, Tooltips::delicious);
+  public static final FluidDataType<StateOfMatter> STATE_OF_MATTER = register("state_of_matter", StateOfMatter.CODEC, StateOfMatter.LIQUID, Tooltips::stateOfMatter, true);
+  public static final FluidDataType<Boolean> BREATHABLE = register("breathable", Codec.BOOL, false, Tooltips::breathable, true);
+  public static final FluidDataType<Boolean> VISCOUS = register("viscous", Codec.BOOL, false, Tooltips::viscous, true);
+  public static final FluidDataType<Boolean> DELICIOUS = register("delicious", Codec.BOOL, false, Tooltips::delicious, true);
   public static final FluidDataType<Boolean> ANTIMATTER = register("antimatter", Codec.BOOL, false, Tooltips::antimatter);
 
 
   private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue, @Nullable FluidDataType.TooltipProvider<T> tooltip){
-    return new FluidDataType<>(NTM.id(name), codec, defaultValue, tooltip).register();
+    return register(name, codec, defaultValue, tooltip, false);
+  }
+  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue, @Nullable FluidDataType.TooltipProvider<T> tooltip, boolean hasExtraInfo){
+    return new FluidDataType<>(NTM.id(name), codec, defaultValue, tooltip, hasExtraInfo).register();
   }
 
   private static class Tooltips{
     private static void temperature(Double celsius, boolean showExtraInfo, Consumer<Text> tooltip){
       switch (NTMConfig.TempUnit.getValue()){
         case "Celsius" -> tooltip.accept(
-          Text.literal(String.format("%,.0f", celsius)).append(Text.translatable("generic.ntm.temp.c")).formatted(Formatting.RED)
+          Text.literal(String.format("%,.1f", celsius)).append(Text.translatable("generic.ntm.temp.c")).formatted(Formatting.RED)
         );
         case "Fahrenheit" -> tooltip.accept(
-          Text.literal(String.format("%,.0f", (celsius * 9 / 5) + 32)).append(Text.translatable("generic.ntm.temp.f")).formatted(Formatting.RED)
+          Text.literal(String.format("%,.1f", (celsius * 9 / 5) + 32)).append(Text.translatable("generic.ntm.temp.f")).formatted(Formatting.RED)
         );
         case "Kelvin" -> tooltip.accept(
-          Text.literal(String.format("%,.0f", celsius - 273.15)).append(Text.translatable("generic.ntm.temp.k")).formatted(Formatting.RED)
+          Text.literal(String.format("%,.1f", celsius - 273.15)).append(Text.translatable("generic.ntm.temp.k")).formatted(Formatting.RED)
         );
       }
     }

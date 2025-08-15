@@ -13,7 +13,8 @@ public record FluidDataType<T>(
   @NotNull Identifier identifier,
   @NotNull Codec<T> codec,
   @Nullable T defaultValue,
-  @Nullable TooltipProvider<T> tooltip
+  @Nullable TooltipProvider<T> tooltip,
+  boolean hasExtraInfo
 ) {
   public void encode(@NotNull NbtCompound nbt, @Nullable T value){
     if(value != null){
