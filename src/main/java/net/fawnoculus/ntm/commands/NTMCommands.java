@@ -43,154 +43,162 @@ public class NTMCommands {
   public static void initialize() {
 
     CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-        CommandManager.literal("ntm")
-            .then(CommandManager.literal("config")
-                .requires(source -> allowCommands(source, environment)
-                )
-                .then(CommandManager.literal("server")
-                )
-                .then(CommandManager.literal("world")
-                    .then(CommandManager.literal("default")
-                    )
-                )
-                .then(CommandManager.literal("client")
-                    .requires(ignored -> environment.integrated)
-                )
+      CommandManager.literal("ntm")
+        .then(CommandManager.literal("version")
+          .executes(context -> version(context, environment)
+          )
+        )
+        .then(CommandManager.literal("config")
+          .requires(source -> allowCommands(source, environment)
+          )
+          .then(CommandManager.literal("server")
+          )
+          .then(CommandManager.literal("world")
+            .then(CommandManager.literal("default")
             )
-            .then(CommandManager.literal("version")
-                .executes(context -> version(context, environment)
+          )
+          .then(CommandManager.literal("client")
+            .requires(ignored -> environment.integrated)
+          )
+        )
+        .then(CommandManager.literal("message")
+          .requires(source -> allowCommands(source, environment))
+          .then(CommandManager.argument("targets", EntityArgumentType.players())
+            .then(CommandManager.literal("send")
+              .then(CommandManager.argument("text", TextArgumentType.text(registryAccess))
+                .executes(context ->
+                  sendMessage(context,
+                    EntityArgumentType.getPlayers(context, "targets"),
+                    NTM.id("command_server"),
+                    context.getArgument("text", Text.class),
+                    2000.0f))
+                .then(CommandManager.argument("milliSeconds", FloatArgumentType.floatArg(0f, 10000f))
+                  .executes(context ->
+                    sendMessage(context,
+                      EntityArgumentType.getPlayers(context, "targets"),
+                      NTM.id("command_server"),
+                      context.getArgument("text", Text.class),
+                      context.getArgument("milliSeconds", Float.class)
+                    ))
+                  .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                    .executes(context ->
+                      sendMessage(
+                        context,
+                        EntityArgumentType.getPlayers(context, "targets"),
+                        context.getArgument("identifier", Identifier.class),
+                        context.getArgument("text", Text.class),
+                        context.getArgument("milliSeconds", Float.class)
+                      ))
+                  )
                 )
+              )
             )
-            .then(CommandManager.literal("message")
-                .requires(source -> allowCommands(source, environment))
-                .then(CommandManager.argument("targets", EntityArgumentType.players())
-                    .then(CommandManager.literal("send")
-                        .then(CommandManager.argument("text", TextArgumentType.text(registryAccess))
-                            .executes(context ->
-                                sendMessage(context,
-                                    EntityArgumentType.getPlayers(context, "targets"),
-                                    NTM.id("command_server"),
-                                    context.getArgument("text", Text.class),
-                                    2000.0f))
-                            .then(CommandManager.argument("milliSeconds", FloatArgumentType.floatArg(0f, 10000f))
-                                .executes(context ->
-                                    sendMessage(context,
-                                        EntityArgumentType.getPlayers(context, "targets"),
-                                        NTM.id("command_server"),
-                                        context.getArgument("text", Text.class),
-                                        context.getArgument("milliSeconds", Float.class)
-                                    ))
-                                .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
-                                    .executes(context ->
-                                        sendMessage(
-                                            context,
-                                            EntityArgumentType.getPlayers(context, "targets"),
-                                            context.getArgument("identifier", Identifier.class),
-                                            context.getArgument("text", Text.class),
-                                            context.getArgument("milliSeconds", Float.class)
-                                        ))
-                                )
-                            )
-                        )
-                    )
-                    .then(CommandManager.literal("remove")
-                        .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
-                            .executes(context -> removeMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
-                        )
-                    )
-                    .then(CommandManager.literal("remove_all")
-                        .executes(context -> removeAllMessages(context, EntityArgumentType.getPlayers(context, "targets")))
-                    )
-                )
+            .then(CommandManager.literal("remove")
+              .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                .executes(context -> removeMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
+              )
             )
-            .then(CommandManager.literal("dev")
-                .requires(source -> allowCommands(source, null)
-                )
-                .then(CommandManager.literal("list_components")
-                    .executes(context -> getDataComponents(context, 100))
-                    .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
-                        .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
-                    )
-                )
-                .then(CommandManager.literal("clean_logs")
-                    .executes(NTMCommands::deleteLogs)
-                )
-                .then(CommandManager.literal("funny")
-                    .executes(NTMCommands::funny)
-                )
-                .then(CommandManager.literal("set_dev_constant")
-                    .then(CommandManager.argument("bool", BoolArgumentType.bool())
-                        .executes(context -> setDevConstant(context, context.getArgument("bool", Boolean.class)))
-                    )
-                )
-                .then(CommandManager.literal("get_node_networks")
-                    .executes(NTMCommands::getNodeNetworks)
-                )
-                .then(CommandManager.literal("node_network_info")
-                    .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
-                        .executes(context -> getNodeNetworkInfo(context, context.getArgument("uuid", UUID.class)))
-                    )
-                )
+            .then(CommandManager.literal("remove_all")
+              .executes(context -> removeAllMessages(context, EntityArgumentType.getPlayers(context, "targets")))
             )
+          )
+        )
     ));
+
+    if (NTMConfig.DevMode.getValue()) {
+      CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
+        CommandManager.literal("ntm")
+          .then(CommandManager.literal("dev")
+            .requires(source -> allowCommands(source, null)
+            )
+            .then(CommandManager.literal("list_components")
+              .executes(context -> getDataComponents(context, 100))
+              .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
+                .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
+              )
+            )
+            .then(CommandManager.literal("clean_logs")
+              .executes(NTMCommands::deleteLogs)
+            )
+            .then(CommandManager.literal("funny")
+              .executes(NTMCommands::funny)
+            )
+            .then(CommandManager.literal("set_dev_constant")
+              .then(CommandManager.argument("bool", BoolArgumentType.bool())
+                .executes(context -> setDevConstant(context, context.getArgument("bool", Boolean.class)))
+              )
+            )
+            .then(CommandManager.literal("get_node_networks")
+              .executes(NTMCommands::getNodeNetworks)
+            )
+            .then(CommandManager.literal("node_network_info")
+              .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
+                .executes(context -> getNodeNetworkInfo(context, context.getArgument("uuid", UUID.class)))
+              )
+            )
+          )
+      ));
+    }
   }
 
-  private static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment){
-    if(environment != null && environment.integrated) return true;
+  private static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
+    if (environment != null && environment.integrated) return true;
     return source.hasPermissionLevel(NTMConfig.RequiredCommandPermission.getValue());
   }
 
-  private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment){
-    if(environment.dedicated) {
+  private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment) {
+    if (environment.dedicated) {
       context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version.server", NTM.METADATA.getVersion()), false);
     }
-    if(environment.integrated){
+    if (environment.integrated) {
       context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version", NTM.METADATA.getVersion()), false);
     }
     return 1;
   }
 
-  private static int removeMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier){
-    for(ServerPlayerEntity player : targets){
+  private static int removeMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier) {
+    for (ServerPlayerEntity player : targets) {
       ServerPlayNetworking.send(player, new RemoveMessagePayload(identifier));
     }
-    if(identifier.toString().equals("special:all_messages")){
+    if (identifier.toString().equals("special:all_messages")) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
-    }else {
+    } else {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
     }
     return 1;
   }
 
-  private static int removeAllMessages(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets){
-    for(ServerPlayerEntity player : targets){
+  private static int removeAllMessages(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets) {
+    for (ServerPlayerEntity player : targets) {
       ServerPlayNetworking.send(player, new RemoveAllMessagesPayload());
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
     return 1;
   }
-  private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float millis){
-    for(ServerPlayerEntity player : targets){
+
+  private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float millis) {
+    for (ServerPlayerEntity player : targets) {
       ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(identifier, text, millis)));
     }
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.sent", targets.size()), true);
     return 1;
   }
 
-  private static int funny(CommandContext<ServerCommandSource> context){
+  private static int funny(CommandContext<ServerCommandSource> context) {
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.the_funny"), false);
     // This doesn't actually do anything
     return 1;
   }
-  private static int setDevConstant(CommandContext<ServerCommandSource> context, boolean value){
+
+  private static int setDevConstant(CommandContext<ServerCommandSource> context, boolean value) {
     SharedConstants.isDevelopment = value;
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_dev_constant", value), false);
     return 1;
   }
 
-  private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, UUID networkID){
+  private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, UUID networkID) {
     NodeNetwork network = NodeNetworkManager.getNetwork(networkID);
-    if(network == null){
+    if (network == null) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.no_network").formatted(Formatting.RED), false);
       return -1;
     }
@@ -243,15 +251,15 @@ public class NTMCommands {
     return 1;
   }
 
-  private static int deleteLogs(CommandContext<ServerCommandSource> context){
+  private static int deleteLogs(CommandContext<ServerCommandSource> context) {
     File[] logs = context.getSource().getServer().getPath("logs").toFile().listFiles();
     long files = 0;
     long data = 0;
     assert logs != null;
-    for(File log : logs){
-      if(log.getName().endsWith(".log.gz")){
+    for (File log : logs) {
+      if (log.getName().endsWith(".log.gz")) {
         long fileSize = log.length();
-        if(log.delete()) {
+        if (log.delete()) {
           files++;
           data += fileSize;
         }
@@ -263,19 +271,19 @@ public class NTMCommands {
     return 1;
   }
 
-  private static int getDataComponents(CommandContext<ServerCommandSource> context, int maxSize){
+  private static int getDataComponents(CommandContext<ServerCommandSource> context, int maxSize) {
     PlayerEntity player = context.getSource().getPlayer();
-    if(player == null || player.getMainHandStack() == ItemStack.EMPTY){
+    if (player == null || player.getMainHandStack() == ItemStack.EMPTY) {
       context.getSource().sendError(Text.translatable("message.ntm.get_components.could_not_get_item"));
       return -1;
     }
 
-    for(Component<?> component : player.getMainHandStack().getComponents()){
+    for (Component<?> component : player.getMainHandStack().getComponents()) {
       String type = component.type().toString();
       String value = component.value().toString();
       MutableText feedback = Text.literal("");
       feedback.append(Text.literal(type + ": ").formatted(Formatting.YELLOW));
-      if(value.length() > maxSize) {
+      if (value.length() > maxSize) {
         feedback.append(Text.translatable("message.ntm.get_components.value_max_length").formatted(Formatting.GRAY));
         context.getSource().sendFeedback(() -> feedback, false);
         continue;

@@ -30,8 +30,15 @@ public enum FluidUnit {
   public static long dropletsToMB(long droplets){
     return droplets / MILLI_BUCKET.DROPLETS;
   }
+  public static double dropletsToMB(double droplets){
+    return droplets / MILLI_BUCKET.DROPLETS;
+  }
 
   public static long mbToDroplets(long droplets){
+    return droplets / MILLI_BUCKET.DROPLETS;
+  }
+
+  public static double mbToDroplets(double droplets){
     return droplets / MILLI_BUCKET.DROPLETS;
   }
 

@@ -151,7 +151,7 @@ public class JsonConfigFile implements ConfigFileType {
   }
 
   private void writeOption(FileWriter writer, Logger LOGGER, Option<?> option, boolean lastOption) throws IOException {
-    String suffix = ",\n";
+    String suffix = ",\n\n";
     if(lastOption) suffix = "";
 
     switch (option) {

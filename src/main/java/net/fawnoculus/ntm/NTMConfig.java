@@ -37,7 +37,7 @@ public class NTMConfig {
   );
   public static final IntegerOption RequiredCommandPermission = CommonConfig.newIntegerOption(
       "RequiredCommandPermission", 2,
-      "The required Permission-Level for Operator NTM Commands"
+      "The required Permission-Level for Operator NTM Commands. Requires Restart"
   );
   public static final StringOption FluidUnit = CommonConfig.newStringOption(
     "FluidUnit", "MilliBuckets",
@@ -59,11 +59,15 @@ public class NTMConfig {
   );
   public static final BooleanOption AlwaysSendRadiationPacket = CommonConfig.newBooleanOption(
       "AlwaysSendRadiationPacket", false,
-      "If the Server should always send the Radiation Packet to player, enabling this may increase performance with high player or addon counts"
+      "If the Server should always send the Radiation Packet to player, enabling this may increase performance with high player or addon counts, may also fix some de-sync issues"
+  );
+  public static final BooleanOption DevMode = CommonConfig.newBooleanOption(
+    "DevMode", false,
+    "Enables a bunch of Dev Features. Requires Restart to apply"
   );
   public static final BooleanOption PrintStackTrace = CommonConfig.newBooleanOption(
       "PrintStackTrace", false,
-      "This is really only usefully for debugging"
+      "Print Stacktrace in Exception formater"
   );
 
   public static final PerWorldConfigFile WorldConfig = new PerWorldConfigFile("ntm/world_default", "ntm/world_config", new JsonConfigFile(), LOGGER);

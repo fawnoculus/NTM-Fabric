@@ -1,31 +1,25 @@
 package net.fawnoculus.ntm.fluid.data;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.fluid.data.custom.*;
 import net.fawnoculus.ntm.fluid.stack.FluidUnit;
-import net.fawnoculus.ntm.misc.data.NTMCodecs;
 import net.fawnoculus.ntm.util.TextUtil;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class FluidDataTypes {
   public static final FluidDataType<Double> TEMPERATURE = register("temperature", Codec.DOUBLE, 20.0, Tooltips::temperature);
-  public static final FluidDataType<Long> FLAMMABLE = register("flammable", Codec.LONG, 0L, Tooltips::flammable);
+  public static final FluidDataType<HeatingData> HEATABLE = register("heatable", HeatingData.CODEC, HeatingData.DEFAULT, Tooltips::boilable, true);
+  public static final FluidDataType<CoolingData> COOLABLE = register("coolable", CoolingData.CODEC, CoolingData.DEFAULT, Tooltips::coolable, true);
+  public static final FluidDataType<Double> PWR_FLUX_MULTIPLIER = register("pwr_flux_multiplier", Codec.DOUBLE, 0.0, Tooltips::pwrFluxMultiplier, true);
+  public static final FluidDataType<Double> FLAMMABLE = register("flammable", Codec.DOUBLE, 0.0, Tooltips::flammable);
   public static final FluidDataType<Combustible> COMBUSTIBLE = register("combustible", Combustible.CODEC, Combustible.DEFAULT, Tooltips::combustible);
   public static final FluidDataType<Polluting> POLLUTING = register("polluting", Polluting.CODEC, Polluting.DEFAULT, Tooltips::polluting, true);
   public static final FluidDataType<Boolean> RADIOACTIVE = register("radioactive", Codec.BOOL, false, Tooltips::radioactive);
@@ -33,7 +27,9 @@ public class FluidDataTypes {
   public static final FluidDataType<ToxinData> TOXIN = register("toxin", ToxinData.CODEC, ToxinData.DEFAULT, Tooltips::toxin, true);
   public static final FluidDataType<Boolean> GLYPHID_PHEROMONES = register("glyphid_pheromones", Codec.BOOL, false, Tooltips::glyphidPheromones);
   public static final FluidDataType<Boolean> MODIFIED_PHEROMONES = register("modified_pheromones", Codec.BOOL, false, Tooltips::modifiedPheromones);
+  public static final FluidDataType<Boolean> GASEOUS_AT_ROOM_TEMPERATURE = register("gaseous_at_room_temperature", Codec.BOOL, false, Tooltips::gaseousAtRoomTemperature, true);
   public static final FluidDataType<StateOfMatter> STATE_OF_MATTER = register("state_of_matter", StateOfMatter.CODEC, StateOfMatter.LIQUID, Tooltips::stateOfMatter, true);
+  public static final FluidDataType<Boolean> IGNORED_BY_SIPHON = register("ignored_by_siphon", Codec.BOOL, false, Tooltips::ignoredBySiphon, true);
   public static final FluidDataType<Boolean> BREATHABLE = register("breathable", Codec.BOOL, false, Tooltips::breathable, true);
   public static final FluidDataType<Boolean> VISCOUS = register("viscous", Codec.BOOL, false, Tooltips::viscous, true);
   public static final FluidDataType<Boolean> DELICIOUS = register("delicious", Codec.BOOL, false, Tooltips::delicious, true);
@@ -49,28 +45,104 @@ public class FluidDataTypes {
 
   private static class Tooltips{
     private static void temperature(Double celsius, boolean showExtraInfo, Consumer<Text> tooltip){
+      Formatting formatting = Formatting.RED;
+      if(celsius < 0){
+        formatting = Formatting.BLUE;
+      }
+
       switch (NTMConfig.TempUnit.getValue()){
         case "Celsius" -> tooltip.accept(
-          Text.literal(String.format("%,.1f", celsius)).append(Text.translatable("generic.ntm.temp.c")).formatted(Formatting.RED)
+          Text.literal(String.format("%,.1f", celsius)).append(Text.translatable("generic.ntm.temp.c")).formatted(formatting)
         );
         case "Fahrenheit" -> tooltip.accept(
-          Text.literal(String.format("%,.1f", (celsius * 9 / 5) + 32)).append(Text.translatable("generic.ntm.temp.f")).formatted(Formatting.RED)
+          Text.literal(String.format("%,.1f", (celsius * 9 / 5) + 32)).append(Text.translatable("generic.ntm.temp.f")).formatted(formatting)
         );
         case "Kelvin" -> tooltip.accept(
-          Text.literal(String.format("%,.1f", celsius - 273.15)).append(Text.translatable("generic.ntm.temp.k")).formatted(Formatting.RED)
+          Text.literal(String.format("%,.1f", celsius - 273.15)).append(Text.translatable("generic.ntm.temp.k")).formatted(formatting)
         );
       }
     }
 
-    private static void flammable(Long TuPerDroplet, boolean showExtraInfo, Consumer<Text> tooltip) {
-      if (TuPerDroplet <= 0) return;
+    // Helper
+    private static Text thermalCapacity(Double tuPerDroplet){
+      return switch (NTMConfig.FluidUnit.getValue()) {
+        case "MilliBuckets" -> Text.translatable("fluid_tooltip.ntm.thermal_capacity", FluidUnit.dropletsToMB(tuPerDroplet), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.RED);
+        case "Droplets" -> Text.translatable("fluid_tooltip.ntm.thermal_capacity", tuPerDroplet, Text.translatable("generic.ntm.fluid.droplets")).formatted(Formatting.RED);
+        default -> Text.empty();
+      };
+    }
+
+    // Helper
+    private static Text efficiency(Double multiplier){
+      return Text.translatable("fluid_tooltip.ntm.efficiency", String.format("%1$.0f", multiplier * 100)).formatted(Formatting.AQUA);
+    }
+
+    private static void boilable(HeatingData data, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if(!showExtraInfo) return;
+      tooltip.accept(thermalCapacity(data.tuPerDroplet()));
+      if(data.isBoilable()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.boilable", efficiency(data.boilingMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+      if(data.isHeatable()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.heatable", efficiency(data.heatingMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+      if(data.isPwrCoolant()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.pwr_coolant", efficiency(data.pwrCoolantMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+      if(data.isIcfCoolant()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.icf_coolant", efficiency(data.icfCoolantMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+      if(data.isParticleAcceleratorCoolant()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.particle_accelerator_coolant", efficiency(data.particleAcceleratorCoolantMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+    }
+
+    private static void coolable(CoolingData data, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if(!showExtraInfo) return;
+      tooltip.accept(thermalCapacity(data.tuPerDroplet()));
+      if(data.isTurbineable()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.turbine_steam", efficiency(data.turbineMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+      if(data.isCoolable()){
+        tooltip.accept(
+          Text.translatable("fluid_tooltip.ntm.coolable", efficiency(data.coolingMultiplier())).formatted(Formatting.YELLOW)
+        );
+      }
+    }
+
+    private static void pwrFluxMultiplier(Double multiplier, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if(multiplier < 0.001 && multiplier > -0.001) return; // No Multipliers under 1%
+      tooltip.accept(Text.translatable("fluid_tooltip.ntm.pwr_flux_multiplier").formatted(Formatting.BLUE));
+
+      if(!showExtraInfo) return;
+      if(multiplier < 0){
+        tooltip.accept(Text.translatable("fluid_tooltip.ntm.pwr_flux_multiplier.val", String.format("%1$.0f", multiplier * 100)).formatted(Formatting.BLUE));
+      }else {
+        tooltip.accept(Text.translatable("fluid_tooltip.ntm.pwr_flux_multiplier.val", String.format("+%1$.0f", multiplier * 100)).formatted(Formatting.BLUE));
+      }
+    }
+
+    private static void flammable(Double tuPerDroplet, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (tuPerDroplet <= 0) return;
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.flammable").formatted(Formatting.YELLOW));
       switch (NTMConfig.FluidUnit.getValue()) {
         case "MilliBuckets" -> tooltip.accept(
-          Text.translatable("fluid_tooltip.ntm.provides", FluidUnit.dropletsToMB(TuPerDroplet), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.YELLOW)
+          Text.translatable("fluid_tooltip.ntm.provides", TextUtil.unit(FluidUnit.dropletsToMB(tuPerDroplet)), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.YELLOW)
         );
         case "Droplets" -> tooltip.accept(
-          Text.translatable("fluid_tooltip.ntm.provides", TuPerDroplet, Text.translatable("generic.ntm.fluid.droplets")).formatted(Formatting.YELLOW)
+          Text.translatable("fluid_tooltip.ntm.provides", TextUtil.unit(tuPerDroplet), Text.translatable("generic.ntm.fluid.droplet")).formatted(Formatting.YELLOW)
         );
       }
     }
@@ -160,9 +232,21 @@ public class FluidDataTypes {
       }
     }
 
+    private static void gaseousAtRoomTemperature(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip){
+      if(showExtraInfo && isModifiedPheromone){
+        tooltip.accept(Text.translatable("fluid_tooltip.ntm.gaseous_at_room_temperature").formatted(Formatting.BLUE));
+      }
+    }
+
     private static void stateOfMatter(StateOfMatter state, boolean showExtraInfo, Consumer<Text> tooltip){
       if(showExtraInfo){
         tooltip.accept(state.TOOLTIP);
+      }
+    }
+
+    private static void ignoredBySiphon(Boolean isIgnored, boolean showExtraInfo, Consumer<Text> tooltip){
+      if(showExtraInfo && isIgnored){
+        tooltip.accept(Text.translatable("fluid_tooltip.ntm.ignored_by_siphon").formatted(Formatting.BLUE));
       }
     }
 
@@ -188,120 +272,6 @@ public class FluidDataTypes {
       if(isAntimatter){
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.antimatter").formatted(Formatting.DARK_RED));
       }
-    }
-  }
-
-  public record Combustible(@NotNull Boolean isCombustible, @NotNull Long ntePerDroplet, @NotNull FuelGrade fuelGrade) {
-    public static final Combustible DEFAULT = new Combustible(false, 0L, FuelGrade.LOW);
-    public static final Codec<Combustible> CODEC = RecordCodecBuilder.create(
-      instance -> instance.group(
-          Codec.BOOL.fieldOf("is_combustible").forGetter(Combustible::isCombustible),
-          Codec.LONG.fieldOf("nte_per_droplet").forGetter(Combustible::ntePerDroplet),
-          FuelGrade.CODEC.fieldOf("fuel_grade").forGetter(Combustible::fuelGrade)
-        ).apply(instance, Combustible::new)
-    );
-  }
-
-  public enum FuelGrade {
-    LOW(Text.translatable("fluid_tooltip.ntm.fuel_grade.low").formatted(Formatting.RED)),
-    MEDIUM(Text.translatable("fluid_tooltip.ntm.fuel_grade.medium").formatted(Formatting.RED)),
-    HIGH(Text.translatable("fluid_tooltip.ntm.fuel_grade.high").formatted(Formatting.RED)),
-    AVIATION(Text.translatable("fluid_tooltip.ntm.fuel_grade.aviation").formatted(Formatting.RED)),
-    GASEOUS(Text.translatable("fluid_tooltip.ntm.fuel_grade.gaseous").formatted(Formatting.RED));
-
-    public static final Codec<FuelGrade> CODEC = NTMCodecs.getEnumCodec(FuelGrade.class);
-    public final Text NAME;
-
-    FuelGrade(Text name){
-      this.NAME = name;
-    }
-  }
-
-  public record Polluting(@NotNull Boolean isPolluting, @NotNull List<PollutionData> whenSpilled, @NotNull List<PollutionData> whenBurned){
-    public static final Polluting DEFAULT = new Polluting(false, List.of(), List.of());
-    public static final Codec<Polluting> CODEC = RecordCodecBuilder.create(
-      instance -> instance.group(
-        Codec.BOOL.fieldOf("is_polluting").forGetter(Polluting::isPolluting),
-        Codec.list(PollutionData.CODEC).fieldOf("when_spilled").forGetter(Polluting::whenSpilled),
-        Codec.list(PollutionData.CODEC).fieldOf("when_burned").forGetter(Polluting::whenBurned)
-      ).apply(instance, Polluting::new)
-    );
-
-  }
-
-  // FIXME (once there is an Atmosphere &/or Pollution System)
-  public record PollutionData(String name, Double amount){
-    public static final Codec<PollutionData> CODEC = RecordCodecBuilder.create(
-      instance -> instance.group(
-        Codec.STRING.fieldOf("name").forGetter(PollutionData::name),
-        Codec.DOUBLE.fieldOf("amount").forGetter(PollutionData::amount)
-      ).apply(instance, PollutionData::new)
-    );
-
-    public String getFluidName(){
-      // TODO: make Pollution a Thing
-      return this.name;
-    }
-
-    public @NotNull MutableText getTooltip(){
-      return switch (NTMConfig.FluidUnit.getValue()) {
-        case "MilliBuckets" -> Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount() / FluidUnit.MILLI_BUCKET.DROPLETS)
-          .append(Text.translatable("generic.ntm.fluid.mb"));
-        case "Droplets" -> Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount())
-          .append(Text.translatable("generic.ntm.fluid.droplets"));
-        default -> Text.empty();
-      };
-    }
-  }
-
-  public record ToxinData(@NotNull Boolean isToxic, ToxinType type, float damagePerSec,  @NotNull Optional<Identifier> damageID, @NotNull List<StatusEffectInstance> effects){
-    public static final ToxinData DEFAULT = new ToxinData(false, ToxinType.CHEMICAL_GAS,0, Optional.empty(), List.of());
-    public static final Codec<ToxinData> CODEC = RecordCodecBuilder.create(
-      instance -> instance.group(
-        Codec.BOOL.fieldOf("is_toxic").forGetter(ToxinData::isToxic),
-        ToxinType.CODEC.fieldOf("type").forGetter(ToxinData::type),
-        Codec.FLOAT.fieldOf("dps").forGetter(ToxinData::damagePerSec),
-        Codec.optionalField("damageID", Identifier.CODEC, false).forGetter(ToxinData::damageID),
-        Codec.list(StatusEffectInstance.CODEC).fieldOf("effects").forGetter(ToxinData::effects)
-      ).apply(instance, ToxinData::new)
-    );
-
-    public ToxinData(@NotNull Boolean isToxic, ToxinType type, float damagePerSec, Identifier damageID, @NotNull List<StatusEffectInstance> effects){
-      this(isToxic, type, damagePerSec, Optional.ofNullable(damageID), effects);
-    }
-
-    public RegistryKey<DamageType> getDamageType(){
-      return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, this.damageID().orElse(DamageTypes.GENERIC.getValue()));
-    }
-  }
-
-  public enum ToxinType {
-    AIRBORNE_PARTICLES(Text.translatable("fluid_tooltip.ntm.toxin_type.airborne_particles")),
-    PARTICULATES(Text.translatable("fluid_tooltip.ntm.toxin_type.particulates")),
-    CHEMICAL_GAS(Text.translatable("fluid_tooltip.ntm.toxin_type.chemical_gas")),
-    CORROSIVE_FUMES(Text.translatable("fluid_tooltip.ntm.toxin_type.corrosive_fumes")),
-    AEROSOLS(Text.translatable("fluid_tooltip.ntm.toxin_type.aerosols")),
-    CARBON_MONOXIDE(Text.translatable("fluid_tooltip.ntm.toxin_type.carbon_monoxide"));
-
-    public static final Codec<ToxinType> CODEC = NTMCodecs.getEnumCodec(ToxinType.class);
-    public final Text NAME;
-
-    ToxinType(Text name){
-      this.NAME = name;
-    }
-  }
-
-  public enum StateOfMatter{
-    SOLID(Text.translatable("fluid_tooltip.ntm.state.solid").formatted(Formatting.BLUE)),
-    LIQUID(Text.translatable("fluid_tooltip.ntm.state.liquid").formatted(Formatting.BLUE)),
-    GASEOUS(Text.translatable("fluid_tooltip.ntm.state.gaseous").formatted(Formatting.BLUE)),
-    PLASMA(Text.translatable("fluid_tooltip.ntm.state.plasma").formatted(Formatting.LIGHT_PURPLE));
-
-    public static final Codec<StateOfMatter> CODEC = NTMCodecs.getEnumCodec(StateOfMatter.class);
-    public final Text TOOLTIP;
-
-    StateOfMatter(Text tooltip){
-      this.TOOLTIP = tooltip;
     }
   }
 }

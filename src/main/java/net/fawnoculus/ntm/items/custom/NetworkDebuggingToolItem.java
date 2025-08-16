@@ -20,14 +20,7 @@ public class NetworkDebuggingToolItem extends Item {
   public NetworkDebuggingToolItem(Settings settings) {
     super(settings);
   }
-  
-  @Override  @SuppressWarnings("deprecation")
-  public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.WHITE));
-    tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool1").formatted(Formatting.RED));
-    tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool2").formatted(Formatting.RED));
-  }
-  
+
   @Override
   public ActionResult useOnBlock(ItemUsageContext context) {
     if (context.getWorld().isClient()) {
@@ -39,7 +32,7 @@ public class NetworkDebuggingToolItem extends Item {
     assert pos != null;
     PlayerEntity player = context.getPlayer();
     assert player != null;
-    
+
     if (!(world.getBlockEntity(pos) instanceof Node node)) {
       player.sendMessage(Text.translatable("message.ntm.network_debug.not_node").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
@@ -49,7 +42,7 @@ public class NetworkDebuggingToolItem extends Item {
       player.sendMessage(Text.translatable("message.ntm.network_debug.node_no_network").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
-    
+
     if(player.isSneaking()){
       for(Node a : node.getNetwork().LOADED_CONNECTORS){
         player.sendMessage(Text.literal("Connector: " + a.getPos().toShortString()), false);
@@ -65,14 +58,21 @@ public class NetworkDebuggingToolItem extends Item {
       }
       return ActionResult.SUCCESS_SERVER;
     }
-    
+
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.getType().getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_provider_count", Text.literal(String.valueOf(network.LOADED_PROVIDERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_storage_count", Text.literal(String.valueOf(network.LOADED_STORAGES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    
+
     return ActionResult.SUCCESS_SERVER;
+  }
+
+  @Override  @SuppressWarnings("deprecation")
+  public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+    tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
+    tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool1").formatted(Formatting.RED));
+    tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool2").formatted(Formatting.RED));
   }
 }
