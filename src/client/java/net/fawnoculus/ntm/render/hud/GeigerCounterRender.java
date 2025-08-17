@@ -4,7 +4,7 @@ import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
-import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
+import net.fawnoculus.ntm.api.radiation.ClientRadiationManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

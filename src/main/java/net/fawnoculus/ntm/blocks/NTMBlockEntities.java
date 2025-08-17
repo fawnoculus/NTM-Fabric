@@ -5,7 +5,6 @@ import net.fawnoculus.ntm.blocks.entities.*;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.entities.container.energy.EnergyConnectorBE;
 import net.fawnoculus.ntm.blocks.entities.container.energy.SimpleEnergyStorageBE;
-import net.fawnoculus.ntm.blocks.entities.container.fluid.FluidBarrelBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -25,9 +24,6 @@ public class NTMBlockEntities {
     NTMBlocks.LITHIUM_ION_ENERGY_STORAGE_BLOCK,
     NTMBlocks.SCHRABIDIUM_ENERGY_STORAGE_BLOCK,
     NTMBlocks.SPARK_ENERGY_STORAGE_BLOCK
-  );
-  public static final BlockEntityType<FluidBarrelBE> SIMPLE_FLUID_STORAGE_BE = register("simple_fluid_storage", FluidBarrelBE::new,
-    NTMBlocks.POTATO_BATTERY_BLOCK
   );
 
   private static <T extends BlockEntity> BlockEntityType<T> register(String name, FabricBlockEntityTypeBuilder.Factory<? extends T> entityFactory, Block... blocks) {

@@ -5,6 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ModMetadata;
+import net.fawnoculus.ntm.api.NTMApi;
 import net.fawnoculus.ntm.blocks.ExtraBlockData;
 import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
@@ -15,15 +16,15 @@ import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.fluid.NTMFluids;
 import net.fawnoculus.ntm.fluid.data.FluidData;
 import net.fawnoculus.ntm.items.*;
-import net.fawnoculus.ntm.misc.radiation.HazmatRegistry;
+import net.fawnoculus.ntm.api.radiation.HazmatRegistry;
 import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
 import net.fawnoculus.ntm.network.NTMPayloads;
 import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.misc.NTMParticles;
 import net.fawnoculus.ntm.world.NTMWorldGeneration;
-import net.fawnoculus.ntm.misc.radiation.RadiationManager;
-import net.fawnoculus.ntm.misc.radiation.RadiationRegistry;
+import net.fawnoculus.ntm.api.radiation.RadiationManager;
+import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +44,7 @@ public class NTM implements ModInitializer {
     LOGGER.info("Initializing...");
 
     NTMConfig.initialize();
+    NTMApi.initialize();
 
     NTMDamageTypes.initialize();
     NTMStatusEffects.initialize();

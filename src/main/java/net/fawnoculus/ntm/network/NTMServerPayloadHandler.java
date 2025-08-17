@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.blocks.entities.InteractableBE;
 import net.fawnoculus.ntm.items.custom.InteractableItem;
 import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
@@ -22,8 +22,8 @@ public class NTMServerPayloadHandler {
     ServerPlayerEntity player = context.player();
 
     if(player.getEyePos().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.getBlockInteractionRange() + 1){
-      if(FabricLoader.getInstance().isDevelopmentEnvironment()){
-        NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away!", player.getName().getLiteralString(), payload.action().toString(), payload.pos().toShortString());
+      if(NTMConfig.DevMode.getValue()){
+        NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away", player.getName().getLiteralString(), payload.action().toString(), payload.pos().toShortString());
       }
       return;
     }

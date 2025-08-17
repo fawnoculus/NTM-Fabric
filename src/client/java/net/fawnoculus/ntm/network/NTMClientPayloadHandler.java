@@ -2,10 +2,10 @@ package net.fawnoculus.ntm.network;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.fluid.data.ClientFluidDataRegistry;
-import net.fawnoculus.ntm.misc.messages.MessageSystem;
-import net.fawnoculus.ntm.misc.radiation.ClientHazmatRegistry;
-import net.fawnoculus.ntm.misc.radiation.ClientRadiationManager;
-import net.fawnoculus.ntm.misc.radiation.ClientRadiationRegistry;
+import net.fawnoculus.ntm.api.messages.MessageSystem;
+import net.fawnoculus.ntm.api.radiation.ClientHazmatRegistry;
+import net.fawnoculus.ntm.api.radiation.ClientRadiationManager;
+import net.fawnoculus.ntm.api.radiation.ClientRadiationRegistry;
 import net.fawnoculus.ntm.network.s2c.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;

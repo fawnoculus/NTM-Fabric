@@ -1,17 +1,17 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
-import net.fawnoculus.ntm.blocks.node.NodeWithValue;
+import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Range;
 
 public interface EnergyContainingItem {
-  
+
   long getEnergy(ItemStack stack);
   void setEnergy(ItemStack stack, long energy);
   long getMaxEnergy(ItemStack stack);
   long getChargeRate(ItemStack stack);
   long getDischargeRate(ItemStack stack);
-  
+
   default boolean hasEnergy(ItemStack stack, long energy){
     return this.getEnergy(stack) >= energy;
   }
@@ -38,10 +38,10 @@ public interface EnergyContainingItem {
     this.setEnergy(stack, this.getEnergy(stack) + energy);
     return 0;
   }
-  default void charge(ItemStack stack, NodeWithValue node){
-    long energy = node.getValue();
+  default void charge(ItemStack stack, NodeValueContainer container){
+    long energy = container.getValue();
     energy = this.charge(stack, energy);
-    node.setValue(energy);
+    container.setValue(energy);
   }
   /**
    * @param stack the Stack to be Discharged
@@ -60,12 +60,12 @@ public interface EnergyContainingItem {
     this.setEnergy(stack, this.getEnergy(stack) - energy);
     return 0;
   }
-  default void discharge(ItemStack stack, NodeWithValue node){
-    long missingEnergy = node.getMaxValue() - node.getValue();
+  default void discharge(ItemStack stack, NodeValueContainer container){
+    long missingEnergy = container.getMaxValue() - container.getValue();
     missingEnergy = this.discharge(stack, missingEnergy);
-    node.setValue(node.getMaxValue() - missingEnergy);
+    container.setValue(container.getMaxValue() - missingEnergy);
   }
-  
+
   default double getEnergyPercentage(ItemStack stack){
     return (double) this.getEnergy(stack) / (double) this.getMaxEnergy(stack) * 100;
   }

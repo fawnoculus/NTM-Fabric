@@ -3,8 +3,8 @@ package net.fawnoculus.ntm.mixin.client;
 import net.fawnoculus.ntm.items.custom.DangerousDrop;
 import net.fawnoculus.ntm.items.custom.ExtraInfo;
 import net.fawnoculus.ntm.misc.NTMKeybinds;
-import net.fawnoculus.ntm.misc.radiation.ClientHazmatRegistry;
-import net.fawnoculus.ntm.misc.radiation.ClientRadiationRegistry;
+import net.fawnoculus.ntm.api.radiation.ClientHazmatRegistry;
+import net.fawnoculus.ntm.api.radiation.ClientRadiationRegistry;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -25,13 +25,13 @@ import java.util.function.Consumer;
 @Mixin(ItemStack.class)
 public abstract class ClientsideItemStackMixin {
   @Shadow public abstract Item getItem();
-  
+
   @Shadow private int count;
   @Unique
   private static final ClientRadiationRegistry clientRadiationRegistry = ClientRadiationRegistry.getInstance();
   @Unique
   private static final ClientHazmatRegistry clientHazmatRegistry = ClientHazmatRegistry.getInstance();
-  
+
   @Inject(method = "appendTooltip", at = @At(
       value = "INVOKE",
       target = "Lnet/minecraft/item/Item;appendTooltip(" +
@@ -58,7 +58,7 @@ public abstract class ClientsideItemStackMixin {
     if(radiationResistance > 0){
       tooltip.accept(Text.translatable("tooltip.ntm.radiation_resistance", radiationResistance).formatted(Formatting.YELLOW));
     }
-    
+
     if(this.getItem() instanceof ExtraInfo extraInfo){
       if(!NTMKeybinds.DISPLAY_EXTRA_INFO.isPressed()){
         tooltip.accept(extraInfo.getHelpText(NTMKeybinds.DISPLAY_EXTRA_INFO.getBoundKeyLocalizedText()));

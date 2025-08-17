@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
-import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;

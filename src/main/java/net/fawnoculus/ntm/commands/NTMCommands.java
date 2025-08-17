@@ -1,21 +1,20 @@
 package net.fawnoculus.ntm.commands;
 
+import net.fawnoculus.ntm.api.node.network.NodeNetworkManager;
+import net.fawnoculus.ntm.api.node.network.type.NetworkType;
+import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.blocks.node.network.EnergyNetwork;
-import net.fawnoculus.ntm.blocks.node.network.FluidNetwork;
-import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
-import net.fawnoculus.ntm.blocks.node.network.NodeNetworkManager;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
 import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
-import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.minecraft.SharedConstants;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
@@ -34,9 +33,7 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 public class NTMCommands {
@@ -130,14 +127,20 @@ public class NTMCommands {
             )
             .then(CommandManager.literal("get_node_networks")
               .executes(NTMCommands::getNodeNetworks)
+              .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
+                .executes(context -> getNodeNetworks(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class))))
+              )
             )
             .then(CommandManager.literal("node_network_info")
-              .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
-                .executes(context -> getNodeNetworkInfo(context, context.getArgument("uuid", UUID.class)))
+              .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
+                .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
+                  .executes(context -> getNodeNetworkInfo(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class)), context.getArgument("uuid", UUID.class)))
+                )
               )
             )
           )
-      ));
+        )
+      );
     }
   }
 
@@ -196,56 +199,30 @@ public class NTMCommands {
     return 1;
   }
 
-  private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, UUID networkID) {
-    NodeNetwork network = NodeNetworkManager.getNetwork(networkID);
+  private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, NetworkType type, UUID networkID) {
+    NodeNetwork network = type.getNetwork(networkID);
     if (network == null) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.no_network").formatted(Formatting.RED), false);
       return -1;
     }
 
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", network.getType().getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_provider_count", Text.literal(String.valueOf(network.LOADED_PROVIDERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.loaded_storage_count", Text.literal(String.valueOf(network.LOADED_STORAGES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.node_count", Text.literal(String.valueOf(network.LOADED_NODES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
 
     return 1;
   }
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context) {
-    List<NodeNetwork> otherNetworks = new ArrayList<>();
-    List<FluidNetwork> fluidNetworks = new ArrayList<>();
-    List<EnergyNetwork> energyNetworks = new ArrayList<>();
-    for (NodeNetwork network : NodeNetworkManager.getAllNetworks()) {
-      switch (network) {
-        case EnergyNetwork energyNetwork -> energyNetworks.add(energyNetwork);
-        case FluidNetwork fluidNetwork -> fluidNetworks.add(fluidNetwork);
-        default -> otherNetworks.add(network);
-      }
+    for(NetworkType type : NodeNetworkManager.getAllTypes()){
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName()).append(Text.literal(" " + type.getAllNetworks().size())), false);
     }
+    return 1;
+  }
 
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.other").formatted(Formatting.GOLD), false);
-    if (otherNetworks.isEmpty()) {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
-    }
-    for (NodeNetwork network : otherNetworks) {
-      context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
-    }
-
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.fluid").formatted(Formatting.GOLD), false);
-    if (fluidNetworks.isEmpty()) {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
-    }
-    for (FluidNetwork network : fluidNetworks) {
-      context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
-    }
-
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.energy").formatted(Formatting.GOLD), false);
-    if (energyNetworks.isEmpty()) {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks.none").formatted(Formatting.GRAY), false);
-    }
-    for (EnergyNetwork network : energyNetworks) {
+  private static int getNodeNetworks(CommandContext<ServerCommandSource> context, NetworkType type) {
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName()), false);
+    for(NodeNetwork network : type.getAllNetworks()){
       context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
     }
     return 1;

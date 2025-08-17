@@ -52,7 +52,7 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
   @Override
   public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     SimpleEnergyStorageBE energyStorageBE = new SimpleEnergyStorageBE(pos, state);
-    energyStorageBE.setMaxValue(this.MAX_ENERGY);
+    energyStorageBE.energy.setMaxValue(this.MAX_ENERGY);
     return energyStorageBE;
   }
 
@@ -106,9 +106,9 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
   public void appendHoverTooltip(World world, BlockPos pos, BlockState state, Consumer<Text> tooltip) {
     SimpleEnergyStorageBE energyStorageBE = (SimpleEnergyStorageBE) world.getBlockEntity(pos);
     assert energyStorageBE != null;
-    long value = energyStorageBE.getValue();
+    long value = energyStorageBE.energy.getValue();
     Text valueText = TextUtil.unit(value);
-    long maxValue = energyStorageBE.getMaxValue();
+    long maxValue = energyStorageBE.energy.getMaxValue();
     Text maxValueText = TextUtil.unit(maxValue, "generic.ntm.energy");
     int color = MathHelper.hsvToRgb(Math.max(0.0F, (float) value / (float) maxValue) / 3.0F, 1.0F, 1.0F);
 

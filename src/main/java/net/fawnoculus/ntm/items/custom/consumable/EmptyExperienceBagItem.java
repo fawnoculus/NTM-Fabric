@@ -6,7 +6,7 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.PlayerUtil;
-import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

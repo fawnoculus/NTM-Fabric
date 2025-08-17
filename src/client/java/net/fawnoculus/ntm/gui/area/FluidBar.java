@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.gui.area;
 
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
 import net.fawnoculus.ntm.fluid.data.ClientFluidDataRegistry;
-import net.fawnoculus.ntm.fluid.stack.FluidStack;
-import net.fawnoculus.ntm.fluid.stack.FluidUnit;
+import net.fawnoculus.ntm.misc.stack.FluidStack;
+import net.fawnoculus.ntm.fluid.FluidUnit;
 import net.fawnoculus.ntm.misc.NTMKeybinds;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.text.Text;

@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.items.components.NTMFoodComponents;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
-import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

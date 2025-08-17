@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.gui.area;
 
-import net.fawnoculus.ntm.blocks.node.NodeWithValue;
+import net.fawnoculus.ntm.misc.stack.EnergyStack;
 import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.text.Text;
@@ -12,12 +12,12 @@ import java.util.function.Supplier;
 
 public class EnergyBar implements InfoBar{
   @SafeVarargs
-  public EnergyBar(int x, int y, int width, int height, NodeWithValue node, Supplier<Text>... extraText){
+  public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText){
     this.X = x;
     this.Y = y;
     this.WIDTH = width;
     this.HEIGHT = height;
-    this.NODE = node;
+    this.STACK = stack;
     this.EXTRA_TEXT = extraText;
   }
 
@@ -25,7 +25,7 @@ public class EnergyBar implements InfoBar{
   private final int Y;
   private final int WIDTH;
   private final int HEIGHT;
-  private final NodeWithValue NODE;
+  private final EnergyStack STACK;
   private final Supplier<Text>[] EXTRA_TEXT;
 
   private Identifier TEXTURE = NTMTextures.GENERIC_ENERGY_BAR;
@@ -102,8 +102,8 @@ public class EnergyBar implements InfoBar{
 
   @Override
   public void appendTooltip(Consumer<Text> tooltip) {
-    Text energyStored = TextUtil.unit(this.NODE.getValue());
-    Text maxEnergy = TextUtil.unit(this.NODE.getMaxValue(), "generic.ntm.energy");
+    Text energyStored = TextUtil.unit(this.STACK.getValue());
+    Text maxEnergy = TextUtil.unit(this.STACK.getMaxValue(), "generic.ntm.energy");
 
     tooltip.accept(Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
 
@@ -119,6 +119,6 @@ public class EnergyBar implements InfoBar{
 
   @Override
   public @Range(from = 0, to = 1) double getFillState() {
-    return (double) this.NODE.getValue() / (double) this.NODE.getMaxValue();
+    return (double) this.STACK.getValue() / (double) this.STACK.getMaxValue();
   }
 }

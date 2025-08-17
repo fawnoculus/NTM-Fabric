@@ -36,31 +36,29 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
   }
   public static final BooleanProperty LIT = Properties.LIT;
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
-  
+
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {
     return createCodec(ElectricFurnaceBlock::new);
   }
-  
+
   @Override
   public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    ElectricFurnaceBE be = new ElectricFurnaceBE(pos, state);
-    be.setMaxValue(100_000);
-    return be;
+    return new ElectricFurnaceBE(pos, state);
   }
-  
+
   @Override
   protected void onStateReplaced(@NotNull BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
     world.updateComparators(pos, this);
     super.onStateReplaced(state, world, pos, moved);
   }
-  
+
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
     if(world.isClient()) return null;
     return validateTicker(type, NTMBlockEntities.ELECTRIC_FURNACE_BE, ElectricFurnaceBE::tick);
   }
-  
+
   @Override
   protected ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
     if (!(world.getBlockEntity(pos) instanceof ElectricFurnaceBE electricFurnaceBE)) {
@@ -69,18 +67,18 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
     if(world.isClient){
       return ActionResult.SUCCESS;
     }
-    
+
     player.openHandledScreen(electricFurnaceBE);
-    
+
     return ActionResult.SUCCESS_SERVER;
   }
-  
+
   @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     builder.add(LIT);
     builder.add(FACING);
   }
-  
+
   @Override
   public BlockState getPlacementState(ItemPlacementContext context) {
     if(context.getPlayer() != null){
@@ -88,18 +86,18 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
     }
     return this.getDefaultState();
   }
-  
+
   @Override
   public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
     if (!world.isClient()) {
       return;
     }
-    
+
     if (!state.get(LIT)) {
       return;
     }
-    
-    
+
+
     double x = pos.getX();
     double y = pos.getY() + 0.1 + random.nextDouble() * 0.4;
     double z = pos.getZ();

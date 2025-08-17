@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.misc.radiation.RadiationManager;
+import net.fawnoculus.ntm.api.radiation.RadiationManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +18,7 @@ public class DosimeterItem extends Item {
   public DosimeterItem(Settings settings) {
     super(settings);
   }
-  
+
   private Text getRadsText(double milliRads){
     if(milliRads > 3_600){
       return Text.translatable("generic.ntm.radiation.rad_s", ">3.6").formatted(Formatting.GOLD);
@@ -31,21 +31,21 @@ public class DosimeterItem extends Item {
     }
     return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
   }
-  
+
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
     if(world.isClient()){
       return ActionResult.SUCCESS;
     }
     RadiationManager radiationManager = RadiationManager.getInstance();
-    
+
     double totalRadiation = radiationManager.getTotalRadiation(user);
-    
+
     user.sendMessage(Text.translatable("message.ntm.dosimeter").formatted(Formatting.GOLD), false);
     user.sendMessage(Text.translatable("message.ntm.radiation.environmental_radiation").append(getRadsText(totalRadiation)).formatted(Formatting.YELLOW), false);
     return ActionResult.SUCCESS_SERVER;
   }
-  
+
   @Override
   public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
     // TODO: make it make noise

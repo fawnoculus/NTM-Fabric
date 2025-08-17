@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.blocks.node.Node;
-import net.fawnoculus.ntm.blocks.node.network.NodeNetwork;
+import net.fawnoculus.ntm.api.node.Node;
+import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -27,44 +27,34 @@ public class NetworkDebuggingToolItem extends Item {
       return ActionResult.SUCCESS;
     }
     ServerWorld world = (ServerWorld) context.getWorld();
-    assert world != null;
     BlockPos pos = context.getBlockPos();
-    assert pos != null;
     PlayerEntity player = context.getPlayer();
-    assert player != null;
 
-    if (!(world.getBlockEntity(pos) instanceof Node node)) {
+    if(player == null) {
+      // how
+      return ActionResult.FAIL;
+    }
+
+    if (!(world.getBlockEntity(pos) instanceof Node clickedNode)) {
       player.sendMessage(Text.translatable("message.ntm.network_debug.not_node").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
-    NodeNetwork network = node.getNetwork();
+    NodeNetwork network = clickedNode.getNetwork();
     if(network == null){
       player.sendMessage(Text.translatable("message.ntm.network_debug.node_no_network").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
 
     if(player.isSneaking()){
-      for(Node a : node.getNetwork().LOADED_CONNECTORS){
-        player.sendMessage(Text.literal("Connector: " + a.getPos().toShortString()), false);
-      }
-      for(Node a : node.getNetwork().LOADED_CONSUMERS){
-        player.sendMessage(Text.literal("Consumer: " + a.getPos().toShortString()), false);
-      }
-      for(Node a : node.getNetwork().LOADED_PROVIDERS){
-        player.sendMessage(Text.literal("Provider: " + a.getPos().toShortString()), false);
-      }
-      for(Node a : node.getNetwork().LOADED_STORAGES){
-        player.sendMessage(Text.literal("Storage: " + a.getPos().toShortString()), false);
+      for(Node node : clickedNode.getNetwork().LOADED_NODES){
+        player.sendMessage(Text.literal(node.getPos().toShortString()), false);
       }
       return ActionResult.SUCCESS_SERVER;
     }
 
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.getType().getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_connector_count", Text.literal(String.valueOf(network.LOADED_CONNECTORS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_consumer_count", Text.literal(String.valueOf(network.LOADED_CONSUMERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_provider_count", Text.literal(String.valueOf(network.LOADED_PROVIDERS.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-    player.sendMessage(Text.translatable("message.ntm.network_debug.loaded_storage_count", Text.literal(String.valueOf(network.LOADED_STORAGES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.node_count", Text.literal(String.valueOf(network.LOADED_NODES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
 
     return ActionResult.SUCCESS_SERVER;
   }

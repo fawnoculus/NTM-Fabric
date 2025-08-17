@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.misc.radiation.RadiationManager;
+import net.fawnoculus.ntm.api.radiation.RadiationManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +18,7 @@ public class GeigerCounterItem extends Item {
   public GeigerCounterItem(Settings settings) {
     super(settings);
   }
-  
+
   private Text getRadsText(double milliRads){
     if(milliRads > 1_000_000){
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
@@ -37,7 +37,7 @@ public class GeigerCounterItem extends Item {
     }
     return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
   }
-  
+
   private Text getRadText(double milliRad){
     if(milliRad > 900_000){
       return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_GRAY);
@@ -56,22 +56,22 @@ public class GeigerCounterItem extends Item {
     }
     return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GREEN);
   }
-  
+
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
     if(!(world instanceof ServerWorld serverWorld)){
       return ActionResult.SUCCESS;
     }
     RadiationManager radiationManager = RadiationManager.getInstance();
-    
+
     double chunkRadiation = radiationManager.getChunkRadiation(serverWorld, user.getPos());
     double totalRadiation = radiationManager.getTotalRadiation(user);
     double playerContamination = radiationManager.getRadiationExposure(user);
     double playerResistance = radiationManager.getRadiationResistance(user);
     double playerResistancePercentage = radiationManager.getRadiationResistancePercentage(user);
-    
+
     Text player_resistance = Text.literal(String.format("%.1f%% (%.1f)", playerResistancePercentage, playerResistance)).formatted(Formatting.WHITE);
-    
+
     user.sendMessage(Text.translatable("message.ntm.geiger_counter").formatted(Formatting.GOLD), false);
     user.sendMessage(Text.translatable("message.ntm.radiation.chunk_radiation").append(getRadsText(chunkRadiation)).formatted(Formatting.YELLOW), false);
     user.sendMessage(Text.translatable("message.ntm.radiation.environmental_radiation").append(getRadsText(totalRadiation)).formatted(Formatting.YELLOW), false);
@@ -79,7 +79,7 @@ public class GeigerCounterItem extends Item {
     user.sendMessage(Text.translatable("message.ntm.radiation.player_resistance").append(player_resistance).formatted(Formatting.YELLOW), false);
     return ActionResult.SUCCESS_SERVER;
   }
-  
+
   @Override
   public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
     // TODO: make it make noise

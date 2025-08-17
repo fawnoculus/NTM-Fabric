@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.entity.effects;
 
-import net.fawnoculus.ntm.misc.radiation.RadiationManager;
+import net.fawnoculus.ntm.api.radiation.RadiationManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -10,12 +10,12 @@ public class RadAwayEffect extends StatusEffect {
   public RadAwayEffect(StatusEffectCategory category, int color) {
     super(category, color);
   }
-  
+
   @Override
   public boolean canApplyUpdateEffect(int duration, int amplifier) {
     return true;
   }
-  
+
   @Override
   public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
     RadiationManager.getInstance().decreaseRadiationExposure(entity, amplifier * 1_000.0);

@@ -1,11 +1,11 @@
 package net.fawnoculus.ntm.mixin;
 
 import net.fawnoculus.ntm.misc.data.CustomDataHolder;
-import net.fawnoculus.ntm.misc.radiation.RadiationManager;
-import net.fawnoculus.ntm.misc.radiation.processor.EmptyRadiationProcessor;
-import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessor;
-import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorHolder;
-import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorMultiHolder;
+import net.fawnoculus.ntm.api.radiation.RadiationManager;
+import net.fawnoculus.ntm.api.radiation.processor.EmptyRadiationProcessor;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessor;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorHolder;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorMultiHolder;
 import net.fawnoculus.ntm.util.WorldUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.NbtCompound;

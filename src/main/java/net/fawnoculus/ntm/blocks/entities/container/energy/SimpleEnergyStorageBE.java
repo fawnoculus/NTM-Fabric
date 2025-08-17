@@ -4,9 +4,11 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.entities.InteractableBE;
-import net.fawnoculus.ntm.blocks.node.type.StorageNode;
+import net.fawnoculus.ntm.api.node.NodeValueContainer;
+import net.fawnoculus.ntm.api.node.StorageMode;
 import net.fawnoculus.ntm.gui.handlers.EnergyStorageScreenHandler;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
+import net.fawnoculus.ntm.misc.stack.EnergyStack;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.block.BlockState;
@@ -25,11 +27,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
 
-public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageNode, ExtendedScreenHandlerFactory<BlockPosPayload>, InteractableBE {
+public class SimpleEnergyStorageBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<BlockPosPayload>, InteractableBE {
   public static final Text NAME = Text.translatable("container.ntm.energy_storage");
 
   public static final int DISCHARGE_SLOT_INDEX = 0;
@@ -41,6 +41,8 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
     super(NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, 2);
   }
 
+  public final EnergyStack.Storage energy = new EnergyStack.Storage(this).onChange(this::markDirty);
+
   public boolean isPowered = false;
   public StorageMode poweredMode = StorageMode.Provide;
   public StorageMode unpoweredMode = StorageMode.Consume;
@@ -48,26 +50,6 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   public long previousEnergy = 0;
   public long[] energyChange = new long[20];
   public int energyChangeIndex = 0;
-
-
-  @Override
-  public void setStorageMode(@NotNull StorageMode mode) {
-    this.onStorageModeChange(mode);
-    if(isPowered){
-      this.poweredMode = mode;
-    }else {
-      this.unpoweredMode = mode;
-    }
-  }
-
-  @Override
-  public StorageMode getStorageMode() {
-    if(this.isPowered){
-      return this.poweredMode;
-    }else {
-      return this.unpoweredMode;
-    }
-  }
 
   public static void tick(World world, BlockPos pos, BlockState state, @NotNull SimpleEnergyStorageBE entity) {
     entity.processBatteries();
@@ -78,11 +60,11 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   private void processBatteries(){
     ItemStack dischargeStack = getStack(DISCHARGE_SLOT_INDEX);
     if(dischargeStack.getItem() instanceof EnergyContainingItem energyContainingItem){
-      energyContainingItem.discharge(dischargeStack, this);
+      energyContainingItem.discharge(dischargeStack, this.energy);
     }
     ItemStack chargeStack = getStack(CHARGE_SLOT_INDEX);
     if(chargeStack.getItem() instanceof EnergyContainingItem energyContainingItem){
-      energyContainingItem.charge(chargeStack, this);
+      energyContainingItem.charge(chargeStack, this.energy);
     }
   }
 
@@ -90,10 +72,10 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
     if(this.energyChangeIndex >= 20 || this.energyChangeIndex < 0){
       this.energyChangeIndex = 0;
     }
-    long energyDifference = this.getValue() - this.previousEnergy;
+    long energyDifference = this.energy.getValue() - this.previousEnergy;
     this.energyChange[this.energyChangeIndex] = energyDifference;
     this.energyChangeIndex++;
-    this.previousEnergy = this.getValue();
+    this.previousEnergy = this.energy.getValue();
   }
 
   public void onBlockUpdate(){
@@ -102,9 +84,9 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
       if(isNowPowered == isPowered) return;
 
       if(isNowPowered){
-        this.onStorageModeChange(this.poweredMode);
+        this.energy.setStorageMode(this.poweredMode);
       }else {
-        this.onStorageModeChange(this.unpoweredMode);
+        this.energy.setStorageMode(this.unpoweredMode);
       }
 
       this.isPowered = isNowPowered;
@@ -122,6 +104,11 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
     if(energyPerSec > 0) formatting = Formatting.GREEN;
 
     return Text.literal("+").append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).formatted(formatting);
+  }
+
+  @Override
+  public Collection<NodeValueContainer> getContainers() {
+    return List.of(this.energy);
   }
 
   @Override
@@ -169,16 +156,14 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements StorageN
   public void onInteraction(ServerPlayerEntity source, Identifier action) {
     if(action.equals(CYCLE_POWERED_MODE)){
       if(this.isPowered){
-        this.onStorageModeChange(this.poweredMode.cycle());
+        this.energy.setStorageMode(this.poweredMode.cycle());
       }
       this.poweredMode = this.poweredMode.cycle();
-      this.markDirty();
     }else if(action.equals(CYCLE_UNPOWERED_MODE)){
       if(!this.isPowered){
-        this.onStorageModeChange(this.poweredMode.cycle());
+        this.energy.setStorageMode(this.poweredMode.cycle());
       }
       this.unpoweredMode = this.unpoweredMode.cycle();
-      this.markDirty();
     }
   }
 }

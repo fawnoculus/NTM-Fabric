@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.fluid.data.custom.*;
-import net.fawnoculus.ntm.fluid.stack.FluidUnit;
+import net.fawnoculus.ntm.fluid.FluidUnit;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.text.Text;

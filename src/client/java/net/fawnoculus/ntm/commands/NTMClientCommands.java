@@ -7,15 +7,15 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
-import net.fawnoculus.ntm.misc.messages.MessageSystem;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.messages.MessageSystem;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.TextArgumentType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class NTMClientCommands {
-  
+
   public static void initialize() {
     ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(
         ClientCommandManager.literal("ntm_client")

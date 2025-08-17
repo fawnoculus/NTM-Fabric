@@ -19,7 +19,7 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
 
   private static final Identifier TEXTURE = NTMTextures.ELECTRIC_FURNACE_GUI;
   private final ElectricFurnaceBE BE = this.handler.getBlockEntity();
-  private final EnergyBar energyBar = new EnergyBar(20, 17, 16, 52, BE);
+  private final EnergyBar energyBar = new EnergyBar(20, 17, 16, 52, BE.energy);
 
   @Override
   protected void init() {

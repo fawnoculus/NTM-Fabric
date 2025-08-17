@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.mixin;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.custom.multiblock.MultiblockBlock;
-import net.fawnoculus.ntm.misc.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

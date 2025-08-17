@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.fluid.data.custom;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fawnoculus.ntm.NTMConfig;
-import net.fawnoculus.ntm.fluid.stack.FluidUnit;
+import net.fawnoculus.ntm.fluid.FluidUnit;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;

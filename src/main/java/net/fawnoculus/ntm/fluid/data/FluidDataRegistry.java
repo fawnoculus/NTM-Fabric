@@ -32,7 +32,7 @@ public class FluidDataRegistry {
   }
 
   /**
-   * Encodes all Fluid Data for Synchronisation with the Client Fluid Data Registry
+   * Encodes all FluidNetworkType Data for Synchronisation with the Client FluidNetworkType Data Registry
    * @return NbtCompound containing all FluidData
    */
   public static @NotNull NbtCompound encodeAllFluidData(){

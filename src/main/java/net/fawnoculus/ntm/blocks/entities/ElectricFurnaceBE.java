@@ -5,9 +5,10 @@ import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
 import net.fawnoculus.ntm.blocks.entities.container.energy.EnergyInventoryBE;
-import net.fawnoculus.ntm.blocks.node.type.ConsumerNode;
+import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
+import net.fawnoculus.ntm.misc.stack.EnergyStack;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,18 +31,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
-public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode, ExtendedScreenHandlerFactory<BlockPosPayload> {
+public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<BlockPosPayload> {
   public static final Text NAME = Text.translatable("container.ntm.electric_furnace");
 
   public static final int OUTPUT_SLOT_INDEX = 0;
   public static final int INPUT_SLOT_INDEX = 1;
   public static final int BATTERY_SLOT_INDEX = 2;
   public static final int UPGRADE_SLOT_INDEX = 3;
-
-  private final PropertyDelegate propertyDelegate;
-  private double progress = 0;
 
   public ElectricFurnaceBE(BlockPos pos, BlockState state) {
     super(NTMBlockEntities.ELECTRIC_FURNACE_BE, pos, state, 4);
@@ -68,6 +68,11 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
       }
     };
   }
+
+  public final EnergyStack energy = new EnergyStack(this).setMaxValue(100_000).setConsumes(true).onChange(this::markDirty);
+
+  private final PropertyDelegate propertyDelegate;
+  private double progress = 0;
 
   public static void tick(World world, BlockPos pos, BlockState state, ElectricFurnaceBE entity) {
     entity.processBattery();
@@ -120,7 +125,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
   }
 
   private boolean canCraft(){
-    return this.getValue() >= this.getEnergyPerTick()
+    return this.energy.getValue() >= this.getEnergyPerTick()
         && this.getRecipe().isPresent()
         && canInsertIntoSlot(OUTPUT_SLOT_INDEX, this.getRecipe().get().value().craft(new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX)), BuiltinRegistries.createWrapperLookup()));
   }
@@ -131,7 +136,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
 
   private void addProgress(){
     this.progress += this.getProgressPerTick();
-    this.remove(this.getEnergyPerTick());
+    this.energy.remove(this.getEnergyPerTick());
 
     if(this.world != null){
       BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
@@ -151,8 +156,13 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ConsumerNode
   private void processBattery(){
     ItemStack stack = getStack(BATTERY_SLOT_INDEX);
     if(stack.getItem() instanceof EnergyContainingItem energyContainingItem){
-      energyContainingItem.discharge(stack, this);
+      energyContainingItem.discharge(stack, this.energy);
     }
+  }
+
+  @Override
+  public Collection<NodeValueContainer> getContainers() {
+    return List.of();
   }
 
   @Override

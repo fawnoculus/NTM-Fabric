@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
-// Fire Diamond, aka: The Symbol on Fluid Containers once you set their Fluids
+// Fire Diamond, aka: The Symbol on FluidNetworkType Containers once you set their Fluids
 public class FireDiamond {
   public static final FluidDataType<@Range(from = 0, to = 4) Integer> RED = register("flammability", Codec.INT, 0);     // FLAMMABILITY
   public static final FluidDataType<@Range(from = 0, to = 4) Integer> BLUE = register("health", Codec.INT, 0);          // HEALTH

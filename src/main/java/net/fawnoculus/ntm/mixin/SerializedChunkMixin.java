@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorHolder;
-import net.fawnoculus.ntm.misc.radiation.processor.RadiationProcessorMultiHolder;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorHolder;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorMultiHolder;
 import net.fawnoculus.ntm.util.WorldUtil;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;

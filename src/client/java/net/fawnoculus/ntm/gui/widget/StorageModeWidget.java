@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.gui.widget;
 
-import net.fawnoculus.ntm.blocks.node.type.StorageNode;
+import net.fawnoculus.ntm.api.node.StorageMode;
 import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public class StorageModeWidget extends ClickableWidget {
-  public StorageModeWidget(int x, int y, Text message, Supplier<StorageNode.StorageMode> storageMode, Runnable onClicked) {
+  public StorageModeWidget(int x, int y, Text message, Supplier<StorageMode> storageMode, Runnable onClicked) {
     super(x, y, 18, 18, message);
     this.STORAGE_MODE = storageMode;
     this.ON_CLICKED = onClicked;
   }
 
-  private final Supplier<StorageNode.StorageMode> STORAGE_MODE;
+  private final Supplier<StorageMode> STORAGE_MODE;
   private final Runnable ON_CLICKED;
 
   @Override
@@ -45,14 +45,14 @@ public class StorageModeWidget extends ClickableWidget {
   }
 
   @Contract(pure = true)
-  private float getU(StorageNode.@NotNull StorageMode storageMode){
+  private float getU(@NotNull StorageMode storageMode){
     return switch (storageMode){
       case None, Provide -> 18;
       default -> 0;
     };
   }
   @Contract(pure = true)
-  private float getV(StorageNode.@NotNull StorageMode storageMode){
+  private float getV(@NotNull StorageMode storageMode){
     return switch (storageMode){
       case None, Share -> 18;
       default -> 0;

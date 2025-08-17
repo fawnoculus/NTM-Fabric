@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * Receives a packed containing an NBT Serialized version on the Servers Fluid Data on Join
+ * Receives a packed containing an NBT Serialized version on the Servers FluidNetworkType Data on Join
  */
 public class ClientFluidDataRegistry {
   private static final HashMap<Identifier, ClientFluidDataContainer> CLIENT_FLUID_DATA = new HashMap<>();

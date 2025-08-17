@@ -14,7 +14,7 @@ public interface HoverTooltipBlock {
   default boolean shouldDisplayTooltip(World world, BlockPos pos, BlockState state){
     return true;
   }
-  
+
   default List<Text> getTooltip(World world, BlockPos pos, BlockState state){
     List<Text> tooltip = new ArrayList<>();
     try{
@@ -23,12 +23,12 @@ public interface HoverTooltipBlock {
       tooltip.add(Text.translatable("error.ntm.while.block_hover_tooltip").formatted(Formatting.RED));
       tooltip.add(Text.translatable("error.ntm.exception", Text.literal(throwable.toString()).formatted(Formatting.YELLOW)).formatted(Formatting.RED));
     }
-    
+
     return tooltip;
   }
-  
+
   /**
    * You can throw Exceptions in here, it will be handled without crashing the game
    */
-  void appendHoverTooltip(World world, BlockPos pos, BlockState state, Consumer<Text> tooltip) throws Throwable;
+  void appendHoverTooltip(World world, BlockPos pos, BlockState state, Consumer<Text> tooltip);
 }

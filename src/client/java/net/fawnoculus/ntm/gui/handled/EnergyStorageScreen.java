@@ -21,7 +21,7 @@ public class EnergyStorageScreen extends HandledScreen<EnergyStorageScreenHandle
 
   private static final Identifier TEXTURE = NTMTextures.ENERGY_STORAGE_GUI;
   private final SimpleEnergyStorageBE BE = this.handler.getBlockEntity();
-  private final EnergyBar energyBar = new EnergyBar(62, 17, 52, 52, BE, BE::getEnergyPerSec);
+  private final EnergyBar energyBar = new EnergyBar(62, 17, 52, 52, BE.energy, BE::getEnergyPerSec);
 
   @Override
   protected void init() {
