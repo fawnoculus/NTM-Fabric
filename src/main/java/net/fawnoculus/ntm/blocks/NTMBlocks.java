@@ -294,14 +294,24 @@ public class NTMBlocks {
   public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), AbstractBlock.Settings.create());
   public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), AbstractBlock.Settings.create());
 
+  // Special Effect Barrels
+  /* FIXME
+  public static final Block EXPLOSIVE_BARREL = register("explosive_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block IMP_RESIDUE_BARREL = register("imp_residue_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block KEROSENE_BARREL = register("kerosene_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block LOX_BARREL = register("lox_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block RADIOACTIVE_BARREL = register("radioactive_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block VITRIFIED_NUCLEAR_WASTE_DRUM = register("vitrified_nuclear_waste_drum", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  */
+
   // FluidNetworkType Stuff
   /* FIXME
+  public static final Block CORRODED_BARREL = register("corroded_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
   public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
-  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
-  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
-  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
-  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
-  public static final Block SAFE_BARREL = register("safe_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block IRON_BARREL = register("iron_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block STEEL_BARREL = register("steel_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block TECHNETIUM_STEEL_BARREL = register("technetium_steel_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
+  public static final Block MAGNETIC_BARREL = register("magnetic_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
    */
 
   private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings){

@@ -7,6 +7,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An Empty Interface
@@ -23,6 +24,6 @@ public interface ItemAbility {
     return Text.translatable(this.getTranslationKey());
   }
   String getTranslationKey();
-  String getValue();
+  @Nullable String getValue();
   void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner);
 }

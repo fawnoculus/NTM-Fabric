@@ -2,13 +2,8 @@ package net.fawnoculus.ntm.mixin;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.fluid.data.FluidDataRegistry;
-import net.fawnoculus.ntm.api.radiation.HazmatRegistry;
-import net.fawnoculus.ntm.network.s2c.FluidDataRegistryPayload;
-import net.fawnoculus.ntm.network.s2c.HazmatRegistryPayload;
+import net.fawnoculus.ntm.api.events.custom.PlayerJoinCallback;
 import net.fawnoculus.ntm.network.s2c.NTMVersionPayload;
-import net.fawnoculus.ntm.network.s2c.RadiationRegistryPayload;
-import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ConnectedClientData;
@@ -25,15 +20,7 @@ public abstract class PlayerManagerMixin {
     ServerPlayNetworking.send(player, new NTMVersionPayload(NTM.MOD_VERSION));
   }
   @Inject(method = "onPlayerConnect", at = @At("TAIL"))
-  private void sendRadiationRegistry(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
-    ServerPlayNetworking.send(player, new RadiationRegistryPayload(RadiationRegistry.getInstance().serialize()));
-  }
-  @Inject(method = "onPlayerConnect", at = @At("TAIL"))
-  private void sendHazmatRegistry(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
-    ServerPlayNetworking.send(player, new HazmatRegistryPayload(HazmatRegistry.getInstance().serialize()));
-  }
-  @Inject(method = "onPlayerConnect", at = @At("TAIL"))
-  private void sendFluidDataRegistry(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
-    ServerPlayNetworking.send(player, new FluidDataRegistryPayload(FluidDataRegistry.encodeAllFluidData()));
+  private void playerJoinEvent(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
+    PlayerJoinCallback.EVENT.invoker().onJoin(connection, player, clientData);
   }
 }

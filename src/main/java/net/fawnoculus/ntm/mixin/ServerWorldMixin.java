@@ -4,11 +4,13 @@ import net.fawnoculus.ntm.api.node.network.NodeNetworkManager;
 import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessor;
 import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorMultiHolder;
 import net.fawnoculus.ntm.api.radiation.RadiationManager;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.profiler.Profilers;
 import net.minecraft.world.EntityList;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,25 +27,27 @@ public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder 
   @Shadow public abstract ServerWorld toServerWorld();
 
   @Shadow @Final EntityList entityList;
+
+  @Shadow
+  @NotNull
+  public abstract MinecraftServer getServer();
+
   @Unique private final HashMap<ChunkPos ,RadiationProcessor> radiationProcessors = new HashMap<>();
   @Unique private final HashMap<RadiationProcessor ,ChunkPos> ChunkPositions = new HashMap<>();
 
   @Inject(at = @At("TAIL"), method = "tick")
-  private void tickNodeNetworks(CallbackInfo ci) {
-    Profiler profiler = Profilers.get();
+  private void tickStuff(CallbackInfo ci) {
+    if(this.getServer().getTickManager().shouldTick()){
+      Profiler profiler = Profilers.get();
 
-    profiler.push("nodeNetworks");
-    NodeNetworkManager.tickNetworks();
-    profiler.pop();
-  }
+      profiler.push("radiationManager");
+      RadiationManager.getInstance().tick(this.toServerWorld(), this.entityList);
+      profiler.pop();
 
-  @Inject(at = @At("TAIL"), method = "tick")
-  private void tickRadiationManager(CallbackInfo ci) {
-    Profiler profiler = Profilers.get();
-
-    profiler.push("radiationManager");
-    RadiationManager.getInstance().tick(this.toServerWorld(), this.entityList);
-    profiler.pop();
+      profiler.push("nodeNetworks");
+      NodeNetworkManager.tickNetworks();
+      profiler.pop();
+    }
   }
 
   @Override

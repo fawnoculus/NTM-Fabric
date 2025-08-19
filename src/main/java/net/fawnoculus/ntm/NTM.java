@@ -16,15 +16,12 @@ import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.fluid.NTMFluids;
 import net.fawnoculus.ntm.fluid.data.FluidData;
 import net.fawnoculus.ntm.items.*;
-import net.fawnoculus.ntm.api.radiation.HazmatRegistry;
 import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
 import net.fawnoculus.ntm.network.NTMPayloads;
 import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.misc.NTMParticles;
 import net.fawnoculus.ntm.world.NTMWorldGeneration;
-import net.fawnoculus.ntm.api.radiation.RadiationManager;
-import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -65,10 +62,6 @@ public class NTM implements ModInitializer {
     NTMBlocks.initialize();
     NTMBlockEntities.initialize();
     ExtraBlockData.initialize();
-
-    RadiationManager.initialize();
-    RadiationRegistry.initialize();
-    HazmatRegistry.initialize();
 
     NTMRecipes.initialize();
 

@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An Empty Interface
@@ -20,6 +21,6 @@ public interface ItemModifier {
     return Text.translatable(this.getTranslationKey());
   }
   String getTranslationKey();
-  String getValue();
+  @Nullable String getValue();
   void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker);
 }

@@ -41,7 +41,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     super(NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, 2);
   }
 
-  public final EnergyStack.Storage energy = new EnergyStack.Storage(this).onChange(this::markDirty);
+  public final EnergyStack.Storage energy = new EnergyStack.Storage(this).setStorageMode(StorageMode.Consume).onChange(this::markDirty);
 
   public boolean isPowered = false;
   public StorageMode poweredMode = StorageMode.Provide;
@@ -118,12 +118,17 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     nbt.putBoolean("is_powered", this.isPowered);
     nbt.putInt("energy_change_index", this.energyChangeIndex);
     nbt.putLongArray("energy_change", energyChange);
+
+    this.energy.writeNBT(nbt);
+
     super.writeNbt(nbt, registryLookup);
   }
 
   @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     super.readNbt(nbt, registryLookup);
+
+    this.energy.readNBT(nbt);
 
     nbt.get("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
     nbt.get("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
@@ -161,7 +166,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
       this.poweredMode = this.poweredMode.cycle();
     }else if(action.equals(CYCLE_UNPOWERED_MODE)){
       if(!this.isPowered){
-        this.energy.setStorageMode(this.poweredMode.cycle());
+        this.energy.setStorageMode(this.unpoweredMode.cycle());
       }
       this.unpoweredMode = this.unpoweredMode.cycle();
     }

@@ -5,7 +5,6 @@ import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -76,7 +75,7 @@ public interface Node {
       NodeNetwork foundNetwork = Objects.requireNonNull(node.getNetwork());
 
       if (detectedNetwork != null && !foundNetwork.equals(detectedNetwork)) {
-        detectedNetwork.mergeWith(foundNetwork);
+        detectedNetwork.mergeAt(this);
         return detectedNetwork;
       }
 
@@ -111,7 +110,11 @@ public interface Node {
     return node.getNetworkType() == this.getNetworkType();
   }
 
-  default void readNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+  default void readNodeData(NbtCompound nbt) {
+    if(this.getWorld() != null && this.getWorld().isClient()){
+      return;
+    }
+
     try {
       UUID uuid = UUID.fromString(nbt.getString("network", null));
       NodeNetwork network = this.getNetworkType().getNetwork(uuid);
@@ -123,7 +126,7 @@ public interface Node {
     }
   }
 
-  default void writeNodeData(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+  default void writeNodeData(NbtCompound nbt) {
     if (this.getNetwork() != null) {
       nbt.putString("network", this.getNetwork().ID.toString());
     }

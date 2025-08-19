@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.items.custom;
 
 import net.fawnoculus.ntm.api.node.Node;
+import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class NetworkDebuggingToolItem extends Item {
@@ -55,8 +57,28 @@ public class NetworkDebuggingToolItem extends Item {
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.node_count", Text.literal(String.valueOf(network.LOADED_NODES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.provider_count", Text.literal(String.valueOf(getProviderCount(network))).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.provider_priorities", Text.literal(network.REVERSED_PROVIDER_PRIORITIES.toString()).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.consumer_count", Text.literal(String.valueOf(getConsumerCount(network))).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+    player.sendMessage(Text.translatable("message.ntm.network_debug.consumer_priorities", Text.literal(network.REVERSED_CONSUMER_PRIORITIES.toString()).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
 
     return ActionResult.SUCCESS_SERVER;
+  }
+
+  private static long getConsumerCount(NodeNetwork network){
+    long consumers = 0;
+    for(List<NodeValueContainer> containers : network.PRIORITISED_CONSUMERS.values()){
+      consumers += containers.size();
+    }
+    return consumers;
+  }
+
+  private static long getProviderCount(NodeNetwork network){
+    long providers = 0;
+    for(List<NodeValueContainer> containers : network.PRIORITISED_PROVIDERS.values()){
+      providers += containers.size();
+    }
+    return providers;
   }
 
   @Override  @SuppressWarnings("deprecation")

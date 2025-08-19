@@ -82,11 +82,11 @@ public abstract class EnergyBE extends BlockEntity implements Node {
   @Override
   protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     super.readNbt(nbt, registries);
-    this.readNodeData(nbt, registries);
+    this.readNodeData(nbt);
   }
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     super.writeNbt(nbt, registries);
-    this.writeNodeData(nbt, registries);
+    this.writeNodeData(nbt);
   }
 }

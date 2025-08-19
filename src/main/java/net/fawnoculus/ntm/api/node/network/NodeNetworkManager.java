@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class NodeNetworkManager {
-  private static final Set<NodeNetwork> NODE_NETWORKS = new HashSet<>();
+  private static final HashSet<NodeNetwork> NODE_NETWORKS = new HashSet<>();
   private static final HashMap<Identifier, NetworkType> TYPES = new HashMap<>();
 
   public static void registerType(NetworkType type){
@@ -38,22 +38,20 @@ public class NodeNetworkManager {
   }
 
   @Contract(pure = true)
-  public static @NotNull Collection<NodeNetwork> getAllNetworks(){
+  public static @NotNull HashSet<NodeNetwork> getAllNetworks(){
     return NODE_NETWORKS;
   }
 
   public static void tickNetworks(){
-    List<NodeNetwork> toBeRemoved = new ArrayList<>();
+    NodeNetwork[] ticking = getAllNetworks().toArray(new NodeNetwork[0]);
 
-    for(NodeNetwork network : getAllNetworks()){
+    for(NodeNetwork network : ticking){
       if(network.isEmpty()){
-        toBeRemoved.add(network);
+        removeNetwork(network);
         continue;
       }
 
       network.tickNetwork();
     }
-
-    toBeRemoved.forEach(NODE_NETWORKS::remove);
   }
 }

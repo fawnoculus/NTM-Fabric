@@ -162,19 +162,21 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
 
   @Override
   public Collection<NodeValueContainer> getContainers() {
-    return List.of();
-  }
-
-  @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-    this.progress = nbt.getDouble("progress", 0);
+    return List.of(this.energy);
   }
 
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
     nbt.putDouble("progress", this.progress);
+    this.energy.writeNBT(nbt);
     super.writeNbt(nbt, registryLookup);
+  }
+
+  @Override
+  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+    super.readNbt(nbt, registryLookup);
+    this.energy.readNBT(nbt);
+    this.progress = nbt.getDouble("progress", 0);
   }
 
   public double getProgress(int requiredProgress) {

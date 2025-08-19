@@ -11,13 +11,13 @@ public class EnergyStack implements NodeValueContainer {
     this.PARENT = parent;
   }
 
-  private final Node PARENT;
-  private long value = 0;
-  private long maxValue = 0;
-  private long priority = 0;
-  private boolean consumes = false;
-  private boolean provides = false;
-  private Runnable onChange = () -> {};
+  protected final Node PARENT;
+  protected long value = 0;
+  protected long maxValue = 0;
+  protected long priority = 0;
+  protected boolean consumes = false;
+  protected boolean provides = false;
+  protected Runnable onChange = () -> {};
 
   @Override
   public EnergyStack setValue(@Range(from = 0, to = Long.MAX_VALUE) long value) {
@@ -90,13 +90,27 @@ public class EnergyStack implements NodeValueContainer {
   }
 
   public void writeNBT(NbtCompound nbt){
-    this.value = nbt.getLong("energy_stack.stored_energy", 0);
-    this.priority = nbt.getLong("energy_stack.priority", 0);
+    nbt.putLong("energy_stack.stored_energy", this.value);
+    nbt.putLong("energy_stack.max_energy", this.maxValue);
+    nbt.putLong("energy_stack.priority", this.priority);
   }
 
   public void readNBT(NbtCompound nbt){
-    nbt.putLong("energy_stack.stored_energy", this.value);
-    nbt.putLong("energy_stack.priority", this.priority);
+    this.value = nbt.getLong("energy_stack.stored_energy", 0);
+    this.maxValue = nbt.getLong("energy_stack.max_energy", 0);
+    this.priority = nbt.getLong("energy_stack.priority", 0);
+  }
+
+  @Override
+  public String toString() {
+    return "EnergyStack{" +
+      "value=" + value +
+      ", maxValue=" + maxValue +
+      ", priority=" + priority +
+      ", consumes=" + consumes +
+      ", provides=" + provides +
+      ", PARENT=" + PARENT +
+      '}';
   }
 
   public static class Storage extends EnergyStack {
@@ -110,11 +124,12 @@ public class EnergyStack implements NodeValueContainer {
       return this.mode;
     }
 
-    public void setStorageMode(StorageMode mode){
+    public Storage setStorageMode(StorageMode mode){
       this.setConsumes(mode.consumes);
       this.setProvides(mode.provides);
 
       this.mode = mode;
+      return this;
     }
 
     @Override
@@ -163,6 +178,19 @@ public class EnergyStack implements NodeValueContainer {
     public void writeNBT(NbtCompound nbt) {
       super.writeNBT(nbt);
       nbt.put("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
+    }
+
+    @Override
+    public String toString() {
+      return "EnergyStack.Storage{" +
+        "value=" + value +
+        ", maxValue=" + maxValue +
+        ", priority=" + priority +
+        ", consumes=" + consumes +
+        ", provides=" + provides +
+        ", mode=" + mode +
+        ", PARENT=" + PARENT +
+        '}';
     }
   }
 }

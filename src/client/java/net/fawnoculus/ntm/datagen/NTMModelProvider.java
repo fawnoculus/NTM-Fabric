@@ -212,6 +212,24 @@ public class NTMModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.YELLOWCAKE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.ZIRCONIUM_BLOCK);
 
+    /* FIXME
+    blockStateModelGenerator.registerSingleton(NTMBlocks.EXPLOSIVE_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.IMP_RESIDUE_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.KEROSENE_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.LOX_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.RADIOACTIVE_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.VITRIFIED_NUCLEAR_WASTE_DRUM, SIMPLE_BARREL);
+    */
+
+    /* FIXME
+    blockStateModelGenerator.registerSingleton(NTMBlocks.CORRODED_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.SAFE_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.IRON_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.STEEL_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.TECHNETIUM_STEEL_BARREL, SIMPLE_BARREL);
+    blockStateModelGenerator.registerSingleton(NTMBlocks.MAGNETIC_BARREL, SIMPLE_BARREL);
+   */
+
     registerForAdvancedModel(blockStateModelGenerator, NTMBlocks.ALLOY_FURNACE_EXTENSION);
 
     registerSimpleHorizontalOrientable(blockStateModelGenerator, NTMBlocks.POTATO_BATTERY_BLOCK);
@@ -222,100 +240,106 @@ public class NTMModelProvider extends FabricModelProvider {
 
 
     TextureMap alloyFurnaceTextureMap = new TextureMap()
-        .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top"))
-        .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side"))
-        .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front"))
-        .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
+      .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top"))
+      .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side"))
+      .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front"))
+      .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
     TextureMap litAlloyFurnaceTextureMap = new TextureMap()
-        .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top_lit"))
-        .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side"))
-        .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front_lit"))
-        .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
+      .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top_lit"))
+      .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side"))
+      .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front_lit"))
+      .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
     TextureMap tallAlloyFurnaceTextureMap = new TextureMap()
-        .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top"))
-        .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side_tall"))
-        .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front_tall"))
-        .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
+      .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top"))
+      .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side_tall"))
+      .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front_tall"))
+      .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
     TextureMap litTallAlloyFurnaceTextureMap = new TextureMap()
-        .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top_lit"))
-        .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side_tall"))
-        .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front_lit_tall"))
-        .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
+      .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_top_lit"))
+      .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_side_tall"))
+      .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_front_lit_tall"))
+      .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ALLOY_FURNACE, "_bottom"));
 
     WeightedVariant alloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.ORIENTABLE_WITH_BOTTOM.upload(NTMBlocks.ALLOY_FURNACE, "", alloyFurnaceTextureMap, blockStateModelGenerator.modelCollector));
     WeightedVariant litAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(NTMBlocks.ALLOY_FURNACE, "_lit", Models.ORIENTABLE_WITH_BOTTOM, a -> litAlloyFurnaceTextureMap));
     WeightedVariant tallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(NTMBlocks.ALLOY_FURNACE, "_tall", Models.ORIENTABLE_WITH_BOTTOM, a -> tallAlloyFurnaceTextureMap));
     WeightedVariant litTallAlloyFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(NTMBlocks.ALLOY_FURNACE, "_lit_tall", Models.ORIENTABLE_WITH_BOTTOM, a -> litTallAlloyFurnaceTextureMap));
     blockStateModelGenerator.blockStateCollector
-        .accept(
-            VariantsBlockModelDefinitionCreator.of(NTMBlocks.ALLOY_FURNACE)
-                .with(
-                    BlockStateVariantMap.models(AlloyFurnaceBlock.FACING, AlloyFurnaceBlock.LIT, AlloyFurnaceBlock.EXTENSION)
-                        .register(Direction.NORTH, false, false, alloyFurnaceweightedVariant)
-                        .register(Direction.EAST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                        .register(Direction.NORTH, true, false, litAlloyFurnaceweightedVariant)
-                        .register(Direction.EAST, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                        .register(Direction.NORTH, false, true, tallAlloyFurnaceweightedVariant)
-                        .register(Direction.EAST, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                        .register(Direction.NORTH, true, true, litTallAlloyFurnaceweightedVariant)
-                        .register(Direction.EAST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                )
-        );
+      .accept(
+        VariantsBlockModelDefinitionCreator.of(NTMBlocks.ALLOY_FURNACE)
+          .with(
+            BlockStateVariantMap.models(AlloyFurnaceBlock.FACING, AlloyFurnaceBlock.LIT, AlloyFurnaceBlock.EXTENSION)
+              .register(Direction.NORTH, false, false, alloyFurnaceweightedVariant)
+              .register(Direction.EAST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, false, false, alloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+              .register(Direction.NORTH, true, false, litAlloyFurnaceweightedVariant)
+              .register(Direction.EAST, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, true, false, litAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+              .register(Direction.NORTH, false, true, tallAlloyFurnaceweightedVariant)
+              .register(Direction.EAST, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, false, true, tallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+              .register(Direction.NORTH, true, true, litTallAlloyFurnaceweightedVariant)
+              .register(Direction.EAST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, true, true, litTallAlloyFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+          )
+      );
 
     TextureMap electricFurnaceTextureMap = new TextureMap()
-        .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_top"))
-        .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_side"))
-        .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_front"))
-        .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_bottom"));
+      .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_top"))
+      .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_side"))
+      .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_front"))
+      .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_bottom"));
     TextureMap litElectricFurnaceTextureMap = new TextureMap()
-        .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_top"))
-        .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_side"))
-        .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_front_lit"))
-        .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_bottom"));
+      .put(TextureKey.TOP, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_top"))
+      .put(TextureKey.SIDE, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_side"))
+      .put(TextureKey.FRONT, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_front_lit"))
+      .put(TextureKey.BOTTOM, TextureMap.getSubId(NTMBlocks.ELECTRIC_FURNACE, "_bottom"));
     WeightedVariant electricFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.ORIENTABLE_WITH_BOTTOM.upload(NTMBlocks.ELECTRIC_FURNACE, "", electricFurnaceTextureMap, blockStateModelGenerator.modelCollector));
     WeightedVariant litElectricFurnaceweightedVariant = BlockStateModelGenerator.createWeightedVariant(blockStateModelGenerator.createSubModel(NTMBlocks.ELECTRIC_FURNACE, "_lit", Models.ORIENTABLE_WITH_BOTTOM, a -> litElectricFurnaceTextureMap));
     blockStateModelGenerator.blockStateCollector
-        .accept(
-            VariantsBlockModelDefinitionCreator.of(NTMBlocks.ELECTRIC_FURNACE)
-                .with(
-                    BlockStateVariantMap.models(ElectricFurnaceBlock.FACING, ElectricFurnaceBlock.LIT)
-                        .register(Direction.NORTH, false, electricFurnaceweightedVariant)
-                        .register(Direction.EAST, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                        .register(Direction.NORTH, true, litElectricFurnaceweightedVariant)
-                        .register(Direction.EAST, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                )
-        );
+      .accept(
+        VariantsBlockModelDefinitionCreator.of(NTMBlocks.ELECTRIC_FURNACE)
+          .with(
+            BlockStateVariantMap.models(ElectricFurnaceBlock.FACING, ElectricFurnaceBlock.LIT)
+              .register(Direction.NORTH, false, electricFurnaceweightedVariant)
+              .register(Direction.EAST, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, false, electricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+              .register(Direction.NORTH, true, litElectricFurnaceweightedVariant)
+              .register(Direction.EAST, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, true, litElectricFurnaceweightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+          )
+      );
     registerSimpleHorizontalOrientable(blockStateModelGenerator, NTMBlocks.PWR_CONTROLLER);
   }
 
-  private static void registerSimpleHorizontalOrientable(@NotNull BlockStateModelGenerator blockStateModelGenerator, Block block){
+  private static void registerSimpleHorizontalOrientable(@NotNull BlockStateModelGenerator blockStateModelGenerator, Block block) {
     WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(TexturedModel.ORIENTABLE.upload(block, blockStateModelGenerator.modelCollector));
     blockStateModelGenerator.blockStateCollector
-        .accept(
-            VariantsBlockModelDefinitionCreator.of(block)
-                .with(
-                    BlockStateVariantMap.models(Properties.HORIZONTAL_FACING)
-                        .register(Direction.NORTH, weightedVariant)
-                        .register(Direction.EAST, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                        .register(Direction.SOUTH, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                        .register(Direction.WEST, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
-                )
-        );
+      .accept(
+        VariantsBlockModelDefinitionCreator.of(block)
+          .with(
+            BlockStateVariantMap.models(Properties.HORIZONTAL_FACING)
+              .register(Direction.NORTH, weightedVariant)
+              .register(Direction.EAST, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_90))
+              .register(Direction.SOUTH, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_180))
+              .register(Direction.WEST, weightedVariant.apply(BlockStateModelGenerator.ROTATE_Y_270))
+          )
+      );
   }
 
-  public static void registerForAdvancedModel(@NotNull BlockStateModelGenerator blockStateModelGenerator , Block block){
+  public static TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
+  public static final TexturedModel.Factory SIMPLE_BARREL = TexturedModel.makeFactory(
+    block -> new TextureMap().put(BARREL_TEXTURE_KEY, TextureMap.getId(block)),
+    new Model(Optional.empty(), Optional.empty(), BARREL_TEXTURE_KEY)
+  );
+
+  public static void registerForAdvancedModel(@NotNull BlockStateModelGenerator blockStateModelGenerator, Block block) {
     // In order for the Model overrides to work there just needs to be any model for the specified item
     // So we just give it an empty model
     blockStateModelGenerator.registerSingleton(block, EMPTY_BLOCK_MODEL);
@@ -1129,6 +1153,7 @@ public class NTMModelProvider extends FabricModelProvider {
     itemModelGenerator.register(NTMItems.MESE_PICKAXE, HANDHELD_LARGE);
     itemModelGenerator.register(NTMItems.MESE_AXE, HANDHELD_LARGE);
   }
+
   public static final Model HANDHELD_LARGE = item("handheld_large", TextureKey.LAYER0);
 
   private static Model item(String parent, TextureKey... requiredTextureKeys) {
@@ -1137,6 +1162,6 @@ public class NTMModelProvider extends FabricModelProvider {
 
   @Override
   public String getName() {
-    return NTM.MOD_NAME+" Model Provider";
+    return NTM.MOD_NAME + " Model Provider";
   }
 }

@@ -2,7 +2,6 @@ package net.fawnoculus.ntm.items.custom.container.energy;
 
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Range;
 
 public interface EnergyContainingItem {
 
@@ -26,7 +25,7 @@ public interface EnergyContainingItem {
    * @param energy the amount of energy to be inserted
    * @return the remaining energy that the item could not hold
    */
-  default @Range(from = 0, to = Long.MAX_VALUE) long charge(ItemStack stack, long energy){
+  default long charge(ItemStack stack, long energy){
     long possibleCharge = this.getMaxEnergy(stack) - this.getEnergy(stack);
     if(possibleCharge > this.getChargeRate(stack)){
       possibleCharge = this.getChargeRate(stack);
@@ -48,7 +47,7 @@ public interface EnergyContainingItem {
    * @param energy the amount of energy to be removed
    * @return the remaining energy that could not be removed
    */
-  default @Range(from = 0, to = Long.MAX_VALUE) long discharge(ItemStack stack, long energy){
+  default long discharge(ItemStack stack, long energy){
     long possibleDischarge = this.getEnergy(stack);
     if(possibleDischarge > this.getDischargeRate(stack)){
       possibleDischarge = this.getDischargeRate(stack);

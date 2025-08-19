@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [48, 28],
 	"textures": {
-		"0": "corroded_barrel",
-		"particle": "corroded_barrel"
+		"0": "barrel",
+		"particle": "barrel"
 	},
 	"elements": [
 		{

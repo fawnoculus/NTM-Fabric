@@ -215,13 +215,13 @@ public class NTMCommands {
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context) {
     for(NetworkType type : NodeNetworkManager.getAllTypes()){
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName()).append(Text.literal(" " + type.getAllNetworks().size())), false);
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName(), type.getId()).append(Text.literal(" " + type.getAllNetworks().size())), false);
     }
     return 1;
   }
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context, NetworkType type) {
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName()), false);
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName(), type.getId()), false);
     for(NodeNetwork network : type.getAllNetworks()){
       context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
     }
