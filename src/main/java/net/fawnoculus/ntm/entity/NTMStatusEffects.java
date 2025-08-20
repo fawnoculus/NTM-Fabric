@@ -17,12 +17,11 @@ public class NTMStatusEffects {
 
   // TODO
   public static final RegistryEntry<StatusEffect> CONTAMINATED = of("contaminated",
-    new LeadPoisoningEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
+    new GenericStatusEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
   );
 
-  // TODO
   public static final RegistryEntry<StatusEffect> EXPLOSION = of("explosion",
-    new LeadPoisoningEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
+    new ExplosionStatusEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
   );
 
   public static final RegistryEntry<StatusEffect> LEAD_POISONING = of("lead_poisoning",
@@ -35,7 +34,7 @@ public class NTMStatusEffects {
 
   // TODO
   public static final RegistryEntry<StatusEffect> POTION_SICKNESS = of("potion_sickness",
-    new LeadPoisoningEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
+    new GenericStatusEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
   );
 
   public static final RegistryEntry<StatusEffect> RAD_AWAY = of("rad_away",
@@ -48,7 +47,7 @@ public class NTMStatusEffects {
 
   // TODO
   public static final RegistryEntry<StatusEffect> STABILITY = of("stability",
-    new LeadPoisoningEffect(StatusEffectCategory.HARMFUL, color(55, 55, 60))
+    new GenericStatusEffect(StatusEffectCategory.BENEFICIAL, color(55, 55, 60))
   );
 
   public static final RegistryEntry<StatusEffect> TAINT = of("taint",

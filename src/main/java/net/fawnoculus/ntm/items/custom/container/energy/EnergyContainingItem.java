@@ -11,15 +11,6 @@ public interface EnergyContainingItem {
   long getChargeRate(ItemStack stack);
   long getDischargeRate(ItemStack stack);
 
-  default boolean hasEnergy(ItemStack stack, long energy){
-    return this.getEnergy(stack) >= energy;
-  }
-  default void decreaseEnergy(ItemStack stack, long energy){
-    this.setEnergy(stack, this.getEnergy(stack) - energy);
-  }
-  default void increaseEnergy(ItemStack stack, long energy){
-    this.setEnergy(stack, this.getEnergy(stack) + energy);
-  }
   /**
    * @param stack the Stack to be Charged
    * @param energy the amount of energy to be inserted

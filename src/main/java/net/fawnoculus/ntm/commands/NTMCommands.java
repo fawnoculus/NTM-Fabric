@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
 import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
@@ -21,6 +22,9 @@ import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.TextArgumentType;
 import net.minecraft.command.argument.UuidArgumentType;
 import net.minecraft.component.Component;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
@@ -34,6 +38,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class NTMCommands {
@@ -138,6 +144,12 @@ public class NTMCommands {
                 )
               )
             )
+            .then(CommandManager.literal("give_all_effects")
+              .executes(context -> giveAllEffects(context, List.of(Objects.requireNonNull(context.getSource().getEntity()))))
+              .then(CommandManager.argument("target", EntityArgumentType.entities())
+                .executes(context -> giveAllEffects(context, EntityArgumentType.getEntities(context, "target")))
+              )
+            )
           )
         )
       );
@@ -196,6 +208,40 @@ public class NTMCommands {
   private static int setDevConstant(CommandContext<ServerCommandSource> context, boolean value) {
     SharedConstants.isDevelopment = value;
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_dev_constant", value), false);
+    return 1;
+  }
+
+  private static int giveAllEffects(CommandContext<ServerCommandSource> context, Collection<? extends Entity> targets) {
+    int affectedTargets = 0;
+    int immuneTargets = 0;
+
+    for(Entity entity : targets){
+      if(entity instanceof LivingEntity livingEntity){
+        affectedTargets++;
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.CONTAMINATED, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.EXPLOSION, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.LEAD_POISONING, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.PHOSPHORUS_BURNS, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.POTION_SICKNESS, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.RAD_AWAY, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.RAD_X, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.STABILITY, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 30 * 20, 0, false, false, true));
+        livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINTED_HEART, 30 * 20, 0, false, false, true));
+      }else {
+        immuneTargets++;
+      }
+    }
+
+    final int finalAffectedTargets = affectedTargets;
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.all_effects.affected_targets", finalAffectedTargets), true);
+    if(immuneTargets > 0){
+      final int finalImmuneTargets = immuneTargets;
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.all_effects.immune_targets", finalImmuneTargets), true);
+    }
+
     return 1;
   }
 
