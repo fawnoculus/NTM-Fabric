@@ -2,6 +2,7 @@
 ## Added:
 * Advanced Message System
 * Energy System (aka: NodeNetworks)
+* Builtin Resource Pack (Legacy Stuff)
 * Batteries
 * Radiation System
 * Node Network System (aka: Energy Cables & Fluid Pipes)
