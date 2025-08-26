@@ -7,11 +7,9 @@ import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.NTM;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +24,6 @@ public class NTMCraftingRecipeProvider extends FabricRecipeProvider {
     return new RecipeGenerator(registryLookup, exporter) {
       @Override
       public void generate() {
-        RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
         makeTools(this, exporter, NTMItems.STEEL_INGOT, NTMItems.STEEL_SWORD, NTMItems.STEEL_PICKAXE, NTMItems.STEEL_AXE, NTMItems.STEEL_SHOVEL, NTMItems.STEEL_HOE);
         makeTools(this, exporter, NTMItems.ADVANCED_ALLOY_INGOT, NTMItems.ADVANCED_ALLOY_SWORD, NTMItems.ADVANCED_ALLOY_PICKAXE, NTMItems.ADVANCED_ALLOY_AXE, NTMItems.ADVANCED_ALLOY_SHOVEL, NTMItems.ADVANCED_ALLOY_HOE);
         makeTools(this, exporter, NTMItems.TITANIUM_INGOT, NTMItems.TITANIUM_SWORD, NTMItems.TITANIUM_PICKAXE, NTMItems.TITANIUM_AXE, NTMItems.TITANIUM_SHOVEL, NTMItems.TITANIUM_HOE);

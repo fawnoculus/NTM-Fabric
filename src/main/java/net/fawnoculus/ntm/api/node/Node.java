@@ -110,10 +110,17 @@ public interface Node {
     return node.getNetworkType() == this.getNetworkType();
   }
 
+  default void writeNodeData(NbtCompound nbt) {
+    if (this.getNetwork() != null) {
+      nbt.putString("network", this.getNetwork().ID.toString());
+    }
+  }
+
   default void readNodeData(NbtCompound nbt) {
     if (this.getWorld() != null && this.getWorld().isClient()) {
       return;
     }
+
 
     try {
       UUID uuid = UUID.fromString(nbt.getString("network", null));
@@ -123,12 +130,6 @@ public interface Node {
         network.addNode(this);
       }
     } catch (IllegalArgumentException | NullPointerException ignored) {
-    }
-  }
-
-  default void writeNodeData(NbtCompound nbt) {
-    if (this.getNetwork() != null) {
-      nbt.putString("network", this.getNetwork().ID.toString());
     }
   }
 

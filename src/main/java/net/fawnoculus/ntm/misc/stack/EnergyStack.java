@@ -172,7 +172,9 @@ public class EnergyStack implements NodeValueContainer {
     @Override
     public void readNBT(NbtCompound nbt) {
       super.readNBT(nbt);
-      this.mode = nbt.get("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume);
+      this.setStorageMode(
+        nbt.get("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume)
+      );
     }
 
     @Override

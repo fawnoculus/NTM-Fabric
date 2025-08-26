@@ -103,7 +103,6 @@ public class ModelHandler {
     stringReader.useDelimiter(anyButFloats);
     float u;
     float v = 0;
-    float w = 0;
     if (!stringReader.hasNextFloat()) {
       throw new WavefrontSyntaxException("Malformed Texture Coordinate, did not specify required value U");
     }

@@ -47,13 +47,6 @@ public class NetworkDebuggingToolItem extends Item {
       return ActionResult.SUCCESS_SERVER;
     }
 
-    if (player.isSneaking()) {
-      for (Node node : clickedNode.getNetwork().LOADED_NODES) {
-        player.sendMessage(Text.literal(node.getPos().toShortString()), false);
-      }
-      return ActionResult.SUCCESS_SERVER;
-    }
-
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
     player.sendMessage(Text.translatable("message.ntm.network_debug.node_count", Text.literal(String.valueOf(network.LOADED_NODES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
