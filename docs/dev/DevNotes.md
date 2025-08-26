@@ -22,10 +22,9 @@ In my version of Node Networks there is no such thing as Nodespace, instead ther
 all a node in a network has to do is store the UUID of it's assigned Network once it is unloaded so it can be loaded again once the Node is loaded.
 When a Node is placed it checks it neighbour blocks for Nodes, if it finds one then this Node will use its Network & if it finds multiple, it will merge all the Networks Together.
 Once a Node is Removed, it will check if it was Connecting Multiple Nodes, if it was then it Splits the Network at its current location
-(if the Network is large then this can take some time, this is the one Downside of not having Nodespace).
+(if the Network is large then this can take some time, this is the one Downside of not having Nodespace as that would speed up the process slightly).
 A Node in this context refers to a BlockEntity.
-In this Version of Node Networks a Node is responsible for every task, Connection, Consumption, Providing & Storing, the only thing keeping these types of Node apart are the type of their NodeProperties.
-The Downside of this is that you could technically try to get or set the energy contained in a cable or get the Storage mode of a consumer, however in most cases this should not be a problem (maybe ... hopefully)
+A Node contains a Collection of NodeValueContainers which handle things like contained Energy or Fluid & whether a node is inserting into or taking from the Network.
 
 ## Advanced Models (aka: Blender Models / Wavefront OBJ Files)
 OBJ Files are loaded from the Resource Manager (technically you could replace them with a resource pack, thou you would have to restart your game as there is no code for reloading them).
