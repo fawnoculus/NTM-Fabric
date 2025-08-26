@@ -27,15 +27,15 @@ public abstract class FluidBE extends BlockEntity implements Node {
   private boolean shouldAssignNetwork = false;
   private NodeNetwork network;
 
-  public FluidBE(BlockEntityType<?> type, BlockPos pos, BlockState state){
+  public FluidBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
   }
 
-  public static @NotNull Fluid getNetworkFluid(@NotNull NodeNetwork network){
-    for(Node node : network.LOADED_NODES){
-      if(node instanceof FluidBE fluidNode
+  public static @NotNull Fluid getNetworkFluid(@NotNull NodeNetwork network) {
+    for (Node node : network.LOADED_NODES) {
+      if (node instanceof FluidBE fluidNode
         && fluidNode.getNodeFluid() != null
-      ){
+      ) {
         return fluidNode.getNodeFluid();
       }
     }
@@ -45,12 +45,14 @@ public abstract class FluidBE extends BlockEntity implements Node {
 
   /**
    * May return Null if the Node Contains Multiple Fluid Types
+   *
    * @return Which type of Fluid this node transports / Contains
    */
   public abstract @Nullable Fluid getNodeFluid();
 
   /**
    * Get the containers in this Node based on the type of Fluid it is trying to get
+   *
    * @param fluid the type of fluid
    * @return the containers in this node based on the fluid
    */
@@ -59,7 +61,7 @@ public abstract class FluidBE extends BlockEntity implements Node {
 
   @Override
   public Collection<NodeValueContainer> getContainers() {
-    if(this.getNetwork() == null){
+    if (this.getNetwork() == null) {
       return List.of();
     }
 

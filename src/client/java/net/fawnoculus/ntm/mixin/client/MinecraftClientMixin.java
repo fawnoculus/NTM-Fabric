@@ -25,15 +25,15 @@ public abstract class MinecraftClientMixin {
     float deltaMillis = (float) ((System.nanoTime() - LastNanoTime) / 1000000);
 
     List<AdvancedMessage> toBeRemovedMessages = new ArrayList<>();
-    for(AdvancedMessage message : messageList){
+    for (AdvancedMessage message : messageList) {
       float millisLeft = message.getMillisLeft();
-      if(millisLeft < 0){
+      if (millisLeft < 0) {
         toBeRemovedMessages.add(message);
         continue;
       }
       message.setMillisLeft(millisLeft - deltaMillis);
     }
-    for(AdvancedMessage message : toBeRemovedMessages){
+    for (AdvancedMessage message : toBeRemovedMessages) {
       MessageSystem.removeMessage(message.getID());
     }
 

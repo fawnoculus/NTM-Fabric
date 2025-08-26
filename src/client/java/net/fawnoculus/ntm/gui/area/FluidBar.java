@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Range;
 
 import java.util.function.Consumer;
 
-public class FluidBar implements InfoBar{
-  public FluidBar(int x, int y, int width, int height, FluidStack fluidStack){
+public class FluidBar implements InfoBar {
+  public FluidBar(int x, int y, int width, int height, FluidStack fluidStack) {
     this.X = x;
     this.Y = y;
     this.WIDTH = width;
@@ -31,7 +31,7 @@ public class FluidBar implements InfoBar{
   private int OFFSET_X;
   private int OFFSET_Y;
 
-  public void setOffsets(int offsetX, int offsetY){
+  public void setOffsets(int offsetX, int offsetY) {
     this.OFFSET_X = offsetX;
     this.OFFSET_Y = offsetY;
   }
@@ -79,25 +79,25 @@ public class FluidBar implements InfoBar{
   @Override
   public int getTextureHeight() {
     Sprite sprite = this.getFluidSprite();
-    if(sprite == null) return 16;
+    if (sprite == null) return 16;
     return sprite.getContents().getHeight();
   }
 
   @Override
   public int getTextureWidth() {
     Sprite sprite = this.getFluidSprite();
-    if(sprite == null) return 16;
+    if (sprite == null) return 16;
     return sprite.getContents().getWidth();
   }
 
   @Override
   public Identifier getTexture() {
     Sprite sprite = this.getFluidSprite();
-    if(sprite == null) return null;
+    if (sprite == null) return null;
     return sprite.getAtlasId();
   }
 
-  private @Nullable Sprite getFluidSprite(){
+  private @Nullable Sprite getFluidSprite() {
     return FluidVariantRendering.getSprite(this.FLUID_STACK.variant);
   }
 

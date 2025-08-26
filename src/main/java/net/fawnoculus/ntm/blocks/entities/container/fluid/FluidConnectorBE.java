@@ -12,7 +12,7 @@ public class FluidConnectorBE extends FluidTypeBE {
   // TODO: this
 
   public FluidConnectorBE(BlockPos pos, BlockState state) {
-    super(null , pos, state);
+    super(null, pos, state);
   }
 
   @Override

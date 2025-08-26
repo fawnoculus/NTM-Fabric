@@ -12,44 +12,47 @@ public class MultiModel3D {
   public final String NAME;
   public final HashMap<String, GroupedModel3D> MODELS = new HashMap<>();
 
-  public MultiModel3D(){
+  public MultiModel3D() {
     this("Empty");
   }
-  public MultiModel3D(String name){
+
+  public MultiModel3D(String name) {
     this.NAME = name;
   }
 
-  public void addModel(String objectName, String groupName, Model3D model3D){
-    if(!MODELS.containsKey(objectName)){
-      MODELS.put(objectName, new GroupedModel3D(this.NAME+"#"+objectName));
+  public void addModel(String objectName, String groupName, Model3D model3D) {
+    if (!MODELS.containsKey(objectName)) {
+      MODELS.put(objectName, new GroupedModel3D(this.NAME + "#" + objectName));
     }
 
     MODELS.get(objectName).addModel(groupName, model3D);
   }
 
   public void drawAll(MatrixStack.Entry matrix, int light, Identifier texture) {
-    for (GroupedModel3D groupedModel : MODELS.values()){
+    for (GroupedModel3D groupedModel : MODELS.values()) {
       groupedModel.drawAll(matrix, light, texture);
     }
   }
 
-  public @Nullable GroupedModel3D getNullable(String objectName){
+  public @Nullable GroupedModel3D getNullable(String objectName) {
     return MODELS.get(objectName);
   }
-  public @Nullable Model3D getNullable(String objectName, String groupName){
+
+  public @Nullable Model3D getNullable(String objectName, String groupName) {
     GroupedModel3D groupedModel = getNullable(objectName);
-    if(groupedModel != null){
+    if (groupedModel != null) {
       return groupedModel.getNullable(groupName);
     }
     return null;
   }
 
   public @NotNull GroupedModel3D getOrThrow(String objectName) throws NoSuchElementException {
-    if(MODELS.containsKey(objectName)){
+    if (MODELS.containsKey(objectName)) {
       return MODELS.get(objectName);
     }
     throw new NoSuchElementException("Could not get GroupedModel3D '" + objectName + "' because it does not exist");
   }
+
   public @NotNull Model3D getOrThrow(String objectName, String groupName) throws NoSuchElementException {
     return getOrThrow(objectName).getOrThrow(groupName);
   }

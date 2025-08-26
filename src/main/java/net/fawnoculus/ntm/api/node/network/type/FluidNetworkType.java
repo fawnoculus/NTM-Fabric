@@ -15,7 +15,7 @@ public class FluidNetworkType implements NetworkType {
   private FluidNetworkType() {
   }
 
-  public static FluidNetworkType get(){
+  public static FluidNetworkType get() {
     return INSTANCE;
   }
 

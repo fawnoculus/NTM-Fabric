@@ -5,14 +5,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class RadiumCoffeeItem extends CoffeeItem{
+public class RadiumCoffeeItem extends CoffeeItem {
   public RadiumCoffeeItem(Settings settings) {
     super(settings);
   }
 
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    if(!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()){
+    if (!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()) {
       RadiationManager radiationManager = RadiationManager.getInstance();
       radiationManager.increaseRadiationExposure(user, 500_000);
     }

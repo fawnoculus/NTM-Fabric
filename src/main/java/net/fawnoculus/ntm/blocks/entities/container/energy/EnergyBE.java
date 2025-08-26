@@ -20,7 +20,7 @@ public abstract class EnergyBE extends BlockEntity implements Node {
   private boolean shouldAssignNetwork = false;
   private NodeNetwork network;
 
-  public EnergyBE(BlockEntityType<?> type, BlockPos pos, BlockState state){
+  public EnergyBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
   }
 
@@ -84,6 +84,7 @@ public abstract class EnergyBE extends BlockEntity implements Node {
     super.readNbt(nbt, registries);
     this.readNodeData(nbt);
   }
+
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
     super.writeNbt(nbt, registries);

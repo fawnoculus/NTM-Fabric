@@ -17,27 +17,27 @@ public class NTMConfig {
 
   public static final ConfigFile CommonConfig = new ConfigFile("ntm/common", new JsonConfigFile(), LOGGER);
   public static final StringListOption VeinMinerAbilityExclude = CommonConfig.newStringListOption(
-      "VeinMinerAbilityExclude",
-      List.of(
-          "minecraft:stone",
-          "minecraft:cobblestone",
-          "minecraft:deepslate",
-          "minecraft:cobbled_deepslate",
-          "minecraft:netherrack"
-      ),
-      "Blocks to exclude from the Vein Miner Ability (the ability already skips all blocks that the tool is incorrect for)"
+    "VeinMinerAbilityExclude",
+    List.of(
+      "minecraft:stone",
+      "minecraft:cobblestone",
+      "minecraft:deepslate",
+      "minecraft:cobbled_deepslate",
+      "minecraft:netherrack"
+    ),
+    "Blocks to exclude from the Vein Miner Ability (the ability already skips all blocks that the tool is incorrect for)"
   );
   public static final StringListOption AoeAbilityExclude = CommonConfig.newBlockListOption(
-      "AoeAbilityExclude",
-      List.of(
-          "minecraft:bedrock",
-          "minecraft:barrier"
-      ),
-      "Blocks that will be immune to the Aoe Ability (the ability already skips all blocks that the tool is incorrect for)"
+    "AoeAbilityExclude",
+    List.of(
+      "minecraft:bedrock",
+      "minecraft:barrier"
+    ),
+    "Blocks that will be immune to the Aoe Ability (the ability already skips all blocks that the tool is incorrect for)"
   );
   public static final IntegerOption RequiredCommandPermission = CommonConfig.newIntegerOption(
-      "RequiredCommandPermission", 2,
-      "The required Permission-Level for Operator NTM Commands. Requires Restart"
+    "RequiredCommandPermission", 2,
+    "The required Permission-Level for Operator NTM Commands. Requires Restart"
   );
   public static final StringOption FluidUnit = CommonConfig.newStringOption(
     "FluidUnit", "MilliBuckets",
@@ -54,30 +54,30 @@ public class NTMConfig {
     "The max Custom Data Regions the Custom Data System will keep cached before flushing it to the world file"
   );
   public static final IntegerOption MaxNodeScanDepth = CommonConfig.newIntegerOption(
-      "MaxNodeScanDepth", 100000,
-      "The max Amount of Blocks a node-network will scan through when nodes are added/removed. Set to 0 to disable limit"
+    "MaxNodeScanDepth", 100000,
+    "The max Amount of Blocks a node-network will scan through when nodes are added/removed. Set to 0 to disable limit"
   );
   public static final BooleanOption AlwaysSendRadiationPacket = CommonConfig.newBooleanOption(
-      "AlwaysSendRadiationPacket", false,
-      "If the Server should always send the Radiation Packet to player, enabling this may increase performance with high player or addon counts, may also fix some de-sync issues"
+    "AlwaysSendRadiationPacket", false,
+    "If the Server should always send the Radiation Packet to player, enabling this may increase performance with high player or addon counts, may also fix some de-sync issues"
   );
   public static final BooleanOption DevMode = CommonConfig.newBooleanOption(
     "DevMode", false,
     "Enables a bunch of Dev Features. Requires Restart to apply"
   );
   public static final BooleanOption PrintStackTrace = CommonConfig.newBooleanOption(
-      "PrintStackTrace", false,
-      "Print Stacktrace in Exception formater"
+    "PrintStackTrace", false,
+    "Print Stacktrace in Exception formater"
   );
 
   public static final PerWorldConfigFile WorldConfig = new PerWorldConfigFile("ntm/world_default", "ntm/world_config", new JsonConfigFile(), LOGGER);
   public static final BooleanOption DisableEntityRadiation = WorldConfig.newBooleanOption(
-      "DisableEntityRadiation", false,
-      "Stops Entities from being able to receive Radiation, does not remove already existent Radiation Poisoning"
+    "DisableEntityRadiation", false,
+    "Stops Entities from being able to receive Radiation, does not remove already existent Radiation Poisoning"
   );
   public static final BooleanOption DisableChunkRadiation = WorldConfig.newBooleanOption(
-      "DisableChunkRadiation", false,
-      "Disables Chunks having Radioactivity"
+    "DisableChunkRadiation", false,
+    "Disables Chunks having Radioactivity"
   );
 
 

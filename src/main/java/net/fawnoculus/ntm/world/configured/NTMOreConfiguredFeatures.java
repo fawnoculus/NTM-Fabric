@@ -54,7 +54,7 @@ public class NTMOreConfiguredFeatures {
 
   public static final RegistryKey<ConfiguredFeature<?, ?>> TRIXITE_ORE_KEY = registryKey("trixite_ore");
 
-  public static void initialize(Registerable<ConfiguredFeature<?, ?>> context){
+  public static void initialize(Registerable<ConfiguredFeature<?, ?>> context) {
     final RuleTest StoneReplaceable = new TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES);
     final RuleTest DeepslateReplaceable = new TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
     final RuleTest NetherrackReplaceable = new TagMatchRuleTest(BlockTags.BASE_STONE_NETHER);
@@ -219,10 +219,11 @@ public class NTMOreConfiguredFeatures {
   }
 
 
-  public static RegistryKey<ConfiguredFeature<?, ?>> registryKey(String name){
+  public static RegistryKey<ConfiguredFeature<?, ?>> registryKey(String name) {
     return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, NTM.id(name));
   }
-  private static <FC extends FeatureConfig, F extends Feature<FC>> void register(@NotNull Registerable<ConfiguredFeature<?, ?>> context, RegistryKey<ConfiguredFeature<?, ?>> key, F feature, FC config){
+
+  private static <FC extends FeatureConfig, F extends Feature<FC>> void register(@NotNull Registerable<ConfiguredFeature<?, ?>> context, RegistryKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
     context.register(key, new ConfiguredFeature<>(feature, config));
   }
 }

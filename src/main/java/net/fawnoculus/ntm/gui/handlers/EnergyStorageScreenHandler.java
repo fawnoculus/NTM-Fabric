@@ -42,18 +42,20 @@ public class EnergyStorageScreenHandler extends ScreenHandler {
     addSlot(new BatterySlot(inventory, SimpleEnergyStorageBE.CHARGE_SLOT_INDEX, 26, 53));
   }
 
-  private void addPlayerInventory(PlayerInventory playerInventory){
+  private void addPlayerInventory(PlayerInventory playerInventory) {
     addPartialPlayerInventory(playerInventory);
     addPlayerHotbar(playerInventory);
   }
-  private void addPartialPlayerInventory(PlayerInventory playerInventory){
+
+  private void addPartialPlayerInventory(PlayerInventory playerInventory) {
     for (int row = 0; row < 3; row++) {
       for (int colum = 0; colum < 9; colum++) {
-        addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)) , 8 + (colum * 18), 84 + (row * 18)));
+        addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)), 8 + (colum * 18), 84 + (row * 18)));
       }
     }
   }
-  private void addPlayerHotbar(PlayerInventory playerInventory){
+
+  private void addPlayerHotbar(PlayerInventory playerInventory) {
     for (int colum = 0; colum < 9; colum++) {
       addSlot(new Slot(playerInventory, colum, 8 + (colum * 18), 142));
     }
@@ -76,7 +78,7 @@ public class EnergyStorageScreenHandler extends ScreenHandler {
     return screenContext.get((world, pos) -> player.canInteractWithBlockAt(pos, 4.0), true);
   }
 
-  public SimpleEnergyStorageBE getBlockEntity(){
+  public SimpleEnergyStorageBE getBlockEntity() {
     return this.blockEntity;
   }
 }

@@ -32,13 +32,13 @@ public class JsonConfigFile implements ConfigFileType {
 
   @Override
   public Boolean isValidValue(@NotNull Object value) {
-    switch (value){
-      case String string ->{
+    switch (value) {
+      case String string -> {
         return !isStringInvalid(string);
       }
-      case String[] strings ->{
-        for(String string: strings){
-          if(isStringInvalid(string)) return false;
+      case String[] strings -> {
+        for (String string : strings) {
+          if (isStringInvalid(string)) return false;
         }
         return true;
       }
@@ -48,9 +48,9 @@ public class JsonConfigFile implements ConfigFileType {
     }
   }
 
-  private boolean isStringInvalid(@NotNull String string){
+  private boolean isStringInvalid(@NotNull String string) {
     return string.contains("\n")
-        || string.contains("\"");
+      || string.contains("\"");
   }
 
   @Override
@@ -118,7 +118,7 @@ public class JsonConfigFile implements ConfigFileType {
             for (JsonElement object : jsonArray) {
               String str = object.getAsString();
               // Only allow valid Entries
-              if(stringListOption.isEntryValid(str)) {
+              if (stringListOption.isEntryValid(str)) {
                 strings.add(str);
               }
             }
@@ -152,36 +152,42 @@ public class JsonConfigFile implements ConfigFileType {
 
   private void writeOption(FileWriter writer, Logger LOGGER, Option<?> option, boolean lastOption) throws IOException {
     String suffix = ",\n\n";
-    if(lastOption) suffix = "";
+    if (lastOption) suffix = "";
 
     switch (option) {
       case BooleanOption booleanOption -> {
-        if(booleanOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, booleanOption.COMMENT));
+        if (booleanOption.COMMENT != null)
+          writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, booleanOption.COMMENT));
         writer.write(String.format("  \"%s\": %b%s", option.NAME, booleanOption.getValue(), suffix));
       }
       case DoubleOption doubleOption -> {
-        if(doubleOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, doubleOption.COMMENT));
+        if (doubleOption.COMMENT != null)
+          writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, doubleOption.COMMENT));
         writer.write(String.format("  \"%s\": %f%s", option.NAME, doubleOption.getValue(), suffix));
       }
       case FloatOption floatOption -> {
-        if(floatOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, floatOption.COMMENT));
+        if (floatOption.COMMENT != null)
+          writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, floatOption.COMMENT));
         writer.write(String.format("  \"%s\": %f%s", option.NAME, floatOption.getValue(), suffix));
       }
       case IntegerOption integerOption -> {
-        if(integerOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, integerOption.COMMENT));
+        if (integerOption.COMMENT != null)
+          writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, integerOption.COMMENT));
         writer.write(String.format("  \"%s\": %d%s", option.NAME, integerOption.getValue(), suffix));
       }
       case StringOption stringOption -> {
-        if(stringOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, stringOption.COMMENT));
+        if (stringOption.COMMENT != null)
+          writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, stringOption.COMMENT));
         writer.write(String.format("  \"%s\": \"%s\"%s", option.NAME, stringOption.getValue(), suffix));
       }
       case StringListOption stringListOption -> {
-        if(stringListOption.COMMENT != null) writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, stringListOption.COMMENT));
+        if (stringListOption.COMMENT != null)
+          writer.write(String.format("  \"__%s_comment\": \"%s\",\n", option.NAME, stringListOption.COMMENT));
         writer.write(String.format("  \"%s\": [\n", option.NAME));
         String[] strings = stringListOption.getValue().toArray(new String[0]);
-        for (int i = 0; i < strings.length ; i++) {
+        for (int i = 0; i < strings.length; i++) {
           // Last String
-          if(i == strings.length - 1){
+          if (i == strings.length - 1) {
             writer.write(String.format("    \"%s\"\n", strings[i]));
             break;
           }
@@ -195,6 +201,5 @@ public class JsonConfigFile implements ConfigFileType {
         LOGGER.error("To whichever Developer did this, don't forget to add write & read methods for your option types to all filetypes when you add option types when you add them!");
       }
     }
-
   }
 }

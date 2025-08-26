@@ -19,39 +19,39 @@ public class GeigerCounterItem extends Item {
     super(settings);
   }
 
-  private Text getRadsText(double milliRads){
-    if(milliRads > 1_000_000){
+  private Text getRadsText(double milliRads) {
+    if (milliRads > 1_000_000) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
     }
-    if(milliRads > 100_000){
+    if (milliRads > 100_000) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_RED);
     }
-    if(milliRads > 10_000){
+    if (milliRads > 10_000) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.RED);
     }
-    if(milliRads > 1_000){
+    if (milliRads > 1_000) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
     }
-    if(milliRads > 0){
+    if (milliRads > 0) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
     }
     return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
   }
 
-  private Text getRadText(double milliRad){
-    if(milliRad > 900_000){
+  private Text getRadText(double milliRad) {
+    if (milliRad > 900_000) {
       return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_GRAY);
     }
-    if(milliRad > 800_000){
+    if (milliRad > 800_000) {
       return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_RED);
     }
-    if(milliRad > 600_000){
+    if (milliRad > 600_000) {
       return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.RED);
     }
-    if(milliRad > 400_000){
+    if (milliRad > 400_000) {
       return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GOLD);
     }
-    if(milliRad > 200_000){
+    if (milliRad > 200_000) {
       return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.YELLOW);
     }
     return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GREEN);
@@ -59,7 +59,7 @@ public class GeigerCounterItem extends Item {
 
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
-    if(!(world instanceof ServerWorld serverWorld)){
+    if (!(world instanceof ServerWorld serverWorld)) {
       return ActionResult.SUCCESS;
     }
     RadiationManager radiationManager = RadiationManager.getInstance();

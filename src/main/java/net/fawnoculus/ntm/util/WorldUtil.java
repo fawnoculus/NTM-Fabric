@@ -18,21 +18,22 @@ public class WorldUtil {
   private static final HashMap<Path, NbtCompound> RegionNbtCache = new HashMap<>();
 
   @Contract(value = "_ -> new", pure = true)
-  public static @NotNull ChunkPos getChunkPos(@NotNull Vec3d pos){
+  public static @NotNull ChunkPos getChunkPos(@NotNull Vec3d pos) {
     return new ChunkPos((int) (pos.x / 16), (int) (pos.z / 16));
   }
+
   @Contract("_ -> new")
-  public static @NotNull ChunkPos getChunkPos(@NotNull Vec3i pos){
+  public static @NotNull ChunkPos getChunkPos(@NotNull Vec3i pos) {
     return new ChunkPos(pos.getX() / 16, pos.getZ() / 16);
   }
 
   @Contract("_ -> new")
-  public static @NotNull Vec3d getVec3d(@NotNull Vec3i pos){
+  public static @NotNull Vec3d getVec3d(@NotNull Vec3i pos) {
     return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
   }
 
-  public static void flushCachedRegionNBT(){
-    for(Path filePath : RegionNbtCache.keySet()){
+  public static void flushCachedRegionNBT() {
+    for (Path filePath : RegionNbtCache.keySet()) {
       writeRegionNBT(filePath, RegionNbtCache.get(filePath));
     }
 
@@ -41,16 +42,16 @@ public class WorldUtil {
 
   public static @NotNull NbtCompound getRegionNBT(Path regionFile) {
     NbtCompound regionNBT = RegionNbtCache.computeIfAbsent(regionFile, longPos -> {
-      NbtCompound nbt = null;
-      try {
-        nbt = NbtIo.read(regionFile);
-      } catch (Throwable ignored) {
+        NbtCompound nbt = null;
+        try {
+          nbt = NbtIo.read(regionFile);
+        } catch (Throwable ignored) {
+        }
+        return nbt != null ? nbt : new NbtCompound();
       }
-      return nbt != null ? nbt : new NbtCompound();
-    }
     );
 
-    if(RegionNbtCache.size() > NTMConfig.MaxRegionDataCache.getValue()){
+    if (RegionNbtCache.size() > NTMConfig.MaxRegionDataCache.getValue()) {
       flushCachedRegionNBT();
     }
 
@@ -65,7 +66,7 @@ public class WorldUtil {
     }
   }
 
-  public static NbtCompound getChunkNBT(@NotNull ChunkPos pos, @NotNull ServerWorld world){
+  public static NbtCompound getChunkNBT(@NotNull ChunkPos pos, @NotNull ServerWorld world) {
     Path regionPath = ((PersistentStateManagerAccessor) world.getChunkManager().getPersistentStateManager())
       .NTM$getDirectory()
       .resolve("ntm/chunk_data")
@@ -74,7 +75,7 @@ public class WorldUtil {
     return getRegionNBT(regionPath).getCompoundOrEmpty(pos.toString());
   }
 
-  public static void setChunkData(@NotNull ChunkPos pos, @NotNull ServerWorld world, NbtCompound nbt){
+  public static void setChunkData(@NotNull ChunkPos pos, @NotNull ServerWorld world, NbtCompound nbt) {
     Path regionPath = ((PersistentStateManagerAccessor) world.getChunkManager().getPersistentStateManager())
       .NTM$getDirectory()
       .resolve("ntm/chunk_data")

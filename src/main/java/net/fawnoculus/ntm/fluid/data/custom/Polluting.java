@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public record Polluting(@NotNull Boolean isPolluting, @NotNull List<PollutionData> whenSpilled, @NotNull List<PollutionData> whenBurned){
+public record Polluting(@NotNull Boolean isPolluting, @NotNull List<PollutionData> whenSpilled, @NotNull List<PollutionData> whenBurned) {
   public static final Polluting DEFAULT = new Polluting(false, List.of(), List.of());
   public static final Codec<Polluting> CODEC = RecordCodecBuilder.create(
     instance -> instance.group(

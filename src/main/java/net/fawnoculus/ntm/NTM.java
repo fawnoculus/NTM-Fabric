@@ -14,7 +14,7 @@ import net.fawnoculus.ntm.commands.NTMCommands;
 import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.fluid.NTMFluids;
-import net.fawnoculus.ntm.fluid.data.FluidData;
+import net.fawnoculus.ntm.fluid.FluidData;
 import net.fawnoculus.ntm.items.*;
 import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
 import net.fawnoculus.ntm.network.NTMPayloads;
@@ -77,7 +77,7 @@ public class NTM implements ModInitializer {
   }
 
   @Contract("_ -> new")
-  public static @NotNull Identifier id(String name){
+  public static @NotNull Identifier id(String name) {
     return Identifier.of(MOD_ID, name);
   }
 }

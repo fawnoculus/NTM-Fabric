@@ -15,7 +15,7 @@ public enum FuelGrade {
   public static final Codec<FuelGrade> CODEC = NTMCodecs.getEnumCodec(FuelGrade.class);
   public final Text NAME;
 
-  FuelGrade(Text name){
+  FuelGrade(Text name) {
     this.NAME = name;
   }
 }

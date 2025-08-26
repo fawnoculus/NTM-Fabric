@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class NTMClient implements ClientModInitializer {
   public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client");
+
   @Override
   public void onInitializeClient() {
     LOGGER.info("Initializing Client Components");

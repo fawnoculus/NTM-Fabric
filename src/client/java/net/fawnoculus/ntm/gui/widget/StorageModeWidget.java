@@ -32,28 +32,29 @@ public class StorageModeWidget extends ClickableWidget {
   @Override
   protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
     context.drawTexture(RenderLayer::getGuiTextured,
-        NTMTextures.GENERIC_STORAGE_MODE,
-        this.getX(),
-        this.getY(),
-        this.getU(STORAGE_MODE.get()),
-        this.getV(STORAGE_MODE.get()),
-        this.width,
-        this.height,
-        36,
-        36
+      NTMTextures.GENERIC_STORAGE_MODE,
+      this.getX(),
+      this.getY(),
+      this.getU(STORAGE_MODE.get()),
+      this.getV(STORAGE_MODE.get()),
+      this.width,
+      this.height,
+      36,
+      36
     );
   }
 
   @Contract(pure = true)
-  private float getU(@NotNull StorageMode storageMode){
-    return switch (storageMode){
+  private float getU(@NotNull StorageMode storageMode) {
+    return switch (storageMode) {
       case None, Provide -> 18;
       default -> 0;
     };
   }
+
   @Contract(pure = true)
-  private float getV(@NotNull StorageMode storageMode){
-    return switch (storageMode){
+  private float getV(@NotNull StorageMode storageMode) {
+    return switch (storageMode) {
       case None, Share -> 18;
       default -> 0;
     };

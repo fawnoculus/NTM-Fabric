@@ -21,46 +21,48 @@ public class NodeNetwork {
   public final Set<Long> REVERSED_PROVIDER_PRIORITIES = new TreeSet<Long>().reversed();
   public final LongObjectMap<List<NodeValueContainer>> PRIORITISED_PROVIDERS = new LongObjectHashMap<>();
 
-  public NodeNetwork(UUID uuid, NetworkType type){
+  public NodeNetwork(UUID uuid, NetworkType type) {
     this.ID = uuid;
     this.TYPE = type;
 
     NodeNetworkManager.addNetwork(this);
   }
 
-  public void addNode(@NotNull Node node){
-    if(node.getWorld() != null && node.getWorld().isClient()){
+  public void addNode(@NotNull Node node) {
+    if (node.getWorld() != null && node.getWorld().isClient()) {
       return;
     }
 
-    if(!LOADED_NODES.add(node) && NTMConfig.DevMode.getValue()){
+    if (!LOADED_NODES.add(node) && NTMConfig.DevMode.getValue()) {
       NTM.LOGGER.warn("Added Node {} twice to Network {}", node, this.ID);
     }
 
-    for(NodeValueContainer container : node.getContainers()){
+    for (NodeValueContainer container : node.getContainers()) {
       this.addToSorted(container, container.getPriority(), container.provides(), container.consumes());
     }
   }
 
   /**
    * Removes a Node from the Network, if the node is permanently removed & not just unloaded, please use disconnect Node instead!
+   *
    * @param node the Node to be removed
    */
-  public void removeNode(@NotNull Node node){
-    if(node.getWorld() != null && node.getWorld().isClient()){
+  public void removeNode(@NotNull Node node) {
+    if (node.getWorld() != null && node.getWorld().isClient()) {
       return;
     }
 
     LOADED_NODES.remove(node);
 
-    for(NodeValueContainer container : node.getContainers()){
+    for (NodeValueContainer container : node.getContainers()) {
       this.removeFromSorted(container, container.getPriority(), container.provides(), container.consumes());
     }
   }
+
   /**
    * Removes all data from a network, this will cause the network to get removed if no containers are added back to the network before the next tick
    */
-  public void clearNetwork(){
+  public void clearNetwork() {
     this.LOADED_NODES.clear();
     this.PRIORITISED_CONSUMERS.clear();
     this.PRIORITISED_PROVIDERS.clear();
@@ -70,31 +72,34 @@ public class NodeNetwork {
 
   /**
    * checks if a network is empty, if this is true the network will be removed in the next tick
+   *
    * @return if the network is empty or not
    */
-  public boolean isEmpty(){
+  public boolean isEmpty() {
     return this.LOADED_NODES.isEmpty();
   }
 
   /**
    * Checks if the network contains a specific node
+   *
    * @param node the node to be checked
    * @return whether the network contains the node
    */
-  public boolean containsNode(@NotNull Node node){
+  public boolean containsNode(@NotNull Node node) {
     return this.LOADED_NODES.contains(node);
   }
 
   /**
    * removes all connections from a node & removes the node from the network
+   *
    * @param originNode the Node to me removed
    */
-  public void disconnectNode(@NotNull Node originNode){
+  public void disconnectNode(@NotNull Node originNode) {
     this.clearNetwork();
 
     final ImmutableList<Node> disconnectedNodeList = ImmutableList.copyOf(originNode.getConnectedNodes());
     Stack<Node> disconnectedNodes = new Stack<>();
-    for(Node disconectedNode : disconnectedNodeList){
+    for (Node disconectedNode : disconnectedNodeList) {
       disconnectedNodes.push(disconectedNode);
     }
 
@@ -103,7 +108,7 @@ public class NodeNetwork {
 
     boolean isFirst = true;
 
-    while(!disconnectedNodes.isEmpty()){
+    while (!disconnectedNodes.isEmpty()) {
       Node disconectedNode = disconnectedNodes.pop();
 
       NodeNetwork assignedNetwork = isFirst ? this : this.TYPE.makeNewNetwork();
@@ -116,12 +121,12 @@ public class NodeNetwork {
       disconectedNode.setNetwork(assignedNetwork);
       assignedNetwork.addNode(disconectedNode);
 
-      while(!toBeScannedNodes.isEmpty()){
+      while (!toBeScannedNodes.isEmpty()) {
         Node scannedNode = toBeScannedNodes.pop();
 
-        for(Node node : scannedNode.getConnectedNodes()){
-          if(alreadyScannedNodes.contains(node)) continue;
-          if(disconnectedNodeList.contains(node)) {
+        for (Node node : scannedNode.getConnectedNodes()) {
+          if (alreadyScannedNodes.contains(node)) continue;
+          if (disconnectedNodeList.contains(node)) {
             disconnectedNodes.remove(node);
           }
 
@@ -129,13 +134,13 @@ public class NodeNetwork {
           node.setNetwork(assignedNetwork);
           assignedNetwork.addNode(node);
 
-          if(toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+          if (toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
             NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while Removing Node at {} from Network {}",
-                NTMConfig.MaxNodeScanDepth.getValue(),
-                node.getPos().toShortString(),
-                node.getWorld().getRegistryKey(),
-                originNode.getPos().toShortString(),
-                this.ID
+              NTMConfig.MaxNodeScanDepth.getValue(),
+              node.getPos().toShortString(),
+              node.getWorld().getRegistryKey(),
+              originNode.getPos().toShortString(),
+              this.ID
             );
             continue;
           }
@@ -147,14 +152,15 @@ public class NodeNetwork {
 
   /**
    * removes the connection between multiple containers, will only remove them from the network if necessary
+   *
    * @param providedNodes the containers whose connection with each other will be severed
    */
-  public void disconnectNodes(Collection<Node> providedNodes){
+  public void disconnectNodes(Collection<Node> providedNodes) {
     this.clearNetwork();
 
     final ImmutableList<Node> disconnectedNodeList = ImmutableList.copyOf(providedNodes);
     Stack<Node> disconnectedNodes = new Stack<>();
-    for(Node disconectedNode : disconnectedNodeList){
+    for (Node disconectedNode : disconnectedNodeList) {
       disconnectedNodes.push(disconectedNode);
     }
 
@@ -162,7 +168,7 @@ public class NodeNetwork {
 
     boolean isFirst = true;
 
-    while(!disconnectedNodes.isEmpty()){
+    while (!disconnectedNodes.isEmpty()) {
       Node disconectedNode = disconnectedNodes.pop();
 
       NodeNetwork assignedNetwork = isFirst ? this : this.TYPE.makeNewNetwork();
@@ -175,12 +181,12 @@ public class NodeNetwork {
       disconectedNode.setNetwork(assignedNetwork);
       assignedNetwork.addNode(disconectedNode);
 
-      while(!toBeScannedNodes.isEmpty()){
+      while (!toBeScannedNodes.isEmpty()) {
         Node scannedNode = toBeScannedNodes.pop();
 
-        for(Node node : scannedNode.getConnectedNodes()){
-          if(alreadyScannedNodes.contains(node)) continue;
-          if(disconnectedNodeList.contains(node)) {
+        for (Node node : scannedNode.getConnectedNodes()) {
+          if (alreadyScannedNodes.contains(node)) continue;
+          if (disconnectedNodeList.contains(node)) {
             disconnectedNodes.remove(node);
           }
 
@@ -188,13 +194,13 @@ public class NodeNetwork {
           node.setNetwork(assignedNetwork);
           assignedNetwork.addNode(node);
 
-          if(toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+          if (toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
             NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while severing Connections Between {} Nodes in Network {}",
-                NTMConfig.MaxNodeScanDepth.getValue(),
-                node.getPos().toShortString(),
-                node.getWorld().getRegistryKey(),
-                providedNodes.size(),
-                this.ID
+              NTMConfig.MaxNodeScanDepth.getValue(),
+              node.getPos().toShortString(),
+              node.getWorld().getRegistryKey(),
+              providedNodes.size(),
+              this.ID
             );
             continue;
           }
@@ -207,26 +213,27 @@ public class NodeNetwork {
   /**
    * Reconstructs a network starting form a specified node.
    * Used when multiple networks are connected together in order to merge them
+   *
    * @param node the Node at which the reconstruction will start
    */
-  public void mergeAt(@NotNull Node node){
+  public void mergeAt(@NotNull Node node) {
     Stack<Node> toBeScanned = new Stack<>();
     Set<Node> scannedNodes = new HashSet<>();
 
     toBeScanned.push(node);
 
-    while(!toBeScanned.isEmpty()){
+    while (!toBeScanned.isEmpty()) {
       Node scaningNode = toBeScanned.pop();
 
-      for(Node connectedNode : scaningNode.getConnectedNodes()){
-        if(scannedNodes.contains(connectedNode)) continue;
-        if(connectedNode.getNetwork() == null) continue;
-        if(connectedNode.getNetwork().equals(this)) continue;
+      for (Node connectedNode : scaningNode.getConnectedNodes()) {
+        if (scannedNodes.contains(connectedNode)) continue;
+        if (connectedNode.getNetwork() == null) continue;
+        if (connectedNode.getNetwork().equals(this)) continue;
 
         connectedNode.setNetwork(this);
         this.addNode(connectedNode);
 
-        if(toBeScanned.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0){
+        if (toBeScanned.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
           NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} while Connecting Network {} from {} to {} in {}",
             NTMConfig.MaxNodeScanDepth.getValue(),
             this.ID,
@@ -243,32 +250,32 @@ public class NodeNetwork {
     }
   }
 
-  public void addToSorted(NodeValueContainer container, long priority, boolean provides, boolean consumes){
-    if(provides){
+  public void addToSorted(NodeValueContainer container, long priority, boolean provides, boolean consumes) {
+    if (provides) {
       this.REVERSED_PROVIDER_PRIORITIES.add(priority);
       this.PRIORITISED_PROVIDERS.putIfAbsent(priority, new ArrayList<>());
       this.PRIORITISED_PROVIDERS.get(priority).add(container);
     }
-    if(consumes){
+    if (consumes) {
       this.REVERSED_CONSUMER_PRIORITIES.add(priority);
       this.PRIORITISED_CONSUMERS.putIfAbsent(priority, new ArrayList<>());
       this.PRIORITISED_CONSUMERS.get(priority).add(container);
     }
   }
 
-  public void removeFromSorted(NodeValueContainer container, long priority, boolean provides, boolean consumes){
-    if(provides){
+  public void removeFromSorted(NodeValueContainer container, long priority, boolean provides, boolean consumes) {
+    if (provides) {
       List<NodeValueContainer> providers = this.PRIORITISED_PROVIDERS.getOrDefault(priority, new ArrayList<>());
       providers.remove(container);
-      if(providers.isEmpty()){
+      if (providers.isEmpty()) {
         this.REVERSED_PROVIDER_PRIORITIES.remove(priority);
         this.PRIORITISED_PROVIDERS.remove(priority);
       }
     }
-    if(consumes){
+    if (consumes) {
       List<NodeValueContainer> providers = this.PRIORITISED_CONSUMERS.getOrDefault(priority, new ArrayList<>());
       providers.remove(container);
-      if(providers.isEmpty()){
+      if (providers.isEmpty()) {
         this.REVERSED_CONSUMER_PRIORITIES.remove(priority);
         this.PRIORITISED_CONSUMERS.remove(priority);
       }
@@ -277,11 +284,12 @@ public class NodeNetwork {
 
   /**
    * Get the amount of  available ... (whatever this network contains ig)
+   *
    * @return the amount contained in all Provider Storages
    */
-  public long getAvailable(){
+  public long getAvailable() {
     long totalEnergy = 0;
-    for(long priority : REVERSED_PROVIDER_PRIORITIES) {
+    for (long priority : REVERSED_PROVIDER_PRIORITIES) {
       for (NodeValueContainer node : PRIORITISED_PROVIDERS.getOrDefault(priority, new ArrayList<>())) {
         long newTotal = totalEnergy + node.getValue();
         if (newTotal < totalEnergy && node.getValue() > 0) {
@@ -297,24 +305,25 @@ public class NodeNetwork {
 
   /**
    * Spread an amount to all Consumers sorted by Priority
+   *
    * @param toSpread the amount to be spread
    * @return the amount that could not be spread (0 if everything was used)
    */
-  public long spread(long toSpread){
-    for(long priority : REVERSED_CONSUMER_PRIORITIES){
+  public long spread(long toSpread) {
+    for (long priority : REVERSED_CONSUMER_PRIORITIES) {
       List<NodeValueContainer> containers = new ArrayList<>(PRIORITISED_CONSUMERS.getOrDefault(priority, new ArrayList<>()));
 
-      while(toSpread > containers.size() && !containers.isEmpty()){
+      while (toSpread > containers.size() && !containers.isEmpty()) {
         long energyPerNode = toSpread / containers.size();
         // The amount that can not be equally divided
         toSpread %= containers.size();
 
         List<NodeValueContainer> fullContainers = new ArrayList<>();
-        for(NodeValueContainer container : containers){
+        for (NodeValueContainer container : containers) {
           // Add the amount that could not be consumed back to the total
           toSpread += container.add(energyPerNode);
 
-          if(container.isFull()){
+          if (container.isFull()) {
             fullContainers.add(container);
           }
         }
@@ -323,37 +332,38 @@ public class NodeNetwork {
       }
 
       // Take the amount that could not be evenly spread & just put it somewhere
-      if(toSpread > 0 && !containers.isEmpty()){
-        for (NodeValueContainer container : containers){
+      if (toSpread > 0 && !containers.isEmpty()) {
+        for (NodeValueContainer container : containers) {
           toSpread = container.add(toSpread);
         }
       }
 
       // break the loop if there is nothing more to spread
-      if(toSpread == 0) break;
+      if (toSpread == 0) break;
     }
     return toSpread;
   }
 
   /**
    * Remove a certain amount from the Networks Providers
+   *
    * @param toRemove the amount to be spread
    */
-  public void removeUsed(long toRemove){
-    for(long priority : REVERSED_PROVIDER_PRIORITIES){
+  public void removeUsed(long toRemove) {
+    for (long priority : REVERSED_PROVIDER_PRIORITIES) {
       List<NodeValueContainer> containers = new ArrayList<>(PRIORITISED_PROVIDERS.getOrDefault(priority, new ArrayList<>()));
 
-      while(toRemove > containers.size() && !containers.isEmpty()){
+      while (toRemove > containers.size() && !containers.isEmpty()) {
         long energyPerNode = toRemove / containers.size();
         // The amount that can not be equally divided
         toRemove %= containers.size();
 
         List<NodeValueContainer> fullContainers = new ArrayList<>();
-        for(NodeValueContainer container : containers){
+        for (NodeValueContainer container : containers) {
           // Add the amount that could not be removed back to the total
           toRemove += container.remove(energyPerNode);
 
-          if(container.isFull()){
+          if (container.isFull()) {
             fullContainers.add(container);
           }
         }
@@ -362,18 +372,18 @@ public class NodeNetwork {
       }
 
       // Take the amount that could not be evenly removed & just take it from somewhere
-      if(toRemove > 0 && !containers.isEmpty()){
-        for (NodeValueContainer container : containers){
+      if (toRemove > 0 && !containers.isEmpty()) {
+        for (NodeValueContainer container : containers) {
           toRemove = container.add(toRemove);
         }
       }
 
       // break the loop if there is nothing more to remove
-      if(toRemove == 0) break;
+      if (toRemove == 0) break;
     }
   }
 
-  public void tickNetwork(){
+  public void tickNetwork() {
     long available = this.getAvailable();
     long remaining = this.spread(available);
     this.removeUsed(available - remaining);

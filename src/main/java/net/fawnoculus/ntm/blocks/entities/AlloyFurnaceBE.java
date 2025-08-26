@@ -51,43 +51,43 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
 
   public static void tick(World world, BlockPos pos, BlockState state, AlloyFurnaceBE entity) {
     entity.processFuelInput();
-    if(entity.canCraft()) {
+    if (entity.canCraft()) {
       entity.addProgress();
-      if(entity.progressFinished()) {
+      if (entity.progressFinished()) {
         entity.craftOutput();
         entity.resetProgress();
       }
-    }else{
+    } else {
       entity.resetProgress();
     }
     entity.markDirty();
   }
 
-  public boolean canCraft(){
+  public boolean canCraft() {
     Optional<RecipeEntry<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
     return recipe.isPresent()
-        && this.canInsertIntoSlot(OUTPUT_SLOT_INDEX, recipe.get().value().output())
-        && this.hasEnoughFuel();
+      && this.canInsertIntoSlot(OUTPUT_SLOT_INDEX, recipe.get().value().output())
+      && this.hasEnoughFuel();
   }
 
-  private boolean hasEnoughFuel(){
+  private boolean hasEnoughFuel() {
     return fuel >= FUEL_PER_TICK;
   }
 
   private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
-    if(this.getWorld() instanceof ServerWorld serverWorld) {
+    if (this.getWorld() instanceof ServerWorld serverWorld) {
       return serverWorld.getRecipeManager()
-          .getFirstMatch(NTMRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
+        .getFirstMatch(NTMRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
     }
     return Optional.empty();
   }
 
-  private boolean progressFinished(){
+  private boolean progressFinished() {
     return this.progress >= MAX_PROGESS;
   }
 
-  private void craftOutput(){
-    if(getCurrentRecipe().isEmpty()) throw new IllegalStateException();
+  private void craftOutput() {
+    if (getCurrentRecipe().isEmpty()) throw new IllegalStateException();
     RecipeEntry<AlloyFurnaceRecipe> recipe = getCurrentRecipe().get();
 
     ItemStack recipeOutput = recipe.value().output().copy();
@@ -99,38 +99,38 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     this.getInventory().removeStack(INPUT_TOP_SLOT_INDEX, 1);
   }
 
-  private void addProgress(){
+  private void addProgress() {
     this.fuel -= FUEL_PER_TICK;
     this.progress++;
 
-    if(hasExtension()){
+    if (hasExtension()) {
       this.progress++;
       this.progress++;
     }
 
-    if(this.world != null){
+    if (this.world != null) {
       BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
       this.world.setBlockState(this.pos, state);
     }
   }
 
-  private void resetProgress(){
+  private void resetProgress() {
     this.progress = 0;
 
-    if(this.world != null && !this.canCraft()){ // this is to avoid flickering
+    if (this.world != null && !this.canCraft()) { // this is to avoid flickering
       BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, false);
       this.world.setBlockState(this.pos, state);
     }
   }
 
-  private void processFuelInput(){
+  private void processFuelInput() {
     assert this.getWorld() != null;
     FuelRegistry fuelRegistry = this.getWorld().getFuelRegistry();
     ItemStack fuelStack = this.getInventory().getStack(FUEL_SLOT_INDEX);
-    if(!fuelRegistry.isFuel(fuelStack)) return;
+    if (!fuelRegistry.isFuel(fuelStack)) return;
 
     int fuelTicks = fuelRegistry.getFuelTicks(fuelStack);
-    if(fuelTicks >= MAX_FUEL - this.fuel) return;
+    if (fuelTicks >= MAX_FUEL - this.fuel) return;
     this.fuel += fuelTicks;
 
     Item item = fuelStack.getItem();
@@ -140,7 +140,7 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     }
   }
 
-  private boolean hasExtension(){
+  private boolean hasExtension() {
     assert this.getWorld() != null;
     return this.getWorld().getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
   }
@@ -164,16 +164,16 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
     return BlockEntityUpdateS2CPacket.create(this);
   }
 
-  public double getFuel(){
+  public double getFuel() {
     return (double) this.fuel / (double) MAX_FUEL;
   }
 
-  public double getProgress(){
+  public double getProgress() {
     return (double) this.progress / (double) MAX_PROGESS;
   }
 
-  public boolean showFireInGUI(){
-    if(this.world == null) return false;
+  public boolean showFireInGUI() {
+    if (this.world == null) return false;
     return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
   }
 

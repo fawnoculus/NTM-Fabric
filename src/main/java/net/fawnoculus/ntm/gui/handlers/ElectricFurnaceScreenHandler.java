@@ -53,18 +53,20 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
     addSlot(new UpgradeSlot(inventory, ElectricFurnaceBE.UPGRADE_SLOT_INDEX, 147, 34));
   }
 
-  private void addPlayerInventory(PlayerInventory playerInventory){
+  private void addPlayerInventory(PlayerInventory playerInventory) {
     addPartialPlayerInventory(playerInventory);
     addPlayerHotbar(playerInventory);
   }
-  private void addPartialPlayerInventory(PlayerInventory playerInventory){
+
+  private void addPartialPlayerInventory(PlayerInventory playerInventory) {
     for (int row = 0; row < 3; row++) {
       for (int colum = 0; colum < 9; colum++) {
-        addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)) , 8 + (colum * 18), 84 + (row * 18)));
+        addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)), 8 + (colum * 18), 84 + (row * 18)));
       }
     }
   }
-  private void addPlayerHotbar(PlayerInventory playerInventory){
+
+  private void addPlayerHotbar(PlayerInventory playerInventory) {
     for (int colum = 0; colum < 9; colum++) {
       addSlot(new Slot(playerInventory, colum, 8 + (colum * 18), 142));
     }
@@ -87,10 +89,11 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
     return canUse(screenContext, player, NTMBlocks.ELECTRIC_FURNACE);
   }
 
-  public ElectricFurnaceBE getBlockEntity(){
+  public ElectricFurnaceBE getBlockEntity() {
     return this.blockEntity;
   }
-  public PropertyDelegate getPropertyDelegate(){
+
+  public PropertyDelegate getPropertyDelegate() {
     return this.propertyDelegate;
   }
 }

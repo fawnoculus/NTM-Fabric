@@ -36,22 +36,22 @@ public class NTMSmeltingRecipeProvider extends FabricRecipeProvider {
     };
   }
 
-  private void ore(RecipeGenerator generator, float xp, int time, String group , ItemConvertible result, List<ItemConvertible> ores){
+  private void ore(RecipeGenerator generator, float xp, int time, String group, ItemConvertible result, List<ItemConvertible> ores) {
     generator.offerSmelting(
-        ores,
-        RecipeCategory.MISC,
-        result,
-        xp,
-        time,
-        group
+      ores,
+      RecipeCategory.MISC,
+      result,
+      xp,
+      time,
+      group
     );
     generator.offerBlasting(
-        ores,
-        RecipeCategory.MISC,
-        result,
-        xp,
-        time/2,
-        group
+      ores,
+      RecipeCategory.MISC,
+      result,
+      xp,
+      time / 2,
+      group
     );
   }
 

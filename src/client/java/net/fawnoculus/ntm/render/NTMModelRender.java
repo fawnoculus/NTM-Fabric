@@ -18,19 +18,20 @@ public class NTMModelRender {
   public static final HashMap<Item, Consumer<MatrixStack>> ITEM_RENDERERS = new HashMap<>();
   public static final HashMap<Item, BiConsumer<MatrixStack, Integer>> ITEM_LIGHT_RENDERERS = new HashMap<>();
 
-  private static void register(BiConsumer<MatrixStack, Integer> renderFunc, @NotNull Block block){
+  private static void register(BiConsumer<MatrixStack, Integer> renderFunc, @NotNull Block block) {
     register(renderFunc, block.asItem());
   }
-  private static void register(BiConsumer<MatrixStack, Integer> renderFunc, Item item){
+
+  private static void register(BiConsumer<MatrixStack, Integer> renderFunc, Item item) {
     ITEM_LIGHT_RENDERERS.put(item, renderFunc);
     ITEM_RENDERERS.put(item, matrixStack -> renderFunc.accept(matrixStack, 15728880));
   }
 
-  public static void initialize(){
+  public static void initialize() {
     register(NTMModelRender.AlloyFurnaceExtension::renderItem, NTMBlocks.ALLOY_FURNACE_EXTENSION);
   }
 
-  public static class AlloyFurnaceExtension{
+  public static class AlloyFurnaceExtension {
     public final static Model3D TOP = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
     public final static Model3D SIDE = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
     public final static Model3D BOTTOM = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
@@ -45,6 +46,7 @@ public class NTMModelRender {
       render(matrices, light);
       matrices.pop();
     }
+
     public static void render(@NotNull MatrixStack matrices, int light) {
       matrices.push();
       TOP.draw(matrices.peek(), light, NTMTextures.ALLOY_FURNACE_EXTENSION_TOP);

@@ -15,7 +15,7 @@ public class EnergyNetworkType implements NetworkType {
   private EnergyNetworkType() {
   }
 
-  public static EnergyNetworkType get(){
+  public static EnergyNetworkType get() {
     return INSTANCE;
   }
 

@@ -31,7 +31,7 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
   protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {
     context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
 
-    if(BE.showFireInGUI()) {
+    if (BE.showFireInGUI()) {
       context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x + 56, this.y + 35, 176, 0, 16, 16, 256, 256);
     }
 

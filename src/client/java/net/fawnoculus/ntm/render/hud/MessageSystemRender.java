@@ -14,7 +14,7 @@ import java.util.List;
 public class MessageSystemRender {
   public static void drawMessageSystem(DrawContext context, RenderTickCounter tickCounter) {
     List<AdvancedMessage> messages = MessageSystem.getAllMessages();
-    if(messages.isEmpty()) {
+    if (messages.isEmpty()) {
       return;
     }
     int backgroundColor = ColorHelper.getArgb(150, 100, 100, 100);
@@ -26,18 +26,18 @@ public class MessageSystemRender {
     TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
     int width = 0;
-    for(AdvancedMessage message : messages){
-      if(textRenderer.getWidth(message.getText()) > width){
+    for (AdvancedMessage message : messages) {
+      if (textRenderer.getWidth(message.getText()) > width) {
         width = textRenderer.getWidth(message.getText());
       }
     }
     int height = textRenderer.fontHeight * messages.size();
 
-    context.fill(marginSide, marginTop, marginSide + (paddingSide*2) + width, marginTop + (paddingTop*2) + height, 0, backgroundColor);
+    context.fill(marginSide, marginTop, marginSide + (paddingSide * 2) + width, marginTop + (paddingTop * 2) + height, 0, backgroundColor);
 
-    for(int i = 0; i < messages.size(); i++){
+    for (int i = 0; i < messages.size(); i++) {
       Text text = messages.get(i).getText();
-      context.drawText(textRenderer, text, marginSide + paddingSide, marginTop + paddingTop + (textRenderer.fontHeight * i), ColorHelper.getArgb(messages.get(i).getOpacity(), 256, 256, 256) , true);
+      context.drawText(textRenderer, text, marginSide + paddingSide, marginTop + paddingTop + (textRenderer.fontHeight * i), ColorHelper.getArgb(messages.get(i).getOpacity(), 256, 256, 256), true);
     }
   }
 }

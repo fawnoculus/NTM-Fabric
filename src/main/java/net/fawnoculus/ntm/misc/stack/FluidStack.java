@@ -8,21 +8,23 @@ import net.minecraft.registry.RegistryWrapper;
 
 public class FluidStack extends SingleVariantStorage<FluidVariant> {
   private long maxDroplets = 0;
-  private Runnable onFinalCommit = () -> {};
+  private Runnable onFinalCommit = () -> {
+  };
 
   @Override
   protected FluidVariant getBlankVariant() {
     return FluidVariant.blank();
   }
 
-  public Fluid getFluid(){
+  public Fluid getFluid() {
     return this.variant.getFluid();
   }
 
-  public FluidStack setFluid(Fluid fluid){
+  public FluidStack setFluid(Fluid fluid) {
     return this.setFluid(FluidVariant.of(fluid));
   }
-  public FluidStack setFluid(FluidVariant fluid){
+
+  public FluidStack setFluid(FluidVariant fluid) {
     this.variant = fluid;
     return this;
   }

@@ -1,5 +1,5 @@
 ## Stuff that was changed from the Original:
-(The original version of textures and translations will be available through a built-in resource pack)
+(Some of the original version of textures and translations will be available through a built-in resource pack)
 
 #### Textures:
 - Industrial Copper -> Standard Minecraft Copper

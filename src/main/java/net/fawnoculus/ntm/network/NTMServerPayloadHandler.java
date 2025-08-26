@@ -30,7 +30,7 @@ public class NTMServerPayloadHandler {
 
     ServerWorld world = player.getServerWorld();
     if(world.getBlockEntity(payload.pos()) instanceof InteractableBE interactableBE){
-      interactableBE.onInteraction(player, payload.action());
+      interactableBE.onInteraction(player, payload.action(), payload.extraData());
     }
   }
 

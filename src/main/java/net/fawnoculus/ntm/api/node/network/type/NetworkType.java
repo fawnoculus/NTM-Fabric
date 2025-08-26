@@ -18,7 +18,7 @@ public interface NetworkType {
 
   Collection<NodeNetwork> getAllNetworks();
 
-  default MutableText getName(){
+  default MutableText getName() {
     return Text.translatable("network_type." + this.getId().getNamespace() + "." + this.getId().getPath());
   }
 

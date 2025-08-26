@@ -10,10 +10,11 @@ public class NTMDamageTypes {
   public static final RegistryKey<DamageType> BLOOD_LOSS = of("blood_loss");
   public static final RegistryKey<DamageType> LEAD_POISONING = of("lead_poisoning");
   public static final RegistryKey<DamageType> RADIATION = of("radiation");
-  
-  private static RegistryKey<DamageType> of(String name){
+
+  private static RegistryKey<DamageType> of(String name) {
     return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id(name));
   }
-  
-  public static void initialize(){}
+
+  public static void initialize() {
+  }
 }

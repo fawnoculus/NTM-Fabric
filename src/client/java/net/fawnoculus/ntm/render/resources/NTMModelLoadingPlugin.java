@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class NTMModelLoadingPlugin implements ModelLoadingPlugin {
-  public static void initialize(){
+  public static void initialize() {
     ModelLoadingPlugin.register(new NTMModelLoadingPlugin());
   }
 

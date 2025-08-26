@@ -12,12 +12,12 @@ public class NTMEntityLootProvider extends FabricEntityLootTableProvider {
   public NTMEntityLootProvider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
     super(output, registryLookup);
   }
-  
+
   @Override
   public void generate() {
-  
+
   }
-  
+
   @Override
   public String getName() {
     return NTM.MOD_NAME + " Entity-Loot Provider";

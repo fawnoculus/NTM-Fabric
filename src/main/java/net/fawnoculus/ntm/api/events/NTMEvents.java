@@ -10,7 +10,7 @@ import net.fawnoculus.ntm.network.s2c.HazmatRegistryPayload;
 import net.fawnoculus.ntm.network.s2c.RadiationRegistryPayload;
 
 public class NTMEvents {
-  public static void initialize(){
+  public static void initialize() {
     PlayerJoinCallback.EVENT.register((connection, player, clientData) ->
       ServerPlayNetworking.send(player, new RadiationRegistryPayload(RadiationRegistry.getInstance().serialize()))
     );

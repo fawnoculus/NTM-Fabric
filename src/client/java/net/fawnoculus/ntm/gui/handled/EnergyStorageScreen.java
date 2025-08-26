@@ -28,10 +28,10 @@ public class EnergyStorageScreen extends HandledScreen<EnergyStorageScreenHandle
     super.init();
     energyBar.setOffsets(this.x, this.y);
     this.addDrawableChild(new StorageModeWidget(this.x + 133, this.y + 16, Text.translatable("narration.ntm.storage_mode_button.unpowered"), () -> BE.unpoweredMode,
-        () -> ClientPlayNetworking.send(new BEInteractionPayload(BE.getPos(), SimpleEnergyStorageBE.CYCLE_UNPOWERED_MODE))
+      () -> ClientPlayNetworking.send(new BEInteractionPayload(BE.getPos(), SimpleEnergyStorageBE.CYCLE_UNPOWERED_MODE))
     ));
     this.addDrawableChild(new StorageModeWidget(this.x + 133, this.y + 52, Text.translatable("narration.ntm.storage_mode_button.powered"), () -> BE.poweredMode,
-        () -> ClientPlayNetworking.send(new BEInteractionPayload(BE.getPos(), SimpleEnergyStorageBE.CYCLE_POWERED_MODE))
+      () -> ClientPlayNetworking.send(new BEInteractionPayload(BE.getPos(), SimpleEnergyStorageBE.CYCLE_POWERED_MODE))
     ));
   }
 

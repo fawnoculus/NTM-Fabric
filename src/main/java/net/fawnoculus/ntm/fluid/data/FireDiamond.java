@@ -14,7 +14,7 @@ public class FireDiamond {
   public static final FluidDataType<@Range(from = 0, to = 4) Integer> YELLOW = register("instability", Codec.INT, 0);   // INSTABILITY
   public static final FluidDataType<SpecialNotice> WHITE = register("special_notice", SpecialNotice.CODEC, SpecialNotice.NONE);        // SPECIAL_NOTICE
 
-  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue){
+  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue) {
     return new FluidDataType<>(NTM.id(name), codec, defaultValue, null, false).register();
   }
 

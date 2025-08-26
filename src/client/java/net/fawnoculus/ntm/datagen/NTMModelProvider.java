@@ -333,7 +333,7 @@ public class NTMModelProvider extends FabricModelProvider {
       );
   }
 
-  public static TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
+  public static final TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
   public static final TexturedModel.Factory SIMPLE_BARREL = TexturedModel.makeFactory(
     block -> new TextureMap().put(BARREL_TEXTURE_KEY, TextureMap.getId(block)),
     new Model(Optional.empty(), Optional.empty(), BARREL_TEXTURE_KEY)

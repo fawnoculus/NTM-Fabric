@@ -27,7 +27,7 @@ public class AlloyFurnaceScreen extends HandledScreen<AlloyFurnaceScreenHandler>
     int fuelBarSize = MathHelper.ceil(entity.getFuel() * 54);
     int progressBarSize = MathHelper.ceil(entity.getProgress() * 24);
 
-    if(showFire) {
+    if (showFire) {
       context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x + 63, this.y + 38, 176, 0, 14, 14, 256, 256);
     }
 

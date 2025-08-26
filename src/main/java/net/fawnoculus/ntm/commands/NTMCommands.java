@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.commands;
 
+import com.mojang.brigadier.arguments.LongArgumentType;
 import net.fawnoculus.ntm.api.node.network.NodeNetworkManager;
 import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
+import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
 import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
@@ -110,47 +112,52 @@ public class NTMCommands {
 
     if (NTMConfig.DevMode.getValue()) {
       CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-        CommandManager.literal("ntm")
-          .then(CommandManager.literal("dev")
-            .requires(source -> allowCommands(source, null)
-            )
-            .then(CommandManager.literal("list_components")
-              .executes(context -> getDataComponents(context, 100))
-              .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
-                .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
+          CommandManager.literal("ntm")
+            .then(CommandManager.literal("dev")
+              .requires(source -> allowCommands(source, null)
               )
-            )
-            .then(CommandManager.literal("clean_logs")
-              .executes(NTMCommands::deleteLogs)
-            )
-            .then(CommandManager.literal("funny")
-              .executes(NTMCommands::funny)
-            )
-            .then(CommandManager.literal("set_dev_constant")
-              .then(CommandManager.argument("bool", BoolArgumentType.bool())
-                .executes(context -> setDevConstant(context, context.getArgument("bool", Boolean.class)))
+              .then(CommandManager.literal("list_components")
+                .executes(context -> getDataComponents(context, 100))
+                .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
+                  .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
+                )
               )
-            )
-            .then(CommandManager.literal("get_node_networks")
-              .executes(NTMCommands::getNodeNetworks)
-              .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
-                .executes(context -> getNodeNetworks(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class))))
+              .then(CommandManager.literal("clean_logs")
+                .executes(NTMCommands::deleteLogs)
               )
-            )
-            .then(CommandManager.literal("node_network_info")
-              .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
-                .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
-                  .executes(context -> getNodeNetworkInfo(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class)), context.getArgument("uuid", UUID.class)))
+              .then(CommandManager.literal("funny")
+                .executes(NTMCommands::funny)
+              )
+              .then(CommandManager.literal("set_dev_constant")
+                .then(CommandManager.argument("bool", BoolArgumentType.bool())
+                  .executes(context -> setDevConstant(context, context.getArgument("bool", Boolean.class)))
+                )
+              )
+              .then(CommandManager.literal("get_node_networks")
+                .executes(NTMCommands::getNodeNetworks)
+                .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
+                  .executes(context -> getNodeNetworks(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class))))
+                )
+              )
+              .then(CommandManager.literal("node_network_info")
+                .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
+                  .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
+                    .executes(context -> getNodeNetworkInfo(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class)), context.getArgument("uuid", UUID.class)))
+                  )
+                )
+              )
+              .then(CommandManager.literal("give_all_effects")
+                .executes(context -> giveAllEffects(context, List.of(Objects.requireNonNull(context.getSource().getEntity()))))
+                .then(CommandManager.argument("target", EntityArgumentType.entities())
+                  .executes(context -> giveAllEffects(context, EntityArgumentType.getEntities(context, "target")))
+                )
+              )
+              .then(CommandManager.literal("set_energy")
+                .then(CommandManager.argument("energy", LongArgumentType.longArg())
+                  .executes(context -> setEnergy(context, context.getArgument("energy", Long.class)))
                 )
               )
             )
-            .then(CommandManager.literal("give_all_effects")
-              .executes(context -> giveAllEffects(context, List.of(Objects.requireNonNull(context.getSource().getEntity()))))
-              .then(CommandManager.argument("target", EntityArgumentType.entities())
-                .executes(context -> giveAllEffects(context, EntityArgumentType.getEntities(context, "target")))
-              )
-            )
-          )
         )
       );
     }
@@ -215,8 +222,8 @@ public class NTMCommands {
     int affectedTargets = 0;
     int immuneTargets = 0;
 
-    for(Entity entity : targets){
-      if(entity instanceof LivingEntity livingEntity){
+    for (Entity entity : targets) {
+      if (entity instanceof LivingEntity livingEntity) {
         affectedTargets++;
         livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
         livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
@@ -230,19 +237,36 @@ public class NTMCommands {
         livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.STABILITY, 30 * 20, 0, false, false, true));
         livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 30 * 20, 0, false, false, true));
         livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINTED_HEART, 30 * 20, 0, false, false, true));
-      }else {
+      } else {
         immuneTargets++;
       }
     }
 
     final int finalAffectedTargets = affectedTargets;
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.all_effects.affected_targets", finalAffectedTargets), true);
-    if(immuneTargets > 0){
+    if (immuneTargets > 0) {
       final int finalImmuneTargets = immuneTargets;
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.all_effects.immune_targets", finalImmuneTargets), true);
     }
 
     return 1;
+  }
+
+  private static int setEnergy(CommandContext<ServerCommandSource> context, long energy) {
+    if (!context.getSource().isExecutedByPlayer()) {
+      context.getSource().sendError(Text.literal("message.ntm.must_be_executed_by_player"));
+      return -2;
+    }
+    ItemStack stack = Objects.requireNonNull(context.getSource().getPlayer()).getMainHandStack();
+
+    if (stack.getItem() instanceof EnergyContainingItem energyContainingItem) {
+      energyContainingItem.setEnergy(stack, energy);
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_energy.success", stack.getItem().getName(), energy), true);
+      return 1;
+    } else {
+      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_energy.fail", stack.getItem().getName()), true);
+      return -1;
+    }
   }
 
   private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, NetworkType type, UUID networkID) {
@@ -260,7 +284,7 @@ public class NTMCommands {
   }
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context) {
-    for(NetworkType type : NodeNetworkManager.getAllTypes()){
+    for (NetworkType type : NodeNetworkManager.getAllTypes()) {
       context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName(), type.getId()).append(Text.literal(" " + type.getAllNetworks().size())), false);
     }
     return 1;
@@ -268,7 +292,7 @@ public class NTMCommands {
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context, NetworkType type) {
     context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName(), type.getId()), false);
-    for(NodeNetwork network : type.getAllNetworks()){
+    for (NodeNetwork network : type.getAllNetworks()) {
       context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
     }
     return 1;

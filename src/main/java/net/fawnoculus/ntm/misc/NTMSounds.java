@@ -9,12 +9,13 @@ import net.minecraft.util.Identifier;
 public class NTMSounds {
   public static final SoundEvent SYRINGE_INJECTS = register("item.syringe_injects");
   public static final SoundEvent IV_BAG_INJECTS = register("item.iv_bag_injects");
-  
-  
-  private static SoundEvent register(String id){
+
+
+  private static SoundEvent register(String id) {
     Identifier identifier = NTM.id(id);
     return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
   }
-  
-  public static void initialize(){}
+
+  public static void initialize() {
+  }
 }

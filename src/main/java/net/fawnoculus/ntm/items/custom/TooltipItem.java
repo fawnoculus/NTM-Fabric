@@ -11,19 +11,21 @@ import java.util.function.Consumer;
 
 public class TooltipItem extends Item {
   private final int TOOLTIP_COUNT;
-  
+
   public TooltipItem(Settings settings) {
     this(settings, 1);
   }
+
   public TooltipItem(Settings settings, int tooltipCount) {
     super(settings);
-    
+
     this.TOOLTIP_COUNT = tooltipCount;
   }
-  
-  @Override @SuppressWarnings("deprecation")
+
+  @Override
+  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    if(this.TOOLTIP_COUNT == 1){
+    if (this.TOOLTIP_COUNT == 1) {
       tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
       return;
     }

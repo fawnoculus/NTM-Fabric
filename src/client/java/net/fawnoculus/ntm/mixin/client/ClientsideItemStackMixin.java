@@ -24,49 +24,51 @@ import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ClientsideItemStackMixin {
-  @Shadow public abstract Item getItem();
+  @Shadow
+  public abstract Item getItem();
 
-  @Shadow private int count;
+  @Shadow
+  private int count;
   @Unique
   private static final ClientRadiationRegistry clientRadiationRegistry = ClientRadiationRegistry.getInstance();
   @Unique
   private static final ClientHazmatRegistry clientHazmatRegistry = ClientHazmatRegistry.getInstance();
 
   @Inject(method = "appendTooltip", at = @At(
-      value = "INVOKE",
-      target = "Lnet/minecraft/item/Item;appendTooltip(" +
-          "Lnet/minecraft/item/ItemStack;" +
-          "Lnet/minecraft/item/Item$TooltipContext;" +
-          "Lnet/minecraft/component/type/TooltipDisplayComponent;" +
-          "Ljava/util/function/Consumer;" +
-          "Lnet/minecraft/item/tooltip/TooltipType;" +
-          ")V",
-      shift = At.Shift.AFTER
+    value = "INVOKE",
+    target = "Lnet/minecraft/item/Item;appendTooltip(" +
+      "Lnet/minecraft/item/ItemStack;" +
+      "Lnet/minecraft/item/Item$TooltipContext;" +
+      "Lnet/minecraft/component/type/TooltipDisplayComponent;" +
+      "Ljava/util/function/Consumer;" +
+      "Lnet/minecraft/item/tooltip/TooltipType;" +
+      ")V",
+    shift = At.Shift.AFTER
   ))
   public void appendTooltip(
-      Item.TooltipContext context, TooltipDisplayComponent displayComponent, @Nullable PlayerEntity player, TooltipType type, Consumer<Text> tooltip, CallbackInfo ci
+    Item.TooltipContext context, TooltipDisplayComponent displayComponent, @Nullable PlayerEntity player, TooltipType type, Consumer<Text> tooltip, CallbackInfo ci
   ) {
     double milliRads = clientRadiationRegistry.getRadioactivity(this.getItem());
-    if(milliRads > 0){
+    if (milliRads > 0) {
       tooltip.accept(Text.translatable("tooltip.ntm.radioactive").formatted(Formatting.GREEN));
       tooltip.accept(Text.translatable("generic.ntm.radiation.rad_s", milliRads / 1000.0).formatted(Formatting.YELLOW));
-      if(this.count > 1){
+      if (this.count > 1) {
         tooltip.accept(Text.translatable("tooltip.ntm.stack_rads", milliRads * this.count / 1000.0).formatted(Formatting.YELLOW));
       }
     }
     double radiationResistance = clientHazmatRegistry.getResistance(this.getItem());
-    if(radiationResistance > 0){
+    if (radiationResistance > 0) {
       tooltip.accept(Text.translatable("tooltip.ntm.radiation_resistance", radiationResistance).formatted(Formatting.YELLOW));
     }
 
-    if(this.getItem() instanceof ExtraInfo extraInfo){
-      if(!NTMKeybinds.DISPLAY_EXTRA_INFO.isPressed()){
+    if (this.getItem() instanceof ExtraInfo extraInfo) {
+      if (!NTMKeybinds.DISPLAY_EXTRA_INFO.isPressed()) {
         tooltip.accept(extraInfo.getHelpText(NTMKeybinds.DISPLAY_EXTRA_INFO.getBoundKeyLocalizedText()));
-      }else {
+      } else {
         extraInfo.getInfo().forEach(tooltip);
       }
     }
-    if(this.getItem() instanceof DangerousDrop){
+    if (this.getItem() instanceof DangerousDrop) {
       tooltip.accept(Text.translatable("tooltip.ntm.dangerous_drop").formatted(Formatting.RED));
     }
   }

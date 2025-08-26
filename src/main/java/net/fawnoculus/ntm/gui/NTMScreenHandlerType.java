@@ -21,10 +21,11 @@ public class NTMScreenHandlerType {
   public static final ScreenHandlerType<EnergyStorageScreenHandler> ENERGY_STORAGE = register("energy_storage", EnergyStorageScreenHandler::new, BlockPosPayload.PACKET_CODEC);
 
 
-  public static <T extends ScreenHandler, D extends CustomPayload>ExtendedScreenHandlerType<T, D>
+  public static <T extends ScreenHandler, D extends CustomPayload> ExtendedScreenHandlerType<T, D>
   register(String name, ExtendedScreenHandlerType.ExtendedFactory<T, D> screenFactory, PacketCodec<? super RegistryByteBuf, D> packetCodec) {
     return Registry.register(Registries.SCREEN_HANDLER, NTM.id(name), new ExtendedScreenHandlerType<>(screenFactory, packetCodec));
   }
 
-  public static void initialize() {}
+  public static void initialize() {
+  }
 }

@@ -111,7 +111,7 @@ public interface Node {
   }
 
   default void readNodeData(NbtCompound nbt) {
-    if(this.getWorld() != null && this.getWorld().isClient()){
+    if (this.getWorld() != null && this.getWorld().isClient()) {
       return;
     }
 
@@ -134,10 +134,10 @@ public interface Node {
 
   default void onSetWorld() {
     this.setShouldAssignNetwork(true);
-    if(this.getWorld().isClient){
+    if (this.getWorld().isClient) {
       return;
     }
-    if(this.getNetwork() == null){
+    if (this.getNetwork() == null) {
       this.assignNetwork();
     }
   }

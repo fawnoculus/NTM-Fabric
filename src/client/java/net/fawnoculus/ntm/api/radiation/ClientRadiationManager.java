@@ -20,7 +20,7 @@ import java.util.function.Function;
 public class ClientRadiationManager {
   private static final ClientRadiationManager INSTANCE = new ClientRadiationManager();
 
-  public static ClientRadiationManager getInstance(){
+  public static ClientRadiationManager getInstance() {
     return ClientRadiationManager.INSTANCE;
   }
 
@@ -31,7 +31,7 @@ public class ClientRadiationManager {
   public double totalChunkRadiation = 0;
   public double totalRadiation = 0;
 
-  public void handlePacked(RadiationInformationPayload payload){
+  public void handlePacked(RadiationInformationPayload payload) {
     RadiationInformationPayload.RadiationInfo info = payload.info();
     this.radiationExposure = info.radiationExposure();
     this.inventoryRadiation = info.inventoryRadiation();
@@ -40,5 +40,4 @@ public class ClientRadiationManager {
     this.totalChunkRadiation = this.activeChunkRadiation + this.passiveChunkRadiation;
     this.totalRadiation = this.inventoryRadiation + this.totalChunkRadiation;
   }
-
 }

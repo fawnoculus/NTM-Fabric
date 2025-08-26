@@ -32,7 +32,7 @@ public class NetworkDebuggingToolItem extends Item {
     BlockPos pos = context.getBlockPos();
     PlayerEntity player = context.getPlayer();
 
-    if(player == null) {
+    if (player == null) {
       // how
       return ActionResult.FAIL;
     }
@@ -42,13 +42,13 @@ public class NetworkDebuggingToolItem extends Item {
       return ActionResult.SUCCESS_SERVER;
     }
     NodeNetwork network = clickedNode.getNetwork();
-    if(network == null){
+    if (network == null) {
       player.sendMessage(Text.translatable("message.ntm.network_debug.node_no_network").formatted(Formatting.RED), false);
       return ActionResult.SUCCESS_SERVER;
     }
 
-    if(player.isSneaking()){
-      for(Node node : clickedNode.getNetwork().LOADED_NODES){
+    if (player.isSneaking()) {
+      for (Node node : clickedNode.getNetwork().LOADED_NODES) {
         player.sendMessage(Text.literal(node.getPos().toShortString()), false);
       }
       return ActionResult.SUCCESS_SERVER;
@@ -65,23 +65,24 @@ public class NetworkDebuggingToolItem extends Item {
     return ActionResult.SUCCESS_SERVER;
   }
 
-  private static long getConsumerCount(NodeNetwork network){
+  private static long getConsumerCount(NodeNetwork network) {
     long consumers = 0;
-    for(List<NodeValueContainer> containers : network.PRIORITISED_CONSUMERS.values()){
+    for (List<NodeValueContainer> containers : network.PRIORITISED_CONSUMERS.values()) {
       consumers += containers.size();
     }
     return consumers;
   }
 
-  private static long getProviderCount(NodeNetwork network){
+  private static long getProviderCount(NodeNetwork network) {
     long providers = 0;
-    for(List<NodeValueContainer> containers : network.PRIORITISED_PROVIDERS.values()){
+    for (List<NodeValueContainer> containers : network.PRIORITISED_PROVIDERS.values()) {
       providers += containers.size();
     }
     return providers;
   }
 
-  @Override  @SuppressWarnings("deprecation")
+  @Override
+  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
     tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
     tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool1").formatted(Formatting.RED));

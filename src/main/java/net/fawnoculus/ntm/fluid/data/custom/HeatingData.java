@@ -10,7 +10,7 @@ public record HeatingData(Double tuPerDroplet,
                           @Range(from = 0, to = 1) Double pwrCoolantMultiplier,
                           @Range(from = 0, to = 1) Double icfCoolantMultiplier,
                           @Range(from = 0, to = 1) Double particleAcceleratorCoolantMultiplier
-){
+) {
   public static final HeatingData DEFAULT = new HeatingData(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   public static final Codec<HeatingData> CODEC = RecordCodecBuilder.create(
     instance -> instance.group(
@@ -23,23 +23,23 @@ public record HeatingData(Double tuPerDroplet,
     ).apply(instance, HeatingData::new)
   );
 
-  public boolean isBoilable(){
+  public boolean isBoilable() {
     return this.boilingMultiplier > 0;
   }
 
-  public boolean isHeatable(){
+  public boolean isHeatable() {
     return this.heatingMultiplier > 0;
   }
 
-  public boolean isPwrCoolant(){
+  public boolean isPwrCoolant() {
     return this.pwrCoolantMultiplier > 0;
   }
 
-  public boolean isIcfCoolant(){
+  public boolean isIcfCoolant() {
     return this.icfCoolantMultiplier > 0;
   }
 
-  public boolean isParticleAcceleratorCoolant(){
+  public boolean isParticleAcceleratorCoolant() {
     return this.particleAcceleratorCoolantMultiplier > 0;
   }
 }

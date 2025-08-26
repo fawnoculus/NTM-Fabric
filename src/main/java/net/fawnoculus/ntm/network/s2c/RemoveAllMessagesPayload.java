@@ -12,9 +12,9 @@ public record RemoveAllMessagesPayload() implements CustomPayload {
   public static final Id<RemoveAllMessagesPayload> ID = new Id<>(CLEAR_ALL_MESSAGES_PAYLOAD_ID);
 
   public static final PacketCodec<RegistryByteBuf, RemoveAllMessagesPayload> PACKET_CODEC = PacketCodec.tuple(
-      Identifier.PACKET_CODEC,
-      ignored -> Identifier.of("ignored:ignored"),
-      ignored -> new RemoveAllMessagesPayload()
+    Identifier.PACKET_CODEC,
+    ignored -> Identifier.of("ignored:ignored"),
+    ignored -> new RemoveAllMessagesPayload()
   );
 
   @Override

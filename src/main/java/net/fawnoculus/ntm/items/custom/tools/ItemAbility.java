@@ -17,13 +17,16 @@ import org.jetbrains.annotations.Nullable;
  * All Abilities can be found at {@link Abilities}
  */
 public interface ItemAbility {
-  default MutableText getFullName(){
-    if(this.getValue() != null){
-      return Text.translatable(this.getTranslationKey()).append(Text.literal(" ("+ this.getValue() +")"));
+  default MutableText getFullName() {
+    if (this.getValue() != null) {
+      return Text.translatable(this.getTranslationKey()).append(Text.literal(" (" + this.getValue() + ")"));
     }
     return Text.translatable(this.getTranslationKey());
   }
+
   String getTranslationKey();
+
   @Nullable String getValue();
+
   void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner);
 }

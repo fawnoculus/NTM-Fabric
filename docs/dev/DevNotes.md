@@ -30,8 +30,8 @@ The Downside of this is that you could technically try to get or set the energy 
 ## Advanced Models (aka: Blender Models / Wavefront OBJ Files)
 OBJ Files are loaded from the Resource Manager (technically you could replace them with a resource pack, thou you would have to restart your game as there is no code for reloading them).
 They are converted to a "MultiModel3D" which contains multiple "GroupedModel3D" which then contain multiple "Model3D", this follows OBJ file standards, they are GroupedModel3D are grouped by object and Model3D are grouped by group.
-When Rendered a Model is added to a BufferBuilder and then send to the TexturedRenderPipeline in ModRenderPipelines which uses a custom shader code that is basically just the Block Render shader but i renamed it.
-These Models can then be Rendered whenever needed. The Current Way they are rendered is fucking horrible, so i still have to think of a way to do that properly.
+When Rendered a Model is added to a BufferBuilder and then send to the TexturedRenderPipeline in ModRenderPipelines which uses a custom shader code that is basically just the Block Render shader, but I renamed it.
+These Models can then be Rendered whenever needed. The Current Way they are rendered is fucking horrible, so I still have to think of a way to do that properly.
 Currently, all things that want to have advanced Models need to make a block entity and give it a block entity render and that render needs to call .render() on the model,
 this is extremely laggy, as in: 1000 Alloy Furnace Extensions bring my computer from  ~500 Fps to 10.
-However, after looking into this, this simply appears to be a SkillIssue considering the original does this exactly the same & they have no lag problem. maybe it's some post 1.12 type shit, i have no clue.
+However, after looking into this, this simply appears to be a SkillIssue considering the original does this exactly the same & they have no lag problem. maybe it's some post 1.12 type shit, I have no clue.

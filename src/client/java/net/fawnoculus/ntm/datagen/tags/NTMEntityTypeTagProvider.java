@@ -13,11 +13,12 @@ public class NTMEntityTypeTagProvider extends FabricTagProvider<EntityType<?>> {
   public NTMEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
     super(output, RegistryKeys.ENTITY_TYPE, registriesFuture);
   }
-  
-  
+
+
   @Override
-  protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {}
-  
+  protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+  }
+
   @Override
   public String getName() {
     return NTM.MOD_NAME + " EntityType-Tag Provider";

@@ -48,7 +48,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     this.propertyDelegate = new PropertyDelegate() {
       @Override
       public int get(int index) {
-        return switch (index){
+        return switch (index) {
           case 0 -> (int) progress;
           case 1 -> getRequiredProgress();
           default -> 0;
@@ -76,44 +76,45 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
 
   public static void tick(World world, BlockPos pos, BlockState state, ElectricFurnaceBE entity) {
     entity.processBattery();
-    if(entity.canCraft()) {
+    if (entity.canCraft()) {
       entity.addProgress();
-      if(entity.progressFinished()) {
+      if (entity.progressFinished()) {
         entity.craftOutput();
         entity.resetProgress();
       }
-    }else{
+    } else {
       entity.resetProgress();
     }
     entity.markDirty();
   }
 
-  private Optional<RecipeEntry<SmeltingRecipe>> getRecipe(){
-    if(!(this.world instanceof ServerWorld serverWorld)){
+  private Optional<RecipeEntry<SmeltingRecipe>> getRecipe() {
+    if (!(this.world instanceof ServerWorld serverWorld)) {
       return Optional.empty();
     }
     SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX));
     return ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
   }
 
-  private int getRequiredProgress(){
+  private int getRequiredProgress() {
     return this.getRecipe()
-        .map(recipeEntry -> recipeEntry.value().getCookingTime())
-        .orElse(0);
+      .map(recipeEntry -> recipeEntry.value().getCookingTime())
+      .orElse(0);
   }
 
-  private double getProgressPerTick(){
+  private double getProgressPerTick() {
     // TODO: upgrades People, Upgrades
     return 1;
   }
-  private long getEnergyPerTick(){
+
+  private long getEnergyPerTick() {
     // TODO: upgrades People, Upgrades
     return 50;
   }
 
   private void craftOutput() {
     Optional<RecipeEntry<SmeltingRecipe>> optional = this.getRecipe();
-    if(optional.isEmpty()) return;
+    if (optional.isEmpty()) return;
 
     RecipeEntry<SmeltingRecipe> recipe = optional.get();
     ItemStack output = recipe.value().craft(new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX)), BuiltinRegistries.createWrapperLookup());
@@ -124,38 +125,38 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     getStack(INPUT_SLOT_INDEX).decrement(1);
   }
 
-  private boolean canCraft(){
+  private boolean canCraft() {
     return this.energy.getValue() >= this.getEnergyPerTick()
-        && this.getRecipe().isPresent()
-        && canInsertIntoSlot(OUTPUT_SLOT_INDEX, this.getRecipe().get().value().craft(new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX)), BuiltinRegistries.createWrapperLookup()));
+      && this.getRecipe().isPresent()
+      && canInsertIntoSlot(OUTPUT_SLOT_INDEX, this.getRecipe().get().value().craft(new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX)), BuiltinRegistries.createWrapperLookup()));
   }
 
-  private boolean progressFinished(){
+  private boolean progressFinished() {
     return this.progress >= this.getRequiredProgress();
   }
 
-  private void addProgress(){
+  private void addProgress() {
     this.progress += this.getProgressPerTick();
     this.energy.remove(this.getEnergyPerTick());
 
-    if(this.world != null){
+    if (this.world != null) {
       BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
       this.world.setBlockState(this.pos, state);
     }
   }
 
-  private void resetProgress(){
+  private void resetProgress() {
     this.progress = 0;
 
-    if(this.world != null && !this.canCraft()){
+    if (this.world != null && !this.canCraft()) {
       BlockState state = this.world.getBlockState(this.pos).with(ElectricFurnaceBlock.LIT, false);
       this.world.setBlockState(this.pos, state);
     }
   }
 
-  private void processBattery(){
+  private void processBattery() {
     ItemStack stack = getStack(BATTERY_SLOT_INDEX);
-    if(stack.getItem() instanceof EnergyContainingItem energyContainingItem){
+    if (stack.getItem() instanceof EnergyContainingItem energyContainingItem) {
       energyContainingItem.discharge(stack, this.energy);
     }
   }
@@ -183,8 +184,8 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     return progress / requiredProgress;
   }
 
-  public boolean showFireInGUI(){
-    if(this.world == null) return false;
+  public boolean showFireInGUI() {
+    if (this.world == null) return false;
     return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
   }
 

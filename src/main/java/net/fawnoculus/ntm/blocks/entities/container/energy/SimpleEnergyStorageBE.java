@@ -57,19 +57,19 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     entity.markDirty();
   }
 
-  private void processBatteries(){
+  private void processBatteries() {
     ItemStack dischargeStack = getStack(DISCHARGE_SLOT_INDEX);
-    if(dischargeStack.getItem() instanceof EnergyContainingItem energyContainingItem){
+    if (dischargeStack.getItem() instanceof EnergyContainingItem energyContainingItem) {
       energyContainingItem.discharge(dischargeStack, this.energy);
     }
     ItemStack chargeStack = getStack(CHARGE_SLOT_INDEX);
-    if(chargeStack.getItem() instanceof EnergyContainingItem energyContainingItem){
+    if (chargeStack.getItem() instanceof EnergyContainingItem energyContainingItem) {
       energyContainingItem.charge(chargeStack, this.energy);
     }
   }
 
-  private void updateEnergyChange(){
-    if(this.energyChangeIndex >= 20 || this.energyChangeIndex < 0){
+  private void updateEnergyChange() {
+    if (this.energyChangeIndex >= 20 || this.energyChangeIndex < 0) {
       this.energyChangeIndex = 0;
     }
     long energyDifference = this.energy.getValue() - this.previousEnergy;
@@ -78,14 +78,14 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     this.previousEnergy = this.energy.getValue();
   }
 
-  public void onBlockUpdate(){
-    if(this.world != null){
+  public void onBlockUpdate() {
+    if (this.world != null) {
       boolean isNowPowered = this.world.getReceivedRedstonePower(this.pos) > 0;
-      if(isNowPowered == isPowered) return;
+      if (isNowPowered == isPowered) return;
 
-      if(isNowPowered){
+      if (isNowPowered) {
         this.energy.setStorageMode(this.poweredMode);
-      }else {
+      } else {
         this.energy.setStorageMode(this.unpoweredMode);
       }
 
@@ -93,15 +93,15 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     }
   }
 
-  public Text getEnergyPerSec(){
+  public Text getEnergyPerSec() {
     OptionalDouble optional = Arrays.stream(energyChange).average();
     long energyPerSec = (long) optional.orElse(0);
-    if(energyPerSec < 0) {
+    if (energyPerSec < 0) {
       return TextUtil.unit(energyPerSec, "generic.ntm.energy_s").formatted(Formatting.RED);
     }
 
     Formatting formatting = Formatting.YELLOW;
-    if(energyPerSec > 0) formatting = Formatting.GREEN;
+    if (energyPerSec > 0) formatting = Formatting.GREEN;
 
     return Text.literal("+").append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).formatted(formatting);
   }
@@ -134,10 +134,10 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     nbt.get("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
     this.isPowered = nbt.getBoolean("is_powered", false);
     this.energyChangeIndex = Math.clamp(
-        nbt.getInt("energy_change_index", 0), 0 , energyChange.length - 1
+      nbt.getInt("energy_change_index", 0), 0, energyChange.length - 1
     );
     Optional<long[]> optional = nbt.getLongArray("energy_change");
-    if(optional.isPresent() && optional.get().length == this.energyChange.length){
+    if (optional.isPresent() && optional.get().length == this.energyChange.length) {
       this.energyChange = optional.get();
     }
   }
@@ -158,14 +158,14 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
   }
 
   @Override
-  public void onInteraction(ServerPlayerEntity source, Identifier action) {
-    if(action.equals(CYCLE_POWERED_MODE)){
-      if(this.isPowered){
+  public void onInteraction(ServerPlayerEntity source, Identifier action, NbtCompound extraData) {
+    if (action.equals(CYCLE_POWERED_MODE)) {
+      if (this.isPowered) {
         this.energy.setStorageMode(this.poweredMode.cycle());
       }
       this.poweredMode = this.poweredMode.cycle();
-    }else if(action.equals(CYCLE_UNPOWERED_MODE)){
-      if(!this.isPowered){
+    } else if (action.equals(CYCLE_UNPOWERED_MODE)) {
+      if (!this.isPowered) {
         this.energy.setStorageMode(this.unpoweredMode.cycle());
       }
       this.unpoweredMode = this.unpoweredMode.cycle();

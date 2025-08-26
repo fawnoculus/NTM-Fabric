@@ -9,7 +9,7 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 // FIXME (once there is an Atmosphere &/or Pollution System)
-public record PollutionData(String name, Double amount){
+public record PollutionData(String name, Double amount) {
   public static final Codec<PollutionData> CODEC = RecordCodecBuilder.create(
     instance -> instance.group(
       Codec.STRING.fieldOf("name").forGetter(PollutionData::name),
@@ -17,15 +17,16 @@ public record PollutionData(String name, Double amount){
     ).apply(instance, PollutionData::new)
   );
 
-  public String getFluidName(){
+  public String getFluidName() {
     // TODO: make Pollution a Thing
     return this.name;
   }
 
-  public @NotNull MutableText getTooltip(){
+  public @NotNull MutableText getTooltip() {
     return switch (NTMConfig.FluidUnit.getValue()) {
-      case "MilliBuckets" -> Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount() / FluidUnit.MILLI_BUCKET.DROPLETS)
-        .append(Text.translatable("generic.ntm.fluid.mb"));
+      case "MilliBuckets" ->
+        Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount() / FluidUnit.MILLI_BUCKET.DROPLETS)
+          .append(Text.translatable("generic.ntm.fluid.mb"));
       case "Droplets" -> Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount())
         .append(Text.translatable("generic.ntm.fluid.droplets"));
       default -> Text.empty();

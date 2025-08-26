@@ -10,7 +10,8 @@ import net.minecraft.util.math.Vec3d;
  */
 public class EmptyRadiationProcessor implements RadiationProcessor {
   @Override
-  public void tick() {}
+  public void tick() {
+  }
 
   @Override
   public double getPassiveRadiation(Vec3d pos) {
@@ -23,11 +24,14 @@ public class EmptyRadiationProcessor implements RadiationProcessor {
   }
 
   @Override
-  public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {}
+  public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {
+  }
 
   @Override
-  public void writeData(NbtCompound data) {}
+  public void writeData(NbtCompound data) {
+  }
 
   @Override
-  public void readData(NbtCompound data) {}
+  public void readData(NbtCompound data) {
+  }
 }

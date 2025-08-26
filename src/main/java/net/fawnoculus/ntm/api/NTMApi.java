@@ -9,7 +9,7 @@ import net.fawnoculus.ntm.api.radiation.RadiationManager;
 import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
 
 public class NTMApi {
-  public static void initialize(){
+  public static void initialize() {
     NTMEvents.initialize();
     RadiationManager.initialize();
     RadiationRegistry.initialize();

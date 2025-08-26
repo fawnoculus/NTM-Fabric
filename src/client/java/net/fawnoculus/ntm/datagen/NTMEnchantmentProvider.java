@@ -16,10 +16,11 @@ public class NTMEnchantmentProvider extends FabricDynamicRegistryProvider {
   public NTMEnchantmentProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
     super(output, registriesFuture);
   }
+
   @Override
   protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
     RegistryWrapper<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
-    
+
     /*
     register(entries, NTMEnchantmentEffects.THUNDERING_KEY, Enchantment.builder(
         Enchantment.definition(
@@ -39,12 +40,13 @@ public class NTMEnchantmentProvider extends FabricDynamicRegistryProvider {
     ));
      */
   }
+
   private void register(Entries entries, RegistryKey<Enchantment> key, Enchantment.Builder builder, ResourceCondition... resourceConditions) {
     entries.add(key, builder.build(key.getValue()), resourceConditions);
   }
+
   @Override
   public String getName() {
     return NTM.MOD_NAME + " Enchantment Provider";
   }
-  
 }

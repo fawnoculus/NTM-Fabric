@@ -13,12 +13,12 @@ public class NTMAdvancementProvider extends FabricAdvancementProvider {
   public NTMAdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
     super(output, registryLookup);
   }
-  
+
   @Override
   public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
-  
+
   }
-  
+
   @Override
   public String getName() {
     return NTM.MOD_NAME + " Advancement Provider";

@@ -16,11 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin {
   @Inject(method = "onPlayerConnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;getGameRules()Lnet/minecraft/world/GameRules;", shift = At.Shift.AFTER))
-  private void sendVersionPacket(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
+  private void sendVersionPacket(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
     ServerPlayNetworking.send(player, new NTMVersionPayload(NTM.MOD_VERSION));
   }
+
   @Inject(method = "onPlayerConnect", at = @At("TAIL"))
-  private void playerJoinEvent(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci){
+  private void playerJoinEvent(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
     PlayerJoinCallback.EVENT.invoker().onJoin(connection, player, clientData);
   }
 }

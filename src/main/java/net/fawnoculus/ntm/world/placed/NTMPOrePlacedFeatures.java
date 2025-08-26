@@ -55,7 +55,7 @@ public class NTMPOrePlacedFeatures {
   public static final RegistryKey<PlacedFeature> TRIXITE_ORE_PLACED_KEY = registryKey("trixite_ore_placed");
 
 
-  public static void initialize(@NotNull Registerable<PlacedFeature> context){
+  public static void initialize(@NotNull Registerable<PlacedFeature> context) {
     var configuredFeatures = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 
     // TODO: extract propper counts from original
@@ -256,14 +256,15 @@ public class NTMPOrePlacedFeatures {
   }
 
 
-  public static RegistryKey<PlacedFeature> registryKey(String name){
+  public static RegistryKey<PlacedFeature> registryKey(String name) {
     return RegistryKey.of(RegistryKeys.PLACED_FEATURE, NTM.id(name));
   }
-  private static void register(@NotNull Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key, RegistryEntry<ConfiguredFeature<?, ?>> config, List<PlacementModifier> modifiers){
+
+  private static void register(@NotNull Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key, RegistryEntry<ConfiguredFeature<?, ?>> config, List<PlacementModifier> modifiers) {
     context.register(key, new PlacedFeature(config, List.copyOf(modifiers)));
   }
 
-  private static <FC extends FeatureConfig, F extends Feature<FC>> void register(Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key, RegistryEntry<ConfiguredFeature<?, ?>> config, PlacementModifier... modifiers){
+  private static <FC extends FeatureConfig, F extends Feature<FC>> void register(Registerable<PlacedFeature> context, RegistryKey<PlacedFeature> key, RegistryEntry<ConfiguredFeature<?, ?>> config, PlacementModifier... modifiers) {
     register(context, key, config, List.of(modifiers));
   }
 

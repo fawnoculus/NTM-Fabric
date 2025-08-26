@@ -11,10 +11,11 @@ import java.io.StringReader;
 public class JsonUtil {
   private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
-  public static JsonObject jsonFromString(String string){
+  public static JsonObject jsonFromString(String string) {
     return JsonUtil.jsonFromReader(new StringReader(string));
   }
-  public static JsonObject jsonFromReader(Reader reader){
+
+  public static JsonObject jsonFromReader(Reader reader) {
     return gson.fromJson(new JsonReader(reader), JsonObject.class);
   }
 }

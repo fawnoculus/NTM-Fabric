@@ -26,7 +26,7 @@ public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
     super(type, pos, state);
 
     EnergyInventoryBE be = this;
-    this.inventory = new SimpleInventory(inventorySlots){
+    this.inventory = new SimpleInventory(inventorySlots) {
       @Override
       public void markDirty() {
         super.markDirty();
@@ -35,25 +35,25 @@ public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
     };
   }
 
-  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory){
-    if(!(world instanceof ServerWorld serverWorld)) return;
+  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory) {
+    if (!(world instanceof ServerWorld serverWorld)) return;
     InventorySyncPayload payload = new InventorySyncPayload(pos, inventory);
 
     int viewDistance = serverWorld.getServer().getPlayerManager().getViewDistance();
-    for(ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)){
+    for (ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)) {
       ServerPlayNetworking.send(player, payload);
     }
   }
 
-  public SimpleInventory getInventory(){
+  public SimpleInventory getInventory() {
     return this.inventory;
   }
 
-  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack){
+  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack) {
     ItemStack switchStack = this.getInventory().getStack(slotIndex);
-    if(switchStack.isEmpty()) return true;
+    if (switchStack.isEmpty()) return true;
 
-    if(switchStack.getItem() == stack.getItem()){
+    if (switchStack.getItem() == stack.getItem()) {
       return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
     }
 
@@ -98,8 +98,8 @@ public abstract class EnergyInventoryBE extends EnergyBE implements Inventory {
   @Override
   public void markDirty() {
     super.markDirty();
-    if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-    if(this.world != null && !this.world.isClient()){
+    if (this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+    if (this.world != null && !this.world.isClient()) {
       sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
     }
   }

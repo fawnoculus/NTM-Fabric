@@ -21,11 +21,11 @@ public record RadiationInformationPayload(RadiationInfo info) implements CustomP
   public static final PacketCodec<RegistryByteBuf, RadiationInformationPayload> PACKET_CODEC = PacketCodec.tuple(RadiationInfo.PACKET_CODEC, RadiationInformationPayload::info, RadiationInformationPayload::new);
 
   public record RadiationInfo(
-      @Range(from = 0, to = 1_000_000) double radiationExposure,
-      double inventoryRadiation,
-      double passiveChunkRadiation,
-      double activeChunkRadiation
-      ) {
+    @Range(from = 0, to = 1_000_000) double radiationExposure,
+    double inventoryRadiation,
+    double passiveChunkRadiation,
+    double activeChunkRadiation
+  ) {
     public static final PacketCodec<ByteBuf, RadiationInfo> PACKET_CODEC = new PacketCodec<>() {
       public RadiationInfo decode(ByteBuf byteBuf) {
         String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);

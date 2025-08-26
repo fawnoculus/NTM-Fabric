@@ -23,37 +23,37 @@ import java.util.function.Function;
 
 public class NTMRenderPipelines {
   public static final Function<Identifier, RenderPhase.Texture> TEXTURE_FUNCTION = Util.memoize(identifier -> new RenderPhase.Texture(identifier, TriState.FALSE, false));
-  
+
   public static final RenderPipeline TEXTURE_PIPELINE = RenderPipelines.register(
-      RenderPipeline.builder()
-          .withLocation(NTM.id("pipeline/texture"))
-          .withVertexShader(NTM.id("textured"))
-          .withFragmentShader(NTM.id("textured"))
-          .withSampler("Sampler0")
-          .withSampler("Sampler2")
-          .withBlend(BlendFunction.TRANSLUCENT)
-          .withVertexFormat(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL, VertexFormat.DrawMode.TRIANGLES)
-          .build()
+    RenderPipeline.builder()
+      .withLocation(NTM.id("pipeline/texture"))
+      .withVertexShader(NTM.id("textured"))
+      .withFragmentShader(NTM.id("textured"))
+      .withSampler("Sampler0")
+      .withSampler("Sampler2")
+      .withBlend(BlendFunction.TRANSLUCENT)
+      .withVertexFormat(VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL, VertexFormat.DrawMode.TRIANGLES)
+      .build()
   );
-  
-  
-  public static void draw(BuiltBuffer buffer, Identifier texture){
+
+
+  public static void draw(BuiltBuffer buffer, Identifier texture) {
     draw(buffer, TEXTURE_PIPELINE,
-        ImmutableList.of(
-            TEXTURE_FUNCTION.apply(texture),
-            RenderPhase.ENABLE_LIGHTMAP,
-            RenderPhase.ENABLE_OVERLAY_COLOR,
-            RenderPhase.MAIN_TARGET,
-            RenderPhase.DEFAULT_TEXTURING,
-            RenderPhase.FULL_LINE_WIDTH
-        )
+      ImmutableList.of(
+        TEXTURE_FUNCTION.apply(texture),
+        RenderPhase.ENABLE_LIGHTMAP,
+        RenderPhase.ENABLE_OVERLAY_COLOR,
+        RenderPhase.MAIN_TARGET,
+        RenderPhase.DEFAULT_TEXTURING,
+        RenderPhase.FULL_LINE_WIDTH
+      )
     );
   }
-  
-  public static void draw(BuiltBuffer buffer, RenderPipeline renderPipeline, ImmutableList<RenderPhase> phases){
+
+  public static void draw(BuiltBuffer buffer, RenderPipeline renderPipeline, ImmutableList<RenderPhase> phases) {
     phases.forEach(RenderPhase::startDrawing);
-    
-    try{
+
+    try {
       GpuBuffer gpuBuffer = renderPipeline.getVertexFormat().uploadImmediateVertexBuffer(buffer.getBuffer());
       GpuBuffer gpuBuffer2;
       VertexFormat.IndexType indexType;
@@ -65,47 +65,47 @@ public class NTMRenderPipelines {
         gpuBuffer2 = renderPipeline.getVertexFormat().uploadImmediateIndexBuffer(buffer.getSortedBuffer());
         indexType = buffer.getDrawParameters().indexType();
       }
-      
+
       Framebuffer framebuffer = RenderPhase.MAIN_TARGET.get();
-      
+
       try (RenderPass renderPass = RenderSystem.getDevice()
-          .createCommandEncoder()
-          .createRenderPass(
-              framebuffer.getColorAttachment(), OptionalInt.empty(), framebuffer.useDepthAttachment ? framebuffer.getDepthAttachment() : null, OptionalDouble.empty()
-          )
+        .createCommandEncoder()
+        .createRenderPass(
+          framebuffer.getColorAttachment(), OptionalInt.empty(), framebuffer.useDepthAttachment ? framebuffer.getDepthAttachment() : null, OptionalDouble.empty()
+        )
       ) {
         renderPass.setPipeline(renderPipeline);
         renderPass.setVertexBuffer(0, gpuBuffer);
         if (RenderSystem.SCISSOR_STATE.isEnabled()) {
           renderPass.enableScissor(RenderSystem.SCISSOR_STATE);
         }
-        
+
         for (int i = 0; i < 12; i++) {
           GpuTexture gpuTexture = RenderSystem.getShaderTexture(i);
           if (gpuTexture != null) {
             renderPass.bindSampler("Sampler" + i, gpuTexture);
           }
         }
-        
+
         renderPass.setIndexBuffer(gpuBuffer2, indexType);
         renderPass.drawIndexed(0, buffer.getDrawParameters().indexCount());
       }
-    }catch (Throwable throwable){
-      if(buffer != null){
+    } catch (Throwable throwable) {
+      if (buffer != null) {
         try {
           buffer.close();
-        }catch (Throwable throwable2){
+        } catch (Throwable throwable2) {
           throwable.addSuppressed(throwable2);
         }
       }
-      
+
       NTMClient.LOGGER.warn("Exception occurred while trying to Render BuiltBuffer \n\tException: {}", ExceptionUtil.makePretty(throwable, false));
     }
-    
-    if(buffer != null){
+
+    if (buffer != null) {
       buffer.close();
     }
-    
+
     phases.forEach(RenderPhase::endDrawing);
   }
 }

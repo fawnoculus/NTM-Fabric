@@ -1,20 +1,27 @@
 package net.fawnoculus.ntm.network.c2s;
 
 import net.fawnoculus.ntm.NTM;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-public record BEInteractionPayload(BlockPos pos, Identifier action) implements CustomPayload {
+public record BEInteractionPayload(BlockPos pos, Identifier action, NbtCompound extraData) implements CustomPayload {
   public static final Identifier BE_INTERACTION_PAYLOAD_ID = NTM.id("be_interaction");
   public static final CustomPayload.Id<BEInteractionPayload> ID = new CustomPayload.Id<>(BE_INTERACTION_PAYLOAD_ID);
 
+  public BEInteractionPayload(BlockPos pos, Identifier action){
+    this(pos, action, new NbtCompound());
+  }
+
   public static final PacketCodec<RegistryByteBuf, BEInteractionPayload> PACKET_CODEC = PacketCodec.tuple(
-      BlockPos.PACKET_CODEC, BEInteractionPayload::pos,
-      Identifier.PACKET_CODEC, BEInteractionPayload::action,
-      BEInteractionPayload::new
+    BlockPos.PACKET_CODEC, BEInteractionPayload::pos,
+    Identifier.PACKET_CODEC, BEInteractionPayload::action,
+    PacketCodecs.NBT_COMPOUND, BEInteractionPayload::extraData,
+    BEInteractionPayload::new
   );
 
   @Override

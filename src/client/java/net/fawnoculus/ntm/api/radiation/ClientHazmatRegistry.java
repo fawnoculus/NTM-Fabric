@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class ClientHazmatRegistry extends HazmatRegistry {
   private static final ClientHazmatRegistry INSTANCE = new ClientHazmatRegistry();
 
-  public static ClientHazmatRegistry getInstance(){
+  public static ClientHazmatRegistry getInstance() {
     return INSTANCE;
   }
 
@@ -17,7 +17,7 @@ public class ClientHazmatRegistry extends HazmatRegistry {
   @Override
   public double getResistance(Identifier identifier) {
     Double override = hazmatOverrides.get(identifier);
-    if(override != null){
+    if (override != null) {
       return override;
     }
     return hazmatGetter.getOrDefault(identifier, 0.0);
@@ -28,7 +28,7 @@ public class ClientHazmatRegistry extends HazmatRegistry {
     throw new IllegalArgumentException("Tried to register radiation resistance in ClientHazmatRegistry");
   }
 
-  public void updateFromPacket(HazmatRegistry.Serialized serializedRegistry){
+  public void updateFromPacket(HazmatRegistry.Serialized serializedRegistry) {
     this.hazmatGetter = serializedRegistry.hazmatGetter();
     this.hazmatOverrides = serializedRegistry.hazmatOverrides();
   }

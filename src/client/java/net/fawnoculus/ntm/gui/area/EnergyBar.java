@@ -10,9 +10,9 @@ import org.jetbrains.annotations.Range;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class EnergyBar implements InfoBar{
+public class EnergyBar implements InfoBar {
   @SafeVarargs
-  public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText){
+  public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText) {
     this.X = x;
     this.Y = y;
     this.WIDTH = width;
@@ -37,7 +37,7 @@ public class EnergyBar implements InfoBar{
   private int OFFSET_X;
   private int OFFSET_Y;
 
-  public void setTexture(Identifier texture, int u, int v, int textureWidth, int textureHeight){
+  public void setTexture(Identifier texture, int u, int v, int textureWidth, int textureHeight) {
     this.TEXTURE = texture;
     this.U = u;
     this.V = v;
@@ -45,7 +45,7 @@ public class EnergyBar implements InfoBar{
     this.TEXTURE_HEIGHT = textureHeight;
   }
 
-  public void setOffsets(int offsetX, int offsetY){
+  public void setOffsets(int offsetX, int offsetY) {
     this.OFFSET_X = offsetX;
     this.OFFSET_Y = offsetY;
   }
@@ -107,7 +107,7 @@ public class EnergyBar implements InfoBar{
 
     tooltip.accept(Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
 
-    for(Supplier<Text> supplier : EXTRA_TEXT){
+    for (Supplier<Text> supplier : EXTRA_TEXT) {
       tooltip.accept(supplier.get());
     }
   }

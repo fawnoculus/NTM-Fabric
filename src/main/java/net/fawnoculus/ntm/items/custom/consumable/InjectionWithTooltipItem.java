@@ -16,24 +16,27 @@ import java.util.function.Consumer;
 
 public class InjectionWithTooltipItem extends InjectionItem {
   private final int TOOLTIP_COUNT;
-  
+
   public InjectionWithTooltipItem(Settings settings, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     this(settings, 1, sound, returnItem, serverUse);
   }
+
   public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings, sound, returnItem, serverUse);
-    
+
     this.TOOLTIP_COUNT = tooltipCount;
   }
+
   public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
     super(settings, sound, returnItems, serverUse);
-    
+
     this.TOOLTIP_COUNT = tooltipCount;
   }
-  
-  @Override @SuppressWarnings("deprecation")
+
+  @Override
+  @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    if(this.TOOLTIP_COUNT == 1){
+    if (this.TOOLTIP_COUNT == 1) {
       tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
       return;
     }
