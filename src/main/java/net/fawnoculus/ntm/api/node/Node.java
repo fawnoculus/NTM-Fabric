@@ -4,7 +4,6 @@ import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.util.ExceptionUtil;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;

@@ -16,7 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.storage.ReadView;
@@ -53,7 +52,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
   public long[] energyChange = new long[20];
   public int energyChangeIndex = 0;
 
-  public static void tick(World world, BlockPos pos, BlockState state, @NotNull SimpleEnergyStorageBE entity) {
+  public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, @NotNull SimpleEnergyStorageBE entity) {
     entity.processBatteries();
     entity.updateEnergyChange();
     entity.markDirty();

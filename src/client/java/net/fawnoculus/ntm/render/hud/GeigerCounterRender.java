@@ -28,7 +28,7 @@ public class GeigerCounterRender {
     return PlayerUtil.hasItem(ClientUtil.getPlayer(), NTMItems.GEIGER_COUNTER);
   }
 
-  public static void drawGeigerCounter(DrawContext context, RenderTickCounter tickCounter) {
+  public static void drawGeigerCounter(DrawContext context, RenderTickCounter ignored) {
     if (!shouldDraw()) return;
 
     final int x = 5;

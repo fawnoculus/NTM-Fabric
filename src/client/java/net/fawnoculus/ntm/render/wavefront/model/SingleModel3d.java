@@ -12,11 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record SingleModel3d(List<Polygon> FACES) implements Model3d {
-
-  public List<Polygon> getFaces() {
-    return this.FACES;
-  }
-
   public void setTexture(Identifier blockId){
     for (Polygon face : FACES) {
       face.setTexture(blockId);

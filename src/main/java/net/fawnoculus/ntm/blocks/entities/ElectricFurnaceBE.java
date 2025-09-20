@@ -14,14 +14,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -76,7 +74,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
   private final PropertyDelegate propertyDelegate;
   private double progress = 0;
 
-  public static void tick(World world, BlockPos pos, BlockState state, ElectricFurnaceBE entity) {
+  public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, ElectricFurnaceBE entity) {
     entity.processBattery();
     if (entity.canCraft()) {
       entity.addProgress();

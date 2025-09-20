@@ -19,7 +19,7 @@ public class MessageSystemRender {
   private static final int paddingTop = 5;
 
 
-  public static void drawMessageSystem(DrawContext context, RenderTickCounter tickCounter) {
+  public static void drawMessageSystem(DrawContext context, RenderTickCounter ignored) {
     List<AdvancedMessage> messages = MessageSystem.getAllMessages();
     if (messages.isEmpty()) {
       return;

@@ -1,6 +1,5 @@
 package net.fawnoculus.ntm.network.custom;
 
-import com.google.gson.JsonObject;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.minecraft.Bootstrap;
