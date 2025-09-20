@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.render.wavefront;
 
 import net.fawnoculus.ntm.NTMClient;
+import net.fawnoculus.ntm.render.wavefront.model.MultiMultiModel3d;
+import net.fawnoculus.ntm.render.wavefront.model.SingleModel3d;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.Resource;
@@ -14,8 +16,8 @@ import java.util.regex.Pattern;
 public class ModelHandler {
   private static final Pattern anyButFloats = Pattern.compile("[^.0-9\\-]+");
 
-  public static MultiModel3D ofWavefrontObj(Identifier resourceIdentifier) {
-    MultiModel3D toBeReturned = new MultiModel3D();
+  public static MultiMultiModel3d ofWavefrontObj(Identifier resourceIdentifier) {
+    MultiMultiModel3d toBeReturned = new MultiMultiModel3d();
     Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(resourceIdentifier);
     if (resource.isEmpty()) {
       NTMClient.LOGGER.warn("Could not load '{}' (.obj) File, because it does not exist", resourceIdentifier);
@@ -32,7 +34,7 @@ public class ModelHandler {
     return toBeReturned;
   }
 
-  public static MultiModel3D ofWavefrontObj(@NotNull Scanner scanner, String name) throws WavefrontSyntaxException {
+  public static MultiMultiModel3d ofWavefrontObj(@NotNull Scanner scanner, String name) throws WavefrontSyntaxException {
     List<GeometryVertex> geometryVertices = new ArrayList<>();
     List<TextureCoordinate> textureCoordinates = new ArrayList<>();
     List<VertexNormal> vertexNormals = new ArrayList<>();
@@ -80,22 +82,22 @@ public class ModelHandler {
     }
     groupedFaces.get(object).put(group, faceIndices);
 
-    MultiModel3D multiModel = new MultiModel3D(name);
+    MultiMultiModel3d multiMultiModel3D = new MultiMultiModel3d(name);
     for (String objectName : groupedFaces.keySet()) {
       for (String groupName : groupedFaces.get(objectName).keySet()) {
-        List<PolygonalFace> polygonalFaces = new ArrayList<>();
+        List<Polygon> polygons = new ArrayList<>();
         for (FaceIndex faceIndex : groupedFaces.get(objectName).get(groupName)) {
-          PolygonalFace polygonalFace = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
-          if (polygonalFace.isInValid()) {
-            NTMClient.LOGGER.warn("Created Invalid Polygonal Face: {}", polygonalFace);
+          Polygon polygon = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
+          if (polygon.isInValid()) {
+            NTMClient.LOGGER.warn("Created Invalid Polygonal Face: {}", polygon);
           }
-          polygonalFaces.add(polygonalFace);
+          polygons.add(polygon);
         }
-        multiModel.addModel(objectName, groupName, new Model3D(polygonalFaces));
+        multiMultiModel3D.addModel(objectName, groupName, new SingleModel3d(polygons));
       }
     }
 
-    return multiModel;
+    return multiMultiModel3D;
   }
 
   private static @NotNull TextureCoordinate getTextureCoordinate(String line) {

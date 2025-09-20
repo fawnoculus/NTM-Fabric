@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.render;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.render.resources.NTMModels;
 import net.fawnoculus.ntm.render.resources.NTMTextures;
-import net.fawnoculus.ntm.render.wavefront.Model3D;
+import net.fawnoculus.ntm.render.wavefront.model.SingleModel3d;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
@@ -32,9 +32,9 @@ public class NTMModelRender {
   }
 
   public static class AlloyFurnaceExtension {
-    public final static Model3D TOP = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
-    public final static Model3D SIDE = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
-    public final static Model3D BOTTOM = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
+    public final static SingleModel3d TOP = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "");
+    public final static SingleModel3d SIDE = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "");
+    public final static SingleModel3d BOTTOM = NTMModels.ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "");
 
     public static void renderItem(@NotNull MatrixStack matrices, int light) {
       matrices.push();

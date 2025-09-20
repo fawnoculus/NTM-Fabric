@@ -340,7 +340,7 @@ public class NTMModelProvider extends FabricModelProvider {
   );
 
   public static void registerForAdvancedModel(@NotNull BlockStateModelGenerator blockStateModelGenerator, Block block) {
-    // In order for the Model overrides to work there just needs to be any model for the specified item
+    // In order for the Model3d overrides to work there just needs to be any model for the specified item
     // So we just give it an empty model
     blockStateModelGenerator.registerSingleton(block, EMPTY_BLOCK_MODEL);
   }

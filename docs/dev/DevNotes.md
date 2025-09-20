@@ -22,7 +22,7 @@ In my version of Node Networks there is no such thing as Nodespace, instead ther
 all a node in a network has to do is store the UUID of it's assigned Network once it is unloaded so it can be loaded again once the Node is loaded.
 When a Node is placed it checks it neighbour blocks for Nodes, if it finds one then this Node will use its Network & if it finds multiple, it will merge all the Networks Together.
 Once a Node is Removed, it will check if it was Connecting Multiple Nodes, if it was then it Splits the Network at its current location
-(if the Network is large then this can take some time, this is the one Downside of not having Nodespace as that would speed up the process slightly).
+(if the Network is large then this can take some time (we are talking about a few ms), this is the one Downside of not having Nodespace as that would speed up this process).
 A Node in this context refers to a BlockEntity.
 A Node contains a Collection of NodeValueContainers which handle things like contained Energy or Fluid & whether a node is inserting into or taking from the Network.
 
