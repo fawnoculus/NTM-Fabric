@@ -6,7 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +31,7 @@ public class StorageModeWidget extends ClickableWidget {
 
   @Override
   protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-    context.drawTexture(RenderLayer::getGuiTextured,
+    context.drawTexture(RenderPipelines.GUI_TEXTURED,
       NTMTextures.GENERIC_STORAGE_MODE,
       this.getX(),
       this.getY(),

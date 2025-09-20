@@ -9,7 +9,7 @@ import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
 import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -37,7 +37,7 @@ public class EnergyStorageScreen extends HandledScreen<EnergyStorageScreenHandle
 
   @Override
   protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {
-    context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
+    context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
     energyBar.draw(context, mouseX, mouseY);
   }
 

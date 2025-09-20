@@ -4,6 +4,8 @@ import net.fawnoculus.ntm.api.node.Node;
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.api.node.StorageMode;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.jetbrains.annotations.Range;
 
 public class EnergyStack implements NodeValueContainer {
@@ -90,16 +92,16 @@ public class EnergyStack implements NodeValueContainer {
     return this;
   }
 
-  public void writeNBT(NbtCompound nbt) {
-    nbt.putLong("energy_stack.stored_energy", this.value);
-    nbt.putLong("energy_stack.max_energy", this.maxValue);
-    nbt.putLong("energy_stack.priority", this.priority);
+  public void writeData(WriteView view) {
+    view.putLong("energy_stack.stored_energy", this.value);
+    view.putLong("energy_stack.max_energy", this.maxValue);
+    view.putLong("energy_stack.priority", this.priority);
   }
 
-  public void readNBT(NbtCompound nbt) {
-    this.value = nbt.getLong("energy_stack.stored_energy", 0);
-    this.maxValue = nbt.getLong("energy_stack.max_energy", 0);
-    this.priority = nbt.getLong("energy_stack.priority", 0);
+  public void readData(ReadView view) {
+    this.value = view.getLong("energy_stack.stored_energy", 0);
+    this.maxValue = view.getLong("energy_stack.max_energy", 0);
+    this.priority = view.getLong("energy_stack.priority", 0);
   }
 
   @Override
@@ -170,17 +172,17 @@ public class EnergyStack implements NodeValueContainer {
     }
 
     @Override
-    public void readNBT(NbtCompound nbt) {
-      super.readNBT(nbt);
-      this.setStorageMode(
-        nbt.get("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume)
-      );
+    public void writeData(WriteView view) {
+      super.writeData(view);
+      view.put("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
     }
 
     @Override
-    public void writeNBT(NbtCompound nbt) {
-      super.writeNBT(nbt);
-      nbt.put("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
+    public void readData(ReadView view) {
+      super.readData(view);
+      this.setStorageMode(
+        view.read("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume)
+      );
     }
 
     @Override

@@ -94,7 +94,7 @@ public class NTMClientCommands {
   }
 
   private static int forceDisconnect(CommandContext<FabricClientCommandSource> context) {
-    context.getSource().getWorld().disconnect();
+    context.getSource().getWorld().disconnect(Text.translatable("message.ntm.force_disconnect"));
     return 1;
   }
 

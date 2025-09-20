@@ -25,6 +25,7 @@
   "message.ntm.message.cleared_specific": "Cleared Message '%1$s' from %2$s Player(s)",
   "message.ntm.message.sent": "Sent Message to %1$s Player(s)",
   "message.ntm.the_funny": "Performed 'the funny' >:3",
+  "message.ntm.force_disconnect": "Forcefully disconnected",
   "message.ntm.set_dev_constant": "Set 'SharedConstants.isDevelopment' to '%1$s'",
   "message.ntm.all_effects.affected_targets": "Applied all Effects to %1$s Targets",
   "message.ntm.all_effects.immune_targets": "Failed to apply all Effects to %1$s Targets",

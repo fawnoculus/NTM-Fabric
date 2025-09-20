@@ -12,16 +12,18 @@ import net.minecraft.util.math.ColorHelper;
 import java.util.List;
 
 public class MessageSystemRender {
+  private static final int backgroundColor = ColorHelper.getArgb(150, 100, 100, 100);
+  private static final int marginSide = 10;
+  private static final int marginTop = 10;
+  private static final int paddingSide = 5;
+  private static final int paddingTop = 5;
+
+
   public static void drawMessageSystem(DrawContext context, RenderTickCounter tickCounter) {
     List<AdvancedMessage> messages = MessageSystem.getAllMessages();
     if (messages.isEmpty()) {
       return;
     }
-    int backgroundColor = ColorHelper.getArgb(150, 100, 100, 100);
-    int marginSide = 10;
-    int marginTop = 10;
-    int paddingSide = 5;
-    int paddingTop = 5;
 
     TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
@@ -33,7 +35,7 @@ public class MessageSystemRender {
     }
     int height = textRenderer.fontHeight * messages.size();
 
-    context.fill(marginSide, marginTop, marginSide + (paddingSide * 2) + width, marginTop + (paddingTop * 2) + height, 0, backgroundColor);
+    context.fill(marginSide, marginTop, marginSide + (paddingSide * 2) + width, marginTop + (paddingTop * 2) + height, backgroundColor);
 
     for (int i = 0; i < messages.size(); i++) {
       Text text = messages.get(i).getText();

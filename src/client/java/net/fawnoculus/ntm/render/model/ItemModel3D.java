@@ -37,7 +37,7 @@ public class ItemModel3D implements ItemModel {
   public void update(ItemRenderState state, ItemStack stack, ItemModelManager resolver, ItemDisplayContext displayContext, @Nullable ClientWorld world, @Nullable LivingEntity user, int seed) {
     LayerRenderState layer = state.newLayer();
 
-    layer.setVector(this.vector);
+    layer.setVertices(this.vector);
     layer.setRenderLayer(RenderLayers.getItemLayer(stack));
     this.settings.addSettings(layer, displayContext);
     layer.getQuads().addAll(this.quads);

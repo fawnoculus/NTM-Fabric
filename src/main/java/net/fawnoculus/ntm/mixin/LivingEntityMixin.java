@@ -4,6 +4,8 @@ import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,17 +18,17 @@ public abstract class LivingEntityMixin implements CustomDataHolder {
   @Unique
   NbtCompound NTM$customData = new NbtCompound();
 
-  @Inject(at = @At("HEAD"), method = "readCustomDataFromNbt")
-  protected void readCustomData(NbtCompound nbt, CallbackInfo ci) {
-    NbtElement data = nbt.get(CustomDataHolder.KEY);
+  @Inject(at = @At("HEAD"), method = "readCustomData")
+  protected void readCustomData(ReadView view, CallbackInfo ci) {
+    NbtElement data = view.read(CustomDataHolder.KEY, NbtCompound.CODEC).orElse(new NbtCompound());
     if (data instanceof NbtCompound nbtCompound) {
       NTM$customData = nbtCompound;
     }
   }
 
-  @Inject(at = @At("HEAD"), method = "writeCustomDataToNbt")
-  protected void writeCustomData(NbtCompound nbt, CallbackInfo ci) {
-    nbt.put(CustomDataHolder.KEY, NTM$customData);
+  @Inject(at = @At("HEAD"), method = "writeCustomData")
+  protected void writeCustomData(WriteView view, CallbackInfo ci) {
+    view.put(CustomDataHolder.KEY, NbtCompound.CODEC, NTM$customData);
   }
 
   @Override

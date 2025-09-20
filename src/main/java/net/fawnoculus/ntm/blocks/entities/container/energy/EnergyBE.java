@@ -12,6 +12,8 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -51,9 +53,7 @@ public abstract class EnergyBE extends BlockEntity implements Node {
 
   @Override
   public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-    NbtCompound nbt = new NbtCompound();
-    this.writeNbt(nbt, registries);
-    return nbt;
+    return this.createNbt(registries);
   }
 
   @Override
@@ -80,14 +80,14 @@ public abstract class EnergyBE extends BlockEntity implements Node {
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-    super.readNbt(nbt, registries);
-    this.readNodeData(nbt);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    this.readNodeData(view);
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-    super.writeNbt(nbt, registries);
-    this.writeNodeData(nbt);
+  protected void writeData(WriteView view) {
+    super.writeData(view);
+    this.writeNodeData(view);
   }
 }

@@ -19,6 +19,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -112,34 +114,34 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    nbt.put("powered_mode", StorageMode.CODEC, this.poweredMode);
-    nbt.put("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
-    nbt.putBoolean("is_powered", this.isPowered);
-    nbt.putInt("energy_change_index", this.energyChangeIndex);
-    nbt.putLongArray("energy_change", energyChange);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    this.energy.readData(view);
 
-    this.energy.writeNBT(nbt);
-
-    super.writeNbt(nbt, registryLookup);
-  }
-
-  @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-
-    this.energy.readNBT(nbt);
-
-    nbt.get("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
-    nbt.get("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
-    this.isPowered = nbt.getBoolean("is_powered", false);
+    view.read("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
+    view.read("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
+    this.isPowered = view.getBoolean("is_powered", false);
     this.energyChangeIndex = Math.clamp(
-      nbt.getInt("energy_change_index", 0), 0, energyChange.length - 1
+      view.getInt("energy_change_index", 0), 0, energyChange.length - 1
     );
-    Optional<long[]> optional = nbt.getLongArray("energy_change");
+
+    Optional<long[]> optional = view.getOptionalLongArray("energy_change");
     if (optional.isPresent() && optional.get().length == this.energyChange.length) {
       this.energyChange = optional.get();
     }
+  }
+
+  @Override
+  protected void writeData(WriteView view) {
+    view.put("powered_mode", StorageMode.CODEC, this.poweredMode);
+    view.put("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
+    view.putBoolean("is_powered", this.isPowered);
+    view.putInt("energy_change_index", this.energyChangeIndex);
+    view.putLongArray("energy_change", energyChange);
+
+    this.energy.writeData(view);
+
+    super.writeData(view);
   }
 
   @Override

@@ -26,6 +26,8 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -166,18 +168,20 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     return List.of(this.energy);
   }
 
+
+
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    nbt.putDouble("progress", this.progress);
-    this.energy.writeNBT(nbt);
-    super.writeNbt(nbt, registryLookup);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    this.energy.readData(view);
+    this.progress = view.getDouble("progress", 0);
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-    this.energy.readNBT(nbt);
-    this.progress = nbt.getDouble("progress", 0);
+  protected void writeData(WriteView view) {
+    view.putDouble("progress", this.progress);
+    this.energy.writeData(view);
+    super.writeData(view);
   }
 
   public double getProgress(int requiredProgress) {

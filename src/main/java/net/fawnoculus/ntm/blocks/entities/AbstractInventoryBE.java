@@ -16,6 +16,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -111,15 +113,15 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    Inventories.writeNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
-    super.writeNbt(nbt, registryLookup);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    Inventories.readData(view, this.inventory.getHeldStacks());
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-    Inventories.readNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
+  protected void writeData(WriteView view) {
+    Inventories.writeData(view, this.getInventory().getHeldStacks());
+    super.writeData(view);
   }
 
   @Override

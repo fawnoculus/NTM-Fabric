@@ -70,8 +70,8 @@ public class RadiationManager {
     ServerPlayNetworking.send(player, new RadiationInformationPayload(new RadiationInformationPayload.RadiationInfo(
       getRadiationExposure(player),
       getInventoryRadiation(player),
-      getPassiveChunkRadiation(player.getServerWorld(), player.getPos()),
-      getActiveChunkRadiation(player.getServerWorld(), player.getPos())
+      getPassiveChunkRadiation(player.getWorld(), player.getPos()),
+      getActiveChunkRadiation(player.getWorld(), player.getPos())
     )));
   }
 

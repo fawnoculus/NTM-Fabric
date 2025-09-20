@@ -5,6 +5,8 @@ import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -110,20 +112,20 @@ public interface Node {
     return node.getNetworkType() == this.getNetworkType();
   }
 
-  default void writeNodeData(NbtCompound nbt) {
+  default void writeNodeData(WriteView view) {
     if (this.getNetwork() != null) {
-      nbt.putString("network", this.getNetwork().ID.toString());
+      view.putString("network", this.getNetwork().ID.toString());
     }
   }
 
-  default void readNodeData(NbtCompound nbt) {
+  default void readNodeData(ReadView view) {
     if (this.getWorld() != null && this.getWorld().isClient()) {
       return;
     }
 
 
     try {
-      UUID uuid = UUID.fromString(nbt.getString("network", null));
+      UUID uuid = UUID.fromString(view.getString("network", null));
       NodeNetwork network = this.getNetworkType().getNetwork(uuid);
       this.setNetwork(network);
       if (!network.containsNode(this)) {

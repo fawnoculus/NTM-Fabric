@@ -5,6 +5,11 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.NbtReadView;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.ErrorReporter;
 
 public class FluidStack extends SingleVariantStorage<FluidVariant> {
   private long maxDroplets = 0;
@@ -60,11 +65,11 @@ public class FluidStack extends SingleVariantStorage<FluidVariant> {
     this.onFinalCommit.run();
   }
 
-  public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
-    SingleVariantStorage.readNbt(this, FluidVariant.CODEC, FluidVariant::blank, nbt, wrapperLookup);
+  public void readData(ReadView view) {
+    SingleVariantStorage.readData(this, FluidVariant.CODEC, FluidVariant::blank, view);
   }
 
-  public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
-    SingleVariantStorage.writeNbt(this, FluidVariant.CODEC, nbt, wrapperLookup);
+  public void writeData(WriteView view) {
+    SingleVariantStorage.writeData(this, FluidVariant.CODEC, view);
   }
 }

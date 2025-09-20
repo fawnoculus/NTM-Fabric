@@ -1,6 +1,5 @@
 # Misc
-- Update (to 1.21.8)
-- Rei Compat (would love to also doe JEI & EMI but they are still stuck on 1.21.1)
+- Rei Compat (would love to also doe JEI & EMI, but they are still stuck on 1.21.1)
 
 # Features
 ## Important Features

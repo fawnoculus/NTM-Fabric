@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.gui.area;
 
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -32,7 +32,7 @@ public interface InfoBar extends InfoArea {
 
     int barSize = MathHelper.ceil(this.getFillState() * this.getHeigh());
 
-    context.drawTexture(RenderLayer::getGuiTextured, this.getTexture(),
+    context.drawTexture(RenderPipelines.GUI_TEXTURED, this.getTexture(),
       this.getX() + this.getOffsetX(),
       this.getY() + this.getOffsetY() + this.getHeigh() - barSize,
       this.getU(),

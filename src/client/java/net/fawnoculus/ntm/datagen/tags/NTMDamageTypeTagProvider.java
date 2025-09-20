@@ -18,45 +18,44 @@ public class NTMDamageTypeTagProvider extends FabricTagProvider<DamageType> {
 
   @Override
   protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-    getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
+    getTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
       .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
       .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
       .addOptional(NTMDamageTypes.LEAD_POISONING.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
-    getOrCreateTagBuilder(DamageTypeTags.BYPASSES_EFFECTS)
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
+
+    getTagBuilder(DamageTypeTags.BYPASSES_EFFECTS)
       .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
       .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
-    getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
-      .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
-      .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
-      .addOptional(NTMDamageTypes.LEAD_POISONING.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
-    getOrCreateTagBuilder(DamageTypeTags.BYPASSES_RESISTANCE)
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
+
+    getTagBuilder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
       .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
       .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
       .addOptional(NTMDamageTypes.LEAD_POISONING.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
-    getOrCreateTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
-      .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
-    getOrCreateTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
+
+    getTagBuilder(DamageTypeTags.BYPASSES_RESISTANCE)
       .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
       .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
       .addOptional(NTMDamageTypes.LEAD_POISONING.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
-    getOrCreateTagBuilder(DamageTypeTags.NO_KNOCKBACK)
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
+
+    getTagBuilder(DamageTypeTags.BYPASSES_INVULNERABILITY)
+      .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
+
+    getTagBuilder(DamageTypeTags.BYPASSES_COOLDOWN)
       .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
       .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
       .addOptional(NTMDamageTypes.LEAD_POISONING.getValue())
-      .addOptional(NTMDamageTypes.RADIATION.getValue())
-      .setReplace(false);
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
+
+    getTagBuilder(DamageTypeTags.NO_KNOCKBACK)
+      .addOptional(NTMDamageTypes.EUTHANIZED.getValue())
+      .addOptional(NTMDamageTypes.BLOOD_LOSS.getValue())
+      .addOptional(NTMDamageTypes.LEAD_POISONING.getValue())
+      .addOptional(NTMDamageTypes.RADIATION.getValue());
   }
 
   @Override

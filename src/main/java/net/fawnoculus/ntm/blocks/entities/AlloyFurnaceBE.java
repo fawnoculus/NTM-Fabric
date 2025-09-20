@@ -23,6 +23,8 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -146,17 +148,17 @@ public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScree
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    nbt.putInt("fuel", fuel);
-    nbt.putInt("process", progress);
-    super.writeNbt(nbt, registryLookup);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    fuel = view.getInt("fuel", 0);
+    progress = view.getInt("process", 0);
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-    fuel = nbt.getInt("fuel").orElse(0);
-    progress = nbt.getInt("process").orElse(0);
+  protected void writeData(WriteView view) {
+    view.putInt("fuel", fuel);
+    view.putInt("process", progress);
+    super.writeData(view);
   }
 
   @Override

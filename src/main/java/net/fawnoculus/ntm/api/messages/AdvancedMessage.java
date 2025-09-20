@@ -1,18 +1,16 @@
 package net.fawnoculus.ntm.api.messages;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.fawnoculus.ntm.util.JsonUtil;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class AdvancedMessage {
@@ -20,32 +18,31 @@ public class AdvancedMessage {
   private final Identifier IDENTIFIER;
   private final Text TEXT;
   private float millisLeft;
+
   public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
     @Override
     public AdvancedMessage decode(ByteBuf byteBuf) {
-      String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
-      return AdvancedMessage.decode(JsonUtil.jsonFromString(string));
+      return AdvancedMessage.decode(Objects.requireNonNull(RegistryByteBuf.readNbt(byteBuf)));
     }
 
     @Override
     public void encode(ByteBuf byteBuf, AdvancedMessage message) {
-      JsonObject json = AdvancedMessage.encode(message);
-      PacketByteBuf.writeByteArray(byteBuf, json.toString().getBytes(StandardCharsets.UTF_8));
+      RegistryByteBuf.writeNbt(byteBuf, AdvancedMessage.encode(message));
     }
   };
 
-  public static JsonObject encode(AdvancedMessage message) {
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.add("identifier", new JsonPrimitive(message.IDENTIFIER.toString()));
-    jsonObject.add("millis_left", new JsonPrimitive(message.millisLeft));
-    jsonObject.add("text", new JsonPrimitive(Text.Serialization.toJsonString(message.TEXT, BuiltinRegistries.createWrapperLookup())));
-    return jsonObject;
+  public static NbtCompound encode(AdvancedMessage message) {
+    NbtCompound nbt = new NbtCompound();
+    nbt.put("identifier", Identifier.CODEC, message.IDENTIFIER);
+    nbt.put("millis_left", Codec.FLOAT, message.millisLeft);
+    nbt.put("text", TextCodecs.CODEC, message.TEXT);
+    return nbt;
   }
 
-  public static AdvancedMessage decode(JsonObject json) {
-    Identifier identifier = Identifier.of(json.getAsJsonPrimitive("identifier").getAsString());
-    float millisLeft = json.getAsJsonPrimitive("millis_left").getAsFloat();
-    Text text = Objects.requireNonNull(Text.Serialization.fromJson(json.getAsJsonPrimitive("text").getAsString(), BuiltinRegistries.createWrapperLookup()));
+  public static AdvancedMessage decode(NbtCompound nbt) {
+    Identifier identifier = nbt.get("identifier", Identifier.CODEC).orElseThrow();
+    float millisLeft = nbt.get("millis_left", Codec.FLOAT).orElseThrow();
+    Text text = nbt.get("text", TextCodecs.CODEC).orElseThrow();
     return new AdvancedMessage(identifier, text, millisLeft);
   }
 

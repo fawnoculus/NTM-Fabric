@@ -8,7 +8,7 @@ import net.fawnoculus.ntm.api.radiation.ClientRadiationManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -39,8 +39,8 @@ public class GeigerCounterRender {
     final double radPercentage = radiationManager.radiationExposure / 1000000;
     final double incomingMilliRads = radiationManager.totalRadiation;
 
-    context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0, 94, 18, 128, 128);
-    context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x + 1, y + 1, 1, 19, (int) (radPercentage * 73), 16, 128, 128);
+    context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, 94, 18, 128, 128);
+    context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 1, y + 1, 1, 19, (int) (radPercentage * 73), 16, 128, 128);
 
     if (incomingMilliRads >= THRESHOLD_1) {
       int u = 0;
@@ -50,7 +50,7 @@ public class GeigerCounterRender {
       if (incomingMilliRads >= THRESHOLD_3) {
         u += 18;
       }
-      context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x + 76, y - 18, u, 36, 18, 18, 128, 128);
+      context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 76, y - 18, u, 36, 18, 18, 128, 128);
     }
     if (incomingMilliRads > 0) {
       String rads = String.valueOf(Math.round(incomingMilliRads / 1000.0));
