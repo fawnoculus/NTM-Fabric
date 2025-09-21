@@ -2,17 +2,13 @@ package net.fawnoculus.ntm.render.wavefront.model;
 
 
 import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.BakedSimpleModel;
 import net.minecraft.client.render.model.Baker;
+import net.minecraft.client.render.model.SimpleModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class MultiModel3D implements Model3d {
   public final String NAME;
@@ -38,7 +34,7 @@ public class MultiModel3D implements Model3d {
     }
   }
 
-  public List<BakedQuad> bake(Baker baker, BakedSimpleModel simpleModel){
+  public List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel){
     List<BakedQuad> quads = new ArrayList<>();
     for (SingleModel3d model3d : MODELS.values()) {
       quads.addAll(model3d.bake(baker, simpleModel));
@@ -46,17 +42,14 @@ public class MultiModel3D implements Model3d {
     return quads;
   }
 
-  public @Nullable SingleModel3d getNullable(String groupName) {
-    if (MODELS.containsKey(groupName)) {
-      return MODELS.get(groupName);
+  public Optional<SingleModel3d> get(String objectName) {
+    if (MODELS.containsKey(objectName)) {
+      return Optional.of(MODELS.get(objectName));
     }
-    return null;
+    return Optional.empty();
   }
 
   public @NotNull SingleModel3d getOrThrow(String groupName) throws NoSuchElementException {
-    if (MODELS.containsKey(groupName)) {
-      return MODELS.get(groupName);
-    }
-    throw new NoSuchElementException("Could not get Model3d '" + groupName + "' because it does not exist");
+    return get(groupName).orElseThrow();
   }
 }

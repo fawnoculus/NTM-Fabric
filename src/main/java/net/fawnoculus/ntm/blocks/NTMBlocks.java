@@ -74,6 +74,7 @@ public class NTMBlocks {
     .strength(2f, 6.0f);
 
   private static AbstractBlock.Settings advancedModel(AbstractBlock.@NotNull Settings settings) {
+
     return settings.nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never);
   }
 

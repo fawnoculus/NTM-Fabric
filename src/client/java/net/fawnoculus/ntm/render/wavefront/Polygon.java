@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.render.wavefront;
 
 import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.BakedSimpleModel;
 import net.minecraft.client.render.model.Baker;
+import net.minecraft.client.render.model.SimpleModel;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -63,24 +63,24 @@ public class Polygon {
 
   // Yes we are turning a triangle into a quad
   // Yes I also hate it
-  public BakedQuad bake(Baker baker, BakedSimpleModel simpleModel) {
+  public BakedQuad bake(@NotNull Baker baker, SimpleModel simpleModel) {
     Sprite sprite = baker.getSpriteGetter().get(texture, simpleModel);
 
     int[] vertexData = new int[32];
 
     for (int i = 0; i < 3; i++){
       TextureCoordinate coordinate = coordinates.get(i);
-      packVertexData(vertexData, i, vertices.get(i).toVec3f(), sprite, coordinate.getU(), coordinate.getV());
+      packVertexData(vertexData, i, vertices.get(i).toVec3f(), sprite, 1 - coordinate.getU(),1 - coordinate.getV());
     }
 
     // Set the fourth Quad Corner to the first polygon corner to make a triangle out of a square
     TextureCoordinate coordinate = coordinates.getFirst();
     packVertexData(vertexData, 3, vertices.getFirst().toVec3f(), sprite, coordinate.getU(), coordinate.getV());
 
-    return new BakedQuad(vertexData, -1, Direction.DOWN, sprite, false, 0);
+    return new BakedQuad(vertexData, -1, normalsToDirection(this.normals), sprite, false, 0);
   }
 
-  private static void packVertexData(int[] vertices, int cornerIndex, Vector3f pos, Sprite sprite, float u, float v) {
+  private static void packVertexData(int @NotNull [] vertices, int cornerIndex, @NotNull Vector3f pos, @NotNull Sprite sprite, float u, float v) {
     int i = cornerIndex * 8;
     vertices[i] = Float.floatToRawIntBits(pos.x());
     vertices[i + 1] = Float.floatToRawIntBits(pos.y());
@@ -88,5 +88,45 @@ public class Polygon {
     vertices[i + 3] = -1;
     vertices[i + 4] = Float.floatToRawIntBits(sprite.getFrameU(u));
     vertices[i + 4 + 1] = Float.floatToRawIntBits(sprite.getFrameV(v));
+  }
+
+  private static Direction normalsToDirection(@NotNull List<VertexNormal> normals) {
+    double averageX = 0;
+    double averageY = 0;
+    double averageZ = 0;
+
+    for (VertexNormal normal : normals) {
+      averageX += normal.X();
+      averageY += normal.Y();
+      averageZ += normal.Z();
+    }
+
+    averageX /= normals.size();
+    averageY /= normals.size();
+    averageZ /= normals.size();
+
+    double absX = Math.abs(averageX);
+    double absY = Math.abs(averageY);
+    double absZ = Math.abs(averageZ);
+
+    if (absX > absY && absX > absZ) {
+      if (averageX > 0) {
+        return Direction.EAST;
+      } else {
+        return Direction.WEST;
+      }
+    } else if (absY > absZ) {
+      if (averageY > 0) {
+        return Direction.UP;
+      } else {
+        return Direction.DOWN;
+      }
+    } else {
+      if (averageZ > 0) {
+        return Direction.SOUTH;
+      } else {
+        return Direction.NORTH;
+      }
+    }
   }
 }

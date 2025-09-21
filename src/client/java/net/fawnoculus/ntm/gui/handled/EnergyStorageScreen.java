@@ -1,12 +1,12 @@
 package net.fawnoculus.ntm.gui.handled;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.entities.container.energy.SimpleEnergyStorageBE;
 import net.fawnoculus.ntm.gui.area.EnergyBar;
 import net.fawnoculus.ntm.gui.handlers.EnergyStorageScreenHandler;
 import net.fawnoculus.ntm.gui.widget.StorageModeWidget;
 import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gl.RenderPipelines;
@@ -19,7 +19,7 @@ public class EnergyStorageScreen extends HandledScreen<EnergyStorageScreenHandle
     super(handler, inventory, title);
   }
 
-  private static final Identifier TEXTURE = NTMTextures.ENERGY_STORAGE_GUI;
+  private static final Identifier TEXTURE = NTM.id("textures/gui/storage/energy_storage.png");
   private final SimpleEnergyStorageBE BE = this.handler.getBlockEntity();
   private final EnergyBar energyBar = new EnergyBar(62, 17, 52, 52, BE.energy, BE::getEnergyPerSec);
 

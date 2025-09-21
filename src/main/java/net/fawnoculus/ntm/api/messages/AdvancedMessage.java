@@ -9,7 +9,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Range;
 
 import java.util.Objects;
 
@@ -76,13 +75,8 @@ public class AdvancedMessage {
     this.millisLeft = millisLeft;
   }
 
-  /**
-   * @return the Opacity of the message as an int (4 - 256)
-   */
-  @Range(from = 4, to = 256)
   public int getOpacity() {
-    if (this.millisLeft > BLEND_TIME) return 256;
-    int min = 4; // for some reason (probably float inaccuracy) anything with an alpha value bellow 4 will be displayed incorrectly
-    return (int) Math.clamp(this.millisLeft / BLEND_TIME * 256, min, 256);
+    if (this.millisLeft > BLEND_TIME) return 255;
+    return (int) Math.clamp(this.millisLeft / BLEND_TIME * 255, 0, 255);
   }
 }

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.hud;
 
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.items.NTMItems;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.PlayerUtil;
 import net.fawnoculus.ntm.api.radiation.ClientRadiationManager;
@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
 public class GeigerCounterRender {
-  private static final Identifier TEXTURE = NTMTextures.GEIGER_COUNTER_HUD;
+  private static final Identifier TEXTURE = NTM.id("textures/gui/hud/geiger_counter.png");
   private static final int THRESHOLD_1 = 10_000;
   private static final int THRESHOLD_2 = 50_000;
   private static final int THRESHOLD_3 = 100_000;

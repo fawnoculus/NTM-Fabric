@@ -1,17 +1,13 @@
 package net.fawnoculus.ntm.render.wavefront.model;
 
 import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.BakedSimpleModel;
 import net.minecraft.client.render.model.Baker;
+import net.minecraft.client.render.model.SimpleModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class MultiMultiModel3d implements Model3d {
   public final String NAME;
@@ -46,7 +42,7 @@ public class MultiMultiModel3d implements Model3d {
   }
 
 
-  public List<BakedQuad> bake(Baker baker, BakedSimpleModel simpleModel){
+  public List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel){
     List<BakedQuad> quads = new ArrayList<>();
     for (MultiModel3D multiModel3D : MODELS.values()) {
       quads.addAll(multiModel3D.bake(baker, simpleModel));
@@ -54,23 +50,15 @@ public class MultiMultiModel3d implements Model3d {
     return quads;
   }
 
-  public @Nullable MultiModel3D getNullable(String objectName) {
-    return MODELS.get(objectName);
-  }
-
-  public @Nullable SingleModel3d getNullable(String objectName, String groupName) {
-    MultiModel3D groupedModel = getNullable(objectName);
-    if (groupedModel != null) {
-      return groupedModel.getNullable(groupName);
+  public Optional<MultiModel3D> get(String objectName) {
+    if (MODELS.containsKey(objectName)) {
+      return Optional.of(MODELS.get(objectName));
     }
-    return null;
+    return Optional.empty();
   }
 
   public @NotNull MultiModel3D getOrThrow(String objectName) throws NoSuchElementException {
-    if (MODELS.containsKey(objectName)) {
-      return MODELS.get(objectName);
-    }
-    throw new NoSuchElementException("Could not get MultiModel3D '" + objectName + "' because it does not exist");
+    return get(objectName).orElseThrow();
   }
 
   public @NotNull SingleModel3d getOrThrow(String objectName, String groupName) throws NoSuchElementException {

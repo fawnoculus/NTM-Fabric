@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.gui.handled;
 
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
 import net.fawnoculus.ntm.gui.handlers.AlloyFurnaceScreenHandler;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gl.RenderPipelines;
@@ -16,7 +16,7 @@ public class AlloyFurnaceScreen extends HandledScreen<AlloyFurnaceScreenHandler>
     super(handler, inventory, title);
   }
 
-  private static final Identifier TEXTURE = NTMTextures.ALLOY_FURNACE_GUI;
+  private static final Identifier TEXTURE = NTM.id("textures/gui/machine/alloy_furnace.png");
 
   @Override
   protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {

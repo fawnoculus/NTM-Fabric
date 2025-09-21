@@ -7,8 +7,7 @@ import net.fawnoculus.ntm.network.NTMClientPayloadHandler;
 import net.fawnoculus.ntm.render.*;
 import net.fawnoculus.ntm.gui.NTMHandledScreens;
 import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
-import net.fawnoculus.ntm.render.resources.NTMBuiltinResourcePacks;
-import net.fawnoculus.ntm.render.resources.NTMModelLoadingPlugin;
+import net.fawnoculus.ntm.render.NTMResources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +24,7 @@ public class NTMClient implements ClientModInitializer {
 
     NTMClientCommands.initialize();
 
-    NTMModelLoadingPlugin.initialize();
-    NTMBuiltinResourcePacks.initialize();
+    NTMResources.initialize();
 
     NTMBlockEntityRender.initialize();
     NTMParticleRender.initialize();

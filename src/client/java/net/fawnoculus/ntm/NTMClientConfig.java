@@ -11,6 +11,9 @@ public class NTMClientConfig {
   public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client/Config");
 
   public static final ConfigFile ClientConfig = new ConfigFile("ntm/client", new JsonConfigFile(), LOGGER);
+  public static final BooleanOption ModelAmbientOcclusion  = ClientConfig.newBooleanOption("ModelAmbientOcclusion", true,
+    "If the Advanced Models should use Ambient Occlusion (looks a little wonky without it)"
+  );
   public static final BooleanOption FixEffectDisplay = ClientConfig.newBooleanOption("FixEffectDisplay", true,
     "If Status Effects with high Amplifiers should be displayed as Arabic Numbers if the roman Numeral is not Available"
   );

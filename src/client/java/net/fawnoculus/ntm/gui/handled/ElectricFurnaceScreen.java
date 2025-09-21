@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.gui.handled;
 
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
 import net.fawnoculus.ntm.gui.area.EnergyBar;
 import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gl.RenderPipelines;
@@ -17,7 +17,7 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
     super(handler, inventory, title);
   }
 
-  private static final Identifier TEXTURE = NTMTextures.ELECTRIC_FURNACE_GUI;
+  private static final Identifier TEXTURE = NTM.id("textures/gui/machine/electric_furnace.png");
   private final ElectricFurnaceBE BE = this.handler.getBlockEntity();
   private final EnergyBar energyBar = new EnergyBar(20, 17, 16, 52, BE.energy);
 

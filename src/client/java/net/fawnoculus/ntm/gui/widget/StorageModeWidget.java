@@ -1,13 +1,14 @@
 package net.fawnoculus.ntm.gui.widget;
 
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.StorageMode;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +20,8 @@ public class StorageModeWidget extends ClickableWidget {
     this.STORAGE_MODE = storageMode;
     this.ON_CLICKED = onClicked;
   }
+
+  private static final Identifier TEXTURE = NTM.id("textures/gui/generic/storage_mode.png");
 
   private final Supplier<StorageMode> STORAGE_MODE;
   private final Runnable ON_CLICKED;
@@ -32,7 +35,7 @@ public class StorageModeWidget extends ClickableWidget {
   @Override
   protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
     context.drawTexture(RenderPipelines.GUI_TEXTURED,
-      NTMTextures.GENERIC_STORAGE_MODE,
+      TEXTURE,
       this.getX(),
       this.getY(),
       this.getU(STORAGE_MODE.get()),
