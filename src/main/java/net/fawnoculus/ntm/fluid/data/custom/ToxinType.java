@@ -15,7 +15,7 @@ public enum ToxinType {
   public static final Codec<ToxinType> CODEC = NTMCodecs.getEnumCodec(ToxinType.class);
   public final Text NAME;
 
-  ToxinType(Text name){
+  ToxinType(Text name) {
     this.NAME = name;
   }
 }

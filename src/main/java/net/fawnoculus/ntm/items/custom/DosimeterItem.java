@@ -19,14 +19,14 @@ public class DosimeterItem extends Item {
     super(settings);
   }
 
-  private Text getRadsText(double milliRads){
-    if(milliRads > 3_600){
+  private Text getRadsText(double milliRads) {
+    if (milliRads > 3_600) {
       return Text.translatable("generic.ntm.radiation.rad_s", ">3.6").formatted(Formatting.GOLD);
     }
-    if(milliRads > 1_000){
+    if (milliRads > 1_000) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
     }
-    if(milliRads > 0){
+    if (milliRads > 0) {
       return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
     }
     return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
@@ -34,7 +34,7 @@ public class DosimeterItem extends Item {
 
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
-    if(world.isClient()){
+    if (world.isClient()) {
       return ActionResult.SUCCESS;
     }
     RadiationManager radiationManager = RadiationManager.getInstance();

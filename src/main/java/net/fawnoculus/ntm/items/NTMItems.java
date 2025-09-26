@@ -637,62 +637,62 @@ public class NTMItems {
 
   // Batteries
   public static final Item BATTERY = register("battery",
-      settings -> new SimpleBatteryItem(settings, 5_000L, 100L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 5_000L, 100L), new Item.Settings());
   public static final Item REDSTONE_POWER_CELL = register("redstone_power_cell",
-      settings -> new SimpleBatteryItem(settings, 15_000L, 100L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 15_000L, 100L), new Item.Settings());
   public static final Item SIXFOLD_REDSTONE_POWER_CELL = register("sixfold_redstone_power_cell",
-      settings -> new SimpleBatteryItem(settings, 90_000L, 100L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 90_000L, 100L), new Item.Settings());
   public static final Item TWENTY_FOUR_FOLD_REDSTONE_POWER_CELL = register("twenty_four_fold_redstone_power_cell",
-      settings -> new SimpleBatteryItem(settings, 360_000L, 100L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 360_000L, 100L), new Item.Settings());
   public static final Item ADVANCED_BATTERY = register("advanced_battery",
-      settings -> new SimpleBatteryItem(settings, 20_000L, 500L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 20_000L, 500L), new Item.Settings());
   public static final Item ADVANCED_POWER_CELL = register("advanced_power_cell",
-      settings -> new SimpleBatteryItem(settings, 60_000L, 500L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 60_000L, 500L), new Item.Settings());
   public static final Item QUADRUPLE_ADVANCED_POWER_CELL = register("quadruple_advanced_power_cell",
-      settings -> new SimpleBatteryItem(settings, 240_000L, 500L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 240_000L, 500L), new Item.Settings());
   public static final Item TWELVEFOLD_ADVANCED_POWER_CELL = register("twelvefold_advanced_power_cell",
-      settings -> new SimpleBatteryItem(settings, 720_000L, 500L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 720_000L, 500L), new Item.Settings());
   public static final Item LITHIUM_ION_BATTERY = register("lithium_ion_battery",
-      settings -> new SimpleBatteryItem(settings, 250_000L, 1_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 250_000L, 1_000L), new Item.Settings());
   public static final Item LITHIUM_ION_POWER_CELL = register("lithium_ion_power_cell",
-      settings -> new SimpleBatteryItem(settings, 750_000L, 1_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 750_000L, 1_000L), new Item.Settings());
   // Triple TRIPLE_LITHIUM_ION_POWER_CELL has one extra comma digit because its max energy would be rounded otherwise, that's why it has an extra class
   public static final Item TRIPLE_LITHIUM_ION_POWER_CELL = register("triple_lithium_ion_power_cell", TripleLithiumIonBatteryItem::new, new Item.Settings());
   public static final Item SIXFOLD_LITHIUM_ION_POWER_CELL = register("sixfold_lithium_ion_power_cell",
-      settings -> new SimpleBatteryItem(settings, 4_500_000L, 1_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 4_500_000L, 1_000L), new Item.Settings());
   public static final Item SCHRABIDIUM_BATTERY = register("schrabidium_battery",
-      settings -> new SimpleBatteryItem(settings, 1_000_000L, 5_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 1_000_000L, 5_000L), new Item.Settings());
   public static final Item SCHRABIDIUM_POWER_CELL = register("schrabidium_power_cell",
-      settings -> new SimpleBatteryItem(settings, 3_000_000L, 5_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 3_000_000L, 5_000L), new Item.Settings());
   public static final Item DOUBLE_SCHRABIDIUM_POWER_CELL = register("double_schrabidium_power_cell",
-      settings -> new SimpleBatteryItem(settings, 6_000_000L, 5_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 6_000_000L, 5_000L), new Item.Settings());
   public static final Item QUADRUPLE_SCHRABIDIUM_POWER_CELL = register("quadruple_schrabidium_power_cell",
-      settings -> new SimpleBatteryItem(settings, 12_000_000L, 5_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 12_000_000L, 5_000L), new Item.Settings());
   public static final Item SPARK_BATTERY = register("spark_battery",
-      settings -> new SimpleBatteryItem(settings, 100_000_000L, 2_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 100_000_000L, 2_000_000L), new Item.Settings());
   public static final Item OFF_BRAND_SPARK_BATTERY = register("off_brand_spark_battery",
-      settings -> new SimpleBatteryItem(settings, 5_000_000L, 40_000L, 200_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 5_000_000L, 40_000L, 200_000L), new Item.Settings());
   public static final Item SPARK_POWER_CELL = register("spark_power_cell",
-      settings -> new SimpleBatteryItem(settings, 600_000_000L, 2_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 600_000_000L, 2_000_000L), new Item.Settings());
   public static final Item SPARK_ARCANE_CAR_BATTERY = register("spark_arcane_car_battery",
-      settings -> new SimpleBatteryItem(settings, 2_500_000_000L, 2_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 2_500_000_000L, 2_000_000L), new Item.Settings());
   public static final Item SPARK_ARCANE_ENERGY_STORAGE_ARRAY = register("spark_arcane_energy_storage_array",
-      settings -> new SimpleBatteryItem(settings, 10_000_000_000L, 2_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 10_000_000_000L, 2_000_000L), new Item.Settings());
   public static final Item SPARK_ARCANE_MASS_ENERGY_VOID = register("spark_arcane_mass_energy_void",
-      settings -> new SimpleBatteryItem(settings, 100_000_000_000L, 20_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 100_000_000_000L, 20_000_000L), new Item.Settings());
   public static final Item SPARK_ARCANE_DIRAC_SEA = register("spark_arcane_dirac_sea",
-      settings -> new SimpleBatteryItem(settings, 250_000_000_000L, 20_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 250_000_000_000L, 20_000_000L), new Item.Settings());
   public static final Item SPARK_SOLID_SPACE_TIME_CRYSTAL = register("spark_solid_space_time_crystal",
-      settings -> new SimpleBatteryItem(settings, 1_000_000_000_000L, 200_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 1_000_000_000_000L, 200_000_000L), new Item.Settings());
   public static final Item SPARK_LUDICROUS_ENERGY_STORAGE_UNIT = register("spark_ludicrous_energy_storage_unit",
-      settings -> new SimpleBatteryItem(settings, 100_000_000_000_000L, 200_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 100_000_000_000_000L, 200_000_000L), new Item.Settings());
   public static final Item ELECTRONIUM_CUBE = register("electronium_cube",
-      settings -> new SimpleBatteryItem(settings, 1_000_000_000_000_000_000L, 1_000_000_000_000_000L), new Item.Settings());
+    settings -> new SimpleBatteryItem(settings, 1_000_000_000_000_000_000L, 1_000_000_000_000_000L), new Item.Settings());
   public static final Item INFINITE_BATTERY = register("infinite_battery", InfiniteBatteryItem::new, new Item.Settings());
   public static final Item POTATO_BATTERY = register("potato_battery", settings -> new SimpleBatteryItem(settings, 1_000L, 0L, 100L),
-      new Item.Settings().component(NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000L));
+    new Item.Settings().component(NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 1_000L));
   public static final Item POTATOS = register("potatos", settings -> new PotatOSItem(settings, 500_000L, 0L, 100L),
-      new Item.Settings().component(NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 500_000L));
+    new Item.Settings().component(NTMDataComponentTypes.ENERGY_COMPONENT_TYPE, 500_000L));
   public static final Item SELF_CHARGING_URANIUM_238_BATTERY = register("self_charging_uranium_238_battery", settings -> new SelfChargingBatteryItem(settings, 5L), new Item.Settings());
   public static final Item SELF_CHARGING_TECHNETIUM_99_BATTERY = register("self_charging_technetium_99_battery", settings -> new SelfChargingBatteryItem(settings, 25L), new Item.Settings());
   public static final Item SELF_CHARGING_PLUTONIUM_238_BATTERY = register("self_charging_plutonium_238_battery", settings -> new SelfChargingBatteryItem(settings, 100L), new Item.Settings());
@@ -704,226 +704,227 @@ public class NTMItems {
   // Consumables
   public static final Item EMPTY_SYRINGE = register("empty_syringe", Item::new, new Item.Settings());
   public static final Item POISONOUS_INJECTION = register("poisonous_injection", settings ->
-      new InjectionItem(settings, NTMSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> {
-            if (!entity.isInCreativeMode()){
-              EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.EUTHANIZED, 30f);
-            }else {
-              EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.EUTHANIZED, 2f);
-            }}
-      ), new Item.Settings()
+    new InjectionItem(settings, NTMSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
+      (serverWorld, entity) -> {
+        if (!entity.isInCreativeMode()) {
+          EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.EUTHANIZED, 30f);
+        } else {
+          EntityUtil.applyDamage(entity, serverWorld, NTMDamageTypes.EUTHANIZED, 2f);
+        }
+      }
+    ), new Item.Settings()
   );
   public static final Item ANTIDOTE = register("antidote", settings ->
-      new InjectionItem(settings, NTMSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> entity.clearStatusEffects()
-      ), new Item.Settings()
+    new InjectionItem(settings, NTMSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
+      (serverWorld, entity) -> entity.clearStatusEffects()
+    ), new Item.Settings()
   );
   public static final Item AWESOME = register("awesome", settings ->
-      new InjectionItem(settings, NTMSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
-          (serverWorld, entity) -> {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.RAD_X, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false, true));
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false, true));
-          }), new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+    new InjectionItem(settings, NTMSounds.SYRINGE_INJECTS, EMPTY_SYRINGE,
+      (serverWorld, entity) -> {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 150, 4, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 700, 6, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.RAD_X, 700, 9, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 700, 9, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 700, 24, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, 700, 9, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 700, 4, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 700, 9, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 700, 9, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 700, 9, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 700, 0, false, false, true));
+      }), new Item.Settings().rarity(Rarity.UNCOMMON).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
   );
   public static final Item METAL_SYRINGE = register("metal_syringe", Item::new, new Item.Settings());
   public static final Item STIMPAK = register("stimpak", settings -> new InjectionWithTooltipItem(settings, NTMSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-          (serverWorld, entity) -> entity.heal(5F)
-      ), new Item.Settings()
+      (serverWorld, entity) -> entity.heal(5F)
+    ), new Item.Settings()
   );
   public static final Item MED_X = register("med_x", settings -> new InjectionWithTooltipItem(settings, NTMSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-          (serverWorld, entity) -> entity.addStatusEffect(
-              new StatusEffectInstance(StatusEffects.RESISTANCE, 4800, 2, false, false, true)
-          )
-      ), new Item.Settings()
+      (serverWorld, entity) -> entity.addStatusEffect(
+        new StatusEffectInstance(StatusEffects.RESISTANCE, 4800, 2, false, false, true)
+      )
+    ), new Item.Settings()
   );
   public static final Item PSYCHO = register("psycho", settings -> new InjectionWithTooltipItem(settings, 2, NTMSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-      (serverWorld, entity) -> {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 0, false, false, true));
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 0, false, false, true));
-      }), new Item.Settings()
+    (serverWorld, entity) -> {
+      entity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 0, false, false, true));
+      entity.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 0, false, false, true));
+    }), new Item.Settings()
   );
   public static final Item SUPER_STIMPAK = register("super_stimpak", settings -> new InjectionWithTooltipItem(settings, 2, NTMSounds.SYRINGE_INJECTS, METAL_SYRINGE,
-      (serverWorld, entity) -> {
-        entity.heal(50F);
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0, false, false, true));
-      }), new Item.Settings()
+    (serverWorld, entity) -> {
+      entity.heal(50F);
+      entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 0, false, false, true));
+    }), new Item.Settings()
   );
   public static final Item FIRST_AID_KIT = register("first_aid_kit", settings -> new InjectionWithTooltipItem(settings, 2, null, Items.AIR,
-      (serverWorld, entity) -> {
-        entity.setHealth(entity.getMaxHealth());
-        EntityUtil.removeNegativeEffects(entity);
-      }), new Item.Settings()
+    (serverWorld, entity) -> {
+      entity.setHealth(entity.getMaxHealth());
+      EntityUtil.removeNegativeEffects(entity);
+    }), new Item.Settings()
   );
 
   public static final Item IV_BAG = register("iv_bag", IvBagItem::new, new Item.Settings());
   public static final Item BLOOD_BAG = register("blood_bag", settings -> new InjectionItem(settings, NTMSounds.IV_BAG_INJECTS, IV_BAG,
-          (serverWorld, entity) -> entity.heal(5F)
-      ), new Item.Settings()
+      (serverWorld, entity) -> entity.heal(5F)
+    ), new Item.Settings()
   );
   public static final Item EMPTY_EXPERIENCE_BAG = register("empty_experience_bag", EmptyExperienceBagItem::new, new Item.Settings());
   public static final Item EXPERIENCE_BAG = register("experience_bag", ExperienceBagItem::new, new Item.Settings());
   public static final Item RAD_AWAY = register("rad_away", settings -> new InjectionItem(settings, NTMSounds.IV_BAG_INJECTS, IV_BAG,
-          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, NTMStatusEffects.RAD_AWAY, 140)
-      ), new Item.Settings()
+      (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, NTMStatusEffects.RAD_AWAY, 140)
+    ), new Item.Settings()
   );
   public static final Item STRONG_RAD_AWAY = register("strong_rad_away", settings -> new InjectionItem(settings, NTMSounds.IV_BAG_INJECTS, IV_BAG,
-          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, NTMStatusEffects.RAD_AWAY, 350)
-      ), new Item.Settings()
+      (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, NTMStatusEffects.RAD_AWAY, 350)
+    ), new Item.Settings()
   );
   public static final Item ELITE_RAD_AWAY = register("elite_rad_away", settings -> new InjectionItem(settings, NTMSounds.IV_BAG_INJECTS, IV_BAG,
-          (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, NTMStatusEffects.RAD_AWAY, 500)
-      ), new Item.Settings()
+      (serverWorld, entity) -> EntityUtil.addEffectDuration(entity, NTMStatusEffects.RAD_AWAY, 500)
+    ), new Item.Settings()
   );
   public static final Item RAD_X = register("rad_x", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.RAD_X)
+    .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.RAD_X)
   );
   public static final Item IODINE_PILL = register("iodine_pill", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.IODINE_PILL)
+    .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.IODINE_PILL)
   );
   public static final Item PLAN_C = register("plan_c", PlanC::new, new Item.Settings()
-      .food(NTMFoodComponents.ALWAYS_EDIBLE)
+    .food(NTMFoodComponents.ALWAYS_EDIBLE)
   );
   public static final Item EMPTY_CAN = register("empty_can", Item::new, new Item.Settings());
   public static final Item RING_PULL = register("ring_pull", Item::new, new Item.Settings());
   public static final Item SMART_ENERGY_DRINK = register("smart_energy_drink", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
+    )), new Item.Settings());
   public static final Item CREATURE_ENERGY_DRINK = register("creature_energy_drink", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
-          new StatusEffectInstance(StatusEffects.REGENERATION, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+      new StatusEffectInstance(StatusEffects.REGENERATION, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
+    )), new Item.Settings());
   public static final Item RED_BOMB_ENERGY_DRINK = register("red_bomb_energy_drink", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
-          new StatusEffectInstance(StatusEffects.ABSORPTION, 600, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 1, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+      new StatusEffectInstance(StatusEffects.ABSORPTION, 600, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 1, false, false, true)
+    )), new Item.Settings());
   public static final Item DR_SUGAR_SOFT_DRINK = register("dr_sugar_soft_drink", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
-          new StatusEffectInstance(StatusEffects.HASTE, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+      new StatusEffectInstance(StatusEffects.HASTE, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true)
+    )), new Item.Settings());
   public static final Item OVERCHARGE_DELIRIUM_XT = register("overcharge_delirium_xt", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
+    )), new Item.Settings());
   public static final Item BLACK_MESA_LUNA_DARK_COLA = register("black_mesa_luna_dark_cola", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.REGENERATION, 600, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.REGENERATION, 600, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
+    )), new Item.Settings());
   public static final Item BEPIS = register("bepis", settings -> new DrinkCanItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 3, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 3, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 3, false, false, true)
+    )), new Item.Settings());
   public static final Item DR_BREENS_PRIVATE_RESERVE = register("dr_breens_private_reserve", settings -> new DrinkCanItem(settings, 2,
-      List.of(
-          new StatusEffectInstance(StatusEffects.NAUSEA, 600, 0, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.NAUSEA, 600, 0, false, false, true)
+    )), new Item.Settings());
   public static final Item MUG_ROOT_BEER = register("mug_root_beer", settings -> new DrinkCanItem(settings, 0,
-      List.of(
-          new StatusEffectInstance(StatusEffects.REGENERATION, 1200, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 3600, 2, false, false, true)
-      )), new Item.Settings());
+    List.of(
+      new StatusEffectInstance(StatusEffects.REGENERATION, 1200, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 3600, 2, false, false, true)
+    )), new Item.Settings());
 
   public static final Item WAFFLE_OF_MASS_DESTRUCTION = register("waffle_of_mass_destruction", DestructiveWaffleItem::new, new Item.Settings());
   public static final Item VEGAN_SCHNITZEL = register("vegan_schnitzel", VeganSchnitzelItem::new, new Item.Settings());
   public static final Item RADIOACTIVE_COTTON_CANDY = register("radioactive_cotton_candy", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.RADIOACTIVE_COTTON_CANDY, NTMConsumableComponents.RADIOACTIVE_COTTON_CANDY));
+    .food(NTMFoodComponents.RADIOACTIVE_COTTON_CANDY, NTMConsumableComponents.RADIOACTIVE_COTTON_CANDY));
 
   public static final Item BASIC_LEAD_APPLE = register("basic_lead_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.LEAD_APPLE, NTMConsumableComponents.BASIC_LEAD_APPLE).rarity(Rarity.UNCOMMON));
+    .food(NTMFoodComponents.LEAD_APPLE, NTMConsumableComponents.BASIC_LEAD_APPLE).rarity(Rarity.UNCOMMON));
   public static final Item GOOD_LEAD_APPLE = register("good_lead_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.LEAD_APPLE, NTMConsumableComponents.GOOD_LEAD_APPLE).rarity(Rarity.RARE));
+    .food(NTMFoodComponents.LEAD_APPLE, NTMConsumableComponents.GOOD_LEAD_APPLE).rarity(Rarity.RARE));
   public static final Item EPIC_LEAD_APPLE = register("epic_lead_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.LEAD_APPLE, NTMConsumableComponents.EPIC_LEAD_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
+    .food(NTMFoodComponents.LEAD_APPLE, NTMConsumableComponents.EPIC_LEAD_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
 
   public static final Item BASIC_SCHRABIDIUM_APPLE = register("basic_schrabidium_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.BASIC_SCHRABIDIUM_APPLE).rarity(Rarity.UNCOMMON));
+    .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.BASIC_SCHRABIDIUM_APPLE).rarity(Rarity.UNCOMMON));
   public static final Item GOOD_SCHRABIDIUM_APPLE = register("good_schrabidium_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.GOOD_SCHRABIDIUM_APPLE).rarity(Rarity.RARE));
+    .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.GOOD_SCHRABIDIUM_APPLE).rarity(Rarity.RARE));
   public static final Item EPIC_SCHRABIDIUM_APPLE = register("epic_schrabidium_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.EPIC_SCHRABIDIUM_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
+    .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.EPIC_SCHRABIDIUM_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
 
   public static final Item EUPHEMIUM_APPLE = register("euphemium_apple", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.EUPHEMIUM_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
+    .food(NTMFoodComponents.SCHRABIDIUM_APPLE, NTMConsumableComponents.EUPHEMIUM_APPLE).rarity(Rarity.EPIC).component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true));
 
   public static final Item CHEAP_TEM_FLAKES = register("cheap_tem_flakes", TemFlakesItem::new, new Item.Settings());
   public static final Item TEM_FLAKES = register("tem_flakes", TemFlakesItem::new, new Item.Settings());
   public static final Item EXPENSIVE_TEM_FLAKES = register("expensive_tem_flakes", TemFlakesItem::new, new Item.Settings());
 
   public static final Item GLOWING_MUSHROOM_STEW = register("glowing_mushroom_stew", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
+    .food(NTMFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
   public static final Item SCRAMBLED_BALEFIRE_EGG = register("scrambled_balefire_egg", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
+    .food(NTMFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
   public static final Item SCRAMBLED_BALEFIRE_EGG_AND_HAM = register("scrambled_balefire_egg_and_ham", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
+    .food(NTMFoodComponents.GLOWING_MUSHROOM_STEW).useRemainder(Items.BOWL));
   public static final Item LEMON = register("lemon", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.LEMON));
+    .food(NTMFoodComponents.LEMON));
   public static final Item MRE = register("mre", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.MRE));
+    .food(NTMFoodComponents.MRE));
   public static final Item LOOPS = register("loops", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.LOOPS));
+    .food(NTMFoodComponents.LOOPS));
   public static final Item IT_BREAKFAST = register("it_breakfast", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.IT_BREAKFAST).useRemainder(Items.BOWL));
+    .food(NTMFoodComponents.IT_BREAKFAST).useRemainder(Items.BOWL));
   public static final Item SPONGEBOB_MACARONI = register("spongebob_macaroni", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.SPONGEBOB_MACARONI));
+    .food(NTMFoodComponents.SPONGEBOB_MACARONI));
   public static final Item FOOD_ITEM = register("food_item", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.FOOD_ITEM));
+    .food(NTMFoodComponents.FOOD_ITEM));
   public static final Item TWINKIE = register("twinkie", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.TWINKIE));
+    .food(NTMFoodComponents.TWINKIE));
   public static final Item TV_STATIC_SANDWICH = register("tv_static_sandwich", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.TV_STATIC_SANDWICH));
+    .food(NTMFoodComponents.TV_STATIC_SANDWICH));
   public static final Item PUDDING = register("pudding", settings -> new TooltipItem(settings, 3), new Item.Settings()
-      .food(NTMFoodComponents.PUDDING));
+    .food(NTMFoodComponents.PUDDING));
   public static final Item SCRAP_PANCAKE = register("scrap_pancake", ScrapPancakeItem::new, new Item.Settings());
   public static final Item CHICKEN_NUGGET = register("chicken_nugget", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.CHICKEN_NUGGET));
+    .food(NTMFoodComponents.CHICKEN_NUGGET));
   public static final Item PEAS = register("peas", PeasItem::new, new Item.Settings());
   public static final Item MARSHMALLOW_ON_A_STICK = register("marshmallow_on_a_stick", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.MARSHMALLOW_ON_A_STICK));
+    .food(NTMFoodComponents.MARSHMALLOW_ON_A_STICK));
   public static final Item ROASTED_MARSHMALLOW_ON_A_STICK = register("roasted_marshmallow_on_a_stick", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.ROASTED_MARSHMALLOW_ON_A_STICK));
+    .food(NTMFoodComponents.ROASTED_MARSHMALLOW_ON_A_STICK));
   public static final Item CHEESE = register("cheese", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.CHEESE));
+    .food(NTMFoodComponents.CHEESE));
   public static final Item CHEESE_QUESADILLA = register("cheese_quesadilla", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.CHEESE_QUESADILLA));
+    .food(NTMFoodComponents.CHEESE_QUESADILLA));
   public static final Item GLYPHID_MEAT = register("glyphid_meat", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.GLYPHID_MEAT));
+    .food(NTMFoodComponents.GLYPHID_MEAT));
   public static final Item GRILLED_GLYPHID_MEAT = register("grilled_glyphid_meat", Item::new, new Item.Settings()
-      .food(NTMFoodComponents.GRILLED_GLYPHID_MEAT));
+    .food(NTMFoodComponents.GRILLED_GLYPHID_MEAT));
   public static final Item GLYPHID_EGG = register("glyphid_egg", Item::new, new Item.Settings());
   public static final Item IPECAC_SYRUP = register("ipecac_syrup", settings -> new TooltipItem(settings, 2), new Item.Settings()
-      .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.IPECAC_SYRUP)
+    .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.IPECAC_SYRUP)
   );
   public static final Item PTSD_MEDICATION = register("ptsd_medication", settings -> new TooltipItem(settings, 2), new Item.Settings()
-      .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.IPECAC_SYRUP)
+    .food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.IPECAC_SYRUP)
   );
   public static final Item STYLISH_FLASK = register("stylish_flask", StylishFlaskItem::new, new Item.Settings());
   public static final Item ARIZONA_MUCHO_MANGO = register("arizona_mucho_mango", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.ARIZONA_MUCHO_MANGO, NTMConsumableComponents.ARIZONA_MUCHO_MANGO));
+    .food(NTMFoodComponents.ARIZONA_MUCHO_MANGO, NTMConsumableComponents.ARIZONA_MUCHO_MANGO));
   public static final Item RADIUM_CHOCOLATE = register("radium_chocolate", TooltipItem::new, new Item.Settings()
-      .food(NTMFoodComponents.RADIUM_CHOCOLATE, NTMConsumableComponents.RADIUM_CHOCOLATE));
+    .food(NTMFoodComponents.RADIUM_CHOCOLATE, NTMConsumableComponents.RADIUM_CHOCOLATE));
   public static final Item COFFEE = register("coffee", CoffeeItem::new, new Item.Settings());
   public static final Item RADIUM_COFFEE = register("radium_coffee", RadiumCoffeeItem::new, new Item.Settings());
   public static final Item BOTTLE_OPENER = register("bottle_opener", settings -> new TooltipItem(settings, 2), new Item.Settings());
@@ -936,327 +937,327 @@ public class NTMItems {
   public static final Item KAROL_BOTTLE_CAP = register("karol_bottle_cap", Item::new, new Item.Settings());
   public static final Item FRITZ_COLA_BOTTLE_CAP = register("fritz_cola_bottle_cap", Item::new, new Item.Settings());
   public static final Item BOTTLE_OF_NUKA_COLA = register("bottle_of_nuka_cola", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.HASTE, 600, 1, false, false, true)
-      ), List.of(
-      EMPTY_BOMB_BOTTLE,
-      NUKA_COLA_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.HASTE, 600, 1, false, false, true)
+    ), List.of(
+    EMPTY_BOMB_BOTTLE,
+    NUKA_COLA_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_NUKA_CHERRY = register("bottle_of_nuka_cherry", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOMB_BOTTLE,
-      NUKA_COLA_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 0, false, false, true),
+      new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOMB_BOTTLE,
+    NUKA_COLA_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_NUKA_COLA_QUANTUM = register("bottle_of_nuka_cola_quantum", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOMB_BOTTLE,
-      NUKA_COLA_QUANTUM_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOMB_BOTTLE,
+    NUKA_COLA_QUANTUM_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_S_COLA = register("bottle_of_s_cola", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.HASTE, 2400, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOMB_BOTTLE,
-      S_COLA_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.HASTE, 2400, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOMB_BOTTLE,
+    S_COLA_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_S_COLA_RAD = register("bottle_of_s_cola_rad", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.HASTE, 2400, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 4, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 2400, 0, false, false, true)
-      ), List.of(
-      EMPTY_BOMB_BOTTLE,
-      S_COLA_RAD_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.HASTE, 2400, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 4, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 2400, 0, false, false, true)
+    ), List.of(
+    EMPTY_BOMB_BOTTLE,
+    S_COLA_RAD_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_KAROL = register("bottle_of_karol", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.HASTE, 600, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOTTLE,
-      KAROL_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.HASTE, 600, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOTTLE,
+    KAROL_BOTTLE_CAP
   )));
   public static final Item FIRST_BOTTLE_OF_KAROL = register("first_bottle_of_karol", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.HASTE, 2400, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOTTLE,
-      KAROL_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.HASTE, 2400, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.STRENGTH, 2400, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOTTLE,
+    KAROL_BOTTLE_CAP
   )));
   public static final Item BOTTLE_OF_FRITZ_COLA = register("bottle_of_fritz_cola", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOTTLE,
-      FRITZ_COLA_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 600, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.JUMP_BOOST, 600, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 600, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOTTLE,
+    FRITZ_COLA_BOTTLE_CAP
   )));
   public static final Item FIRST_BOTTLE_OF_FRITZ_COLA = register("first_bottle_of_fritz_cola", new Item.Settings(), settings -> new BottleItem(settings,
-      List.of(
-          new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
-          new StatusEffectInstance(StatusEffects.JUMP_BOOST, 2400, 2, false, false, true),
-          new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true)
-      ), List.of(
-      EMPTY_BOTTLE,
-      FRITZ_COLA_BOTTLE_CAP
+    List.of(
+      new StatusEffectInstance(StatusEffects.SPEED, 2400, 1, false, false, true),
+      new StatusEffectInstance(StatusEffects.JUMP_BOOST, 2400, 2, false, false, true),
+      new StatusEffectInstance(StatusEffects.RESISTANCE, 2400, 2, false, false, true)
+    ), List.of(
+    EMPTY_BOTTLE,
+    FRITZ_COLA_BOTTLE_CAP
   )));
   public static final Item WATERY_TAINT_INJECTION = register("watery_taint_injection", settings -> new InjectionWithTooltipItem(settings, 3, NTMSounds.SYRINGE_INJECTS,
-      List.of(METAL_SYRINGE, EMPTY_BOTTLE),
-      (serverWorld, entity) -> {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, true));
-        entity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 1200, 0, false, false, true));
-      }), new Item.Settings()
+    List.of(METAL_SYRINGE, EMPTY_BOTTLE),
+    (serverWorld, entity) -> {
+      entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, true));
+      entity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 1200, 0, false, false, true));
+    }), new Item.Settings()
   );
 
   // Tools
   public static final Item STEEL_SWORD = register("steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 3.5f, 1f));
   public static final Item STEEL_PICKAXE = register("steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 1.5f, 1f));
   public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 2.5f, 1f)
-      .addModifier(new Modifiers.Decapitator()));
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 0.5f, 1f));
   public static final Item STEEL_HOE = register("steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item TITANIUM_SWORD = register("titanium_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 3.5f, 1f));
   public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 1.5f, 1f));
   public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 2.5f, 1f)
-      .addModifier(new Modifiers.Decapitator()));
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 0.5f, 1f));
   public static final Item TITANIUM_HOE = register("titanium_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 5f, 1f)
-      .addModifier(new Modifiers.Stunning(2)));
+    .addModifier(new Modifiers.Stunning(2)));
   public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 2f, 1f)
-      .addAbility(new Abilities.VeinMiner(3)));
+    .addAbility(new Abilities.VeinMiner(3)));
   public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 4f, 1f)
-      .addAbility(new Abilities.VeinMiner(3))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.VeinMiner(3))
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.VeinMiner(3)));
+    .addAbility(new Abilities.VeinMiner(3)));
   public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 28f, 1f)
-      .addModifier(new Modifiers.Stunning(2))
-      .addModifier(new Modifiers.Vampire(2.0f)));
+    .addModifier(new Modifiers.Stunning(2))
+    .addModifier(new Modifiers.Vampire(2.0f)));
   public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 3f, 1f)
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3)));
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(3)));
   public static final Item CMB_STEEL_AXE = register("cmb_steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 23f, 1f)
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(3))
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item CMB_STEEL_SHOVEL = register("cmb_steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3)));
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(3)));
   public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item COBALT_SWORD = register("cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 11.5f, 1f));
   public static final Item COBALT_PICKAXE = register("cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 1.5f, 1f));
   public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 4.5f, 1f)
-      .addModifier(new Modifiers.Decapitator()));
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item COBALT_SHOVEL = register("cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
   public static final Item COBALT_HOE = register("cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 11f, 1f)
-      .addModifier(new Modifiers.LuckOfTheCollector()));
+    .addModifier(new Modifiers.LuckOfTheCollector()));
   public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 2f, 1f)
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AoE(1))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(3))
   );
   public static final Item DECORATED_COBALT_AXE = register("decorated_cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 4f, 1f)
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AoE(1))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(3))
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item DECORATED_COBALT_SHOVEL = register("decorated_cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(3)));
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AoE(1))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(3)));
   public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item STARMETAL_SWORD = register("starmetal_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 19f, 1f)
-      .addModifier(new Modifiers.Decapitator())
-      .addModifier(new Modifiers.Stunning(3))
-      .addModifier(new Modifiers.LuckOfTheCollector()));
+    .addModifier(new Modifiers.Decapitator())
+    .addModifier(new Modifiers.Stunning(3))
+    .addModifier(new Modifiers.LuckOfTheCollector()));
   public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 2f, 1f)
-      .addAbility(new Abilities.VeinMiner(6))
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(5))
-      .addModifier(new Modifiers.Stunning(3)));
+    .addAbility(new Abilities.VeinMiner(6))
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(5))
+    .addModifier(new Modifiers.Stunning(3)));
   public static final Item STARMETAL_AXE = register("starmetal_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 6f, 1f)
-      .addAbility(new Abilities.VeinMiner(6))
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(5))
-      .addModifier(new Modifiers.Decapitator())
-      .addModifier(new Modifiers.Stunning(3)));
+    .addAbility(new Abilities.VeinMiner(6))
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(5))
+    .addModifier(new Modifiers.Decapitator())
+    .addModifier(new Modifiers.Stunning(3)));
   public static final Item STARMETAL_SHOVEL = register("starmetal_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.VeinMiner(6))
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(5))
-      .addModifier(new Modifiers.Stunning(3)));
+    .addAbility(new Abilities.VeinMiner(6))
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(5))
+    .addModifier(new Modifiers.Stunning(3)));
   public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item DESH_SWORD = register("desh_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 9.5f, 1f)
-      .addModifier(new Modifiers.Stunning(2))
-      .addModifier(new Modifiers.Vampire(2.0f)));
+    .addModifier(new Modifiers.Stunning(2))
+    .addModifier(new Modifiers.Vampire(2.0f)));
   public static final Item DESH_PICKAXE = register("desh_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 2f, 1f)
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(2)));
+    .addAbility(new Abilities.AoE(1))
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(2)));
   public static final Item DESH_AXE = register("desh_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 4.5f, 1f)
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(2))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.AoE(1))
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(2))
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
-      .addAbility(new Abilities.AoE(1))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(2)));
+    .addAbility(new Abilities.AoE(1))
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(2)));
   public static final Item DESH_HOE = register("desh_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 65f, 1f)
-      .addModifier(new Modifiers.RadioactiveBlade(50f))
-      .addModifier(new Modifiers.Vampire(2f)));
+    .addModifier(new Modifiers.RadioactiveBlade(50f))
+    .addModifier(new Modifiers.Vampire(2f)));
   public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 20f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(10))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(5))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.AutoShreader())
-      .addModifier(new Modifiers.RadioactiveBlade(15f)));
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(10))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(5))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.AutoShreader())
+    .addModifier(new Modifiers.RadioactiveBlade(15f)));
   public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialAxeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 15f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(10))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(5))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.AutoShreader())
-      .addModifier(new Modifiers.RadioactiveBlade(15f))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(10))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(5))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.AutoShreader())
+    .addModifier(new Modifiers.RadioactiveBlade(15f))
+    .addModifier(new Modifiers.Decapitator()));
   public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 5f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(10))
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(5))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.AutoShreader())
-      .addModifier(new Modifiers.RadioactiveBlade(15f)));
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(10))
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(5))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.AutoShreader())
+    .addModifier(new Modifiers.RadioactiveBlade(15f)));
   public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 0f, 1f));
 
   public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 0f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AutoShreader())
-      .addAbility(new Abilities.Fortune(2))
-      .addAbility(new Abilities.SilkTouch()));
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AutoShreader())
+    .addAbility(new Abilities.Fortune(2))
+    .addAbility(new Abilities.SilkTouch()));
   public static final Item BISMUTH_AXE = register("bismuth_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 10f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AutoShreader())
-      .addAbility(new Abilities.Fortune(2))
-      .addAbility(new Abilities.SilkTouch())
-      .addModifier(new Modifiers.Stunning(10))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AutoShreader())
+    .addAbility(new Abilities.Fortune(2))
+    .addAbility(new Abilities.SilkTouch())
+    .addModifier(new Modifiers.Stunning(10))
+    .addModifier(new Modifiers.Decapitator()));
 
   public static final Item MOLTEN_PICKAXE = register("molten_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.MOLTEN_TOOL_MATERIAL, 0f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.Fortune(3))
-      .addAbility(new Abilities.SilkTouch())
-      .addModifier(new Modifiers.Flaming(5))
-      .addModifier(new Modifiers.Vampire(2.0f))
-      .addModifier(new Modifiers.Decapitator())
-      .addCanBreakDepthRock());
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.Fortune(3))
+    .addAbility(new Abilities.SilkTouch())
+    .addModifier(new Modifiers.Flaming(5))
+    .addModifier(new Modifiers.Vampire(2.0f))
+    .addModifier(new Modifiers.Decapitator())
+    .addCanBreakDepthRock());
   public static final Item MOLTEN_AXE = register("molten_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.MOLTEN_TOOL_MATERIAL, 10f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.AutoSmelt())
-      .addAbility(new Abilities.Fortune(3))
-      .addAbility(new Abilities.SilkTouch())
-      .addModifier(new Modifiers.Flaming(10))
-      .addModifier(new Modifiers.Vampire(3.0f))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.AutoSmelt())
+    .addAbility(new Abilities.Fortune(3))
+    .addAbility(new Abilities.SilkTouch())
+    .addModifier(new Modifiers.Flaming(10))
+    .addModifier(new Modifiers.Vampire(3.0f))
+    .addModifier(new Modifiers.Decapitator()));
 
   public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 0f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.Fortune(4))
-      .addAbility(new Abilities.AutoCentrifuge())
-      .addAbility(new Abilities.MercuryTouch())
-      .addModifier(new Modifiers.Stunning(10))
-      .addModifier(new Modifiers.Vampire(5.0f))
-      .addModifier(new Modifiers.Decapitator())
-      .addCanBreakDepthRock());
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.Fortune(4))
+    .addAbility(new Abilities.AutoCentrifuge())
+    .addAbility(new Abilities.MercuryTouch())
+    .addModifier(new Modifiers.Stunning(10))
+    .addModifier(new Modifiers.Vampire(5.0f))
+    .addModifier(new Modifiers.Decapitator())
+    .addCanBreakDepthRock());
   public static final Item CHLOROPHYTE_AXE = register("chlorophyte_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 30f, 1f)
-      .addAbility(new Abilities.AoE(2))
-      .addAbility(new Abilities.VeinMiner(4))
-      .addAbility(new Abilities.Fortune(4))
-      .addModifier(new Modifiers.Stunning(10))
-      .addModifier(new Modifiers.Vampire(5.0f))
-      .addModifier(new Modifiers.Decapitator())
-      .addCanBreakDepthRock());
+    .addAbility(new Abilities.AoE(2))
+    .addAbility(new Abilities.VeinMiner(4))
+    .addAbility(new Abilities.Fortune(4))
+    .addModifier(new Modifiers.Stunning(10))
+    .addModifier(new Modifiers.Vampire(5.0f))
+    .addModifier(new Modifiers.Decapitator())
+    .addCanBreakDepthRock());
 
   public static final Item MESE_PICKAXE = register("mese_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.MESE_TOOL_MATERIAL, 0f, 1f)
-      .addAbility(new Abilities.AoE(3))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.AutoCrystallizer())
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(9))
-      .addAbility(new Abilities.Explosion(2.5f))
-      .addAbility(new Abilities.Explosion(5.0f))
-      .addAbility(new Abilities.Explosion(10.0f))
-      .addAbility(new Abilities.Explosion(15.0f))
-      .addModifier(new Modifiers.Stunning(10))
-      .addModifier(new Modifiers.PhosphorusTip(60))
-      .addModifier(new Modifiers.Decapitator())
-      .addCanBreakDepthRock());
+    .addAbility(new Abilities.AoE(3))
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.AutoCrystallizer())
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(9))
+    .addAbility(new Abilities.Explosion(2.5f))
+    .addAbility(new Abilities.Explosion(5.0f))
+    .addAbility(new Abilities.Explosion(10.0f))
+    .addAbility(new Abilities.Explosion(15.0f))
+    .addModifier(new Modifiers.Stunning(10))
+    .addModifier(new Modifiers.PhosphorusTip(60))
+    .addModifier(new Modifiers.Decapitator())
+    .addCanBreakDepthRock());
   public static final Item MESE_AXE = register("mese_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.MESE_TOOL_MATERIAL, 40f, 1f)
-      .addAbility(new Abilities.AoE(3))
-      .addAbility(new Abilities.VeinMiner(5))
-      .addAbility(new Abilities.AutoCrystallizer())
-      .addAbility(new Abilities.SilkTouch())
-      .addAbility(new Abilities.Fortune(9))
-      .addAbility(new Abilities.Explosion(2.5f))
-      .addAbility(new Abilities.Explosion(5.0f))
-      .addAbility(new Abilities.Explosion(10.0f))
-      .addAbility(new Abilities.Explosion(15.0f))
-      .addModifier(new Modifiers.Stunning(10))
-      .addModifier(new Modifiers.PhosphorusTip(60))
-      .addModifier(new Modifiers.Decapitator()));
+    .addAbility(new Abilities.AoE(3))
+    .addAbility(new Abilities.VeinMiner(5))
+    .addAbility(new Abilities.AutoCrystallizer())
+    .addAbility(new Abilities.SilkTouch())
+    .addAbility(new Abilities.Fortune(9))
+    .addAbility(new Abilities.Explosion(2.5f))
+    .addAbility(new Abilities.Explosion(5.0f))
+    .addAbility(new Abilities.Explosion(10.0f))
+    .addAbility(new Abilities.Explosion(15.0f))
+    .addModifier(new Modifiers.Stunning(10))
+    .addModifier(new Modifiers.PhosphorusTip(60))
+    .addModifier(new Modifiers.Decapitator()));
 
   public static Item register(@NotNull String name, @NotNull Function<Item.Settings, Item> itemFactory, @NotNull Item.Settings settings) {
     RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));

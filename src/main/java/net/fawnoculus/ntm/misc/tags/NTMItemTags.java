@@ -21,7 +21,7 @@ public class NTMItemTags {
   public static final TagKey<Item> MOLTEN_TOOL_MATERIALS = of("molten_tool_materials");
   public static final TagKey<Item> CHLOROPHYTE_TOOL_MATERIALS = of("chlorophyte_tool_materials");
   public static final TagKey<Item> MESE_TOOL_MATERIALS = of("mese_tool_materials");
-  
+
   // Ores
   public static final TagKey<Item> URANIUM_ORES = of("uranium_ores");
   public static final TagKey<Item> SCORCHED_URANIUM_ORES = of("scorched_uranium_ores");
@@ -51,11 +51,12 @@ public class NTMItemTags {
   public static final TagKey<Item> METEORIC_ALUMINIUM_ORES = of("meteoric_aluminium_ores");
   public static final TagKey<Item> METEORIC_RARE_EARTH_ORES = of("meteoric_rare_earth_ores");
   public static final TagKey<Item> METEORIC_COBALT_ORES = of("meteoric_cobalt_ores");
-  
-  private static TagKey<Item> of(String name){
+
+  private static TagKey<Item> of(String name) {
     return of(NTM.id(name));
   }
-  private static TagKey<Item> of(Identifier identifier){
+
+  private static TagKey<Item> of(Identifier identifier) {
     return TagKey.of(RegistryKeys.ITEM, identifier);
   }
 }

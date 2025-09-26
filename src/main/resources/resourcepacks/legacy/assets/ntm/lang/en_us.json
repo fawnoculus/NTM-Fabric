@@ -1,0 +1,48 @@
+{
+  "effect.ntm.explosion": "! ! !",
+
+  "generic.ntm.energy": "HE",
+  "generic.ntm.energy_t": "HE/t",
+  "generic.ntm.energy_s": "HE/s",
+
+  "container.ntm.alloy_furnace": "Blast Furnace",
+
+  "block.ntm.red_copper_block": "Minecraft Grade Copper Block",
+  "item.ntm.red_copper_block": "Minecraft Grade Copper Block",
+  "item.ntm.volcanic_basalt": "Basalt",
+  "block.ntm.volcanic_basalt": "Basalt",
+  "item.ntm.sulfur_rich_volcanic_basalt": "Sulfur-Rich Basalt",
+  "block.ntm.sulfur_rich_volcanic_basalt": "Sulfur-Rich Basalt",
+  "item.ntm.fluorite_rich_volcanic_basalt": "Fluorite-Rich Basalt",
+  "block.ntm.fluorite_rich_volcanic_basalt": "Fluorite-Rich Basalt",
+  "item.ntm.asbestos_rich_volcanic_basalt": "Asbestos-Rich Basalt",
+  "block.ntm.asbestos_rich_volcanic_basalt": "Asbestos-Rich Basalt",
+  "item.ntm.gem_rich_volcanic_basalt": "Gem-Rich Basalt",
+  "block.ntm.gem_rich_volcanic_basalt": "Gem-Rich Basalt",
+  "item.ntm.molysite_rich_volcanic_basalt": "Molysite-Rich Basalt",
+  "block.ntm.molysite_rich_volcanic_basalt": "Molysite-Rich Basalt",
+  "block.ntm.tantalum_block": "Tantalium Block",
+  "item.ntm.tantalum_block": "Tantalium Block",
+  "block.ntm.alloy_furnace": "Blast Furnace",
+  "item.ntm.alloy_furnace": "Blast Furnace",
+  "block.ntm.alloy_furnace_extension": "Blast Furnace Extension",
+  "item.ntm.alloy_furnace_extension": "Blast Furnace Extension",
+  "block.ntm.desh_block": "Reinforced Block of Desh",
+  "item.ntm.desh_block": "Reinforced Block of Desh",
+  "block.ntm.high_speed_steel_block": "Reinforced Block of High-Speed Steel",
+  "item.ntm.high_speed_steel_block": "Reinforced Block of High-Speed Steel",
+
+  "item.minecraft.copper_ingot": "Industrial Grade Copper Ingot",
+  "item.ntm.cast_cmb_steel_plate": "Cast Combine Steel Steel Plate",
+  "item.ntm.welded_cmb_steel_plate": "Welded Combine Steel Steel Plate",
+  "item.ntm.red_copper_ingot": "Minecraft Grade Copper Ingot",
+  "item.ntm.tantalum_ingot": "Tantalium Ingot",
+  "item.ntm.semi_stable_lanthanum_ingot": "Semi-Stable Lanthanium Ingot",
+  "item.ntm.lanthanum_powder": "Lanthanium Powder",
+  "item.ntm.tiny_pile_of_lanthanum_powder": "Tiny Pile Of Lanthanium Powder",
+  "item.ntm.lanthanum_fragment": "Lanthanium Fragment",
+  "item.ntm.tv_static_sandwich": "Sandwich Garnished with TV Static",
+
+  "item.ntm.scrap_pancake": "Pancake made from Scrap Metal, Nails and Gem Dust",
+  "item.ntm.spark_ludicrous_energy_storage_unit": "Spark Ludicrous Physics-Defying Energy Storage Unit"
+}

@@ -28,72 +28,73 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
   public AlloyFurnaceBlock(Settings settings) {
     super(settings);
     setDefaultState(this.getDefaultState()
-        .with(LIT, false)
-        .with(EXTENSION, false)
-        .with(FACING, Direction.NORTH));
+      .with(LIT, false)
+      .with(EXTENSION, false)
+      .with(FACING, Direction.NORTH));
   }
+
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
   public static final BooleanProperty LIT = Properties.LIT;
   public static final BooleanProperty EXTENSION = NTMBlockProperties.EXTENSION;
-  
+
   @Override
   protected MapCodec<? extends BlockWithEntity> getCodec() {
     return createCodec(AlloyFurnaceBlock::new);
   }
-  
+
   @Override
   public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     return new AlloyFurnaceBE(pos, state);
   }
-  
+
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-    if(world.isClient) return null;
+    if (world.isClient) return null;
     return validateTicker(type, NTMBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
   }
-  
+
   @Override
   protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
     if (!(world.getBlockEntity(pos) instanceof AlloyFurnaceBE alloyFurnaceBE)) {
       return ActionResult.FAIL;
     }
-    if(world.isClient){
+    if (world.isClient) {
       return ActionResult.SUCCESS;
     }
-    
+
     player.openHandledScreen(alloyFurnaceBE);
-    
+
     return ActionResult.SUCCESS_SERVER;
   }
-  
+
   @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     builder.add(FACING);
     builder.add(LIT);
     builder.add(EXTENSION);
   }
-  
+
   @Override
   public BlockState getPlacementState(ItemPlacementContext context) {
-    if(context.getPlayer() == null) return this.getDefaultState();
-    if(context.getWorld().getBlockState(context.getBlockPos().up()).getBlock() instanceof AlloyFurnaceExtensionBlock){
+    if (context.getPlayer() == null) return this.getDefaultState();
+    if (context.getWorld().getBlockState(context.getBlockPos().up()).getBlock() instanceof AlloyFurnaceExtensionBlock) {
       return this.getDefaultState()
-          .with(FACING, context.getPlayer().getHorizontalFacing().getOpposite())
-          .with(EXTENSION, true);
+        .with(FACING, context.getPlayer().getHorizontalFacing().getOpposite())
+        .with(EXTENSION, true);
     }
     return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
   }
-  
+
   @Override
   public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
     if (!world.isClient()) {
       return;
     }
-    
+
     if (!state.get(LIT)) {
       return;
     }
-    
+
     double y = pos.getY() + 1;
     if (state.get(EXTENSION)) y += 1;
     double x = pos.getX();
@@ -109,7 +110,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
       z -= 0.5;
     }
     world.addParticleClient(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
-    
+
     x = pos.getX();
     y = pos.getY() + 0.3 + random.nextDouble() * 0.4;
     z = pos.getZ();

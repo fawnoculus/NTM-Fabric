@@ -6,7 +6,7 @@ import net.fawnoculus.ntm.world.placed.NTMPOrePlacedFeatures;
 import net.minecraft.world.gen.GenerationStep;
 
 public class NTMOreGeneration {
-  public static void initialize(){
+  public static void initialize() {
     BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.URANIUM_ORE_PLACED_KEY);
     BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.TITANIUM_ORE_PLACED_KEY);
     BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, NTMPOrePlacedFeatures.SULFUR_ORE_PLACED_KEY);

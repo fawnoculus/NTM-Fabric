@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class ClientRadiationRegistry extends RadiationRegistry {
   private static final ClientRadiationRegistry INSTANCE = new ClientRadiationRegistry();
 
-  public static ClientRadiationRegistry getInstance(){
+  public static ClientRadiationRegistry getInstance() {
     return INSTANCE;
   }
 
@@ -16,9 +16,9 @@ public class ClientRadiationRegistry extends RadiationRegistry {
   private HashMap<Identifier, Double> radioactivityOverrides = new HashMap<>();
 
   @Override
-  public double getRadioactivity(Identifier identifier){
+  public double getRadioactivity(Identifier identifier) {
     Double override = radioactivityOverrides.get(identifier);
-    if(override != null){
+    if (override != null) {
       return override;
     }
     return radioactivityGetter.getOrDefault(identifier, 0.0);
@@ -29,7 +29,7 @@ public class ClientRadiationRegistry extends RadiationRegistry {
     throw new RuntimeException("Tried to register radioactivity in ClientRadiationRegistry");
   }
 
-  public void updateFromPacket(@NotNull Serialized serializedRegistry){
+  public void updateFromPacket(@NotNull Serialized serializedRegistry) {
     this.radioactivityGetter = serializedRegistry.radioactivityGetter();
     this.radioactivityOverrides = serializedRegistry.radioactivityOverrides();
   }

@@ -15,10 +15,10 @@ public class StatusEffectsDisplayMixin {
 
   @Inject(at = @At("RETURN"), method = "getStatusEffectDescription")
   private void fixHighAmplifiers(StatusEffectInstance statusEffect, CallbackInfoReturnable<Text> cir) {
-    if(NTMClientConfig.FixEffectDisplay.getValue()
+    if (NTMClientConfig.FixEffectDisplay.getValue()
       && statusEffect.getAmplifier() > 9
       && cir.getReturnValue() instanceof MutableText mutableText
-    ){
+    ) {
       mutableText.append(" " + (statusEffect.getAmplifier() - 1));
     }
   }

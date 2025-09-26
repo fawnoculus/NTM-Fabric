@@ -3,11 +3,12 @@ package net.fawnoculus.ntm.misc.stack;
 import net.fawnoculus.ntm.api.node.Node;
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.api.node.StorageMode;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.jetbrains.annotations.Range;
 
 public class EnergyStack implements NodeValueContainer {
-  public EnergyStack(Node parent){
+  public EnergyStack(Node parent) {
     this.PARENT = parent;
   }
 
@@ -17,7 +18,8 @@ public class EnergyStack implements NodeValueContainer {
   protected long priority = 0;
   protected boolean consumes = false;
   protected boolean provides = false;
-  protected Runnable onChange = () -> {};
+  protected Runnable onChange = () -> {
+  };
 
   @Override
   public EnergyStack setValue(@Range(from = 0, to = Long.MAX_VALUE) long value) {
@@ -64,7 +66,7 @@ public class EnergyStack implements NodeValueContainer {
 
   @Override
   public boolean provides() {
-    return false;
+    return this.provides;
   }
 
   public EnergyStack setConsumes(boolean consumes) {
@@ -84,21 +86,21 @@ public class EnergyStack implements NodeValueContainer {
     return this.PARENT;
   }
 
-  public EnergyStack onChange(Runnable runnable){
+  public EnergyStack onChange(Runnable runnable) {
     this.onChange = runnable;
     return this;
   }
 
-  public void writeNBT(NbtCompound nbt){
-    nbt.putLong("energy_stack.stored_energy", this.value);
-    nbt.putLong("energy_stack.max_energy", this.maxValue);
-    nbt.putLong("energy_stack.priority", this.priority);
+  public void writeData(WriteView view) {
+    view.putLong("energy_stack.stored_energy", this.value);
+    view.putLong("energy_stack.max_energy", this.maxValue);
+    view.putLong("energy_stack.priority", this.priority);
   }
 
-  public void readNBT(NbtCompound nbt){
-    this.value = nbt.getLong("energy_stack.stored_energy", 0);
-    this.maxValue = nbt.getLong("energy_stack.max_energy", 0);
-    this.priority = nbt.getLong("energy_stack.priority", 0);
+  public void readData(ReadView view) {
+    this.value = view.getLong("energy_stack.stored_energy", 0);
+    this.maxValue = view.getLong("energy_stack.max_energy", 0);
+    this.priority = view.getLong("energy_stack.priority", 0);
   }
 
   @Override
@@ -120,11 +122,11 @@ public class EnergyStack implements NodeValueContainer {
 
     private StorageMode mode = StorageMode.Consume;
 
-    public StorageMode getStorageMode(){
+    public StorageMode getStorageMode() {
       return this.mode;
     }
 
-    public Storage setStorageMode(StorageMode mode){
+    public Storage setStorageMode(StorageMode mode) {
       this.setConsumes(mode.consumes);
       this.setProvides(mode.provides);
 
@@ -169,15 +171,17 @@ public class EnergyStack implements NodeValueContainer {
     }
 
     @Override
-    public void readNBT(NbtCompound nbt) {
-      super.readNBT(nbt);
-      this.mode = nbt.get("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume);
+    public void writeData(WriteView view) {
+      super.writeData(view);
+      view.put("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
     }
 
     @Override
-    public void writeNBT(NbtCompound nbt) {
-      super.writeNBT(nbt);
-      nbt.put("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
+    public void readData(ReadView view) {
+      super.readData(view);
+      this.setStorageMode(
+        view.read("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume)
+      );
     }
 
     @Override

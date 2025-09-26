@@ -16,6 +16,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -27,7 +29,7 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
     super(type, pos, state);
 
     AbstractInventoryBE be = this;
-    this.inventory = new SimpleInventory(inventorySlots){
+    this.inventory = new SimpleInventory(inventorySlots) {
       @Override
       public void markDirty() {
         super.markDirty();
@@ -36,25 +38,25 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
     };
   }
 
-  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory){
-    if(!(world instanceof ServerWorld serverWorld)) return;
+  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory) {
+    if (!(world instanceof ServerWorld serverWorld)) return;
     InventorySyncPayload payload = new InventorySyncPayload(pos, inventory);
 
     int viewDistance = serverWorld.getServer().getPlayerManager().getViewDistance();
-    for(ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)){
+    for (ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)) {
       ServerPlayNetworking.send(player, payload);
     }
   }
 
-  public SimpleInventory getInventory(){
+  public SimpleInventory getInventory() {
     return this.inventory;
   }
 
-  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack){
+  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack) {
     ItemStack switchStack = this.getInventory().getStack(slotIndex);
-    if(switchStack.isEmpty()) return true;
+    if (switchStack.isEmpty()) return true;
 
-    if(switchStack.getItem() == stack.getItem()){
+    if (switchStack.getItem() == stack.getItem()) {
       return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
     }
 
@@ -104,22 +106,22 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
   @Override
   public void markDirty() {
     super.markDirty();
-    if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-    if(this.world != null && !this.world.isClient()){
+    if (this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+    if (this.world != null && !this.world.isClient()) {
       sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
     }
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    Inventories.writeNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
-    super.writeNbt(nbt, registryLookup);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    Inventories.readData(view, this.inventory.getHeldStacks());
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-    Inventories.readNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
+  protected void writeData(WriteView view) {
+    Inventories.writeData(view, this.getInventory().getHeldStacks());
+    super.writeData(view);
   }
 
   @Override

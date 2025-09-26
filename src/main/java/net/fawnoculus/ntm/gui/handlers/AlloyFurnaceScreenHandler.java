@@ -48,18 +48,20 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
     addSlot(new OutputSlot(inventory, AlloyFurnaceBE.OUTPUT_SLOT_INDEX, 134, 36));
   }
 
-  private void addPlayerInventory(PlayerInventory playerInventory){
+  private void addPlayerInventory(PlayerInventory playerInventory) {
     addPartialPlayerInventory(playerInventory);
     addPlayerHotbar(playerInventory);
   }
-  private void addPartialPlayerInventory(PlayerInventory playerInventory){
+
+  private void addPartialPlayerInventory(PlayerInventory playerInventory) {
     for (int row = 0; row < 3; row++) {
       for (int colum = 0; colum < 9; colum++) {
-        addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)) , 8 + (colum * 18), 84 + (row * 18)));
+        addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)), 8 + (colum * 18), 84 + (row * 18)));
       }
     }
   }
-  private void addPlayerHotbar(PlayerInventory playerInventory){
+
+  private void addPlayerHotbar(PlayerInventory playerInventory) {
     for (int colum = 0; colum < 9; colum++) {
       addSlot(new Slot(playerInventory, colum, 8 + (colum * 18), 142));
     }
@@ -107,7 +109,7 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
     return canUse(screenContext, player, NTMBlocks.ALLOY_FURNACE);
   }
 
-  public AlloyFurnaceBE getBlockEntity(){
+  public AlloyFurnaceBE getBlockEntity() {
     return this.blockEntity;
   }
 }

@@ -1,13 +1,14 @@
 package net.fawnoculus.ntm.gui.widget;
 
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.StorageMode;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +21,8 @@ public class StorageModeWidget extends ClickableWidget {
     this.ON_CLICKED = onClicked;
   }
 
+  private static final Identifier TEXTURE = NTM.id("textures/gui/generic/storage_mode.png");
+
   private final Supplier<StorageMode> STORAGE_MODE;
   private final Runnable ON_CLICKED;
 
@@ -31,29 +34,30 @@ public class StorageModeWidget extends ClickableWidget {
 
   @Override
   protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-    context.drawTexture(RenderLayer::getGuiTextured,
-        NTMTextures.GENERIC_STORAGE_MODE,
-        this.getX(),
-        this.getY(),
-        this.getU(STORAGE_MODE.get()),
-        this.getV(STORAGE_MODE.get()),
-        this.width,
-        this.height,
-        36,
-        36
+    context.drawTexture(RenderPipelines.GUI_TEXTURED,
+      TEXTURE,
+      this.getX(),
+      this.getY(),
+      this.getU(STORAGE_MODE.get()),
+      this.getV(STORAGE_MODE.get()),
+      this.width,
+      this.height,
+      36,
+      36
     );
   }
 
   @Contract(pure = true)
-  private float getU(@NotNull StorageMode storageMode){
-    return switch (storageMode){
+  private float getU(@NotNull StorageMode storageMode) {
+    return switch (storageMode) {
       case None, Provide -> 18;
       default -> 0;
     };
   }
+
   @Contract(pure = true)
-  private float getV(@NotNull StorageMode storageMode){
-    return switch (storageMode){
+  private float getV(@NotNull StorageMode storageMode) {
+    return switch (storageMode) {
       case None, Share -> 18;
       default -> 0;
     };

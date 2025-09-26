@@ -46,7 +46,7 @@ public class ClientFluidDataRegistry {
       for (Identifier dataID : DATA.keySet()) {
         try {
           FluidDataType<?> fluidDataType = FluidDataRegistry.getDataType(dataID);
-          if(fluidDataType.hasExtraInfo()){
+          if (fluidDataType.hasExtraInfo()) {
             hasExtraInfo = true;
           }
           getTooltip(fluidDataType, getOrDefault(fluidDataType), showExtraInfo, tooltip);
@@ -55,7 +55,7 @@ public class ClientFluidDataRegistry {
         }
       }
 
-      if(hasExtraInfo && ! showExtraInfo) {
+      if (hasExtraInfo && !showExtraInfo) {
         tooltip.accept(Text.translatable("tooltip.ntm.hold_for_info", NTMKeybinds.DISPLAY_EXTRA_INFO.getBoundKeyLocalizedText()));
       }
     }

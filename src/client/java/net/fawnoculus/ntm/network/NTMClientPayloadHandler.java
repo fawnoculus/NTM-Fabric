@@ -27,15 +27,15 @@ public class NTMClientPayloadHandler {
     ClientPlayNetworking.registerGlobalReceiver(InventorySyncPayload.ID, NTMClientPayloadHandler::handleInventorySync);
   }
 
-  private static void handleInventorySync(InventorySyncPayload payload, @NotNull ClientPlayNetworking.Context context){
-    if(context.player() == null) return;
-    if(context.player().clientWorld == null) return;
+  private static void handleInventorySync(InventorySyncPayload payload, @NotNull ClientPlayNetworking.Context context) {
+    if (context.player() == null) return;
+    if (context.player().clientWorld == null) return;
 
     ClientWorld world = context.player().clientWorld;
     BlockEntity be = world.getBlockEntity(payload.pos());
-    if(be instanceof Inventory inventory){
+    if (be instanceof Inventory inventory) {
       int i = 0;
-      for(ItemStack stack : payload.inventory()){
+      for (ItemStack stack : payload.inventory()) {
         inventory.setStack(i, stack);
         i++;
       }

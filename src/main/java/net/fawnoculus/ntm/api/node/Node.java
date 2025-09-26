@@ -4,7 +4,8 @@ import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.util.ExceptionUtil;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -110,13 +111,20 @@ public interface Node {
     return node.getNetworkType() == this.getNetworkType();
   }
 
-  default void readNodeData(NbtCompound nbt) {
-    if(this.getWorld() != null && this.getWorld().isClient()){
+  default void writeNodeData(WriteView view) {
+    if (this.getNetwork() != null) {
+      view.putString("network", this.getNetwork().ID.toString());
+    }
+  }
+
+  default void readNodeData(ReadView view) {
+    if (this.getWorld() != null && this.getWorld().isClient()) {
       return;
     }
 
+
     try {
-      UUID uuid = UUID.fromString(nbt.getString("network", null));
+      UUID uuid = UUID.fromString(view.getString("network", null));
       NodeNetwork network = this.getNetworkType().getNetwork(uuid);
       this.setNetwork(network);
       if (!network.containsNode(this)) {
@@ -126,18 +134,12 @@ public interface Node {
     }
   }
 
-  default void writeNodeData(NbtCompound nbt) {
-    if (this.getNetwork() != null) {
-      nbt.putString("network", this.getNetwork().ID.toString());
-    }
-  }
-
   default void onSetWorld() {
     this.setShouldAssignNetwork(true);
-    if(this.getWorld().isClient){
+    if (this.getWorld().isClient) {
       return;
     }
-    if(this.getNetwork() == null){
+    if (this.getNetwork() == null) {
       this.assignNetwork();
     }
   }

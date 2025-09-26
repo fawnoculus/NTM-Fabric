@@ -18,6 +18,7 @@ Some basic principles to follow for code changes
    lots of issues can be resolved significantly quicker with a little communication!
 
 
-## Correcting Me
-Please don't shy away from correcting me as I am (as all humans are) in fact an idiot that cannot see through all possible scenarios of how to develop something to achieve the best outcome.
+## Footnote
+Please don't shy away from correcting me as I am (as all humans are) a very stupid idiot that cannot see through all possible scenarios of how to develop something to achieve the best outcome.
 If you believe that you have a better way to make something work then the way it currently works, please propose that idea to me, considering that most things currently here could likely be heavily improved.
+You could also just implement the better way yourself, but that comes with the risk that your version may not get merged & nobody want's to do a bunch of work for nothing.

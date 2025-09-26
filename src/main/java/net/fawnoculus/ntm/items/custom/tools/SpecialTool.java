@@ -28,36 +28,42 @@ public interface SpecialTool {
   Identifier ADVANCED_MESSAGE_ID = NTM.id("tool_ability");
 
   SpecialTool addAbility(ItemAbility ability);
+
   SpecialTool addModifier(ItemModifier modifier);
+
   SpecialTool addCanBreakDepthRock();
 
   List<ItemAbility> getAbilities();
+
   List<ItemModifier> getModifiers();
+
   boolean canBreakDepthRock();
 
   default void processMakerModifiers(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-    for (ItemModifier modifier : getModifiers()){
+    for (ItemModifier modifier : getModifiers()) {
       modifier.postHit(stack, target, attacker);
     }
   }
 
-  default void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner){
-    if(world.isClient()){
+  default void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    if (world.isClient()) {
       return;
     }
-    if(!(miner instanceof PlayerEntity player)){
+    if (!(miner instanceof PlayerEntity player)) {
       return;
     }
 
     ItemAbility ability = getSelectedAbility(stack);
-    if(ability != null){
+    if (ability != null) {
       ability.preMine(stack, world, state, pos, player);
     }
   }
 
-  default ItemAbility getSelectedAbility(ItemStack stack){
+  default ItemAbility getSelectedAbility(ItemStack stack) {
     int selectedAbility = stack.getOrDefault(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1);
-    if(selectedAbility < 0){return null;}
+    if (selectedAbility < 0) {
+      return null;
+    }
     return this.getAbilities().get(selectedAbility);
   }
 
@@ -78,9 +84,9 @@ public interface SpecialTool {
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
 
       ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(
-          ADVANCED_MESSAGE_ID,
-          Text.translatable("message.ntm.ability.unselect").formatted(Formatting.GOLD),
-          1000.0f)));
+        ADVANCED_MESSAGE_ID,
+        Text.translatable("message.ntm.ability.unselect").formatted(Formatting.GOLD),
+        1000.0f)));
     } else {
       // Ability switched
       stack.set(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, NewAbilityIndex);
@@ -88,9 +94,9 @@ public interface SpecialTool {
       player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
 
       ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(
-          ADVANCED_MESSAGE_ID,
-          Text.translatable("message.ntm.ability.select", getSelectedAbility(stack).getFullName()).formatted(Formatting.YELLOW),
-          1000.0f)));
+        ADVANCED_MESSAGE_ID,
+        Text.translatable("message.ntm.ability.select", getSelectedAbility(stack).getFullName()).formatted(Formatting.YELLOW),
+        1000.0f)));
     }
   }
 
@@ -98,7 +104,7 @@ public interface SpecialTool {
     List<ItemAbility> abilities = getAbilities();
     List<ItemModifier> modifiers = getModifiers();
 
-    if(!abilities.isEmpty()) {
+    if (!abilities.isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.ability.start").formatted(Formatting.GRAY));
       for (int i = 0; i < abilities.size(); i++) {
         ItemAbility ability = abilities.get(i);
@@ -114,14 +120,14 @@ public interface SpecialTool {
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
     }
 
-    if(!modifiers.isEmpty()) {
+    if (!modifiers.isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.modifier.start").formatted(Formatting.GRAY));
       for (ItemModifier modifier : modifiers) {
         tooltip.accept(Text.literal("  ").append(modifier.getFullName().formatted(Formatting.RED)));
       }
     }
 
-    if(canBreakDepthRock()) {
+    if (canBreakDepthRock()) {
       tooltip.accept(Text.of(""));
       tooltip.accept(Text.translatable("tooltip.ntm.canbreakdepthrock").formatted(Formatting.RED));
     }

@@ -27,34 +27,39 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WorldChunk.class)
 public abstract class WorldChunkMixin implements RadiationProcessorHolder, CustomDataHolder {
-  @Shadow public abstract BlockState getBlockState(BlockPos pos);
-  @Shadow public abstract World getWorld();
-  @Unique private RadiationProcessor NTM$radiationProcessor = new EmptyRadiationProcessor();
+  @Shadow
+  public abstract BlockState getBlockState(BlockPos pos);
+
+  @Shadow
+  public abstract World getWorld();
+
+  @Unique
+  private RadiationProcessor NTM$radiationProcessor = new EmptyRadiationProcessor();
 
   @Inject(at = @At("TAIL"), method = "<init>(" +
-      "Lnet/minecraft/world/World;" +
-      "Lnet/minecraft/util/math/ChunkPos;" +
-      "Lnet/minecraft/world/chunk/UpgradeData;" +
-      "Lnet/minecraft/world/tick/ChunkTickScheduler;" +
-      "Lnet/minecraft/world/tick/ChunkTickScheduler;" +
-      "J[Lnet/minecraft/world/chunk/ChunkSection;" +
-      "Lnet/minecraft/world/chunk/WorldChunk$EntityLoader;" +
-      "Lnet/minecraft/world/gen/chunk/BlendingData;)V"
+    "Lnet/minecraft/world/World;" +
+    "Lnet/minecraft/util/math/ChunkPos;" +
+    "Lnet/minecraft/world/chunk/UpgradeData;" +
+    "Lnet/minecraft/world/tick/ChunkTickScheduler;" +
+    "Lnet/minecraft/world/tick/ChunkTickScheduler;" +
+    "J[Lnet/minecraft/world/chunk/ChunkSection;" +
+    "Lnet/minecraft/world/chunk/WorldChunk$EntityLoader;" +
+    "Lnet/minecraft/world/gen/chunk/BlendingData;)V"
   )
   @SuppressWarnings("rawtypes")
   private void addRadiationProcessor(
-      World world,
-      ChunkPos pos,
-      UpgradeData upgradeData,
-      ChunkTickScheduler blockTickScheduler,
-      ChunkTickScheduler fluidTickScheduler,
-      long inhabitedTime,
-      ChunkSection[] sectionArrayInitializer,
-      WorldChunk.EntityLoader entityLoader,
-      BlendingData blendingData,
-      CallbackInfo ci
+    World world,
+    ChunkPos pos,
+    UpgradeData upgradeData,
+    ChunkTickScheduler blockTickScheduler,
+    ChunkTickScheduler fluidTickScheduler,
+    long inhabitedTime,
+    ChunkSection[] sectionArrayInitializer,
+    WorldChunk.EntityLoader entityLoader,
+    BlendingData blendingData,
+    CallbackInfo ci
   ) {
-    if(world instanceof ServerWorld serverWorld){
+    if (world instanceof ServerWorld serverWorld) {
       this.NTM$radiationProcessor = RadiationManager.getInstance().makeNewRadiationProcessor(serverWorld, pos);
       this.NTM$radiationProcessor.readData(WorldUtil.getChunkNBT(((Chunk) (Object) this).getPos(), serverWorld));
       RadiationProcessorMultiHolder.from(serverWorld).NTM$addRadiationProcessor(this.NTM$radiationProcessor, pos);
@@ -70,7 +75,7 @@ public abstract class WorldChunkMixin implements RadiationProcessorHolder, Custo
 
   @Override
   public @NotNull NbtCompound NTM$getCustomData() {
-    if(this.getWorld() instanceof ServerWorld serverWorld){
+    if (this.getWorld() instanceof ServerWorld serverWorld) {
       return WorldUtil.getChunkNBT(((Chunk) (Object) this).getPos(), serverWorld);
     }
     return new NbtCompound();
@@ -78,7 +83,7 @@ public abstract class WorldChunkMixin implements RadiationProcessorHolder, Custo
 
   @Override
   public void NTM$setCustomData(NbtCompound customData) {
-    if(this.getWorld() instanceof ServerWorld serverWorld){
+    if (this.getWorld() instanceof ServerWorld serverWorld) {
       WorldUtil.setChunkData(((Chunk) (Object) this).getPos(), serverWorld, customData);
     }
   }

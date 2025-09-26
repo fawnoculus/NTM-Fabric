@@ -14,13 +14,16 @@ import org.jetbrains.annotations.Nullable;
  * All modifiers can be found in {@link Modifiers}
  */
 public interface ItemModifier {
-  default MutableText getFullName(){
-    if(this.getValue() != null){
-      return Text.translatable(this.getTranslationKey()).append(Text.literal(" ("+ this.getValue() +")"));
+  default MutableText getFullName() {
+    if (this.getValue() != null) {
+      return Text.translatable(this.getTranslationKey()).append(Text.literal(" (" + this.getValue() + ")"));
     }
     return Text.translatable(this.getTranslationKey());
   }
+
   String getTranslationKey();
+
   @Nullable String getValue();
+
   void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker);
 }

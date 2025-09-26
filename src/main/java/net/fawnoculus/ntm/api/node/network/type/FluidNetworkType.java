@@ -4,8 +4,8 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.minecraft.util.Identifier;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class FluidNetworkType implements NetworkType {
@@ -15,7 +15,7 @@ public class FluidNetworkType implements NetworkType {
   private FluidNetworkType() {
   }
 
-  public static FluidNetworkType get(){
+  public static FluidNetworkType get() {
     return INSTANCE;
   }
 
@@ -25,22 +25,7 @@ public class FluidNetworkType implements NetworkType {
   }
 
   @Override
-  public void setNetwork(UUID uuid, NodeNetwork network) {
-    FLUID_NETWORKS.put(uuid, network);
-  }
-
-  @Override
-  public void removeNetwork(UUID uuid) {
-    FLUID_NETWORKS.remove(uuid);
-  }
-
-  @Override
-  public NodeNetwork getNetwork(UUID uuid) {
-    return FLUID_NETWORKS.getOrDefault(uuid, this.makeNewNetwork());
-  }
-
-  @Override
-  public Collection<NodeNetwork> getAllNetworks() {
-    return FLUID_NETWORKS.values();
+  public Map<UUID, NodeNetwork> networks() {
+    return FLUID_NETWORKS;
   }
 }

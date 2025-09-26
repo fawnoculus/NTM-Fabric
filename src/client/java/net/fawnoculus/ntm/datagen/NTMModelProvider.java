@@ -333,14 +333,14 @@ public class NTMModelProvider extends FabricModelProvider {
       );
   }
 
-  public static TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
+  public static final TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
   public static final TexturedModel.Factory SIMPLE_BARREL = TexturedModel.makeFactory(
     block -> new TextureMap().put(BARREL_TEXTURE_KEY, TextureMap.getId(block)),
     new Model(Optional.empty(), Optional.empty(), BARREL_TEXTURE_KEY)
   );
 
   public static void registerForAdvancedModel(@NotNull BlockStateModelGenerator blockStateModelGenerator, Block block) {
-    // In order for the Model overrides to work there just needs to be any model for the specified item
+    // In order for the Model3d overrides to work there just needs to be any model for the specified item
     // So we just give it an empty model
     blockStateModelGenerator.registerSingleton(block, EMPTY_BLOCK_MODEL);
   }

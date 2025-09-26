@@ -4,8 +4,8 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.minecraft.util.Identifier;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class EnergyNetworkType implements NetworkType {
@@ -15,7 +15,7 @@ public class EnergyNetworkType implements NetworkType {
   private EnergyNetworkType() {
   }
 
-  public static EnergyNetworkType get(){
+  public static EnergyNetworkType get() {
     return INSTANCE;
   }
 
@@ -25,22 +25,7 @@ public class EnergyNetworkType implements NetworkType {
   }
 
   @Override
-  public void setNetwork(UUID uuid, NodeNetwork network) {
-    ENERGY_NETWORKS.put(uuid, network);
-  }
-
-  @Override
-  public void removeNetwork(UUID uuid) {
-    ENERGY_NETWORKS.remove(uuid);
-  }
-
-  @Override
-  public NodeNetwork getNetwork(UUID uuid) {
-    return ENERGY_NETWORKS.getOrDefault(uuid, this.makeNewNetwork());
-  }
-
-  @Override
-  public Collection<NodeNetwork> getAllNetworks() {
-    return ENERGY_NETWORKS.values();
+  public Map<UUID, NodeNetwork> networks() {
+    return ENERGY_NETWORKS;
   }
 }

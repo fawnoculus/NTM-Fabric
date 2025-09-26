@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public interface HoverTooltipBlock {
-  default boolean shouldDisplayTooltip(World world, BlockPos pos, BlockState state){
+  default boolean shouldDisplayTooltip(World world, BlockPos pos, BlockState state) {
     return true;
   }
 
-  default List<Text> getTooltip(World world, BlockPos pos, BlockState state){
+  default List<Text> getTooltip(World world, BlockPos pos, BlockState state) {
     List<Text> tooltip = new ArrayList<>();
-    try{
+    try {
       this.appendHoverTooltip(world, pos, state, tooltip::add);
     } catch (Throwable throwable) {
       tooltip.add(Text.translatable("error.ntm.while.block_hover_tooltip").formatted(Formatting.RED));

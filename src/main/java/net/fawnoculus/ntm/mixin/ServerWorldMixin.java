@@ -24,34 +24,39 @@ import java.util.HashMap;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder {
-  @Shadow public abstract ServerWorld toServerWorld();
+  @Shadow
+  public abstract ServerWorld toServerWorld();
 
-  @Shadow @Final EntityList entityList;
+  @Shadow
+  @Final
+  EntityList entityList;
 
   @Shadow
   @NotNull
   public abstract MinecraftServer getServer();
 
-  @Unique private final HashMap<ChunkPos ,RadiationProcessor> radiationProcessors = new HashMap<>();
-  @Unique private final HashMap<RadiationProcessor ,ChunkPos> ChunkPositions = new HashMap<>();
+  @Unique
+  private final HashMap<ChunkPos, RadiationProcessor> radiationProcessors = new HashMap<>();
+  @Unique
+  private final HashMap<RadiationProcessor, ChunkPos> ChunkPositions = new HashMap<>();
 
   @Inject(at = @At("TAIL"), method = "tick")
   private void tickStuff(CallbackInfo ci) {
-    if(this.getServer().getTickManager().shouldTick()){
+    if (this.getServer().getTickManager().shouldTick()) {
       Profiler profiler = Profilers.get();
 
-      profiler.push("radiationManager");
+      profiler.push("[NTM] radiationManager");
       RadiationManager.getInstance().tick(this.toServerWorld(), this.entityList);
       profiler.pop();
 
-      profiler.push("nodeNetworks");
+      profiler.push("[NTM] nodeNetworks");
       NodeNetworkManager.tickNetworks();
       profiler.pop();
     }
   }
 
   @Override
-  public Collection<RadiationProcessor> NTM$getRadiationProcessors(){
+  public Collection<RadiationProcessor> NTM$getRadiationProcessors() {
     return radiationProcessors.values();
   }
 
@@ -74,7 +79,7 @@ public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder 
   }
 
   @Override
-  public void NTM$removeRadiationProcessor(RadiationProcessor processor){
+  public void NTM$removeRadiationProcessor(RadiationProcessor processor) {
     ChunkPos chunkPos = ChunkPositions.get(processor);
     ChunkPositions.remove(processor);
     radiationProcessors.remove(chunkPos);

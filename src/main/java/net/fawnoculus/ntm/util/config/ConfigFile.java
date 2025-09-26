@@ -22,8 +22,7 @@ public class ConfigFile {
   public boolean initialized = false;
 
 
-
-  public ConfigFile(String subPath, ConfigFileType configFileType, @Nullable Logger logger){
+  public ConfigFile(String subPath, ConfigFileType configFileType, @Nullable Logger logger) {
     this(FabricLoader.getInstance().getConfigDir().resolve(subPath).toAbsolutePath(), configFileType, logger);
   }
 
@@ -37,6 +36,7 @@ public class ConfigFile {
       this.CONFIG_FILE = new File(path + configFileType.getFileExtension());
     }
   }
+
   public void readFile() {
     List<Option<?>> readOptions = this.options;
 
@@ -76,13 +76,13 @@ public class ConfigFile {
     if (initialized) {
       throw new IllegalStateException("Config File already Initialized");
     }
-    if(CONFIG_FILE.exists()) readFile();
+    if (CONFIG_FILE.exists()) readFile();
     writeFile();
 
     initialized = true;
   }
 
-  public List<Option<?>> getAllOptions(){
+  public List<Option<?>> getAllOptions() {
     return List.copyOf(options);
   }
 
@@ -106,7 +106,7 @@ public class ConfigFile {
    * @param comment      Optional Comment (use "null" for no Comment)
    */
   public BooleanOption newBooleanOption(String name, Boolean defaultValue, @Nullable String comment, Option.ExtraType extraType) {
-    if(comment != null) comment += " [Default: " + defaultValue + "]";
+    if (comment != null) comment += " [Default: " + defaultValue + "]";
 
     BooleanOption option = new BooleanOption(this, name, defaultValue, comment);
     option.setExtraType(extraType);
@@ -145,7 +145,7 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public DoubleOption newDoubleOption(String name, Double defaultValue, @Nullable String comment, Double min, Double max) {
-    if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
+    if (comment != null) comment += "[min: " + min + "; max: " + max + "]";
 
     return newDoubleOption(name, defaultValue, comment, new Option.ExtraType.FloatRange(min, max));
   }
@@ -181,7 +181,7 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public FloatOption newFloatOption(String name, Float defaultValue, @Nullable String comment, Float min, Float max) {
-    if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
+    if (comment != null) comment += "[min: " + min + "; max: " + max + "]";
 
     return newFloatOption(name, defaultValue, comment, new Option.ExtraType.FloatRange(min, max));
   }
@@ -217,7 +217,7 @@ public class ConfigFile {
    * @param max          Maximum allowed Value
    */
   public IntegerOption newIntegerOption(String name, Integer defaultValue, @Nullable String comment, Integer min, Integer max) {
-    if (comment != null) comment += "[min: "+ min +"; max: "+ max +"]";
+    if (comment != null) comment += "[min: " + min + "; max: " + max + "]";
 
     return newIntegerOption(name, defaultValue, comment, new Option.ExtraType.IntRange(min, max));
   }
@@ -263,7 +263,7 @@ public class ConfigFile {
       comment += "]";
     }
 
-    return newStringOption(name, defaultValue, comment,  new Option.ExtraType.AllowedValues(allowedValues));
+    return newStringOption(name, defaultValue, comment, new Option.ExtraType.AllowedValues(allowedValues));
   }
 
   /**
@@ -292,10 +292,11 @@ public class ConfigFile {
   public StringOption newBlockOption(String name, String defaultValue, @Nullable String comment) {
     return newStringOption(name, defaultValue, comment, new Option.ExtraType.BlockOption());
   }
+
   /**
-   * @param name Name of the Option
+   * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
-   * @param comment Optional Comment (use "null" for no Comment)
+   * @param comment      Optional Comment (use "null" for no Comment)
    */
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment, Option.ExtraType extraType) {
     if (comment != null) comment += " [Default: " + defaultValue + "]";
@@ -305,6 +306,7 @@ public class ConfigFile {
     addAndValidateOption(option);
     return option;
   }
+
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -313,6 +315,7 @@ public class ConfigFile {
   public StringListOption newStringListOption(String name, List<String> defaultValue, @Nullable String comment) {
     return newStringListOption(name, defaultValue, comment, new Option.ExtraType.Generic());
   }
+
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to
@@ -321,6 +324,7 @@ public class ConfigFile {
   public StringListOption newItemListOption(String name, List<String> defaultValue, @Nullable String comment) {
     return newStringListOption(name, defaultValue, comment, new Option.ExtraType.ItemOption());
   }
+
   /**
    * @param name         Name of the Option
    * @param defaultValue the Value that the Option will default to

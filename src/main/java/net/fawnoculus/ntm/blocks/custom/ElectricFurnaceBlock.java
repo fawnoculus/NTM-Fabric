@@ -31,9 +31,10 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
   public ElectricFurnaceBlock(Settings settings) {
     super(settings);
     setDefaultState(this.getDefaultState()
-        .with(LIT, false)
-        .with(FACING, Direction.NORTH));
+      .with(LIT, false)
+      .with(FACING, Direction.NORTH));
   }
+
   public static final BooleanProperty LIT = Properties.LIT;
   public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
 
@@ -55,7 +56,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
 
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
-    if(world.isClient()) return null;
+    if (world.isClient()) return null;
     return validateTicker(type, NTMBlockEntities.ELECTRIC_FURNACE_BE, ElectricFurnaceBE::tick);
   }
 
@@ -64,7 +65,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
     if (!(world.getBlockEntity(pos) instanceof ElectricFurnaceBE electricFurnaceBE)) {
       return ActionResult.FAIL;
     }
-    if(world.isClient){
+    if (world.isClient) {
       return ActionResult.SUCCESS;
     }
 
@@ -81,7 +82,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
 
   @Override
   public BlockState getPlacementState(ItemPlacementContext context) {
-    if(context.getPlayer() != null){
+    if (context.getPlayer() != null) {
       return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
     }
     return this.getDefaultState();

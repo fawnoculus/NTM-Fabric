@@ -5,7 +5,7 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 public class NTMConfiguredFeatures {
-  public static void initialize(Registerable<ConfiguredFeature<?, ?>> context){
+  public static void initialize(Registerable<ConfiguredFeature<?, ?>> context) {
     NTMOreConfiguredFeatures.initialize(context);
   }
 }

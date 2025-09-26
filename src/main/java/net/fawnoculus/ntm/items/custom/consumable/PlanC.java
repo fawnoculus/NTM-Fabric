@@ -12,13 +12,13 @@ public class PlanC extends TooltipItem {
   public PlanC(Settings settings) {
     super(settings);
   }
-  
+
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    if(world instanceof ServerWorld serverWorld){
-      if(!user.isInCreativeMode()){
+    if (world instanceof ServerWorld serverWorld) {
+      if (!user.isInCreativeMode()) {
         EntityUtil.applyDamage(user, serverWorld, NTMDamageTypes.EUTHANIZED, Float.MAX_VALUE);
-      }else {
+      } else {
         EntityUtil.applyDamage(user, serverWorld, NTMDamageTypes.EUTHANIZED, 10);
       }
     }

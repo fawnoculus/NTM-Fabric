@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.render.wavefront;
 
 import net.fawnoculus.ntm.NTMClient;
+import net.fawnoculus.ntm.render.wavefront.model.MultiMultiModel3d;
+import net.fawnoculus.ntm.render.wavefront.model.SingleModel3d;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.Resource;
@@ -14,15 +16,15 @@ import java.util.regex.Pattern;
 public class ModelHandler {
   private static final Pattern anyButFloats = Pattern.compile("[^.0-9\\-]+");
 
-  public static MultiModel3D ofWavefrontObj(Identifier resourceIdentifier) {
-    MultiModel3D toBeReturned = new MultiModel3D();
+  public static MultiMultiModel3d ofWavefrontObj(Identifier resourceIdentifier) {
+    MultiMultiModel3d toBeReturned = new MultiMultiModel3d();
     Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(resourceIdentifier);
-    if(resource.isEmpty()){
+    if (resource.isEmpty()) {
       NTMClient.LOGGER.warn("Could not load '{}' (.obj) File, because it does not exist", resourceIdentifier);
-    }else{
-      try{
+    } else {
+      try {
         toBeReturned = ofWavefrontObj(new Scanner(resource.get().getInputStream()), resourceIdentifier.toString());
-      }catch (WavefrontSyntaxException e){
+      } catch (WavefrontSyntaxException e) {
         NTMClient.LOGGER.warn("Exception occurred while parsing '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
       } catch (IOException e) {
         NTMClient.LOGGER.warn("Exception occurred while trying to read '{}' (.obj) File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
@@ -32,7 +34,7 @@ public class ModelHandler {
     return toBeReturned;
   }
 
-  public static MultiModel3D ofWavefrontObj(@NotNull Scanner scanner, String name) throws WavefrontSyntaxException {
+  public static MultiMultiModel3d ofWavefrontObj(@NotNull Scanner scanner, String name) throws WavefrontSyntaxException {
     List<GeometryVertex> geometryVertices = new ArrayList<>();
     List<TextureCoordinate> textureCoordinates = new ArrayList<>();
     List<VertexNormal> vertexNormals = new ArrayList<>();
@@ -45,19 +47,19 @@ public class ModelHandler {
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
       if (line.startsWith("#")
-          || line.startsWith("l")
-          || line.startsWith("s")
-          || line.startsWith("vp")
+        || line.startsWith("l")
+        || line.startsWith("s")
+        || line.startsWith("vp")
       ) {
         continue;
       }
-      if(line.startsWith("o ")){
+      if (line.startsWith("o ")) {
         groupedFaces.get(object).put(group, faceIndices);
         object = line.substring(2);
         groupedFaces.put(object, new HashMap<>());
         faceIndices = new ArrayList<>();
       }
-      if(line.startsWith("g ")){
+      if (line.startsWith("g ")) {
         groupedFaces.get(object).put(group, faceIndices);
         group = line.substring(2);
         faceIndices = new ArrayList<>();
@@ -80,22 +82,22 @@ public class ModelHandler {
     }
     groupedFaces.get(object).put(group, faceIndices);
 
-    MultiModel3D multiModel = new MultiModel3D(name);
-    for(String objectName : groupedFaces.keySet()){
-      for(String groupName : groupedFaces.get(objectName).keySet()){
-        List<PolygonalFace> polygonalFaces = new ArrayList<>();
-        for(FaceIndex faceIndex : groupedFaces.get(objectName).get(groupName)){
-          PolygonalFace polygonalFace = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
-          if(polygonalFace.isInValid()){
-            NTMClient.LOGGER.warn("Created Invalid Polygonal Face: {}", polygonalFace);
+    MultiMultiModel3d multiMultiModel3D = new MultiMultiModel3d(name);
+    for (String objectName : groupedFaces.keySet()) {
+      for (String groupName : groupedFaces.get(objectName).keySet()) {
+        List<Polygon> polygons = new ArrayList<>();
+        for (FaceIndex faceIndex : groupedFaces.get(objectName).get(groupName)) {
+          Polygon polygon = faceIndex.toFace(geometryVertices, textureCoordinates, vertexNormals);
+          if (polygon.isInValid()) {
+            NTMClient.LOGGER.warn("Created Invalid Polygonal Face: {}", polygon);
           }
-          polygonalFaces.add(polygonalFace);
+          polygons.add(polygon);
         }
-        multiModel.addModel(objectName, groupName, new Model3D(polygonalFaces));
+        multiMultiModel3D.addModel(objectName, groupName, new SingleModel3d(polygons));
       }
     }
 
-    return multiModel;
+    return multiMultiModel3D;
   }
 
   private static @NotNull TextureCoordinate getTextureCoordinate(String line) {
@@ -103,7 +105,6 @@ public class ModelHandler {
     stringReader.useDelimiter(anyButFloats);
     float u;
     float v = 0;
-    float w = 0;
     if (!stringReader.hasNextFloat()) {
       throw new WavefrontSyntaxException("Malformed Texture Coordinate, did not specify required value U");
     }
@@ -111,11 +112,9 @@ public class ModelHandler {
     if (stringReader.hasNextFloat()) {
       v = stringReader.nextFloat();
     }
-    if (stringReader.hasNextFloat()) {
-      w = stringReader.nextFloat();
-    }
-    return new TextureCoordinate(u, v, w);
+    return new TextureCoordinate(u, v);
   }
+
   public static @NotNull VertexNormal getVertexNormal(String line) {
     Scanner stringReader = new Scanner(new StringReader(line));
     stringReader.useDelimiter(anyButFloats);
@@ -136,6 +135,7 @@ public class ModelHandler {
 
     return new VertexNormal(u, v, w);
   }
+
   public static @NotNull GeometryVertex getGeometryVertex(String line) {
     Scanner stringReader = new Scanner(new StringReader(line));
     stringReader.useDelimiter(anyButFloats);
@@ -160,14 +160,16 @@ public class ModelHandler {
     }
     return new GeometryVertex(x, y, z, w);
   }
+
   private static final Collection<Character> digits = List.of('-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+
   public static @NotNull FaceIndex getFaceIndex(String line) {
     // After 5 hours of the Scanner with a Delimiter not cooperating, I have decided to do whatever this shit is
     // it is bad & I know it
     // am I going to fix it?
     // absolutely not, I will not spend even more time ting to fix this
     Stack<Character> stack = new Stack<>();
-    for(Character c : new StringBuilder(line).reverse().toString().toCharArray()){
+    for (Character c : new StringBuilder(line).reverse().toString().toCharArray()) {
       stack.push(c);
     }
 
@@ -175,32 +177,35 @@ public class ModelHandler {
     List<Integer> coordinateIndices = new ArrayList<>();
     List<Integer> normalIndices = new ArrayList<>();
 
-    while (!stack.isEmpty()){
-      switch (stack.peek()){
-        case '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> handleIndices(stack, vertexIndices, coordinateIndices, normalIndices);
-        case '/' -> throw new WavefrontSyntaxException("Malformed Vertex Index, did not specify Index before Separator");
+    while (!stack.isEmpty()) {
+      switch (stack.peek()) {
+        case '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ->
+          handleIndices(stack, vertexIndices, coordinateIndices, normalIndices);
+        case '/' ->
+          throw new WavefrontSyntaxException("Malformed Vertex Index, did not specify Index before Separator");
         default -> stack.pop();
       }
     }
 
     return new FaceIndex(vertexIndices, coordinateIndices, normalIndices);
   }
-  private static void handleIndices(Stack<Character> stack, List<Integer> vertexIndices, List<Integer> coordinateIndices, List<Integer> normalIndices){
+
+  private static void handleIndices(Stack<Character> stack, List<Integer> vertexIndices, List<Integer> coordinateIndices, List<Integer> normalIndices) {
     Integer vertex;
     Integer coordinate = null;
     Integer normal = null;
 
     vertex = makeNum(stack);
     while (!stack.isEmpty() && !(digits.contains(stack.peek()) || stack.peek() == '/')) stack.pop();
-    if(!stack.isEmpty() && stack.peek() == '/'){
+    if (!stack.isEmpty() && stack.peek() == '/') {
       stack.pop();
-      if(!stack.isEmpty() && digits.contains(stack.peek())){
+      if (!stack.isEmpty() && digits.contains(stack.peek())) {
         coordinate = makeNum(stack);
       }
       while (!stack.isEmpty() && !(digits.contains(stack.peek()) || stack.peek() == '/')) stack.pop();
-      if(!stack.isEmpty() && stack.peek() == '/'){
+      if (!stack.isEmpty() && stack.peek() == '/') {
         stack.pop();
-        if(!stack.isEmpty() && digits.contains(stack.peek())){
+        if (!stack.isEmpty() && digits.contains(stack.peek())) {
           normal = makeNum(stack);
         }
       }
@@ -211,9 +216,9 @@ public class ModelHandler {
     normalIndices.add(normal);
   }
 
-  private static Integer makeNum(Stack<Character> stack){
+  private static Integer makeNum(Stack<Character> stack) {
     StringBuilder builder = new StringBuilder();
-    while (!stack.isEmpty() && digits.contains(stack.peek())){
+    while (!stack.isEmpty() && digits.contains(stack.peek())) {
       builder.append(stack.pop());
     }
     return Integer.parseInt(builder.toString()) - 1;

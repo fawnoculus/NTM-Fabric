@@ -1,5 +1,5 @@
 ## Stuff that was changed from the Original:
-(The original version of textures and translations will be available through a built-in resource pack)
+(Some of the original version of textures and translations will be available through a built-in resource pack)
 
 #### Textures:
 - Industrial Copper -> Standard Minecraft Copper
@@ -25,7 +25,7 @@
 - Spark Ludicrous Physics-Defying Energy Storage Unit -> Spark Ludicrous Energy Storage Unit
 - Explosion Effect: from "! ! !" to "Explosion"
 
-Main Reason for changing names is that the old names where really long & the item ids that we use are usually just the item name with underscores for spaces & in lowercase,
+Main Reason for changing names is that the old names where really long & the item ids that we use are (usually) just the english item name with underscores for spaces & in lowercase,
 however really long item ids can be very annoying so in order to not break consistency things with long names get renamed to have a slightly shorter name
 
 #### Features:

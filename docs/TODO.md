@@ -1,12 +1,17 @@
-# Important Features
+# Misc
+- Rei Compat (would love to also doe JEI & EMI, but they are still stuck on 1.21.1)
+
+# Features
+## Important Features
 - Custom Render Code for advanced Models (compatible with the format of the Original Mod if Possible)
 - Energy System (HE) & Cables/Pylons
 - Fluid/Gas System & Pipes
 - Atmosphere System & Gases in the Environment
+- Multiblock in one Block (aka: Blocks that are bigger then one block)
 - ~~Radioactivity~~
 - MuliBlock Machine System
 - Heat System for Machines
-- Working Ores and Deposits
+- Working Ores and Deposits (Still need to configure ore distribution)
 - ~~Advanced Tools (Abilities, Weapon modifiers, ...)~~ (THEY CHANGED IT, this needs a rework already)
 - Special Text Box in the Top Left
 - Item Help (aka: [Press F1 for Help])
@@ -14,7 +19,7 @@
 - ~~Working Config File(s)~~
 - ~~Advanced Message System~~
 
-# Regular Features
+## Regular Features
 ### Single Block Machines
 - Press
 - Anvils
@@ -106,7 +111,7 @@
 - ICF (Inertial Confinement Fusion Reactor)
 - DFC (Dark Fusion Reactor)
 
-# Optional Features
+## Optional Features
 - Old NTM Features aka: stuff that will likely be removed from the Original Mod (like the old Bedrock Ore System as a Gamerule, The old Particle Accelerator, Joke Blocks/Items/Entitys)
 - ReaSim RBMK
 - Custom Machine Features from the Original Mod

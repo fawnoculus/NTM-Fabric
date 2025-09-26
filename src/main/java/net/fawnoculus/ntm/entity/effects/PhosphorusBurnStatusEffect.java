@@ -12,7 +12,7 @@ public class PhosphorusBurnStatusEffect  extends StatusEffect {
 
   @Override
   public boolean canApplyUpdateEffect(int duration, int amplifier) {
-    return duration % 20 == 0 && duration > 0;
+    return duration % 10 == 0 && duration > 0;
   }
 
   @Override

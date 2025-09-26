@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class HazmatRegistry {
   private static final HazmatRegistry INSTANCE = new HazmatRegistry();
 
-  public static HazmatRegistry getInstance(){
+  public static HazmatRegistry getInstance() {
     return INSTANCE;
   }
 
@@ -41,11 +41,11 @@ public class HazmatRegistry {
 
   private void loadOverrides() {
     File file = FabricLoader.getInstance().getConfigDir().resolve("ntm/overrides/hazmat.json").toFile();
-    if(!file.exists()){
-      try{
+    if (!file.exists()) {
+      try {
         boolean ignored = file.getParentFile().mkdirs();
         boolean newFile = file.createNewFile();
-        if(newFile){
+        if (newFile) {
           NTM.LOGGER.info("Created Hazmat Overrides File");
           try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write("{\n");
@@ -56,28 +56,28 @@ public class HazmatRegistry {
           } catch (Exception e) {
             NTM.LOGGER.error("An Exception occurred while trying write Examples to Hazmat Overrides File\nException:{}", ExceptionUtil.makePretty(e));
           }
-        }else {
+        } else {
           NTM.LOGGER.warn("Failed to crate Hazmat Overrides File");
         }
-      }catch (Exception e){
+      } catch (Exception e) {
         NTM.LOGGER.error("An Exception occurred while trying to crate Hazmat Overrides File\nException:{}", ExceptionUtil.makePretty(e));
       }
       return;
     }
     JsonObject overrides = new JsonObject();
-    try{
+    try {
       FileReader fileReader = new FileReader(file);
       overrides = JsonUtil.jsonFromReader(fileReader);
-    }catch (Exception e){
+    } catch (Exception e) {
       NTM.LOGGER.error("An Exception occurred while trying read Hazmat Overrides File\nException:{}", ExceptionUtil.makePretty(e));
     }
 
-    for(String key : overrides.keySet()){
-      try{
+    for (String key : overrides.keySet()) {
+      try {
         Identifier identifier = Identifier.of(key);
         Double value = overrides.get(key).getAsDouble();
         hazmatOverrides.put(identifier, value);
-      }catch (Exception e){
+      } catch (Exception e) {
         NTM.LOGGER.error("An Exception occurred while trying parse Hazmat Overrides for {}\nException:{}", key, ExceptionUtil.makePretty(e));
       }
     }
@@ -85,27 +85,33 @@ public class HazmatRegistry {
     NTM.LOGGER.info("Successfully loaded Hazmat Overrides for {} identifier(s)", hazmatOverrides.size());
   }
 
-  public double getResistance(LivingEntity entity){
+  public double getResistance(LivingEntity entity) {
     double resistance = 0;
-    if(entity instanceof EquipmentHolder equipmentHolder){
-      try{
+    if (entity instanceof EquipmentHolder equipmentHolder) {
+      try {
         resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.HEAD));
-      }catch (Throwable ignored){}
-      try{
+      } catch (Throwable ignored) {
+      }
+      try {
         resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.CHEST));
-      }catch (Throwable ignored){}
-      try{
+      } catch (Throwable ignored) {
+      }
+      try {
         resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.LEGS));
-      }catch (Throwable ignored){}
-      try{
+      } catch (Throwable ignored) {
+      }
+      try {
         resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.FEET));
-      }catch (Throwable ignored){}
-      try{
+      } catch (Throwable ignored) {
+      }
+      try {
         resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.BODY));
-      }catch (Throwable ignored){}
-      try{
+      } catch (Throwable ignored) {
+      }
+      try {
         resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.SADDLE));
-      }catch (Throwable ignored){}
+      } catch (Throwable ignored) {
+      }
     }
     return resistance;
   }
@@ -113,9 +119,11 @@ public class HazmatRegistry {
   public double getResistance(ItemStack stack) {
     return getResistance(stack.getItem()) * stack.getCount();
   }
+
   public double getResistance(Item item) {
     return getResistance(Registries.ITEM.getId(item));
   }
+
   public double getResistance(Identifier identifier) {
     Double override = hazmatOverrides.get(identifier);
     if (override != null) {
@@ -127,9 +135,11 @@ public class HazmatRegistry {
   public void register(Block block, double milliRads) {
     this.register(Registries.BLOCK.getId(block), milliRads);
   }
+
   public void register(Item item, double milliRads) {
     this.register(Registries.ITEM.getId(item), milliRads);
   }
+
   public void register(Identifier identifier, double milliRads) {
     this.hazmatGetter.put(identifier, milliRads);
   }
@@ -156,12 +166,12 @@ public class HazmatRegistry {
 
     public static JsonObject encode(HazmatRegistry.Serialized registry) {
       JsonObject hazmatGetter = new JsonObject();
-      for(Identifier key : registry.hazmatGetter().keySet()){
+      for (Identifier key : registry.hazmatGetter().keySet()) {
         Double value = registry.hazmatGetter().get(key);
         hazmatGetter.add(key.toString(), new JsonPrimitive(value));
       }
       JsonObject radioactivityOverrides = new JsonObject();
-      for(Identifier key : registry.hazmatOverrides().keySet()){
+      for (Identifier key : registry.hazmatOverrides().keySet()) {
         Double value = registry.hazmatOverrides().get(key);
         radioactivityOverrides.add(key.toString(), new JsonPrimitive(value));
       }
@@ -175,13 +185,13 @@ public class HazmatRegistry {
       JsonObject jsonHazmatGetter = json.get("hazmatGetter").getAsJsonObject();
       JsonObject jsonHazmatOverrides = json.get("hazmatOverrides").getAsJsonObject();
       HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
-      for(String key : jsonHazmatGetter.keySet()){
+      for (String key : jsonHazmatGetter.keySet()) {
         Identifier identifier = Identifier.of(key);
         Double value = jsonHazmatGetter.get(key).getAsDouble();
         hazmatGetter.put(identifier, value);
       }
       HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
-      for(String key : jsonHazmatOverrides.keySet()){
+      for (String key : jsonHazmatOverrides.keySet()) {
         Identifier identifier = Identifier.of(key);
         Double value = jsonHazmatOverrides.get(key).getAsDouble();
         hazmatOverrides.put(identifier, value);

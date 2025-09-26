@@ -33,22 +33,22 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
     double toBeSpreadRadiation = (this.activeRadiation + this.passiveRadiation) / 5; // one fifth of total radiation is to be spread
 
     this.activeRadiation = (this.activeRadiation / 5) * 4; // remove one third of active radiation
-    if(this.activeRadiation < 1){
+    if (this.activeRadiation < 1) {
       this.activeRadiation = 0; // remove all active radiation of there is less than 1 milliRAD/s
     }
 
     double spreadRadiationPerChunk = toBeSpreadRadiation / 4; // one fifth of the to be spread radiation is lost
 
-    if(radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x - 1, this.POS.z)) instanceof SimpleRadiationProcessor processor){
+    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x - 1, this.POS.z)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
-    if(radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x + 1, this.POS.z)) instanceof SimpleRadiationProcessor processor){
+    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x + 1, this.POS.z)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
-    if(radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z - 1)) instanceof SimpleRadiationProcessor processor){
+    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z - 1)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
-    if(radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z + 1)) instanceof SimpleRadiationProcessor processor){
+    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z + 1)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
     // if a chunk is not loaded the radiation going into it is also lost
@@ -67,8 +67,8 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
   @Override
   public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {
     this.passiveRadiation = Math.clamp(
-        this.passiveRadiation - radiationRegistry.getRadioactivity(previousState) + radiationRegistry.getRadioactivity(newState),
-        0, Double.MAX_VALUE
+      this.passiveRadiation - radiationRegistry.getRadioactivity(previousState) + radiationRegistry.getRadioactivity(newState),
+      0, Double.MAX_VALUE
     );
   }
 
@@ -82,7 +82,7 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
   @Override
   public void readData(NbtCompound data) {
     String type = data.getString("radiation_processor_type", "no_processor");
-    if(type.equals("simple")){
+    if (type.equals("simple")) {
       this.activeRadiation = data.getDouble("active_radiation", 0.0);
       this.passiveRadiation = data.getDouble("passive_radiation", 0.0);
     }

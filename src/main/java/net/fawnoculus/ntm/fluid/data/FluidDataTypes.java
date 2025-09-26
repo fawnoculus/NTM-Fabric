@@ -36,21 +36,22 @@ public class FluidDataTypes {
   public static final FluidDataType<Boolean> ANTIMATTER = register("antimatter", Codec.BOOL, false, Tooltips::antimatter);
 
 
-  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue, @Nullable FluidDataType.TooltipProvider<T> tooltip){
+  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue, @Nullable FluidDataType.TooltipProvider<T> tooltip) {
     return register(name, codec, defaultValue, tooltip, false);
   }
-  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue, @Nullable FluidDataType.TooltipProvider<T> tooltip, boolean hasExtraInfo){
+
+  private static <T> @NotNull FluidDataType<T> register(String name, Codec<T> codec, @Nullable T defaultValue, @Nullable FluidDataType.TooltipProvider<T> tooltip, boolean hasExtraInfo) {
     return new FluidDataType<>(NTM.id(name), codec, defaultValue, tooltip, hasExtraInfo).register();
   }
 
-  private static class Tooltips{
-    private static void temperature(Double celsius, boolean showExtraInfo, Consumer<Text> tooltip){
+  private static class Tooltips {
+    private static void temperature(Double celsius, boolean showExtraInfo, Consumer<Text> tooltip) {
       Formatting formatting = Formatting.RED;
-      if(celsius < 0){
+      if (celsius < 0) {
         formatting = Formatting.BLUE;
       }
 
-      switch (NTMConfig.TempUnit.getValue()){
+      switch (NTMConfig.TempUnit.getValue()) {
         case "Celsius" -> tooltip.accept(
           Text.literal(String.format("%,.1f", celsius)).append(Text.translatable("generic.ntm.temp.c")).formatted(formatting)
         );
@@ -64,43 +65,45 @@ public class FluidDataTypes {
     }
 
     // Helper
-    private static Text thermalCapacity(Double tuPerDroplet){
+    private static Text thermalCapacity(Double tuPerDroplet) {
       return switch (NTMConfig.FluidUnit.getValue()) {
-        case "MilliBuckets" -> Text.translatable("fluid_tooltip.ntm.thermal_capacity", FluidUnit.dropletsToMB(tuPerDroplet), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.RED);
-        case "Droplets" -> Text.translatable("fluid_tooltip.ntm.thermal_capacity", tuPerDroplet, Text.translatable("generic.ntm.fluid.droplets")).formatted(Formatting.RED);
+        case "MilliBuckets" ->
+          Text.translatable("fluid_tooltip.ntm.thermal_capacity", FluidUnit.dropletsToMB(tuPerDroplet), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.RED);
+        case "Droplets" ->
+          Text.translatable("fluid_tooltip.ntm.thermal_capacity", tuPerDroplet, Text.translatable("generic.ntm.fluid.droplets")).formatted(Formatting.RED);
         default -> Text.empty();
       };
     }
 
     // Helper
-    private static Text efficiency(Double multiplier){
+    private static Text efficiency(Double multiplier) {
       return Text.translatable("fluid_tooltip.ntm.efficiency", String.format("%1$.0f", multiplier * 100)).formatted(Formatting.AQUA);
     }
 
     private static void boilable(HeatingData data, boolean showExtraInfo, Consumer<Text> tooltip) {
-      if(!showExtraInfo) return;
+      if (!showExtraInfo) return;
       tooltip.accept(thermalCapacity(data.tuPerDroplet()));
-      if(data.isBoilable()){
+      if (data.isBoilable()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.boilable", efficiency(data.boilingMultiplier())).formatted(Formatting.YELLOW)
         );
       }
-      if(data.isHeatable()){
+      if (data.isHeatable()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.heatable", efficiency(data.heatingMultiplier())).formatted(Formatting.YELLOW)
         );
       }
-      if(data.isPwrCoolant()){
+      if (data.isPwrCoolant()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.pwr_coolant", efficiency(data.pwrCoolantMultiplier())).formatted(Formatting.YELLOW)
         );
       }
-      if(data.isIcfCoolant()){
+      if (data.isIcfCoolant()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.icf_coolant", efficiency(data.icfCoolantMultiplier())).formatted(Formatting.YELLOW)
         );
       }
-      if(data.isParticleAcceleratorCoolant()){
+      if (data.isParticleAcceleratorCoolant()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.particle_accelerator_coolant", efficiency(data.particleAcceleratorCoolantMultiplier())).formatted(Formatting.YELLOW)
         );
@@ -108,14 +111,14 @@ public class FluidDataTypes {
     }
 
     private static void coolable(CoolingData data, boolean showExtraInfo, Consumer<Text> tooltip) {
-      if(!showExtraInfo) return;
+      if (!showExtraInfo) return;
       tooltip.accept(thermalCapacity(data.tuPerDroplet()));
-      if(data.isTurbineable()){
+      if (data.isTurbineable()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.turbine_steam", efficiency(data.turbineMultiplier())).formatted(Formatting.YELLOW)
         );
       }
-      if(data.isCoolable()){
+      if (data.isCoolable()) {
         tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.coolable", efficiency(data.coolingMultiplier())).formatted(Formatting.YELLOW)
         );
@@ -123,13 +126,13 @@ public class FluidDataTypes {
     }
 
     private static void pwrFluxMultiplier(Double multiplier, boolean showExtraInfo, Consumer<Text> tooltip) {
-      if(multiplier < 0.001 && multiplier > -0.001) return; // No Multipliers under 1%
+      if (multiplier < 0.001 && multiplier > -0.001) return; // No Multipliers under 1%
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.pwr_flux_multiplier").formatted(Formatting.BLUE));
 
-      if(!showExtraInfo) return;
-      if(multiplier < 0){
+      if (!showExtraInfo) return;
+      if (multiplier < 0) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.pwr_flux_multiplier.val", String.format("%1$.0f", multiplier * 100)).formatted(Formatting.BLUE));
-      }else {
+      } else {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.pwr_flux_multiplier.val", String.format("+%1$.0f", multiplier * 100)).formatted(Formatting.BLUE));
       }
     }
@@ -171,29 +174,29 @@ public class FluidDataTypes {
       if (!data.isPolluting()) return;
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.polluting"));
 
-      if(!showExtraInfo) return;
-      if(!data.whenSpilled().isEmpty()){
+      if (!showExtraInfo) return;
+      if (!data.whenSpilled().isEmpty()) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.polluting.spilled").formatted(Formatting.GREEN));
-        for(PollutionData spilled : data.whenSpilled()){
+        for (PollutionData spilled : data.whenSpilled()) {
           tooltip.accept(spilled.getTooltip().formatted(Formatting.GREEN));
         }
       }
-      if(!data.whenBurned().isEmpty()){
+      if (!data.whenBurned().isEmpty()) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.polluting.burned").formatted(Formatting.RED));
-        for(PollutionData spilled : data.whenBurned()){
+        for (PollutionData spilled : data.whenBurned()) {
           tooltip.accept(spilled.getTooltip().formatted(Formatting.RED));
         }
       }
     }
 
-    private static void radioactive(Boolean isRadioactive, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(isRadioactive){
+    private static void radioactive(Boolean isRadioactive, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (isRadioactive) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.radioactive").formatted(Formatting.YELLOW));
       }
     }
 
-    private static void toxicFumes(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo && isModifiedPheromone){
+    private static void toxicFumes(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo && isModifiedPheromone) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.toxic_fumes").formatted(Formatting.GREEN));
       }
     }
@@ -202,13 +205,13 @@ public class FluidDataTypes {
       if (!(showExtraInfo && data.isToxic())) return;
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.toxin").formatted(Formatting.LIGHT_PURPLE));
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.toxin.type", data.type().NAME).formatted(Formatting.YELLOW));
-      if(data.damagePerSec() > 0){
+      if (data.damagePerSec() > 0) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.toxin.dps", data.damagePerSec()).formatted(Formatting.YELLOW));
       }
-      if(!data.effects().isEmpty()){
+      if (!data.effects().isEmpty()) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.toxin.effects").formatted(Formatting.YELLOW));
       }
-      for(StatusEffectInstance effect : data.effects()) {
+      for (StatusEffectInstance effect : data.effects()) {
         tooltip.accept(
           Text.literal(" - ")
             .append(Text.translatable(effect.getTranslationKey()))
@@ -220,56 +223,56 @@ public class FluidDataTypes {
       }
     }
 
-    private static void glyphidPheromones(Boolean isGlyphidPheromone, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(isGlyphidPheromone){
+    private static void glyphidPheromones(Boolean isGlyphidPheromone, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (isGlyphidPheromone) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.glyphid_pheromones").formatted(Formatting.AQUA));
       }
     }
 
-    private static void modifiedPheromones(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(isModifiedPheromone){
+    private static void modifiedPheromones(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (isModifiedPheromone) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.modified_pheromones").formatted(Formatting.BLUE));
       }
     }
 
-    private static void gaseousAtRoomTemperature(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo && isModifiedPheromone){
+    private static void gaseousAtRoomTemperature(Boolean isModifiedPheromone, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo && isModifiedPheromone) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.gaseous_at_room_temperature").formatted(Formatting.BLUE));
       }
     }
 
-    private static void stateOfMatter(StateOfMatter state, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo){
+    private static void stateOfMatter(StateOfMatter state, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo) {
         tooltip.accept(state.TOOLTIP);
       }
     }
 
-    private static void ignoredBySiphon(Boolean isIgnored, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo && isIgnored){
+    private static void ignoredBySiphon(Boolean isIgnored, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo && isIgnored) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.ignored_by_siphon").formatted(Formatting.BLUE));
       }
     }
 
-    private static void breathable(Boolean isViscous, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo && isViscous){
+    private static void breathable(Boolean isViscous, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo && isViscous) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.breathable").formatted(Formatting.AQUA));
       }
     }
 
-    private static void viscous(Boolean isViscous, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo && isViscous){
+    private static void viscous(Boolean isViscous, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo && isViscous) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.viscous").formatted(Formatting.BLUE));
       }
     }
 
-    private static void delicious(Boolean isDelicious, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(showExtraInfo && isDelicious){
+    private static void delicious(Boolean isDelicious, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (showExtraInfo && isDelicious) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.delicious").formatted(Formatting.DARK_GREEN));
       }
     }
 
-    private static void antimatter(Boolean isAntimatter, boolean showExtraInfo, Consumer<Text> tooltip){
-      if(isAntimatter){
+    private static void antimatter(Boolean isAntimatter, boolean showExtraInfo, Consumer<Text> tooltip) {
+      if (isAntimatter) {
         tooltip.accept(Text.translatable("fluid_tooltip.ntm.antimatter").formatted(Formatting.DARK_RED));
       }
     }

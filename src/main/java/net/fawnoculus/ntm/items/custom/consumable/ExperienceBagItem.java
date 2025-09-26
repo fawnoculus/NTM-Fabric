@@ -15,20 +15,20 @@ public class ExperienceBagItem  extends Item {
   public ExperienceBagItem(Settings settings) {
     super(settings);
   }
-  
+
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
-    if(world.isClient()){
+    if (world.isClient()) {
       return ActionResult.SUCCESS;
     }
-    if(!player.isCreative()){
+    if (!player.isCreative()) {
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }
     world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
     player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_EXPERIENCE_BAG));
     player.addExperience(EmptyExperienceBagItem.XP_PER_BAG);
-    
+
     return ActionResult.SUCCESS_SERVER;
   }
 }

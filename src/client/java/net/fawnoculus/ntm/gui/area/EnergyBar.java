@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.gui.area;
 
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.stack.EnergyStack;
-import net.fawnoculus.ntm.render.resources.NTMTextures;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -10,9 +10,9 @@ import org.jetbrains.annotations.Range;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class EnergyBar implements InfoBar{
+public class EnergyBar implements InfoBar {
   @SafeVarargs
-  public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText){
+  public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText) {
     this.X = x;
     this.Y = y;
     this.WIDTH = width;
@@ -28,24 +28,16 @@ public class EnergyBar implements InfoBar{
   private final EnergyStack STACK;
   private final Supplier<Text>[] EXTRA_TEXT;
 
-  private Identifier TEXTURE = NTMTextures.GENERIC_ENERGY_BAR;
-  private int U = 0;
-  private int V = 0;
-  private int TEXTURE_WIDTH = 52;
-  private int TEXTURE_HEIGHT = 52;
+  private static final Identifier TEXTURE = NTM.id("textures/gui/generic/energy_bar.png");
+  private static final int U = 0;
+  private static final int V = 0;
+  private static final int TEXTURE_WIDTH = 52;
+  private static final int TEXTURE_HEIGHT = 52;
 
   private int OFFSET_X;
   private int OFFSET_Y;
 
-  public void setTexture(Identifier texture, int u, int v, int textureWidth, int textureHeight){
-    this.TEXTURE = texture;
-    this.U = u;
-    this.V = v;
-    this.TEXTURE_WIDTH = textureWidth;
-    this.TEXTURE_HEIGHT = textureHeight;
-  }
-
-  public void setOffsets(int offsetX, int offsetY){
+  public void setOffsets(int offsetX, int offsetY) {
     this.OFFSET_X = offsetX;
     this.OFFSET_Y = offsetY;
   }
@@ -82,22 +74,22 @@ public class EnergyBar implements InfoBar{
 
   @Override
   public int getU() {
-    return this.U;
+    return U;
   }
 
   @Override
   public int getV() {
-    return this.V;
+    return V;
   }
 
   @Override
   public int getTextureHeight() {
-    return this.TEXTURE_HEIGHT;
+    return TEXTURE_HEIGHT;
   }
 
   @Override
   public int getTextureWidth() {
-    return this.TEXTURE_WIDTH;
+    return TEXTURE_WIDTH;
   }
 
   @Override
@@ -107,14 +99,14 @@ public class EnergyBar implements InfoBar{
 
     tooltip.accept(Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
 
-    for(Supplier<Text> supplier : EXTRA_TEXT){
+    for (Supplier<Text> supplier : EXTRA_TEXT) {
       tooltip.accept(supplier.get());
     }
   }
 
   @Override
   public Identifier getTexture() {
-    return this.TEXTURE;
+    return TEXTURE;
   }
 
   @Override

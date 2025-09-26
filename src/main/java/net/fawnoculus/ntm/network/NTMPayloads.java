@@ -6,7 +6,7 @@ import net.fawnoculus.ntm.network.c2s.ItemInteractionPayload;
 import net.fawnoculus.ntm.network.s2c.*;
 
 public class NTMPayloads {
-  public static void initialize(){
+  public static void initialize() {
     PayloadTypeRegistry.playS2C().register(AdvancedMessagePayload.ID, AdvancedMessagePayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(RemoveMessagePayload.ID, RemoveMessagePayload.PACKET_CODEC);
     PayloadTypeRegistry.playS2C().register(RemoveAllMessagesPayload.ID, RemoveAllMessagesPayload.PACKET_CODEC);

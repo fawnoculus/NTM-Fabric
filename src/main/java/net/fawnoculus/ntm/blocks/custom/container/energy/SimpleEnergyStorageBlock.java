@@ -36,6 +36,7 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
     setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
     this.MAX_ENERGY = MaxEnergy;
   }
+
   // Extra Constructor for the Codec
   private SimpleEnergyStorageBlock(Settings settings) {
     this(settings, 0);
@@ -58,7 +59,7 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
 
   @Override
   public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-    if(world.isClient) return null;
+    if (world.isClient) return null;
     return validateTicker(type, NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, SimpleEnergyStorageBE::tick);
   }
 
@@ -72,7 +73,7 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
     if (!(world.getBlockEntity(pos) instanceof SimpleEnergyStorageBE energyStorageBE)) {
       return ActionResult.FAIL;
     }
-    if(world.isClient){
+    if (world.isClient) {
       return ActionResult.SUCCESS;
     }
 
@@ -85,7 +86,7 @@ public class SimpleEnergyStorageBlock extends BlockWithEntity implements HoverTo
   protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
     super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
 
-    if(world.getBlockEntity(pos) instanceof SimpleEnergyStorageBE simpleEnergyStorageBE){
+    if (world.getBlockEntity(pos) instanceof SimpleEnergyStorageBE simpleEnergyStorageBE) {
       simpleEnergyStorageBE.onBlockUpdate();
     }
   }

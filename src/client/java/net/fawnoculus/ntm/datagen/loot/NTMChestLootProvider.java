@@ -15,12 +15,12 @@ public class NTMChestLootProvider extends SimpleFabricLootTableProvider {
   public NTMChestLootProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
     super(output, registryLookup, LootContextTypes.CHEST);
   }
-  
+
   @Override
   public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
-  
+
   }
-  
+
   @Override
   public String getName() {
     return NTM.MOD_NAME + " Chest-Loot Provider";

@@ -72,7 +72,9 @@ public class NTMBlocks {
     .sounds(BlockSoundGroup.STONE)
     .mapColor(MapColor.GRAY)
     .strength(2f, 6.0f);
-  private static AbstractBlock.Settings advancedModel(AbstractBlock.@NotNull Settings settings){
+
+  private static AbstractBlock.Settings advancedModel(AbstractBlock.@NotNull Settings settings) {
+
     return settings.nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never);
   }
 
@@ -270,9 +272,6 @@ public class NTMBlocks {
   public static final Block ZIRCONIUM_BLOCK = register("zirconium_block", Block::new, STONE_ORE_SETTINGS);
 
 
-
-
-
   public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new, AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.STONE)
     .strength(2f, 6.0f)
@@ -314,10 +313,11 @@ public class NTMBlocks {
   public static final Block MAGNETIC_BARREL = register("magnetic_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
    */
 
-  private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings){
+  private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
     return register(name, blockFactory, settings, true);
   }
-  private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean registerItem){
+
+  private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean registerItem) {
     RegistryKey<Block> blockKey = keyOfBlock(name);
     Block block = blockFactory.apply(settings.registryKey(blockKey));
 
@@ -329,12 +329,15 @@ public class NTMBlocks {
 
     return Registry.register(Registries.BLOCK, blockKey, block);
   }
-  private static RegistryKey<Block> keyOfBlock(String name){
+
+  private static RegistryKey<Block> keyOfBlock(String name) {
     return RegistryKey.of(RegistryKeys.BLOCK, NTM.id(name));
   }
+
   private static RegistryKey<Item> keyOfItem(String name) {
     return RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));
   }
 
-  public static void initialize() {}
+  public static void initialize() {
+  }
 }

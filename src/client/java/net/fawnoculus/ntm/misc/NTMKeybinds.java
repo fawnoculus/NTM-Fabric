@@ -7,17 +7,18 @@ import org.lwjgl.glfw.GLFW;
 
 public class NTMKeybinds {
   public static final KeyBinding DUCK = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-      "key.ntm.duck",
-      InputUtil.Type.KEYSYM,
-      GLFW.GLFW_KEY_O,
-      "key.category.ntm"
+    "key.ntm.duck",
+    InputUtil.Type.KEYSYM,
+    GLFW.GLFW_KEY_O,
+    "key.category.ntm"
   ));
   public static final KeyBinding DISPLAY_EXTRA_INFO = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-      "key.ntm.extra_info",
-      InputUtil.Type.KEYSYM,
-      GLFW.GLFW_KEY_LEFT_SHIFT,
-      "key.category.ntm"
+    "key.ntm.extra_info",
+    InputUtil.Type.KEYSYM,
+    GLFW.GLFW_KEY_LEFT_SHIFT,
+    "key.category.ntm"
   ));
-  
-  public static void initialize(){}
+
+  public static void initialize() {
+  }
 }

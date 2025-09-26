@@ -23,23 +23,24 @@ public class EmptyExperienceBagItem extends Item {
   public EmptyExperienceBagItem(Settings settings) {
     super(settings);
   }
+
   public static final int XP_PER_BAG = 500;
 
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
-    if(player.totalExperience < XP_PER_BAG){
-      if(!world.isClient()){
+    if (player.totalExperience < XP_PER_BAG) {
+      if (!world.isClient()) {
         ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessagePayload(new AdvancedMessage(
-            NTM.id("empty_xp_bag"),
-            Text.translatable("message.ntm.not_enough_xp").formatted(Formatting.RED),
-            1000.0f)));
+          NTM.id("empty_xp_bag"),
+          Text.translatable("message.ntm.not_enough_xp").formatted(Formatting.RED),
+          1000.0f)));
       }
       return ActionResult.FAIL;
     }
-    if(world.isClient()){
+    if (world.isClient()) {
       return ActionResult.SUCCESS;
     }
-    if(!player.isCreative()){
+    if (!player.isCreative()) {
       ItemStack stack = player.getStackInHand(hand);
       stack.decrement(1);
     }

@@ -1,7 +1,10 @@
+# v0.0.3-alpha
+
 # v0.0.2-alpha
 ## Added:
 * Advanced Message System
 * Energy System (aka: NodeNetworks)
+* Builtin Resource Pack (Legacy Stuff)
 * Batteries
 * Radiation System
 * Node Network System (aka: Energy Cables & Fluid Pipes)

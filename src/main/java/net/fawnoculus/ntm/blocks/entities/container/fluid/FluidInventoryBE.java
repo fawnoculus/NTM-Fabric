@@ -11,10 +11,10 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -109,14 +109,14 @@ public abstract class FluidInventoryBE extends FluidBE implements Inventory {
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    Inventories.writeNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
-    super.writeNbt(nbt, registryLookup);
+  protected void readData(ReadView view) {
+    Inventories.readData(view, this.getInventory().getHeldStacks());
+    super.readData(view);
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
-    Inventories.readNbt(nbt, this.getInventory().getHeldStacks(), registryLookup);
+  protected void writeData(WriteView view) {
+    super.writeData(view);
+    Inventories.writeData(view, this.getInventory().getHeldStacks());
   }
 }

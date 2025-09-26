@@ -20,11 +20,11 @@ public class DestructiveWaffleItem extends Item {
 
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    if(user instanceof ServerPlayerEntity player){
+    if (user instanceof ServerPlayerEntity player) {
       ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(
-          NTM.id("waffle_of_mass_destruction"),
-          Text.literal("Now you would violently Explode, but Nuclear Explosions are not implemented yet").formatted(Formatting.RED),
-          4000.0f)));
+        NTM.id("waffle_of_mass_destruction"),
+        Text.literal("Now you would violently Explode, but Nuclear Explosions are not implemented yet").formatted(Formatting.RED),
+        4000.0f)));
     }
     // TODO: this, once we have Nuclear Explosions
     return super.finishUsing(stack, world, user);

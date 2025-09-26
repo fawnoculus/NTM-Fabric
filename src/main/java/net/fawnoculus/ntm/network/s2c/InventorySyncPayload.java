@@ -19,7 +19,7 @@ public record InventorySyncPayload(BlockPos pos, SimpleInventory inventory) impl
       int size = buf.readVarInt();
 
       SimpleInventory inventory = new SimpleInventory(size);
-      for(int i = 0; i < size; i++){
+      for (int i = 0; i < size; i++) {
         inventory.setStack(i, ItemStack.OPTIONAL_PACKET_CODEC.decode(buf));
       }
 
@@ -30,16 +30,16 @@ public record InventorySyncPayload(BlockPos pos, SimpleInventory inventory) impl
     public void encode(RegistryByteBuf buf, SimpleInventory inventory) {
       buf.writeVarInt(inventory.size());
 
-      for(ItemStack stack : inventory){
+      for (ItemStack stack : inventory) {
         ItemStack.OPTIONAL_PACKET_CODEC.encode(buf, stack);
       }
     }
   };
 
   public static final PacketCodec<RegistryByteBuf, InventorySyncPayload> PACKET_CODEC = PacketCodec.tuple(
-      BlockPos.PACKET_CODEC, InventorySyncPayload::pos,
-      INVENTORY_CODEC, InventorySyncPayload::inventory,
-      InventorySyncPayload::new
+    BlockPos.PACKET_CODEC, InventorySyncPayload::pos,
+    INVENTORY_CODEC, InventorySyncPayload::inventory,
+    InventorySyncPayload::new
   );
 
   @Override

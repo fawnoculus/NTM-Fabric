@@ -16,9 +16,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -51,25 +52,25 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
   public long[] energyChange = new long[20];
   public int energyChangeIndex = 0;
 
-  public static void tick(World world, BlockPos pos, BlockState state, @NotNull SimpleEnergyStorageBE entity) {
+  public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, @NotNull SimpleEnergyStorageBE entity) {
     entity.processBatteries();
     entity.updateEnergyChange();
     entity.markDirty();
   }
 
-  private void processBatteries(){
+  private void processBatteries() {
     ItemStack dischargeStack = getStack(DISCHARGE_SLOT_INDEX);
-    if(dischargeStack.getItem() instanceof EnergyContainingItem energyContainingItem){
+    if (dischargeStack.getItem() instanceof EnergyContainingItem energyContainingItem) {
       energyContainingItem.discharge(dischargeStack, this.energy);
     }
     ItemStack chargeStack = getStack(CHARGE_SLOT_INDEX);
-    if(chargeStack.getItem() instanceof EnergyContainingItem energyContainingItem){
+    if (chargeStack.getItem() instanceof EnergyContainingItem energyContainingItem) {
       energyContainingItem.charge(chargeStack, this.energy);
     }
   }
 
-  private void updateEnergyChange(){
-    if(this.energyChangeIndex >= 20 || this.energyChangeIndex < 0){
+  private void updateEnergyChange() {
+    if (this.energyChangeIndex >= 20 || this.energyChangeIndex < 0) {
       this.energyChangeIndex = 0;
     }
     long energyDifference = this.energy.getValue() - this.previousEnergy;
@@ -78,14 +79,14 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     this.previousEnergy = this.energy.getValue();
   }
 
-  public void onBlockUpdate(){
-    if(this.world != null){
+  public void onBlockUpdate() {
+    if (this.world != null) {
       boolean isNowPowered = this.world.getReceivedRedstonePower(this.pos) > 0;
-      if(isNowPowered == isPowered) return;
+      if (isNowPowered == isPowered) return;
 
-      if(isNowPowered){
+      if (isNowPowered) {
         this.energy.setStorageMode(this.poweredMode);
-      }else {
+      } else {
         this.energy.setStorageMode(this.unpoweredMode);
       }
 
@@ -93,15 +94,15 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     }
   }
 
-  public Text getEnergyPerSec(){
+  public Text getEnergyPerSec() {
     OptionalDouble optional = Arrays.stream(energyChange).average();
     long energyPerSec = (long) optional.orElse(0);
-    if(energyPerSec < 0) {
+    if (energyPerSec < 0) {
       return TextUtil.unit(energyPerSec, "generic.ntm.energy_s").formatted(Formatting.RED);
     }
 
     Formatting formatting = Formatting.YELLOW;
-    if(energyPerSec > 0) formatting = Formatting.GREEN;
+    if (energyPerSec > 0) formatting = Formatting.GREEN;
 
     return Text.literal("+").append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).formatted(formatting);
   }
@@ -112,34 +113,34 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    nbt.put("powered_mode", StorageMode.CODEC, this.poweredMode);
-    nbt.put("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
-    nbt.putBoolean("is_powered", this.isPowered);
-    nbt.putInt("energy_change_index", this.energyChangeIndex);
-    nbt.putLongArray("energy_change", energyChange);
+  protected void readData(ReadView view) {
+    super.readData(view);
+    this.energy.readData(view);
 
-    this.energy.writeNBT(nbt);
+    view.read("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
+    view.read("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
+    this.isPowered = view.getBoolean("is_powered", false);
+    this.energyChangeIndex = Math.clamp(
+      view.getInt("energy_change_index", 0), 0, energyChange.length - 1
+    );
 
-    super.writeNbt(nbt, registryLookup);
+    Optional<long[]> optional = view.getOptionalLongArray("energy_change");
+    if (optional.isPresent() && optional.get().length == this.energyChange.length) {
+      this.energyChange = optional.get();
+    }
   }
 
   @Override
-  protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-    super.readNbt(nbt, registryLookup);
+  protected void writeData(WriteView view) {
+    view.put("powered_mode", StorageMode.CODEC, this.poweredMode);
+    view.put("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
+    view.putBoolean("is_powered", this.isPowered);
+    view.putInt("energy_change_index", this.energyChangeIndex);
+    view.putLongArray("energy_change", energyChange);
 
-    this.energy.readNBT(nbt);
+    this.energy.writeData(view);
 
-    nbt.get("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
-    nbt.get("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
-    this.isPowered = nbt.getBoolean("is_powered", false);
-    this.energyChangeIndex = Math.clamp(
-        nbt.getInt("energy_change_index", 0), 0 , energyChange.length - 1
-    );
-    Optional<long[]> optional = nbt.getLongArray("energy_change");
-    if(optional.isPresent() && optional.get().length == this.energyChange.length){
-      this.energyChange = optional.get();
-    }
+    super.writeData(view);
   }
 
   @Override
@@ -158,14 +159,14 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
   }
 
   @Override
-  public void onInteraction(ServerPlayerEntity source, Identifier action) {
-    if(action.equals(CYCLE_POWERED_MODE)){
-      if(this.isPowered){
+  public void onInteraction(ServerPlayerEntity source, Identifier action, NbtCompound extraData) {
+    if (action.equals(CYCLE_POWERED_MODE)) {
+      if (this.isPowered) {
         this.energy.setStorageMode(this.poweredMode.cycle());
       }
       this.poweredMode = this.poweredMode.cycle();
-    }else if(action.equals(CYCLE_UNPOWERED_MODE)){
-      if(!this.isPowered){
+    } else if (action.equals(CYCLE_UNPOWERED_MODE)) {
+      if (!this.isPowered) {
         this.energy.setStorageMode(this.unpoweredMode.cycle());
       }
       this.unpoweredMode = this.unpoweredMode.cycle();

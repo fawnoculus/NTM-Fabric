@@ -17,14 +17,16 @@ import java.util.List;
 
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin {
-  @Shadow @Final protected LevelStorage.Session session;
+  @Shadow
+  @Final
+  protected LevelStorage.Session session;
 
   @Inject(at = @At("TAIL"), method = "<init>")
   private void createWorldSpecificConfig(CallbackInfo ci) {
     List<PerWorldConfigFile> perWorldConfigFiles = PerWorldConfigFile.getPerWorldConfigFiles();
     Path worldConfigDir = this.session.getDirectory().path().resolve("data");
 
-    for(PerWorldConfigFile configFile : perWorldConfigFiles){
+    for (PerWorldConfigFile configFile : perWorldConfigFiles) {
       configFile.setConfigPath(worldConfigDir);
     }
   }
@@ -33,7 +35,7 @@ public abstract class MinecraftServerMixin {
   private void removeWorldSpecificConfig(CallbackInfo ci) {
     List<PerWorldConfigFile> perWorldConfigFiles = PerWorldConfigFile.getPerWorldConfigFiles();
 
-    for(PerWorldConfigFile configFile : perWorldConfigFiles){
+    for (PerWorldConfigFile configFile : perWorldConfigFiles) {
       configFile.removeConfigPath();
     }
   }

@@ -13,9 +13,9 @@ public record ItemInteractionPayload(Identifier action, NbtCompound extraData) i
   public static final Id<ItemInteractionPayload> ID = new Id<>(ITEM_INTERACTION_PAYLOAD_ID);
 
   public static final PacketCodec<RegistryByteBuf, ItemInteractionPayload> PACKET_CODEC = PacketCodec.tuple(
-      Identifier.PACKET_CODEC, ItemInteractionPayload::action,
-      PacketCodecs.NBT_COMPOUND, ItemInteractionPayload::extraData,
-      ItemInteractionPayload::new
+    Identifier.PACKET_CODEC, ItemInteractionPayload::action,
+    PacketCodecs.NBT_COMPOUND, ItemInteractionPayload::extraData,
+    ItemInteractionPayload::new
   );
 
   @Override

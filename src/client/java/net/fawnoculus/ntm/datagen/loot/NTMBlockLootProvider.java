@@ -32,8 +32,8 @@ public class NTMBlockLootProvider extends FabricBlockLootTableProvider {
 
     addDrop(NTMBlocks.URANIUM_ORE, oreDrops(NTMBlocks.URANIUM_ORE, NTMItems.RAW_URANIUM));
     addDrop(NTMBlocks.DEEPSLATE_URANIUM_ORE, oreDrops(NTMBlocks.DEEPSLATE_URANIUM_ORE, NTMItems.RAW_URANIUM));
-    addDrop(NTMBlocks.SCORCHED_URANIUM_ORE, oreDrops(NTMBlocks.SCORCHED_URANIUM_ORE , NTMItems.RAW_SCORCHED_URANIUM));
-    addDrop(NTMBlocks.DEEPSLATE_SCORCHED_URANIUM_ORE, oreDrops(NTMBlocks.DEEPSLATE_SCORCHED_URANIUM_ORE , NTMItems.RAW_SCORCHED_URANIUM));
+    addDrop(NTMBlocks.SCORCHED_URANIUM_ORE, oreDrops(NTMBlocks.SCORCHED_URANIUM_ORE, NTMItems.RAW_SCORCHED_URANIUM));
+    addDrop(NTMBlocks.DEEPSLATE_SCORCHED_URANIUM_ORE, oreDrops(NTMBlocks.DEEPSLATE_SCORCHED_URANIUM_ORE, NTMItems.RAW_SCORCHED_URANIUM));
     addDrop(NTMBlocks.TITANIUM_ORE, oreDrops(NTMBlocks.TITANIUM_ORE, NTMItems.RAW_TITANIUM));
     addDrop(NTMBlocks.DEEPSLATE_TITANIUM_ORE, oreDrops(NTMBlocks.DEEPSLATE_TITANIUM_ORE, NTMItems.RAW_TITANIUM));
     addDrop(NTMBlocks.SULFUR_ORE, oreDrops(NTMBlocks.SULFUR_ORE, NTMItems.SULFUR));
@@ -160,6 +160,7 @@ public class NTMBlockLootProvider extends FabricBlockLootTableProvider {
         .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
     );
   }
+
   public LootTable.Builder chancedDrops(Block block, ItemConvertible item, int chance, ItemConvertible item2, int chance2) {
     RegistryWrapper.Impl<Enchantment> impl = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
     return dropsWithSilkTouch(
