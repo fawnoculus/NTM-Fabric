@@ -49,19 +49,13 @@ public record MultiBlock(Map<BlockPos, BlockState> states) {
 
     switch (rotation) {
       case NORTH -> {}
-      case SOUTH -> {
-        invertX = true;
-      }
-      case WEST -> {
-        swapXZ = true;
-      }
+      case SOUTH -> invertX = true;
+      case WEST -> swapXZ = true;
       case EAST -> {
         invertZ = true;
         swapXZ = true;
       }
-      case UP -> {
-        swapXY = true;
-      }
+      case UP -> swapXY = true;
       case DOWN -> {
         swapXY = true;
         invertY = true;
