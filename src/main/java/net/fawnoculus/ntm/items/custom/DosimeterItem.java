@@ -37,9 +37,8 @@ public class DosimeterItem extends Item {
     if (world.isClient()) {
       return ActionResult.SUCCESS;
     }
-    RadiationManager radiationManager = RadiationManager.getInstance();
 
-    double totalRadiation = radiationManager.getTotalRadiation(user);
+    double totalRadiation = RadiationManager.getTotalRadiation(user);
 
     user.sendMessage(Text.translatable("message.ntm.dosimeter").formatted(Formatting.GOLD), false);
     user.sendMessage(Text.translatable("message.ntm.radiation.environmental_radiation").append(getRadsText(totalRadiation)).formatted(Formatting.YELLOW), false);

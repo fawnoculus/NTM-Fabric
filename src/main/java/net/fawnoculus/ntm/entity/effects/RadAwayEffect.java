@@ -18,7 +18,7 @@ public class RadAwayEffect extends StatusEffect {
 
   @Override
   public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-    RadiationManager.getInstance().decreaseRadiationExposure(entity, amplifier * 1_000.0);
+    RadiationManager.decreaseRadiationExposure(entity, amplifier * 1_000.0);
     return true;
   }
 }

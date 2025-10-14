@@ -155,7 +155,7 @@ public abstract class Modifiers {
 
     @Override
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-      RadiationManager.getInstance().increaseRadiationExposure(target, radiation);
+      RadiationManager.increaseRadiationExposure(target, radiation);
     }
   }
 

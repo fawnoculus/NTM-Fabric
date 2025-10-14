@@ -8,10 +8,18 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 @FunctionalInterface
 public interface PlayerJoinCallback {
-  Event<PlayerJoinCallback> EVENT = EventFactory.createArrayBacked(PlayerJoinCallback.class,
-    (listeners) -> (player, connection, clientData) -> {
+  Event<PlayerJoinCallback> EARLY = EventFactory.createArrayBacked(PlayerJoinCallback.class,
+    (listeners) -> (connection, player, clientData) -> {
       for (PlayerJoinCallback event : listeners) {
-        event.onJoin(player, connection, clientData);
+        event.onJoin(connection, player, clientData);
+      }
+    }
+  );
+
+  Event<PlayerJoinCallback> LATE = EventFactory.createArrayBacked(PlayerJoinCallback.class,
+    (listeners) -> (connection, player, clientData) -> {
+      for (PlayerJoinCallback event : listeners) {
+        event.onJoin(connection, player, clientData);
       }
     }
   );

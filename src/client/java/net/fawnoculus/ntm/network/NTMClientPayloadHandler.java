@@ -19,11 +19,11 @@ public class NTMClientPayloadHandler {
     ClientPlayNetworking.registerGlobalReceiver(AdvancedMessagePayload.ID, (payload, context) -> MessageSystem.addMessage(payload.message()));
     ClientPlayNetworking.registerGlobalReceiver(RemoveMessagePayload.ID, (payload, context) -> MessageSystem.removeMessage(payload.identifier()));
     ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesPayload.ID, (payload, context) -> MessageSystem.removeAllMessages());
-    ClientPlayNetworking.registerGlobalReceiver(RadiationInformationPayload.ID, (payload, context) -> ClientRadiationManager.getInstance().handlePacked(payload));
-    ClientPlayNetworking.registerGlobalReceiver(RadiationRegistryPayload.ID, (payload, context) -> ClientRadiationRegistry.getInstance().updateFromPacket(payload.serializedRegistry()));
-    ClientPlayNetworking.registerGlobalReceiver(HazmatRegistryPayload.ID, (payload, context) -> ClientHazmatRegistry.getInstance().updateFromPacket(payload.serializedRegistry()));
-    ClientPlayNetworking.registerGlobalReceiver(FluidDataRegistryPayload.ID, (payload, context) -> ClientFluidDataRegistry.updateFromPacket(payload.registryNBT()));
-    ClientPlayNetworking.registerGlobalReceiver(NTMVersionPayload.ID, (payload, context) -> ClientReceivedVersionHandler.handlePacket(payload));
+    ClientPlayNetworking.registerGlobalReceiver(RadiationInformationPayload.ID, ClientRadiationManager::handlePacket);
+    ClientPlayNetworking.registerGlobalReceiver(RadiationRegistryPayload.ID, ClientRadiationRegistry::updateFromPacket);
+    ClientPlayNetworking.registerGlobalReceiver(HazmatRegistryPayload.ID, ClientHazmatRegistry::updateFromPacket);
+    ClientPlayNetworking.registerGlobalReceiver(FluidDataRegistryPayload.ID, ClientFluidDataRegistry::updateFromPacket);
+    ClientPlayNetworking.registerGlobalReceiver(NTMVersionPayload.ID, ClientReceivedVersionHandler::handlePacket);
     ClientPlayNetworking.registerGlobalReceiver(InventorySyncPayload.ID, NTMClientPayloadHandler::handleInventorySync);
   }
 

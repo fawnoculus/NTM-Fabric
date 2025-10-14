@@ -57,10 +57,6 @@ public class NTMConfig {
     "MaxNodeScanDepth", 100000,
     "The max Amount of Blocks a node-network will scan through when nodes are added/removed. Set to 0 to disable limit"
   );
-  public static final BooleanOption AlwaysSendRadiationPacket = CommonConfig.newBooleanOption(
-    "AlwaysSendRadiationPacket", false,
-    "If the Server should always send the Radiation Packet to player, enabling this may increase performance with high player or addon counts, may also fix some de-sync issues"
-  );
   public static final BooleanOption DevMode = CommonConfig.newBooleanOption(
     "DevMode", false,
     "Enables a bunch of Dev Features. Requires Restart to apply"

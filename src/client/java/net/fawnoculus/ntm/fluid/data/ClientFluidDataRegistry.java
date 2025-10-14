@@ -1,6 +1,8 @@
 package net.fawnoculus.ntm.fluid.data;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.misc.NTMKeybinds;
+import net.fawnoculus.ntm.network.s2c.FluidDataRegistryPayload;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
@@ -27,15 +29,15 @@ public class ClientFluidDataRegistry {
     return CLIENT_FLUID_DATA.computeIfAbsent(fluidID, k -> new ClientFluidDataContainer(new HashMap<>()));
   }
 
-  public static void updateFromPacket(@NotNull NbtCompound registryNBT) {
+  public static void updateFromPacket(FluidDataRegistryPayload payload, ClientPlayNetworking.Context ignored) {
+    NbtCompound registryNBT = payload.registryNBT();
     for (String key : registryNBT.getKeys()) {
       try {
         Identifier fluidID = Objects.requireNonNull(Identifier.tryParse(key));
         NbtCompound fluidContainerNBT = registryNBT.getCompoundOrEmpty(key);
         ClientFluidDataContainer container = ClientFluidDataContainer.decode(fluidContainerNBT);
         CLIENT_FLUID_DATA.put(fluidID, container);
-      } catch (Throwable ignored) {
-      }
+      } catch (Throwable ignored2) {}
     }
   }
 

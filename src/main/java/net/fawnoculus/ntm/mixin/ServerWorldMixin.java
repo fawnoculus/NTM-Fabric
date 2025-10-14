@@ -46,7 +46,7 @@ public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder 
       Profiler profiler = Profilers.get();
 
       profiler.push("[NTM] radiationManager");
-      RadiationManager.getInstance().tick(this.toServerWorld(), this.entityList);
+      RadiationManager.tick(this.toServerWorld(), this.entityList);
       profiler.pop();
 
       profiler.push("[NTM] nodeNetworks");

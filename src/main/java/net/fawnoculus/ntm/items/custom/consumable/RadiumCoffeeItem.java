@@ -13,8 +13,7 @@ public class RadiumCoffeeItem extends CoffeeItem {
   @Override
   public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
     if (!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()) {
-      RadiationManager radiationManager = RadiationManager.getInstance();
-      radiationManager.increaseRadiationExposure(user, 500_000);
+      RadiationManager.increaseRadiationExposure(user, 500_000);
     }
     return super.finishUsing(stack, world, user);
   }

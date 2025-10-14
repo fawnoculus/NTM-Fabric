@@ -60,7 +60,7 @@ public abstract class WorldChunkMixin implements RadiationProcessorHolder, Custo
     CallbackInfo ci
   ) {
     if (world instanceof ServerWorld serverWorld) {
-      this.NTM$radiationProcessor = RadiationManager.getInstance().makeNewRadiationProcessor(serverWorld, pos);
+      this.NTM$radiationProcessor = RadiationManager.makeNewRadiationProcessor(serverWorld, pos);
       this.NTM$radiationProcessor.readData(WorldUtil.getChunkNBT(((Chunk) (Object) this).getPos(), serverWorld));
       RadiationProcessorMultiHolder.from(serverWorld).NTM$addRadiationProcessor(this.NTM$radiationProcessor, pos);
     }
