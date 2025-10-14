@@ -1,12 +1,12 @@
 
 <div align="center">
-  <img src="./.idea/icon.svg" alt="Logo" width="300">
+  <img src="./.idea/icon.svg" alt="NTM-Fabric Icon" width="300">
   <h1>NTM-Fabric</h1>
   <a href="https://fabricmc.net/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_64h.png" alt="Available on Fabric" width="200"></a>
   <a href="https://quiltmc.org/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/quilt_64h.png" alt="Available on Quilt" width="200"></a>
   <br>
   <a href="https://github.com/fawnoculus/NTM-Fabric/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/fawnoculus/NTM-Fabric?style=flat&color=900c3f" alt="Licence: GPL-3.0"></a>
-  <a href="https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml"><img src="https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml/badge.svg" alt="Licence: GPL-3.0"></a>
+  <a href="https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml"><img src="https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml/badge.svg" alt="Build Workflow"></a>
 </div>
 
 ## What is NTM-Fabric?
@@ -14,11 +14,11 @@ NTM-Fabric is an Attempt to recreate [HBM's NTM](https://github.com/HbmMods/Hbm-
 Depending on how development plays out some features from [NTM-Space](https://github.com/JameH2/Hbm-s-Nuclear-Tech-GIT/tree/space-travel-twopointfive) (JameH2's fork of HBM's) may also be implemented.
 
 ## DISCLAIMERS
-1. I am not in any way associated with HBM (aka Bob), I am developing this Recreation purely because I liked HBM's NTM and at some point thought "Wow, this would be really cool in newer Versions"
+1. I am not in any way associated with HBM (aka Bob), I am developing this Recreation purely because I liked HBM's NTM and at some point thought "Wow, this would be really cool in newer Versions!"
 2. NTM-Fabric is not even remotely finished!
   Most Features are still missing, unfinished, unpolished or barely functioning.
   There will be no release of mod on Modrinth / CurseForge until It is at least in a *"playable"* State
-3. Don't bother contributors of the original mod with problems of this one! (technically not a disclaimer but still, don't do it)
+3. Don't bother contributors of the original mod with problems of this one! (We don't want to bother them with hundreds of unnecessary Bug Reports)
 
 ## Installing NTM-Fabric
 In the future there may also be Releases on Modrinth & CurseForge.
