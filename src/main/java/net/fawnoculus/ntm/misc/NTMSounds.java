@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 public class NTMSounds {
   public static final SoundEvent SYRINGE_INJECTS = register("item.syringe_injects");
   public static final SoundEvent IV_BAG_INJECTS = register("item.iv_bag_injects");
+  public static final SoundEvent PAIN_SAW = register("item.pain_saw");
 
 
   private static SoundEvent register(String id) {

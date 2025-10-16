@@ -33,7 +33,7 @@ public class NTMConfig {
       "minecraft:bedrock",
       "minecraft:barrier"
     ),
-    "Blocks that will be immune to the Aoe Ability (the ability already skips all blocks that the tool is incorrect for)"
+    "Blocks that will be immune to the Aoe & Flat Aoe Ability (the ability already skips all blocks that the tool is incorrect for)"
   );
   public static final IntegerOption RequiredCommandPermission = CommonConfig.newIntegerOption(
     "RequiredCommandPermission", 2,

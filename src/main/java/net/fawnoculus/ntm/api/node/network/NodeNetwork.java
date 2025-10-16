@@ -1,13 +1,13 @@
 package net.fawnoculus.ntm.api.node.network;
 
-import net.fawnoculus.ntm.api.node.Node;
-import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import com.google.common.collect.ImmutableList;
 import io.netty.util.collection.LongObjectHashMap;
 import io.netty.util.collection.LongObjectMap;
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.api.node.Node;
+import net.fawnoculus.ntm.api.node.NodeValueContainer;
+import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -43,7 +43,7 @@ public class NodeNetwork {
   }
 
   /**
-   * Removes a Node from the Network, if the node is permanently removed & not just unloaded, please use disconnect Node instead!
+   * Removes a Node from the Network, if the node is permanently removed &AMP; not just unloaded, please use disconnect Node instead!
    *
    * @param node the Node to be removed
    */
@@ -90,7 +90,7 @@ public class NodeNetwork {
   }
 
   /**
-   * removes all connections from a node & removes the node from the network
+   * removes all connections from a node &AMP; removes the node from the network
    *
    * @param originNode the Node to me removed
    */

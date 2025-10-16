@@ -7,9 +7,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -23,18 +22,13 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
-
-public class SpecialAxeItem extends AxeItem implements SpecialTool {
+public class SpecialToolItem extends Item implements SpecialTool {
   private final AbilityHandler ABILITIES;
   private final ModifierHandler MODIFIERS;
   private final boolean CAN_BREAK_DEPTH_ROCK;
 
-  public SpecialAxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    this(settings, material, attackDamage, attackSpeed, AbilityHandler.builder().build(), ModifierHandler.builder().build(), false);
-  }
-
-  public SpecialAxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
-    super(material, attackDamage, attackSpeed, settings);
+  public SpecialToolItem(Settings settings, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
+    super(settings);
 
     this.ABILITIES = abilities;
     this.MODIFIERS = modifiers;

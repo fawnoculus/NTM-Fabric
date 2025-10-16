@@ -10,5 +10,11 @@
     "sounds": [
       "ntm:item/iv_bag_injects"
     ]
+  },
+  "item.pain_saw": {
+    "subtitle": "sound.ntm.item.pain_saw",
+    "sounds": [
+      "ntm:item/pain_saw"
+    ]
   }
 }

@@ -1,17 +1,17 @@
 package net.fawnoculus.ntm.api.radiation;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.api.radiation.processor.EmptyRadiationProcessor;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessor;
+import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorMultiHolder;
+import net.fawnoculus.ntm.api.radiation.processor.SimpleRadiationProcessor;
 import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
-import net.fawnoculus.ntm.NTMConfig;
-import net.fawnoculus.ntm.api.radiation.processor.SimpleRadiationProcessor;
+import net.fawnoculus.ntm.misc.data.CustomDataHolder;
 import net.fawnoculus.ntm.network.s2c.RadiationInformationPayload;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.fawnoculus.ntm.util.WorldUtil;
-import net.fawnoculus.ntm.misc.data.CustomDataHolder;
-import net.fawnoculus.ntm.api.radiation.processor.EmptyRadiationProcessor;
-import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorMultiHolder;
-import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessor;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -32,7 +32,7 @@ import java.util.Collection;
 
 /**
  * The Server Radiation Manager is run on the Logical Server (So it also Runs on Singleplayer Worlds).
- * <br>It Handles the active Radiation in All Loaded Chunks, Giving Players the effects for Radiation Exposure &
+ * <br>It Handles the active Radiation in All Loaded Chunks, Giving Players the effects for Radiation Exposure &AMP;
  * Send Update Packets to the Players that should Receive Radiation Information so that the ClientRadiationManager can give it to the Player
  */
 public class RadiationManager {

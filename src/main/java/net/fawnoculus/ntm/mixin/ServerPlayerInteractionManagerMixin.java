@@ -3,7 +3,6 @@ package net.fawnoculus.ntm.mixin;
 import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.OperatorBlock;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
@@ -25,18 +24,14 @@ public abstract class ServerPlayerInteractionManagerMixin {
   @Shadow
   protected ServerWorld world;
 
-  @Inject(method = "tryBreakBlock", at = @At("HEAD"))
-  private void tryBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-    PlayerEntity player = this.player;
-    ServerWorld world = this.world;
-    ItemStack stack = player.getMainHandStack();
-    BlockState state = world.getBlockState(pos);
+  @Inject(method = "tryBreakBlock", at = @At(value = "HEAD"))
+  private void preBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    if (player.getMainHandStack().getItem() instanceof SpecialTool specialTool) {
+      ItemStack stack = player.getMainHandStack();
+      BlockState state = world.getBlockState(pos);
 
-    if (stack.canMine(state, world, pos, player)
-      && !(world.getBlockState(pos).getBlock() instanceof OperatorBlock && !player.isCreativeLevelTwoOp())) {
-
-      if (player.getMainHandStack().getItem() instanceof SpecialTool specialItem) {
-        specialItem.preMine(stack, world, state, pos, player);
+      if (stack.canMine(state, world, pos, player) && !(world.getBlockState(pos).getBlock() instanceof OperatorBlock && !player.isCreativeLevelTwoOp())) {
+        specialTool.preMine(stack, world, state, pos, player);
       }
     }
   }
