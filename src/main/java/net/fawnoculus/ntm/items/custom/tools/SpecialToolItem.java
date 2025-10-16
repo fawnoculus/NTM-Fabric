@@ -58,7 +58,11 @@ public class SpecialToolItem extends Item implements SpecialTool {
 
     if(player instanceof ServerPlayerEntity serverPlayer){
       ItemStack stack = player.getStackInHand(hand);
-      this.ABILITIES.incrementPresetSelection(stack, 1);
+      if(player.isSneaking()){
+        this.ABILITIES.setSelectedPreset(stack, 0);
+      }else {
+        this.ABILITIES.incrementPresetSelection(stack, 1);
+      }
 
       if(this.ABILITIES.abilitiesDisabled(stack)){
         player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);

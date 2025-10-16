@@ -1,23 +1,23 @@
 package net.fawnoculus.ntm.commands;
 
-import com.mojang.brigadier.arguments.LongArgumentType;
-import net.fawnoculus.ntm.api.node.network.NodeNetworkManager;
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
-import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.node.network.NodeNetwork;
+import net.fawnoculus.ntm.api.node.network.NodeNetworkManager;
+import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
 import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
-import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.minecraft.SharedConstants;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
@@ -285,13 +285,13 @@ public class NTMCommands {
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context) {
     for (NetworkType type : NodeNetworkManager.getAllTypes()) {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName(), type.getId()).append(Text.literal(" " + type.getAllNetworks().size())), false);
+      context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.get_node_networks", type.getName(), type.getId()).append(Text.literal(" " + type.getAllNetworks().size())), false);
     }
     return 1;
   }
 
   private static int getNodeNetworks(CommandContext<ServerCommandSource> context, NetworkType type) {
-    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.get_node_networks", type.getName(), type.getId()), false);
+    context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.get_node_networks", type.getName(), type.getId()), false);
     for (NodeNetwork network : type.getAllNetworks()) {
       context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
     }

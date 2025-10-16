@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
+import net.fawnoculus.ntm.util.ClientTransferUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -35,12 +36,26 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
   }
 
   /**
-   * @param stack the stacks which's selection will b e incremented
+   * @param stack the stacks which's selection will be incremented
    * @param by the amount to increment by
    */
   public void incrementPresetSelection(ItemStack stack, int by){
     StackData stackData = getStackData(stack);
     stackData.incrementSelection(by);
+    stack.set(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, stackData);
+  }
+
+  /**
+   * @param stack the stacks which's selection will be changed
+   * @param to the selected preset that should be selected
+   */
+  public void setSelectedPreset(ItemStack stack, int to){
+    StackData stackData = getStackData(stack);
+    if(to < 0 || to > stackData.presets.size()) {
+      return;
+    }
+
+    stackData.selectPreset(to);
     stack.set(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, stackData);
   }
 
@@ -57,6 +72,10 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
    * @return true if the presets are valid, false if they are not
    */
   public boolean verifyPresets(List<Preset> presets) {
+    if(presets.isEmpty()){
+      return false;
+    }
+
     for (Preset preset : presets) {
       Optional<ItemAbility> top = ItemAbility.get(preset.topAbility);
       if (top.isEmpty()) {
@@ -144,7 +163,7 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
       }
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end1").formatted(Formatting.GRAY));
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
-      tooltip.accept(Text.translatable("tooltip.ntm.ability.end3").formatted(Formatting.GRAY));
+      tooltip.accept(Text.translatable("tooltip.ntm.ability.end3", ClientTransferUtil.getBoundKey("key.ntm.open_tool_ability_gui").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
     }
   }
 
@@ -172,7 +191,7 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
 
     private StackData makeDefaultStackData() {
       List<Preset> presets = new ArrayList<>(maxLevels.size());
-      presets.add(new Preset(ItemAbility.NONE.getId(), 0, ItemAbility.NONE.getId(), 0));
+      presets.add(new Preset(ItemAbility.NONE_ID, 0, ItemAbility.NONE_ID, 0));
 
       for(Identifier abilityID : maxLevels.keySet()){
         int maxLevel = maxLevels.get(abilityID);
@@ -181,13 +200,13 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
         Optional<ItemAbility> optional = ItemAbility.get(abilityID);
         if(optional.isEmpty()) continue;
         if(optional.get().isBottom()){
-          presets.add(new Preset(ItemAbility.NONE.getId(), 0, abilityID, maxLevel));
+          presets.add(new Preset(ItemAbility.NONE_ID, 0, abilityID, maxLevel));
         }else {
-          presets.add(new Preset(abilityID, maxLevel, ItemAbility.NONE.getId(), 0));
+          presets.add(new Preset(abilityID, maxLevel, ItemAbility.NONE_ID, 0));
         }
       }
 
-      return new StackData(new ArrayList<>(presets.reversed()), 0);
+      return new StackData(presets, 0);
     }
 
     public AbilityHandler build() {
@@ -289,7 +308,7 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
     }
 
     public void incrementSelection(int by) {
-      this.selectPreset(by % presets.size());
+      this.selectPreset((selectedPreset + by) % presets.size());
     }
 
     @Override

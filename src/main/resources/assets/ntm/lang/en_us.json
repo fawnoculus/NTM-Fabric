@@ -119,6 +119,7 @@
 
   "key.category.ntm": "NTM-Fabric",
   "key.ntm.extra_info": "Display Extra Info",
+  "key.ntm.open_tool_ability_gui": "Open Tool Ability GUI",
 
   "fluid_tooltip.ntm.thermal_capacity": "Thermal Capacity: %1$s TU per 1 %2$s",
   "fluid_tooltip.ntm.efficiency": "Efficiency: %1$s%%",
@@ -257,7 +258,7 @@
   "tooltip.ntm.ability.start": "Abilities:",
   "tooltip.ntm.ability.end1": "Right click to cycle through presets!",
   "tooltip.ntm.ability.end2": "Sneak-click to go to first preset!",
-  "tooltip.ntm.ability.end3": "press [%1$s] to open customization GUI!",
+  "tooltip.ntm.ability.end3": "press <%1$s> to open customization GUI!",
   "tooltip.ntm.ability.vein_miner": "Vein Miner",
   "tooltip.ntm.ability.aoe": "AoE",
   "tooltip.ntm.ability.flat_aoe": "Flat AoE",

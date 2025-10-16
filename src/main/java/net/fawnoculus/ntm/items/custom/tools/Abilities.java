@@ -11,6 +11,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ToolComponent;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameters;
@@ -26,6 +27,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -114,36 +116,15 @@ public abstract class Abilities {
       if (!isCorrectForDrops(stack, state) || excludedBlocks.contains(state.getBlock())) {
         return;
       }
-      boolean swapXZ = false;
-      boolean swapYZ = false;
-
-      switch (miner.getFacing()) {
-        case WEST, EAST -> swapXZ = true;
-        case UP, DOWN -> swapYZ = true;
-      }
 
       for (int x = pos.getX() - level; x <= pos.getX() + level; x++) {
         for (int y = pos.getY() - level; y <= pos.getY() + level; y++) {
-          int targetX = x;
-          int targetY = y;
-          int targetZ = pos.getZ();
+          for (int z = pos.getZ() - level; z <= pos.getZ() + level; z++) {
+            BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
 
-          if(swapXZ){
-            int temp = targetZ;
-            targetZ = targetX;
-            targetX = temp;
-          }
-
-          if(swapYZ){
-            int temp = targetZ;
-            targetZ = targetY;
-            targetY = temp;
-          }
-
-          BlockState checkBlock = world.getBlockState(new BlockPos(targetX, targetY, targetZ));
-
-          if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
-            breakBlock(world, new BlockPos(targetX, targetY, targetZ), miner, !miner.shouldSkipBlockDrops());
+            if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
+              breakBlock(world, new BlockPos(x, y, z), miner, !miner.shouldSkipBlockDrops());
+            }
           }
         }
       }
@@ -168,10 +149,28 @@ public abstract class Abilities {
         return;
       }
 
-      for (int x = pos.getX() - level; x <= pos.getX() + level; x++) {
-        for (int y = pos.getY() - level; y <= pos.getY() + level; y++) {
-          for (int z = pos.getZ() - level; z <= pos.getZ() + level; z++) {
+      if(!(miner.raycast(miner.getAttributeValue(EntityAttributes.BLOCK_INTERACTION_RANGE), 1, false) instanceof BlockHitResult hitResult)) return;
 
+      int xRange = level;
+      int yRange = level;
+      int zRange = 0;
+
+      switch (hitResult.getSide()) {
+        case WEST, EAST -> {
+          xRange = 0;
+          zRange = level;
+        }
+        case UP, DOWN -> {
+          yRange = 0;
+          zRange = level;
+        }
+      }
+
+
+
+      for (int x = pos.getX() - xRange; x <= pos.getX() + xRange; x++) {
+        for (int y = pos.getY() - yRange; y <= pos.getY() + yRange; y++) {
+          for (int z = pos.getZ() - zRange; z <= pos.getZ() + zRange; z++) {
             BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
 
             if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
@@ -184,72 +183,33 @@ public abstract class Abilities {
   };
 
   /**
-   * Makes blocks drop what the thing they dropped would have produced when smelted
-   * If the drop doesn't have a smelting recipe it will the regular drop will be used instead
+   * Creates an explosion when a block that the tool can be used for is broken
+   * <p>
+   * The resulting Explosion has the Strength specified by "explosionStrength"
    */
-  public static final ItemAbility AutoSmelt = new ItemAbility(NTM.id("auto_smelt"), true){
+  public static final ItemAbility Explosion = new ItemAbility(NTM.id("explosion"), false) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      if(miner.isCreative()) return;
-      if(!isCorrectForDrops(stack, state)) return;
-      if(!(world instanceof ServerWorld serverWorld)) return;
-
-      LootWorldContext.Builder builder = new LootWorldContext.Builder(serverWorld)
-          .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
-          .add(LootContextParameters.BLOCK_STATE, state)
-          .addOptional(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos))
-          .addOptional(LootContextParameters.THIS_ENTITY, miner)
-          .add(LootContextParameters.TOOL, stack);
-
-      List<ItemStack> list = state.getDroppedStacks(builder);
-      for(ItemStack checkedStack : list){
-        SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(checkedStack);
-
-        Optional<RecipeEntry<SmeltingRecipe>> optional = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
-        if(optional.isEmpty()) return;
-
-        RecipeEntry<SmeltingRecipe> recipeEntry = optional.get();
-
-        ItemStack output = recipeEntry.value().craft(recipeInput, serverWorld.getRegistryManager());
-        output.setCount(checkedStack.getCount());
-
-        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output);
+    public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
+      if (level < 2) {
+        return Text.literal("(2.5)");
       }
 
-      breakBlock(world, pos, miner, false);
+      return Text.literal("(" + 5 * (level - 1) + ".0)");
     }
-  };
 
-  /**
-   * Makes blocks drop what the thing they dropped would have produced when shredded
-   * If the drop doesn't have a shredding recipe it will the regular drop will be used instead
-   */
-  public static final ItemAbility AutoShredder = new ItemAbility(NTM.id("auto_shredder"), true){
+    private float fromLevel(int level) {
+      if (level < 2) {
+        return 2.5f;
+      }
+
+      return 5f * (level - 1);
+    }
+
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      //TODO: Do this once you have Shreader Recipes
-    }
-  };
-
-  /**
-   * Makes blocks drop what the thing they dropped would have produced when centrifuged
-   * If the drop doesn't have a centrifuging recipe it will the regular drop will be used instead
-   */
-  public static final ItemAbility AutoCentrifuge = new ItemAbility(NTM.id("auto_centrifuge"), true){
-    @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      //TODO: Do this once you have Centrifuge Recipes
-    }
-  };
-
-  /**
-   * Makes blocks drop what the thing they dropped would have produced when Crystallized (aka: put in an Ore Acidizer)
-   * If the drop doesn't have a Crystallizing recipe it will the regular drop will be used instead
-   */
-  public static final ItemAbility AutoCrystallizer = new ItemAbility(NTM.id("auto_crystallizer"), true){
-    @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      //TODO: Do this once you have Crystallizer Recipes
+      if (!isCorrectForDrops(stack, state)) return;
+      ExplosionBehavior explosionBehavior = new AdvancedExplosionBehavior(true, false, Optional.empty(), Optional.empty());
+      world.createExplosion(null, null, explosionBehavior, Vec3d.of(pos), this.fromLevel(level), false, World.ExplosionSourceType.TNT);
     }
   };
 
@@ -273,10 +233,10 @@ public abstract class Abilities {
   };
 
   /**
-     * It's the same thing as if you had the enchantment
-     * <p>
-     * The Level represents the Enchantment Level of Fortune that will be applied
-     */
+   * It's the same thing as if you had the enchantment
+   * <p>
+   * The Level represents the Enchantment Level of Fortune that will be applied
+   */
   public static final ItemAbility Fortune = new ItemAbility(NTM.id("fortune"), true) {
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
@@ -294,53 +254,92 @@ public abstract class Abilities {
   };
 
   /**
-     * Creates an explosion when a block that the tool can be used for is broken
-     * <p>
-     * The resulting Explosion has the Strength specified by "explosionStrength"
-     */
-  public static final ItemAbility Explosion = new ItemAbility(NTM.id("explosion"), false) {
-    @Override
-    public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
-      if(level < 2){
-        return Text.literal("(2.5)");
-      }
-
-      return Text.literal("(" + 5 * (level - 1) + ".0)");
-    }
-
-    private float fromLevel(int level){
-      if(level < 2){
-        return 2.5f;
-      }
-
-      return 5f * (level - 1);
-    }
-
+   * Makes blocks drop what the thing they dropped would have produced when smelted
+   * If the drop doesn't have a smelting recipe it will the regular drop will be used instead
+   */
+  public static final ItemAbility AutoSmelt = new ItemAbility(NTM.id("auto_smelt"), true) {
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      if (miner.isCreative()) return;
       if (!isCorrectForDrops(stack, state)) return;
-      ExplosionBehavior explosionBehavior = new AdvancedExplosionBehavior(true, false, Optional.empty(), Optional.empty());
-      world.createExplosion(null, null, explosionBehavior, Vec3d.of(pos), this.fromLevel(level), false, World.ExplosionSourceType.TNT);
+      if (!(world instanceof ServerWorld serverWorld)) return;
+
+      LootWorldContext.Builder builder = new LootWorldContext.Builder(serverWorld)
+        .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
+        .add(LootContextParameters.BLOCK_STATE, state)
+        .addOptional(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos))
+        .addOptional(LootContextParameters.THIS_ENTITY, miner)
+        .add(LootContextParameters.TOOL, stack);
+
+      List<ItemStack> list = state.getDroppedStacks(builder);
+      for (ItemStack checkedStack : list) {
+        SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(checkedStack);
+
+        Optional<RecipeEntry<SmeltingRecipe>> optional = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
+        if (optional.isEmpty()) return;
+
+        RecipeEntry<SmeltingRecipe> recipeEntry = optional.get();
+
+        ItemStack output = recipeEntry.value().craft(recipeInput, serverWorld.getRegistryManager());
+        output.setCount(checkedStack.getCount());
+
+        ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output);
+      }
+
+      breakBlock(world, pos, miner, false);
+    }
+  };
+
+  /**
+   * Makes blocks drop what the thing they dropped would have produced when shredded
+   * If the drop doesn't have a shredding recipe it will the regular drop will be used instead
+   */
+  public static final ItemAbility AutoShredder = new ItemAbility(NTM.id("auto_shredder"), true) {
+    @Override
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      //TODO: Do this once you have Shreader Recipes
+    }
+  };
+
+  /**
+   * Makes blocks drop what the thing they dropped would have produced when centrifuged
+   * If the drop doesn't have a centrifuging recipe it will the regular drop will be used instead
+   */
+  public static final ItemAbility AutoCentrifuge = new ItemAbility(NTM.id("auto_centrifuge"), true) {
+    @Override
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      //TODO: Do this once you have Centrifuge Recipes
+    }
+  };
+
+  /**
+   * Makes blocks drop what the thing they dropped would have produced when Crystallized (aka: put in an Ore Acidizer)
+   * If the drop doesn't have a Crystallizing recipe it will the regular drop will be used instead
+   */
+  public static final ItemAbility AutoCrystallizer = new ItemAbility(NTM.id("auto_crystallizer"), true) {
+    @Override
+    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      //TODO: Do this once you have Crystallizer Recipes
     }
   };
 
   /**
    * Makes redstone blocks &AMP; ores drop a random amount of mercury drops
    */
-  public static final ItemAbility MercuryTouch = new ItemAbility(NTM.id("mercury_touch"), true){
+  public static final ItemAbility MercuryTouch = new ItemAbility(NTM.id("mercury_touch"), true) {
     @Override
     public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      if(miner.isCreative()){
+      if (miner.isCreative()) {
         return;
       }
 
       int mercury = 0;
-      if(state.getBlock() == Blocks.REDSTONE_ORE || state.getBlock() == Blocks.DEEPSLATE_REDSTONE_ORE)
+      if (state.getBlock() == Blocks.REDSTONE_ORE || state.getBlock() == Blocks.DEEPSLATE_REDSTONE_ORE)
         mercury = miner.getRandom().nextInt(5) + 4;
-      if(state.getBlock() == Blocks.REDSTONE_BLOCK)
+      if (state.getBlock() == Blocks.REDSTONE_BLOCK)
         mercury = miner.getRandom().nextInt(7) + 8;
 
-      if(mercury > 0) {
+      if (mercury > 0) {
         breakBlock(world, pos, miner, false);
         ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(NTMItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
 
