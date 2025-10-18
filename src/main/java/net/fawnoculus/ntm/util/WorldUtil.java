@@ -2,12 +2,19 @@ package net.fawnoculus.ntm.util;
 
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.mixin.accessor.PersistentStateManagerAccessor;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -84,5 +91,32 @@ public class WorldUtil {
     NbtCompound regionNBT = getRegionNBT(regionPath);
     regionNBT.put(pos.toString(), nbt);
     RegionNbtCache.put(regionPath, regionNBT);
+  }
+
+  public static void removeBlock(World world, BlockPos pos, PlayerEntity player, boolean doBlockDrops){
+    BlockEntity blockEntity = world.getBlockEntity(pos);
+    BlockState originalState = world.getBlockState(pos);
+    Block block = originalState.getBlock();
+    BlockState newState = block.onBreak(world, pos, originalState, player);
+    boolean bl = world.removeBlock(pos, false);
+    if (bl) {
+      block.onBroken(world, pos, newState);
+    }
+
+    if(doBlockDrops){
+      ItemStack itemStack = player.getMainHandStack();
+      ItemStack itemStack2 = itemStack.copy();
+      boolean bl2 = player.canHarvest(newState);
+      itemStack.postMine(world, newState, pos, player);
+      if (bl && bl2) {
+        block.afterBreak(world, player, pos, newState, blockEntity, itemStack2);
+      }
+    }
+
+  }
+
+  public static void dropItemsFromBlock(World world, BlockPos pos, PlayerEntity miner, ItemStack tool){
+    BlockState state = world.getBlockState(pos);
+    Block.dropStacks(state, world, pos, world.getBlockEntity(pos), miner, tool);
   }
 }

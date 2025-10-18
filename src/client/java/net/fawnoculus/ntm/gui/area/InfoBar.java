@@ -22,8 +22,8 @@ public interface InfoBar extends InfoArea {
   double getFillState();
 
   @Override
-  default void draw(DrawContext context, int mouseX, int mouseY) {
-    InfoArea.super.draw(context, mouseX, mouseY);
+  default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    InfoArea.super.render(context, mouseX, mouseY, deltaTicks);
     this.drawBar(context);
   }
 

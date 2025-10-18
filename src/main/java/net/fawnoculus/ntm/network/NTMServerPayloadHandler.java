@@ -3,22 +3,27 @@ package net.fawnoculus.ntm.network;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.fawnoculus.ntm.blocks.entities.InteractableBE;
 import net.fawnoculus.ntm.items.custom.InteractableItem;
+import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
 import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
 import net.fawnoculus.ntm.network.c2s.ItemInteractionPayload;
+import net.fawnoculus.ntm.network.c2s.ToolAbilityPresetPayload;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.util.WorldUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import org.jetbrains.annotations.NotNull;
 
 public class NTMServerPayloadHandler {
   public static void initialize() {
     ServerPlayNetworking.registerGlobalReceiver(BEInteractionPayload.ID, NTMServerPayloadHandler::handleBEInteractionPayload);
     ServerPlayNetworking.registerGlobalReceiver(ItemInteractionPayload.ID, NTMServerPayloadHandler::handleItemInteractionPayload);
+    ServerPlayNetworking.registerGlobalReceiver(ToolAbilityPresetPayload.ID, NTMServerPayloadHandler::handleToolAbilityPresetPayload);
   }
 
-  private static void handleBEInteractionPayload(@NotNull BEInteractionPayload payload, @NotNull ServerPlayNetworking.Context context){
+  private static void handleBEInteractionPayload(BEInteractionPayload payload, ServerPlayNetworking.Context context){
     ServerPlayerEntity player = context.player();
 
     if(player.getEyePos().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.getBlockInteractionRange() + 1){
@@ -34,11 +39,29 @@ public class NTMServerPayloadHandler {
     }
   }
 
-  private static void handleItemInteractionPayload(@NotNull ItemInteractionPayload payload, @NotNull ServerPlayNetworking.Context context){
+  private static void handleItemInteractionPayload(ItemInteractionPayload payload, ServerPlayNetworking.Context context){
     ServerPlayerEntity player = context.player();
 
     if(player.getMainHandStack().getItem() instanceof InteractableItem interactableItem){
       interactableItem.onInteraction(player, player.getMainHandStack(), payload.action(), payload.extraData());
+    }
+  }
+
+  private static void handleToolAbilityPresetPayload(ToolAbilityPresetPayload payload, ServerPlayNetworking.Context context){
+    ServerPlayerEntity player = context.player();
+    ItemStack stack = player.getMainHandStack();
+
+    if(stack.getItem() instanceof SpecialTool specialTool
+      && specialTool.getAbilities().verifyPresets(payload.stackData().presets())
+      && payload.stackData().isValid()
+    ){
+      specialTool.getAbilities().setStackData(stack, payload.stackData());
+
+      context.responseSender().sendPacket(
+        new AdvancedMessagePayload(
+          new AdvancedMessage(SpecialTool.ADVANCED_MESSAGE_ID, specialTool.getAbilities().changeMessage(stack), 1000f)
+        )
+      );
     }
   }
 }

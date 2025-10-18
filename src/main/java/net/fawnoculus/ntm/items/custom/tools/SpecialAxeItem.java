@@ -29,10 +29,6 @@ public class SpecialAxeItem extends AxeItem implements SpecialTool {
   private final ModifierHandler MODIFIERS;
   private final boolean CAN_BREAK_DEPTH_ROCK;
 
-  public SpecialAxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    this(settings, material, attackDamage, attackSpeed, AbilityHandler.builder().build(), ModifierHandler.builder().build(), false);
-  }
-
   public SpecialAxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
     super(material, attackDamage, attackSpeed, settings);
 
@@ -58,12 +54,17 @@ public class SpecialAxeItem extends AxeItem implements SpecialTool {
 
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
+    ItemStack stack = player.getStackInHand(hand);
+
+    if(this.ABILITIES.canNotSwitch(stack)){
+      return super.use(world, player, hand);
+    }
+
     if (world.isClient()) {
       return ActionResult.SUCCESS;
     }
 
     if(player instanceof ServerPlayerEntity serverPlayer){
-      ItemStack stack = player.getStackInHand(hand);
       if(player.isSneaking()){
         this.ABILITIES.setSelectedPreset(stack, 0);
       }else {
@@ -93,14 +94,6 @@ public class SpecialAxeItem extends AxeItem implements SpecialTool {
   @Override
   public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
     this.ABILITIES.preBreak(stack, world, state, pos, miner);
-  }
-
-  @Override
-  public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-    if(miner instanceof PlayerEntity player){
-      this.ABILITIES.postBreak(stack, world, state, pos, player);
-    }
-    return super.postMine(stack, world, state, pos, miner);
   }
 
   @Override

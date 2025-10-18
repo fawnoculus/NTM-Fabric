@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -23,6 +24,10 @@ public class ClientUtil {
 
   public static TextRenderer getTextRenderer() {
     return getClient().textRenderer;
+  }
+
+  public static void playSound(SoundInstance sound){
+    getClient().getSoundManager().play(sound);
   }
 
   public static void initialize(){

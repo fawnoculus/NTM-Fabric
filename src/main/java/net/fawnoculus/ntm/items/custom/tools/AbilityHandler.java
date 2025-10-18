@@ -5,7 +5,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.fawnoculus.ntm.util.ClientTransferUtil;
+import net.fawnoculus.ntm.util.WorldUtil;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -13,18 +15,26 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
-public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to = 10) Integer> MAX_LEVELS, StackData DEFAULT_STACK_DATA) {
+public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer>> ABILITIES, StackData DEFAULT_STACK_DATA) {
   public @Range(from = -1, to = 10) int getMaxLevel(ItemAbility abilityType) {
-    return MAX_LEVELS.getOrDefault(abilityType.getId(), -1);
+    for (Pair<ItemAbility, Integer> pair : ABILITIES){
+      if(Objects.equals(pair.getLeft(), abilityType)){
+        return pair.getRight();
+      }
+    }
+    return -1;
   }
 
   public static Builder builder() {
@@ -35,14 +45,18 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
     return stack.getOrDefault(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, DEFAULT_STACK_DATA.copy());
   }
 
+  public boolean canNotSwitch(ItemStack stack){
+    return getStackData(stack).presets().size() <= 1;
+  }
+
   /**
    * @param stack the stacks which's selection will be incremented
    * @param by the amount to increment by
    */
   public void incrementPresetSelection(ItemStack stack, int by){
     StackData stackData = getStackData(stack);
-    stackData.incrementSelection(by);
-    stack.set(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, stackData);
+    stackData = stackData.incrementSelection(by);
+    this.setStackData(stack, stackData);
   }
 
   /**
@@ -55,14 +69,21 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
       return;
     }
 
-    stackData.selectPreset(to);
-    stack.set(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, stackData);
+    stackData = stackData.withSelectPreset(to);
+    this.setStackData(stack, stackData);
   }
 
-  public void setPresets(ItemStack stack, List<Preset> presets) {
-    StackData stackData = getStackData(stack);
-    stackData.setPresets(presets);
+  public void setStackData(ItemStack stack, StackData stackData){
+    if(!stackData.isValid()){
+      return;
+    }
+
     stack.set(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, stackData);
+    if(this.abilitiesDisabled(stack)){
+      stack.remove(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
+    }else {
+      stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+    }
   }
 
   /**
@@ -77,26 +98,20 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
     }
 
     for (Preset preset : presets) {
-      Optional<ItemAbility> top = ItemAbility.get(preset.topAbility);
-      if (top.isEmpty()) {
-        return false;
-      }
-      if (this.getMaxLevel(top.get()) < preset.topAbilityLevel) {
+      ItemAbility top = preset.topAbility;
+      if (this.getMaxLevel(top) < preset.topAbilityLevel && top.isNotNone()) {
         return false;
       }
 
-      Optional<ItemAbility> bottom = ItemAbility.get(preset.bottomAbility);
-      if (bottom.isEmpty()) {
-        return false;
-      }
-      if (this.getMaxLevel(bottom.get()) < preset.bottomAbilityLevel) {
+      ItemAbility bottom = preset.bottomAbility;
+      if (this.getMaxLevel(bottom) < preset.bottomAbilityLevel && bottom.isNotNone()) {
         return false;
       }
 
-      if(top.get().disablesOtherRow() && bottom.get().isNotNone()){
+      if(top.disablesOtherRow() && bottom.isNotNone()){
         return false;
       }
-      if(bottom.get().disablesOtherRow() && top.get().isNotNone()){
+      if(bottom.disablesOtherRow() && top.isNotNone()){
         return false;
       }
     }
@@ -105,34 +120,29 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
   }
 
   public boolean abilitiesDisabled(ItemStack stack){
-    Optional<ItemAbility> top = ItemAbility.get(getCurrentPreset(stack).topAbility).filter(ItemAbility::isNotNone);
-    Optional<ItemAbility> bottom = ItemAbility.get(getCurrentPreset(stack).bottomAbility).filter(ItemAbility::isNotNone);
-
-    return top.isEmpty() && bottom.isEmpty();
+    return getCurrentPreset(stack).topAbility.isNone() && getCurrentPreset(stack).bottomAbility.isNone();
   }
 
   public Preset getCurrentPreset(ItemStack stack) {
     StackData stackData = getStackData(stack);
-    return Objects.requireNonNullElse(stackData.presets.get(stackData.selectedPreset), stackData.presets.getFirst());
+    return Objects.requireNonNullElse(stackData.getPreset(stackData.selectedPreset), stackData.presets.getFirst());
   }
 
   public Text changeMessage(ItemStack stack) {
     Preset preset = getCurrentPreset(stack);
-    Optional<Text> top = ItemAbility.get(preset.topAbility).filter(ItemAbility::isNotNone)
-      .map(ability -> ability.getFullName(preset.topAbilityLevel));
-    Optional<Text> bottom = ItemAbility.get(preset.bottomAbility).filter(ItemAbility::isNotNone)
-      .map(ability -> ability.getFullName(preset.bottomAbilityLevel));
+    ItemAbility top = preset.topAbility;
+    ItemAbility bottom = preset.bottomAbility;
 
-    if (top.isPresent() && bottom.isPresent()) {
-      return Text.translatable("message.ntm.ability.enable_2", top.get(), bottom.get()).formatted(Formatting.YELLOW);
+    if (top.isNotNone() && bottom.isNotNone()) {
+      return Text.translatable("message.ntm.ability.enable_2", top.getFullName(preset.topAbilityLevel), bottom.getFullName(preset.bottomAbilityLevel)).formatted(Formatting.YELLOW);
     }
 
-    if(top.isPresent()){
-      return Text.translatable("message.ntm.ability.enable_1", top.get()).formatted(Formatting.YELLOW);
+    if(top.isNotNone()){
+      return Text.translatable("message.ntm.ability.enable_1", top.getFullName(preset.topAbilityLevel)).formatted(Formatting.YELLOW);
     }
 
-    if(bottom.isPresent()){
-      return Text.translatable("message.ntm.ability.enable_1", bottom.get()).formatted(Formatting.YELLOW);
+    if(bottom.isNotNone()){
+      return Text.translatable("message.ntm.ability.enable_1", bottom.getFullName(preset.bottomAbilityLevel)).formatted(Formatting.YELLOW);
     }
 
     return Text.translatable("message.ntm.ability.deactivate").formatted(Formatting.GOLD);
@@ -140,26 +150,26 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
 
   public void preBreak(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner){
     Preset currentPreset = this.getCurrentPreset(stack);
-    ItemAbility.get(currentPreset.topAbility)
-      .ifPresent(ability -> ability.preMine(stack, world, state, pos, miner, currentPreset.topAbilityLevel));
-    ItemAbility.get(currentPreset.bottomAbility)
-      .ifPresent(ability -> ability.preMine(stack, world, state, pos, miner, currentPreset.bottomAbilityLevel));
-  }
+    currentPreset.bottomAbility.preMine(stack, world, state, pos, miner, currentPreset.bottomAbilityLevel);
+    currentPreset.topAbility.preMine(stack, world, state, pos, miner, currentPreset.topAbilityLevel);
 
-  public void postBreak(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner){
-    Preset currentPreset = this.getCurrentPreset(stack);
-    ItemAbility.get(currentPreset.topAbility)
-      .ifPresent(ability -> ability.postMine(stack, world, state, pos, miner, currentPreset.topAbilityLevel));
-    ItemAbility.get(currentPreset.bottomAbility)
-      .ifPresent(ability -> ability.postMine(stack, world, state, pos, miner, currentPreset.bottomAbilityLevel));
+    ArrayList<BlockPos> blocksToBreak = new ArrayList<>();
+    blocksToBreak.add(pos);
+    currentPreset.topAbility.addExtraBlocks(stack, world, state, pos, miner, currentPreset.topAbilityLevel, blocksToBreak);
+    currentPreset.bottomAbility.addExtraBlocks(stack, world, state, pos, miner, currentPreset.bottomAbilityLevel, blocksToBreak);
+
+    for (BlockPos breakingPos : blocksToBreak){
+      boolean doDrops1 = currentPreset.topAbility.onBreakBlock(stack, world, breakingPos, miner, currentPreset.topAbilityLevel);
+      boolean doDrops2 = currentPreset.bottomAbility.onBreakBlock(stack, world, breakingPos, miner, currentPreset.bottomAbilityLevel);
+      WorldUtil.removeBlock(world, breakingPos, miner, doDrops1 && doDrops2);
+    }
   }
 
   public void appendTooltip(Consumer<Text> tooltip) {
-    if (!MAX_LEVELS.isEmpty()) {
+    if (!this.ABILITIES().isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.ability.start").formatted(Formatting.GRAY));
-      for (Identifier key : MAX_LEVELS.keySet()) {
-        ItemAbility.get(key)
-          .ifPresent(abilityType -> tooltip.accept(Text.literal("  ").append(abilityType.getFullName(MAX_LEVELS.get(key))).formatted(Formatting.GOLD)));
+      for (Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer> pair : ABILITIES) {
+          tooltip.accept(Text.literal("  ").append(pair.getLeft().getFullName(pair.getRight())).formatted(Formatting.GOLD));
       }
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end1").formatted(Formatting.GRAY));
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
@@ -168,14 +178,14 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
   }
 
   public static class Builder {
-    private final HashMap<Identifier, @NotNull @Range(from = -1, to = 10) Integer> maxLevels = new HashMap<>();
+    private final List<Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer>> abilities = new ArrayList<>();
 
     /**
      * Use this one if the ability doesn't support levels
      * @param ability the ability to add
      */
     public Builder addAbility(ItemAbility ability) {
-      maxLevels.put(ability.getId(), 0);
+      abilities.add(new Pair<>(ability, 0));
       return this;
     }
 
@@ -185,24 +195,19 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
      * @param maxLevel the maximum level of the ability that will be supported
      */
     public Builder addAbility(ItemAbility ability, int maxLevel) {
-      maxLevels.put(ability.getId(), maxLevel);
+      abilities.add(new Pair<>(ability, maxLevel));
       return this;
     }
 
     private StackData makeDefaultStackData() {
-      List<Preset> presets = new ArrayList<>(maxLevels.size());
-      presets.add(new Preset(ItemAbility.NONE_ID, 0, ItemAbility.NONE_ID, 0));
+      List<Preset> presets = new ArrayList<>(abilities.size());
+      presets.add(new Preset(ItemAbility.NONE, 0, ItemAbility.NONE, 0));
 
-      for(Identifier abilityID : maxLevels.keySet()){
-        int maxLevel = maxLevels.get(abilityID);
-        if(maxLevel < 0 || maxLevel > 10) continue;
-
-        Optional<ItemAbility> optional = ItemAbility.get(abilityID);
-        if(optional.isEmpty()) continue;
-        if(optional.get().isBottom()){
-          presets.add(new Preset(ItemAbility.NONE_ID, 0, abilityID, maxLevel));
+      for(Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer> pair : abilities){
+        if(pair.getLeft().isBottom()){
+          presets.add(new Preset(ItemAbility.NONE, 0, pair.getLeft(), pair.getRight()));
         }else {
-          presets.add(new Preset(abilityID, maxLevel, ItemAbility.NONE_ID, 0));
+          presets.add(new Preset(pair.getLeft(), pair.getRight(), ItemAbility.NONE, 0));
         }
       }
 
@@ -210,77 +215,68 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
     }
 
     public AbilityHandler build() {
-      return new AbilityHandler(maxLevels, this.makeDefaultStackData());
+      return new AbilityHandler(abilities, this.makeDefaultStackData());
     }
   }
 
+
   /**
-   * @param topAbility    Identifier of the top ability
+   * @param topAbility         Identifier of the top ability
    * @param topAbilityLevel    The level of the top ability, 0 if the ability doesn't support levels
-   * @param bottomAbility The Index to the bottom ability
+   * @param bottomAbility      The Index to the bottom ability
    * @param bottomAbilityLevel The bottom of the top ability, 0 if the ability doesn't support levels
    */
   public record Preset(
-    Identifier topAbility, @Range(from = 0, to = 10) int topAbilityLevel,
-    Identifier bottomAbility, @Range(from = 0, to = 10) int bottomAbilityLevel
+    ItemAbility topAbility, @Range(from = 0, to = 10) int topAbilityLevel,
+    ItemAbility bottomAbility, @Range(from = 0, to = 10) int bottomAbilityLevel
   ) {
     public static final Codec<Preset> CODEC = RecordCodecBuilder.create(instance ->
       instance.group(
-        Identifier.CODEC.fieldOf("topAbility").forGetter(Preset::topAbility),
+        ItemAbility.CODEC.fieldOf("topAbility").forGetter(Preset::topAbility),
         Codec.INT.fieldOf("topAbilityLevel").forGetter(Preset::topAbilityLevel),
-        Identifier.CODEC.fieldOf("bottomAbility").forGetter(Preset::bottomAbility),
+        ItemAbility.CODEC.fieldOf("bottomAbility").forGetter(Preset::bottomAbility),
         Codec.INT.fieldOf("bottomAbilityLevel").forGetter(Preset::bottomAbilityLevel)
       ).apply(instance, Preset::new)
     );
 
-    public static final PacketCodec<ByteBuf, Preset> PACKET_CODEC = new PacketCodec<>() {
-      @Override
-      public Preset decode(ByteBuf buf) {
-        return fromNBT(Objects.requireNonNull(PacketByteBuf.readNbt(buf)));
-      }
-
-      @Override
-      public void encode(ByteBuf buf, Preset value) {
-        PacketByteBuf.writeNbt(buf, toNBT(value));
-      }
-    };
-
     public Preset copy() {
       return new Preset(topAbility, topAbilityLevel, bottomAbility, bottomAbilityLevel);
     }
-
-    public static NbtCompound toNBT(Preset preset){
-      NbtCompound nbt = new NbtCompound();
-      nbt.put("topAbility", Identifier.CODEC ,preset.topAbility);
-      nbt.putInt("topAbilityLevel" ,preset.topAbilityLevel);
-      nbt.put("bottomAbility", Identifier.CODEC ,preset.bottomAbility);
-      nbt.putInt("bottomAbilityLevel" ,preset.bottomAbilityLevel);
-      return nbt;
-    }
-
-    public static Preset fromNBT(NbtCompound nbt){
-      return new Preset(
-        nbt.get("topAbility", Identifier.CODEC).orElseThrow(),
-        nbt.getInt("topAbilityLevel").orElseThrow(),
-        nbt.get("bottomAbility", Identifier.CODEC).orElseThrow(),
-        nbt.getInt("bottomAbilityLevel").orElseThrow()
-      );
-    }
   }
 
-  public static final class StackData {
+  public record StackData(List<Preset> presets, int selectedPreset) {
     public static final Codec<StackData> CODEC = RecordCodecBuilder.create(instance ->
       instance.group(
         Preset.CODEC.listOf().fieldOf("presets").forGetter(StackData::presets),
         Codec.INT.fieldOf("selectedPreset").forGetter(StackData::selectedPreset)
       ).apply(instance, StackData::new)
     );
-    private List<Preset> presets;
-    private int selectedPreset;
+    public static final PacketCodec<ByteBuf, StackData> PACKET_CODEC = new PacketCodec<>() {
+      @Override
+      public StackData decode(ByteBuf buf) {
+        NbtCompound nbt = Objects.requireNonNull(PacketByteBuf.readNbt(buf));
+        return new StackData(
+          nbt.get("presets", Preset.CODEC.listOf()).orElseThrow(),
+          nbt.getInt("selectedPreset").orElseThrow()
+        );
+      }
 
-    public StackData(List<Preset> presets, int selectedPreset) {
-      this.presets = presets;
-      this.selectedPreset = selectedPreset;
+      @Override
+      public void encode(ByteBuf buf, StackData value) {
+        NbtCompound nbt = new NbtCompound();
+        nbt.put("presets", Preset.CODEC.listOf(), value.presets);
+        nbt.putInt("selectedPreset", value.selectedPreset);
+        PacketByteBuf.writeNbt(buf, nbt);
+      }
+    };
+
+    public boolean isValid(){
+      return this.selectedPreset >= 0 && this.selectedPreset < this.presets.size();
+    }
+
+    public @Nullable Preset getPreset(int index) {
+      if(index < 0 || index >= presets.size()) return null;
+      return presets.get(index);
     }
 
     public StackData copy() {
@@ -291,46 +287,12 @@ public record AbilityHandler(HashMap<Identifier, @NotNull @Range(from = -1, to =
       return new StackData(copiedPresets, selectedPreset);
     }
 
-    public List<Preset> presets() {
-      return presets;
+    public StackData withSelectPreset(int index) {
+      return new StackData(this.presets, index);
     }
 
-    public void setPresets(List<Preset> presets) {
-      this.presets = presets;
+    public StackData incrementSelection(int by) {
+      return this.withSelectPreset((selectedPreset + by) % presets.size());
     }
-
-    public int selectedPreset() {
-      return selectedPreset;
-    }
-
-    public void selectPreset(int index) {
-      this.selectedPreset = index;
-    }
-
-    public void incrementSelection(int by) {
-      this.selectPreset((selectedPreset + by) % presets.size());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (obj == this) return true;
-      if (obj == null || obj.getClass() != this.getClass()) return false;
-      var that = (StackData) obj;
-      return Objects.equals(this.presets, that.presets) &&
-        this.selectedPreset == that.selectedPreset;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(presets, selectedPreset);
-    }
-
-    @Override
-    public String toString() {
-      return "StackData[" +
-        "presets=" + presets + ", " +
-        "selectedPreset=" + selectedPreset + ']';
-    }
-
   }
 }

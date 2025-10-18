@@ -4,10 +4,10 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.util.EnchantmentUtil;
+import net.fawnoculus.ntm.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ToolComponent;
 import net.minecraft.enchantment.Enchantments;
@@ -52,7 +52,7 @@ public abstract class Abilities {
     }
 
     @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
       if (!isCorrectForDrops(stack, state)) {
         return;
       }
@@ -68,15 +68,10 @@ public abstract class Abilities {
         return;
       }
 
-      List<BlockPos> scannedBlocks = new ArrayList<>();
-      scannedBlocks.add(pos);
+      extraBlocks.add(pos);
       try {
-        scanNeighbours(world, compareBlock, pos, pos, scannedBlocks, level);
+        scanNeighbours(world, compareBlock, pos, pos, extraBlocks, level);
       } catch (StackOverflowError ignored) {
-      }
-
-      for (BlockPos breakingPos : scannedBlocks) {
-        breakBlock(world, breakingPos, miner, !miner.shouldSkipBlockDrops());
       }
     }
 
@@ -95,7 +90,7 @@ public abstract class Abilities {
       if (world.getBlockState(scanningPos).getBlock() != compareBlock) return;
       if (!originPos.isWithinDistance(scanningPos, level + 2)) return;
       scannedBlocks.add(scanningPos);
-      scanNeighbours(world, compareBlock, originPos, scanningPos, scannedBlocks, + 3);
+      scanNeighbours(world, compareBlock, originPos, scanningPos, scannedBlocks,  level);
     }
   };
 
@@ -106,7 +101,7 @@ public abstract class Abilities {
      */
   public static final ItemAbility AOE = new ItemAbility(NTM.id("aoe"), false) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
       //Update the exclusion List every time the ability is used, just in case
       List<Block> excludedBlocks = new ArrayList<>();
       for (String id : NTMConfig.AoeAbilityExclude.getValue()) {
@@ -123,7 +118,7 @@ public abstract class Abilities {
             BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
 
             if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
-              breakBlock(world, new BlockPos(x, y, z), miner, !miner.shouldSkipBlockDrops());
+              extraBlocks.add(new BlockPos(x, y, z));
             }
           }
         }
@@ -138,7 +133,7 @@ public abstract class Abilities {
    */
   public static final ItemAbility FLAT_AOE = new ItemAbility(NTM.id("flat_aoe"), false) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
       //Update the exclusion List every time the ability is used, just in case
       List<Block> excludedBlocks = new ArrayList<>();
       for (String id : NTMConfig.AoeAbilityExclude.getValue()) {
@@ -174,7 +169,7 @@ public abstract class Abilities {
             BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
 
             if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
-              breakBlock(world, new BlockPos(x, y, z), miner, !miner.shouldSkipBlockDrops());
+              extraBlocks.add(new BlockPos(x, y, z));
             }
           }
         }
@@ -185,9 +180,9 @@ public abstract class Abilities {
   /**
    * Creates an explosion when a block that the tool can be used for is broken
    * <p>
-   * The resulting Explosion has the Strength specified by "explosionStrength"
+   * The resulting EXPLOSION has the Strength specified by "explosionStrength"
    */
-  public static final ItemAbility Explosion = new ItemAbility(NTM.id("explosion"), false) {
+  public static final ItemAbility EXPLOSION = new ItemAbility(NTM.id("explosion"), false, true) {
     @Override
     public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
       if (level < 2) {
@@ -216,40 +211,48 @@ public abstract class Abilities {
   /**
    * It's the same thing as if you had the enchantment
    */
-  public static final ItemAbility SilkTouch = new ItemAbility(NTM.id("silk_touch"), true){
+  public static final ItemAbility SILK_TOUCH = new ItemAbility(NTM.id("silk_touch"), true){
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      if(miner.isCreative()){
-        return;
-      }
-      EnchantmentUtil.addEnchantment(world, Enchantments.SILK_TOUCH, 1, stack);
-    }
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
 
-    @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      if (!isCorrectForDrops(stack, state)) {
+        return true;
+      }
+
+      if (miner.shouldSkipBlockDrops()) {
+        return false;
+      }
+
+      EnchantmentUtil.addEnchantment(world, Enchantments.SILK_TOUCH, 1, stack);
+      WorldUtil.dropItemsFromBlock(world, pos, miner, stack);
       EnchantmentUtil.removeEnchantment(world, Enchantments.SILK_TOUCH, stack);
-      super.postMine(stack, world, state, pos, miner, level);
+      return false;
     }
   };
 
   /**
    * It's the same thing as if you had the enchantment
    * <p>
-   * The Level represents the Enchantment Level of Fortune that will be applied
+   * The Level represents the Enchantment Level of FORTUNE that will be applied
    */
-  public static final ItemAbility Fortune = new ItemAbility(NTM.id("fortune"), true) {
+  public static final ItemAbility FORTUNE = new ItemAbility(NTM.id("fortune"), true) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      if (miner.isCreative()) {
-        return;
-      }
-      EnchantmentUtil.addEnchantment(world, Enchantments.FORTUNE, level, stack);
-    }
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
 
-    @Override
-    public void postMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      if (!isCorrectForDrops(stack, state)) {
+        return true;
+      }
+
+      if (miner.shouldSkipBlockDrops()) {
+        return false;
+      }
+
+      EnchantmentUtil.addEnchantment(world, Enchantments.FORTUNE, level, stack);
+      WorldUtil.dropItemsFromBlock(world, pos, miner, stack);
       EnchantmentUtil.removeEnchantment(world, Enchantments.FORTUNE, stack);
-      super.postMine(stack, world, state, pos, miner, level);
+      return false;
     }
   };
 
@@ -257,12 +260,18 @@ public abstract class Abilities {
    * Makes blocks drop what the thing they dropped would have produced when smelted
    * If the drop doesn't have a smelting recipe it will the regular drop will be used instead
    */
-  public static final ItemAbility AutoSmelt = new ItemAbility(NTM.id("auto_smelt"), true) {
+  public static final ItemAbility AUTO_SMELT = new ItemAbility(NTM.id("auto_smelt"), true) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      if (miner.isCreative()) return;
-      if (!isCorrectForDrops(stack, state)) return;
-      if (!(world instanceof ServerWorld serverWorld)) return;
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
+
+      if(!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)){
+        return true;
+      }
+
+      if(miner.shouldSkipBlockDrops()){
+        return false;
+      }
 
       LootWorldContext.Builder builder = new LootWorldContext.Builder(serverWorld)
         .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
@@ -276,7 +285,9 @@ public abstract class Abilities {
         SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(checkedStack);
 
         Optional<RecipeEntry<SmeltingRecipe>> optional = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
-        if (optional.isEmpty()) return;
+        if (optional.isEmpty()) {
+          return true;
+        }
 
         RecipeEntry<SmeltingRecipe> recipeEntry = optional.get();
 
@@ -286,7 +297,7 @@ public abstract class Abilities {
         ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output);
       }
 
-      breakBlock(world, pos, miner, false);
+      return false;
     }
   };
 
@@ -294,10 +305,21 @@ public abstract class Abilities {
    * Makes blocks drop what the thing they dropped would have produced when shredded
    * If the drop doesn't have a shredding recipe it will the regular drop will be used instead
    */
-  public static final ItemAbility AutoShredder = new ItemAbility(NTM.id("auto_shredder"), true) {
+  public static final ItemAbility AUTO_SHREADER = new ItemAbility(NTM.id("auto_shredder"), true) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
+
+      if(!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)){
+        return true;
+      }
+
+      if(miner.shouldSkipBlockDrops()){
+        return false;
+      }
+
       //TODO: Do this once you have Shreader Recipes
+      return super.onBreakBlock(stack, world, pos, miner, level);
     }
   };
 
@@ -305,10 +327,21 @@ public abstract class Abilities {
    * Makes blocks drop what the thing they dropped would have produced when centrifuged
    * If the drop doesn't have a centrifuging recipe it will the regular drop will be used instead
    */
-  public static final ItemAbility AutoCentrifuge = new ItemAbility(NTM.id("auto_centrifuge"), true) {
+  public static final ItemAbility AUTO_CENTRIFUGE = new ItemAbility(NTM.id("auto_centrifuge"), true) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
+
+      if(!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)){
+        return true;
+      }
+
+      if(miner.shouldSkipBlockDrops()){
+        return false;
+      }
+
       //TODO: Do this once you have Centrifuge Recipes
+      return super.onBreakBlock(stack, world, pos, miner, level);
     }
   };
 
@@ -316,22 +349,31 @@ public abstract class Abilities {
    * Makes blocks drop what the thing they dropped would have produced when Crystallized (aka: put in an Ore Acidizer)
    * If the drop doesn't have a Crystallizing recipe it will the regular drop will be used instead
    */
-  public static final ItemAbility AutoCrystallizer = new ItemAbility(NTM.id("auto_crystallizer"), true) {
+  public static final ItemAbility AUTO_CRYSTALLIZER = new ItemAbility(NTM.id("auto_crystallizer"), true) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
+
+      if(!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)){
+        return true;
+      }
+
+      if(miner.shouldSkipBlockDrops()){
+        return false;
+      }
+
       //TODO: Do this once you have Crystallizer Recipes
+      return super.onBreakBlock(stack, world, pos, miner, level);
     }
   };
 
   /**
    * Makes redstone blocks &AMP; ores drop a random amount of mercury drops
    */
-  public static final ItemAbility MercuryTouch = new ItemAbility(NTM.id("mercury_touch"), true) {
+  public static final ItemAbility MERCURY_TOUCH = new ItemAbility(NTM.id("mercury_touch"), true) {
     @Override
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-      if (miner.isCreative()) {
-        return;
-      }
+    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+      BlockState state = world.getBlockState(pos);
 
       int mercury = 0;
       if (state.getBlock() == Blocks.REDSTONE_ORE || state.getBlock() == Blocks.DEEPSLATE_REDSTONE_ORE)
@@ -340,37 +382,18 @@ public abstract class Abilities {
         mercury = miner.getRandom().nextInt(7) + 8;
 
       if (mercury > 0) {
-        breakBlock(world, pos, miner, false);
         ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(NTMItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
-
         stack.damage(1, miner);
+
+        return false;
       }
+
+      return true;
     }
   };
 
   private static boolean isCorrectForDrops(ItemStack stack, BlockState state) {
     ToolComponent toolComponent = stack.get(DataComponentTypes.TOOL);
     return toolComponent != null && toolComponent.isCorrectForDrops(state);
-  }
-
-  private static void breakBlock(World world, BlockPos pos, PlayerEntity player, boolean doBlockDrops){
-    BlockEntity blockEntity = world.getBlockEntity(pos);
-    BlockState originalState = world.getBlockState(pos);
-    Block block = originalState.getBlock();
-    BlockState newState = block.onBreak(world, pos, originalState, player);
-    boolean bl = world.removeBlock(pos, false);
-    if (bl) {
-      block.onBroken(world, pos, newState);
-    }
-
-    if (doBlockDrops) {
-      ItemStack itemStack = player.getMainHandStack();
-      ItemStack itemStack2 = itemStack.copy();
-      boolean bl2 = player.canHarvest(newState);
-      itemStack.postMine(world, newState, pos, player);
-      if (bl && bl2) {
-        block.afterBreak(world, player, pos, newState, blockEntity, itemStack2);
-      }
-    }
   }
 }

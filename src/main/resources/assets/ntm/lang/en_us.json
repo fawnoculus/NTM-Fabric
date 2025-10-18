@@ -85,7 +85,6 @@
 
   "sound.ntm.item.syringe_injects": "Syringe Injects",
   "sound.ntm.item.iv_bag_injects": "RadAway Injects",
-  "sound.ntm.item.pain_saw": "Entity is sawed in half",
 
   "generic.ntm.unit.k": "%1$sk",
   "generic.ntm.unit.m": "%1$sM",
@@ -255,10 +254,19 @@
   "tooltip.ntm.construction_wand.block": "Block saved: '%1$s'",
   "tooltip.ntm.network_debug_tool1": "Right-click node to analyze the Node-Network",
   "tooltip.ntm.network_debug_tool2": "Displays information about the Network in Chat",
+
   "tooltip.ntm.ability.start": "Abilities:",
   "tooltip.ntm.ability.end1": "Right click to cycle through presets!",
   "tooltip.ntm.ability.end2": "Sneak-click to go to first preset!",
-  "tooltip.ntm.ability.end3": "press <%1$s> to open customization GUI!",
+  "tooltip.ntm.ability.end3": "Press <%1$s> to open customization GUI!",
+  "tooltip.ntm.ability.gui.reset_presets": "Reset all presets",
+  "tooltip.ntm.ability.gui.delete_current": "Delete current preset",
+  "tooltip.ntm.ability.gui.add_new": "Add new preset",
+  "tooltip.ntm.ability.gui.select_first": "select first preset",
+  "tooltip.ntm.ability.gui.next": "Next preset",
+  "tooltip.ntm.ability.gui.previous": "Previous preset",
+  "tooltip.ntm.ability.gui.close_gui": "Close Window",
+  "tooltip.ntm.ability.none": "None",
   "tooltip.ntm.ability.vein_miner": "Vein Miner",
   "tooltip.ntm.ability.aoe": "AoE",
   "tooltip.ntm.ability.flat_aoe": "Flat AoE",
@@ -334,6 +342,8 @@
   "tag.item.ntm.meteoric_aluminium_ores": "Meteoric Aluminium Ores",
   "tag.item.ntm.meteoric_rare_earth_ores": "Meteoric Rare Earth Ores",
   "tag.item.ntm.meteoric_cobalt_ores": "Meteoric Cobalt Ores",
+
+  "screen.ntm.tool_abilities": "Tool Abilities",
 
   "container.ntm.alloy_furnace": "Alloy Furnace",
   "container.ntm.electric_furnace": "Electric Furnace",

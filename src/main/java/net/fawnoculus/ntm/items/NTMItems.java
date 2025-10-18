@@ -1039,7 +1039,7 @@ public class NTMItems {
   public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings ->
     new SpecialAxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 2.5f, 1f,
       AbilityHandler.builder().build(),
-      ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
       false
   ));
   public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings ->
@@ -1054,7 +1054,7 @@ public class NTMItems {
   public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings ->
     new SpecialAxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 2.5f, 1f,
     AbilityHandler.builder().build(),
-    ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+    ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
     false
   ));
   public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings ->
@@ -1065,7 +1065,7 @@ public class NTMItems {
   public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings ->
     new SpecialSwordItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 5f, 1f,
       AbilityHandler.builder().build(),
-      ModifierHandler.builder().addModifier(Modifiers.Stunning, 2).build(),
+      ModifierHandler.builder().addModifier(Modifiers.STUNNING, 2).build(),
       false
   ));
   public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings ->
@@ -1077,7 +1077,7 @@ public class NTMItems {
   public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings ->
     new SpecialAxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 4f, 1f,
       AbilityHandler.builder().addAbility(Abilities.VEIN_MINER, 1).build(),
-      ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
       false
   ));
   public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel", new Item.Settings(), settings ->
@@ -1093,8 +1093,8 @@ public class NTMItems {
     new SpecialSwordItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 28f, 1f,
       AbilityHandler.builder().build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Stunning, 2)
-        .addModifier(Modifiers.Vampire, 2)
+        .addModifier(Modifiers.STUNNING, 2)
+        .addModifier(Modifiers.VAMPIRE, 2)
         .build(),
       false
     ));
@@ -1102,9 +1102,9 @@ public class NTMItems {
     new SpecialPickaxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 3f, 1f,
       AbilityHandler.builder()
         .addAbility(Abilities.VEIN_MINER, 3)
-        .addAbility(Abilities.AutoSmelt)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
         .build(),
       ModifierHandler.builder().build(),
       false
@@ -1113,20 +1113,20 @@ public class NTMItems {
     new SpecialAxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 23f, 1f,
       AbilityHandler.builder()
         .addAbility(Abilities.VEIN_MINER, 3)
-        .addAbility(Abilities.AutoSmelt)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
       false
     ));
   public static final Item CMB_STEEL_SHOVEL = register("cmb_steel_shovel", new Item.Settings(), settings ->
     new SpecialShovelItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f,
       AbilityHandler.builder()
         .addAbility(Abilities.VEIN_MINER, 3)
-        .addAbility(Abilities.AutoSmelt)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
         .build(),
       ModifierHandler.builder().build(),
       false
@@ -1141,7 +1141,7 @@ public class NTMItems {
   public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings ->
     new SpecialAxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 4.5f, 1f,
       AbilityHandler.builder().build(),
-      ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
       false
     ));
   public static final Item COBALT_SHOVEL = register("cobalt_shovel", new Item.Settings(), settings ->
@@ -1152,7 +1152,7 @@ public class NTMItems {
   public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings ->
     new SpecialSwordItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 11f, 1f,
       AbilityHandler.builder().build(),
-      ModifierHandler.builder().addModifier(Modifiers.LuckOfTheCollector).build(),
+      ModifierHandler.builder().addModifier(Modifiers.LUCK_OF_THE_COLLECTOR).build(),
       false
     ));
   public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings ->
@@ -1161,8 +1161,8 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 2)
         .addAbility(Abilities.AOE, 1)
         .addAbility(Abilities.FLAT_AOE, 1)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
         .build(),
       ModifierHandler.builder().build(),
       false
@@ -1173,10 +1173,10 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 2)
         .addAbility(Abilities.AOE, 1)
         .addAbility(Abilities.FLAT_AOE, 1)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
       false
     ));
   public static final Item DECORATED_COBALT_SHOVEL = register("decorated_cobalt_shovel", new Item.Settings(), settings ->
@@ -1185,8 +1185,8 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 2)
         .addAbility(Abilities.AOE, 1)
         .addAbility(Abilities.FLAT_AOE, 1)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
         .build(),
       ModifierHandler.builder().build(),
       false
@@ -1198,9 +1198,9 @@ public class NTMItems {
     new SpecialSwordItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 19f, 1f,
       AbilityHandler.builder().build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Decapitator)
-        .addModifier(Modifiers.Stunning, 3)
-        .addModifier(Modifiers.LuckOfTheCollector)
+        .addModifier(Modifiers.DECAPITATOR)
+        .addModifier(Modifiers.STUNNING, 3)
+        .addModifier(Modifiers.LUCK_OF_THE_COLLECTOR)
         .build(),
       false
     ));
@@ -1210,10 +1210,10 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 5)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.Stunning, 3).build(),
+      ModifierHandler.builder().addModifier(Modifiers.STUNNING, 3).build(),
       false
     ));
   public static final Item STARMETAL_AXE = register("starmetal_axe", new Item.Settings(), settings ->
@@ -1222,12 +1222,12 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 5)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Stunning, 3)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.STUNNING, 3)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       false
     ));
@@ -1237,10 +1237,10 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 5)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.Stunning, 3).build(),
+      ModifierHandler.builder().addModifier(Modifiers.STUNNING, 3).build(),
       false
     ));
   public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings ->
@@ -1250,8 +1250,7 @@ public class NTMItems {
     new SpecialSwordItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 9.5f, 1f,
       AbilityHandler.builder().build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Stunning, 2)
-        .addModifier(Modifiers.Vampire, 2)
+        .addModifier(Modifiers.STUNNING, 2)
         .build(),
       false
     ));
@@ -1261,8 +1260,8 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 3)
         .addAbility(Abilities.AOE, 1)
         .addAbility(Abilities.FLAT_AOE, 1)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
         .build(),
       ModifierHandler.builder().build(),
       false
@@ -1273,10 +1272,10 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 3)
         .addAbility(Abilities.AOE, 1)
         .addAbility(Abilities.FLAT_AOE, 1)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.Decapitator).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
       false
     ));
   public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings ->
@@ -1285,8 +1284,8 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 3)
         .addAbility(Abilities.AOE, 1)
         .addAbility(Abilities.FLAT_AOE, 1)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
         .build(),
       ModifierHandler.builder().build(),
       false
@@ -1298,8 +1297,8 @@ public class NTMItems {
     new SpecialSwordItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 65f, 1f,
       AbilityHandler.builder().build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.RadioactiveBlade, 50)
-        .addModifier(Modifiers.Vampire, 2)
+        .addModifier(Modifiers.RADIOACTIVE_BLADE, 50)
+        .addModifier(Modifiers.VAMPIRE, 2)
         .build(),
       false
     ));
@@ -1309,12 +1308,12 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 8)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 5)
-        .addAbility(Abilities.AutoSmelt)
-        .addAbility(Abilities.AutoShredder)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.AUTO_SHREADER)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.RadioactiveBlade, 15).build(),
+      ModifierHandler.builder().addModifier(Modifiers.RADIOACTIVE_BLADE, 15).build(),
       false
     ));
   public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings ->
@@ -1323,14 +1322,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 8)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 5)
-        .addAbility(Abilities.AutoSmelt)
-        .addAbility(Abilities.AutoShredder)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.AUTO_SHREADER)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.RadioactiveBlade, 15)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.RADIOACTIVE_BLADE, 15)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       false
     ));
@@ -1340,12 +1339,12 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 8)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 5)
-        .addAbility(Abilities.AutoSmelt)
-        .addAbility(Abilities.AutoShredder)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.AUTO_SHREADER)
         .build(),
-      ModifierHandler.builder().addModifier(Modifiers.RadioactiveBlade, 15).build(),
+      ModifierHandler.builder().addModifier(Modifiers.RADIOACTIVE_BLADE, 15).build(),
       false
     ));
   public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings ->
@@ -1357,14 +1356,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 2)
-        .addAbility(Abilities.AutoShredder)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .addAbility(Abilities.AUTO_SHREADER)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Vampire, 2)
-        .addModifier(Modifiers.Stunning, 5)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.VAMPIRE, 2)
+        .addModifier(Modifiers.STUNNING, 5)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       true
     ));
@@ -1374,14 +1373,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 42)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 2)
-        .addAbility(Abilities.AutoShredder)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .addAbility(Abilities.AUTO_SHREADER)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Vampire, 3)
-        .addModifier(Modifiers.Stunning, 10)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.VAMPIRE, 3)
+        .addModifier(Modifiers.STUNNING, 10)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       false
     ));
@@ -1392,14 +1391,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
-        .addAbility(Abilities.AutoSmelt)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .addAbility(Abilities.AUTO_SMELT)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Vampire, 2)
-        .addModifier(Modifiers.Flaming, 5)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.VAMPIRE, 2)
+        .addModifier(Modifiers.FLAMING, 5)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       true
     ));
@@ -1409,14 +1408,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 3)
-        .addAbility(Abilities.AutoSmelt)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .addAbility(Abilities.AUTO_SMELT)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Vampire, 3)
-        .addModifier(Modifiers.Flaming, 10)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.VAMPIRE, 3)
+        .addModifier(Modifiers.FLAMING, 10)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       false
     ));
@@ -1427,14 +1426,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.Fortune, 4)
-        .addAbility(Abilities.AutoCentrifuge)
-        .addAbility(Abilities.MercuryTouch)
+        .addAbility(Abilities.FORTUNE, 4)
+        .addAbility(Abilities.AUTO_CENTRIFUGE)
+        .addAbility(Abilities.MERCURY_TOUCH)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Vampire, 5)
-        .addModifier(Modifiers.Stunning, 10)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.VAMPIRE, 5)
+        .addModifier(Modifiers.STUNNING, 10)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       true
     ));
@@ -1444,14 +1443,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
-        .addAbility(Abilities.Fortune, 4)
-        .addAbility(Abilities.AutoCentrifuge)
-        .addAbility(Abilities.MercuryTouch)
+        .addAbility(Abilities.FORTUNE, 4)
+        .addAbility(Abilities.AUTO_CENTRIFUGE)
+        .addAbility(Abilities.MERCURY_TOUCH)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Vampire, 10)
-        .addModifier(Modifiers.Stunning, 15)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.VAMPIRE, 10)
+        .addModifier(Modifiers.STUNNING, 15)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       false
     ));
@@ -1462,15 +1461,15 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 5)
         .addAbility(Abilities.AOE, 3)
         .addAbility(Abilities.FLAT_AOE, 3)
-        .addAbility(Abilities.Explosion, 4)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 9)
-        .addAbility(Abilities.AutoCrystallizer)
+        .addAbility(Abilities.EXPLOSION, 4)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 9)
+        .addAbility(Abilities.AUTO_CRYSTALLIZER)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Stunning, 10)
-        .addModifier(Modifiers.PhosphorusTip, 60)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.STUNNING, 10)
+        .addModifier(Modifiers.PHOSPHORUS_TIP, 60)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       true
     ));
@@ -1480,14 +1479,14 @@ public class NTMItems {
         .addAbility(Abilities.VEIN_MINER, 5)
         .addAbility(Abilities.AOE, 3)
         .addAbility(Abilities.FLAT_AOE, 3)
-        .addAbility(Abilities.Explosion, 4)
-        .addAbility(Abilities.SilkTouch)
-        .addAbility(Abilities.Fortune, 9)
+        .addAbility(Abilities.EXPLOSION, 4)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 9)
         .build(),
       ModifierHandler.builder()
-        .addModifier(Modifiers.Stunning, 15)
-        .addModifier(Modifiers.PhosphorusTip, 90)
-        .addModifier(Modifiers.Decapitator)
+        .addModifier(Modifiers.STUNNING, 15)
+        .addModifier(Modifiers.PHOSPHORUS_TIP, 90)
+        .addModifier(Modifiers.DECAPITATOR)
         .build(),
       true
     ));
