@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.tools;
+package net.fawnoculus.ntm.api.tool;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -27,14 +27,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer>> ABILITIES, StackData DEFAULT_STACK_DATA) {
-  public @Range(from = -1, to = 10) int getMaxLevel(ItemAbility abilityType) {
+public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to = 10) Integer>> ABILITIES, StackData DEFAULT_STACK_DATA) {
+  public @Range(from = 0, to = 10) int getMaxLevel(ItemAbility abilityType) {
     for (Pair<ItemAbility, Integer> pair : ABILITIES){
       if(Objects.equals(pair.getLeft(), abilityType)){
         return pair.getRight();
       }
     }
-    return -1;
+    return 0;
   }
 
   public static Builder builder() {
@@ -168,24 +168,24 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, t
   public void appendTooltip(Consumer<Text> tooltip) {
     if (!this.ABILITIES().isEmpty()) {
       tooltip.accept(Text.translatable("tooltip.ntm.ability.start").formatted(Formatting.GRAY));
-      for (Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer> pair : ABILITIES) {
+      for (Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : ABILITIES) {
           tooltip.accept(Text.literal("  ").append(pair.getLeft().getFullName(pair.getRight())).formatted(Formatting.GOLD));
       }
-      tooltip.accept(Text.translatable("tooltip.ntm.ability.end1").formatted(Formatting.GRAY));
-      tooltip.accept(Text.translatable("tooltip.ntm.ability.end2").formatted(Formatting.GRAY));
+      tooltip.accept(Text.translatable("tooltip.ntm.ability.end1", ClientTransferUtil.getBoundKey("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
+      tooltip.accept(Text.translatable("tooltip.ntm.ability.end2", ClientTransferUtil.getBoundKey("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
       tooltip.accept(Text.translatable("tooltip.ntm.ability.end3", ClientTransferUtil.getBoundKey("key.ntm.open_tool_ability_gui").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
     }
   }
 
   public static class Builder {
-    private final List<Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer>> abilities = new ArrayList<>();
+    private final List<Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer>> abilities = new ArrayList<>();
 
     /**
      * Use this one if the ability doesn't support levels
      * @param ability the ability to add
      */
     public Builder addAbility(ItemAbility ability) {
-      abilities.add(new Pair<>(ability, 0));
+      abilities.add(new Pair<>(ability, 1));
       return this;
     }
 
@@ -195,19 +195,27 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, t
      * @param maxLevel the maximum level of the ability that will be supported
      */
     public Builder addAbility(ItemAbility ability, int maxLevel) {
+      if(maxLevel < 1 || maxLevel > ability.maxLevel()){
+        throw new IllegalArgumentException("Max Level " + maxLevel + " is not valid for ability " + ability.getId());
+      }
+
       abilities.add(new Pair<>(ability, maxLevel));
       return this;
     }
 
     private StackData makeDefaultStackData() {
       List<Preset> presets = new ArrayList<>(abilities.size());
-      presets.add(new Preset(ItemAbility.NONE, 0, ItemAbility.NONE, 0));
+      presets.add(new Preset(ItemAbility.NONE, 1, ItemAbility.NONE, 1));
 
-      for(Pair<ItemAbility, @NotNull @Range(from = -1, to = 10) Integer> pair : abilities){
+      for(Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : abilities){
+        if(pair.getRight() < 1){
+          continue;
+        }
+
         if(pair.getLeft().isBottom()){
-          presets.add(new Preset(ItemAbility.NONE, 0, pair.getLeft(), pair.getRight()));
+          presets.add(new Preset(ItemAbility.NONE, 1, pair.getLeft(), pair.getRight()));
         }else {
-          presets.add(new Preset(pair.getLeft(), pair.getRight(), ItemAbility.NONE, 0));
+          presets.add(new Preset(pair.getLeft(), pair.getRight(), ItemAbility.NONE, 1));
         }
       }
 
@@ -227,8 +235,8 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, t
    * @param bottomAbilityLevel The bottom of the top ability, 0 if the ability doesn't support levels
    */
   public record Preset(
-    ItemAbility topAbility, @Range(from = 0, to = 10) int topAbilityLevel,
-    ItemAbility bottomAbility, @Range(from = 0, to = 10) int bottomAbilityLevel
+    ItemAbility topAbility, @Range(from = 1, to = 10) int topAbilityLevel,
+    ItemAbility bottomAbility, @Range(from = 1, to = 10) int bottomAbilityLevel
   ) {
     public static final Codec<Preset> CODEC = RecordCodecBuilder.create(instance ->
       instance.group(
@@ -241,6 +249,10 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, t
 
     public Preset copy() {
       return new Preset(topAbility, topAbilityLevel, bottomAbility, bottomAbilityLevel);
+    }
+
+    public boolean isValid(){
+      return this.topAbilityLevel <= this.topAbility.maxLevel() && this.bottomAbilityLevel <= this.bottomAbility.maxLevel();
     }
   }
 
@@ -271,6 +283,11 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = -1, t
     };
 
     public boolean isValid(){
+      for (Preset preset : this.presets){
+        if(!preset.isValid()){
+          return false;
+        }
+      }
       return this.selectedPreset >= 0 && this.selectedPreset < this.presets.size();
     }
 

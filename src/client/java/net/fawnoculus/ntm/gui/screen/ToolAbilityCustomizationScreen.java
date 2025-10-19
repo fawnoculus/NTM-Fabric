@@ -2,11 +2,11 @@ package net.fawnoculus.ntm.gui.screen;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.ItemAbility;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.gui.widget.HoverButtonWidget;
 import net.fawnoculus.ntm.gui.widget.ToolAbilityWidget;
-import net.fawnoculus.ntm.items.custom.tools.AbilityHandler;
-import net.fawnoculus.ntm.items.custom.tools.ItemAbility;
-import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
 import net.fawnoculus.ntm.network.c2s.ToolAbilityPresetPayload;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.fawnoculus.ntm.util.RenderUtil;
@@ -45,7 +45,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
     super(Text.translatable("screen.ntm.tool_abilities"));
 
     this.TOOL = specialTool;
-    this.ABILITY_HANDLER = specialTool.getAbilities();
+    this.ABILITY_HANDLER = specialTool.abilityHandler();
 
     AbilityHandler.StackData stackData = ABILITY_HANDLER.getStackData(stack);
     this.PRESETS = new ArrayList<>(stackData.presets().stream().map(ModifiablePreset::new).toList());
@@ -134,7 +134,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
     widgetX = this.x + 15;
     widgetY = this.y + 25;
     for(ItemAbility ability : ItemAbility.TOP_ABILITIES){
-      ToolAbilityWidget widget = new ToolAbilityWidget(widgetX, widgetY, ability, TOOL.getAbilities().getMaxLevel(ability), false, TOP_ABILITIES, BOTTOM_ABILITIES);
+      ToolAbilityWidget widget = new ToolAbilityWidget(widgetX, widgetY, ability, TOOL.abilityHandler().getMaxLevel(ability), false, TOP_ABILITIES, BOTTOM_ABILITIES);
       this.TOP_ABILITIES.add(widget);
       this.addDrawableChild(widget);
       widgetX += 20;
@@ -143,7 +143,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
     widgetX = this.x + 15;
     widgetY = this.y + 45;
     for(ItemAbility ability : ItemAbility.BOTTOM_ABILITIES){
-      ToolAbilityWidget widget = new ToolAbilityWidget(widgetX, widgetY, ability, TOOL.getAbilities().getMaxLevel(ability), true, BOTTOM_ABILITIES, TOP_ABILITIES);
+      ToolAbilityWidget widget = new ToolAbilityWidget(widgetX, widgetY, ability, TOOL.abilityHandler().getMaxLevel(ability), true, BOTTOM_ABILITIES, TOP_ABILITIES);
       this.BOTTOM_ABILITIES.add(widget);
       this.addDrawableChild(widget);
       widgetX += 20;
@@ -239,6 +239,10 @@ public class ToolAbilityCustomizationScreen extends Screen {
   private void resetPresets(){
     this.PRESETS.clear();
     this.ABILITY_HANDLER.DEFAULT_STACK_DATA().presets().stream().map(ModifiablePreset::new).forEach(this.PRESETS::add);
+    if(this.presetIndex >= this.PRESETS.size()){
+      this.presetIndex = this.PRESETS.size() - 1;
+    }
+    this.setPresetIndex(this.presetIndex);
   }
 
   private void deleteCurrent(){
@@ -279,7 +283,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
     public int bottomAbilityLevel;
 
     public ModifiablePreset(){
-      this(ItemAbility.NONE, 0, ItemAbility.NONE, 0);
+      this(ItemAbility.NONE, 1, ItemAbility.NONE, 1);
     }
 
     public ModifiablePreset(AbilityHandler.Preset from){

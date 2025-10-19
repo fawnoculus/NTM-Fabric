@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.render.hud;
 
-import net.fawnoculus.ntm.items.custom.tools.AbilityHandler;
-import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
@@ -26,7 +26,7 @@ public class ToolAbilityRender {
     ItemStack stack = ClientUtil.getPlayer().getMainHandStack();
     if(!(stack.getItem() instanceof SpecialTool specialTool)) return;
 
-    AbilityHandler.Preset preset = specialTool.getAbilities().getCurrentPreset(stack);
+    AbilityHandler.Preset preset = specialTool.abilityHandler().getCurrentPreset(stack);
 
     int centerX = context.getScaledWindowWidth() / 2;
     int centerY = context.getScaledWindowHeight() / 2;

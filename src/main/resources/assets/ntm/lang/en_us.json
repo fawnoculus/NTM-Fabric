@@ -117,6 +117,7 @@
   "error.ntm.exception": "Exception: %1$s",
 
   "key.category.ntm": "NTM-Fabric",
+  "key.ntm.duck": "Duck",
   "key.ntm.extra_info": "Display Extra Info",
   "key.ntm.open_tool_ability_gui": "Open Tool Ability GUI",
 

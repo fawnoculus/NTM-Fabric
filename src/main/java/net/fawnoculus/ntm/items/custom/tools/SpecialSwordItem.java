@@ -1,5 +1,7 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.ModifierHandler;
 import net.minecraft.item.ToolMaterial;
 
 

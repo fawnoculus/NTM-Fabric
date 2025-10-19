@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.tools;
+package net.fawnoculus.ntm.api.tool;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -17,16 +17,16 @@ import org.jetbrains.annotations.Range;
 import java.util.*;
 
 /**
- * <br> All Abilities can be found at {@link Abilities}
+ * All Abilities can be found at {@link Abilities}
  */
 public abstract class ItemAbility {
   public static final HashMap<Identifier, ItemAbility> ID_TO_ABILITY = new HashMap<>();
   public static final List<ItemAbility> TOP_ABILITIES = new ArrayList<>();
   public static final List<ItemAbility> BOTTOM_ABILITIES = new ArrayList<>();
   public static final Identifier NONE_ID = NTM.id("none");
-  public static final ItemAbility NONE = new ItemAbility(NONE_ID, false, false, true){};
+  public static final ItemAbility NONE = new ItemAbility(NONE_ID, 1, false, false, true){};
   public static final Codec<ItemAbility> CODEC = Identifier.CODEC.flatXmap(
-    identifier -> get(identifier).map(DataResult::success).orElse(DataResult.error(() -> "Identifier not Found")),
+    identifier -> get(identifier).map(DataResult::success).orElse(DataResult.error(() -> "Identifier not valid")),
     ability -> DataResult.success(ability.getId())
   );
 
@@ -34,19 +34,25 @@ public abstract class ItemAbility {
   private final Identifier ENABLED_TEXTURE;
   private final Identifier DISABLED_TEXTURE;
   private final @Nullable Identifier CROSSHAIR_EXTENSION;
+  private final int MAX_LEVEL;
   private final boolean IS_BOTTOM;
   private final boolean DISABLES_OTHER_ROW;
 
   protected ItemAbility(Identifier id, boolean isBottom){
-    this(id, isBottom, false, false);
+    this(id, 1, isBottom, false, false);
   }
 
-  protected ItemAbility(Identifier id, boolean isBottom, boolean disablesOtherRow){
-    this(id, isBottom, disablesOtherRow, false);
+  protected ItemAbility(Identifier id, @Range(from = 1, to = 10) int maxLevel, boolean isBottom){
+    this(id, maxLevel, isBottom, false, false);
   }
 
-  private ItemAbility(Identifier id, boolean isBottom, boolean disablesOtherRow, boolean isNone){
+  protected ItemAbility(Identifier id, @Range(from = 1, to = 10) int maxLevel, boolean isBottom, boolean disablesOtherRow){
+    this(id, maxLevel, isBottom, disablesOtherRow, false);
+  }
+
+  private ItemAbility(Identifier id, @Range(from = 1, to = 10) int maxLevel, boolean isBottom, boolean disablesOtherRow, boolean isNone){
     this.ID = id;
+    this.MAX_LEVEL = maxLevel;
     this.IS_BOTTOM = isBottom;
     this.DISABLES_OTHER_ROW = disablesOtherRow;
     this.ENABLED_TEXTURE = Identifier.of(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_enabled.png");
@@ -88,6 +94,10 @@ public abstract class ItemAbility {
     return this.CROSSHAIR_EXTENSION;
   }
 
+  public @Range(from = 1, to = 10) int maxLevel(){
+    return this.MAX_LEVEL;
+  }
+
   // UWU
   public boolean isBottom(){
     return this.IS_BOTTOM;
@@ -110,14 +120,14 @@ public abstract class ItemAbility {
   }
 
   public MutableText getFullName(@Range(from = 0, to = 10) int level) {
-    if (level == 0) {
-      return getName();
+    if (this.MAX_LEVEL <= 1) {
+      return this.getName();
     }
-    return getName().append(" ").append(getLevelText(level));
+    return this.getName().append(" ").append(getLevelText(level));
   }
 
   public MutableText getName(){
-    return Text.translatable("tooltip." + getId().getNamespace() + ".ability." + getId().getPath());
+    return Text.translatable("tooltip." + this.ID.getNamespace() + ".ability." + this.ID.getPath());
   }
 
   public MutableText getLevelText(@Range(from = 0, to = 10) int level){

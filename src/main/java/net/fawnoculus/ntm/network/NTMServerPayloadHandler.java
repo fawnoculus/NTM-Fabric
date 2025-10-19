@@ -4,9 +4,9 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.blocks.entities.InteractableBE;
 import net.fawnoculus.ntm.items.custom.InteractableItem;
-import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
 import net.fawnoculus.ntm.network.c2s.BEInteractionPayload;
 import net.fawnoculus.ntm.network.c2s.ItemInteractionPayload;
 import net.fawnoculus.ntm.network.c2s.ToolAbilityPresetPayload;
@@ -52,14 +52,14 @@ public class NTMServerPayloadHandler {
     ItemStack stack = player.getMainHandStack();
 
     if(stack.getItem() instanceof SpecialTool specialTool
-      && specialTool.getAbilities().verifyPresets(payload.stackData().presets())
+      && specialTool.abilityHandler().verifyPresets(payload.stackData().presets())
       && payload.stackData().isValid()
     ){
-      specialTool.getAbilities().setStackData(stack, payload.stackData());
+      specialTool.abilityHandler().setStackData(stack, payload.stackData());
 
       context.responseSender().sendPacket(
         new AdvancedMessagePayload(
-          new AdvancedMessage(SpecialTool.ADVANCED_MESSAGE_ID, specialTool.getAbilities().changeMessage(stack), 1000f)
+          new AdvancedMessage(SpecialTool.ADVANCED_MESSAGE_ID, specialTool.abilityHandler().changeMessage(stack), 1000f)
         )
       );
     }

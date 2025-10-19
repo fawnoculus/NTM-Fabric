@@ -1,6 +1,10 @@
 package net.fawnoculus.ntm.items;
 
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.api.tool.Abilities;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.ModifierHandler;
+import net.fawnoculus.ntm.api.tool.Modifiers;
 import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.items.components.NTMConsumableComponents;
@@ -1370,7 +1374,7 @@ public class NTMItems {
   public static final Item BISMUTH_AXE = register("bismuth_axe", new Item.Settings(), settings ->
     new SpecialBigAxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 10f, 1f,
       AbilityHandler.builder()
-        .addAbility(Abilities.VEIN_MINER, 42)
+        .addAbility(Abilities.VEIN_MINER, 4)
         .addAbility(Abilities.AOE, 2)
         .addAbility(Abilities.FLAT_AOE, 2)
         .addAbility(Abilities.SILK_TOUCH)

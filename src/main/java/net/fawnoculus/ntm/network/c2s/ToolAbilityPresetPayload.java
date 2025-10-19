@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.network.c2s;
 
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.items.custom.tools.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;

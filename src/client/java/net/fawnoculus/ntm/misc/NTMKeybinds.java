@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.misc;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fawnoculus.ntm.api.events.custom.ClientTickCallback;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.gui.screen.ToolAbilityCustomizationScreen;
-import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
@@ -41,7 +41,7 @@ public class NTMKeybinds {
 
       if(client.currentScreen == null
         && stack.getItem() instanceof SpecialTool specialTool
-        && !specialTool.getAbilities().ABILITIES().isEmpty()
+        && !specialTool.abilityHandler().ABILITIES().isEmpty()
       ){
         client.setScreen(new ToolAbilityCustomizationScreen(specialTool, stack));
       }
@@ -50,7 +50,9 @@ public class NTMKeybinds {
 
   private static void onKeyPressed(KeyBinding key, Consumer<MinecraftClient> onPressed) {
     ClientTickCallback.EVENT.register(client -> {
-        if (key.isPressed()) onPressed.accept(client);
+      while (key.wasPressed()){
+        onPressed.accept(client);
+      }
     });
   }
 }

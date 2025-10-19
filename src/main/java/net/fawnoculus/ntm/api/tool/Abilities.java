@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.tools;
+package net.fawnoculus.ntm.api.tool;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
@@ -45,7 +45,7 @@ public abstract class Abilities {
      * <p>
      * MaxBlocks is the max Distance that a block can have from the originally broken block before it will no longer be harvested by VeinMiner
      */
-  public static final ItemAbility VEIN_MINER = new ItemAbility(NTM.id("vein_miner"), false) {
+  public static final ItemAbility VEIN_MINER = new ItemAbility(NTM.id("vein_miner"), 10, false) {
     @Override
     public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
       return Text.literal("(" + (level + 2) + ")");
@@ -99,7 +99,7 @@ public abstract class Abilities {
      * <p>
      * blockAmount decides how big the Cube is (Value of 1 would cause a 3x3 Cube, Value of 2 a 5x5 Cube and so on)
      */
-  public static final ItemAbility AOE = new ItemAbility(NTM.id("aoe"), false) {
+  public static final ItemAbility AOE = new ItemAbility(NTM.id("aoe"), 10, false) {
     @Override
     public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
       //Update the exclusion List every time the ability is used, just in case
@@ -131,7 +131,7 @@ public abstract class Abilities {
    * <p>
    * blockAmount decides how big the Cube is (Value of 1 would cause a 3x3 Cube, Value of 2 a 5x5 Cube and so on)
    */
-  public static final ItemAbility FLAT_AOE = new ItemAbility(NTM.id("flat_aoe"), false) {
+  public static final ItemAbility FLAT_AOE = new ItemAbility(NTM.id("flat_aoe"), 10, false) {
     @Override
     public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
       //Update the exclusion List every time the ability is used, just in case
@@ -182,7 +182,7 @@ public abstract class Abilities {
    * <p>
    * The resulting EXPLOSION has the Strength specified by "explosionStrength"
    */
-  public static final ItemAbility EXPLOSION = new ItemAbility(NTM.id("explosion"), false, true) {
+  public static final ItemAbility EXPLOSION = new ItemAbility(NTM.id("explosion"), 10, false, true) {
     @Override
     public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
       if (level < 2) {
@@ -236,7 +236,7 @@ public abstract class Abilities {
    * <p>
    * The Level represents the Enchantment Level of FORTUNE that will be applied
    */
-  public static final ItemAbility FORTUNE = new ItemAbility(NTM.id("fortune"), true) {
+  public static final ItemAbility FORTUNE = new ItemAbility(NTM.id("fortune"), 10, true) {
     @Override
     public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
       BlockState state = world.getBlockState(pos);

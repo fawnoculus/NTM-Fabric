@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.blocks.entities.container.energy;
 
 import net.fawnoculus.ntm.api.node.Node;
-import net.fawnoculus.ntm.api.node.network.type.EnergyNetworkType;
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
+import net.fawnoculus.ntm.api.node.network.NetworkType;
+import net.fawnoculus.ntm.api.node.network.NetworkTypes;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -28,7 +28,7 @@ public abstract class EnergyBE extends BlockEntity implements Node {
 
   @Override
   public NetworkType getNetworkType() {
-    return EnergyNetworkType.get();
+    return NetworkTypes.ENERGY;
   }
 
   @Override

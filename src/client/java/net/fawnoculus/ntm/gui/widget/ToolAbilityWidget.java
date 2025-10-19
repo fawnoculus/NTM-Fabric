@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.gui.widget;
 
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.api.tool.ItemAbility;
 import net.fawnoculus.ntm.gui.screen.ToolAbilityCustomizationScreen.ModifiablePreset;
-import net.fawnoculus.ntm.items.custom.tools.ItemAbility;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.minecraft.client.gl.RenderPipelines;
@@ -13,6 +13,7 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Range;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ToolAbilityWidget extends ClickableWidget {
   private static final int LEVEL_TEXTURE_HEIGHT = 128;
   private static final int LEVEL_TEXTURE_V = 106;
 
-  private final int MAX_LEVEL;
+  private final @Range(from = 0, to = 10) int MAX_LEVEL;
   private final boolean IS_BOTTOM;
   private final ItemAbility ABILITY;
   private final List<ToolAbilityWidget> ROW;
@@ -38,13 +39,13 @@ public class ToolAbilityWidget extends ClickableWidget {
   public ToolAbilityWidget(int x, int y, ItemAbility ability, int maxLevel, boolean isBottom, List<ToolAbilityWidget> row, List<ToolAbilityWidget> oppositeRow) {
     super(x, y, WIDTH, HEIGHT, maxLevel >= 1 ? ability.getFullName(maxLevel) : ability.getFullName(0));
 
-    this.MAX_LEVEL = ability.isNone() ? 0 : maxLevel;
+    this.MAX_LEVEL = ability.isNone() ? 1 : maxLevel;
     this.IS_BOTTOM = isBottom;
     this.ABILITY = ability;
     this.ROW = row;
     this.OPPOSITE_ROW = oppositeRow;
 
-    this.isDisabled = maxLevel < 0 && ability.isNotNone();
+    this.isDisabled = this.MAX_LEVEL < 1;
   }
 
   @Override
@@ -57,7 +58,7 @@ public class ToolAbilityWidget extends ClickableWidget {
       context.drawBorder(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.WHITE);
     }
 
-    if(this.MAX_LEVEL > 0){
+    if(this.ABILITY.maxLevel() > 1){
       context.drawTexture(
         RenderPipelines.GUI_TEXTURED,
         LEVEL_TEXTURE,
@@ -142,7 +143,7 @@ public class ToolAbilityWidget extends ClickableWidget {
       this.isDisabled = true;
       this.setLevel(-1);
     }else {
-      this.isDisabled = this.MAX_LEVEL < 0;
+      this.isDisabled = this.MAX_LEVEL < 1;
     }
   }
 
@@ -161,7 +162,7 @@ public class ToolAbilityWidget extends ClickableWidget {
         this.setLevel(this.MAX_LEVEL);
       }
     }else {
-      this.setLevel((Math.max(1, this.currentLevel + 1)) % this.MAX_LEVEL);
+      this.setLevel(Math.max(0, this.currentLevel) % this.MAX_LEVEL + 1);
     }
 
     if(previousLevel != currentLevel){

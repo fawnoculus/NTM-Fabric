@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.mixin;
 
-import net.fawnoculus.ntm.items.custom.tools.SpecialTool;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.OperatorBlock;
 import net.minecraft.item.ItemStack;

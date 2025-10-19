@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.items;
 
 import com.mojang.serialization.Codec;
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.items.custom.tools.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;

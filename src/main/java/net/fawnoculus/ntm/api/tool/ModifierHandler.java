@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.tools;
+package net.fawnoculus.ntm.api.tool;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;

@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.tools;
+package net.fawnoculus.ntm.api.tool;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.radiation.RadiationManager;
@@ -185,7 +185,7 @@ public abstract class Modifiers {
       }
       if (target.getWorld() instanceof ServerWorld world) {
         int count = world.getRandom().nextBetween(1, level);
-        target.dropStack(world, new ItemStack(NTMItems.NITRA));
+        target.dropStack(world, new ItemStack(NTMItems.NITRA, count));
       }
     }
   };

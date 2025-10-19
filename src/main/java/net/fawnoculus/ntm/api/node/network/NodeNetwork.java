@@ -7,7 +7,6 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.api.node.Node;
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

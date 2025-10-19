@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.blocks.entities.container.fluid;
 
 import net.fawnoculus.ntm.api.node.Node;
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
-import net.fawnoculus.ntm.api.node.network.type.FluidNetworkType;
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
+import net.fawnoculus.ntm.api.node.network.NetworkType;
+import net.fawnoculus.ntm.api.node.network.NetworkTypes;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -72,7 +72,7 @@ public abstract class FluidBE extends BlockEntity implements Node {
 
   @Override
   public NetworkType getNetworkType() {
-    return FluidNetworkType.get();
+    return NetworkTypes.FLUID;
   }
 
   @Override

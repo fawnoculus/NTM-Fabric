@@ -1,4 +1,4 @@
-package net.fawnoculus.ntm.items.custom.tools;
+package net.fawnoculus.ntm.api.tool;
 
 
 import net.fawnoculus.ntm.NTM;
@@ -12,11 +12,13 @@ import net.minecraft.world.World;
 public interface SpecialTool {
   Identifier ADVANCED_MESSAGE_ID = NTM.id("tool_ability");
 
-  AbilityHandler getAbilities();
+  AbilityHandler abilityHandler();
 
-  ModifierHandler getModifiers();
+  ModifierHandler modifierHandler();
 
-  boolean getCanBreakDepthRock();
+  boolean canBreakDepthRock();
 
-  void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner);
+  default void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+    this.abilityHandler().preBreak(stack, world, state, pos, miner);
+  }
 }

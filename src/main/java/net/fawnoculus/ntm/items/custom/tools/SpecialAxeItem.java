@@ -2,8 +2,10 @@ package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.ModifierHandler;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
-import net.minecraft.block.BlockState;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +20,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.function.Consumer;
@@ -38,17 +39,17 @@ public class SpecialAxeItem extends AxeItem implements SpecialTool {
   }
 
   @Override
-  public AbilityHandler getAbilities() {
+  public AbilityHandler abilityHandler() {
     return this.ABILITIES;
   }
 
   @Override
-  public ModifierHandler getModifiers() {
+  public ModifierHandler modifierHandler() {
     return this.MODIFIERS;
   }
 
   @Override
-  public boolean getCanBreakDepthRock() {
+  public boolean canBreakDepthRock() {
     return this.CAN_BREAK_DEPTH_ROCK;
   }
 
@@ -89,11 +90,6 @@ public class SpecialAxeItem extends AxeItem implements SpecialTool {
   public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
     this.MODIFIERS.postHit(stack, target, attacker);
     super.postHit(stack, target, attacker);
-  }
-
-  @Override
-  public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-    this.ABILITIES.preBreak(stack, world, state, pos, miner);
   }
 
   @Override
