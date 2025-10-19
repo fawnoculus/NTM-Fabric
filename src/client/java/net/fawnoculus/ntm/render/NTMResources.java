@@ -10,8 +10,6 @@ import net.fawnoculus.ntm.NTMClient;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.render.model.BlockModel3D;
 import net.fawnoculus.ntm.render.model.ItemModel3D;
-import net.fawnoculus.ntm.render.wavefront.ModelHandler;
-import net.fawnoculus.ntm.render.wavefront.model.MultiMultiModel3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.item.model.ItemModel;
@@ -24,7 +22,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.profiler.Profilers;
-import org.jetbrains.annotations.Contract;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
@@ -42,17 +39,22 @@ public class NTMResources {
     ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener() {
       @Override
       public Identifier getFabricId() {
-        return NTM.id("on_reload");
+        return NTM.id("wavefront_models");
       }
 
       @Override
       public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Executor prepareExecutor, Executor applyExecutor) {
-        Models.loadModels();
-
         return CompletableFuture
-          .runAsync(NTMResources::prepareReload, prepareExecutor)
+          .runAsync(() -> {
+            Profiler profiler = Profilers.get();
+            profiler.push("[NTM] loading Wavefront Models");
+            NTMClient.LOGGER.info("loading Wavefront Models");
+            WavefrontModels.loadModels();
+            profiler.pop();
+            }, prepareExecutor
+          )
           .thenCompose(synchronizer::whenPrepared)
-          .thenRunAsync(NTMResources::applyReload, applyExecutor);
+          .thenRunAsync(() -> {}, applyExecutor);
       }
     });
 
@@ -61,38 +63,12 @@ public class NTMResources {
       pluginContext.modifyItemModelBeforeBake().register(ModelLoadingOverrides::getItemModel);
     });
 
-    ModelLoadingOverrides.addItem(NTMBlocks.ALLOY_FURNACE_EXTENSION, id -> new ItemModel3D.Unbaked(id, Models.ALLOY_FURNACE_EXTENSION));
-    ModelLoadingOverrides.addBlock(NTMBlocks.ALLOY_FURNACE_EXTENSION, state -> new BlockModel3D.MultipartUnbaked(Models.ALLOY_FURNACE_EXTENSION, NTM.id("block/alloy_furnace_extension")));
-  }
-
-  private static void prepareReload(){}
-
-  private static void applyReload(){
-    Profiler profiler = Profilers.get();
-    profiler.push("[NTM] loading 3d Models");
-    Models.loadModels();
-    profiler.pop();
-  }
-
-
-  public static class Models {
-    public static MultiMultiModel3d ALLOY_FURNACE_EXTENSION;
-    public static MultiMultiModel3d ZIRNOX;
-    public static MultiMultiModel3d ZIRNOX_DESTROYED;
-
-    private static void loadModels() {
-      ALLOY_FURNACE_EXTENSION = of("alloy_furnace_extension");
-      ALLOY_FURNACE_EXTENSION.getOrThrow("Top", "").setTexture(NTM.id("block/alloy_furnace_top"));
-      ALLOY_FURNACE_EXTENSION.getOrThrow("Side", "").setTexture(NTM.id("block/alloy_furnace_extension"));
-      ALLOY_FURNACE_EXTENSION.getOrThrow("Bottom", "").setTexture(NTM.id("block/alloy_furnace_bottom"));
-      ZIRNOX = of("zirnox");
-      ZIRNOX_DESTROYED = of("zirnox_destroyed");
-    }
-
-    @Contract("_ -> new")
-    private static MultiMultiModel3d of(String name) {
-      return ModelHandler.ofWavefrontObj(NTM.id("models/obj/" + name + ".obj"));
-    }
+    ModelLoadingOverrides.addItem(NTMBlocks.ALLOY_FURNACE_EXTENSION,
+      id -> new ItemModel3D.Unbaked(id, WavefrontModels.ALLOY_FURNACE_EXTENSION)
+    );
+    ModelLoadingOverrides.addBlock(NTMBlocks.ALLOY_FURNACE_EXTENSION,
+      state -> new BlockModel3D.MultipartUnbaked(WavefrontModels.ALLOY_FURNACE_EXTENSION, NTM.id("block/alloy_furnace_extension"))
+    );
   }
 
   public static class ModelLoadingOverrides {

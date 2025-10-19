@@ -11,32 +11,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public record SingleModel3d(List<Polygon> FACES) implements Model3d {
+public record WavefrontModelObject(String name ,List<Polygon> polygons) implements Model3d {
   public void setTexture(Identifier blockId){
-    for (Polygon face : FACES) {
+    for (Polygon face : polygons) {
       face.setTexture(blockId);
     }
   }
 
   public void setTexture(SpriteIdentifier spriteIdentifier){
-    for (Polygon face : FACES) {
+    for (Polygon face : polygons) {
       face.setTexture(spriteIdentifier);
     }
   }
 
   public @NotNull List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel) {
     List<BakedQuad> quads = new ArrayList<>();
-    for (Polygon face : FACES) {
+    for (Polygon face : polygons) {
       quads.add(face.bake(baker, simpleModel));
     }
     return quads;
-  }
-
-  @Override
-  public @NotNull String toString() {
-    return "SingleModel3d{" +
-      "FACES.size()=" + FACES.size() +
-      ", FACES=" + FACES +
-      '}';
   }
 }
