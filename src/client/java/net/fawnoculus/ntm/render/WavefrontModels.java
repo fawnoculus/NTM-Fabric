@@ -12,11 +12,17 @@ public class WavefrontModels {
 
   protected static void loadModels() {
     ALLOY_FURNACE_EXTENSION = of("alloy_furnace_extension");
-    ALLOY_FURNACE_EXTENSION.get("", "Top").ifPresent(model -> model.setTexture(NTM.id("block/alloy_furnace_top")));
-    ALLOY_FURNACE_EXTENSION.get("", "Side").ifPresent(model -> model.setTexture(NTM.id("block/alloy_furnace_extension")));
-    ALLOY_FURNACE_EXTENSION.get("", "Bottom").ifPresent(model -> model.setTexture(NTM.id("block/alloy_furnace_bottom")));
     ZIRNOX = of("zirnox");
     ZIRNOX_DESTROYED = of("zirnox_destroyed");
+  }
+
+  protected static void loadModelTextures() {
+    ALLOY_FURNACE_EXTENSION.get("", "Top")
+      .ifPresent(model -> model.setTexture(NTM.id("block/alloy_furnace_top")));
+    ALLOY_FURNACE_EXTENSION.get("", "Side")
+      .ifPresent(model -> model.setTexture(NTM.id("block/alloy_furnace_extension")));
+    ALLOY_FURNACE_EXTENSION.get("", "Bottom")
+      .ifPresent(model -> model.setTexture(NTM.id("block/alloy_furnace_bottom")));
   }
 
   @Contract("_ -> new")

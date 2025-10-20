@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ItemModel3D implements ItemModel {
@@ -43,7 +44,7 @@ public class ItemModel3D implements ItemModel {
     layer.getQuads().addAll(this.quads);
   }
 
-  public record Unbaked(Identifier model, Model3d model3d) implements ItemModel.Unbaked {
+  public record Unbaked(Identifier model, Model3d model3d, Function<Vector3f, Vector3f> offset) implements ItemModel.Unbaked {
     /* How the hell am I going to put a Wavefront model in a codec?
     public static final MapCodec<ItemModel3D.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
       instance -> instance.group(
@@ -52,6 +53,10 @@ public class ItemModel3D implements ItemModel {
         .apply(instance, ItemModel3D.Unbaked::new)
     );
      */
+
+    public Unbaked(Identifier model, Model3d model3d){
+      this(model, model3d, vector3f -> vector3f);
+    }
 
     @Override
     public void resolve(ResolvableModel.Resolver resolver) {
@@ -66,7 +71,7 @@ public class ItemModel3D implements ItemModel {
       ModelTextures modelTextures = bakedSimpleModel.getTextures();
       ModelSettings modelSettings = ModelSettings.resolveSettings(baker, bakedSimpleModel, modelTextures);
 
-      List<BakedQuad> quads = model3d.bake(baker, bakedSimpleModel);
+      List<BakedQuad> quads = model3d.bake(baker, bakedSimpleModel, offset);
 
       return new ItemModel3D(quads, modelSettings);
     }

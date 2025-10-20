@@ -10,11 +10,13 @@ import net.minecraft.client.render.model.SimpleModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> models) implements Model3d {
   public static final WavefrontModel EMPTY = new WavefrontModel("Empty", new HashMap<>());
@@ -36,10 +38,10 @@ public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> m
   }
 
 
-  public List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel){
+  public List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset){
     List<BakedQuad> quads = new ArrayList<>();
     for (WavefrontModelGroup wavefrontModelGroup : models.values()) {
-      quads.addAll(wavefrontModelGroup.bake(baker, simpleModel));
+      quads.addAll(wavefrontModelGroup.bake(baker, simpleModel, offset));
     }
     return quads;
   }

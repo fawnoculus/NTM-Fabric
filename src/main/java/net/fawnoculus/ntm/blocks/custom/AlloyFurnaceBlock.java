@@ -4,7 +4,10 @@ import com.mojang.serialization.MapCodec;
 import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.NTMBlockProperties;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceBE;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -19,6 +22,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -95,41 +99,36 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
       return;
     }
 
-    double y = pos.getY() + 1;
+    Vec3d centerPos = pos.toCenterPos();
+    double y = centerPos.getY() + 0.5;
+    double x = centerPos.getX();
+    double z = centerPos.getZ();
     if (state.get(EXTENSION)) y += 1;
-    double x = pos.getX();
-    if (x > -1) {
-      x += 0.5;
-    } else {
-      x -= 0.5;
-    }
-    double z = pos.getZ();
-    if (z > -1) {
-      z += 0.5;
-    } else {
-      z -= 0.5;
-    }
     world.addParticleClient(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
 
-    x = pos.getX();
-    y = pos.getY() + 0.3 + random.nextDouble() * 0.4;
-    z = pos.getZ();
-    switch (state.get(AlloyFurnaceBlock.FACING)) {
+    x = centerPos.getX();
+    y = centerPos.getY() - 0.2 + random.nextDouble() * 0.4;
+    z = centerPos.getZ();
+    switch (state.get(FACING)) {
       case Direction.NORTH -> {
-        x += 0.3 + random.nextDouble() * 0.4;
-        z -= 0.1;
-      }
-      case Direction.EAST -> {
-        x += 1.1;
-        z += 0.3 + random.nextDouble() * 0.4;
-      }
-      case Direction.WEST -> {
-        x -= 0.1;
-        z += 0.3 + random.nextDouble() * 0.4;
+        x += 0.2;
+        x -= random.nextDouble() * 0.4;
+        z -= 0.6;
       }
       case Direction.SOUTH -> {
-        x += 0.3 + random.nextDouble() * 0.4;
-        z += 1.1;
+        x -= 0.2;
+        x += random.nextDouble() * 0.4;
+        z += 0.6;
+      }
+      case Direction.EAST -> {
+        z -= 0.2;
+        z += random.nextDouble() * 0.4;
+        x += 0.6;
+      }
+      case Direction.WEST -> {
+        z += 0.2;
+        z -= random.nextDouble() * 0.4;
+        x -= 0.6;
       }
     }
     world.addParticleClient(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);

@@ -15,6 +15,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class Polygon {
@@ -57,19 +58,19 @@ public class Polygon {
 
   // Yes we are turning a triangle into a quad
   // Yes I also hate it
-  public BakedQuad bake(@NotNull Baker baker, SimpleModel simpleModel) {
+  public BakedQuad bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset) {
     Sprite sprite = baker.getSpriteGetter().get(texture, simpleModel);
 
     int[] vertexData = new int[32];
 
     for (int i = 0; i < 3; i++){
       TextureCoordinate coordinate = coordinates.get(i);
-      packVertexData(vertexData, i, vertices.get(i).toVec3f(), sprite, 1 - coordinate.U(),1 - coordinate.V());
+      packVertexData(vertexData, i, offset.apply(vertices.get(i).toVec3f()), sprite, 1 - coordinate.U(),1 - coordinate.V());
     }
 
     // Set the fourth Quad Corner to the first polygon corner to make a triangle out of a square
     TextureCoordinate coordinate = coordinates.getFirst();
-    packVertexData(vertexData, 3, vertices.getFirst().toVec3f(), sprite, coordinate.U(), coordinate.V());
+    packVertexData(vertexData, 3, offset.apply(vertices.getFirst().toVec3f()), sprite, coordinate.U(), coordinate.V());
 
     return new BakedQuad(vertexData, -1, normalsToDirection(this.normals), sprite, false, 0);
   }
