@@ -17,7 +17,10 @@ import java.util.List;
 import java.util.function.Function;
 
 public class NTMConfig {
-  public static final ConfigFile COMMON_CONFIG_FILE = new ConfigFile(JsonConfigEncoder.getInstance(), "ntm/common.json");
+  public static final ConfigFile COMMON_CONFIG_FILE = new ConfigFile(
+    JsonConfigEncoder.getInstance(),
+    "ntm/common.json"
+  );
   public static final ConfigOption<List<Block>> VEIN_MINER_ABILITY_EXCLUDE = COMMON_CONFIG_FILE.newOption(
     "vein_miner_ability_exclude",
     NTMCodecs.BLOCK_CODEC.listOf(),
@@ -49,7 +52,10 @@ public class NTMConfig {
     "temp_unit", TempUnit.CODEC, TempUnit.Celsius, "Temperature Unit to be displayed [Celsius, Fahrenheit, Kelvin]"
   );
 
-  public static final ConfigFile DEV_CONFIG_FILE = new ConfigFile(JsonConfigEncoder.getInstance(),"ntm/dev.json");
+  public static final ConfigFile DEV_CONFIG_FILE = new ConfigFile(
+    JsonConfigEncoder.getInstance(),
+    "ntm/dev.json"
+  );
   public static final ConfigOption<Boolean> DEV_MODE = DEV_CONFIG_FILE.newOption(
     "dev_mode",  Codec.BOOL, FabricLoader.getInstance().isDevelopmentEnvironment()
   );
