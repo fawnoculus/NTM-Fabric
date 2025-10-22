@@ -169,7 +169,7 @@ public class RadiationManager {
   }
 
   public static void processEntityRadiation(LivingEntity entity) {
-    if (NTMConfig.DisableEntityRadiation.getValue()) return;
+    if (NTMConfig.DISABLE_ENTITY_RADIATION.getValue()) return;
     if (entity.isInvulnerable() || entity.isInCreativeMode()) return;
     if (!(entity.getWorld() instanceof ServerWorld serverWorld)) return;
     increaseRadiationExposure(entity, getTotalRadiation(entity) * getRadiationModifier(entity) / 20.0);
@@ -275,7 +275,7 @@ public class RadiationManager {
   }
 
   public static RadiationProcessor makeNewRadiationProcessor(ServerWorld world, ChunkPos pos) {
-    if (NTMConfig.DisableChunkRadiation.getValue()) {
+    if (NTMConfig.DISABLE_CHUNK_RADIATION.getValue()) {
       return new EmptyRadiationProcessor();
     }
     return new SimpleRadiationProcessor(world, pos);

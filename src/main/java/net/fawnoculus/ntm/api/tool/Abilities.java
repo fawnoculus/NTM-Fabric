@@ -21,11 +21,9 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -58,13 +56,7 @@ public abstract class Abilities {
       }
       Block compareBlock = state.getBlock();
 
-      //Update the exclusion List every time the ability is used, just in case
-      List<Block> excludedBlocks = new ArrayList<>();
-      for (String id : NTMConfig.VeinMinerAbilityExclude.getValue()) {
-        excludedBlocks.add(Registries.BLOCK.get(Identifier.of(id)));
-      }
-
-      if (excludedBlocks.contains(compareBlock)) {
+      if (NTMConfig.VEIN_MINER_ABILITY_EXCLUDE.getValue().contains(compareBlock)) {
         return;
       }
 
@@ -102,13 +94,7 @@ public abstract class Abilities {
   public static final ItemAbility AOE = new ItemAbility(NTM.id("aoe"), 10, false) {
     @Override
     public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
-      //Update the exclusion List every time the ability is used, just in case
-      List<Block> excludedBlocks = new ArrayList<>();
-      for (String id : NTMConfig.AoeAbilityExclude.getValue()) {
-        excludedBlocks.add(Registries.BLOCK.get(Identifier.of(id)));
-      }
-
-      if (!isCorrectForDrops(stack, state) || excludedBlocks.contains(state.getBlock())) {
+      if (!isCorrectForDrops(stack, state) || NTMConfig.AOE_ABILITY_EXCLUDE.getValue().contains(state.getBlock())) {
         return;
       }
 
@@ -117,7 +103,7 @@ public abstract class Abilities {
           for (int z = pos.getZ() - level; z <= pos.getZ() + level; z++) {
             BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
 
-            if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
+            if (isCorrectForDrops(stack, checkBlock) && !NTMConfig.AOE_ABILITY_EXCLUDE.getValue().contains(checkBlock.getBlock())) {
               extraBlocks.add(new BlockPos(x, y, z));
             }
           }
@@ -134,13 +120,7 @@ public abstract class Abilities {
   public static final ItemAbility FLAT_AOE = new ItemAbility(NTM.id("flat_aoe"), 10, false) {
     @Override
     public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
-      //Update the exclusion List every time the ability is used, just in case
-      List<Block> excludedBlocks = new ArrayList<>();
-      for (String id : NTMConfig.AoeAbilityExclude.getValue()) {
-        excludedBlocks.add(Registries.BLOCK.get(Identifier.of(id)));
-      }
-
-      if (!isCorrectForDrops(stack, state) || excludedBlocks.contains(state.getBlock())) {
+      if (!isCorrectForDrops(stack, state) || NTMConfig.AOE_ABILITY_EXCLUDE.getValue().contains(state.getBlock())) {
         return;
       }
 
@@ -168,7 +148,7 @@ public abstract class Abilities {
           for (int z = pos.getZ() - zRange; z <= pos.getZ() + zRange; z++) {
             BlockState checkBlock = world.getBlockState(new BlockPos(x, y, z));
 
-            if (isCorrectForDrops(stack, checkBlock) && !excludedBlocks.contains(checkBlock.getBlock())) {
+            if (isCorrectForDrops(stack, checkBlock) && !NTMConfig.AOE_ABILITY_EXCLUDE.getValue().contains(checkBlock.getBlock())) {
               extraBlocks.add(new BlockPos(x, y, z));
             }
           }

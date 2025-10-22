@@ -27,7 +27,7 @@ public class NTMServerPayloadHandler {
     ServerPlayerEntity player = context.player();
 
     if(player.getEyePos().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.getBlockInteractionRange() + 1){
-      if(NTMConfig.DevMode.getValue()){
+      if(NTMConfig.DEV_MODE.getValue()){
         NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away", player.getName().getLiteralString(), payload.action().toString(), payload.pos().toShortString());
       }
       return;

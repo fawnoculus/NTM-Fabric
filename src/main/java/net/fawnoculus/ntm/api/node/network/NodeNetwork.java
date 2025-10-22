@@ -32,7 +32,7 @@ public class NodeNetwork {
       return;
     }
 
-    if (!LOADED_NODES.add(node) && NTMConfig.DevMode.getValue()) {
+    if (!LOADED_NODES.add(node) && NTMConfig.DEV_MODE.getValue()) {
       NTM.LOGGER.warn("Added Node {} twice to Network {}", node, this.ID);
     }
 
@@ -133,9 +133,9 @@ public class NodeNetwork {
           node.setNetwork(assignedNetwork);
           assignedNetwork.addNode(node);
 
-          if (toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+          if (toBeScannedNodes.size() > NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() && NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() > 0) {
             NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while Removing Node at {} from Network {}",
-              NTMConfig.MaxNodeScanDepth.getValue(),
+              NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
               node.getPos().toShortString(),
               node.getWorld().getRegistryKey(),
               originNode.getPos().toShortString(),
@@ -193,9 +193,9 @@ public class NodeNetwork {
           node.setNetwork(assignedNetwork);
           assignedNetwork.addNode(node);
 
-          if (toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+          if (toBeScannedNodes.size() > NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() && NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() > 0) {
             NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while severing Connections Between {} Nodes in Network {}",
-              NTMConfig.MaxNodeScanDepth.getValue(),
+              NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
               node.getPos().toShortString(),
               node.getWorld().getRegistryKey(),
               providedNodes.size(),
@@ -232,9 +232,9 @@ public class NodeNetwork {
         connectedNode.setNetwork(this);
         this.addNode(connectedNode);
 
-        if (toBeScanned.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+        if (toBeScanned.size() > NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() && NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() > 0) {
           NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} while Connecting Network {} from {} to {} in {}",
-            NTMConfig.MaxNodeScanDepth.getValue(),
+            NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
             this.ID,
             connectedNode.getPos().toShortString(),
             node.getPos().toShortString(),

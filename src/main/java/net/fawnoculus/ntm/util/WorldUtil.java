@@ -58,7 +58,7 @@ public class WorldUtil {
       }
     );
 
-    if (RegionNbtCache.size() > NTMConfig.MaxRegionDataCache.getValue()) {
+    if (RegionNbtCache.size() > NTMConfig.MAX_REGION_DATA_CACHE.getValue()) {
       flushCachedRegionNBT();
     }
 

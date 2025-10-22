@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ExceptionUtil {
   public static @NotNull String makePretty(@NotNull Throwable throwable) {
-    return makePretty(throwable, NTMConfig.PrintStackTrace.getValue());
+    return makePretty(throwable, NTMConfig.PRINT_STACKTRACE.getValue());
   }
 
   public static @NotNull String makePretty(@NotNull Throwable throwable, boolean stacktrace) {

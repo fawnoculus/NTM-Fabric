@@ -1,18 +1,23 @@
 package net.fawnoculus.ntm.commands;
 
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.FloatArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.LongArgumentType;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.api.config.ConfigFile;
+import net.fawnoculus.ntm.api.config.ConfigOption;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.fawnoculus.ntm.api.node.network.NetworkType;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.fawnoculus.ntm.api.node.network.NodeNetworkManager;
+import net.fawnoculus.ntm.commands.arguments.ConfigOptionArgumentType;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
@@ -46,7 +51,6 @@ import java.util.UUID;
 
 public class NTMCommands {
   public static void initialize() {
-
     CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
       CommandManager.literal("ntm")
         .then(CommandManager.literal("version")
@@ -54,16 +58,94 @@ public class NTMCommands {
           )
         )
         .then(CommandManager.literal("config")
-          .requires(source -> allowCommands(source, environment)
-          )
-          .then(CommandManager.literal("server")
-          )
-          .then(CommandManager.literal("world")
-            .then(CommandManager.literal("default")
+          .requires(source -> allowCommands(source, environment))
+          .then(CommandManager.literal("common")
+            .then(CommandManager.literal("reload")
+              .executes(context -> reloadConfig(context, NTMConfig.COMMON_CONFIG_FILE))
+            )
+            .then(CommandManager.literal("get")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.COMMON_CONFIG_FILE))
+                .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
+              )
+            )
+            .then(CommandManager.literal("set")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.COMMON_CONFIG_FILE))
+                .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                  .executes(context -> trySetOption(context,
+                    NTMConfig.COMMON_CONFIG_FILE,
+                    ConfigOptionArgumentType.getOption(context, "option"),
+                    context.getArgument("value", String.class)
+                    )
+                  )
+                )
+              )
             )
           )
-          .then(CommandManager.literal("client")
-            .requires(ignored -> environment.integrated)
+          .then(CommandManager.literal("dev")
+            .then(CommandManager.literal("reload")
+              .executes(context -> reloadConfig(context, NTMConfig.DEV_CONFIG_FILE))
+            )
+            .then(CommandManager.literal("get")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.DEV_CONFIG_FILE))
+                .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
+              )
+            )
+            .then(CommandManager.literal("set")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.DEV_CONFIG_FILE))
+                .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                  .executes(context -> trySetOption(context,
+                    NTMConfig.DEV_CONFIG_FILE,
+                    ConfigOptionArgumentType.getOption(context, "option"),
+                    context.getArgument("value", String.class)
+                    )
+                  )
+                )
+              )
+            )
+          )
+          .then(CommandManager.literal("world-default")
+            .then(CommandManager.literal("reload")
+              .executes(context -> reloadConfig(context, NTMConfig.WORLD_CONFIG.defaultConfig()))
+            )
+            .then(CommandManager.literal("get")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::defaultConfig))
+                .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
+              )
+            )
+            .then(CommandManager.literal("set")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::defaultConfig))
+                .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                  .executes(context -> trySetOption(context,
+                    NTMConfig.WORLD_CONFIG.defaultConfig(),
+                    ConfigOptionArgumentType.getOption(context, "option"),
+                    context.getArgument("value", String.class)
+                    )
+                  )
+                )
+              )
+            )
+          )
+          .then(CommandManager.literal("world")
+            .then(CommandManager.literal("reload")
+              .executes(context -> reloadConfig(context, Objects.requireNonNull(NTMConfig.WORLD_CONFIG.worldConfig())))
+            )
+            .then(CommandManager.literal("get")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::worldConfig))
+                .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
+              )
+            )
+            .then(CommandManager.literal("set")
+              .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::worldConfig))
+                .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                  .executes(context -> trySetOption(context,
+                      NTMConfig.WORLD_CONFIG.worldConfig(),
+                      ConfigOptionArgumentType.getOption(context, "option"),
+                      context.getArgument("value", String.class)
+                    )
+                  )
+                )
+              )
+            )
           )
         )
         .then(CommandManager.literal("message")
@@ -110,7 +192,7 @@ public class NTMCommands {
         )
     ));
 
-    if (NTMConfig.DevMode.getValue()) {
+    if (NTMConfig.DEV_MODE.getValue()) {
       CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
           CommandManager.literal("ntm")
             .then(CommandManager.literal("dev")
@@ -163,9 +245,9 @@ public class NTMCommands {
     }
   }
 
-  private static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
+  protected static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
     if (environment != null && environment.integrated) return true;
-    return source.hasPermissionLevel(NTMConfig.RequiredCommandPermission.getValue());
+    return source.hasPermissionLevel(NTMConfig.REQUIRED_COMMAND_PERMISSION.getValue());
   }
 
   private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment) {
@@ -178,15 +260,61 @@ public class NTMCommands {
     return 1;
   }
 
+  protected static int reloadConfig(CommandContext<ServerCommandSource> context, ConfigFile file) {
+    context.getSource().sendFeedback(() -> Text.translatable("command.ntm.reload_configs", file.getSubPath()), true);
+    file.readFile();
+    return 1;
+  }
+
+  protected static <T> int getOptionInfo(CommandContext<ServerCommandSource> context, ConfigOption<T> option) {
+    Codec<T> codec = option.getCodec();
+    T defaultValue = option.getDefaultValue();
+    T currentValue = option.getValue();
+
+    Text nameText = Text.translatable("command.ntm.get_option_info.name").formatted(Formatting.BLUE)
+      .append(Text.literal(option.getName()).formatted(Formatting.WHITE));
+    context.getSource().sendFeedback(() -> nameText, false);
+
+    if (option.getComment() != null) {
+      Text commentText = Text.translatable("command.ntm.get_option_info.comment").formatted(Formatting.YELLOW)
+        .append(Text.literal(option.getComment()).formatted(Formatting.WHITE));
+      context.getSource().sendFeedback(() -> commentText, false);
+    }
+
+    Text defaultValueText = Text.translatable("command.ntm.get_option_info.default").formatted(Formatting.YELLOW)
+      .append(Text.literal(codec.encodeStart(JsonOps.INSTANCE, defaultValue).getOrThrow().toString()).formatted(Formatting.WHITE));
+    context.getSource().sendFeedback(() -> defaultValueText, false);
+
+    Text currentValueText = Text.translatable("command.ntm.get_option_info.current_value").formatted(Formatting.YELLOW)
+      .append(Text.literal(codec.encodeStart(JsonOps.INSTANCE, currentValue).getOrThrow().toString()).formatted(Formatting.WHITE));
+    context.getSource().sendFeedback(() -> currentValueText, false);
+    return 1;
+  }
+
+  protected static int trySetOption(CommandContext<ServerCommandSource> context, ConfigFile file, ConfigOption<?> option, String value) {
+    JsonElement element;
+    try {
+      element = JsonParser.parseString(value);
+    } catch (JsonSyntaxException exception) {
+      context.getSource().sendError(Text.translatable("command.ntm.set_config_value.invalid_json", value));
+      return -2;
+    }
+
+    if (option.setValueFrom(element, JsonOps.INSTANCE)) {
+      context.getSource().sendFeedback(() -> Text.translatable("command.ntm.set_config_value", option.getName(), value), true);
+      file.writeFile();
+      return 1;
+    }
+
+    context.getSource().sendError(Text.translatable("command.ntm.set_config_value.failed", option.getName(), value));
+    return -1;
+  }
+
   private static int removeMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier) {
     for (ServerPlayerEntity player : targets) {
       ServerPlayNetworking.send(player, new RemoveMessagePayload(identifier));
     }
-    if (identifier.toString().equals("special:all_messages")) {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
-    } else {
-      context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
-    }
+    context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
     return 1;
   }
 

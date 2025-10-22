@@ -48,7 +48,7 @@ public record BlockModel3D(BlockModelPart part) implements BlockStateModel {
       final List<BakedQuad> quads = model3d.bake(baker, state::toString, offset);
       final Sprite particleSprite = baker.getSpriteGetter().get(this.particleSprite, state::toString);
 
-      return new BlockModel3D(new Part(quads, NTMClientConfig.ModelAmbientOcclusion.getValue(), particleSprite));
+      return new BlockModel3D(new Part(quads, NTMClientConfig.MODEL_AMBIENT_OCCLUSION.getValue(), particleSprite));
     }
 
     @Override

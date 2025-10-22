@@ -3,17 +3,21 @@ package net.fawnoculus.ntm.blocks.custom;
 import com.mojang.serialization.MapCodec;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.blocks.entities.AlloyFurnaceExtensionBE;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 
-public class AlloyFurnaceExtensionBlock extends TransparentBlock implements BlockEntityProvider {
+public class AlloyFurnaceExtensionBlock extends Block implements BlockEntityProvider {
   public AlloyFurnaceExtensionBlock(Settings settings) {
     super(settings);
   }
@@ -35,6 +39,11 @@ public class AlloyFurnaceExtensionBlock extends TransparentBlock implements Bloc
 
     bellowState = bellowState.with(AlloyFurnaceBlock.EXTENSION, true);
     world.setBlockState(pos.down(), bellowState);
+  }
+
+  @Override
+  public BlockState getAppearance(BlockState state, BlockRenderView renderView, BlockPos pos, Direction side, @Nullable BlockState sourceState, @Nullable BlockPos sourcePos) {
+    return super.getAppearance(state, renderView, pos, side, sourceState, sourcePos);
   }
 
   @Override
