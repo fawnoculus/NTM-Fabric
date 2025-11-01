@@ -4,7 +4,6 @@
   "package": "net.fawnoculus.ntm.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ClientConnectionMixin",
     "ClientPlayNetworkingHandlerMixin",
     "ClientsideItemStackMixin",
     "MinecraftClientMixin",

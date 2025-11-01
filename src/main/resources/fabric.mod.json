@@ -5,14 +5,12 @@
   "name": "NTM-Fabric",
   "description": "NTM-Fabric is a Recreation of 'HBM's Nuclear Tech Mod' in Modern Minecraft made for Fabric/Quilt",
   "authors": [
-    "fawnoculus",
-    "HbMinecraft [Original]"
+    "fawnoculus"
   ],
   "contributors": [
     "Elo3000 [Code]",
     "Random_Player_MC [Code]",
-    "OrdenEnderman [Textures]",
-    "All Contributors of the Original"
+    "OrdenEnderman [Textures]"
   ],
   "contact": {
     "homepage": "https://github.com/fawnoculus/NTM-Fabric",
@@ -70,9 +68,9 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
-    "java": ">=21",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft_version}",
+    "fabric-api": ">=${fabric_version}",
+    "java": ">=21"
   },
   "recommends": {}
 }

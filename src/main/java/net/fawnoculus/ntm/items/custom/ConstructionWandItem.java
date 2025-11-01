@@ -64,18 +64,19 @@ public class ConstructionWandItem extends Item {
     int lesserY = Math.min(selectedPos.getY(), context.getBlockPos().getY());
     int greaterZ = Math.max(selectedPos.getZ(), context.getBlockPos().getZ());
     int lesserZ = Math.min(selectedPos.getZ(), context.getBlockPos().getZ());
-    int blocks = 0;
+    int blocksToFill = (greaterX - lesserX) * (greaterY - lesserY) * (greaterZ - lesserZ);
+
+    player.sendMessage(Text.translatable("message.ntm.construction_wand.filling", blocksToFill), false);
 
     for (int x = lesserX; x <= greaterX; x++) {
       for (int y = lesserY; y <= greaterY; y++) {
         for (int z = lesserZ; z <= greaterZ; z++) {
           world.setBlockState(new BlockPos(x, y, z), getBlockState(stack));
-          blocks++;
         }
       }
     }
     stack.set(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
-    player.sendMessage(Text.translatable("message.ntm.construction_wand.filled", blocks), false);
+    player.sendMessage(Text.translatable("message.ntm.construction_wand.filled", blocksToFill), false);
     return ActionResult.SUCCESS_SERVER;
   }
 

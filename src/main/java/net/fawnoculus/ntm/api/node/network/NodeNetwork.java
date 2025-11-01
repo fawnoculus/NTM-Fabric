@@ -1,13 +1,12 @@
 package net.fawnoculus.ntm.api.node.network;
 
-import net.fawnoculus.ntm.api.node.Node;
-import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import com.google.common.collect.ImmutableList;
 import io.netty.util.collection.LongObjectHashMap;
 import io.netty.util.collection.LongObjectMap;
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
+import net.fawnoculus.ntm.api.node.Node;
+import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -33,7 +32,7 @@ public class NodeNetwork {
       return;
     }
 
-    if (!LOADED_NODES.add(node) && NTMConfig.DevMode.getValue()) {
+    if (!LOADED_NODES.add(node) && NTMConfig.DEV_MODE.getValue()) {
       NTM.LOGGER.warn("Added Node {} twice to Network {}", node, this.ID);
     }
 
@@ -43,7 +42,7 @@ public class NodeNetwork {
   }
 
   /**
-   * Removes a Node from the Network, if the node is permanently removed & not just unloaded, please use disconnect Node instead!
+   * Removes a Node from the Network, if the node is permanently removed &AMP; not just unloaded, please use disconnect Node instead!
    *
    * @param node the Node to be removed
    */
@@ -90,7 +89,7 @@ public class NodeNetwork {
   }
 
   /**
-   * removes all connections from a node & removes the node from the network
+   * removes all connections from a node &AMP; removes the node from the network
    *
    * @param originNode the Node to me removed
    */
@@ -134,9 +133,9 @@ public class NodeNetwork {
           node.setNetwork(assignedNetwork);
           assignedNetwork.addNode(node);
 
-          if (toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+          if (toBeScannedNodes.size() > NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() && NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() > 0) {
             NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while Removing Node at {} from Network {}",
-              NTMConfig.MaxNodeScanDepth.getValue(),
+              NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
               node.getPos().toShortString(),
               node.getWorld().getRegistryKey(),
               originNode.getPos().toShortString(),
@@ -194,9 +193,9 @@ public class NodeNetwork {
           node.setNetwork(assignedNetwork);
           assignedNetwork.addNode(node);
 
-          if (toBeScannedNodes.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+          if (toBeScannedNodes.size() > NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() && NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() > 0) {
             NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while severing Connections Between {} Nodes in Network {}",
-              NTMConfig.MaxNodeScanDepth.getValue(),
+              NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
               node.getPos().toShortString(),
               node.getWorld().getRegistryKey(),
               providedNodes.size(),
@@ -233,9 +232,9 @@ public class NodeNetwork {
         connectedNode.setNetwork(this);
         this.addNode(connectedNode);
 
-        if (toBeScanned.size() > NTMConfig.MaxNodeScanDepth.getValue() && NTMConfig.MaxNodeScanDepth.getValue() > 0) {
+        if (toBeScanned.size() > NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() && NTMConfig.MAX_NODE_SCAN_DEPTH.getValue() > 0) {
           NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} while Connecting Network {} from {} to {} in {}",
-            NTMConfig.MaxNodeScanDepth.getValue(),
+            NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
             this.ID,
             connectedNode.getPos().toShortString(),
             node.getPos().toShortString(),

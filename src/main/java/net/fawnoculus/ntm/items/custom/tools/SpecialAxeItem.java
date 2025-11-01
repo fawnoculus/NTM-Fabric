@@ -1,6 +1,11 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
-import net.fawnoculus.ntm.items.NTMDataComponentTypes;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fawnoculus.ntm.api.messages.AdvancedMessage;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.ModifierHandler;
+import net.fawnoculus.ntm.api.tool.SpecialTool;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,79 +14,93 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 
 public class SpecialAxeItem extends AxeItem implements SpecialTool {
-  public SpecialAxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-    super(material, attackDamage, attackSpeed, settings.component(NTMDataComponentTypes.SELECTED_ABILITY_COMPONENT_TYPE, -1));
-  }
+  private final AbilityHandler ABILITIES;
+  private final ModifierHandler MODIFIERS;
+  private final boolean CAN_BREAK_DEPTH_ROCK;
 
-  public final AtomicBoolean canBreakDepthRock = new AtomicBoolean(false);
-  public final List<ItemAbility> abilities = new ArrayList<>();
-  public final List<ItemModifier> modifiers = new ArrayList<>();
+  public SpecialAxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
+    super(material, attackDamage, attackSpeed, settings);
 
-  public SpecialAxeItem addAbility(ItemAbility ability) {
-    this.abilities.add(ability);
-    return this;
-  }
-
-  public SpecialAxeItem addModifier(ItemModifier modifier) {
-    this.modifiers.add(modifier);
-    return this;
+    this.ABILITIES = abilities;
+    this.MODIFIERS = modifiers;
+    this.CAN_BREAK_DEPTH_ROCK = canBreakDepthRock;
   }
 
   @Override
-  public SpecialAxeItem addCanBreakDepthRock() {
-    this.canBreakDepthRock.set(true);
-    return this;
+  public AbilityHandler abilityHandler() {
+    return this.ABILITIES;
   }
 
   @Override
-  public List<ItemAbility> getAbilities() {
-    return this.abilities;
-  }
-
-  @Override
-  public List<ItemModifier> getModifiers() {
-    return this.modifiers;
+  public ModifierHandler modifierHandler() {
+    return this.MODIFIERS;
   }
 
   @Override
   public boolean canBreakDepthRock() {
-    return this.canBreakDepthRock.get();
+    return this.CAN_BREAK_DEPTH_ROCK;
+  }
+
+  @Override
+  public ActionResult use(World world, PlayerEntity player, Hand hand) {
+    ItemStack stack = player.getStackInHand(hand);
+
+    if(this.ABILITIES.canNotSwitch(stack)){
+      return super.use(world, player, hand);
+    }
+
+    if (world.isClient()) {
+      return ActionResult.SUCCESS;
+    }
+
+    if(player instanceof ServerPlayerEntity serverPlayer){
+      if(player.isSneaking()){
+        this.ABILITIES.setSelectedPreset(stack, 0);
+      }else {
+        this.ABILITIES.incrementPresetSelection(stack, 1);
+      }
+
+      if(this.ABILITIES.abilitiesDisabled(stack)){
+        player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
+      }else {
+        player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
+      }
+
+      ServerPlayNetworking.send(serverPlayer, new AdvancedMessagePayload(
+        new AdvancedMessage(SpecialTool.ADVANCED_MESSAGE_ID, this.ABILITIES.changeMessage(stack), 1000f)
+      ));
+    }
+
+    return ActionResult.SUCCESS_SERVER;
   }
 
   @Override
   public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-    this.processMakerModifiers(stack, target, attacker);
+    this.MODIFIERS.postHit(stack, target, attacker);
     super.postHit(stack, target, attacker);
   }
 
   @Override
   @SuppressWarnings("deprecation")
   public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    this.processTooltip(stack, tooltip);
-  }
+    this.ABILITIES.appendTooltip(tooltip);
+    this.MODIFIERS.appendTooltip(tooltip);
 
-  @Override
-  public ActionResult use(World world, PlayerEntity player, Hand hand) {
-    if (world.isClient()) {
-      return super.use(world, player, hand);
+    if (this.CAN_BREAK_DEPTH_ROCK) {
+      tooltip.accept(Text.empty());
+      tooltip.accept(Text.translatable("tooltip.ntm.can_break_depth_rock").formatted(Formatting.RED));
     }
-    if (player instanceof ServerPlayerEntity serverPlayer) {
-      this.cycleAbility(player.getStackInHand(hand), serverPlayer);
-      return ActionResult.SUCCESS;
-    }
-
-    return super.use(world, player, hand);
   }
 }

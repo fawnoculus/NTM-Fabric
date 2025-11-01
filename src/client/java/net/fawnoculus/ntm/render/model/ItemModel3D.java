@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.render.model;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.NTMClient;
 import net.fawnoculus.ntm.render.wavefront.model.Model3d;
 import net.minecraft.client.item.ItemModelManager;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ItemModel3D implements ItemModel {
@@ -43,15 +45,10 @@ public class ItemModel3D implements ItemModel {
     layer.getQuads().addAll(this.quads);
   }
 
-  public record Unbaked(Identifier model, Model3d model3d) implements ItemModel.Unbaked {
-    /* How the hell am I going to put a Wavefront model in a codec?
-    public static final MapCodec<ItemModel3D.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
-      instance -> instance.group(
-          Identifier.CODEC.fieldOf("model").forGetter(ItemModel3D.Unbaked::model)
-        )
-        .apply(instance, ItemModel3D.Unbaked::new)
-    );
-     */
+  public record Unbaked(Identifier model, Model3d model3d, Function<Vector3f, Vector3f> offset) implements ItemModel.Unbaked {
+    public Unbaked(Identifier model, Model3d model3d){
+      this(model, model3d, vector3f -> vector3f);
+    }
 
     @Override
     public void resolve(ResolvableModel.Resolver resolver) {
@@ -66,15 +63,17 @@ public class ItemModel3D implements ItemModel {
       ModelTextures modelTextures = bakedSimpleModel.getTextures();
       ModelSettings modelSettings = ModelSettings.resolveSettings(baker, bakedSimpleModel, modelTextures);
 
-      List<BakedQuad> quads = model3d.bake(baker, bakedSimpleModel);
+      List<BakedQuad> quads = model3d.bake(baker, bakedSimpleModel, offset);
 
       return new ItemModel3D(quads, modelSettings);
     }
 
     @Override
     public MapCodec<ItemModel3D.Unbaked> getCodec() {
-      NTMClient.LOGGER.warn("FUCK this is actually called somewhere");
-      NTMClient.LOGGER.warn("This is probably not good");
+      if(FabricLoader.getInstance().isDevelopmentEnvironment()){
+        NTMClient.LOGGER.warn("FUCK this is actually called somewhere");
+        NTMClient.LOGGER.warn("This is probably not good");
+      }
       return null;
     }
   }

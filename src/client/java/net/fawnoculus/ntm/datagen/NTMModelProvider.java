@@ -2,11 +2,11 @@ package net.fawnoculus.ntm.datagen;
 
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.blocks.custom.AlloyFurnaceBlock;
 import net.fawnoculus.ntm.blocks.custom.ElectricFurnaceBlock;
 import net.fawnoculus.ntm.items.NTMItems;
-import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.model.json.WeightedVariant;
@@ -697,6 +697,9 @@ public class NTMModelProvider extends FabricModelProvider {
 
     itemModelGenerator.register(NTMItems.NITER, Models.GENERATED);
     itemModelGenerator.register(NTMItems.NITER_CRYSTALS, Models.GENERATED);
+
+    itemModelGenerator.register(NTMItems.NITRA, Models.GENERATED);
+    itemModelGenerator.register(NTMItems.SMALL_PILE_OF_NITRA, Models.GENERATED);
 
     itemModelGenerator.register(NTMItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE, Models.GENERATED);
     itemModelGenerator.register(NTMItems.OSMIRIDIUM_INGOT, Models.GENERATED);

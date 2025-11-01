@@ -1,11 +1,12 @@
 package net.fawnoculus.ntm.api.node.network;
 
-import net.fawnoculus.ntm.api.node.network.type.NetworkType;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class NodeNetworkManager {
   private static final HashSet<NodeNetwork> NODE_NETWORKS = new HashSet<>();

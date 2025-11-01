@@ -1,5 +1,10 @@
 package net.fawnoculus.ntm.items;
 
+import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.api.tool.Abilities;
+import net.fawnoculus.ntm.api.tool.AbilityHandler;
+import net.fawnoculus.ntm.api.tool.ModifierHandler;
+import net.fawnoculus.ntm.api.tool.Modifiers;
 import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.items.components.NTMConsumableComponents;
@@ -8,7 +13,6 @@ import net.fawnoculus.ntm.items.custom.*;
 import net.fawnoculus.ntm.items.custom.consumable.*;
 import net.fawnoculus.ntm.items.custom.container.energy.*;
 import net.fawnoculus.ntm.items.custom.tools.*;
-import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
 import net.minecraft.component.DataComponentTypes;
@@ -374,6 +378,9 @@ public class NTMItems {
 
   public static final Item NITER = register("niter", Item::new, new Item.Settings());
   public static final Item NITER_CRYSTALS = register("niter_crystals", Item::new, new Item.Settings());
+
+  public static final Item NITRA = register("nitra", Item::new, new Item.Settings());
+  public static final Item SMALL_PILE_OF_NITRA = register("small_pile_of_nitra", Item::new, new Item.Settings());
 
   public static final Item RAW_OSMIRIDIUM_INFUSED_TEKTITE = register("raw_osmiridium_infused_tektite", Item::new, new Item.Settings());
   public static final Item OSMIRIDIUM_INGOT = register("osmiridium_ingot", Item::new, new Item.Settings());
@@ -1018,246 +1025,475 @@ public class NTMItems {
     EMPTY_BOTTLE,
     FRITZ_COLA_BOTTLE_CAP
   )));
-  public static final Item WATERY_TAINT_INJECTION = register("watery_taint_injection", settings -> new InjectionWithTooltipItem(settings, 3, NTMSounds.SYRINGE_INJECTS,
-    List.of(METAL_SYRINGE, EMPTY_BOTTLE),
-    (serverWorld, entity) -> {
-      entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, true));
-      entity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 1200, 0, false, false, true));
-    }), new Item.Settings()
+  public static final Item WATERY_TAINT_INJECTION = register("watery_taint_injection", settings ->
+    new InjectionWithTooltipItem(settings, 3, NTMSounds.SYRINGE_INJECTS,
+      List.of(METAL_SYRINGE, EMPTY_BOTTLE),
+      (serverWorld, entity) -> {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 0, false, false, true));
+        entity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 1200, 0, false, false, true));
+      }
+    ), new Item.Settings()
   );
 
   // Tools
-  public static final Item STEEL_SWORD = register("steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 3.5f, 1f));
-  public static final Item STEEL_PICKAXE = register("steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 1.5f, 1f));
-  public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 2.5f, 1f)
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 0.5f, 1f));
-  public static final Item STEEL_HOE = register("steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 0f, 1f));
+  public static final Item STEEL_SWORD = register("steel_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 3.5f, 1f));
+  public static final Item STEEL_PICKAXE = register("steel_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 1.5f, 1f));
+  public static final Item STEEL_AXE = register("steel_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 2.5f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+      false
+  ));
+  public static final Item STEEL_SHOVEL = register("steel_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 0.5f, 1f));
+  public static final Item STEEL_HOE = register("steel_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.STEEL_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item TITANIUM_SWORD = register("titanium_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 3.5f, 1f));
-  public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 1.5f, 1f));
-  public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 2.5f, 1f)
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 0.5f, 1f));
-  public static final Item TITANIUM_HOE = register("titanium_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 0f, 1f));
+  public static final Item TITANIUM_SWORD = register("titanium_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 3.5f, 1f));
+  public static final Item TITANIUM_PICKAXE = register("titanium_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 1.5f, 1f));
+  public static final Item TITANIUM_AXE = register("titanium_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 2.5f, 1f,
+    AbilityHandler.builder().build(),
+    ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+    false
+  ));
+  public static final Item TITANIUM_SHOVEL = register("titanium_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 0.5f, 1f));
+  public static final Item TITANIUM_HOE = register("titanium_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.TITANIUM_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 5f, 1f)
-    .addModifier(new Modifiers.Stunning(2)));
-  public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 2f, 1f)
-    .addAbility(new Abilities.VeinMiner(3)));
-  public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 4f, 1f)
-    .addAbility(new Abilities.VeinMiner(3))
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f)
-    .addAbility(new Abilities.VeinMiner(3)));
-  public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 0f, 1f));
+  public static final Item ADVANCED_ALLOY_SWORD = register("advanced_alloy_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 5f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder().addModifier(Modifiers.STUNNING, 2).build(),
+      false
+  ));
+  public static final Item ADVANCED_ALLOY_PICKAXE = register("advanced_alloy_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 2f, 1f,
+      AbilityHandler.builder().addAbility(Abilities.VEIN_MINER, 1).build(),
+      ModifierHandler.builder().build(),
+      false
+  ));
+  public static final Item ADVANCED_ALLOY_AXE = register("advanced_alloy_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 4f, 1f,
+      AbilityHandler.builder().addAbility(Abilities.VEIN_MINER, 1).build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+      false
+  ));
+  public static final Item ADVANCED_ALLOY_SHOVEL = register("advanced_alloy_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 1f, 1f,
+      AbilityHandler.builder().addAbility(Abilities.VEIN_MINER, 1).build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item ADVANCED_ALLOY_HOE = register("advanced_alloy_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.ADVANCED_ALLOY_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 28f, 1f)
-    .addModifier(new Modifiers.Stunning(2))
-    .addModifier(new Modifiers.Vampire(2.0f)));
-  public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 3f, 1f)
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(3)));
-  public static final Item CMB_STEEL_AXE = register("cmb_steel_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 23f, 1f)
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(3))
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item CMB_STEEL_SHOVEL = register("cmb_steel_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f)
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(3)));
-  public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 0f, 1f));
+  public static final Item CMB_STEEL_SWORD = register("cmb_steel_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 28f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.STUNNING, 2)
+        .addModifier(Modifiers.VAMPIRE, 2)
+        .build(),
+      false
+    ));
+  public static final Item CMB_STEEL_PICKAXE = register("cmb_steel_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 3f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item CMB_STEEL_AXE = register("cmb_steel_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 23f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+      false
+    ));
+  public static final Item CMB_STEEL_SHOVEL = register("cmb_steel_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 1f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item CMB_STEEL_HOE = register("cmb_steel_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.CMB_STEEL_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item COBALT_SWORD = register("cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 11.5f, 1f));
-  public static final Item COBALT_PICKAXE = register("cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 1.5f, 1f));
-  public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 4.5f, 1f)
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item COBALT_SHOVEL = register("cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
-  public static final Item COBALT_HOE = register("cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 0f, 1f));
+  public static final Item COBALT_SWORD = register("cobalt_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 11.5f, 1f));
+  public static final Item COBALT_PICKAXE = register("cobalt_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 1.5f, 1f));
+  public static final Item COBALT_AXE = register("cobalt_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 4.5f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+      false
+    ));
+  public static final Item COBALT_SHOVEL = register("cobalt_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 1f, 1f));
+  public static final Item COBALT_HOE = register("cobalt_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.COBALT_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 11f, 1f)
-    .addModifier(new Modifiers.LuckOfTheCollector()));
-  public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 2f, 1f)
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AoE(1))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(3))
-  );
-  public static final Item DECORATED_COBALT_AXE = register("decorated_cobalt_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 4f, 1f)
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AoE(1))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(3))
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item DECORATED_COBALT_SHOVEL = register("decorated_cobalt_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f)
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AoE(1))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(3)));
-  public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 0f, 1f));
+  public static final Item DECORATED_COBALT_SWORD = register("decorated_cobalt_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 11f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder().addModifier(Modifiers.LUCK_OF_THE_COLLECTOR).build(),
+      false
+    ));
+  public static final Item DECORATED_COBALT_PICKAXE = register("decorated_cobalt_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 2f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 2)
+        .addAbility(Abilities.AOE, 1)
+        .addAbility(Abilities.FLAT_AOE, 1)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item DECORATED_COBALT_AXE = register("decorated_cobalt_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 4f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 2)
+        .addAbility(Abilities.AOE, 1)
+        .addAbility(Abilities.FLAT_AOE, 1)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+      false
+    ));
+  public static final Item DECORATED_COBALT_SHOVEL = register("decorated_cobalt_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 1f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 2)
+        .addAbility(Abilities.AOE, 1)
+        .addAbility(Abilities.FLAT_AOE, 1)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item DECORATED_COBALT_HOE = register("decorated_cobalt_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.DECORATED_COBALT_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item STARMETAL_SWORD = register("starmetal_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 19f, 1f)
-    .addModifier(new Modifiers.Decapitator())
-    .addModifier(new Modifiers.Stunning(3))
-    .addModifier(new Modifiers.LuckOfTheCollector()));
-  public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 2f, 1f)
-    .addAbility(new Abilities.VeinMiner(6))
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(5))
-    .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_AXE = register("starmetal_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 6f, 1f)
-    .addAbility(new Abilities.VeinMiner(6))
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(5))
-    .addModifier(new Modifiers.Decapitator())
-    .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_SHOVEL = register("starmetal_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f)
-    .addAbility(new Abilities.VeinMiner(6))
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(5))
-    .addModifier(new Modifiers.Stunning(3)));
-  public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 0f, 1f));
+  public static final Item STARMETAL_SWORD = register("starmetal_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 19f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.DECAPITATOR)
+        .addModifier(Modifiers.STUNNING, 3)
+        .addModifier(Modifiers.LUCK_OF_THE_COLLECTOR)
+        .build(),
+      false
+    ));
+  public static final Item STARMETAL_PICKAXE = register("starmetal_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 2f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.STUNNING, 3).build(),
+      false
+    ));
+  public static final Item STARMETAL_AXE = register("starmetal_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 6f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.STUNNING, 3)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      false
+    ));
+  public static final Item STARMETAL_SHOVEL = register("starmetal_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 1f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.STUNNING, 3).build(),
+      false
+    ));
+  public static final Item STARMETAL_HOE = register("starmetal_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.STARMETAL_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item DESH_SWORD = register("desh_sword", new Item.Settings(), settings -> new SpecialSwordItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 9.5f, 1f)
-    .addModifier(new Modifiers.Stunning(2))
-    .addModifier(new Modifiers.Vampire(2.0f)));
-  public static final Item DESH_PICKAXE = register("desh_pickaxe", new Item.Settings(), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 2f, 1f)
-    .addAbility(new Abilities.AoE(1))
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(2)));
-  public static final Item DESH_AXE = register("desh_axe", new Item.Settings(), settings -> new SpecialAxeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 4.5f, 1f)
-    .addAbility(new Abilities.AoE(1))
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(2))
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings -> new SpecialShovelItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f)
-    .addAbility(new Abilities.AoE(1))
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(2)));
-  public static final Item DESH_HOE = register("desh_hoe", new Item.Settings(), settings -> new SpecialHoeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 0f, 1f));
+  public static final Item DESH_SWORD = register("desh_sword", new Item.Settings(), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 9.5f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.STUNNING, 2)
+        .build(),
+      false
+    ));
+  public static final Item DESH_PICKAXE = register("desh_pickaxe", new Item.Settings(), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 2f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 3)
+        .addAbility(Abilities.AOE, 1)
+        .addAbility(Abilities.FLAT_AOE, 1)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item DESH_AXE = register("desh_axe", new Item.Settings(), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 4.5f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 3)
+        .addAbility(Abilities.AOE, 1)
+        .addAbility(Abilities.FLAT_AOE, 1)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.DECAPITATOR).build(),
+      false
+    ));
+  public static final Item DESH_SHOVEL = register("desh_shovel", new Item.Settings(), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 1f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 3)
+        .addAbility(Abilities.AOE, 1)
+        .addAbility(Abilities.FLAT_AOE, 1)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .build(),
+      ModifierHandler.builder().build(),
+      false
+    ));
+  public static final Item DESH_HOE = register("desh_hoe", new Item.Settings(), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.DESH_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialSwordItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 65f, 1f)
-    .addModifier(new Modifiers.RadioactiveBlade(50f))
-    .addModifier(new Modifiers.Vampire(2f)));
-  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialPickaxeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 20f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(10))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(5))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.AutoShreader())
-    .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialAxeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 15f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(10))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(5))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.AutoShreader())
-    .addModifier(new Modifiers.RadioactiveBlade(15f))
-    .addModifier(new Modifiers.Decapitator()));
-  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialShovelItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 5f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(10))
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(5))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.AutoShreader())
-    .addModifier(new Modifiers.RadioactiveBlade(15f)));
-  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings -> new SpecialHoeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 0f, 1f));
+  public static final Item SCHRABIDIUM_SWORD = register("schrabidium_sword", new Item.Settings().rarity(Rarity.RARE), settings ->
+    new SpecialSwordItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 65f, 1f,
+      AbilityHandler.builder().build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.RADIOACTIVE_BLADE, 50)
+        .addModifier(Modifiers.VAMPIRE, 2)
+        .build(),
+      false
+    ));
+  public static final Item SCHRABIDIUM_PICKAXE = register("schrabidium_pickaxe", new Item.Settings().rarity(Rarity.RARE), settings ->
+    new SpecialPickaxeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 20f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 8)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.AUTO_SHREADER)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.RADIOACTIVE_BLADE, 15).build(),
+      false
+    ));
+  public static final Item SCHRABIDIUM_AXE = register("schrabidium_axe", new Item.Settings().rarity(Rarity.RARE), settings ->
+    new SpecialAxeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 15f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 8)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.AUTO_SHREADER)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.RADIOACTIVE_BLADE, 15)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      false
+    ));
+  public static final Item SCHRABIDIUM_SHOVEL = register("schrabidium_shovel", new Item.Settings().rarity(Rarity.RARE), settings ->
+    new SpecialShovelItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 5f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 8)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 5)
+        .addAbility(Abilities.AUTO_SMELT)
+        .addAbility(Abilities.AUTO_SHREADER)
+        .build(),
+      ModifierHandler.builder().addModifier(Modifiers.RADIOACTIVE_BLADE, 15).build(),
+      false
+    ));
+  public static final Item SCHRABIDIUM_HOE = register("schrabidium_hoe", new Item.Settings().rarity(Rarity.RARE), settings ->
+    new SpecialHoeItem(settings, NTMToolMaterials.SCHRABIDIUM_TOOL_MATERIAL, 0f, 1f));
 
-  public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 0f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AutoShreader())
-    .addAbility(new Abilities.Fortune(2))
-    .addAbility(new Abilities.SilkTouch()));
-  public static final Item BISMUTH_AXE = register("bismuth_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 10f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AutoShreader())
-    .addAbility(new Abilities.Fortune(2))
-    .addAbility(new Abilities.SilkTouch())
-    .addModifier(new Modifiers.Stunning(10))
-    .addModifier(new Modifiers.Decapitator()));
+  public static final Item BISMUTH_PICKAXE = register("bismuth_pickaxe", new Item.Settings(), settings ->
+    new SpecialBigPickaxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 0f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .addAbility(Abilities.AUTO_SHREADER)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.VAMPIRE, 2)
+        .addModifier(Modifiers.STUNNING, 5)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      true
+    ));
+  public static final Item BISMUTH_AXE = register("bismuth_axe", new Item.Settings(), settings ->
+    new SpecialBigAxeItem(settings, NTMToolMaterials.BISMUTH_TOOL_MATERIAL, 10f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 2)
+        .addAbility(Abilities.AUTO_SHREADER)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.VAMPIRE, 3)
+        .addModifier(Modifiers.STUNNING, 10)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      false
+    ));
 
-  public static final Item MOLTEN_PICKAXE = register("molten_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.MOLTEN_TOOL_MATERIAL, 0f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.Fortune(3))
-    .addAbility(new Abilities.SilkTouch())
-    .addModifier(new Modifiers.Flaming(5))
-    .addModifier(new Modifiers.Vampire(2.0f))
-    .addModifier(new Modifiers.Decapitator())
-    .addCanBreakDepthRock());
-  public static final Item MOLTEN_AXE = register("molten_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.MOLTEN_TOOL_MATERIAL, 10f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.AutoSmelt())
-    .addAbility(new Abilities.Fortune(3))
-    .addAbility(new Abilities.SilkTouch())
-    .addModifier(new Modifiers.Flaming(10))
-    .addModifier(new Modifiers.Vampire(3.0f))
-    .addModifier(new Modifiers.Decapitator()));
+  public static final Item MOLTEN_PICKAXE = register("molten_pickaxe", new Item.Settings(), settings ->
+    new SpecialBigPickaxeItem(settings, NTMToolMaterials.MOLTEN_TOOL_MATERIAL, 0f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.VAMPIRE, 2)
+        .addModifier(Modifiers.FLAMING, 5)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      true
+    ));
+  public static final Item MOLTEN_AXE = register("molten_axe", new Item.Settings(), settings ->
+    new SpecialBigAxeItem(settings, NTMToolMaterials.MOLTEN_TOOL_MATERIAL, 10f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 3)
+        .addAbility(Abilities.AUTO_SMELT)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.VAMPIRE, 3)
+        .addModifier(Modifiers.FLAMING, 10)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      false
+    ));
 
-  public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 0f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.Fortune(4))
-    .addAbility(new Abilities.AutoCentrifuge())
-    .addAbility(new Abilities.MercuryTouch())
-    .addModifier(new Modifiers.Stunning(10))
-    .addModifier(new Modifiers.Vampire(5.0f))
-    .addModifier(new Modifiers.Decapitator())
-    .addCanBreakDepthRock());
-  public static final Item CHLOROPHYTE_AXE = register("chlorophyte_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 30f, 1f)
-    .addAbility(new Abilities.AoE(2))
-    .addAbility(new Abilities.VeinMiner(4))
-    .addAbility(new Abilities.Fortune(4))
-    .addModifier(new Modifiers.Stunning(10))
-    .addModifier(new Modifiers.Vampire(5.0f))
-    .addModifier(new Modifiers.Decapitator())
-    .addCanBreakDepthRock());
+  public static final Item CHLOROPHYTE_PICKAXE = register("chlorophyte_pickaxe", new Item.Settings(), settings ->
+    new SpecialBigPickaxeItem(settings, NTMToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 0f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.FORTUNE, 4)
+        .addAbility(Abilities.AUTO_CENTRIFUGE)
+        .addAbility(Abilities.MERCURY_TOUCH)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.VAMPIRE, 5)
+        .addModifier(Modifiers.STUNNING, 10)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      true
+    ));
+  public static final Item CHLOROPHYTE_AXE = register("chlorophyte_axe", new Item.Settings(), settings ->
+    new SpecialBigAxeItem(settings, NTMToolMaterials.CHLOTOPHYTE_TOOL_MATERIAL, 30f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 4)
+        .addAbility(Abilities.AOE, 2)
+        .addAbility(Abilities.FLAT_AOE, 2)
+        .addAbility(Abilities.FORTUNE, 4)
+        .addAbility(Abilities.AUTO_CENTRIFUGE)
+        .addAbility(Abilities.MERCURY_TOUCH)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.VAMPIRE, 10)
+        .addModifier(Modifiers.STUNNING, 15)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      false
+    ));
 
-  public static final Item MESE_PICKAXE = register("mese_pickaxe", new Item.Settings(), settings -> new SpecialBigPickaxeItem(settings, NTMToolMaterials.MESE_TOOL_MATERIAL, 0f, 1f)
-    .addAbility(new Abilities.AoE(3))
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.AutoCrystallizer())
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(9))
-    .addAbility(new Abilities.Explosion(2.5f))
-    .addAbility(new Abilities.Explosion(5.0f))
-    .addAbility(new Abilities.Explosion(10.0f))
-    .addAbility(new Abilities.Explosion(15.0f))
-    .addModifier(new Modifiers.Stunning(10))
-    .addModifier(new Modifiers.PhosphorusTip(60))
-    .addModifier(new Modifiers.Decapitator())
-    .addCanBreakDepthRock());
-  public static final Item MESE_AXE = register("mese_axe", new Item.Settings(), settings -> new SpecialBigAxeItem(settings, NTMToolMaterials.MESE_TOOL_MATERIAL, 40f, 1f)
-    .addAbility(new Abilities.AoE(3))
-    .addAbility(new Abilities.VeinMiner(5))
-    .addAbility(new Abilities.AutoCrystallizer())
-    .addAbility(new Abilities.SilkTouch())
-    .addAbility(new Abilities.Fortune(9))
-    .addAbility(new Abilities.Explosion(2.5f))
-    .addAbility(new Abilities.Explosion(5.0f))
-    .addAbility(new Abilities.Explosion(10.0f))
-    .addAbility(new Abilities.Explosion(15.0f))
-    .addModifier(new Modifiers.Stunning(10))
-    .addModifier(new Modifiers.PhosphorusTip(60))
-    .addModifier(new Modifiers.Decapitator()));
+  public static final Item MESE_PICKAXE = register("mese_pickaxe", new Item.Settings(), settings ->
+    new SpecialBigPickaxeItem(settings, NTMToolMaterials.MESE_TOOL_MATERIAL, 0f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 5)
+        .addAbility(Abilities.AOE, 3)
+        .addAbility(Abilities.FLAT_AOE, 3)
+        .addAbility(Abilities.EXPLOSION, 4)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 9)
+        .addAbility(Abilities.AUTO_CRYSTALLIZER)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.STUNNING, 10)
+        .addModifier(Modifiers.PHOSPHORUS_TIP, 60)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      true
+    ));
+  public static final Item MESE_AXE = register("mese_axe", new Item.Settings(), settings ->
+    new SpecialBigAxeItem(settings, NTMToolMaterials.MESE_TOOL_MATERIAL, 40f, 1f,
+      AbilityHandler.builder()
+        .addAbility(Abilities.VEIN_MINER, 5)
+        .addAbility(Abilities.AOE, 3)
+        .addAbility(Abilities.FLAT_AOE, 3)
+        .addAbility(Abilities.EXPLOSION, 4)
+        .addAbility(Abilities.SILK_TOUCH)
+        .addAbility(Abilities.FORTUNE, 9)
+        .build(),
+      ModifierHandler.builder()
+        .addModifier(Modifiers.STUNNING, 15)
+        .addModifier(Modifiers.PHOSPHORUS_TIP, 90)
+        .addModifier(Modifiers.DECAPITATOR)
+        .build(),
+      true
+    ));
 
   public static Item register(@NotNull String name, @NotNull Function<Item.Settings, Item> itemFactory, @NotNull Item.Settings settings) {
     RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));

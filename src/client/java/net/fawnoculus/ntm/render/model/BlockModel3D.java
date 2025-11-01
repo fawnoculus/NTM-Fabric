@@ -3,7 +3,10 @@ package net.fawnoculus.ntm.render.model;
 import net.fawnoculus.ntm.NTMClientConfig;
 import net.fawnoculus.ntm.render.wavefront.model.Model3d;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.render.model.*;
+import net.minecraft.client.render.model.BakedQuad;
+import net.minecraft.client.render.model.Baker;
+import net.minecraft.client.render.model.BlockModelPart;
+import net.minecraft.client.render.model.BlockStateModel;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -11,8 +14,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.List;
+import java.util.function.Function;
 
 public record BlockModel3D(BlockModelPart part) implements BlockStateModel {
 
@@ -26,19 +31,24 @@ public record BlockModel3D(BlockModelPart part) implements BlockStateModel {
     return this.part.particleSprite();
   }
 
-  public record MultipartUnbaked(Model3d model3d, SpriteIdentifier particleSprite) implements UnbakedGrouped {
+  public record MultipartUnbaked(Model3d model3d, SpriteIdentifier particleSprite, Function<Vector3f, Vector3f> offset) implements UnbakedGrouped {
     @SuppressWarnings("deprecation")
     public MultipartUnbaked(Model3d model3d, Identifier blockId){
-      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, blockId));
+      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, blockId), vector3f -> vector3f);
+    }
+
+    @SuppressWarnings("deprecation")
+    public MultipartUnbaked(Model3d model3d, Identifier blockId, Function<Vector3f, Vector3f> offset){
+      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, blockId), offset);
     }
 
 
     @Override
     public BlockModel3D bake(BlockState state, Baker baker) {
-      final List<BakedQuad> quads = model3d.bake(baker, state::toString);
+      final List<BakedQuad> quads = model3d.bake(baker, state::toString, offset);
       final Sprite particleSprite = baker.getSpriteGetter().get(this.particleSprite, state::toString);
 
-      return new BlockModel3D(new Part(quads, NTMClientConfig.ModelAmbientOcclusion.getValue(), particleSprite));
+      return new BlockModel3D(new Part(quads, NTMClientConfig.MODEL_AMBIENT_OCCLUSION.getValue(), particleSprite));
     }
 
     @Override

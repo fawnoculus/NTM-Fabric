@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.api.messages;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -11,6 +12,26 @@ public class MessageSystem {
   private static final List<AdvancedMessage> ALL_MESSAGES = new ArrayList<>();
   private static final HashMap<String, AdvancedMessage> MESSAGE_HASH_MAP = new HashMap<>();
   private static final AtomicBoolean isEnabled = new AtomicBoolean(true);
+  private static long LastNanoTime = System.nanoTime();
+
+  public static void onClientTick(MinecraftClient ignored){
+    float deltaMillis = (float) ((System.nanoTime() - LastNanoTime) / 1000000);
+
+    List<AdvancedMessage> toBeRemovedMessages = new ArrayList<>();
+    for (AdvancedMessage message : ALL_MESSAGES) {
+      float millisLeft = message.getMillisLeft();
+      if (millisLeft < 0) {
+        toBeRemovedMessages.add(message);
+        continue;
+      }
+      message.setMillisLeft(millisLeft - deltaMillis);
+    }
+    for (AdvancedMessage message : toBeRemovedMessages) {
+      MessageSystem.removeMessage(message.getID());
+    }
+
+    LastNanoTime = System.nanoTime();
+  }
 
   public static void addMessage(AdvancedMessage message) {
     if (!isEnabled.get()) return;

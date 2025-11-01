@@ -1,11 +1,15 @@
 package net.fawnoculus.ntm.network;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.Version;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMClient;
 import net.fawnoculus.ntm.network.s2c.NTMVersionPayload;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientLoginNetworkHandler;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import net.minecraft.text.Text;
 
 public class ClientReceivedVersionHandler {
@@ -14,12 +18,12 @@ public class ClientReceivedVersionHandler {
   public static Version serverVersion = null;
   public static final Version clientVersion = NTM.MOD_VERSION;
 
-  public static void handlePacket(NTMVersionPayload payload) {
+  public static void handlePacket(NTMVersionPayload payload, ClientPlayNetworking.Context ignored) {
     hasReceivedVersion = true;
     serverVersion = payload.version();
   }
 
-  public static void onJoin() {
+  public static void onJoin(ClientPlayNetworkHandler ignored, GameJoinS2CPacket ignored2) {
     ClientPlayerEntity player = MinecraftClient.getInstance().player;
     if (player == null) return;
     if (!hasReceivedVersion) {
@@ -38,7 +42,7 @@ public class ClientReceivedVersionHandler {
     }
   }
 
-  public static void onDisconnect() {
+  public static void onDisconnect(ClientLoginNetworkHandler ignored, MinecraftClient ignored2) {
     hasReceivedVersion = false;
     serverVersion = null;
   }

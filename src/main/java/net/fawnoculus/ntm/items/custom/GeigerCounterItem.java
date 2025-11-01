@@ -62,13 +62,12 @@ public class GeigerCounterItem extends Item {
     if (!(world instanceof ServerWorld serverWorld)) {
       return ActionResult.SUCCESS;
     }
-    RadiationManager radiationManager = RadiationManager.getInstance();
 
-    double chunkRadiation = radiationManager.getChunkRadiation(serverWorld, user.getPos());
-    double totalRadiation = radiationManager.getTotalRadiation(user);
-    double playerContamination = radiationManager.getRadiationExposure(user);
-    double playerResistance = radiationManager.getRadiationResistance(user);
-    double playerResistancePercentage = radiationManager.getRadiationResistancePercentage(user);
+    double chunkRadiation = RadiationManager.getChunkRadiation(serverWorld, user.getPos());
+    double totalRadiation = RadiationManager.getTotalRadiation(user);
+    double playerContamination = RadiationManager.getRadiationExposure(user);
+    double playerResistance = RadiationManager.getRadiationResistance(user);
+    double playerResistancePercentage = RadiationManager.getRadiationResistancePercentage(user);
 
     Text player_resistance = Text.literal(String.format("%.1f%% (%.1f)", playerResistancePercentage, playerResistance)).formatted(Formatting.WHITE);
 

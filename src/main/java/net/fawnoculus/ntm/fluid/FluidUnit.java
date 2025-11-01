@@ -44,7 +44,7 @@ public enum FluidUnit {
   }
 
   public static MutableText text(long droplets) {
-    if (NTMConfig.FluidUnit.getValue().equals("Droplets")) {
+    if (NTMConfig.FLUID_UNIT.getValue() == NTMConfig.FluidUnit.Droplets) {
       return textDroplets(droplets);
     }
     return textMB(droplets);

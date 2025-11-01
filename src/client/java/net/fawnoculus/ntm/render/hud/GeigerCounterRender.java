@@ -35,9 +35,8 @@ public class GeigerCounterRender {
     final int y = context.getScaledWindowHeight() - 20;
 
 
-    ClientRadiationManager radiationManager = ClientRadiationManager.getInstance();
-    final double radPercentage = radiationManager.radiationExposure / 1000000;
-    final double incomingMilliRads = radiationManager.totalRadiation;
+    final double radPercentage = ClientRadiationManager.radiationExposure / 1000000;
+    final double incomingMilliRads = ClientRadiationManager.totalRadiation;
 
     context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, 94, 18, 128, 128);
     context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 1, y + 1, 1, 19, (int) (radPercentage * 73), 16, 128, 128);

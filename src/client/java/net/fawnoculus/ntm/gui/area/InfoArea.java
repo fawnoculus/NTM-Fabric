@@ -2,6 +2,7 @@ package net.fawnoculus.ntm.gui.area;
 
 import net.fawnoculus.ntm.util.ClientUtil;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.Drawable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Range;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface InfoArea {
+public interface InfoArea extends Drawable {
   int getX();
 
   int getY();
@@ -51,7 +52,7 @@ public interface InfoArea {
       && this.getRelativeMouseY(mouseY) < this.getY() + this.getHeigh();
   }
 
-  default void draw(DrawContext context, int mouseX, int mouseY) {
+  default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks){
     this.drawTooltip(context, mouseX, mouseY);
   }
 

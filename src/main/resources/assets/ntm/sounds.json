@@ -10,5 +10,23 @@
     "sounds": [
       "ntm:item/iv_bag_injects"
     ]
+  },
+  "item.pain_saw": {
+    "subtitle": "sound.ntm.item.pain_saw",
+    "sounds": [
+      "ntm:item/pain_saw"
+    ]
+  },
+  "item.tech_boop": {
+    "subtitle": "sound.ntm.item.tech_boop",
+    "sounds": [
+      "ntm:item/tech_boop"
+    ]
+  },
+  "item.tech_bleep": {
+    "subtitle": "sound.ntm.item.tech_bleep",
+    "sounds": [
+      "ntm:item/tech_bleep"
+    ]
   }
 }

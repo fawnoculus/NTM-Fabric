@@ -1,21 +1,61 @@
 package net.fawnoculus.ntm.api.radiation;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fawnoculus.ntm.network.s2c.HazmatRegistryPayload;
+import net.minecraft.entity.EquipmentHolder;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 
-public class ClientHazmatRegistry extends HazmatRegistry {
-  private static final ClientHazmatRegistry INSTANCE = new ClientHazmatRegistry();
+public class ClientHazmatRegistry {
+  private static HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
+  private static HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
 
-  public static ClientHazmatRegistry getInstance() {
-    return INSTANCE;
+  public static double getResistance(LivingEntity entity) {
+    double resistance = 0;
+    if (entity instanceof EquipmentHolder equipmentHolder) {
+      try {
+        resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.HEAD));
+      } catch (Throwable ignored) {
+      }
+      try {
+        resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.CHEST));
+      } catch (Throwable ignored) {
+      }
+      try {
+        resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.LEGS));
+      } catch (Throwable ignored) {
+      }
+      try {
+        resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.FEET));
+      } catch (Throwable ignored) {
+      }
+      try {
+        resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.BODY));
+      } catch (Throwable ignored) {
+      }
+      try {
+        resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.SADDLE));
+      } catch (Throwable ignored) {
+      }
+    }
+    return resistance;
   }
 
-  private HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
-  private HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
+  public static double getResistance(ItemStack stack) {
+    return getResistance(stack.getItem()) * stack.getCount();
+  }
 
-  @Override
-  public double getResistance(Identifier identifier) {
+  public static double getResistance(Item item) {
+    return getResistance(Registries.ITEM.getId(item));
+  }
+
+  public static double getResistance(Identifier identifier) {
     Double override = hazmatOverrides.get(identifier);
     if (override != null) {
       return override;
@@ -23,13 +63,8 @@ public class ClientHazmatRegistry extends HazmatRegistry {
     return hazmatGetter.getOrDefault(identifier, 0.0);
   }
 
-  @Override
-  public void register(Identifier identifier, double milliRads) {
-    throw new IllegalArgumentException("Tried to register radiation resistance in ClientHazmatRegistry");
-  }
-
-  public void updateFromPacket(HazmatRegistry.Serialized serializedRegistry) {
-    this.hazmatGetter = serializedRegistry.hazmatGetter();
-    this.hazmatOverrides = serializedRegistry.hazmatOverrides();
+  public static void updateFromPacket(HazmatRegistryPayload payload, ClientPlayNetworking.Context ignored) {
+    hazmatGetter = payload.serializedRegistry().hazmatGetter();
+    hazmatOverrides = payload.serializedRegistry().hazmatOverrides();
   }
 }

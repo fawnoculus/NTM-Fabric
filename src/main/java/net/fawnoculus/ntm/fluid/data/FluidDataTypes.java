@@ -3,8 +3,8 @@ package net.fawnoculus.ntm.fluid.data;
 import com.mojang.serialization.Codec;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
-import net.fawnoculus.ntm.fluid.data.custom.*;
 import net.fawnoculus.ntm.fluid.FluidUnit;
+import net.fawnoculus.ntm.fluid.data.custom.*;
 import net.fawnoculus.ntm.util.TextUtil;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.text.Text;
@@ -51,27 +51,18 @@ public class FluidDataTypes {
         formatting = Formatting.BLUE;
       }
 
-      switch (NTMConfig.TempUnit.getValue()) {
-        case "Celsius" -> tooltip.accept(
-          Text.literal(String.format("%,.1f", celsius)).append(Text.translatable("generic.ntm.temp.c")).formatted(formatting)
-        );
-        case "Fahrenheit" -> tooltip.accept(
-          Text.literal(String.format("%,.1f", (celsius * 9 / 5) + 32)).append(Text.translatable("generic.ntm.temp.f")).formatted(formatting)
-        );
-        case "Kelvin" -> tooltip.accept(
-          Text.literal(String.format("%,.1f", celsius - 273.15)).append(Text.translatable("generic.ntm.temp.k")).formatted(formatting)
-        );
-      }
+      tooltip.accept(NTMConfig.TEMP_UNIT.getValue()
+        .CELSIUS_TO_TEXT.apply(celsius).formatted(formatting)
+      );
     }
 
     // Helper
     private static Text thermalCapacity(Double tuPerDroplet) {
-      return switch (NTMConfig.FluidUnit.getValue()) {
-        case "MilliBuckets" ->
+      return switch (NTMConfig.FLUID_UNIT.getValue()) {
+        case NTMConfig.FluidUnit.MilliBuckets ->
           Text.translatable("fluid_tooltip.ntm.thermal_capacity", FluidUnit.dropletsToMB(tuPerDroplet), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.RED);
-        case "Droplets" ->
+        case NTMConfig.FluidUnit.Droplets ->
           Text.translatable("fluid_tooltip.ntm.thermal_capacity", tuPerDroplet, Text.translatable("generic.ntm.fluid.droplets")).formatted(Formatting.RED);
-        default -> Text.empty();
       };
     }
 
@@ -140,11 +131,11 @@ public class FluidDataTypes {
     private static void flammable(Double tuPerDroplet, boolean showExtraInfo, Consumer<Text> tooltip) {
       if (tuPerDroplet <= 0) return;
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.flammable").formatted(Formatting.YELLOW));
-      switch (NTMConfig.FluidUnit.getValue()) {
-        case "MilliBuckets" -> tooltip.accept(
+      switch (NTMConfig.FLUID_UNIT.getValue()) {
+        case NTMConfig.FluidUnit.MilliBuckets -> tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.provides", TextUtil.unit(FluidUnit.dropletsToMB(tuPerDroplet)), Text.translatable("generic.ntm.fluid.mb")).formatted(Formatting.YELLOW)
         );
-        case "Droplets" -> tooltip.accept(
+        case NTMConfig.FluidUnit.Droplets -> tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.provides", TextUtil.unit(tuPerDroplet), Text.translatable("generic.ntm.fluid.droplet")).formatted(Formatting.YELLOW)
         );
       }
@@ -153,14 +144,14 @@ public class FluidDataTypes {
     private static void combustible(Combustible data, boolean showExtraInfo, Consumer<Text> tooltip) {
       if (!data.isCombustible()) return;
       tooltip.accept(Text.translatable("fluid_tooltip.ntm.combustible"));
-      switch (NTMConfig.FluidUnit.getValue()) {
-        case "MilliBuckets" -> tooltip.accept(
+      switch (NTMConfig.FLUID_UNIT.getValue()) {
+        case NTMConfig.FluidUnit.MilliBuckets -> tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.provides",
             TextUtil.unit(FluidUnit.dropletsToMB(data.ntePerDroplet()), "generic.ntm.delta_kelvin"),
             Text.translatable("generic.ntm.fluid.mb")
           ).formatted(Formatting.GOLD)
         );
-        case "Droplets" -> tooltip.accept(
+        case NTMConfig.FluidUnit.Droplets -> tooltip.accept(
           Text.translatable("fluid_tooltip.ntm.provides",
             TextUtil.unit(data.ntePerDroplet(), "generic.ntm.delta_kelvin").formatted(Formatting.RED),
             Text.translatable("generic.ntm.fluid.droplets")

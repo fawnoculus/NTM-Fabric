@@ -1,7 +1,6 @@
 package net.fawnoculus.ntm.api.radiation;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.NTM;
@@ -13,6 +12,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
@@ -21,25 +21,18 @@ import net.minecraft.util.Identifier;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class HazmatRegistry {
-  private static final HazmatRegistry INSTANCE = new HazmatRegistry();
-
-  public static HazmatRegistry getInstance() {
-    return INSTANCE;
-  }
-
   public static void initialize() {
-    INSTANCE.loadOverrides();
+    loadOverrides();
   }
 
-  private final HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
-  private final HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
+  private static final HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
+  private static final HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
 
 
-  private void loadOverrides() {
+  private static void loadOverrides() {
     File file = FabricLoader.getInstance().getConfigDir().resolve("ntm/overrides/hazmat.json").toFile();
     if (!file.exists()) {
       try {
@@ -85,7 +78,7 @@ public class HazmatRegistry {
     NTM.LOGGER.info("Successfully loaded Hazmat Overrides for {} identifier(s)", hazmatOverrides.size());
   }
 
-  public double getResistance(LivingEntity entity) {
+  public static double getResistance(LivingEntity entity) {
     double resistance = 0;
     if (entity instanceof EquipmentHolder equipmentHolder) {
       try {
@@ -116,15 +109,15 @@ public class HazmatRegistry {
     return resistance;
   }
 
-  public double getResistance(ItemStack stack) {
+  public static double getResistance(ItemStack stack) {
     return getResistance(stack.getItem()) * stack.getCount();
   }
 
-  public double getResistance(Item item) {
+  public static double getResistance(Item item) {
     return getResistance(Registries.ITEM.getId(item));
   }
 
-  public double getResistance(Identifier identifier) {
+  public static double getResistance(Identifier identifier) {
     Double override = hazmatOverrides.get(identifier);
     if (override != null) {
       return override;
@@ -132,68 +125,76 @@ public class HazmatRegistry {
     return hazmatGetter.getOrDefault(identifier, 0.0);
   }
 
-  public void register(Block block, double milliRads) {
-    this.register(Registries.BLOCK.getId(block), milliRads);
+  public static void register(Block block, double resistance) {
+    register(Registries.BLOCK.getId(block), resistance);
   }
 
-  public void register(Item item, double milliRads) {
-    this.register(Registries.ITEM.getId(item), milliRads);
+  public static void register(Item item, double resistance) {
+    register(Registries.ITEM.getId(item), resistance);
   }
 
-  public void register(Identifier identifier, double milliRads) {
-    this.hazmatGetter.put(identifier, milliRads);
+  public static void register(Identifier identifier, double resistance) {
+    if(resistance <= 0){
+      hazmatGetter.remove(identifier);
+    }else {
+      hazmatGetter.put(identifier, resistance);
+    }
   }
 
-  public HazmatRegistry.Serialized serialize() {
-    return new HazmatRegistry.Serialized(this.hazmatGetter, this.hazmatOverrides);
+  public static HazmatRegistry.Serialized serialize() {
+    return new HazmatRegistry.Serialized(hazmatGetter, hazmatOverrides);
   }
 
-  public record Serialized(HashMap<Identifier, Double> hazmatGetter,
-                           HashMap<Identifier, Double> hazmatOverrides) {
-    public static final PacketCodec<ByteBuf, HazmatRegistry.Serialized> PACKET_CODEC = new PacketCodec<>() {
+  public record Serialized(HashMap<Identifier, Double> hazmatGetter, HashMap<Identifier, Double> hazmatOverrides) {
+    public static final PacketCodec<ByteBuf, Serialized> PACKET_CODEC = new PacketCodec<>() {
       @Override
-      public HazmatRegistry.Serialized decode(ByteBuf byteBuf) {
-        String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
-        return HazmatRegistry.Serialized.decode(JsonUtil.jsonFromString(string));
+      public Serialized decode(ByteBuf byteBuf) {
+        NbtCompound nbt = PacketByteBuf.readNbt(byteBuf);
+        if(nbt == null) nbt = new NbtCompound();
+        return Serialized.decode(nbt);
       }
 
       @Override
-      public void encode(ByteBuf byteBuf, HazmatRegistry.Serialized registry) {
-        JsonObject json = HazmatRegistry.Serialized.encode(registry);
-        PacketByteBuf.writeByteArray(byteBuf, json.toString().getBytes(StandardCharsets.UTF_8));
+      public void encode(ByteBuf byteBuf, Serialized registry) {
+        PacketByteBuf.writeNbt(byteBuf, Serialized.encode(registry));
       }
     };
 
-    public static JsonObject encode(HazmatRegistry.Serialized registry) {
-      JsonObject hazmatGetter = new JsonObject();
+    public static NbtCompound encode(HazmatRegistry.Serialized registry) {
+      NbtCompound hazmatGetter = new NbtCompound();
       for (Identifier key : registry.hazmatGetter().keySet()) {
         Double value = registry.hazmatGetter().get(key);
-        hazmatGetter.add(key.toString(), new JsonPrimitive(value));
+        hazmatGetter.putDouble(key.toString(), value);
       }
-      JsonObject radioactivityOverrides = new JsonObject();
+
+      NbtCompound radioactivityOverrides = new NbtCompound();
       for (Identifier key : registry.hazmatOverrides().keySet()) {
         Double value = registry.hazmatOverrides().get(key);
-        radioactivityOverrides.add(key.toString(), new JsonPrimitive(value));
+        radioactivityOverrides.putDouble(key.toString(), value);
       }
-      JsonObject json = new JsonObject();
-      json.add("hazmatGetter", hazmatGetter);
-      json.add("hazmatOverrides", radioactivityOverrides);
-      return json;
+
+      NbtCompound nbt = new NbtCompound();
+      nbt.put("hazmatGetter", hazmatGetter);
+      nbt.put("hazmatOverrides", radioactivityOverrides);
+      return nbt;
     }
 
-    public static HazmatRegistry.Serialized decode(JsonObject json) {
-      JsonObject jsonHazmatGetter = json.get("hazmatGetter").getAsJsonObject();
-      JsonObject jsonHazmatOverrides = json.get("hazmatOverrides").getAsJsonObject();
+    public static HazmatRegistry.Serialized decode(NbtCompound json) {
+      NbtCompound jsonHazmatGetter = json.getCompoundOrEmpty("hazmatGetter");
+      NbtCompound jsonHazmatOverrides = json.getCompoundOrEmpty("hazmatOverrides");
+
       HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
-      for (String key : jsonHazmatGetter.keySet()) {
+      for (String key : jsonHazmatGetter.getKeys()) {
         Identifier identifier = Identifier.of(key);
-        Double value = jsonHazmatGetter.get(key).getAsDouble();
+        double value = jsonHazmatGetter.getDouble(key, 0);
+        if(value == 0) continue;
         hazmatGetter.put(identifier, value);
       }
+
       HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
-      for (String key : jsonHazmatOverrides.keySet()) {
+      for (String key : jsonHazmatOverrides.getKeys()) {
         Identifier identifier = Identifier.of(key);
-        Double value = jsonHazmatOverrides.get(key).getAsDouble();
+        double value = jsonHazmatOverrides.getDouble(key, 0);
         hazmatOverrides.put(identifier, value);
       }
 

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 /**
- * All Data of Fluids that doesn't change is stored as FluidData, serialized & send to clients when joining
+ * All Data of Fluids that doesn't change is stored as FluidData, serialized &AMP; send to clients when joining
  */
 public class FluidDataRegistry {
   private static final HashMap<Identifier, FluidDataType<?>> DATA_TYPES = new HashMap<>();

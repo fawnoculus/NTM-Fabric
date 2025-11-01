@@ -1,25 +1,23 @@
 package net.fawnoculus.ntm;
 
 
-import net.fawnoculus.ntm.util.config.ConfigFile;
-import net.fawnoculus.ntm.util.config.filetype.JsonConfigFile;
-import net.fawnoculus.ntm.util.config.options.BooleanOption;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.mojang.serialization.Codec;
+import net.fawnoculus.ntm.api.config.ConfigFile;
+import net.fawnoculus.ntm.api.config.ConfigOption;
+import net.fawnoculus.ntm.api.config.encoder.JsonConfigEncoder;
 
 public class NTMClientConfig {
-  public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client/Config");
-
-  public static final ConfigFile ClientConfig = new ConfigFile("ntm/client", new JsonConfigFile(), LOGGER);
-  public static final BooleanOption ModelAmbientOcclusion  = ClientConfig.newBooleanOption("ModelAmbientOcclusion", true,
+  public static final ConfigFile CLIENT_CONFIG_FILE = new ConfigFile(JsonConfigEncoder.getInstance(),"ntm/client.json");
+  public static final ConfigOption<Boolean> MODEL_AMBIENT_OCCLUSION = CLIENT_CONFIG_FILE.newOption(
+    "model_ambient_occlusion", Codec.BOOL, true,
     "If the Advanced Models should use Ambient Occlusion (looks a little wonky without it)"
   );
-  public static final BooleanOption FixEffectDisplay = ClientConfig.newBooleanOption("FixEffectDisplay", true,
-    "If Status Effects with high Amplifiers should be displayed as Arabic Numbers if the roman Numeral is not Available"
+  public static final ConfigOption<Boolean> FIX_EFFECT_LEVEL = CLIENT_CONFIG_FILE.newOption(
+    "fix_effect_level", Codec.BOOL, true,
+    "If Status Effects with high Amplifiers should be displayed as Arabic Numerals if the roman Numeral is not Available"
   );
 
-
   public static void initialize() {
-    ClientConfig.initialize();
+    CLIENT_CONFIG_FILE.initialize();
   }
 }

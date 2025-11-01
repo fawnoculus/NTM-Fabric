@@ -13,13 +13,10 @@ import net.minecraft.util.math.Vec3d;
  * Simple Chunk Based Radiation Processor
  */
 public class SimpleRadiationProcessor implements RadiationProcessor {
-  public static final RadiationManager radiationManager = RadiationManager.getInstance();
-  public static final RadiationRegistry radiationRegistry = RadiationRegistry.getInstance();
-
   public SimpleRadiationProcessor(ServerWorld world, ChunkPos pos) {
     this.WORLD = world;
     this.POS = pos;
-    this.passiveRadiation = radiationRegistry.getRadioactivity(WORLD);
+    this.passiveRadiation = RadiationRegistry.getRadioactivity(WORLD);
     this.activeRadiation = 0;
   }
 
@@ -39,16 +36,16 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
 
     double spreadRadiationPerChunk = toBeSpreadRadiation / 4; // one fifth of the to be spread radiation is lost
 
-    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x - 1, this.POS.z)) instanceof SimpleRadiationProcessor processor) {
+    if (RadiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x - 1, this.POS.z)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
-    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x + 1, this.POS.z)) instanceof SimpleRadiationProcessor processor) {
+    if (RadiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x + 1, this.POS.z)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
-    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z - 1)) instanceof SimpleRadiationProcessor processor) {
+    if (RadiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z - 1)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
-    if (radiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z + 1)) instanceof SimpleRadiationProcessor processor) {
+    if (RadiationManager.getRadiationProcessor(this.WORLD, new ChunkPos(this.POS.x, this.POS.z + 1)) instanceof SimpleRadiationProcessor processor) {
       processor.activeRadiation += spreadRadiationPerChunk;
     }
     // if a chunk is not loaded the radiation going into it is also lost
@@ -67,7 +64,7 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
   @Override
   public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {
     this.passiveRadiation = Math.clamp(
-      this.passiveRadiation - radiationRegistry.getRadioactivity(previousState) + radiationRegistry.getRadioactivity(newState),
+      this.passiveRadiation - RadiationRegistry.getRadioactivity(previousState) + RadiationRegistry.getRadioactivity(newState),
       0, Double.MAX_VALUE
     );
   }

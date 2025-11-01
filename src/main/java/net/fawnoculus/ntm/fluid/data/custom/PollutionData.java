@@ -23,13 +23,12 @@ public record PollutionData(String name, Double amount) {
   }
 
   public @NotNull MutableText getTooltip() {
-    return switch (NTMConfig.FluidUnit.getValue()) {
-      case "MilliBuckets" ->
+    return switch (NTMConfig.FLUID_UNIT.getValue()) {
+      case NTMConfig.FluidUnit.MilliBuckets ->
         Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount() / FluidUnit.MILLI_BUCKET.DROPLETS)
           .append(Text.translatable("generic.ntm.fluid.mb"));
-      case "Droplets" -> Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount())
+      case NTMConfig.FluidUnit.Droplets -> Text.translatable("fluid_tooltip.ntm.polluting.val", this.getFluidName(), this.amount())
         .append(Text.translatable("generic.ntm.fluid.droplets"));
-      default -> Text.empty();
     };
   }
 }

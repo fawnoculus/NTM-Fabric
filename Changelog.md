@@ -1,4 +1,6 @@
 # v0.0.3-alpha
+## Added:
+* The new Tool Ability System that the original added
 
 # v0.0.2-alpha
 ## Added:

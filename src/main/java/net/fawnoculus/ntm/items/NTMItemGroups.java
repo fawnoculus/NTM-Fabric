@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.items;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -411,6 +411,9 @@ public class NTMItemGroups {
 
       ItemGroup.add(NTMItems.NITER);
       ItemGroup.add(NTMItems.NITER_CRYSTALS);
+
+      ItemGroup.add(NTMItems.NITRA);
+      ItemGroup.add(NTMItems.SMALL_PILE_OF_NITRA);
 
       ItemGroup.add(NTMItems.OSMIRIDIUM_INGOT);
       ItemGroup.add(NTMItems.OSMIRIDIUM_NUGGET);

@@ -18,6 +18,7 @@
 - Conveyor Belts, Pneumatic Tubes & Drones
 - ~~Working Config File(s)~~
 - ~~Advanced Message System~~
+- QMAW (Quick Manual And Wiki) & WIAJ (World In A Jar)
 
 ## Regular Features
 ### Single Block Machines
