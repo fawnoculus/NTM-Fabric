@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:thorium_232_ingot_from_smelting_thorium_ore"
+        "recipe": "ntm:thorium_232_ingot_from_smelting_thorium_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:thorium_232_ingot_from_smelting_thorium_ore"
+      "ntm:thorium_232_ingot_from_smelting_thorium_ore"
     ]
   }
 }

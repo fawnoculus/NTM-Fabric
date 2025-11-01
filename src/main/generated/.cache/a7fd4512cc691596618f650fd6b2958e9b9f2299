@@ -1,4 +1,4 @@
-// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric Model Provider
+// 1.21.8	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric Model Provider
 ce5a504210889c7793cb97202d2e4b01361e88bc assets/ntm/blockstates/actinium_227_block.json
 03d9257b83bbe92a1acccb36af896e6c246c6948 assets/ntm/blockstates/advanced_alloy_block.json
 a2c3b374683caf281551ac9ff4f594e8e2e8f958 assets/ntm/blockstates/alexandrite_ore.json
@@ -662,6 +662,7 @@ f7d7bb0a127ac94db79488a937ac3b92ee4012a0 assets/ntm/items/nitan_blend.json
 b24845e4d334ae2795c45e461a688dfe3d9c4b58 assets/ntm/items/niter_block.json
 6064b25b701dd6a0f5620637f0244c2402292917 assets/ntm/items/niter_crystals.json
 cc19aa50867ca9b3ad096ea96f7634370cc5ab0e assets/ntm/items/niter_ore.json
+4d285394c1caac4200cd7c982ea1908cb09898fe assets/ntm/items/nitra.json
 8dcbb4f671ebae6c5bb97ff65210280506a04fd1 assets/ntm/items/nuka_cola_bottle_cap.json
 8a84f07de776990417ab4a545814fb455d0f7f28 assets/ntm/items/nuka_cola_quantum_bottle_cap.json
 778245d68a615d6a49fb38dc82ea35da4854003f assets/ntm/items/null.json
@@ -849,6 +850,7 @@ f0512a4b1d3e9dc1dcd8f80c2f63eb0e0c14fab0 assets/ntm/items/semtex_blend.json
 34fe07fc2d52dd926fcdb9bfc3005ebe46ab5eaf assets/ntm/items/silicon_wafer.json
 52fd8b351c08c2e4a01e1c8089f4a62e16cc1d6b assets/ntm/items/sixfold_lithium_ion_power_cell.json
 bc0195a53c5377d41d04d4efad620528bd99671c assets/ntm/items/sixfold_redstone_power_cell.json
+f497539ed759958359eee0b5bceeea65e41df128 assets/ntm/items/small_pile_of_nitra.json
 24a4acb35d9a803fd1e2883068f1f6a06355f15c assets/ntm/items/smart_energy_drink.json
 142bd82c0f906f9a61aba938fae7a299c6b1651c assets/ntm/items/smoldering_netherrack.json
 688c7d95eabdb6dae622af2dc58dcb33c9cb50d9 assets/ntm/items/sodium_powder.json
@@ -1579,6 +1581,7 @@ dbb16629d573cf0bb3d2aa1fcd1a1c8b4ef98dc7 assets/ntm/models/item/niobium_powder.j
 97bf198005cb97d416489d05ca3710a6ce942869 assets/ntm/models/item/nitan_blend.json
 31357ac70406339927e4870b85580261f4e54ec4 assets/ntm/models/item/niter.json
 37c1d1ae2cdae7d71505f4319883fa7ee3bd87fe assets/ntm/models/item/niter_crystals.json
+9ac1ab404c2e63d2318bc27cebe74cd687de3eba assets/ntm/models/item/nitra.json
 eefb3f5519a6ddb1bda6b3e802f4974108a1c1b3 assets/ntm/models/item/nuka_cola_bottle_cap.json
 9e0ebe1f3264ddf2276da43c933f2ffd099d3c32 assets/ntm/models/item/nuka_cola_quantum_bottle_cap.json
 36f027342e00768f9d0b355874defd345daf0338 assets/ntm/models/item/null.json
@@ -1728,6 +1731,7 @@ ef5fffbfd14e1c103c7190e69961d30062339541 assets/ntm/models/item/semi_stable_lant
 68b95502ffa5cbd269ed2c0407ccf7b765845bae assets/ntm/models/item/silicon_wafer.json
 0abe3b4ec9959c98171889c3357b3f42f9cb001c assets/ntm/models/item/sixfold_lithium_ion_power_cell.json
 e553638dcd8701ee84ee61bf9aebf6c2016a235c assets/ntm/models/item/sixfold_redstone_power_cell.json
+2e71c0b89886ffc4ee2df9a54cf284f80b8bf89e assets/ntm/models/item/small_pile_of_nitra.json
 bfb013df23a053e35d4667fc5dc4d14f9394017d assets/ntm/models/item/smart_energy_drink.json
 f071d2548e0c17773a848c324c821564a1090d1d assets/ntm/models/item/sodium_powder.json
 c0f4dc432c8ac5a825dac182f4ed7677279e855b assets/ntm/models/item/solinium_billet.json

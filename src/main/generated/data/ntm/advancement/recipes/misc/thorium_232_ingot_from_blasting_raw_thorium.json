@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:thorium_232_ingot_from_blasting_raw_thorium"
+        "recipe": "ntm:thorium_232_ingot_from_blasting_raw_thorium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:thorium_232_ingot_from_blasting_raw_thorium"
+      "ntm:thorium_232_ingot_from_blasting_raw_thorium"
     ]
   }
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:australium_ingot_from_smelting_australium_ore"
+        "recipe": "ntm:australium_ingot_from_smelting_australium_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:australium_ingot_from_smelting_australium_ore"
+      "ntm:australium_ingot_from_smelting_australium_ore"
     ]
   }
 }

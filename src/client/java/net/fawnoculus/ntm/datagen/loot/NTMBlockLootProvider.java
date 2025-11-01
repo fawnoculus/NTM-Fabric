@@ -2,9 +2,9 @@ package net.fawnoculus.ntm.datagen.loot;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.items.NTMItems;
-import net.fawnoculus.ntm.NTM;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -28,8 +28,6 @@ public class NTMBlockLootProvider extends FabricBlockLootTableProvider {
 
   @Override
   public void generate() {
-    addDrop(NTMBlocks.ALLOY_FURNACE);
-
     addDrop(NTMBlocks.URANIUM_ORE, oreDrops(NTMBlocks.URANIUM_ORE, NTMItems.RAW_URANIUM));
     addDrop(NTMBlocks.DEEPSLATE_URANIUM_ORE, oreDrops(NTMBlocks.DEEPSLATE_URANIUM_ORE, NTMItems.RAW_URANIUM));
     addDrop(NTMBlocks.SCORCHED_URANIUM_ORE, oreDrops(NTMBlocks.SCORCHED_URANIUM_ORE, NTMItems.RAW_SCORCHED_URANIUM));
@@ -146,6 +144,17 @@ public class NTMBlockLootProvider extends FabricBlockLootTableProvider {
     addDrop(NTMBlocks.TEKTITE);
     addDrop(NTMBlocks.OSMIRIDIUM_INFUSED_TEKTITE, oreDrops(NTMBlocks.OSMIRIDIUM_INFUSED_TEKTITE, NTMItems.RAW_OSMIRIDIUM_INFUSED_TEKTITE));
     addDrop(NTMBlocks.TRIXITE_ORE, oreDrops(NTMBlocks.TRIXITE_ORE, NTMItems.RAW_TRIXITE));
+
+
+    addDrop(NTMBlocks.ALLOY_FURNACE);
+    addDrop(NTMBlocks.ALLOY_FURNACE_EXTENSION);
+    addDrop(NTMBlocks.ELECTRIC_FURNACE);
+
+    addDrop(NTMBlocks.POTATO_BATTERY_BLOCK);
+    addDrop(NTMBlocks.ENERGY_STORAGE_BLOCK);
+    addDrop(NTMBlocks.LITHIUM_ION_ENERGY_STORAGE_BLOCK);
+    addDrop(NTMBlocks.SCHRABIDIUM_ENERGY_STORAGE_BLOCK);
+    addDrop(NTMBlocks.SPARK_ENERGY_STORAGE_BLOCK);
   }
 
   public LootTable.Builder multiDrops(Block block, ItemConvertible item, float minDrops, float maxDrops) {

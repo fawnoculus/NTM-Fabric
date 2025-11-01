@@ -14,10 +14,6 @@ public class ConfigOption<T> {
   private final @NotNull T DEFAULT_VALUE;
   private @Nullable T currentValue = null;
 
-  public ConfigOption(@NotNull String name, @NotNull Codec<T> codec, @NotNull T defaultValue){
-    this(name, codec, defaultValue, null);
-  }
-
   public ConfigOption(@NotNull String name, @NotNull Codec<T> codec, @NotNull T defaultValue, @Nullable String comment){
     this.NAME = name;
     this.CODEC = codec;
@@ -38,7 +34,7 @@ public class ConfigOption<T> {
   }
 
   /**
-   * @return The value this option is currently set to, or the default one id decoding fails
+   * @return The value this option is currently set to, or the default one if no value was set
    */
   public @NotNull T getValue(){
     if(currentValue == null) {

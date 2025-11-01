@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:uranium_ingot_from_blasting_raw_scorched_uranium"
+        "recipe": "ntm:uranium_ingot_from_blasting_raw_scorched_uranium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:uranium_ingot_from_blasting_raw_scorched_uranium"
+      "ntm:uranium_ingot_from_blasting_raw_scorched_uranium"
     ]
   }
 }

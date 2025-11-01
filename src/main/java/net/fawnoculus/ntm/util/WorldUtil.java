@@ -112,7 +112,6 @@ public class WorldUtil {
         block.afterBreak(world, player, pos, newState, blockEntity, itemStack2);
       }
     }
-
   }
 
   public static void dropItemsFromBlock(World world, BlockPos pos, PlayerEntity miner, ItemStack tool){

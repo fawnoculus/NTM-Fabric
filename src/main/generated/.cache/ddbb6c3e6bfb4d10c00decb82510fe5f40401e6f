@@ -1,4 +1,4 @@
-// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric DamageType-Tag Provider
+// 1.21.8	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric DamageType-Tag Provider
 e19783dc40f396d095f7616da30282cc7ffa5369 data/minecraft/tags/damage_type/bypasses_armor.json
 e19783dc40f396d095f7616da30282cc7ffa5369 data/minecraft/tags/damage_type/bypasses_cooldown.json
 8cbc7717463dc0f07d550dde71cfc4059858051d data/minecraft/tags/damage_type/bypasses_effects.json

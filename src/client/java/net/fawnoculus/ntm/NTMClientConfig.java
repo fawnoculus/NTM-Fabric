@@ -10,7 +10,7 @@ public class NTMClientConfig {
   public static final ConfigFile CLIENT_CONFIG_FILE = new ConfigFile(JsonConfigEncoder.getInstance(),"ntm/client.json");
   public static final ConfigOption<Boolean> MODEL_AMBIENT_OCCLUSION = CLIENT_CONFIG_FILE.newOption(
     "model_ambient_occlusion", Codec.BOOL, true,
-    "If the Advanced Models should use Ambient Occlusion (looks a little wonky without it)"
+    "makes the models lock better, sometimes looks a little wonky tho"
   );
   public static final ConfigOption<Boolean> FIX_EFFECT_LEVEL = CLIENT_CONFIG_FILE.newOption(
     "fix_effect_level", Codec.BOOL, true,

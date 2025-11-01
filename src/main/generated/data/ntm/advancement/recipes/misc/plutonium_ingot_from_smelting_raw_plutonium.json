@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:plutonium_ingot_from_smelting_raw_plutonium"
+        "recipe": "ntm:plutonium_ingot_from_smelting_raw_plutonium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:plutonium_ingot_from_smelting_raw_plutonium"
+      "ntm:plutonium_ingot_from_smelting_raw_plutonium"
     ]
   }
 }

@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.blocks;
 
-import net.fawnoculus.ntm.blocks.custom.*;
 import net.fawnoculus.ntm.NTM;
+import net.fawnoculus.ntm.blocks.custom.*;
 import net.fawnoculus.ntm.blocks.custom.container.energy.SimpleEnergyStorageBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -25,42 +25,50 @@ public class NTMBlocks {
     .sounds(BlockSoundGroup.STONE)
     .mapColor(MapColor.GRAY)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings SCHIST_ORE_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.STONE)
     .mapColor(MapColor.LIGHT_BLUE_GRAY)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings DEEPSLATE_ORE_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.DEEPSLATE)
     .mapColor(MapColor.DEEPSLATE_GRAY)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings VOLCANIC_BASALT_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.BASALT)
     .mapColor(MapColor.BLACK)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings NETHER_ORE_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.NETHER_ORE)
     .mapColor(MapColor.RED)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings GLOWING_NETHER_ORE_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.NETHER_ORE)
     .mapColor(MapColor.RED)
     .luminance(ignored -> 15)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings METEOR_STONE_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.STONE)
     .mapColor(MapColor.BLACK)
     .requiresTool()
-    .strength(2f, 2f);
+    .strength(2f, 2f)
+    .requiresTool();
   private static final AbstractBlock.Settings DEPTH_STONE_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.STONE)
     .mapColor(MapColor.GRAY)
-    .strength(Float.MAX_VALUE, 3600000.0f);
+    .strength(Float.MAX_VALUE, 3600000.0f)
+    .requiresTool();
   private static final AbstractBlock.Settings DIRT_SETTINGS = AbstractBlock.Settings.create()
     .sounds(BlockSoundGroup.GRAVEL)
     .mapColor(MapColor.DIRT_BROWN);
@@ -68,14 +76,13 @@ public class NTMBlocks {
     .sounds(BlockSoundGroup.SAND)
     .mapColor(MapColor.PALE_YELLOW)
     .instrument(NoteBlockInstrument.SNARE);
-  private static final AbstractBlock.Settings MACHINE_SETTINGS = AbstractBlock.Settings.create()
-    .sounds(BlockSoundGroup.STONE)
-    .mapColor(MapColor.GRAY)
-    .strength(2f, 6.0f);
 
   private static AbstractBlock.Settings advancedModel(AbstractBlock.@NotNull Settings settings) {
-
     return settings.nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never);
+  }
+
+  private static AbstractBlock.Settings machineSettings(AbstractBlock.@NotNull Settings settings) {
+    return settings.sounds(BlockSoundGroup.STONE).mapColor(MapColor.GRAY).strength(2f, 6.0f).requiresTool();
   }
 
   // Ore Blocks
@@ -272,26 +279,33 @@ public class NTMBlocks {
   public static final Block ZIRCONIUM_BLOCK = register("zirconium_block", Block::new, STONE_ORE_SETTINGS);
 
 
-  public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new, AbstractBlock.Settings.create()
-    .sounds(BlockSoundGroup.STONE)
-    .strength(2f, 6.0f)
-    .mapColor(MapColor.TERRACOTTA_ORANGE)
+  public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new,
+    machineSettings(AbstractBlock.Settings.create())
+      .strength(1.5F, 6.0F)
+      .sounds(BlockSoundGroup.STONE)
+      .mapColor(MapColor.TERRACOTTA_ORANGE));
+  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new,
+    advancedModel(machineSettings(AbstractBlock.Settings.create()))
+      .strength(1.5F, 6.0F)
+      .sounds(BlockSoundGroup.STONE)
+      .mapColor(MapColor.TERRACOTTA_ORANGE)
   );
-  public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new, advancedModel(AbstractBlock.Settings.create())
-    .strength(1.5F, 6.0F)
-    .sounds(BlockSoundGroup.STONE)
-    .mapColor(MapColor.TERRACOTTA_ORANGE)
-  );
-  public static final Block ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlock::new, MACHINE_SETTINGS);
-  public static final Block PWR_CONTROLLER = register("pwr_controller", PWRControllerBlock::new, MACHINE_SETTINGS);
+  public static final Block ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlock::new, machineSettings(AbstractBlock.Settings.create()));
+  // This one is currently only here for the item group icon
+  public static final Block PWR_CONTROLLER = register("pwr_controller", PWRControllerBlock::new, machineSettings(AbstractBlock.Settings.create()));
 
   // Energy Stuff
   public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create());
-  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block", settings -> new SimpleEnergyStorageBlock(settings, 10_000L), AbstractBlock.Settings.create());
-  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000L), AbstractBlock.Settings.create());
-  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 50_000_000L), AbstractBlock.Settings.create());
-  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), AbstractBlock.Settings.create());
-  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block", settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), AbstractBlock.Settings.create());
+  public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block",
+    settings -> new SimpleEnergyStorageBlock(settings, 10_000L), machineSettings(AbstractBlock.Settings.create()));
+  public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block",
+    settings -> new SimpleEnergyStorageBlock(settings, 1_000_000L), machineSettings(AbstractBlock.Settings.create()));
+  public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block",
+    settings -> new SimpleEnergyStorageBlock(settings, 50_000_000L), machineSettings(AbstractBlock.Settings.create()));
+  public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block",
+    settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), machineSettings(AbstractBlock.Settings.create()));
+  public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block",
+    settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), machineSettings(AbstractBlock.Settings.create()));
 
   // Special Effect Barrels
   /* FIXME

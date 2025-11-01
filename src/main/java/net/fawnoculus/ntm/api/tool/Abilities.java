@@ -266,7 +266,7 @@ public abstract class Abilities {
 
         Optional<RecipeEntry<SmeltingRecipe>> optional = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
         if (optional.isEmpty()) {
-          return true;
+          continue;
         }
 
         RecipeEntry<SmeltingRecipe> recipeEntry = optional.get();

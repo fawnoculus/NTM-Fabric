@@ -1,6 +1,7 @@
-// 1.21.5	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric Block-Loot Provider
+// 1.21.8	-999999999-01-01T00:00:00	NTM-Fabric/NTM-Fabric Block-Loot Provider
 e33f0804f47b1828a81280857a276a8ff3ad2a2d data/ntm/loot_table/blocks/alexandrite_ore.json
 c9d9afa91e608c4292fa72565cdd1aecb9d80e1d data/ntm/loot_table/blocks/alloy_furnace.json
+9b513f065ca86be0d904031150d858daaf4c1656 data/ntm/loot_table/blocks/alloy_furnace_extension.json
 e65b4923e57f3f4f6ac3c3189d0b31a1f44ff1d2 data/ntm/loot_table/blocks/aluminium_bearing_ore.json
 5efcbbf1c686e33d378b1a17b694fc60bd20a5a2 data/ntm/loot_table/blocks/aluminium_ore_cluster.json
 4b5438b55ee850275cfbf5cede36824948dd2edf data/ntm/loot_table/blocks/asbestos_ore.json
@@ -46,7 +47,9 @@ bcf03a470c1185a59acb81583d08c67d10ee71ab data/ntm/loot_table/blocks/depth_iron_o
 4f1b4ca8a502c012281e882cbc176939b0cfb04a data/ntm/loot_table/blocks/depth_titanium_ore_cluster.json
 233c72d8079fe9ce455eb5fa07302bd4c85b2880 data/ntm/loot_table/blocks/depth_tungsten_ore_cluster.json
 e6bbfb2f69d457c516d7e38ff79ca6acff4585c2 data/ntm/loot_table/blocks/depth_zirconium.json
+e6c70658bc01d426b290c904009eb48973a344ff data/ntm/loot_table/blocks/electric_furnace.json
 2c942e5845a50c082aa4c4939e9c3eed3bc4bad5 data/ntm/loot_table/blocks/empty_oil_deposit.json
+92b58f1feee0d6ef9d724cf51c52ac18f3b11491 data/ntm/loot_table/blocks/energy_storage_block.json
 34757741f365f7554bc2282b15044b8c5e9cd64b data/ntm/loot_table/blocks/fluorite_ore.json
 560bae471b07c02ee40b92ff112ad4ee70a157f7 data/ntm/loot_table/blocks/fluorite_rich_volcanic_basalt.json
 b4120f78ed1b2614fd2155e3f0eeac9b2fd8c669 data/ntm/loot_table/blocks/gas_shale.json
@@ -57,6 +60,7 @@ be17f6a08af0ca8393c218fd5809ee31111fcf19 data/ntm/loot_table/blocks/iron_ore_clu
 8bb7fe85587eb0c7939524d2eae86da7ef73f2fc data/ntm/loot_table/blocks/lead_ore.json
 9b2cf0a5c44add48eb829256d2e00e8b28105e41 data/ntm/loot_table/blocks/lignite_ore.json
 9b781d9c7fcd04f2ae7bc560a65322d2091e4edb data/ntm/loot_table/blocks/limestone.json
+aae190401ce6701765d1a375a4af09e9bcd7ceff data/ntm/loot_table/blocks/lithium_ion_energy_storage_block.json
 03a8ee55482b24b17cf9b0dc49e2aa333e5f0216 data/ntm/loot_table/blocks/malachite.json
 7f1d7062bfd58dd9c9cbca8b66b99e33ac779ae1 data/ntm/loot_table/blocks/meteor_aluminium_ore.json
 998a0430ee01e6192a39053f307f408eef8f4312 data/ntm/loot_table/blocks/meteor_cobalt_ore.json
@@ -82,6 +86,7 @@ fdbcdea97e2332069b351844b18a5385009d0b31 data/ntm/loot_table/blocks/niter_ore.js
 14ef9442534b92fb7c8ecc9cf3a369eb0f2c2a5e data/ntm/loot_table/blocks/oily_dirt.json
 0b678f22ddc49d8a3cc91aaac512eaf3055b2547 data/ntm/loot_table/blocks/oily_sand.json
 efd61b8751130fa4536884989f92115645599ccd data/ntm/loot_table/blocks/osmiridium_infused_tektite.json
+3e6e6f38ce96950989f1edd757db0ae13aaa2bcb data/ntm/loot_table/blocks/potato_battery_block.json
 a4fa47711cf34c070747e99e28bc9eb202c4fca5 data/ntm/loot_table/blocks/rare_earth_ore.json
 a1ee3dec94b35312e0c0fce4329fb3b9af861630 data/ntm/loot_table/blocks/schist_asbestos_ore.json
 c849c3333bf3ad7b98c6dcf8825a8c43592bb33f data/ntm/loot_table/blocks/schist_copper_ore.json
@@ -91,11 +96,13 @@ fa29a45dc910fe1a6fd6da3e8a1031687d87fce3 data/ntm/loot_table/blocks/schist_gold_
 01cf44cfa613a9da5ec1f5949bc28ac586979194 data/ntm/loot_table/blocks/schist_rare_earth_ore.json
 746d3fff2df49e596539cf295f7d3c7ade1d87d3 data/ntm/loot_table/blocks/schist_schrabidium_ore.json
 96c6cafecea8c9bf3d1624a2c8642c44ba696b11 data/ntm/loot_table/blocks/schist_uranium_ore.json
+a3602701950f279f3c21df95f419ec57c3488cb4 data/ntm/loot_table/blocks/schrabidium_energy_storage_block.json
 8f62ea81a3e445e9e9a8230b0db783cbee334c42 data/ntm/loot_table/blocks/schrabidium_ore.json
 815c9e8f9f6c1864b401060402cc8cc0b1768f47 data/ntm/loot_table/blocks/scorched_nether_uranium_ore.json
 f59d2ca66bd5d90ba77ebb4ab0f13605029bf10d data/ntm/loot_table/blocks/scorched_schist_uranium_ore.json
 464386f4ed96aa667209919c9d82f24d5fa52d34 data/ntm/loot_table/blocks/scorched_uranium_ore.json
 e223e95a96d2ae6c0559f1c4221438193ca3b7df data/ntm/loot_table/blocks/smoldering_netherrack.json
+6eef2310eef6285663894565cf1037f548f8e441 data/ntm/loot_table/blocks/spark_energy_storage_block.json
 2244afdced578490d495dbcec017535047586d21 data/ntm/loot_table/blocks/sulfur_ore.json
 009c9c233bae8fa414f708a1ed41ae978dc79b57 data/ntm/loot_table/blocks/sulfur_rich_volcanic_basalt.json
 2e23e4a67d04e8a18c7c364a8452dc2dc5c82d86 data/ntm/loot_table/blocks/sulfurous_stone.json
