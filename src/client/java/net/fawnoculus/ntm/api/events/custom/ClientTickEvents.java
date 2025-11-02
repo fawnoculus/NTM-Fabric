@@ -8,10 +8,10 @@ import net.minecraft.client.MinecraftClient;
  * This Event is called every time the Client draws a new Frame
  */
 @FunctionalInterface
-public interface ClientTickCallback {
-  Event<ClientTickCallback> EVENT = EventFactory.createArrayBacked(ClientTickCallback.class,
+public interface ClientTickEvents {
+  Event<ClientTickEvents> EVENT = EventFactory.createArrayBacked(ClientTickEvents.class,
     (listeners) -> (client) -> {
-      for (ClientTickCallback event : listeners) {
+      for (ClientTickEvents event : listeners) {
         event.onTick(client);
       }
     }

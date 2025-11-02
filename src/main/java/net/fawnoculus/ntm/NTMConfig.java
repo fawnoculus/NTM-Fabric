@@ -10,6 +10,7 @@ import net.fawnoculus.ntm.api.config.encoder.JsonConfigEncoder;
 import net.fawnoculus.ntm.misc.data.NTMCodecs;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
@@ -23,7 +24,7 @@ public class NTMConfig {
   );
   public static final ConfigOption<List<Block>> VEIN_MINER_ABILITY_EXCLUDE = COMMON_CONFIG_FILE.newOption(
     "vein_miner_ability_exclude",
-    NTMCodecs.BLOCK_CODEC.listOf(),
+    Registries.BLOCK.getCodec().listOf(),
     List.of(
       Blocks.STONE,
       Blocks.COBBLESTONE,
@@ -35,7 +36,7 @@ public class NTMConfig {
   );
   public static final ConfigOption<List<Block>> AOE_ABILITY_EXCLUDE = COMMON_CONFIG_FILE.newOption(
     "aoe_ability_exclude",
-    NTMCodecs.BLOCK_CODEC.listOf(),
+    Registries.BLOCK.getCodec().listOf(),
     List.of(
       Blocks.BARRIER,
       Blocks.BEDROCK

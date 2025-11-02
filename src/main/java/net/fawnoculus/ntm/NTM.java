@@ -13,14 +13,14 @@ import net.fawnoculus.ntm.commands.NTMCommandArguments;
 import net.fawnoculus.ntm.commands.NTMCommands;
 import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.entity.NTMStatusEffects;
-import net.fawnoculus.ntm.fluid.NTMFluids;
 import net.fawnoculus.ntm.fluid.FluidData;
+import net.fawnoculus.ntm.fluid.NTMFluids;
 import net.fawnoculus.ntm.items.*;
-import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
-import net.fawnoculus.ntm.network.NTMPayloads;
-import net.fawnoculus.ntm.recipe.NTMRecipes;
-import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.misc.NTMParticles;
+import net.fawnoculus.ntm.misc.NTMSounds;
+import net.fawnoculus.ntm.network.NTMPayloads;
+import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
+import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.fawnoculus.ntm.world.NTMWorldGeneration;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
@@ -38,7 +38,7 @@ public class NTM implements ModInitializer {
 
   @Override
   public void onInitialize() {
-    LOGGER.info("Initializing...");
+    LOGGER.info("Initializing ...");
 
     NTMConfig.initialize();
     NTMApi.initialize();

@@ -16,7 +16,6 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 
 public class NTMModelProvider extends FabricModelProvider {
@@ -24,14 +23,20 @@ public class NTMModelProvider extends FabricModelProvider {
     super(output);
   }
 
-  static BiConsumer<Identifier, ModelSupplier> BlockModelCollector;
-  static BiConsumer<Identifier, ModelSupplier> ItemModelCollector;
+  public static final TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
+  public static final TexturedModel.Factory SIMPLE_BARREL = TexturedModel.makeFactory(
+    block -> new TextureMap().put(BARREL_TEXTURE_KEY, TextureMap.getId(block)),
+    new Model(Optional.empty(), Optional.empty(), BARREL_TEXTURE_KEY)
+  );
 
+  public static final TextureMap EMPTY_BLOCK_TEXTURE = new TextureMap();
+  public static final TexturedModel.Factory EMPTY_BLOCK_MODEL = TexturedModel.makeFactory(block -> EMPTY_BLOCK_TEXTURE, new Model(Optional.of(Identifier.ofVanilla("block/block")), Optional.empty()));
+
+
+  public static final Model HANDHELD_LARGE = item("handheld_large", TextureKey.LAYER0);
 
   @Override
   public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-    BlockModelCollector = blockStateModelGenerator.modelCollector;
-
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.URANIUM_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.DEEPSLATE_URANIUM_ORE);
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.SCORCHED_URANIUM_ORE);
@@ -212,6 +217,8 @@ public class NTMModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.YELLOWCAKE_BLOCK);
     blockStateModelGenerator.registerSimpleCubeAll(NTMBlocks.ZIRCONIUM_BLOCK);
 
+    blockStateModelGenerator.registerSingleton(NTMBlocks.ALLOY_FURNACE_EXTENSION, EMPTY_BLOCK_MODEL);
+
     /* FIXME
     blockStateModelGenerator.registerSingleton(NTMBlocks.EXPLOSIVE_BARREL, SIMPLE_BARREL);
     blockStateModelGenerator.registerSingleton(NTMBlocks.IMP_RESIDUE_BARREL, SIMPLE_BARREL);
@@ -229,8 +236,6 @@ public class NTMModelProvider extends FabricModelProvider {
     blockStateModelGenerator.registerSingleton(NTMBlocks.TECHNETIUM_STEEL_BARREL, SIMPLE_BARREL);
     blockStateModelGenerator.registerSingleton(NTMBlocks.MAGNETIC_BARREL, SIMPLE_BARREL);
    */
-
-    registerForAdvancedModel(blockStateModelGenerator, NTMBlocks.ALLOY_FURNACE_EXTENSION);
 
     registerSimpleHorizontalOrientable(blockStateModelGenerator, NTMBlocks.POTATO_BATTERY_BLOCK);
     registerSimpleHorizontalOrientable(blockStateModelGenerator, NTMBlocks.ENERGY_STORAGE_BLOCK);
@@ -333,24 +338,8 @@ public class NTMModelProvider extends FabricModelProvider {
       );
   }
 
-  public static final TextureKey BARREL_TEXTURE_KEY = TextureKey.of("barrel");
-  public static final TexturedModel.Factory SIMPLE_BARREL = TexturedModel.makeFactory(
-    block -> new TextureMap().put(BARREL_TEXTURE_KEY, TextureMap.getId(block)),
-    new Model(Optional.empty(), Optional.empty(), BARREL_TEXTURE_KEY)
-  );
-
-  public static void registerForAdvancedModel(@NotNull BlockStateModelGenerator blockStateModelGenerator, Block block) {
-    // In order for the Model3d overrides to work there just needs to be any model for the specified item
-    // So we just give it an empty model
-    blockStateModelGenerator.registerSingleton(block, EMPTY_BLOCK_MODEL);
-  }
-
-  public static final TextureMap EMPTY_BLOCK_TEXTURE = new TextureMap();
-  public static final TexturedModel.Factory EMPTY_BLOCK_MODEL = TexturedModel.makeFactory(block -> EMPTY_BLOCK_TEXTURE, new Model(Optional.empty(), Optional.empty()));
-
   @Override
   public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-    ItemModelCollector = itemModelGenerator.modelCollector;
     // Basic Items
     itemModelGenerator.register(NTMItems.NULL, Models.GENERATED);
     itemModelGenerator.register(NTMItems.PLUTONIUM_238_RTG_PELLET, Models.GENERATED);
@@ -1156,8 +1145,6 @@ public class NTMModelProvider extends FabricModelProvider {
     itemModelGenerator.register(NTMItems.MESE_PICKAXE, HANDHELD_LARGE);
     itemModelGenerator.register(NTMItems.MESE_AXE, HANDHELD_LARGE);
   }
-
-  public static final Model HANDHELD_LARGE = item("handheld_large", TextureKey.LAYER0);
 
   private static Model item(String parent, TextureKey... requiredTextureKeys) {
     return new Model(Optional.of(NTM.id("item/" + parent)), Optional.empty(), requiredTextureKeys);

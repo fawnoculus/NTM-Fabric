@@ -33,4 +33,94 @@ public record WavefrontModelObject(String name ,List<Polygon> polygons) implemen
     }
     return quads;
   }
+
+  @Override
+  public float getMaxX() {
+    float current = 0f;
+
+    for (Polygon polygon : this.polygons) {
+      for (Polygon.GeometryVertex vertex : polygon.vertices) {
+        if (vertex.X() > current) {
+          current = vertex.X();
+        }
+      }
+    }
+
+    return current;
+  }
+
+  @Override
+  public float getMaxY() {
+    float current = 0f;
+
+    for (Polygon polygon : this.polygons) {
+      for (Polygon.GeometryVertex vertex : polygon.vertices) {
+        if (vertex.Y() > current) {
+          current = vertex.X();
+        }
+      }
+    }
+
+    return current;
+  }
+
+  @Override
+  public float getMaxZ() {
+    float current = 0f;
+
+    for (Polygon polygon : this.polygons) {
+      for (Polygon.GeometryVertex vertex : polygon.vertices) {
+        if (vertex.Z() > current) {
+          current = vertex.X();
+        }
+      }
+    }
+
+    return current;
+  }
+
+  @Override
+  public float getMinX() {
+    float current = 0f;
+
+    for (Polygon polygon : this.polygons) {
+      for (Polygon.GeometryVertex vertex : polygon.vertices) {
+        if (vertex.X() < current) {
+          current = vertex.X();
+        }
+      }
+    }
+
+    return current;
+  }
+
+  @Override
+  public float getMinY() {
+    float current = 0f;
+
+    for (Polygon polygon : this.polygons) {
+      for (Polygon.GeometryVertex vertex : polygon.vertices) {
+        if (vertex.Y() < current) {
+          current = vertex.X();
+        }
+      }
+    }
+
+    return current;
+  }
+
+  @Override
+  public float getMinZ() {
+    float current = 0f;
+
+    for (Polygon polygon : this.polygons) {
+      for (Polygon.GeometryVertex vertex : polygon.vertices) {
+        if (vertex.Z() < current) {
+          current = vertex.X();
+        }
+      }
+    }
+
+    return current;
+  }
 }

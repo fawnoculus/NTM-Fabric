@@ -25,19 +25,19 @@ public class WavefrontModelLoader {
   private final static String OBJ_FACE = "f";
 
   public static WavefrontModel ofWavefrontObj(Identifier resourceIdentifier) {
-    WavefrontModel toBeReturned = WavefrontModel.EMPTY;
     Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(resourceIdentifier);
     if (resource.isEmpty()) {
       NTMClient.LOGGER.warn("Could not load '{}' Wavefront File, because it does not exist", resourceIdentifier);
-    } else {
-      try {
-        toBeReturned = ofWavefrontObj(resource.get().getReader(), resourceIdentifier.toString());
-      } catch (IOException e) {
-        NTMClient.LOGGER.warn("Exception occurred while reading '{}' Wavefront File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
-      }catch (IndexOutOfBoundsException e){
-        NTMClient.LOGGER.warn("Exception occurred while parsing '{}' Wavefront File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
+      return WavefrontModel.EMPTY;
+    }
 
-      }
+    WavefrontModel toBeReturned = WavefrontModel.EMPTY;
+    try {
+      toBeReturned = ofWavefrontObj(resource.get().getReader(), resourceIdentifier.toString());
+    } catch (IOException e) {
+      NTMClient.LOGGER.warn("Exception occurred while reading '{}' Wavefront File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
+    } catch (IndexOutOfBoundsException e) {
+      NTMClient.LOGGER.warn("Exception occurred while parsing '{}' Wavefront File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
     }
 
     return toBeReturned;
@@ -99,6 +99,12 @@ public class WavefrontModelLoader {
 
   private static @NotNull TextureCoordinate getTextureCoordinate(String line) {
     float[] floats = parseFloats(2, line, OBJ_TEXTURE_COORDINATE.length());
+    if(floats[0] > 1 || floats[0] < -0.0) {
+      NTMClient.LOGGER.error("FUCK1");
+    }
+    if(floats[1] > 1 || floats[1] < -0.0){
+      NTMClient.LOGGER.error("FUCK2");
+    }
     return new TextureCoordinate(floats[0], floats[1]);
   }
 

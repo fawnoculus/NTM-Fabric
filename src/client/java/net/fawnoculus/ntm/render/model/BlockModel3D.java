@@ -33,13 +33,13 @@ public record BlockModel3D(BlockModelPart part) implements BlockStateModel {
 
   public record MultipartUnbaked(Model3d model3d, SpriteIdentifier particleSprite, Function<Vector3f, Vector3f> offset) implements UnbakedGrouped {
     @SuppressWarnings("deprecation")
-    public MultipartUnbaked(Model3d model3d, Identifier blockId){
-      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, blockId), vector3f -> vector3f);
+    public MultipartUnbaked(Model3d model3d, Identifier particleTexture){
+      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, particleTexture), model3d.defaultBlockTransforms());
     }
 
     @SuppressWarnings("deprecation")
-    public MultipartUnbaked(Model3d model3d, Identifier blockId, Function<Vector3f, Vector3f> offset){
-      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, blockId), offset);
+    public MultipartUnbaked(Model3d model3d, Identifier particleTexture, Function<Vector3f, Vector3f> offset){
+      this(model3d, new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, particleTexture), offset);
     }
 
 
@@ -48,12 +48,13 @@ public record BlockModel3D(BlockModelPart part) implements BlockStateModel {
       final List<BakedQuad> quads = model3d.bake(baker, state::toString, offset);
       final Sprite particleSprite = baker.getSpriteGetter().get(this.particleSprite, state::toString);
 
-      return new BlockModel3D(new Part(quads, NTMClientConfig.MODEL_AMBIENT_OCCLUSION.getValue(), particleSprite));
+      return new BlockModel3D(new Part(quads, NTMClientConfig.BLOCK_MODEL_AMBIENT_OCCLUSION.getValue(), particleSprite));
     }
 
     @Override
     public Object getEqualityGroup(BlockState state) {
-      return null;
+      // I have no idea what this is for, but it just needs an object, so I guess this is fine?
+      return this;
     }
 
     @Override
@@ -61,7 +62,7 @@ public record BlockModel3D(BlockModelPart part) implements BlockStateModel {
     }
   }
 
-  public record Part(List<BakedQuad> quads, boolean  useAmbientOcclusion,Sprite particleSprite) implements BlockModelPart{
+  public record Part(List<BakedQuad> quads, boolean useAmbientOcclusion, Sprite particleSprite) implements BlockModelPart{
     @Override
     public List<BakedQuad> getQuads(@Nullable Direction side) {
       return this.quads;

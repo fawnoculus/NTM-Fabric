@@ -72,7 +72,7 @@ public class Polygon {
     TextureCoordinate coordinate = coordinates.getFirst();
     packVertexData(vertexData, 3, offset.apply(vertices.getFirst().toVec3f()), sprite, coordinate.U(), coordinate.V());
 
-    return new BakedQuad(vertexData, -1, normalsToDirection(this.normals), sprite, false, 0);
+    return new BakedQuad(vertexData, -1, normalsToDirection(this.normals), sprite, true, 0);
   }
 
   private static void packVertexData(int @NotNull [] vertices, int cornerIndex, @NotNull Vector3f pos, @NotNull Sprite sprite, float u, float v) {

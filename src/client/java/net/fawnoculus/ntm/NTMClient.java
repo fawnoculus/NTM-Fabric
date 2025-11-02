@@ -20,7 +20,7 @@ public class NTMClient implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    LOGGER.info("Initializing Client Components");
+    LOGGER.info("Initializing Client Components ...");
 
     NTMClientConfig.initialize();
     NTMClientApi.initialize();

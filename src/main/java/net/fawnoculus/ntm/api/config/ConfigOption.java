@@ -14,6 +14,7 @@ public class ConfigOption<T> {
   private final @NotNull T DEFAULT_VALUE;
   private @Nullable T currentValue = null;
 
+
   public ConfigOption(@NotNull String name, @NotNull Codec<T> codec, @NotNull T defaultValue, @Nullable String comment){
     this.NAME = name;
     this.CODEC = codec;

@@ -45,21 +45,21 @@ public class ItemModel3D implements ItemModel {
     layer.getQuads().addAll(this.quads);
   }
 
-  public record Unbaked(Identifier model, Model3d model3d, Function<Vector3f, Vector3f> offset) implements ItemModel.Unbaked {
-    public Unbaked(Identifier model, Model3d model3d){
-      this(model, model3d, vector3f -> vector3f);
+  public record Unbaked(Model3d model3d, Identifier baseModelId, Function<Vector3f, Vector3f> offset) implements ItemModel.Unbaked {
+    public Unbaked(Model3d model3d, Identifier baseModelId){
+      this(model3d, baseModelId, model3d.defaultItemTransforms());
     }
 
     @Override
     public void resolve(ResolvableModel.Resolver resolver) {
-      resolver.markDependency(this.model);
+      resolver.markDependency(this.baseModelId);
     }
 
     @Override
     public ItemModel bake(ItemModel.BakeContext context) {
 
       Baker baker = context.blockModelBaker();
-      BakedSimpleModel bakedSimpleModel = baker.getModel(this.model);
+      BakedSimpleModel bakedSimpleModel = baker.getModel(this.baseModelId);
       ModelTextures modelTextures = bakedSimpleModel.getTextures();
       ModelSettings modelSettings = ModelSettings.resolveSettings(baker, bakedSimpleModel, modelTextures);
 

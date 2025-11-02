@@ -5,10 +5,10 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 
-public interface ConnectToServerCallback {
-  Event<ConnectToServerCallback> EVENT = EventFactory.createArrayBacked(ConnectToServerCallback.class,
+public interface ConnectToServerEvent {
+  Event<ConnectToServerEvent> EVENT = EventFactory.createArrayBacked(ConnectToServerEvent.class,
     (listeners) -> (handler, packet) -> {
-      for (ConnectToServerCallback event : listeners) {
+      for (ConnectToServerEvent event : listeners) {
         event.onJoin(handler, packet);
       }
     }

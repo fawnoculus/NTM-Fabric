@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.misc;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fawnoculus.ntm.api.events.custom.ClientTickCallback;
+import net.fawnoculus.ntm.api.events.custom.ClientTickEvents;
 import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.gui.screen.ToolAbilityCustomizationScreen;
 import net.fawnoculus.ntm.util.ClientUtil;
@@ -24,6 +24,12 @@ public class NTMKeybinds {
     "key.ntm.extra_info",
     InputUtil.Type.KEYSYM,
     GLFW.GLFW_KEY_LEFT_SHIFT,
+    "key.category.ntm"
+  ));
+  public static final KeyBinding OPEN_QMAW_PAGE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    "key.ntm.qmaw",
+    InputUtil.Type.KEYSYM,
+    GLFW.GLFW_KEY_F1,
     "key.category.ntm"
   ));
   public static final KeyBinding OPEN_TOOL_ABILITY_GUI = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -49,7 +55,7 @@ public class NTMKeybinds {
   }
 
   private static void onKeyPressed(KeyBinding key, Consumer<MinecraftClient> onPressed) {
-    ClientTickCallback.EVENT.register(client -> {
+    ClientTickEvents.EVENT.register(client -> {
       while (key.wasPressed()){
         onPressed.accept(client);
       }

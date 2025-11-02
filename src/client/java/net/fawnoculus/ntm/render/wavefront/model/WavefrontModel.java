@@ -4,21 +4,12 @@ import net.fawnoculus.ntm.render.wavefront.Polygon;
 import net.fawnoculus.ntm.render.wavefront.Polygon.GeometryVertex;
 import net.fawnoculus.ntm.render.wavefront.Polygon.TextureCoordinate;
 import net.fawnoculus.ntm.render.wavefront.Polygon.VertexNormal;
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.Baker;
-import net.minecraft.client.render.model.SimpleModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
+import java.util.*;
 
-public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> models) implements Model3d {
+public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> models) implements MultiModel3d {
   public static final WavefrontModel EMPTY = new WavefrontModel("Empty", new HashMap<>());
 
   public static Builder builder(String name){
@@ -37,15 +28,6 @@ public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> m
     }
   }
 
-
-  public List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset){
-    List<BakedQuad> quads = new ArrayList<>();
-    for (WavefrontModelGroup wavefrontModelGroup : models.values()) {
-      quads.addAll(wavefrontModelGroup.bake(baker, simpleModel, offset));
-    }
-    return quads;
-  }
-
   public Optional<WavefrontModelGroup> get(String groupName) {
     return Optional.ofNullable(models.get(groupName));
   }
@@ -53,6 +35,11 @@ public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> m
   public Optional<WavefrontModelObject> get(String groupName, String objectName) {
     Optional<WavefrontModelGroup> group = this.get(groupName);
     return group.flatMap(wavefrontModelGroup -> wavefrontModelGroup.get(objectName));
+  }
+
+  @Override
+  public Collection<? extends MultiModel3d> getModels() {
+    return this.models.values();
   }
 
   public static class Builder {

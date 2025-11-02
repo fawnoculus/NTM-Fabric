@@ -129,6 +129,7 @@
   "key.category.ntm": "NTM-Fabric",
   "key.ntm.duck": "Duck",
   "key.ntm.extra_info": "Display Extra Info",
+  "key.ntm.qmaw": "Open QMAW Page",
   "key.ntm.open_tool_ability_gui": "Open Tool Ability GUI",
 
   "fluid_tooltip.ntm.thermal_capacity": "Thermal Capacity: %1$s TU per 1 %2$s",
