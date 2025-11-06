@@ -17,51 +17,51 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 public class NTMServerPayloadHandler {
-  public static void initialize() {
-    ServerPlayNetworking.registerGlobalReceiver(BEInteractionPayload.ID, NTMServerPayloadHandler::handleBEInteractionPayload);
-    ServerPlayNetworking.registerGlobalReceiver(ItemInteractionPayload.ID, NTMServerPayloadHandler::handleItemInteractionPayload);
-    ServerPlayNetworking.registerGlobalReceiver(ToolAbilityPresetPayload.ID, NTMServerPayloadHandler::handleToolAbilityPresetPayload);
-  }
+	public static void initialize() {
+		ServerPlayNetworking.registerGlobalReceiver(BEInteractionPayload.ID, NTMServerPayloadHandler::handleBEInteractionPayload);
+		ServerPlayNetworking.registerGlobalReceiver(ItemInteractionPayload.ID, NTMServerPayloadHandler::handleItemInteractionPayload);
+		ServerPlayNetworking.registerGlobalReceiver(ToolAbilityPresetPayload.ID, NTMServerPayloadHandler::handleToolAbilityPresetPayload);
+	}
 
-  private static void handleBEInteractionPayload(BEInteractionPayload payload, ServerPlayNetworking.Context context){
-    ServerPlayerEntity player = context.player();
+	private static void handleBEInteractionPayload(BEInteractionPayload payload, ServerPlayNetworking.Context context) {
+		ServerPlayerEntity player = context.player();
 
-    if(player.getEyePos().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.getBlockInteractionRange() + 1){
-      if(NTMConfig.DEV_MODE.getValue()){
-        NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away", player.getName().getLiteralString(), payload.action().toString(), payload.pos().toShortString());
-      }
-      return;
-    }
+		if (player.getEyePos().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.getBlockInteractionRange() + 1) {
+			if (NTMConfig.DEV_MODE.getValue()) {
+				NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away", player.getName().getLiteralString(), payload.action().toString(), payload.pos().toShortString());
+			}
+			return;
+		}
 
-    ServerWorld world = player.getWorld();
-    if(world.getBlockEntity(payload.pos()) instanceof InteractableBE interactableBE){
-      interactableBE.onInteraction(player, payload.action(), payload.extraData());
-    }
-  }
+		ServerWorld world = player.getWorld();
+		if (world.getBlockEntity(payload.pos()) instanceof InteractableBE interactableBE) {
+			interactableBE.onInteraction(player, payload.action(), payload.extraData());
+		}
+	}
 
-  private static void handleItemInteractionPayload(ItemInteractionPayload payload, ServerPlayNetworking.Context context){
-    ServerPlayerEntity player = context.player();
+	private static void handleItemInteractionPayload(ItemInteractionPayload payload, ServerPlayNetworking.Context context) {
+		ServerPlayerEntity player = context.player();
 
-    if(player.getMainHandStack().getItem() instanceof InteractableItem interactableItem){
-      interactableItem.onInteraction(player, player.getMainHandStack(), payload.action(), payload.extraData());
-    }
-  }
+		if (player.getMainHandStack().getItem() instanceof InteractableItem interactableItem) {
+			interactableItem.onInteraction(player, player.getMainHandStack(), payload.action(), payload.extraData());
+		}
+	}
 
-  private static void handleToolAbilityPresetPayload(ToolAbilityPresetPayload payload, ServerPlayNetworking.Context context){
-    ServerPlayerEntity player = context.player();
-    ItemStack stack = player.getMainHandStack();
+	private static void handleToolAbilityPresetPayload(ToolAbilityPresetPayload payload, ServerPlayNetworking.Context context) {
+		ServerPlayerEntity player = context.player();
+		ItemStack stack = player.getMainHandStack();
 
-    if(stack.getItem() instanceof SpecialTool specialTool
-      && specialTool.abilityHandler().verifyPresets(payload.stackData().presets())
-      && payload.stackData().isValid()
-    ){
-      specialTool.abilityHandler().setStackData(stack, payload.stackData());
+		if (stack.getItem() instanceof SpecialTool specialTool
+		  && specialTool.abilityHandler().verifyPresets(payload.stackData().presets())
+		  && payload.stackData().isValid()
+		) {
+			specialTool.abilityHandler().setStackData(stack, payload.stackData());
 
-      context.responseSender().sendPacket(
-        new AdvancedMessagePayload(
-          new AdvancedMessage(SpecialTool.ADVANCED_MESSAGE_ID, specialTool.abilityHandler().changeMessage(stack), 1000f)
-        )
-      );
-    }
-  }
+			context.responseSender().sendPacket(
+			  new AdvancedMessagePayload(
+				new AdvancedMessage(SpecialTool.ADVANCED_MESSAGE_ID, specialTool.abilityHandler().changeMessage(stack), 1000f)
+			  )
+			);
+		}
+	}
 }

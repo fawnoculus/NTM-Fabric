@@ -10,27 +10,27 @@ import net.minecraft.util.Formatting;
 import java.util.function.Consumer;
 
 public class TooltipItem extends Item {
-  private final int TOOLTIP_COUNT;
+	private final int TOOLTIP_COUNT;
 
-  public TooltipItem(Settings settings) {
-    this(settings, 1);
-  }
+	public TooltipItem(Settings settings) {
+		this(settings, 1);
+	}
 
-  public TooltipItem(Settings settings, int tooltipCount) {
-    super(settings);
+	public TooltipItem(Settings settings, int tooltipCount) {
+		super(settings);
 
-    this.TOOLTIP_COUNT = tooltipCount;
-  }
+		this.TOOLTIP_COUNT = tooltipCount;
+	}
 
-  @Override
-  @SuppressWarnings("deprecation")
-  public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    if (this.TOOLTIP_COUNT == 1) {
-      tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
-      return;
-    }
-    for (int i = 1; i <= this.TOOLTIP_COUNT; i++) {
-      tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + i).formatted(Formatting.GRAY));
-    }
-  }
+	@Override
+	@SuppressWarnings("deprecation")
+	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+		if (this.TOOLTIP_COUNT == 1) {
+			tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+			return;
+		}
+		for (int i = 1; i <= this.TOOLTIP_COUNT; i++) {
+			tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + i).formatted(Formatting.GRAY));
+		}
+	}
 }

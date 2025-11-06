@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    "ntm:red_phosphorus_block"
-  ],
-  "result": {
-    "count": 9,
-    "id": "ntm:red_phosphorus"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"ntm:red_phosphorus_block"
+	],
+	"result": {
+		"count": 9,
+		"id": "ntm:red_phosphorus"
+	}
 }

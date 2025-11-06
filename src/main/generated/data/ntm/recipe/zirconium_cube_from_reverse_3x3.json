@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    "ntm:zirconium_block"
-  ],
-  "result": {
-    "count": 9,
-    "id": "ntm:zirconium_cube"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"ntm:zirconium_block"
+	],
+	"result": {
+		"count": 9,
+		"id": "ntm:zirconium_cube"
+	}
 }

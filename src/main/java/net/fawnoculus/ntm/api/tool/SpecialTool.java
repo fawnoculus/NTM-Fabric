@@ -10,15 +10,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface SpecialTool {
-  Identifier ADVANCED_MESSAGE_ID = NTM.id("tool_ability");
+	Identifier ADVANCED_MESSAGE_ID = NTM.id("tool_ability");
 
-  AbilityHandler abilityHandler();
+	AbilityHandler abilityHandler();
 
-  ModifierHandler modifierHandler();
+	ModifierHandler modifierHandler();
 
-  boolean canBreakDepthRock();
+	boolean canBreakDepthRock();
 
-  default void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-    this.abilityHandler().preBreak(stack, world, state, pos, miner);
-  }
+	default void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+		this.abilityHandler().preBreak(stack, world, state, pos, miner);
+	}
 }

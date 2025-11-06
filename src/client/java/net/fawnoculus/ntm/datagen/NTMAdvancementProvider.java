@@ -10,17 +10,17 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class NTMAdvancementProvider extends FabricAdvancementProvider {
-  public NTMAdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-    super(output, registryLookup);
-  }
+	public NTMAdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+		super(output, registryLookup);
+	}
 
-  @Override
-  public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
+	@Override
+	public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
 
-  }
+	}
 
-  @Override
-  public String getName() {
-    return NTM.MOD_NAME + " Advancement Provider";
-  }
+	@Override
+	public String getName() {
+		return NTM.MOD_NAME + " Advancement Provider";
+	}
 }

@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SerializedChunk.class)
 public class SerializedChunkMixin {
-  @Inject(at = @At("HEAD"), method = "fromChunk")
-  private static void saveChunkData(ServerWorld world, Chunk chunk, CallbackInfoReturnable<SerializedChunk> cir) {
-    if (chunk instanceof WorldChunk worldChunk && worldChunk.getWorld() instanceof ServerWorld serverWorld) {
+	@Inject(at = @At("HEAD"), method = "fromChunk")
+	private static void saveChunkData(ServerWorld world, Chunk chunk, CallbackInfoReturnable<SerializedChunk> cir) {
+		if (chunk instanceof WorldChunk worldChunk && worldChunk.getWorld() instanceof ServerWorld serverWorld) {
 
-      NbtCompound nbt = WorldUtil.getChunkNBT(chunk.getPos(), serverWorld);
-      ((RadiationProcessorHolder) chunk).NTM$getRadiationProcessor().writeData(nbt);
-      WorldUtil.setChunkData(chunk.getPos(), serverWorld, nbt);
+			NbtCompound nbt = WorldUtil.getChunkNBT(chunk.getPos(), serverWorld);
+			((RadiationProcessorHolder) chunk).NTM$getRadiationProcessor().writeData(nbt);
+			WorldUtil.setChunkData(chunk.getPos(), serverWorld, nbt);
 
-      RadiationProcessorMultiHolder.from(serverWorld).NTM$removeRadiationProcessor(chunk.getPos());
-    }
-  }
+			RadiationProcessorMultiHolder.from(serverWorld).NTM$removeRadiationProcessor(chunk.getPos());
+		}
+	}
 }

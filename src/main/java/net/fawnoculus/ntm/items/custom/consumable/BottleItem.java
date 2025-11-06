@@ -20,40 +20,40 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class BottleItem extends Item {
-  public final List<StatusEffectInstance> EFFECTS;
-  public final List<Item> RETURN_ITEMS;
+	public final List<StatusEffectInstance> EFFECTS;
+	public final List<Item> RETURN_ITEMS;
 
-  public BottleItem(Settings settings, List<StatusEffectInstance> effects, List<Item> returnItems) {
-    super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK));
-    this.EFFECTS = effects;
-    this.RETURN_ITEMS = returnItems;
-  }
+	public BottleItem(Settings settings, List<StatusEffectInstance> effects, List<Item> returnItems) {
+		super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK));
+		this.EFFECTS = effects;
+		this.RETURN_ITEMS = returnItems;
+	}
 
-  @Override
-  @SuppressWarnings("deprecation")
-  public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
-    tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
-    tooltip.accept(Text.translatable("tooltip.ntm.needs_bottle_opener").formatted(Formatting.GRAY));
-  }
+	@Override
+	@SuppressWarnings("deprecation")
+	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+		tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+		tooltip.accept(Text.translatable("tooltip.ntm.needs_bottle_opener").formatted(Formatting.GRAY));
+	}
 
-  @Override
-  public ActionResult use(World world, PlayerEntity playerEntity, Hand hand) {
-    if (!PlayerUtil.hasItem(playerEntity, NTMItems.BOTTLE_OPENER)) {
-      return ActionResult.FAIL;
-    }
-    return super.use(world, playerEntity, hand);
-  }
+	@Override
+	public ActionResult use(World world, PlayerEntity playerEntity, Hand hand) {
+		if (!PlayerUtil.hasItem(playerEntity, NTMItems.BOTTLE_OPENER)) {
+			return ActionResult.FAIL;
+		}
+		return super.use(world, playerEntity, hand);
+	}
 
-  @Override
-  public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
-    if (!world.isClient() && entity instanceof PlayerEntity player) {
-      for (StatusEffectInstance effect : this.EFFECTS) {
-        player.addStatusEffect(new StatusEffectInstance(effect));
-      }
-      for (Item returnItem : this.RETURN_ITEMS) {
-        player.getInventory().offerOrDrop(new ItemStack(returnItem));
-      }
-    }
-    return super.finishUsing(stack, world, entity);
-  }
+	@Override
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
+		if (!world.isClient() && entity instanceof PlayerEntity player) {
+			for (StatusEffectInstance effect : this.EFFECTS) {
+				player.addStatusEffect(new StatusEffectInstance(effect));
+			}
+			for (Item returnItem : this.RETURN_ITEMS) {
+				player.getInventory().offerOrDrop(new ItemStack(returnItem));
+			}
+		}
+		return super.finishUsing(stack, world, entity);
+	}
 }

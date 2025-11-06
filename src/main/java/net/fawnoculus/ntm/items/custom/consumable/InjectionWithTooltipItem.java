@@ -15,33 +15,33 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class InjectionWithTooltipItem extends InjectionItem {
-  private final int TOOLTIP_COUNT;
+	private final int TOOLTIP_COUNT;
 
-  public InjectionWithTooltipItem(Settings settings, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
-    this(settings, 1, sound, returnItem, serverUse);
-  }
+	public InjectionWithTooltipItem(Settings settings, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+		this(settings, 1, sound, returnItem, serverUse);
+	}
 
-  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
-    super(settings, sound, returnItem, serverUse);
+	public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+		super(settings, sound, returnItem, serverUse);
 
-    this.TOOLTIP_COUNT = tooltipCount;
-  }
+		this.TOOLTIP_COUNT = tooltipCount;
+	}
 
-  public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
-    super(settings, sound, returnItems, serverUse);
+	public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+		super(settings, sound, returnItems, serverUse);
 
-    this.TOOLTIP_COUNT = tooltipCount;
-  }
+		this.TOOLTIP_COUNT = tooltipCount;
+	}
 
-  @Override
-  @SuppressWarnings("deprecation")
-  public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-    if (this.TOOLTIP_COUNT == 1) {
-      tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
-      return;
-    }
-    for (int i = 1; i <= this.TOOLTIP_COUNT; i++) {
-      tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + i).formatted(Formatting.GRAY));
-    }
-  }
+	@Override
+	@SuppressWarnings("deprecation")
+	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+		if (this.TOOLTIP_COUNT == 1) {
+			tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+			return;
+		}
+		for (int i = 1; i <= this.TOOLTIP_COUNT; i++) {
+			tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + i).formatted(Formatting.GRAY));
+		}
+	}
 }

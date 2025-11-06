@@ -8,13 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class VeganSchnitzelItem extends Item {
-  public VeganSchnitzelItem(Settings settings) {
-    super(settings.food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.VEGAN_SCHNITZEL));
-  }
-  
-  @Override
-  public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    user.setFireTicks(1200);
-    return super.finishUsing(stack, world, user);
-  }
+	public VeganSchnitzelItem(Settings settings) {
+		super(settings.food(NTMFoodComponents.ALWAYS_EDIBLE, NTMConsumableComponents.VEGAN_SCHNITZEL));
+	}
+
+	@Override
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+		user.setFireTicks(1200);
+		return super.finishUsing(stack, world, user);
+	}
 }

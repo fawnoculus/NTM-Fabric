@@ -9,13 +9,13 @@ import java.io.Reader;
 import java.io.StringReader;
 
 public class JsonUtil {
-  private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+	private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
-  public static JsonObject jsonFromString(String string) {
-    return JsonUtil.jsonFromReader(new StringReader(string));
-  }
+	public static JsonObject jsonFromString(String string) {
+		return JsonUtil.jsonFromReader(new StringReader(string));
+	}
 
-  public static JsonObject jsonFromReader(Reader reader) {
-    return gson.fromJson(new JsonReader(reader), JsonObject.class);
-  }
+	public static JsonObject jsonFromReader(Reader reader) {
+		return gson.fromJson(new JsonReader(reader), JsonObject.class);
+	}
 }

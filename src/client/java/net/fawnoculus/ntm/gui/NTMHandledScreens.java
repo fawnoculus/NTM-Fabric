@@ -6,9 +6,9 @@ import net.fawnoculus.ntm.gui.handled.EnergyStorageScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 public class NTMHandledScreens {
-  public static void initialize() {
-    HandledScreens.register(NTMScreenHandlerType.ALLOY_FURNACE, AlloyFurnaceScreen::new);
-    HandledScreens.register(NTMScreenHandlerType.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
-    HandledScreens.register(NTMScreenHandlerType.ENERGY_STORAGE, EnergyStorageScreen::new);
-  }
+	public static void initialize() {
+		HandledScreens.register(NTMScreenHandlerType.ALLOY_FURNACE, AlloyFurnaceScreen::new);
+		HandledScreens.register(NTMScreenHandlerType.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
+		HandledScreens.register(NTMScreenHandlerType.ENERGY_STORAGE, EnergyStorageScreen::new);
+	}
 }

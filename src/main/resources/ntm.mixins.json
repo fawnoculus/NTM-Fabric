@@ -1,20 +1,20 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "net.fawnoculus.ntm.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "ItemEntityMixin",
-    "LivingEntityMixin",
-    "MinecraftServerMixin",
-    "PlayerManagerMixin",
-    "SerializedChunkMixin",
-    "ServerPlayerInteractionManagerMixin",
-    "ServerWorldMixin",
-    "WorldChunkMixin",
-    "accessor.PersistentStateManagerAccessor"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+	"required": true,
+	"minVersion": "0.8",
+	"package": "net.fawnoculus.ntm.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"EntityMixin",
+		"ItemEntityMixin",
+		"MinecraftServerMixin",
+		"PlayerManagerMixin",
+		"SerializedChunkMixin",
+		"ServerPlayerInteractionManagerMixin",
+		"ServerWorldMixin",
+		"WorldChunkMixin",
+		"accessor.PersistentStateManagerAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }

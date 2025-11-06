@@ -19,104 +19,105 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class FluidInventoryBE extends FluidBE implements Inventory {
-  private final SimpleInventory inventory;
+	private final SimpleInventory inventory;
 
-  public FluidInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
-    super(type, pos, state);
+	public FluidInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
+		super(type, pos, state);
 
-    FluidInventoryBE be = this;
-    this.inventory = new SimpleInventory(inventorySlots){
-      @Override
-      public void markDirty() {
-        super.markDirty();
-        be.markDirty();
-      }
-    };
-  }
+		FluidInventoryBE be = this;
+		this.inventory = new SimpleInventory(inventorySlots) {
+			@Override
+			public void markDirty() {
+				super.markDirty();
+				be.markDirty();
+			}
+		};
+	}
 
-  public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory){
-    if(!(world instanceof ServerWorld serverWorld)) return;
-    InventorySyncPayload payload = new InventorySyncPayload(pos, inventory);
+	public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory) {
+		if (!(world instanceof ServerWorld serverWorld)) return;
+		InventorySyncPayload payload = new InventorySyncPayload(pos, inventory);
 
-    int viewDistance = serverWorld.getServer().getPlayerManager().getViewDistance();
-    for(ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)){
-      ServerPlayNetworking.send(player, payload);
-    }
-  }
+		int viewDistance = serverWorld.getServer().getPlayerManager().getViewDistance();
+		for (ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)) {
+			ServerPlayNetworking.send(player, payload);
+		}
+	}
 
-  public SimpleInventory getInventory(){
-    return this.inventory;
-  }
+	public SimpleInventory getInventory() {
+		return this.inventory;
+	}
 
-  public boolean canInsertIntoSlot(int slotIndex, ItemStack stack){
-    ItemStack switchStack = this.getInventory().getStack(slotIndex);
-    if(switchStack.isEmpty()) return true;
+	public boolean canInsertIntoSlot(int slotIndex, ItemStack stack) {
+		ItemStack switchStack = this.getInventory().getStack(slotIndex);
+		if (switchStack.isEmpty()) return true;
 
-    if(switchStack.getItem() == stack.getItem()){
-      return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
-    }
+		if (switchStack.getItem() == stack.getItem()) {
+			return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
+		}
 
-    return false;
-  }
+		return false;
+	}
 
-  @Override
-  public int size() {
-    return this.getInventory().size();
-  }
+	@Override
+	public int size() {
+		return this.getInventory().size();
+	}
 
-  @Override
-  public boolean isEmpty() {
-    return this.getInventory().isEmpty();
-  }
+	@Override
+	public boolean isEmpty() {
+		return this.getInventory().isEmpty();
+	}
 
-  @Override
-  public ItemStack getStack(int slot) {
-    return this.getInventory().getStack(slot);
-  }
+	@Override
+	public ItemStack getStack(int slot) {
+		return this.getInventory().getStack(slot);
+	}
 
-  @Override
-  public ItemStack removeStack(int slot, int amount) {
-    return this.getInventory().removeStack(slot, amount);
-  }
+	@Override
+	public ItemStack removeStack(int slot, int amount) {
+		return this.getInventory().removeStack(slot, amount);
+	}
 
-  @Override
-  public ItemStack removeStack(int slot) {
-    return this.getInventory().removeStack(slot);
-  }
+	@Override
+	public ItemStack removeStack(int slot) {
+		return this.getInventory().removeStack(slot);
+	}
 
-  @Override
-  public void setStack(int slot, ItemStack stack) {
-    this.getInventory().setStack(slot, stack);
-  }
+	@Override
+	public void setStack(int slot, ItemStack stack) {
+		this.getInventory().setStack(slot, stack);
+	}
 
-  @Override
-  public boolean canPlayerUse(PlayerEntity player) {
-    return this.getInventory().canPlayerUse(player);
-  }
+	@Override
+	public boolean canPlayerUse(PlayerEntity player) {
+		return this.getInventory().canPlayerUse(player);
+	}
 
-  @Override
-  public void markDirty() {
-    super.markDirty();
-    if(this.world != null) this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-    if(this.world != null && !this.world.isClient()){
-      sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
-    }
-  }
+	@Override
+	public void markDirty() {
+		super.markDirty();
+		if (this.world != null)
+			this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+		if (this.world != null && !this.world.isClient()) {
+			sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
+		}
+	}
 
-  @Override
-  public void clear() {
-    inventory.clear();
-  }
+	@Override
+	public void clear() {
+		inventory.clear();
+	}
 
-  @Override
-  protected void readData(ReadView view) {
-    Inventories.readData(view, this.getInventory().getHeldStacks());
-    super.readData(view);
-  }
+	@Override
+	protected void readData(ReadView view) {
+		Inventories.readData(view, this.getInventory().getHeldStacks());
+		super.readData(view);
+	}
 
-  @Override
-  protected void writeData(WriteView view) {
-    super.writeData(view);
-    Inventories.writeData(view, this.getInventory().getHeldStacks());
-  }
+	@Override
+	protected void writeData(WriteView view) {
+		super.writeData(view);
+		Inventories.writeData(view, this.getInventory().getHeldStacks());
+	}
 }

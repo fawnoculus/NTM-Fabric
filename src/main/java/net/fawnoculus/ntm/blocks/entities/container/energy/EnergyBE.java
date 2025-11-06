@@ -19,75 +19,75 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class EnergyBE extends BlockEntity implements Node {
-  private boolean shouldAssignNetwork = false;
-  private NodeNetwork network;
+	private boolean shouldAssignNetwork = false;
+	private NodeNetwork network;
 
-  public EnergyBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-    super(type, pos, state);
-  }
+	public EnergyBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
+	}
 
-  @Override
-  public NetworkType getNetworkType() {
-    return NetworkTypes.ENERGY;
-  }
+	@Override
+	public NetworkType getNetworkType() {
+		return NetworkTypes.ENERGY;
+	}
 
-  @Override
-  public void setShouldAssignNetwork(boolean value) {
-    this.shouldAssignNetwork = value;
-  }
+	@Override
+	public void setShouldAssignNetwork(boolean value) {
+		this.shouldAssignNetwork = value;
+	}
 
-  @Override
-  public boolean shouldAssignNetwork() {
-    return this.shouldAssignNetwork;
-  }
+	@Override
+	public boolean shouldAssignNetwork() {
+		return this.shouldAssignNetwork;
+	}
 
-  @Override
-  public void setNetwork(NodeNetwork network) {
-    this.network = network;
-  }
+	@Override
+	public void setNetwork(NodeNetwork network) {
+		this.network = network;
+	}
 
-  @Override
-  public @Nullable NodeNetwork getNetwork() {
-    return this.network;
-  }
+	@Override
+	public @Nullable NodeNetwork getNetwork() {
+		return this.network;
+	}
 
-  @Override
-  public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-    return this.createNbt(registries);
-  }
+	@Override
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
+		return this.createNbt(registries);
+	}
 
-  @Override
-  public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
-    return BlockEntityUpdateS2CPacket.create(this);
-  }
+	@Override
+	public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
+	}
 
-  @Override
-  public void setWorld(World world) {
-    super.setWorld(world);
-    this.onSetWorld();
-  }
+	@Override
+	public void setWorld(World world) {
+		super.setWorld(world);
+		this.onSetWorld();
+	}
 
-  @Override
-  public void markRemoved() {
-    super.markRemoved();
-    this.onUnload();
-  }
+	@Override
+	public void markRemoved() {
+		super.markRemoved();
+		this.onUnload();
+	}
 
-  @Override
-  public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-    super.onBlockReplaced(pos, oldState);
-    this.onBreak();
-  }
+	@Override
+	public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+		super.onBlockReplaced(pos, oldState);
+		this.onBreak();
+	}
 
-  @Override
-  protected void readData(ReadView view) {
-    super.readData(view);
-    this.readNodeData(view);
-  }
+	@Override
+	protected void readData(ReadView view) {
+		super.readData(view);
+		this.readNodeData(view);
+	}
 
-  @Override
-  protected void writeData(WriteView view) {
-    super.writeData(view);
-    this.writeNodeData(view);
-  }
+	@Override
+	protected void writeData(WriteView view) {
+		super.writeData(view);
+		this.writeNodeData(view);
+	}
 }

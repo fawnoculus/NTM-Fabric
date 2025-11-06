@@ -9,17 +9,17 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 public class TempCableBlock extends BlockWithEntity {
-  public TempCableBlock(Settings settings) {
-    super(settings);
-  }
-  
-  @Override
-  protected MapCodec<? extends BlockWithEntity> getCodec() {
-    return createCodec(TempCableBlock::new);
-  }
-  
-  @Override
-  public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    return new EnergyConnectorBE(pos, state);
-  }
+	public TempCableBlock(Settings settings) {
+		super(settings);
+	}
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return createCodec(TempCableBlock::new);
+	}
+
+	@Override
+	public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new EnergyConnectorBE(pos, state);
+	}
 }

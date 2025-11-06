@@ -7,12 +7,12 @@ import net.fawnoculus.ntm.api.radiation.HazmatRegistry;
 import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
 
 public class NTMApi {
-  public static void initialize() {
-    NTMEvents.initialize();
-    RadiationRegistry.initialize();
-    HazmatRegistry.initialize();
+	public static void initialize() {
+		NTMEvents.initialize();
+		RadiationRegistry.initialize();
+		HazmatRegistry.initialize();
 
-    NodeNetworkManager.registerType(NetworkTypes.ENERGY);
-    NodeNetworkManager.registerType(NetworkTypes.FLUID);
-  }
+		NodeNetworkManager.registerType(NetworkTypes.ENERGY);
+		NodeNetworkManager.registerType(NetworkTypes.FLUID);
+	}
 }

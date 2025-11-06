@@ -8,13 +8,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 public class PeasItem extends Item {
-  public PeasItem(Settings settings) {
-    super(settings);
-  }
-  
-  @Override
-  public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-    // TODO: this, once we have "Quackatos"
-    return super.useOnEntity(stack, user, entity, hand);
-  }
+	public PeasItem(Settings settings) {
+		super(settings);
+	}
+
+	@Override
+	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+		// TODO: this, once we have "Quackatos"
+		return super.useOnEntity(stack, user, entity, hand);
+	}
 }

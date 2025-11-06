@@ -15,38 +15,38 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class IvBagItem  extends Item {
-  public IvBagItem(Settings settings) {
-    super(settings);
-  }
+public class IvBagItem extends Item {
+	public IvBagItem(Settings settings) {
+		super(settings);
+	}
 
 
-  @Override
-  public ActionResult use(World world, PlayerEntity player, Hand hand) {
-    if (world.isClient()) {
-      return ActionResult.SUCCESS;
-    }
-    if (!player.isCreative()) {
-      EntityUtil.applyDamage(player, (ServerWorld) world, NTMDamageTypes.BLOOD_LOSS, 5F);
-      ItemStack stack = player.getStackInHand(hand);
-      stack.decrement(1);
-    }
-    world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
-    player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
+	@Override
+	public ActionResult use(World world, PlayerEntity player, Hand hand) {
+		if (world.isClient()) {
+			return ActionResult.SUCCESS;
+		}
+		if (!player.isCreative()) {
+			EntityUtil.applyDamage(player, (ServerWorld) world, NTMDamageTypes.BLOOD_LOSS, 5F);
+			ItemStack stack = player.getStackInHand(hand);
+			stack.decrement(1);
+		}
+		world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+		player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
 
-    return ActionResult.SUCCESS_SERVER;
-  }
+		return ActionResult.SUCCESS_SERVER;
+	}
 
-  @Override
-  public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-    if (!(target.getWorld() instanceof ServerWorld world) || !(attacker instanceof PlayerEntity player)) {
-      return;
-    }
-    if (!player.isCreative()) {
-      EntityUtil.applyDamage(target, world, NTMDamageTypes.BLOOD_LOSS, 5F);
-      stack.decrement(1);
-    }
-    world.playSound(null, BlockPos.ofFloored(target.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
-    player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
-  }
+	@Override
+	public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (!(target.getWorld() instanceof ServerWorld world) || !(attacker instanceof PlayerEntity player)) {
+			return;
+		}
+		if (!player.isCreative()) {
+			EntityUtil.applyDamage(target, world, NTMDamageTypes.BLOOD_LOSS, 5F);
+			stack.decrement(1);
+		}
+		world.playSound(null, BlockPos.ofFloored(target.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+		player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
+	}
 }

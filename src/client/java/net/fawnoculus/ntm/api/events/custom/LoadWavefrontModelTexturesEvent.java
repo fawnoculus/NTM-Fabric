@@ -5,13 +5,13 @@ import net.fabricmc.fabric.api.event.EventFactory;
 
 @FunctionalInterface
 public interface LoadWavefrontModelTexturesEvent {
-  Event<LoadWavefrontModelTexturesEvent> EVENT = EventFactory.createArrayBacked(LoadWavefrontModelTexturesEvent.class,
-    (listeners) -> () -> {
-      for (LoadWavefrontModelTexturesEvent event : listeners) {
-        event.loadModelTextures();
-      }
-    }
-  );
+	Event<LoadWavefrontModelTexturesEvent> EVENT = EventFactory.createArrayBacked(LoadWavefrontModelTexturesEvent.class,
+	  (listeners) -> () -> {
+		  for (LoadWavefrontModelTexturesEvent event : listeners) {
+			  event.loadModelTextures();
+		  }
+	  }
+	);
 
-  void loadModelTextures();
+	void loadModelTextures();
 }

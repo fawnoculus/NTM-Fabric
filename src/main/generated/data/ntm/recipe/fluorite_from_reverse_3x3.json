@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    "ntm:fluorite_block"
-  ],
-  "result": {
-    "count": 9,
-    "id": "ntm:fluorite"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"ntm:fluorite_block"
+	],
+	"result": {
+		"count": 9,
+		"id": "ntm:fluorite"
+	}
 }

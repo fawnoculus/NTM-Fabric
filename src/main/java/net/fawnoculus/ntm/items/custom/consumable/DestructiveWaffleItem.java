@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.items.components.NTMFoodComponents;
 import net.fawnoculus.ntm.NTM;
-import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
+import net.fawnoculus.ntm.items.components.NTMFoodComponents;
+import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,19 +14,19 @@ import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 public class DestructiveWaffleItem extends Item {
-  public DestructiveWaffleItem(Settings settings) {
-    super(settings.food(NTMFoodComponents.WAFFLE_OF_MASS_DESTRUCTION));
-  }
+	public DestructiveWaffleItem(Settings settings) {
+		super(settings.food(NTMFoodComponents.WAFFLE_OF_MASS_DESTRUCTION));
+	}
 
-  @Override
-  public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-    if (user instanceof ServerPlayerEntity player) {
-      ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(
-        NTM.id("waffle_of_mass_destruction"),
-        Text.literal("Now you would violently Explode, but Nuclear Explosions are not implemented yet").formatted(Formatting.RED),
-        4000.0f)));
-    }
-    // TODO: this, once we have Nuclear Explosions
-    return super.finishUsing(stack, world, user);
-  }
+	@Override
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+		if (user instanceof ServerPlayerEntity player) {
+			ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(
+			  NTM.id("waffle_of_mass_destruction"),
+			  Text.literal("Now you would violently Explode, but Nuclear Explosions are not implemented yet").formatted(Formatting.RED),
+			  4000.0f)));
+		}
+		// TODO: this, once we have Nuclear Explosions
+		return super.finishUsing(stack, world, user);
+	}
 }

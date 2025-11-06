@@ -10,18 +10,18 @@ import net.fawnoculus.ntm.network.ClientReceivedVersionHandler;
 import net.fawnoculus.ntm.render.WavefrontModels;
 
 public class NTMClientEvents {
-  public static void initialize() {
-    ClientLoginConnectionEvents.DISCONNECT.register(ClientReceivedVersionHandler::onDisconnect);
-    ClientLoginConnectionEvents.DISCONNECT.register((handler, client) ->
-      MessageSystem.removeAllMessages()
-    );
+	public static void initialize() {
+		ClientLoginConnectionEvents.DISCONNECT.register(ClientReceivedVersionHandler::onDisconnect);
+		ClientLoginConnectionEvents.DISCONNECT.register((handler, client) ->
+		  MessageSystem.removeAllMessages()
+		);
 
-    ConnectToServerEvent.EVENT.register(ClientReceivedVersionHandler::onJoin);
+		ConnectToServerEvent.EVENT.register(ClientReceivedVersionHandler::onJoin);
 
-    ClientTickEvents.EVENT.register(MessageSystem::onClientTick);
+		ClientTickEvents.EVENT.register(MessageSystem::onClientTick);
 
-    LoadWavefrontModelsEvent.EVENT.register(WavefrontModels::loadModels);
+		LoadWavefrontModelsEvent.EVENT.register(WavefrontModels::loadModels);
 
-    LoadWavefrontModelTexturesEvent.EVENT.register(WavefrontModels::loadModelTextures);
-  }
+		LoadWavefrontModelTexturesEvent.EVENT.register(WavefrontModels::loadModelTextures);
+	}
 }

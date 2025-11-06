@@ -29,108 +29,108 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class AlloyFurnaceBlock extends BlockWithEntity {
-  public AlloyFurnaceBlock(Settings settings) {
-    super(settings);
-    setDefaultState(this.getDefaultState()
-      .with(LIT, false)
-      .with(EXTENSION, false)
-      .with(FACING, Direction.NORTH));
-  }
+	public AlloyFurnaceBlock(Settings settings) {
+		super(settings);
+		setDefaultState(this.getDefaultState()
+		  .with(LIT, false)
+		  .with(EXTENSION, false)
+		  .with(FACING, Direction.NORTH));
+	}
 
-  public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
-  public static final BooleanProperty LIT = Properties.LIT;
-  public static final BooleanProperty EXTENSION = NTMBlockProperties.EXTENSION;
+	public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+	public static final BooleanProperty LIT = Properties.LIT;
+	public static final BooleanProperty EXTENSION = NTMBlockProperties.EXTENSION;
 
-  @Override
-  protected MapCodec<? extends BlockWithEntity> getCodec() {
-    return createCodec(AlloyFurnaceBlock::new);
-  }
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return createCodec(AlloyFurnaceBlock::new);
+	}
 
-  @Override
-  public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    return new AlloyFurnaceBE(pos, state);
-  }
+	@Override
+	public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new AlloyFurnaceBE(pos, state);
+	}
 
-  @Override
-  public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-    if (world.isClient) return null;
-    return validateTicker(type, NTMBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
-  }
+	@Override
+	public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		if (world.isClient) return null;
+		return validateTicker(type, NTMBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
+	}
 
-  @Override
-  protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-    if (!(world.getBlockEntity(pos) instanceof AlloyFurnaceBE alloyFurnaceBE)) {
-      return ActionResult.FAIL;
-    }
-    if (world.isClient) {
-      return ActionResult.SUCCESS;
-    }
+	@Override
+	protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+		if (!(world.getBlockEntity(pos) instanceof AlloyFurnaceBE alloyFurnaceBE)) {
+			return ActionResult.FAIL;
+		}
+		if (world.isClient) {
+			return ActionResult.SUCCESS;
+		}
 
-    player.openHandledScreen(alloyFurnaceBE);
+		player.openHandledScreen(alloyFurnaceBE);
 
-    return ActionResult.SUCCESS_SERVER;
-  }
+		return ActionResult.SUCCESS_SERVER;
+	}
 
-  @Override
-  protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-    builder.add(FACING);
-    builder.add(LIT);
-    builder.add(EXTENSION);
-  }
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		builder.add(FACING);
+		builder.add(LIT);
+		builder.add(EXTENSION);
+	}
 
-  @Override
-  public BlockState getPlacementState(ItemPlacementContext context) {
-    if (context.getPlayer() == null) return this.getDefaultState();
-    if (context.getWorld().getBlockState(context.getBlockPos().up()).getBlock() instanceof AlloyFurnaceExtensionBlock) {
-      return this.getDefaultState()
-        .with(FACING, context.getPlayer().getHorizontalFacing().getOpposite())
-        .with(EXTENSION, true);
-    }
-    return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
-  }
+	@Override
+	public BlockState getPlacementState(ItemPlacementContext context) {
+		if (context.getPlayer() == null) return this.getDefaultState();
+		if (context.getWorld().getBlockState(context.getBlockPos().up()).getBlock() instanceof AlloyFurnaceExtensionBlock) {
+			return this.getDefaultState()
+			  .with(FACING, context.getPlayer().getHorizontalFacing().getOpposite())
+			  .with(EXTENSION, true);
+		}
+		return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
+	}
 
-  @Override
-  public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-    if (!world.isClient()) {
-      return;
-    }
+	@Override
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+		if (!world.isClient()) {
+			return;
+		}
 
-    if (!state.get(LIT)) {
-      return;
-    }
+		if (!state.get(LIT)) {
+			return;
+		}
 
-    Vec3d centerPos = pos.toCenterPos();
-    double y = centerPos.getY() + 0.5;
-    double x = centerPos.getX();
-    double z = centerPos.getZ();
-    if (state.get(EXTENSION)) y += 1;
-    world.addParticleClient(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+		Vec3d centerPos = pos.toCenterPos();
+		double y = centerPos.getY() + 0.5;
+		double x = centerPos.getX();
+		double z = centerPos.getZ();
+		if (state.get(EXTENSION)) y += 1;
+		world.addParticleClient(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
 
-    x = centerPos.getX();
-    y = centerPos.getY() - 0.2 + random.nextDouble() * 0.4;
-    z = centerPos.getZ();
-    switch (state.get(FACING)) {
-      case Direction.NORTH -> {
-        x += 0.2;
-        x -= random.nextDouble() * 0.4;
-        z -= 0.6;
-      }
-      case Direction.SOUTH -> {
-        x -= 0.2;
-        x += random.nextDouble() * 0.4;
-        z += 0.6;
-      }
-      case Direction.EAST -> {
-        z -= 0.2;
-        z += random.nextDouble() * 0.4;
-        x += 0.6;
-      }
-      case Direction.WEST -> {
-        z += 0.2;
-        z -= random.nextDouble() * 0.4;
-        x -= 0.6;
-      }
-    }
-    world.addParticleClient(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
-  }
+		x = centerPos.getX();
+		y = centerPos.getY() - 0.2 + random.nextDouble() * 0.4;
+		z = centerPos.getZ();
+		switch (state.get(FACING)) {
+			case Direction.NORTH -> {
+				x += 0.2;
+				x -= random.nextDouble() * 0.4;
+				z -= 0.6;
+			}
+			case Direction.SOUTH -> {
+				x -= 0.2;
+				x += random.nextDouble() * 0.4;
+				z += 0.6;
+			}
+			case Direction.EAST -> {
+				z -= 0.2;
+				z += random.nextDouble() * 0.4;
+				x += 0.6;
+			}
+			case Direction.WEST -> {
+				z += 0.2;
+				z -= random.nextDouble() * 0.4;
+				x -= 0.6;
+			}
+		}
+		world.addParticleClient(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
+	}
 }

@@ -10,17 +10,17 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
 public class NTMEnchantmentEffects {
-  private static RegistryKey<Enchantment> of(String path) {
-    return RegistryKey.of(RegistryKeys.ENCHANTMENT, NTM.id(path));
-  }
+	private static RegistryKey<Enchantment> of(String path) {
+		return RegistryKey.of(RegistryKeys.ENCHANTMENT, NTM.id(path));
+	}
 
-  private static <T extends EnchantmentEntityEffect> MapCodec<T> register(String id, MapCodec<T> codec) {
-    return Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, NTM.id(id), codec);
-  }
+	private static <T extends EnchantmentEntityEffect> MapCodec<T> register(String id, MapCodec<T> codec) {
+		return Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, NTM.id(id), codec);
+	}
 
-  //public static final RegistryKey<Enchantment> THUNDERING_KEY = of("thundering");
-  //public static MapCodec<LightningEnchantmentEffect> LIGHTNING_EFFECT = register("lightning_effect", LightningEnchantmentEffect.CODEC);
+	//public static final RegistryKey<Enchantment> THUNDERING_KEY = of("thundering");
+	//public static MapCodec<LightningEnchantmentEffect> LIGHTNING_EFFECT = register("lightning_effect", LightningEnchantmentEffect.CODEC);
 
-  public static void initialize() {
-  }
+	public static void initialize() {
+	}
 }

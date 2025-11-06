@@ -15,28 +15,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public record LightningEnchantmentEffect(EnchantmentLevelBasedValue amount) implements EnchantmentEntityEffect {
-  public static final MapCodec<LightningEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec(
-    instance ->
-      instance.group(
-        EnchantmentLevelBasedValue.CODEC.fieldOf("amount").forGetter(LightningEnchantmentEffect::amount)
-      ).apply(instance, LightningEnchantmentEffect::new)
-  );
+	public static final MapCodec<LightningEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec(
+	  instance ->
+		instance.group(
+		  EnchantmentLevelBasedValue.CODEC.fieldOf("amount").forGetter(LightningEnchantmentEffect::amount)
+		).apply(instance, LightningEnchantmentEffect::new)
+	);
 
-  @Override
-  public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
-    if (target instanceof LivingEntity victim && context.owner() instanceof @SuppressWarnings("unused")PlayerEntity player) {
-      float numStrikes = this.amount.getValue(level);
+	@Override
+	public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
+		if (target instanceof LivingEntity victim && context.owner() instanceof @SuppressWarnings("unused")PlayerEntity player) {
+			float numStrikes = this.amount.getValue(level);
 
-      BlockPos position = victim.getBlockPos();
+			BlockPos position = victim.getBlockPos();
 
-      for (float i = 0; i < numStrikes; i++) {
-        EntityType.LIGHTNING_BOLT.spawn(world, position, SpawnReason.TRIGGERED);
-      }
-    }
-  }
+			for (float i = 0; i < numStrikes; i++) {
+				EntityType.LIGHTNING_BOLT.spawn(world, position, SpawnReason.TRIGGERED);
+			}
+		}
+	}
 
-  @Override
-  public MapCodec<? extends EnchantmentEntityEffect> getCodec() {
-    return CODEC;
-  }
+	@Override
+	public MapCodec<? extends EnchantmentEntityEffect> getCodec() {
+		return CODEC;
+	}
 }

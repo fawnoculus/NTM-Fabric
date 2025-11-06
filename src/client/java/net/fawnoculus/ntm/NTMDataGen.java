@@ -23,39 +23,39 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class NTMDataGen implements DataGeneratorEntrypoint {
-  @Override
-  public void onInitializeDataGenerator(@NotNull FabricDataGenerator fabricDataGenerator) {
-    FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
+	@Override
+	public void onInitializeDataGenerator(@NotNull FabricDataGenerator fabricDataGenerator) {
+		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-    pack.addProvider(NTMRegistryProvider::new);
+		pack.addProvider(NTMRegistryProvider::new);
 
-    pack.addProvider(NTMItemTagProvider::new);
-    pack.addProvider(NTMBlockTagProvider::new);
-    pack.addProvider(NTMEntityTypeTagProvider::new);
-    pack.addProvider(NTMDamageTypeTagProvider::new);
+		pack.addProvider(NTMItemTagProvider::new);
+		pack.addProvider(NTMBlockTagProvider::new);
+		pack.addProvider(NTMEntityTypeTagProvider::new);
+		pack.addProvider(NTMDamageTypeTagProvider::new);
 
-    pack.addProvider(NTMBlockLootProvider::new);
-    pack.addProvider(NTMChestLootProvider::new);
-    pack.addProvider(NTMEntityLootProvider::new);
+		pack.addProvider(NTMBlockLootProvider::new);
+		pack.addProvider(NTMChestLootProvider::new);
+		pack.addProvider(NTMEntityLootProvider::new);
 
-    pack.addProvider(NTMAdvancementProvider::new);
+		pack.addProvider(NTMAdvancementProvider::new);
 
-    pack.addProvider(NTMCraftingRecipeProvider::new);
-    pack.addProvider(NTMSmeltingRecipeProvider::new);
+		pack.addProvider(NTMCraftingRecipeProvider::new);
+		pack.addProvider(NTMSmeltingRecipeProvider::new);
 
-    pack.addProvider(NTMEnchantmentProvider::new);
+		pack.addProvider(NTMEnchantmentProvider::new);
 
-    pack.addProvider(NTMModelProvider::new);
-  }
+		pack.addProvider(NTMModelProvider::new);
+	}
 
-  @Override
-  public void buildRegistry(@NotNull RegistryBuilder registryBuilder) {
-    registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NTMConfiguredFeatures::initialize);
-    registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NTMPlacedFeatures::initialize);
-  }
+	@Override
+	public void buildRegistry(@NotNull RegistryBuilder registryBuilder) {
+		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NTMConfiguredFeatures::initialize);
+		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NTMPlacedFeatures::initialize);
+	}
 
-  @Override
-  public @Nullable String getEffectiveModId() {
-    return NTM.MOD_ID;
-  }
+	@Override
+	public @Nullable String getEffectiveModId() {
+		return NTM.MOD_ID;
+	}
 }

@@ -12,52 +12,52 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public interface InfoArea extends Drawable {
-  int getX();
+	int getX();
 
-  int getY();
+	int getY();
 
-  int getWidth();
+	int getWidth();
 
-  int getHeigh();
+	int getHeigh();
 
-  int getOffsetX();
+	int getOffsetX();
 
-  int getOffsetY();
+	int getOffsetY();
 
-  void appendTooltip(Consumer<Text> tooltip);
+	void appendTooltip(Consumer<Text> tooltip);
 
-  Identifier getTexture();
+	Identifier getTexture();
 
-  @Range(from = 0, to = 1)
-  double getFillState();
+	@Range(from = 0, to = 1)
+	double getFillState();
 
-  default List<Text> getTooltip() {
-    List<Text> tooltip = new ArrayList<>();
-    this.appendTooltip(tooltip::add);
-    return tooltip;
-  }
+	default List<Text> getTooltip() {
+		List<Text> tooltip = new ArrayList<>();
+		this.appendTooltip(tooltip::add);
+		return tooltip;
+	}
 
-  default int getRelativeMouseX(int mouseX) {
-    return mouseX - this.getOffsetX();
-  }
+	default int getRelativeMouseX(int mouseX) {
+		return mouseX - this.getOffsetX();
+	}
 
-  default int getRelativeMouseY(int mouseY) {
-    return mouseY - this.getOffsetY();
-  }
+	default int getRelativeMouseY(int mouseY) {
+		return mouseY - this.getOffsetY();
+	}
 
-  default boolean isInBounds(int mouseX, int mouseY) {
-    return this.getRelativeMouseX(mouseX) > this.getX()
-      && this.getRelativeMouseX(mouseX) < this.getX() + this.getWidth()
-      && this.getRelativeMouseY(mouseY) > this.getY()
-      && this.getRelativeMouseY(mouseY) < this.getY() + this.getHeigh();
-  }
+	default boolean isInBounds(int mouseX, int mouseY) {
+		return this.getRelativeMouseX(mouseX) > this.getX()
+		  && this.getRelativeMouseX(mouseX) < this.getX() + this.getWidth()
+		  && this.getRelativeMouseY(mouseY) > this.getY()
+		  && this.getRelativeMouseY(mouseY) < this.getY() + this.getHeigh();
+	}
 
-  default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks){
-    this.drawTooltip(context, mouseX, mouseY);
-  }
+	default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+		this.drawTooltip(context, mouseX, mouseY);
+	}
 
-  default void drawTooltip(DrawContext context, int mouseX, int mouseY) {
-    if (!isInBounds(mouseX, mouseY)) return;
-    context.drawTooltip(ClientUtil.getTextRenderer(), this.getTooltip(), mouseX, mouseY);
-  }
+	default void drawTooltip(DrawContext context, int mouseX, int mouseY) {
+		if (!isInBounds(mouseX, mouseY)) return;
+		context.drawTooltip(ClientUtil.getTextRenderer(), this.getTooltip(), mouseX, mouseY);
+	}
 }

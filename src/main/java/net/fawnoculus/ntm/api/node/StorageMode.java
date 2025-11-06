@@ -6,33 +6,33 @@ import net.fawnoculus.ntm.misc.data.NTMCodecs;
 import org.jetbrains.annotations.NotNull;
 
 public enum StorageMode {
-  Provide(true, false, "narration.ntm.storage_mode.provide"),
-  Consume(false, true, "narration.ntm.storage_mode.consume"),
-  Share(true, true, "narration.ntm.storage_mode.share"),
-  None(false, false, "narration.ntm.storage_mode.none");
+	Provide(true, false, "narration.ntm.storage_mode.provide"),
+	Consume(false, true, "narration.ntm.storage_mode.consume"),
+	Share(true, true, "narration.ntm.storage_mode.share"),
+	None(false, false, "narration.ntm.storage_mode.none");
 
-  public static final Codec<StorageMode> CODEC = NTMCodecs.getEnumCodec(StorageMode.class);
+	public static final Codec<StorageMode> CODEC = NTMCodecs.getEnumCodec(StorageMode.class);
 
-  public final boolean provides;
-  public final boolean consumes;
-  public final String translationKey;
+	public final boolean provides;
+	public final boolean consumes;
+	public final String translationKey;
 
-  StorageMode(boolean provides, boolean consumes, String translationKey) {
-    this.provides = provides;
-    this.consumes = consumes;
-    this.translationKey = translationKey;
-  }
+	StorageMode(boolean provides, boolean consumes, String translationKey) {
+		this.provides = provides;
+		this.consumes = consumes;
+		this.translationKey = translationKey;
+	}
 
-  public StorageMode cycle() {
-    return cycle(this);
-  }
+	public StorageMode cycle() {
+		return cycle(this);
+	}
 
-  public static StorageMode cycle(@NotNull StorageMode mode) {
-    return switch (mode) {
-      case None -> Provide;
-      case Provide -> Consume;
-      case Consume -> Share;
-      case Share -> None;
-    };
-  }
+	public static StorageMode cycle(@NotNull StorageMode mode) {
+		return switch (mode) {
+			case None -> Provide;
+			case Provide -> Consume;
+			case Consume -> Share;
+			case Share -> None;
+		};
+	}
 }

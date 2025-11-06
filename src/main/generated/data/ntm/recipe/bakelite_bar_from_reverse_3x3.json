@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    "ntm:bakelite_block"
-  ],
-  "result": {
-    "count": 9,
-    "id": "ntm:bakelite_bar"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"ntm:bakelite_block"
+	],
+	"result": {
+		"count": 9,
+		"id": "ntm:bakelite_bar"
+	}
 }
