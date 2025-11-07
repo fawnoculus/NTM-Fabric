@@ -35,16 +35,16 @@
 			"net.fawnoculus.ntm.NTM"
 		],
 		"client": [
-			"net.fawnoculus.ntm.NTMClient"
+			"net.fawnoculus.ntm.client.NTMClient"
 		],
 		"fabric-datagen": [
-			"net.fawnoculus.ntm.NTMDataGen"
+			"net.fawnoculus.ntm.client.NTMDataGen"
 		],
 		"jade": [
 			"net.fawnoculus.ntm.compat.NTMJadePlugin"
 		],
 		"modmenu": [
-			"net.fawnoculus.ntm.compat.NTMModMenuPlugin"
+			"net.fawnoculus.ntm.client.compat.NTMModMenuPlugin"
 		],
 		"emi": [
 			"net.fawnoculus.ntm.compat.NTMEmiPlugin"
@@ -53,7 +53,7 @@
 			"net.fawnoculus.ntm.compat.NTMReiCommonPlugin"
 		],
 		"rei_client": [
-			"net.fawnoculus.ntm.compat.NTMReiClientPlugin"
+			"net.fawnoculus.ntm.client.compat.NTMReiClientPlugin"
 		],
 		"jei_mod_plugin": [
 			"net.fawnoculus.ntm.compat.NTMJeiPlugin"

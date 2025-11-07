@@ -55,16 +55,20 @@ public class NTMConfig {
 	);
 
 	public static final ConfigOption<Boolean> DEV_MODE = COMMON_CONFIG_FILE.newOption(
-	  "dev_mode", Codec.BOOL, FabricLoader.getInstance().isDevelopmentEnvironment()
+	  "dev_mode", Codec.BOOL, FabricLoader.getInstance().isDevelopmentEnvironment(),
+	  "Activates a bunch of dev features and makes more errors print into the log (like /ntm dev)"
 	);
 	public static final ConfigOption<Boolean> PRINT_STACKTRACE = COMMON_CONFIG_FILE.newOption(
-	  "print_stacktrace", Codec.BOOL, FabricLoader.getInstance().isDevelopmentEnvironment()
+	  "print_stacktrace", Codec.BOOL, FabricLoader.getInstance().isDevelopmentEnvironment(),
+	  "Make (most) of the Exceptions logged by NTM print their Stacktrace"
 	);
 	public static final ConfigOption<Integer> MAX_REGION_DATA_CACHE = COMMON_CONFIG_FILE.newOption(
-	  "max_region_data_cache", Codec.INT, 512
+	  "max_region_data_cache", Codec.INT, 512,
+	  "The amount of custom chunk data regions to keep in cache (large values may led to large memory consumption, small values may led to bad performance)"
 	);
 	public static final ConfigOption<Integer> MAX_NODE_SCAN_DEPTH = COMMON_CONFIG_FILE.newOption(
-	  "max_node_scan_depth", Codec.INT, 100_000
+	  "max_node_scan_depth", Codec.INT, 100_000,
+	  "The maximum amount of nodes (cables and pipes) to scan when reconstructing node-networks (use anything lower that 1 to disable)"
 	);
 
 	public static final PerWorldConfigFile WORLD_CONFIG = new PerWorldConfigFile(
@@ -78,7 +82,7 @@ public class NTMConfig {
 	);
 	public static final PerWorldConfigOption<Boolean> DISABLE_CHUNK_RADIATION = WORLD_CONFIG.newOption(
 	  "disable_chunk_radiation", Codec.BOOL, false,
-	  "Disables Chunks having Radioactivity [default: false]"
+	  "Disables Chunks having Radioactivity (Requires restating the world or server) [default: false]"
 	);
 
 	public static void initialize() {

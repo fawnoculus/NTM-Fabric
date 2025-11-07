@@ -1,20 +1,20 @@
 package net.fawnoculus.ntm.items.custom;
 
+import net.fawnoculus.ntm.api.explosion.NTMExplosionTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.AdvancedExplosionBehavior;
-import net.minecraft.world.explosion.ExplosionBehavior;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class DebugWandItem extends Item {
@@ -28,10 +28,9 @@ public class DebugWandItem extends Item {
 			return ActionResult.SUCCESS;
 		}
 
-		Vec3d targetPos = user.raycast(256, 0, false).getPos();
-		if (targetPos != null) {
-			ExplosionBehavior explosionBehavior = new AdvancedExplosionBehavior(true, true, Optional.empty(), Optional.empty());
-			world.createExplosion(user, null, explosionBehavior, targetPos, 20, true, World.ExplosionSourceType.MOB);
+		BlockHitResult hitResult = (BlockHitResult) user.raycast(256, 0, false);
+		if (hitResult.getType() == HitResult.Type.BLOCK) {
+			NTMExplosionTypes.SIMPLE.explode((ServerWorld) world, hitResult.getBlockPos(), 10f);
 		}
 
 		return ActionResult.SUCCESS_SERVER;

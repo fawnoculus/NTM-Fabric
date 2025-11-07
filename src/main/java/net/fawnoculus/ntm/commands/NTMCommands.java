@@ -223,7 +223,7 @@ public class NTMCommands {
 		}
 	}
 
-	protected static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
+	public static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
 		if (environment != null && environment.integrated) return true;
 		return source.hasPermissionLevel(NTMConfig.REQUIRED_COMMAND_PERMISSION.getValue());
 	}
@@ -238,13 +238,13 @@ public class NTMCommands {
 		return 1;
 	}
 
-	protected static int reloadConfig(CommandContext<ServerCommandSource> context, ConfigFile file) {
+	public static int reloadConfig(CommandContext<ServerCommandSource> context, ConfigFile file) {
 		context.getSource().sendFeedback(() -> Text.translatable("command.ntm.reload_configs", file.getSubPath()), true);
 		file.readFile();
 		return 1;
 	}
 
-	protected static <T> int getOptionInfo(CommandContext<ServerCommandSource> context, ConfigOption<T> option) {
+	public static <T> int getOptionInfo(CommandContext<ServerCommandSource> context, ConfigOption<T> option) {
 		Codec<T> codec = option.getCodec();
 		T defaultValue = option.getDefaultValue();
 		T currentValue = option.getValue();
@@ -269,7 +269,7 @@ public class NTMCommands {
 		return 1;
 	}
 
-	protected static int trySetOption(CommandContext<ServerCommandSource> context, ConfigFile file, ConfigOption<?> option, String value) {
+	public static int trySetOption(CommandContext<ServerCommandSource> context, ConfigFile file, ConfigOption<?> option, String value) {
 		JsonElement element;
 		try {
 			element = JsonParser.parseString(value);
