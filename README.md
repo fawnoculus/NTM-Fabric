@@ -6,7 +6,6 @@
   <a href="https://quiltmc.org/"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/quilt_64h.png" alt="Available on Quilt" width="200"></a>
   <br>
   <a href="https://github.com/fawnoculus/NTM-Fabric/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/fawnoculus/NTM-Fabric?style=flat&color=900c3f" alt="Licence: GPL-3.0"></a>
-  <a href="https://github.com/Kir-Antipov/cubes-without-borders/releases/latest"><img src="https://img.shields.io/github/v/release/fawnoculus/NTM-Fabric?sort=date&label=version" alt="Version Information"></a>
   <a href="https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml"><img src="https://github.com/fawnoculus/NTM-Fabric/actions/workflows/build.yml/badge.svg" alt="Build Workflow"></a>
 </div>
 
