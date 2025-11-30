@@ -11,37 +11,37 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class ClientUtil {
-	public static MinecraftClient getClient() {
-		return MinecraftClient.getInstance();
-	}
+    public static MinecraftClient getClient() {
+        return MinecraftClient.getInstance();
+    }
 
-	public static ClientPlayerEntity getPlayer() {
-		return getClient().player;
-	}
+    public static ClientPlayerEntity getPlayer() {
+        return getClient().player;
+    }
 
-	public static ClientWorld getWorld() {
-		return getClient().world;
-	}
+    public static ClientWorld getWorld() {
+        return getClient().world;
+    }
 
-	public static TextRenderer getTextRenderer() {
-		return getClient().textRenderer;
-	}
+    public static TextRenderer getTextRenderer() {
+        return getClient().textRenderer;
+    }
 
-	public static void playSound(SoundInstance sound) {
-		getClient().getSoundManager().play(sound);
-	}
+    public static void playSound(SoundInstance sound) {
+        getClient().getSoundManager().play(sound);
+    }
 
-	public static void initialize() {
-		ClientTransferUtil.setClientDataGetter(new ClientTransferUtil.ClientDataGetter() {
-			@Override
-			public MutableText getBoundKey(String keybindTranslationKey) {
-				KeyBinding keyBinding = KeyBinding.byId(keybindTranslationKey);
-				if (keyBinding == null) {
-					return Text.translatable(keybindTranslationKey);
-				}
+    public static void initialize() {
+        ClientTransferUtil.setClientDataGetter(new ClientTransferUtil.ClientDataGetter() {
+            @Override
+            public MutableText getBoundKey(String keybindTranslationKey) {
+                KeyBinding keyBinding = KeyBinding.byId(keybindTranslationKey);
+                if (keyBinding == null) {
+                    return Text.translatable(keybindTranslationKey);
+                }
 
-				return keyBinding.getBoundKeyLocalizedText().copy();
-			}
-		});
-	}
+                return keyBinding.getBoundKeyLocalizedText().copy();
+            }
+        });
+    }
 }

@@ -9,13 +9,13 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
 public record FluidDataRegistryPayload(NbtCompound registryNBT) implements CustomPayload {
-	public static final Identifier FLUID_DATA_REGISTRY_PAYLOAD_ID = NTM.id("fluid_data_registry");
-	public static final Id<FluidDataRegistryPayload> ID = new Id<>(FLUID_DATA_REGISTRY_PAYLOAD_ID);
+    public static final Identifier FLUID_DATA_REGISTRY_PAYLOAD_ID = NTM.id("fluid_data_registry");
+    public static final Id<FluidDataRegistryPayload> ID = new Id<>(FLUID_DATA_REGISTRY_PAYLOAD_ID);
 
-	public static final PacketCodec<RegistryByteBuf, FluidDataRegistryPayload> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.NBT_COMPOUND, FluidDataRegistryPayload::registryNBT, FluidDataRegistryPayload::new);
+    public static final PacketCodec<RegistryByteBuf, FluidDataRegistryPayload> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.NBT_COMPOUND, FluidDataRegistryPayload::registryNBT, FluidDataRegistryPayload::new);
 
-	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
-	}
+    @Override
+    public Id<? extends CustomPayload> getId() {
+        return ID;
+    }
 }

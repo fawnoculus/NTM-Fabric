@@ -26,112 +26,112 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class FluidBE extends BlockEntity implements Node {
-	private boolean shouldAssignNetwork = false;
-	private NodeNetwork network;
+    private boolean shouldAssignNetwork = false;
+    private NodeNetwork network;
 
-	public FluidBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
+    public FluidBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
 
-	public static @NotNull Fluid getNetworkFluid(@NotNull NodeNetwork network) {
-		for (Node node : network.LOADED_NODES) {
-			if (node instanceof FluidBE fluidNode
-			  && fluidNode.getNodeFluid() != null
-			) {
-				return fluidNode.getNodeFluid();
-			}
-		}
+    public static @NotNull Fluid getNetworkFluid(@NotNull NodeNetwork network) {
+        for (Node node : network.LOADED_NODES) {
+            if (node instanceof FluidBE fluidNode
+              && fluidNode.getNodeFluid() != null
+            ) {
+                return fluidNode.getNodeFluid();
+            }
+        }
 
-		return Fluids.EMPTY;
-	}
+        return Fluids.EMPTY;
+    }
 
-	/**
-	 * May return Null if the Node Contains Multiple Fluid Types
-	 *
-	 * @return Which type of Fluid this node transports / Contains
-	 */
-	public abstract @Nullable Fluid getNodeFluid();
+    /**
+     * May return Null if the Node Contains Multiple Fluid Types
+     *
+     * @return Which type of Fluid this node transports / Contains
+     */
+    public abstract @Nullable Fluid getNodeFluid();
 
-	/**
-	 * Get the containers in this Node based on the type of Fluid it is trying to get
-	 *
-	 * @param fluid the type of fluid
-	 * @return the containers in this node based on the fluid
-	 */
-	public abstract Collection<NodeValueContainer> getContainers(Fluid fluid);
+    /**
+     * Get the containers in this Node based on the type of Fluid it is trying to get
+     *
+     * @param fluid the type of fluid
+     * @return the containers in this node based on the fluid
+     */
+    public abstract Collection<NodeValueContainer> getContainers(Fluid fluid);
 
 
-	@Override
-	public Collection<NodeValueContainer> getContainers() {
-		if (this.getNetwork() == null) {
-			return List.of();
-		}
+    @Override
+    public Collection<NodeValueContainer> getContainers() {
+        if (this.getNetwork() == null) {
+            return List.of();
+        }
 
-		return this.getContainers(getNetworkFluid(this.getNetwork()));
-	}
+        return this.getContainers(getNetworkFluid(this.getNetwork()));
+    }
 
-	@Override
-	public NetworkType getNetworkType() {
-		return NetworkTypes.FLUID;
-	}
+    @Override
+    public NetworkType getNetworkType() {
+        return NetworkTypes.FLUID;
+    }
 
-	@Override
-	public void setShouldAssignNetwork(boolean value) {
-		this.shouldAssignNetwork = value;
-	}
+    @Override
+    public void setShouldAssignNetwork(boolean value) {
+        this.shouldAssignNetwork = value;
+    }
 
-	@Override
-	public boolean shouldAssignNetwork() {
-		return this.shouldAssignNetwork;
-	}
+    @Override
+    public boolean shouldAssignNetwork() {
+        return this.shouldAssignNetwork;
+    }
 
-	@Override
-	public void setNetwork(NodeNetwork network) {
-		this.network = network;
-	}
+    @Override
+    public @Nullable NodeNetwork getNetwork() {
+        return this.network;
+    }
 
-	@Override
-	public @Nullable NodeNetwork getNetwork() {
-		return this.network;
-	}
+    @Override
+    public void setNetwork(NodeNetwork network) {
+        this.network = network;
+    }
 
-	@Override
-	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-		return this.createNbt(registries);
-	}
+    @Override
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
+        return this.createNbt(registries);
+    }
 
-	@Override
-	public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
-		return BlockEntityUpdateS2CPacket.create(this);
-	}
+    @Override
+    public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
 
-	@Override
-	public void setWorld(World world) {
-		super.setWorld(world);
-		this.onSetWorld();
-	}
+    @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        this.onSetWorld();
+    }
 
-	@Override
-	public void markRemoved() {
-		super.markRemoved();
-		this.onUnload();
-	}
+    @Override
+    public void markRemoved() {
+        super.markRemoved();
+        this.onUnload();
+    }
 
-	@Override
-	public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-		super.onBlockReplaced(pos, oldState);
-		this.onBreak();
-	}
+    @Override
+    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+        super.onBlockReplaced(pos, oldState);
+        this.onBreak();
+    }
 
-	@Override
-	protected void readData(ReadView view) {
-		this.readNodeData(view);
-		super.readData(view);
-	}
+    @Override
+    protected void readData(ReadView view) {
+        this.readNodeData(view);
+        super.readData(view);
+    }
 
-	@Override
-	protected void writeData(WriteView view) {
-		super.writeData(view);
-		this.writeNodeData(view);
-	}
+    @Override
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        this.writeNodeData(view);
+    }
 }

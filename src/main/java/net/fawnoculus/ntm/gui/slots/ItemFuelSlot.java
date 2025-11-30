@@ -7,24 +7,24 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.slot.Slot;
 
 public class ItemFuelSlot extends Slot {
-	final FuelRegistry FUEL_REGISTRY;
+    final FuelRegistry FUEL_REGISTRY;
 
-	public ItemFuelSlot(FuelRegistry fuelRegistry, Inventory inventory, int index, int x, int y) {
-		super(inventory, index, x, y);
-		this.FUEL_REGISTRY = fuelRegistry;
-	}
+    public ItemFuelSlot(FuelRegistry fuelRegistry, Inventory inventory, int index, int x, int y) {
+        super(inventory, index, x, y);
+        this.FUEL_REGISTRY = fuelRegistry;
+    }
 
-	@Override
-	public boolean canInsert(ItemStack stack) {
-		return this.FUEL_REGISTRY.isFuel(stack) || isBucket(stack);
-	}
+    public static boolean isBucket(ItemStack stack) {
+        return stack.isOf(Items.BUCKET);
+    }
 
-	@Override
-	public int getMaxItemCount(ItemStack stack) {
-		return isBucket(stack) ? 1 : super.getMaxItemCount(stack);
-	}
+    @Override
+    public boolean canInsert(ItemStack stack) {
+        return this.FUEL_REGISTRY.isFuel(stack) || isBucket(stack);
+    }
 
-	public static boolean isBucket(ItemStack stack) {
-		return stack.isOf(Items.BUCKET);
-	}
+    @Override
+    public int getMaxItemCount(ItemStack stack) {
+        return isBucket(stack) ? 1 : super.getMaxItemCount(stack);
+    }
 }

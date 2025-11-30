@@ -8,13 +8,13 @@ import net.fawnoculus.ntm.commands.arguments.serializer.ConfigOptionArgumentSeri
 import net.minecraft.command.argument.serialize.ArgumentSerializer;
 
 public class NTMCommandArguments {
-	public static void initialize() {
-		register("config_option", ConfigOptionArgumentType.class, new ConfigOptionArgumentSerializer());
-	}
+    public static void initialize() {
+        register("config_option", ConfigOptionArgumentType.class, new ConfigOptionArgumentSerializer());
+    }
 
-	private static <A extends ArgumentType<?>, T extends ArgumentSerializer.ArgumentTypeProperties<A>> void register(
-	  String name, Class<? extends A> clazz, ArgumentSerializer<A, T> serializer
-	) {
-		ArgumentTypeRegistry.registerArgumentType(NTM.id(name), clazz, serializer);
-	}
+    private static <A extends ArgumentType<?>, T extends ArgumentSerializer.ArgumentTypeProperties<A>> void register(
+      String name, Class<? extends A> clazz, ArgumentSerializer<A, T> serializer
+    ) {
+        ArgumentTypeRegistry.registerArgumentType(NTM.id(name), clazz, serializer);
+    }
 }

@@ -13,19 +13,19 @@ import net.minecraft.world.World;
 import java.util.function.Consumer;
 
 public class TemFlakesItem extends Item {
-	public TemFlakesItem(Settings settings) {
-		super(settings.food(NTMFoodComponents.ALWAYS_EDIBLE));
-	}
+    public TemFlakesItem(Settings settings) {
+        super(settings.food(NTMFoodComponents.ALWAYS_EDIBLE));
+    }
 
-	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		user.heal(2);
-		return super.finishUsing(stack, world, user);
-	}
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        user.heal(2);
+        return super.finishUsing(stack, world, user);
+    }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-		tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
-	}
+    @Override
+    @SuppressWarnings("deprecation")
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+        tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+    }
 }

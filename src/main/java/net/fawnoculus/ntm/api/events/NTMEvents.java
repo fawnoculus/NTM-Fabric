@@ -12,18 +12,18 @@ import net.fawnoculus.ntm.network.s2c.NTMVersionPayload;
 import net.fawnoculus.ntm.network.s2c.RadiationRegistryPayload;
 
 public class NTMEvents {
-	public static void initialize() {
-		PlayerJoinCallback.EARLY.register((connection, player, clientData) ->
-		  ServerPlayNetworking.send(player, new NTMVersionPayload(NTM.MOD_VERSION))
-		);
-		PlayerJoinCallback.LATE.register((connection, player, clientData) ->
-		  ServerPlayNetworking.send(player, new RadiationRegistryPayload(RadiationRegistry.serialize()))
-		);
-		PlayerJoinCallback.LATE.register((connection, player, clientData) ->
-		  ServerPlayNetworking.send(player, new HazmatRegistryPayload(HazmatRegistry.serialize()))
-		);
-		PlayerJoinCallback.LATE.register((connection, player, clientData) ->
-		  ServerPlayNetworking.send(player, new FluidDataRegistryPayload(FluidDataRegistry.encodeAllFluidData()))
-		);
-	}
+    public static void initialize() {
+        PlayerJoinCallback.EARLY.register((connection, player, clientData) ->
+          ServerPlayNetworking.send(player, new NTMVersionPayload(NTM.MOD_VERSION))
+        );
+        PlayerJoinCallback.LATE.register((connection, player, clientData) ->
+          ServerPlayNetworking.send(player, new RadiationRegistryPayload(RadiationRegistry.serialize()))
+        );
+        PlayerJoinCallback.LATE.register((connection, player, clientData) ->
+          ServerPlayNetworking.send(player, new HazmatRegistryPayload(HazmatRegistry.serialize()))
+        );
+        PlayerJoinCallback.LATE.register((connection, player, clientData) ->
+          ServerPlayNetworking.send(player, new FluidDataRegistryPayload(FluidDataRegistry.encodeAllFluidData()))
+        );
+    }
 }

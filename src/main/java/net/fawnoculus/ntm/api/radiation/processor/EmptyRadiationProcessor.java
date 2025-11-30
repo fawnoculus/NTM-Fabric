@@ -9,29 +9,29 @@ import net.minecraft.util.math.Vec3d;
  * A Radiation Processor that does absolutely nothing.
  */
 public class EmptyRadiationProcessor implements RadiationProcessor {
-	@Override
-	public void tick() {
-	}
+    @Override
+    public void tick() {
+    }
 
-	@Override
-	public double getPassiveRadiation(Vec3d pos) {
-		return 0;
-	}
+    @Override
+    public double getPassiveRadiation(Vec3d pos) {
+        return 0;
+    }
 
-	@Override
-	public double getActiveRadiation(Vec3d pos) {
-		return 0;
-	}
+    @Override
+    public double getActiveRadiation(Vec3d pos) {
+        return 0;
+    }
 
-	@Override
-	public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {
-	}
+    @Override
+    public void onChangeBlock(BlockState newState, BlockState previousState, BlockPos pos) {
+    }
 
-	@Override
-	public void writeData(NbtCompound data) {
-	}
+    @Override
+    public void writeData(NbtCompound data) {
+    }
 
-	@Override
-	public void readData(NbtCompound data) {
-	}
+    @Override
+    public void readData(NbtCompound data) {
+    }
 }

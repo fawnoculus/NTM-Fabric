@@ -11,106 +11,103 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class EnergyBar implements InfoBar {
-	@SafeVarargs
-	public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText) {
-		this.X = x;
-		this.Y = y;
-		this.WIDTH = width;
-		this.HEIGHT = height;
-		this.STACK = stack;
-		this.EXTRA_TEXT = extraText;
-	}
+    private static final Identifier TEXTURE = NTM.id("textures/gui/generic/energy_bar.png");
+    private static final int U = 0;
+    private static final int V = 0;
+    private static final int TEXTURE_WIDTH = 52;
+    private static final int TEXTURE_HEIGHT = 52;
+    private final int X;
+    private final int Y;
+    private final int WIDTH;
+    private final int HEIGHT;
+    private final EnergyStack STACK;
+    private final Supplier<Text>[] EXTRA_TEXT;
+    private int OFFSET_X;
+    private int OFFSET_Y;
+    @SafeVarargs
+    public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText) {
+        this.X = x;
+        this.Y = y;
+        this.WIDTH = width;
+        this.HEIGHT = height;
+        this.STACK = stack;
+        this.EXTRA_TEXT = extraText;
+    }
 
-	private final int X;
-	private final int Y;
-	private final int WIDTH;
-	private final int HEIGHT;
-	private final EnergyStack STACK;
-	private final Supplier<Text>[] EXTRA_TEXT;
+    public void setOffsets(int offsetX, int offsetY) {
+        this.OFFSET_X = offsetX;
+        this.OFFSET_Y = offsetY;
+    }
 
-	private static final Identifier TEXTURE = NTM.id("textures/gui/generic/energy_bar.png");
-	private static final int U = 0;
-	private static final int V = 0;
-	private static final int TEXTURE_WIDTH = 52;
-	private static final int TEXTURE_HEIGHT = 52;
+    @Override
+    public int getX() {
+        return this.X;
+    }
 
-	private int OFFSET_X;
-	private int OFFSET_Y;
+    @Override
+    public int getY() {
+        return this.Y;
+    }
 
-	public void setOffsets(int offsetX, int offsetY) {
-		this.OFFSET_X = offsetX;
-		this.OFFSET_Y = offsetY;
-	}
+    @Override
+    public int getWidth() {
+        return this.WIDTH;
+    }
 
-	@Override
-	public int getX() {
-		return this.X;
-	}
+    @Override
+    public int getHeigh() {
+        return this.HEIGHT;
+    }
 
-	@Override
-	public int getY() {
-		return this.Y;
-	}
+    @Override
+    public int getOffsetX() {
+        return this.OFFSET_X;
+    }
 
-	@Override
-	public int getWidth() {
-		return this.WIDTH;
-	}
+    @Override
+    public int getOffsetY() {
+        return this.OFFSET_Y;
+    }
 
-	@Override
-	public int getHeigh() {
-		return this.HEIGHT;
-	}
+    @Override
+    public int getU() {
+        return U;
+    }
 
-	@Override
-	public int getOffsetX() {
-		return this.OFFSET_X;
-	}
+    @Override
+    public int getV() {
+        return V;
+    }
 
-	@Override
-	public int getOffsetY() {
-		return this.OFFSET_Y;
-	}
+    @Override
+    public int getTextureHeight() {
+        return TEXTURE_HEIGHT;
+    }
 
-	@Override
-	public int getU() {
-		return U;
-	}
+    @Override
+    public int getTextureWidth() {
+        return TEXTURE_WIDTH;
+    }
 
-	@Override
-	public int getV() {
-		return V;
-	}
+    @Override
+    public void appendTooltip(Consumer<Text> tooltip) {
+        Text energyStored = TextUtil.unit(this.STACK.getValue());
+        Text maxEnergy = TextUtil.unit(this.STACK.getMaxValue(), "generic.ntm.energy");
 
-	@Override
-	public int getTextureHeight() {
-		return TEXTURE_HEIGHT;
-	}
+        tooltip.accept(Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
 
-	@Override
-	public int getTextureWidth() {
-		return TEXTURE_WIDTH;
-	}
+        for (Supplier<Text> supplier : EXTRA_TEXT) {
+            tooltip.accept(supplier.get());
+        }
+    }
 
-	@Override
-	public void appendTooltip(Consumer<Text> tooltip) {
-		Text energyStored = TextUtil.unit(this.STACK.getValue());
-		Text maxEnergy = TextUtil.unit(this.STACK.getMaxValue(), "generic.ntm.energy");
+    @Override
+    public Identifier getTexture() {
+        return TEXTURE;
+    }
 
-		tooltip.accept(Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
-
-		for (Supplier<Text> supplier : EXTRA_TEXT) {
-			tooltip.accept(supplier.get());
-		}
-	}
-
-	@Override
-	public Identifier getTexture() {
-		return TEXTURE;
-	}
-
-	@Override
-	public @Range(from = 0, to = 1) double getFillState() {
-		return (double) this.STACK.getValue() / (double) this.STACK.getMaxValue();
-	}
+    @Override
+    public @Range(from = 0, to = 1) double getFillState() {
+        return (double) this.STACK.getValue() / (double) this.STACK.getMaxValue();
+    }
 }

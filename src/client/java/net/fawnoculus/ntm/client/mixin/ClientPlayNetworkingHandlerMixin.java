@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkingHandlerMixin {
-	@Inject(at = @At("TAIL"), method = "onGameJoin")
-	private void updateVersionReceived(GameJoinS2CPacket packet, CallbackInfo ci) {
-		ConnectToServerEvent.EVENT.invoker().onJoin((ClientPlayNetworkHandler) (Object) this, packet);
-	}
+    @Inject(at = @At("TAIL"), method = "onGameJoin")
+    private void updateVersionReceived(GameJoinS2CPacket packet, CallbackInfo ci) {
+        ConnectToServerEvent.EVENT.invoker().onJoin((ClientPlayNetworkHandler) (Object) this, packet);
+    }
 }

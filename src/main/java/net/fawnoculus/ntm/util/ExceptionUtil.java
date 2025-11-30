@@ -3,22 +3,28 @@ package net.fawnoculus.ntm.util;
 import net.fawnoculus.ntm.NTMConfig;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class ExceptionUtil {
-	public static @NotNull String makePretty(@NotNull Throwable throwable) {
-		return makePretty(throwable, NTMConfig.PRINT_STACKTRACE.getValue());
-	}
+    public static @NotNull String makePretty(@NotNull Throwable throwable) {
+        return makePretty(throwable, NTMConfig.PRINT_STACKTRACE.getValue());
+    }
 
-	public static @NotNull String makePretty(@NotNull Throwable throwable, boolean stacktrace) {
-		StringBuilder Exception = new StringBuilder(throwable.toString());
+    public static @NotNull String makePretty(@NotNull Throwable throwable, boolean stacktrace) {
+        if (stacktrace) {
+            StringWriter writer = new StringWriter();
+            writer.append(throwable.toString());
+            writer.append('\n');
 
-		if (stacktrace) {
-			for (StackTraceElement element : throwable.getStackTrace()) {
-				Exception
-				  .append("\n\t")
-				  .append(element);
-			}
-		}
+            PrintWriter printWriter = new PrintWriter(writer);
+            throwable.printStackTrace(printWriter);
+            printWriter.flush();
+            printWriter.close();
 
-		return Exception.toString();
-	}
+            return writer.toString();
+        }
+
+        return throwable.toString();
+    }
 }

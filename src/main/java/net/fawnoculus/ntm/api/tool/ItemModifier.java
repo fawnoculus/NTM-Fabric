@@ -17,38 +17,38 @@ import java.util.Optional;
  * All modifiers can be found in {@link Modifiers}
  */
 public abstract class ItemModifier {
-	public static final HashMap<Identifier, ItemModifier> ID_TO_MODIFIER = new HashMap<>();
-	private final Identifier ID;
+    public static final HashMap<Identifier, ItemModifier> ID_TO_MODIFIER = new HashMap<>();
+    private final Identifier ID;
 
-	public ItemModifier(Identifier id) {
-		this.ID = id;
+    public ItemModifier(Identifier id) {
+        this.ID = id;
 
-		ID_TO_MODIFIER.put(id, this);
-	}
+        ID_TO_MODIFIER.put(id, this);
+    }
 
-	public static Optional<ItemModifier> get(Identifier id) {
-		return Optional.ofNullable(ID_TO_MODIFIER.get(id));
-	}
+    public static Optional<ItemModifier> get(Identifier id) {
+        return Optional.ofNullable(ID_TO_MODIFIER.get(id));
+    }
 
-	public Identifier getId() {
-		return ID;
-	}
+    public Identifier getId() {
+        return ID;
+    }
 
-	public MutableText getFullName(int level) {
-		if (level == 0) {
-			return getName();
-		}
-		return getName().append(" ").append(getLevelText(level));
-	}
+    public MutableText getFullName(int level) {
+        if (level == 0) {
+            return getName();
+        }
+        return getName().append(" ").append(getLevelText(level));
+    }
 
-	public MutableText getName() {
-		return Text.translatable("tooltip." + getId().getNamespace() + ".modifier." + getId().getPath());
-	}
+    public MutableText getName() {
+        return Text.translatable("tooltip." + getId().getNamespace() + ".modifier." + getId().getPath());
+    }
 
-	public MutableText getLevelText(int level) {
-		return Text.literal("(" + level + ")");
-	}
+    public MutableText getLevelText(int level) {
+        return Text.literal("(" + level + ")");
+    }
 
-	public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-	}
+    public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
+    }
 }

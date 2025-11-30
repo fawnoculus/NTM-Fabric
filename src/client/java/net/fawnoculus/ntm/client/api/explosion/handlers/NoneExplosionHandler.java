@@ -7,12 +7,12 @@ import net.minecraft.util.Unit;
 import net.minecraft.util.math.BlockPos;
 
 public class NoneExplosionHandler extends NTMExplosionHandler<Unit> {
-	public NoneExplosionHandler(NTMExplosionType<Unit> type) {
-		super(type);
-	}
+    public NoneExplosionHandler(NTMExplosionType<Unit> type) {
+        super(type);
+    }
 
-	@Override
-	public void onExplosion(ClientPlayNetworking.Context context, BlockPos pos, Unit extraData) {
+    @Override
+    public void onExplosion(ClientPlayNetworking.Context context, BlockPos pos, Unit extraData) {
 
-	}
+    }
 }

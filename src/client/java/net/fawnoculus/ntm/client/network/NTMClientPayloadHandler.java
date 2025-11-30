@@ -16,34 +16,34 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class NTMClientPayloadHandler {
-	public static void initialize() {
-		ClientPlayNetworking.registerGlobalReceiver(AdvancedMessagePayload.ID, (payload, context) -> MessageSystem.addMessage(payload.message()));
-		ClientPlayNetworking.registerGlobalReceiver(NTMExplosionPayload.ID, NTMExplosionHandlerRegistry::handleExplosionPacket);
-		ClientPlayNetworking.registerGlobalReceiver(RemoveMessagePayload.ID, (payload, context) -> MessageSystem.removeMessage(payload.identifier()));
-		ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesPayload.ID, (payload, context) -> MessageSystem.removeAllMessages());
-		ClientPlayNetworking.registerGlobalReceiver(RadiationInformationPayload.ID, ClientRadiationManager::handlePacket);
-		ClientPlayNetworking.registerGlobalReceiver(RadiationRegistryPayload.ID, ClientRadiationRegistry::updateFromPacket);
-		ClientPlayNetworking.registerGlobalReceiver(HazmatRegistryPayload.ID, ClientHazmatRegistry::updateFromPacket);
-		ClientPlayNetworking.registerGlobalReceiver(FluidDataRegistryPayload.ID, ClientFluidDataRegistry::updateFromPacket);
-		ClientPlayNetworking.registerGlobalReceiver(NTMVersionPayload.ID, ClientReceivedVersionHandler::handlePacket);
-		ClientPlayNetworking.registerGlobalReceiver(InventorySyncPayload.ID, NTMClientPayloadHandler::handleInventorySync);
-	}
+    public static void initialize() {
+        ClientPlayNetworking.registerGlobalReceiver(AdvancedMessagePayload.ID, (payload, context) -> MessageSystem.addMessage(payload.message()));
+        ClientPlayNetworking.registerGlobalReceiver(NTMExplosionPayload.ID, NTMExplosionHandlerRegistry::handleExplosionPacket);
+        ClientPlayNetworking.registerGlobalReceiver(RemoveMessagePayload.ID, (payload, context) -> MessageSystem.removeMessage(payload.identifier()));
+        ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesPayload.ID, (payload, context) -> MessageSystem.removeAllMessages());
+        ClientPlayNetworking.registerGlobalReceiver(RadiationInformationPayload.ID, ClientRadiationManager::handlePacket);
+        ClientPlayNetworking.registerGlobalReceiver(RadiationRegistryPayload.ID, ClientRadiationRegistry::updateFromPacket);
+        ClientPlayNetworking.registerGlobalReceiver(HazmatRegistryPayload.ID, ClientHazmatRegistry::updateFromPacket);
+        ClientPlayNetworking.registerGlobalReceiver(FluidDataRegistryPayload.ID, ClientFluidDataRegistry::updateFromPacket);
+        ClientPlayNetworking.registerGlobalReceiver(NTMVersionPayload.ID, ClientReceivedVersionHandler::handlePacket);
+        ClientPlayNetworking.registerGlobalReceiver(InventorySyncPayload.ID, NTMClientPayloadHandler::handleInventorySync);
+    }
 
-	private static void handleInventorySync(InventorySyncPayload payload, @NotNull ClientPlayNetworking.Context context) {
-		if (context.player() == null) return;
-		if (context.player().clientWorld == null) return;
+    private static void handleInventorySync(InventorySyncPayload payload, @NotNull ClientPlayNetworking.Context context) {
+        if (context.player() == null) return;
+        if (context.player().clientWorld == null) return;
 
-		ClientWorld world = context.player().clientWorld;
-		BlockEntity be = world.getBlockEntity(payload.pos());
-		if (be instanceof Inventory inventory) {
-			int i = 0;
-			for (ItemStack stack : payload.inventory()) {
-				inventory.setStack(i, stack);
-				i++;
-			}
+        ClientWorld world = context.player().clientWorld;
+        BlockEntity be = world.getBlockEntity(payload.pos());
+        if (be instanceof Inventory inventory) {
+            int i = 0;
+            for (ItemStack stack : payload.inventory()) {
+                inventory.setStack(i, stack);
+                i++;
+            }
 
-			world.updateListeners(payload.pos(), be.getCachedState(), be.getCachedState(), Block.NOTIFY_ALL);
-		}
-	}
+            world.updateListeners(payload.pos(), be.getCachedState(), be.getCachedState(), Block.NOTIFY_ALL);
+        }
+    }
 
 }

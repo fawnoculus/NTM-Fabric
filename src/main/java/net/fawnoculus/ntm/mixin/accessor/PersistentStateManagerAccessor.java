@@ -8,6 +8,6 @@ import java.nio.file.Path;
 
 @Mixin(PersistentStateManager.class)
 public interface PersistentStateManagerAccessor {
-	@Accessor("directory")
-	Path NTM$getDirectory();
+    @Accessor("directory")
+    Path NTM$getDirectory();
 }

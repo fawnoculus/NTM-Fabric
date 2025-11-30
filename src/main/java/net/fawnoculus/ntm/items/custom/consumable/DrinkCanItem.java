@@ -13,32 +13,32 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class DrinkCanItem extends TooltipItem {
-	public DrinkCanItem(Settings settings, List<StatusEffectInstance> effects) {
-		super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK));
+    private final List<StatusEffectInstance> EFFECTS;
 
-		this.EFFECTS = effects;
-	}
+    public DrinkCanItem(Settings settings, List<StatusEffectInstance> effects) {
+        super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK));
 
-	public DrinkCanItem(Settings settings, int tooltipCount, List<StatusEffectInstance> effects) {
-		super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK), tooltipCount);
+        this.EFFECTS = effects;
+    }
 
-		this.EFFECTS = effects;
-	}
+    public DrinkCanItem(Settings settings, int tooltipCount, List<StatusEffectInstance> effects) {
+        super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK), tooltipCount);
 
-	private final List<StatusEffectInstance> EFFECTS;
+        this.EFFECTS = effects;
+    }
 
-	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof PlayerEntity player && !player.isCreative()) {
-			stack.decrement(1);
-			player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_CAN));
-			player.getInventory().offerOrDrop(new ItemStack(NTMItems.RING_PULL));
-		}
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        if (user instanceof PlayerEntity player && !player.isCreative()) {
+            stack.decrement(1);
+            player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_CAN));
+            player.getInventory().offerOrDrop(new ItemStack(NTMItems.RING_PULL));
+        }
 
-		for (StatusEffectInstance effect : EFFECTS) {
-			user.addStatusEffect(new StatusEffectInstance(effect));
-		}
+        for (StatusEffectInstance effect : EFFECTS) {
+            user.addStatusEffect(new StatusEffectInstance(effect));
+        }
 
-		return super.finishUsing(stack, world, user);
-	}
+        return super.finishUsing(stack, world, user);
+    }
 }

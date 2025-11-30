@@ -6,17 +6,17 @@ import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.NotNull;
 
 public interface CustomDataHolder {
-	String KEY = "ntm.custom_data";
+    String KEY = "ntm.custom_data";
 
-	@NotNull NbtCompound NTM$getCustomData();
+    static CustomDataHolder from(WorldChunk chunk) {
+        return (CustomDataHolder) chunk;
+    }
 
-	void NTM$setCustomData(NbtCompound customData);
+    static CustomDataHolder from(Entity entity) {
+        return (CustomDataHolder) entity;
+    }
 
-	static CustomDataHolder from(WorldChunk chunk) {
-		return (CustomDataHolder) chunk;
-	}
+    @NotNull NbtCompound NTM$getCustomData();
 
-	static CustomDataHolder from(Entity entity) {
-		return (CustomDataHolder) entity;
-	}
+    void NTM$setCustomData(NbtCompound customData);
 }

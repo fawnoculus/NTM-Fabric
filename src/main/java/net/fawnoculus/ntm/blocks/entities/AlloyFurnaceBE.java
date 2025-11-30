@@ -31,164 +31,161 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class AlloyFurnaceBE extends AbstractInventoryBE implements ExtendedScreenHandlerFactory<BlockPosPayload> {
-	public AlloyFurnaceBE(BlockPos pos, BlockState state) {
-		super(NTMBlockEntities.ALLOY_FURNACE_BE, pos, state, 4);
-	}
+    public static final int OUTPUT_SLOT_INDEX = 0;
+    public static final int FUEL_SLOT_INDEX = 1;
+    public static final int INPUT_TOP_SLOT_INDEX = 2;
+    public static final int INPUT_BOTTOM_SLOT_INDEX = 3;
+    private static final int MAX_FUEL = 102400;
+    private static final int FUEL_PER_TICK = 8;
+    private static final int MAX_PROGESS = 400;
+    private static final Text DISPLAY_NAME = Text.translatable("container.ntm.alloy_furnace");
+    private int fuel = 0;
+    private int progress = 0;
 
-	private static final int MAX_FUEL = 102400;
-	private static final int FUEL_PER_TICK = 8;
-	private int fuel = 0;
+    public AlloyFurnaceBE(BlockPos pos, BlockState state) {
+        super(NTMBlockEntities.ALLOY_FURNACE_BE, pos, state, 4);
+    }
 
-	private static final int MAX_PROGESS = 400;
-	private int progress = 0;
+    public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, AlloyFurnaceBE entity) {
+        entity.processFuelInput();
+        if (entity.canCraft()) {
+            entity.addProgress();
+            if (entity.progressFinished()) {
+                entity.craftOutput();
+                entity.resetProgress();
+            }
+        } else {
+            entity.resetProgress();
+        }
+        entity.markDirty();
+    }
 
-	public static final int OUTPUT_SLOT_INDEX = 0;
-	public static final int FUEL_SLOT_INDEX = 1;
-	public static final int INPUT_TOP_SLOT_INDEX = 2;
-	public static final int INPUT_BOTTOM_SLOT_INDEX = 3;
+    public boolean canCraft() {
+        Optional<RecipeEntry<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
+        return recipe.isPresent()
+          && this.canInsertIntoSlot(OUTPUT_SLOT_INDEX, recipe.get().value().output())
+          && this.hasEnoughFuel();
+    }
 
-	private static final Text DISPLAY_NAME = Text.translatable("container.ntm.alloy_furnace");
+    private boolean hasEnoughFuel() {
+        return fuel >= FUEL_PER_TICK;
+    }
 
-	public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, AlloyFurnaceBE entity) {
-		entity.processFuelInput();
-		if (entity.canCraft()) {
-			entity.addProgress();
-			if (entity.progressFinished()) {
-				entity.craftOutput();
-				entity.resetProgress();
-			}
-		} else {
-			entity.resetProgress();
-		}
-		entity.markDirty();
-	}
+    private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            return serverWorld.getRecipeManager()
+              .getFirstMatch(NTMRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
+        }
+        return Optional.empty();
+    }
 
-	public boolean canCraft() {
-		Optional<RecipeEntry<AlloyFurnaceRecipe>> recipe = getCurrentRecipe();
-		return recipe.isPresent()
-		  && this.canInsertIntoSlot(OUTPUT_SLOT_INDEX, recipe.get().value().output())
-		  && this.hasEnoughFuel();
-	}
+    private boolean progressFinished() {
+        return this.progress >= MAX_PROGESS;
+    }
 
-	private boolean hasEnoughFuel() {
-		return fuel >= FUEL_PER_TICK;
-	}
+    private void craftOutput() {
+        if (getCurrentRecipe().isEmpty()) throw new IllegalStateException();
+        RecipeEntry<AlloyFurnaceRecipe> recipe = getCurrentRecipe().get();
 
-	private Optional<RecipeEntry<AlloyFurnaceRecipe>> getCurrentRecipe() {
-		if (this.getWorld() instanceof ServerWorld serverWorld) {
-			return serverWorld.getRecipeManager()
-			  .getFirstMatch(NTMRecipes.ALLOY_FURNACE_RECIPE_TYPE, new AlloyFurnaceRecipeInput(this.getInventory().getStack(INPUT_TOP_SLOT_INDEX), this.getInventory().getStack(INPUT_BOTTOM_SLOT_INDEX)), serverWorld);
-		}
-		return Optional.empty();
-	}
+        ItemStack recipeOutput = recipe.value().output().copy();
+        recipeOutput.setCount(this.getInventory().getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
 
-	private boolean progressFinished() {
-		return this.progress >= MAX_PROGESS;
-	}
+        this.getInventory().setStack(OUTPUT_SLOT_INDEX, recipeOutput);
 
-	private void craftOutput() {
-		if (getCurrentRecipe().isEmpty()) throw new IllegalStateException();
-		RecipeEntry<AlloyFurnaceRecipe> recipe = getCurrentRecipe().get();
+        this.getInventory().removeStack(INPUT_BOTTOM_SLOT_INDEX, 1);
+        this.getInventory().removeStack(INPUT_TOP_SLOT_INDEX, 1);
+    }
 
-		ItemStack recipeOutput = recipe.value().output().copy();
-		recipeOutput.setCount(this.getInventory().getStack(OUTPUT_SLOT_INDEX).getCount() + recipeOutput.getCount());
+    private void addProgress() {
+        this.fuel -= FUEL_PER_TICK;
+        this.progress++;
 
-		this.getInventory().setStack(OUTPUT_SLOT_INDEX, recipeOutput);
+        if (hasExtension()) {
+            this.progress++;
+            this.progress++;
+        }
 
-		this.getInventory().removeStack(INPUT_BOTTOM_SLOT_INDEX, 1);
-		this.getInventory().removeStack(INPUT_TOP_SLOT_INDEX, 1);
-	}
+        if (this.world != null) {
+            BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
+            this.world.setBlockState(this.pos, state);
+        }
+    }
 
-	private void addProgress() {
-		this.fuel -= FUEL_PER_TICK;
-		this.progress++;
+    private void resetProgress() {
+        this.progress = 0;
 
-		if (hasExtension()) {
-			this.progress++;
-			this.progress++;
-		}
+        if (this.world != null && !this.canCraft()) { // this is to avoid flickering
+            BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, false);
+            this.world.setBlockState(this.pos, state);
+        }
+    }
 
-		if (this.world != null) {
-			BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
-			this.world.setBlockState(this.pos, state);
-		}
-	}
+    private void processFuelInput() {
+        assert this.getWorld() != null;
+        FuelRegistry fuelRegistry = this.getWorld().getFuelRegistry();
+        ItemStack fuelStack = this.getInventory().getStack(FUEL_SLOT_INDEX);
+        if (!fuelRegistry.isFuel(fuelStack)) return;
 
-	private void resetProgress() {
-		this.progress = 0;
+        int fuelTicks = fuelRegistry.getFuelTicks(fuelStack);
+        if (fuelTicks >= MAX_FUEL - this.fuel) return;
+        this.fuel += fuelTicks;
 
-		if (this.world != null && !this.canCraft()) { // this is to avoid flickering
-			BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, false);
-			this.world.setBlockState(this.pos, state);
-		}
-	}
+        Item item = fuelStack.getItem();
+        fuelStack.decrement(1);
+        if (fuelStack.isEmpty()) {
+            this.getInventory().setStack(FUEL_SLOT_INDEX, item.getRecipeRemainder());
+        }
+    }
 
-	private void processFuelInput() {
-		assert this.getWorld() != null;
-		FuelRegistry fuelRegistry = this.getWorld().getFuelRegistry();
-		ItemStack fuelStack = this.getInventory().getStack(FUEL_SLOT_INDEX);
-		if (!fuelRegistry.isFuel(fuelStack)) return;
+    private boolean hasExtension() {
+        assert this.getWorld() != null;
+        return this.getWorld().getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
+    }
 
-		int fuelTicks = fuelRegistry.getFuelTicks(fuelStack);
-		if (fuelTicks >= MAX_FUEL - this.fuel) return;
-		this.fuel += fuelTicks;
+    @Override
+    protected void readData(ReadView view) {
+        super.readData(view);
+        fuel = view.getInt("fuel", 0);
+        progress = view.getInt("process", 0);
+    }
 
-		Item item = fuelStack.getItem();
-		fuelStack.decrement(1);
-		if (fuelStack.isEmpty()) {
-			this.getInventory().setStack(FUEL_SLOT_INDEX, item.getRecipeRemainder());
-		}
-	}
+    @Override
+    protected void writeData(WriteView view) {
+        view.putInt("fuel", fuel);
+        view.putInt("process", progress);
+        super.writeData(view);
+    }
 
-	private boolean hasExtension() {
-		assert this.getWorld() != null;
-		return this.getWorld().getBlockState(this.pos).get(AlloyFurnaceBlock.EXTENSION);
-	}
+    @Override
+    public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
 
-	@Override
-	protected void readData(ReadView view) {
-		super.readData(view);
-		fuel = view.getInt("fuel", 0);
-		progress = view.getInt("process", 0);
-	}
+    public double getFuel() {
+        return (double) this.fuel / (double) MAX_FUEL;
+    }
 
-	@Override
-	protected void writeData(WriteView view) {
-		view.putInt("fuel", fuel);
-		view.putInt("process", progress);
-		super.writeData(view);
-	}
+    public double getProgress() {
+        return (double) this.progress / (double) MAX_PROGESS;
+    }
 
-	@Override
-	public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
-		return BlockEntityUpdateS2CPacket.create(this);
-	}
+    public boolean showFireInGUI() {
+        if (this.world == null) return false;
+        return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
+    }
 
-	public double getFuel() {
-		return (double) this.fuel / (double) MAX_FUEL;
-	}
+    @Override
+    public Text getDisplayName() {
+        return DISPLAY_NAME;
+    }
 
-	public double getProgress() {
-		return (double) this.progress / (double) MAX_PROGESS;
-	}
+    @Override
+    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new AlloyFurnaceScreenHandler(syncId, playerInventory, this);
+    }
 
-	public boolean showFireInGUI() {
-		if (this.world == null) return false;
-		return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
-	}
-
-	@Override
-	public Text getDisplayName() {
-		return DISPLAY_NAME;
-	}
-
-	@Override
-	public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-		return new AlloyFurnaceScreenHandler(syncId, playerInventory, this);
-	}
-
-	@Override
-	public BlockPosPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
-		return new BlockPosPayload(this.pos);
-	}
+    @Override
+    public BlockPosPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
+        return new BlockPosPayload(this.pos);
+    }
 }

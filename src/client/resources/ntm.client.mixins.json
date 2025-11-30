@@ -1,15 +1,18 @@
 {
-	"required": true,
-	"minVersion": "0.8",
-	"package": "net.fawnoculus.ntm.client.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"ClientPlayNetworkingHandlerMixin",
-		"ClientsideItemStackMixin",
-		"MinecraftClientMixin",
-		"StatusEffectsDisplayMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.fawnoculus.ntm.client.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "ClientPlayNetworkingHandlerMixin",
+        "ClientsideItemStackMixin",
+        "KeyboardMixin",
+        "MinecraftClientMixin",
+        "MouseMixin",
+        "StatusEffectsDisplayMixin",
+        "accessor.HandledScreenInvoker"
+    ],
+    "injectors": {
+        "defaultRequire": 1
 	}
 }

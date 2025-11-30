@@ -17,23 +17,23 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class ScrapPancakeItem extends Item {
-	public ScrapPancakeItem(Settings settings) {
-		super(settings.food(NTMFoodComponents.SCRAP_PANCAKE));
-	}
+    public ScrapPancakeItem(Settings settings) {
+        super(settings.food(NTMFoodComponents.SCRAP_PANCAKE));
+    }
 
-	@Override
-	public ActionResult use(World world, PlayerEntity player, Hand hand) {
-		// TODO: this, once we have lunar cybernetic armor
-		ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessagePayload(new AdvancedMessage(
-		  NTM.id("scrap_pancake"),
-		  Text.translatable("message.ntm.teeth_to_soft").formatted(Formatting.YELLOW),
-		  1000.0f)));
-		return ActionResult.FAIL;
-	}
+    @Override
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
+        // TODO: this, once we have lunar cybernetic armor
+        ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessagePayload(new AdvancedMessage(
+          NTM.id("scrap_pancake"),
+          Text.translatable("message.ntm.teeth_to_soft").formatted(Formatting.YELLOW),
+          1000.0f)));
+        return ActionResult.FAIL;
+    }
 
-	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		// TODO: this, once we have lunar cybernetic armor
-		return super.finishUsing(stack, world, user);
-	}
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        // TODO: this, once we have lunar cybernetic armor
+        return super.finishUsing(stack, world, user);
+    }
 }

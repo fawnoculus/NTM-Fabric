@@ -6,18 +6,18 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.server.world.ServerWorld;
 
 public class PhosphorusBurnStatusEffect extends StatusEffect {
-	public PhosphorusBurnStatusEffect(StatusEffectCategory category, int color) {
-		super(category, color);
-	}
+    public PhosphorusBurnStatusEffect(StatusEffectCategory category, int color) {
+        super(category, color);
+    }
 
-	@Override
-	public boolean canApplyUpdateEffect(int duration, int amplifier) {
-		return duration % 10 == 0 && duration > 0;
-	}
+    @Override
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return duration % 10 == 0 && duration > 0;
+    }
 
-	@Override
-	public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-		entity.setFireTicks(20);
-		return true;
-	}
+    @Override
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
+        entity.setFireTicks(20);
+        return true;
+    }
 }

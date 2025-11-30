@@ -8,11 +8,11 @@ import net.minecraft.util.Identifier;
 
 public class NTMEntityTypeTags {
 
-	private static TagKey<EntityType<?>> of(String name) {
-		return of(NTM.id(name));
-	}
+    private static TagKey<EntityType<?>> of(String name) {
+        return of(NTM.id(name));
+    }
 
-	private static TagKey<EntityType<?>> of(Identifier identifier) {
-		return TagKey.of(RegistryKeys.ENTITY_TYPE, identifier);
-	}
+    private static TagKey<EntityType<?>> of(Identifier identifier) {
+        return TagKey.of(RegistryKeys.ENTITY_TYPE, identifier);
+    }
 }

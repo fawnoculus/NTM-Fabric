@@ -12,21 +12,20 @@ import net.minecraft.util.Identifier;
 import java.util.concurrent.CompletableFuture;
 
 public class NTMEntityTypeTagProvider extends FabricTagProvider<EntityType<?>> {
-	public NTMEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-		super(output, RegistryKeys.ENTITY_TYPE, registriesFuture);
-	}
+    public NTMEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, RegistryKeys.ENTITY_TYPE, registriesFuture);
+    }
 
+    private static Identifier id(EntityType<?> entityType) {
+        return Registries.ENTITY_TYPE.getId(entityType);
+    }
 
-	@Override
-	protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-	}
+    @Override
+    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+    }
 
-	private static Identifier id(EntityType<?> entityType) {
-		return Registries.ENTITY_TYPE.getId(entityType);
-	}
-
-	@Override
-	public String getName() {
-		return NTM.MOD_NAME + " EntityType-Tag Provider";
-	}
+    @Override
+    public String getName() {
+        return NTM.MOD_NAME + " EntityType-Tag Provider";
+    }
 }

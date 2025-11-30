@@ -6,15 +6,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class RadiumCoffeeItem extends CoffeeItem {
-	public RadiumCoffeeItem(Settings settings) {
-		super(settings);
-	}
+    public RadiumCoffeeItem(Settings settings) {
+        super(settings);
+    }
 
-	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()) {
-			RadiationManager.increaseRadiationExposure(user, 500_000);
-		}
-		return super.finishUsing(stack, world, user);
-	}
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        if (!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()) {
+            RadiationManager.increaseRadiationExposure(user, 500_000);
+        }
+        return super.finishUsing(stack, world, user);
+    }
 }

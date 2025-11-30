@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.api.multiblock;
 import net.minecraft.util.math.BlockPos;
 
 public interface MultiBlockBE {
-	BlockPos getMultiblockOrigin();
+    BlockPos getMultiblockOrigin();
 
-	void setMultiblockOrigin(BlockPos multiblockOrigin);
+    void setMultiblockOrigin(BlockPos multiblockOrigin);
 }

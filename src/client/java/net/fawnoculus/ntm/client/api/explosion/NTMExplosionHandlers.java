@@ -10,9 +10,9 @@ import static net.fawnoculus.ntm.client.api.explosion.NTMExplosionHandlerRegistr
 
 @SuppressWarnings("unused")
 public class NTMExplosionHandlers {
-	private static final NTMExplosionHandler<Unit> NONE_HANDLER = register(NTMExplosionTypeRegistry.NONE, NoneExplosionHandler::new);
-	private static final NTMExplosionHandler<Float> SIMPLE_HANDLER = register(NTMExplosionTypes.SIMPLE, SimpleExplosionHandler::new);
+    private static final NTMExplosionHandler<Unit> NONE_HANDLER = register(NTMExplosionTypeRegistry.NONE, NoneExplosionHandler::new);
+    private static final NTMExplosionHandler<Float> SIMPLE_HANDLER = register(NTMExplosionTypes.SIMPLE, SimpleExplosionHandler::new);
 
-	public static void initialize(){
-	}
+    public static void initialize() {
+    }
 }

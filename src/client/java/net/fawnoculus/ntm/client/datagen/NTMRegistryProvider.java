@@ -10,18 +10,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 public class NTMRegistryProvider extends FabricDynamicRegistryProvider {
-	public NTMRegistryProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-		super(output, registriesFuture);
-	}
+    public NTMRegistryProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, registriesFuture);
+    }
 
-	@Override
-	protected void configure(RegistryWrapper.@NotNull WrapperLookup registries, @NotNull Entries entries) {
-		entries.addAll(registries.getOrThrow(RegistryKeys.CONFIGURED_FEATURE));
-		entries.addAll(registries.getOrThrow(RegistryKeys.PLACED_FEATURE));
-	}
+    @Override
+    protected void configure(RegistryWrapper.@NotNull WrapperLookup registries, @NotNull Entries entries) {
+        entries.addAll(registries.getOrThrow(RegistryKeys.CONFIGURED_FEATURE));
+        entries.addAll(registries.getOrThrow(RegistryKeys.PLACED_FEATURE));
+    }
 
-	@Override
-	public String getName() {
-		return NTM.MOD_NAME + " Dynamic-Registry Provider";
-	}
+    @Override
+    public String getName() {
+        return NTM.MOD_NAME + " Dynamic-Registry Provider";
+    }
 }

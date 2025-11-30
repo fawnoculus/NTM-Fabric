@@ -9,14 +9,14 @@ import net.minecraft.client.MinecraftClient;
  */
 @FunctionalInterface
 public interface ClientTickEvents {
-	Event<ClientTickEvents> EVENT = EventFactory.createArrayBacked(ClientTickEvents.class,
-	  (listeners) -> (client) -> {
-		  for (ClientTickEvents event : listeners) {
-			  event.onTick(client);
-		  }
-	  }
-	);
+    Event<ClientTickEvents> EVENT = EventFactory.createArrayBacked(ClientTickEvents.class,
+      (listeners) -> (client) -> {
+          for (ClientTickEvents event : listeners) {
+              event.onTick(client);
+          }
+      }
+    );
 
 
-	void onTick(MinecraftClient client);
+    void onTick(MinecraftClient client);
 }

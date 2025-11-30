@@ -8,39 +8,39 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
 public interface InfoBar extends InfoArea {
-	int getU();
+    int getU();
 
-	int getV();
+    int getV();
 
-	int getTextureHeight();
+    int getTextureHeight();
 
-	int getTextureWidth();
+    int getTextureWidth();
 
-	@Nullable Identifier getTexture();
+    @Nullable Identifier getTexture();
 
-	@Range(from = 0, to = 1)
-	double getFillState();
+    @Range(from = 0, to = 1)
+    double getFillState();
 
-	@Override
-	default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-		InfoArea.super.render(context, mouseX, mouseY, deltaTicks);
-		this.drawBar(context);
-	}
+    @Override
+    default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+        InfoArea.super.render(context, mouseX, mouseY, deltaTicks);
+        this.drawBar(context);
+    }
 
-	default void drawBar(DrawContext context) {
-		if (this.getTexture() == null) return;
+    default void drawBar(DrawContext context) {
+        if (this.getTexture() == null) return;
 
-		int barSize = MathHelper.ceil(this.getFillState() * this.getHeigh());
+        int barSize = MathHelper.ceil(this.getFillState() * this.getHeigh());
 
-		context.drawTexture(RenderPipelines.GUI_TEXTURED, this.getTexture(),
-		  this.getX() + this.getOffsetX(),
-		  this.getY() + this.getOffsetY() + this.getHeigh() - barSize,
-		  this.getU(),
-		  this.getV() + this.getHeigh() - barSize,
-		  this.getWidth(),
-		  barSize,
-		  this.getTextureWidth(),
-		  this.getTextureHeight()
-		);
-	}
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, this.getTexture(),
+          this.getX() + this.getOffsetX(),
+          this.getY() + this.getOffsetY() + this.getHeigh() - barSize,
+          this.getU(),
+          this.getV() + this.getHeigh() - barSize,
+          this.getWidth(),
+          barSize,
+          this.getTextureWidth(),
+          this.getTextureHeight()
+        );
+    }
 }

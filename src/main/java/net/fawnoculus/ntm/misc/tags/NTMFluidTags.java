@@ -8,11 +8,11 @@ import net.minecraft.util.Identifier;
 
 public class NTMFluidTags {
 
-	private static TagKey<Fluid> of(String name) {
-		return of(NTM.id(name));
-	}
+    private static TagKey<Fluid> of(String name) {
+        return of(NTM.id(name));
+    }
 
-	private static TagKey<Fluid> of(Identifier identifier) {
-		return TagKey.of(RegistryKeys.FLUID, identifier);
-	}
+    private static TagKey<Fluid> of(Identifier identifier) {
+        return TagKey.of(RegistryKeys.FLUID, identifier);
+    }
 }

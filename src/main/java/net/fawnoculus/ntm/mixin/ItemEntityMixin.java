@@ -15,28 +15,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
-	public ItemEntityMixin(EntityType<?> type, World world) {
-		super(type, world);
-	}
+    @Shadow
+    private int itemAge;
 
-	@Shadow
-	public abstract ItemStack getStack();
+    public ItemEntityMixin(EntityType<?> type, World world) {
+        super(type, world);
+    }
 
-	@Shadow
-	private int itemAge;
+    @Shadow
+    public abstract ItemStack getStack();
 
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void removeWorldSpecificConfig(CallbackInfo ci) {
-		if (this.getStack().getItem() instanceof DangerousDrop dangerousDrop
-		  && this.getWorld() instanceof ServerWorld serverWorld
-		  && this.getWorld().getEntity(this.uuid) instanceof ItemEntity itemEntity
-		) {
-			if (this.itemAge == 0) {
-				dangerousDrop.onDropped(serverWorld, this.getPos(), itemEntity);
-			}
-			if (this.isOnGround()) {
-				dangerousDrop.onTouchBlock(serverWorld, this.getPos(), itemEntity);
-			}
-		}
-	}
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void removeWorldSpecificConfig(CallbackInfo ci) {
+        if (this.getStack().getItem() instanceof DangerousDrop dangerousDrop
+          && this.getWorld() instanceof ServerWorld serverWorld
+          && this.getWorld().getEntity(this.uuid) instanceof ItemEntity itemEntity
+        ) {
+            if (this.itemAge == 0) {
+                dangerousDrop.onDropped(serverWorld, this.getPos(), itemEntity);
+            }
+            if (this.isOnGround()) {
+                dangerousDrop.onTouchBlock(serverWorld, this.getPos(), itemEntity);
+            }
+        }
+    }
 }

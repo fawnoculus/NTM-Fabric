@@ -17,31 +17,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NTMClient implements ClientModInitializer {
-	public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client");
+    public static final Logger LOGGER = LoggerFactory.getLogger(NTM.MOD_NAME + "/Client");
 
-	@Override
-	public void onInitializeClient() {
-		LOGGER.info("Initializing Client Components ...");
+    @Override
+    public void onInitializeClient() {
+        LOGGER.info("Initializing Client Components ...");
 
-		NTMClientConfig.initialize();
-		NTMClientApi.initialize();
+        NTMClientConfig.initialize();
+        NTMClientApi.initialize();
 
-		NTMKeybinds.initialize();
+        NTMKeybinds.initialize();
 
-		NTMClientCommands.initialize();
+        NTMClientCommands.initialize();
 
-		NTMResources.initialize();
+        NTMResources.initialize();
 
-		NTMBlockEntityRender.initialize();
-		NTMParticleRender.initialize();
-		NTMHudRender.initialize();
+        NTMBlockEntityRender.initialize();
+        NTMParticleRender.initialize();
+        NTMHudRender.initialize();
 
-		NTMScreenHandlerType.initialize();
-		NTMHandledScreens.initialize();
+        NTMScreenHandlerType.initialize();
+        NTMHandledScreens.initialize();
 
-		NTMClientPayloadHandler.initialize();
-		ClientUtil.initialize();
+        NTMClientPayloadHandler.initialize();
+        ClientUtil.initialize();
 
-		LOGGER.info("Finished Client Initialization");
-	}
+        LOGGER.info("Finished Client Initialization");
+    }
 }

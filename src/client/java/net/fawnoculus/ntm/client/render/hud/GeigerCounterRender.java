@@ -16,50 +16,50 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
 public class GeigerCounterRender {
-	private static final Identifier TEXTURE = NTM.id("textures/gui/hud/geiger_counter.png");
-	private static final int THRESHOLD_1 = 10_000;
-	private static final int THRESHOLD_2 = 50_000;
-	private static final int THRESHOLD_3 = 100_000;
-	private static final int COLOR = ColorHelper.getArgb(256, 256, 256);
+    private static final Identifier TEXTURE = NTM.id("textures/gui/hud/geiger_counter.png");
+    private static final int THRESHOLD_1 = 10_000;
+    private static final int THRESHOLD_2 = 50_000;
+    private static final int THRESHOLD_3 = 100_000;
+    private static final int COLOR = ColorHelper.getArgb(256, 256, 256);
 
-	private static boolean shouldDraw() {
-		if (ClientUtil.getClient() == null) return false;
-		if (ClientUtil.getPlayer() == null) return false;
-		return PlayerUtil.hasItem(ClientUtil.getPlayer(), NTMItems.GEIGER_COUNTER);
-	}
+    private static boolean shouldDraw() {
+        if (ClientUtil.getClient() == null) return false;
+        if (ClientUtil.getPlayer() == null) return false;
+        return PlayerUtil.hasItem(ClientUtil.getPlayer(), NTMItems.GEIGER_COUNTER);
+    }
 
-	public static void drawGeigerCounter(DrawContext context, RenderTickCounter ignored) {
-		if (!shouldDraw()) return;
+    public static void drawGeigerCounter(DrawContext context, RenderTickCounter ignored) {
+        if (!shouldDraw()) return;
 
-		final int x = 5;
-		final int y = context.getScaledWindowHeight() - 20;
+        final int x = 5;
+        final int y = context.getScaledWindowHeight() - 20;
 
 
-		final double radPercentage = ClientRadiationManager.radiationExposure / 1000000;
-		final double incomingMilliRads = ClientRadiationManager.totalRadiation;
+        final double radPercentage = ClientRadiationManager.radiationExposure / 1000000;
+        final double incomingMilliRads = ClientRadiationManager.totalRadiation;
 
-		context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, 94, 18, 128, 128);
-		context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 1, y + 1, 1, 19, (int) (radPercentage * 73), 16, 128, 128);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, 94, 18, 128, 128);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 1, y + 1, 1, 19, (int) (radPercentage * 73), 16, 128, 128);
 
-		if (incomingMilliRads >= THRESHOLD_1) {
-			int u = 0;
-			if (incomingMilliRads >= THRESHOLD_2) {
-				u += 18;
-			}
-			if (incomingMilliRads >= THRESHOLD_3) {
-				u += 18;
-			}
-			context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 76, y - 18, u, 36, 18, 18, 128, 128);
-		}
-		if (incomingMilliRads > 0) {
-			String rads = String.valueOf(Math.round(incomingMilliRads / 1000.0));
-			if (incomingMilliRads < 1000) {
-				rads = "<1";
-			}
+        if (incomingMilliRads >= THRESHOLD_1) {
+            int u = 0;
+            if (incomingMilliRads >= THRESHOLD_2) {
+                u += 18;
+            }
+            if (incomingMilliRads >= THRESHOLD_3) {
+                u += 18;
+            }
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x + 76, y - 18, u, 36, 18, 18, 128, 128);
+        }
+        if (incomingMilliRads > 0) {
+            String rads = String.valueOf(Math.round(incomingMilliRads / 1000.0));
+            if (incomingMilliRads < 1000) {
+                rads = "<1";
+            }
 
-			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-			Text text = Text.translatable("generic.ntm.radiation.rad_s", rads).formatted(Formatting.RED);
-			context.drawText(textRenderer, text, x + 2, y - textRenderer.fontHeight, COLOR, true);
-		}
-	}
+            TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+            Text text = Text.translatable("generic.ntm.radiation.rad_s", rads).formatted(Formatting.RED);
+            context.drawText(textRenderer, text, x + 2, y - textRenderer.fontHeight, COLOR, true);
+        }
+    }
 }

@@ -10,35 +10,36 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-public record NTMExplosionPayload<T>(NTMExplosionType<T> explosionType, BlockPos pos, T extraData) implements CustomPayload {
-	public static final Identifier EXPLOSION_PAYLOAD_ID = NTM.id("explosion");
-	public static final CustomPayload.Id<NTMExplosionPayload<?>> ID = new CustomPayload.Id<>(EXPLOSION_PAYLOAD_ID);
-	public static final PacketCodec<RegistryByteBuf, NTMExplosionPayload<?>> PACKET_CODEC = new PacketCodec<>() {
-		@Override
-		public NTMExplosionPayload<?> decode(RegistryByteBuf buf) {
-			return handleDecoding(buf, NTMExplosionType.PACKET_CODEC.decode(buf));
-		}
+public record NTMExplosionPayload<T>(NTMExplosionType<T> explosionType, BlockPos pos,
+                                     T extraData) implements CustomPayload {
+    public static final Identifier EXPLOSION_PAYLOAD_ID = NTM.id("explosion");
+    public static final CustomPayload.Id<NTMExplosionPayload<?>> ID = new CustomPayload.Id<>(EXPLOSION_PAYLOAD_ID);
+    public static final PacketCodec<RegistryByteBuf, NTMExplosionPayload<?>> PACKET_CODEC = new PacketCodec<>() {
+        private static <T> void handleEncoding(RegistryByteBuf buf, NTMExplosionPayload<T> value) {
+            NTMExplosionType.PACKET_CODEC.encode(buf, value.explosionType);
+            BlockPos.PACKET_CODEC.encode(buf, value.pos);
+            buf.writeNbt(value.explosionType.getExtraDataCodec().encodeStart(NbtOps.INSTANCE, value.extraData).getOrThrow());
+        }
 
-		@Override
-		public void encode(RegistryByteBuf buf, NTMExplosionPayload<?> value) {
-			handleEncoding(buf, value);
-		}
+        private static <T> NTMExplosionPayload<T> handleDecoding(RegistryByteBuf buf, NTMExplosionType<T> type) {
+            BlockPos pos = BlockPos.PACKET_CODEC.decode(buf);
+            T extraData = type.getExtraDataCodec().decode(NbtOps.INSTANCE, buf.readNbt(NbtSizeTracker.ofUnlimitedBytes())).getOrThrow().getFirst();
+            return new NTMExplosionPayload<>(type, pos, extraData);
+        }
 
-		private static <T> void handleEncoding(RegistryByteBuf buf, NTMExplosionPayload<T> value) {
-			NTMExplosionType.PACKET_CODEC.encode(buf, value.explosionType);
-			BlockPos.PACKET_CODEC.encode(buf, value.pos);
-			buf.writeNbt(value.explosionType.getExtraDataCodec().encodeStart(NbtOps.INSTANCE, value.extraData).getOrThrow());
-		}
+        @Override
+        public NTMExplosionPayload<?> decode(RegistryByteBuf buf) {
+            return handleDecoding(buf, NTMExplosionType.PACKET_CODEC.decode(buf));
+        }
 
-		private static <T> NTMExplosionPayload<T> handleDecoding(RegistryByteBuf buf, NTMExplosionType<T> type) {
-			BlockPos pos = BlockPos.PACKET_CODEC.decode(buf);
-			T extraData = type.getExtraDataCodec().decode(NbtOps.INSTANCE, buf.readNbt(NbtSizeTracker.ofUnlimitedBytes())).getOrThrow().getFirst();
-			return new NTMExplosionPayload<>(type, pos, extraData);
-		}
-	};
+        @Override
+        public void encode(RegistryByteBuf buf, NTMExplosionPayload<?> value) {
+            handleEncoding(buf, value);
+        }
+    };
 
-	@Override
-	public CustomPayload.Id<? extends CustomPayload> getId() {
-		return ID;
-	}
+    @Override
+    public CustomPayload.Id<? extends CustomPayload> getId() {
+        return ID;
+    }
 }

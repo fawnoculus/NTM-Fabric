@@ -9,5 +9,5 @@ import net.minecraft.util.Identifier;
  * An Interface for Items to respond Clients to sending Interaction Packets
  */
 public interface InteractableItem {
-	void onInteraction(ServerPlayerEntity source, ItemStack heldStack, Identifier action, NbtCompound extraData);
+    void onInteraction(ServerPlayerEntity source, ItemStack heldStack, Identifier action, NbtCompound extraData);
 }

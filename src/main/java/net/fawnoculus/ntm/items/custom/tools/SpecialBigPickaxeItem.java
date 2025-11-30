@@ -7,11 +7,11 @@ import net.minecraft.item.ToolMaterial;
 
 
 public class SpecialBigPickaxeItem extends SpecialToolItem {
-	public SpecialBigPickaxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-		this(settings, material, attackDamage, attackSpeed, AbilityHandler.builder().build(), ModifierHandler.builder().build(), false);
-	}
+    public SpecialBigPickaxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
+        this(settings, material, attackDamage, attackSpeed, AbilityHandler.builder().build(), ModifierHandler.builder().build(), false);
+    }
 
-	public SpecialBigPickaxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
-		super(settings.tool(material, NTMBlockTags.BIG_PICKAXE_MINEABLE, attackDamage, attackSpeed, 0.0F), abilities, modifiers, canBreakDepthRock);
-	}
+    public SpecialBigPickaxeItem(Settings settings, ToolMaterial material, float attackDamage, float attackSpeed, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
+        super(settings.tool(material, NTMBlockTags.BIG_PICKAXE_MINEABLE, attackDamage, attackSpeed, 0.0F), abilities, modifiers, canBreakDepthRock);
+    }
 }

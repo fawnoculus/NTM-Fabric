@@ -29,55 +29,55 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NTM implements ModInitializer {
-	public static final String MOD_ID = "ntm";
-	public static final ModContainer MOD_CONTAINER = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
-	public static final ModMetadata METADATA = MOD_CONTAINER.getMetadata();
-	public static final String MOD_NAME = METADATA.getName();
-	public static final Version MOD_VERSION = METADATA.getVersion();
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
+    public static final String MOD_ID = "ntm";
+    public static final ModContainer MOD_CONTAINER = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
+    public static final ModMetadata METADATA = MOD_CONTAINER.getMetadata();
+    public static final String MOD_NAME = METADATA.getName();
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
+    public static final Version MOD_VERSION = METADATA.getVersion();
 
-	@Override
-	public void onInitialize() {
-		LOGGER.info("Initializing ...");
+    @Contract("_ -> new")
+    public static @NotNull Identifier id(String name) {
+        return Identifier.of(MOD_ID, name);
+    }
 
-		NTMConfig.initialize();
-		NTMApi.initialize();
+    @Override
+    public void onInitialize() {
+        LOGGER.info("Initializing ...");
 
-		NTMDamageTypes.initialize();
-		NTMStatusEffects.initialize();
+        NTMConfig.initialize();
+        NTMApi.initialize();
 
-		NTMSounds.initialize();
-		NTMParticles.initialize();
+        NTMDamageTypes.initialize();
+        NTMStatusEffects.initialize();
 
-		NTMToolMaterials.initialize();
-		NTMDataComponentTypes.initialize();
-		NTMItems.initialize();
-		NTMItemGroups.initialize();
-		ExtraItemData.initialize();
-		NTMEnchantmentEffects.initialize();
+        NTMSounds.initialize();
+        NTMParticles.initialize();
 
-		NTMFluids.initialize();
-		FluidData.initialize();
+        NTMToolMaterials.initialize();
+        NTMDataComponentTypes.initialize();
+        NTMItems.initialize();
+        NTMItemGroups.initialize();
+        ExtraItemData.initialize();
+        NTMEnchantmentEffects.initialize();
 
-		NTMBlocks.initialize();
-		NTMBlockEntities.initialize();
-		ExtraBlockData.initialize();
+        NTMFluids.initialize();
+        FluidData.initialize();
 
-		NTMRecipes.initialize();
+        NTMBlocks.initialize();
+        NTMBlockEntities.initialize();
+        ExtraBlockData.initialize();
 
-		NTMCommandArguments.initialize();
-		NTMCommands.initialize();
+        NTMRecipes.initialize();
 
-		NTMWorldGeneration.initialize();
+        NTMCommandArguments.initialize();
+        NTMCommands.initialize();
 
-		NTMPayloads.initialize();
-		NTMServerPayloadHandler.initialize();
+        NTMWorldGeneration.initialize();
 
-		NTM.LOGGER.info("Finished Initialization");
-	}
+        NTMPayloads.initialize();
+        NTMServerPayloadHandler.initialize();
 
-	@Contract("_ -> new")
-	public static @NotNull Identifier id(String name) {
-		return Identifier.of(MOD_ID, name);
-	}
+        NTM.LOGGER.info("Finished Initialization");
+    }
 }

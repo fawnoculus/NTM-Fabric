@@ -11,20 +11,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class AdvancedMessagePayloadTest {
-  @BeforeAll
-  static void beforeAll() {
-    SharedConstants.createGameVersion();
-    Bootstrap.initialize();
-  }
+    @BeforeAll
+    static void beforeAll() {
+        SharedConstants.createGameVersion();
+        Bootstrap.initialize();
+    }
 
-  @Test
-  void testCodec(){
-    AdvancedMessage testMessage = new AdvancedMessage(NTM.id("test"), Text.literal("this is a test"), 1000);
-    NbtCompound nbt = AdvancedMessage.encode(testMessage);
-    AdvancedMessage decodedMessage = AdvancedMessage.decode(nbt);
+    @Test
+    void testCodec() {
+        AdvancedMessage testMessage = new AdvancedMessage(NTM.id("test"), Text.literal("this is a test"), 1000);
+        NbtCompound nbt = AdvancedMessage.encode(testMessage);
+        AdvancedMessage decodedMessage = AdvancedMessage.decode(nbt);
 
-    Assertions.assertEquals(testMessage.getID(), decodedMessage.getID());
-    Assertions.assertEquals(testMessage.getMillisLeft(), decodedMessage.getMillisLeft());
-    Assertions.assertTrue(decodedMessage.getText().contains(testMessage.getText()));
-  }
+        Assertions.assertEquals(testMessage.getID(), decodedMessage.getID());
+        Assertions.assertEquals(testMessage.getMillisLeft(), decodedMessage.getMillisLeft());
+        Assertions.assertTrue(decodedMessage.getText().contains(testMessage.getText()));
+    }
 }

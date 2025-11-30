@@ -12,17 +12,17 @@ import java.util.List;
 
 public class NoneExplosionType implements NTMExplosionType<Unit> {
 
-	@Override
-	public Codec<Unit> getExtraDataCodec() {
-		return Unit.CODEC;
-	}
+    @Override
+    public Codec<Unit> getExtraDataCodec() {
+        return Unit.CODEC;
+    }
 
-	@Override
-	public void onExplode(ServerWorld world, BlockPos pos, Unit extraData) {
-	}
+    @Override
+    public void onExplode(ServerWorld world, BlockPos pos, Unit extraData) {
+    }
 
-	@Override
-	public Collection<ServerPlayerEntity> getAffectedPlayers(ServerWorld world, BlockPos pos, Unit extraData) {
-		return List.of();
-	}
+    @Override
+    public Collection<ServerPlayerEntity> getAffectedPlayers(ServerWorld world, BlockPos pos, Unit extraData) {
+        return List.of();
+    }
 }

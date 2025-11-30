@@ -15,75 +15,75 @@ import java.util.Map;
  * @param states the BlockStates mapped by their offset from the multiblock origin
  */
 public record MultiBlock(Map<BlockPos, BlockState> states) {
-	public boolean canPlaceAt(World world, BlockPos originPos, Direction rotation) {
-		for (BlockPos structurePos : states.keySet()) {
-			BlockPos offsetPos = getOffsetPos(originPos, structurePos, rotation);
-			if (!world.getBlockState(offsetPos).isReplaceable()) {
-				return false;
-			}
-		}
+    /**
+     * @param originPos    the Position where the origin block was placed
+     * @param structurePos the offset from the pos in the structure relative to the origin (in northwards rotation)
+     * @param rotation     the rotation in which the structure is placed
+     * @return the position of the block in the rotated structure
+     */
+    @Contract("_, _, _ -> new")
+    @SuppressWarnings("SuspiciousNameCombination")
+    private static @NotNull BlockPos getOffsetPos(BlockPos originPos, BlockPos structurePos, @NotNull Direction rotation) {
+        boolean invertX = false;
+        boolean invertY = false;
+        boolean invertZ = false;
 
-		return true;
-	}
+        boolean swapXY = false;
+        boolean swapXZ = false;
 
-	public void placeAt(World world, BlockPos originPos, Direction rotation) {
-		for (BlockPos structurePos : states.keySet()) {
-			BlockPos offsetPos = getOffsetPos(originPos, structurePos, rotation);
-			world.setBlockState(offsetPos, states.get(structurePos));
-			if (world.getBlockEntity(offsetPos) instanceof MultiBlockBE multiBlockBE) {
-				multiBlockBE.setMultiblockOrigin(originPos);
-			}
-		}
-	}
+        switch (rotation) {
+            case NORTH -> {
+            }
+            case SOUTH -> invertX = true;
+            case WEST -> swapXZ = true;
+            case EAST -> {
+                invertZ = true;
+                swapXZ = true;
+            }
+            case UP -> swapXY = true;
+            case DOWN -> {
+                swapXY = true;
+                invertY = true;
+            }
+        }
 
-	/**
-	 * @param originPos    the Position where the origin block was placed
-	 * @param structurePos the offset from the pos in the structure relative to the origin (in northwards rotation)
-	 * @param rotation     the rotation in which the structure is placed
-	 * @return the position of the block in the rotated structure
-	 */
-	@Contract("_, _, _ -> new")
-	@SuppressWarnings("SuspiciousNameCombination")
-	private static @NotNull BlockPos getOffsetPos(BlockPos originPos, BlockPos structurePos, @NotNull Direction rotation) {
-		boolean invertX = false;
-		boolean invertY = false;
-		boolean invertZ = false;
+        int offsetX = invertX ? -structurePos.getX() : structurePos.getX();
+        int offsetY = invertY ? -structurePos.getY() : structurePos.getY();
+        int offsetZ = invertZ ? -structurePos.getZ() : structurePos.getZ();
 
-		boolean swapXY = false;
-		boolean swapXZ = false;
+        if (swapXY) {
+            int temp = offsetY;
+            offsetY = offsetX;
+            offsetX = temp;
+        }
 
-		switch (rotation) {
-			case NORTH -> {
-			}
-			case SOUTH -> invertX = true;
-			case WEST -> swapXZ = true;
-			case EAST -> {
-				invertZ = true;
-				swapXZ = true;
-			}
-			case UP -> swapXY = true;
-			case DOWN -> {
-				swapXY = true;
-				invertY = true;
-			}
-		}
+        if (swapXZ) {
+            int temp = offsetZ;
+            offsetZ = offsetX;
+            offsetX = temp;
+        }
 
-		int offsetX = invertX ? -structurePos.getX() : structurePos.getX();
-		int offsetY = invertY ? -structurePos.getY() : structurePos.getY();
-		int offsetZ = invertZ ? -structurePos.getZ() : structurePos.getZ();
+        return new BlockPos(originPos.getX() + offsetX, originPos.getY() + offsetY, originPos.getZ() + offsetZ);
+    }
 
-		if (swapXY) {
-			int temp = offsetY;
-			offsetY = offsetX;
-			offsetX = temp;
-		}
+    public boolean canPlaceAt(World world, BlockPos originPos, Direction rotation) {
+        for (BlockPos structurePos : states.keySet()) {
+            BlockPos offsetPos = getOffsetPos(originPos, structurePos, rotation);
+            if (!world.getBlockState(offsetPos).isReplaceable()) {
+                return false;
+            }
+        }
 
-		if (swapXZ) {
-			int temp = offsetZ;
-			offsetZ = offsetX;
-			offsetX = temp;
-		}
+        return true;
+    }
 
-		return new BlockPos(originPos.getX() + offsetX, originPos.getY() + offsetY, originPos.getZ() + offsetZ);
-	}
+    public void placeAt(World world, BlockPos originPos, Direction rotation) {
+        for (BlockPos structurePos : states.keySet()) {
+            BlockPos offsetPos = getOffsetPos(originPos, structurePos, rotation);
+            world.setBlockState(offsetPos, states.get(structurePos));
+            if (world.getBlockEntity(offsetPos) instanceof MultiBlockBE multiBlockBE) {
+                multiBlockBE.setMultiblockOrigin(originPos);
+            }
+        }
+    }
 }

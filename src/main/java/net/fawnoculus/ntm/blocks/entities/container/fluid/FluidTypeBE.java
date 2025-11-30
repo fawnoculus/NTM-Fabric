@@ -12,26 +12,26 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class FluidTypeBE extends FluidBE {
-	public FluidTypeBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
+    private RegistryEntry<Fluid> fluidType = Registries.FLUID.getEntry(Fluids.EMPTY);
 
-	private RegistryEntry<Fluid> fluidType = Registries.FLUID.getEntry(Fluids.EMPTY);
+    public FluidTypeBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
 
-	@Override
-	public @Nullable Fluid getNodeFluid() {
-		return fluidType.value();
-	}
+    @Override
+    public @Nullable Fluid getNodeFluid() {
+        return fluidType.value();
+    }
 
-	@Override
-	protected void readData(ReadView view) {
-		this.fluidType = view.read("fluidType", Registries.FLUID.getEntryCodec()).orElse(Registries.FLUID.getEntry(Fluids.EMPTY));
-		super.readData(view);
-	}
+    @Override
+    protected void readData(ReadView view) {
+        this.fluidType = view.read("fluidType", Registries.FLUID.getEntryCodec()).orElse(Registries.FLUID.getEntry(Fluids.EMPTY));
+        super.readData(view);
+    }
 
-	@Override
-	protected void writeData(WriteView view) {
-		super.writeData(view);
-		view.put("fluidType", Registries.FLUID.getEntryCodec(), this.fluidType);
-	}
+    @Override
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        view.put("fluidType", Registries.FLUID.getEntryCodec(), this.fluidType);
+    }
 }

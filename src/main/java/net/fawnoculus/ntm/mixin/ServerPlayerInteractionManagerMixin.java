@@ -17,22 +17,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public abstract class ServerPlayerInteractionManagerMixin {
-	@Shadow
-	@Final
-	protected ServerPlayerEntity player;
+    @Shadow
+    @Final
+    protected ServerPlayerEntity player;
 
-	@Shadow
-	protected ServerWorld world;
+    @Shadow
+    protected ServerWorld world;
 
-	@Inject(method = "tryBreakBlock", at = @At(value = "HEAD"))
-	private void preBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-		if (player.getMainHandStack().getItem() instanceof SpecialTool specialTool) {
-			ItemStack stack = player.getMainHandStack();
-			BlockState state = world.getBlockState(pos);
+    @Inject(method = "tryBreakBlock", at = @At(value = "HEAD"))
+    private void preBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        if (player.getMainHandStack().getItem() instanceof SpecialTool specialTool) {
+            ItemStack stack = player.getMainHandStack();
+            BlockState state = world.getBlockState(pos);
 
-			if (stack.canMine(state, world, pos, player) && !(world.getBlockState(pos).getBlock() instanceof OperatorBlock && !player.isCreativeLevelTwoOp())) {
-				specialTool.preMine(stack, world, state, pos, player);
-			}
-		}
-	}
+            if (stack.canMine(state, world, pos, player) && !(world.getBlockState(pos).getBlock() instanceof OperatorBlock && !player.isCreativeLevelTwoOp())) {
+                specialTool.preMine(stack, world, state, pos, player);
+            }
+        }
+    }
 }

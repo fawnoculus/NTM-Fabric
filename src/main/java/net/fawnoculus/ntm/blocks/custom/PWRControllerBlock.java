@@ -14,36 +14,36 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public class PWRControllerBlock extends BlockWithEntity {
-	public PWRControllerBlock(Settings settings) {
-		super(settings);
-		setDefaultState(this.getDefaultState()
-		  .with(FACING, Direction.NORTH));
-	}
-	// TODO: this
-	// this is currently only here as the icon for the Machine Tab
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+    // TODO: this
+    // this is currently only here as the icon for the Machine Tab
 
-	public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+    public PWRControllerBlock(Settings settings) {
+        super(settings);
+        setDefaultState(this.getDefaultState()
+          .with(FACING, Direction.NORTH));
+    }
 
-	@Override
-	protected MapCodec<? extends BlockWithEntity> getCodec() {
-		return createCodec(PWRControllerBlock::new);
-	}
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return createCodec(PWRControllerBlock::new);
+    }
 
-	@Override
-	public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return null;
-	}
+    @Override
+    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return null;
+    }
 
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
-	}
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
 
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext context) {
-		if (context.getPlayer() != null) {
-			return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
-		}
-		return this.getDefaultState();
-	}
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext context) {
+        if (context.getPlayer() != null) {
+            return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
+        }
+        return this.getDefaultState();
+    }
 }
