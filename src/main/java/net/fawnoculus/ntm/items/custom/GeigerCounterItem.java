@@ -63,7 +63,7 @@ public class GeigerCounterItem extends Item {
             return ActionResult.SUCCESS;
         }
 
-        double chunkRadiation = RadiationManager.getChunkRadiation(serverWorld, user.getPos());
+        double chunkRadiation = RadiationManager.getChunkRadiation(serverWorld, user.getEntityPos());
         double totalRadiation = RadiationManager.getTotalRadiation(user);
         double playerContamination = RadiationManager.getRadiationExposure(user);
         double playerResistance = RadiationManager.getRadiationResistance(user);

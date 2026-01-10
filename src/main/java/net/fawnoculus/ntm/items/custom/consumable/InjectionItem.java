@@ -20,9 +20,11 @@ public class InjectionItem extends Item {
     private final @Nullable SoundEvent SOUND;
     private final List<Item> RETURN_ITEMS;
     private final BiConsumer<ServerWorld, LivingEntity> SERVER_USE;
+
     public InjectionItem(Settings settings, @Nullable SoundEvent sound, @Nullable Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
         this(settings, sound, returnItem != null ? List.of(returnItem) : List.of(), serverUse);
     }
+
     public InjectionItem(Settings settings, @Nullable SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
         super(settings);
 
@@ -41,7 +43,7 @@ public class InjectionItem extends Item {
             stack.decrement(1);
         }
         if (this.SOUND != null) {
-            world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), this.SOUND, SoundCategory.PLAYERS);
+            world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), this.SOUND, SoundCategory.PLAYERS);
         }
         for (Item returnItem : RETURN_ITEMS) {
             player.getInventory().offerOrDrop(new ItemStack(returnItem));
@@ -54,15 +56,15 @@ public class InjectionItem extends Item {
 
     @Override
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target.getWorld().isClient() || !(attacker instanceof PlayerEntity player)) {
+        if (target.getEntityWorld().isClient() || !(attacker instanceof PlayerEntity player)) {
             return;
         }
-        ServerWorld world = (ServerWorld) target.getWorld();
+        ServerWorld world = (ServerWorld) target.getEntityWorld();
         if (!player.isCreative()) {
             stack.decrement(1);
         }
         if (this.SOUND != null) {
-            world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), this.SOUND, SoundCategory.PLAYERS);
+            world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), this.SOUND, SoundCategory.PLAYERS);
         }
         for (Item returnItem : RETURN_ITEMS) {
             player.getInventory().offerOrDrop(new ItemStack(returnItem));

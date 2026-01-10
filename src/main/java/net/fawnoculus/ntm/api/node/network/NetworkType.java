@@ -12,6 +12,7 @@ import java.util.UUID;
 public class NetworkType {
     private final HashMap<UUID, NodeNetwork> NETWORKS = new HashMap<>();
     private final Identifier ID;
+
     public NetworkType(Identifier id) {
         this.ID = id;
     }

@@ -40,8 +40,8 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
 
         for (Polygon polygon : this.polygons) {
             for (Polygon.GeometryVertex vertex : polygon.vertices) {
-                if (vertex.X() > current) {
-                    current = vertex.X();
+                if (vertex.x() > current) {
+                    current = vertex.x();
                 }
             }
         }
@@ -55,8 +55,8 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
 
         for (Polygon polygon : this.polygons) {
             for (Polygon.GeometryVertex vertex : polygon.vertices) {
-                if (vertex.Y() > current) {
-                    current = vertex.X();
+                if (vertex.y() > current) {
+                    current = vertex.x();
                 }
             }
         }
@@ -70,8 +70,8 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
 
         for (Polygon polygon : this.polygons) {
             for (Polygon.GeometryVertex vertex : polygon.vertices) {
-                if (vertex.Z() > current) {
-                    current = vertex.X();
+                if (vertex.z() > current) {
+                    current = vertex.x();
                 }
             }
         }
@@ -85,8 +85,8 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
 
         for (Polygon polygon : this.polygons) {
             for (Polygon.GeometryVertex vertex : polygon.vertices) {
-                if (vertex.X() < current) {
-                    current = vertex.X();
+                if (vertex.x() < current) {
+                    current = vertex.x();
                 }
             }
         }
@@ -100,8 +100,8 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
 
         for (Polygon polygon : this.polygons) {
             for (Polygon.GeometryVertex vertex : polygon.vertices) {
-                if (vertex.Y() < current) {
-                    current = vertex.X();
+                if (vertex.y() < current) {
+                    current = vertex.x();
                 }
             }
         }
@@ -115,8 +115,8 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
 
         for (Polygon polygon : this.polygons) {
             for (Polygon.GeometryVertex vertex : polygon.vertices) {
-                if (vertex.Z() < current) {
-                    current = vertex.X();
+                if (vertex.z() < current) {
+                    current = vertex.x();
                 }
             }
         }

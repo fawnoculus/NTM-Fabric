@@ -30,10 +30,10 @@ public class NTMClientPayloadHandler {
     }
 
     private static void handleInventorySync(InventorySyncPayload payload, @NotNull ClientPlayNetworking.Context context) {
-        if (context.player() == null) return;
-        if (context.player().clientWorld == null) return;
+        if (!(context.player().getEntityWorld() instanceof ClientWorld world)) {
+            return;
+        }
 
-        ClientWorld world = context.player().clientWorld;
         BlockEntity be = world.getBlockEntity(payload.pos());
         if (be instanceof Inventory inventory) {
             int i = 0;

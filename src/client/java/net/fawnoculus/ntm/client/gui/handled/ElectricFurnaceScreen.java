@@ -16,6 +16,7 @@ public class ElectricFurnaceScreen extends HandledScreen<ElectricFurnaceScreenHa
     private static final Identifier TEXTURE = NTM.id("textures/gui/machine/electric_furnace.png");
     private final ElectricFurnaceBE BE = this.handler.getBlockEntity();
     private final EnergyBar energyBar = new EnergyBar(20, 17, 16, 52, BE.energy);
+
     public ElectricFurnaceScreen(ElectricFurnaceScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }

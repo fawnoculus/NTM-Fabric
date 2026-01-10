@@ -2,9 +2,8 @@ package net.fawnoculus.ntm.client.render;
 
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.fabricmc.fabric.api.resource.v1.pack.PackActivationType;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.client.NTMClient;
@@ -18,16 +17,13 @@ import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.model.BlockStateModel;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.Registries;
-import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.profiler.Profilers;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.function.Function;
 
 public class NTMResources {
@@ -71,37 +67,33 @@ public class NTMResources {
 
         private static void initialize() {
             // Builtin Resource Pack
-            if (!ResourceManagerHelper.registerBuiltinResourcePack(NTM.id("legacy"), NTM.MOD_CONTAINER, Text.translatable("resourcePack.ntm_legacy.name"), ResourcePackActivationType.NORMAL)) {
+
+
+            if (!ResourceLoader.registerBuiltinPack(NTM.id("legacy"), NTM.MOD_CONTAINER, PackActivationType.NORMAL)) {
                 NTMClient.LOGGER.warn("Failed to load Legacy Resource Pack");
             }
 
             // Load 3d Models
-            ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener() {
-                @Override
-                public Identifier getFabricId() {
-                    return NTM.id("wavefront_models");
-                }
+            ResourceLoader.get(ResourceType.CLIENT_RESOURCES).registerReloader(
+              NTM.id("wavefront_models"),
+              (store, prepareExecutor, reloadSynchronizer, applyExecutor) -> CompletableFuture
+                .runAsync(() -> {
+                      Profiler profiler = Profilers.get();
+                      profiler.push("[NTM] Loading Wavefront Models");
+                      NTMClient.LOGGER.info("Loading Wavefront Models");
+                      LoadWavefrontModelsEvent.EVENT.invoker().loadModels();
+                      profiler.pop();
+                      profiler.push("[NTM] Loading Wavefront Model Textures");
+                      NTMClient.LOGGER.info("Loading Wavefront Model Textures");
+                      LoadWavefrontModelTexturesEvent.EVENT.invoker().loadModelTextures();
+                      profiler.pop();
+                  }, prepareExecutor
+                )
+                .thenCompose(reloadSynchronizer::whenPrepared)
+                .thenRunAsync(() -> {
+                }, applyExecutor)
+            );
 
-                @Override
-                public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Executor prepareExecutor, Executor applyExecutor) {
-                    return CompletableFuture
-                      .runAsync(() -> {
-                            Profiler profiler = Profilers.get();
-                            profiler.push("[NTM] Loading Wavefront Models");
-                            NTMClient.LOGGER.info("Loading Wavefront Models");
-                            LoadWavefrontModelsEvent.EVENT.invoker().loadModels();
-                            profiler.pop();
-                            profiler.push("[NTM] Loading Wavefront Model Textures");
-                            NTMClient.LOGGER.info("Loading Wavefront Model Textures");
-                            LoadWavefrontModelTexturesEvent.EVENT.invoker().loadModelTextures();
-                            profiler.pop();
-                        }, prepareExecutor
-                      )
-                      .thenCompose(synchronizer::whenPrepared)
-                      .thenRunAsync(() -> {
-                      }, applyExecutor);
-                }
-            });
 
             ModelLoadingPlugin.register(pluginContext -> {
                 pluginContext.modifyBlockModelBeforeBake().register(ModelLoadingOverrides::getBlockModel);

@@ -11,7 +11,6 @@ import net.fawnoculus.ntm.client.render.NTMBlockEntityRender;
 import net.fawnoculus.ntm.client.render.NTMHudRender;
 import net.fawnoculus.ntm.client.render.NTMParticleRender;
 import net.fawnoculus.ntm.client.render.NTMResources;
-import net.fawnoculus.ntm.client.util.ClientUtil;
 import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,8 @@ public class NTMClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         LOGGER.info("Initializing Client Components ...");
+
+        NTMClientProxy.initialize();
 
         NTMClientConfig.initialize();
         NTMClientApi.initialize();
@@ -40,7 +41,6 @@ public class NTMClient implements ClientModInitializer {
         NTMHandledScreens.initialize();
 
         NTMClientPayloadHandler.initialize();
-        ClientUtil.initialize();
 
         LOGGER.info("Finished Client Initialization");
     }

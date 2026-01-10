@@ -28,14 +28,14 @@ public abstract class ItemEntityMixin extends Entity {
     @Inject(method = "tick", at = @At("HEAD"))
     private void removeWorldSpecificConfig(CallbackInfo ci) {
         if (this.getStack().getItem() instanceof DangerousDrop dangerousDrop
-          && this.getWorld() instanceof ServerWorld serverWorld
-          && this.getWorld().getEntity(this.uuid) instanceof ItemEntity itemEntity
+          && this.getEntityWorld() instanceof ServerWorld serverWorld
+          && this.getEntityWorld().getEntity(this.uuid) instanceof ItemEntity itemEntity
         ) {
             if (this.itemAge == 0) {
-                dangerousDrop.onDropped(serverWorld, this.getPos(), itemEntity);
+                dangerousDrop.onDropped(serverWorld, this.getEntityPos(), itemEntity);
             }
             if (this.isOnGround()) {
-                dangerousDrop.onTouchBlock(serverWorld, this.getPos(), itemEntity);
+                dangerousDrop.onTouchBlock(serverWorld, this.getEntityPos(), itemEntity);
             }
         }
     }

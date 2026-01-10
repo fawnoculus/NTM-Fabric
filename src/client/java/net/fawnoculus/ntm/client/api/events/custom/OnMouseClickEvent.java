@@ -3,14 +3,14 @@ package net.fawnoculus.ntm.client.api.events.custom;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.input.KeyInput;
+import net.minecraft.client.gui.Click;
 import org.jetbrains.annotations.NotNull;
 
-public interface OnKeyPressedEvent {
-    Event<@NotNull OnKeyPressedEvent> EVENT = EventFactory.createArrayBacked(OnKeyPressedEvent.class,
-      (listeners) -> (client, keyInput) -> {
-          for (OnKeyPressedEvent event : listeners) {
-              if (event.onKeyPressed(client, keyInput)) {
+public interface OnMouseClickEvent {
+    Event<@NotNull OnMouseClickEvent> EVENT = EventFactory.createArrayBacked(OnMouseClickEvent.class,
+      (listeners) -> (client, click) -> {
+          for (OnMouseClickEvent event : listeners) {
+              if (event.onClick(client, click)) {
                   return true;
               }
           }
@@ -21,5 +21,5 @@ public interface OnKeyPressedEvent {
     /**
      * @return if the following actions should be canceled or not
      */
-    boolean onKeyPressed(MinecraftClient client, KeyInput keyInput);
+    boolean onClick(MinecraftClient client, Click click);
 }

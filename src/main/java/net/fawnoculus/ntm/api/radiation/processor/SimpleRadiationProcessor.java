@@ -17,6 +17,7 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
     private final ChunkPos POS;
     private double passiveRadiation;
     private double activeRadiation;
+
     public SimpleRadiationProcessor(ServerWorld world, ChunkPos pos) {
         this.WORLD = world;
         this.POS = pos;

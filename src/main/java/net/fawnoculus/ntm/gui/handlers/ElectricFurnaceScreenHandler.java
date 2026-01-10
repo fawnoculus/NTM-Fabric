@@ -25,7 +25,7 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
 
     // Client Constructor
     public ElectricFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosPayload payload) {
-        this(syncId, playerInventory, (ElectricFurnaceBE) playerInventory.player.getWorld().getBlockEntity(payload.pos()), new ArrayPropertyDelegate(2));
+        this(syncId, playerInventory, (ElectricFurnaceBE) playerInventory.player.getEntityWorld().getBlockEntity(payload.pos()), new ArrayPropertyDelegate(2));
     }
 
     // Common Constructor

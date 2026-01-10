@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class SimpleEnergyStorageBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<BlockPosPayload>, InteractableBE {
+public class SimpleEnergyStorageBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<@NotNull BlockPosPayload>, InteractableBE {
     public static final Text NAME = Text.translatable("container.ntm.energy_storage");
 
     public static final int DISCHARGE_SLOT_INDEX = 0;
@@ -44,6 +44,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     public long previousEnergy = 0;
     public long[] energyChange = new long[20];
     public int energyChangeIndex = 0;
+
     public SimpleEnergyStorageBE(BlockPos pos, BlockState state) {
         super(NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, 2);
     }
@@ -140,7 +141,7 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     }
 
     @Override
-    public BlockPosPayload getScreenOpeningData(ServerPlayerEntity player) {
+    public BlockPosPayload getScreenOpeningData(@NotNull ServerPlayerEntity player) {
         return new BlockPosPayload(this.pos);
     }
 

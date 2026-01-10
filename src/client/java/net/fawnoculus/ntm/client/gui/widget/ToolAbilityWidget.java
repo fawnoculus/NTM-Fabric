@@ -6,6 +6,7 @@ import net.fawnoculus.ntm.client.gui.screen.ToolAbilityCustomizationScreen.Modif
 import net.fawnoculus.ntm.client.util.ClientUtil;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -51,11 +52,11 @@ public class ToolAbilityWidget extends ClickableWidget {
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         if (this.isHovered()) {
-            context.drawBorder(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.GRAY);
+            context.drawStrokedRectangle(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.GRAY);
         }
 
         if (this.currentLevel >= 0) {
-            context.drawBorder(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.WHITE);
+            context.drawStrokedRectangle(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.WHITE);
         }
 
         if (this.ABILITY.maxLevel() > 1) {
@@ -152,7 +153,7 @@ public class ToolAbilityWidget extends ClickableWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
+    public void onClick(Click click, boolean doubled) {
         if (this.isDisabled) return;
 
         int previousLevel = currentLevel;
@@ -166,7 +167,7 @@ public class ToolAbilityWidget extends ClickableWidget {
         }
 
         if (previousLevel != currentLevel) {
-            ClientUtil.playSound(PositionedSoundInstance.master(NTMSounds.TECH_BOOP, 2));
+            ClientUtil.playSound(PositionedSoundInstance.ui(NTMSounds.TECH_BOOP, 2));
         }
     }
 }

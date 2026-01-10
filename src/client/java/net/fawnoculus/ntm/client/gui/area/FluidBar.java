@@ -21,6 +21,7 @@ public class FluidBar implements InfoBar {
     private final FluidStack FLUID_STACK;
     private int OFFSET_X;
     private int OFFSET_Y;
+
     public FluidBar(int x, int y, int width, int height, FluidStack fluidStack) {
         this.X = x;
         this.Y = y;

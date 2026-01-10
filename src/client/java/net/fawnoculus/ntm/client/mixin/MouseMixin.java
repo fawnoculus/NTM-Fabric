@@ -1,8 +1,10 @@
 package net.fawnoculus.ntm.client.mixin;
 
-import net.fawnoculus.ntm.client.api.events.custom.OnMousePressedEvent;
+import net.fawnoculus.ntm.client.api.events.custom.OnMouseClickEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
+import net.minecraft.client.gui.Click;
+import net.minecraft.client.input.MouseInput;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,9 +18,15 @@ public abstract class MouseMixin {
     @Final
     private MinecraftClient client;
 
+    @Shadow
+    private double x;
+
+    @Shadow
+    private double y;
+
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/InactivityFpsLimiter;onInput()V"), method = "onMouseButton", cancellable = true)
-    private void onKeyPressed(long window, int button, int action, int mods, CallbackInfo ci) {
-        boolean isCanceled = OnMousePressedEvent.EVENT.invoker().onButtonPressed(this.client, button, action, mods);
+    private void onMouseClicked(long window, MouseInput input, int action, CallbackInfo ci) {
+        boolean isCanceled = OnMouseClickEvent.EVENT.invoker().onClick(this.client, new Click(this.x, this.y, input));
         if (isCanceled) {
             ci.cancel();
         }

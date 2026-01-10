@@ -12,19 +12,25 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 
 public class NTMBlockEntities {
 
-    private static <T extends BlockEntity> BlockEntityType<T> register(String name, FabricBlockEntityTypeBuilder.Factory<? extends T> entityFactory, Block... blocks) {
+    private static <T extends BlockEntity> BlockEntityType<T> register(String name, FabricBlockEntityTypeBuilder.Factory<? extends @NotNull T> entityFactory, Block... blocks) {
         return Registry.register(
           Registries.BLOCK_ENTITY_TYPE,
           NTM.id(name),
           FabricBlockEntityTypeBuilder.<T>create(entityFactory, blocks).build()
         );
-    }    public static final BlockEntityType<AlloyFurnaceBE> ALLOY_FURNACE_BE = register("alloy_furnace", AlloyFurnaceBE::new, NTMBlocks.ALLOY_FURNACE);
+    }
 
     public static void initialize() {
-    }    public static final BlockEntityType<AlloyFurnaceExtensionBE> ALLOY_FURNACE_EXTENSION_BE = register("alloy_furnace_extension", AlloyFurnaceExtensionBE::new, NTMBlocks.ALLOY_FURNACE_EXTENSION);
+    }
+
+    public static final BlockEntityType<AlloyFurnaceBE> ALLOY_FURNACE_BE = register("alloy_furnace", AlloyFurnaceBE::new, NTMBlocks.ALLOY_FURNACE);
+
+
+    public static final BlockEntityType<AlloyFurnaceExtensionBE> ALLOY_FURNACE_EXTENSION_BE = register("alloy_furnace_extension", AlloyFurnaceExtensionBE::new, NTMBlocks.ALLOY_FURNACE_EXTENSION);
     public static final BlockEntityType<ElectricFurnaceBE> ELECTRIC_FURNACE_BE = register("electric_furnace", ElectricFurnaceBE::new, NTMBlocks.ELECTRIC_FURNACE);
     public static final BlockEntityType<EnergyConnectorBE> SIMPLE_ENERGY_CONNECTOR_BE = register("simple_energy_connector", EnergyConnectorBE::new, NTMBlocks.TEMP_CABLE);
     public static final BlockEntityType<SimpleEnergyStorageBE> SIMPLE_ENERGY_STORAGE_BE = register("simple_energy_storage", SimpleEnergyStorageBE::new,
@@ -34,8 +40,6 @@ public class NTMBlockEntities {
       NTMBlocks.SCHRABIDIUM_ENERGY_STORAGE_BLOCK,
       NTMBlocks.SPARK_ENERGY_STORAGE_BLOCK
     );
-
-
 
 
 }

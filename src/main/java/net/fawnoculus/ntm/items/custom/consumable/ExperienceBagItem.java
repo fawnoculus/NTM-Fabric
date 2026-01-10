@@ -25,7 +25,7 @@ public class ExperienceBagItem extends Item {
             ItemStack stack = player.getStackInHand(hand);
             stack.decrement(1);
         }
-        world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+        world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
         player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_EXPERIENCE_BAG));
         player.addExperience(EmptyExperienceBagItem.XP_PER_BAG);
 

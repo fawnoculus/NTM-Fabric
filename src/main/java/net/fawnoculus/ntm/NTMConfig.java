@@ -43,10 +43,6 @@ public class NTMConfig {
       ),
       "Blocks that will be excluded from the Aoe and Flat Aoe Tool Ability, it already excludes all blocks that the tool can not mine"
     );
-    public static final ConfigOption<Integer> REQUIRED_COMMAND_PERMISSION = COMMON_CONFIG_FILE.newOption(
-      "required_command_permission", Codec.INT, 2,
-      "Permission Level required to execute Operator NTM Commands (Requires Restart) [default: false]"
-    );
     public static final ConfigOption<FluidUnit> FLUID_UNIT = COMMON_CONFIG_FILE.newOption(
       "fluid_unit", FluidUnit.CODEC, FluidUnit.MilliBuckets, "Fluid Unit to be displayed (MilliBuckets, Droplets) [default: MilliBuckets]"
     );

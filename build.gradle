@@ -1,5 +1,6 @@
 plugins {
-  id 'fabric-loom' version "${loom_version}"
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+    id 'maven-publish'
 }
 
 version = mod_version
@@ -86,26 +87,26 @@ repositories {
 }
 
 dependencies {
-  // The important Stuff //
+  // The important Stuff
   minecraft "com.mojang:minecraft:${minecraft_version}"
   mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
   modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-  modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+  modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
   testImplementation "net.fabricmc:fabric-loader-junit:${loader_version}"
 
-  // Libraries required by other mods (REI) //
-  modApi "dev.architectury:architectury-fabric:${architectury_version}"
-  modApi "me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}"
+  // Libraries required by REI
+  // modApi "dev.architectury:architectury-fabric:${architectury_version}"
+  // modApi "me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}"
 
-  // Compatibility Tests & better Dev Environment //
+  // Compatibility Tests & better Dev Environment
   modLocalRuntime "com.terraformersmc:modmenu:${modmenu_version}"           // ModMenu
   modLocalRuntime "maven.modrinth:jade:${jade_version}"                     // Jade
   modLocalRuntime "maven.modrinth:sodium:${sodium_version}"                 // Sodium
-  //modLocalRuntime "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"  // JEI (there is no version for 1.21.5 fabric yet)
-  modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"   // REI
-  //modLocalRuntime "dev.emi:emi-fabric:${emi_version}+${emi_mc_version}"   // EMI (there is no version for 1.21.5 yet)
+  modLocalRuntime "mezz.jei:jei-${jei_mc_version}-fabric:${jei_version}"    // JEI
+  //modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"   // REI (there is no version for 1.21.11 yet)
+  //modLocalRuntime "dev.emi:emi-fabric:${emi_version}+${emi_mc_version}"     // EMI (there is no version for 1.21.11 yet)
 
-  // Compile Time Stuff //
+  // Compile Time Stuff
   modCompileOnly "com.terraformersmc:modmenu:${modmenu_version}"                        // ModMenu
   modCompileOnly "maven.modrinth:jade:${jade_version}"                                  // Jade
   modCompileOnly "mezz.jei:jei-${jei_mc_version}-fabric-api:${jei_version}"             // JEI
@@ -118,14 +119,14 @@ processResources {
   inputs.property "mod_version", mod_version
   inputs.property "minecraft_version", minecraft_version
   inputs.property "loader_version", loader_version
-  inputs.property "fabric_version", fabric_version
+  inputs.property "fabric_api_version", fabric_api_version
   filteringCharset "UTF-8"
 
   filesMatching("fabric.mod.json") {
     expand "version": inputs.properties.mod_version,
       "minecraft_version": inputs.properties.minecraft_version,
       "loader_version": inputs.properties.loader_version,
-      "fabric_version": inputs.properties.fabric_version
+      "fabric_api_version": inputs.properties.fabric_api_version
   }
 }
 
@@ -142,6 +143,9 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 test {
+    beforeTest {
+        setWorkingDir(getWorkingDir().toPath().resolve("run"))
+    }
     useJUnitPlatform()
     afterTest {
         // some test really like creating unnecessary directories

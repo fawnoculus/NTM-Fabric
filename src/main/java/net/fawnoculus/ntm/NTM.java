@@ -35,10 +35,19 @@ public class NTM implements ModInitializer {
     public static final String MOD_NAME = METADATA.getName();
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final Version MOD_VERSION = METADATA.getVersion();
+    private static NTMProxy proxy = new NTMServerProxy();
 
     @Contract("_ -> new")
     public static @NotNull Identifier id(String name) {
         return Identifier.of(MOD_ID, name);
+    }
+
+    public static NTMProxy getProxy() {
+        return proxy;
+    }
+
+    public static void setProxy(NTMProxy proxy) {
+        NTM.proxy = proxy;
     }
 
     @Override

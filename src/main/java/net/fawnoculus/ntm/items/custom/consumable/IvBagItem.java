@@ -31,7 +31,7 @@ public class IvBagItem extends Item {
             ItemStack stack = player.getStackInHand(hand);
             stack.decrement(1);
         }
-        world.playSound(null, BlockPos.ofFloored(player.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+        world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
         player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
 
         return ActionResult.SUCCESS_SERVER;
@@ -39,14 +39,14 @@ public class IvBagItem extends Item {
 
     @Override
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!(target.getWorld() instanceof ServerWorld world) || !(attacker instanceof PlayerEntity player)) {
+        if (!(target.getEntityWorld() instanceof ServerWorld world) || !(attacker instanceof PlayerEntity player)) {
             return;
         }
         if (!player.isCreative()) {
             EntityUtil.applyDamage(target, world, NTMDamageTypes.BLOOD_LOSS, 5F);
             stack.decrement(1);
         }
-        world.playSound(null, BlockPos.ofFloored(target.getPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
+        world.playSound(null, BlockPos.ofFloored(target.getEntityPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
         player.getInventory().offerOrDrop(new ItemStack(NTMItems.BLOOD_BAG));
     }
 }

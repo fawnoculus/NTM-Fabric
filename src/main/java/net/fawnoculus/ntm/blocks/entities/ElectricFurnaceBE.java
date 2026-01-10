@@ -29,13 +29,14 @@ import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<BlockPosPayload> {
+public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<@NotNull BlockPosPayload> {
     public static final Text NAME = Text.translatable("container.ntm.electric_furnace");
 
     public static final int OUTPUT_SLOT_INDEX = 0;
@@ -45,6 +46,7 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     public final EnergyStack energy = new EnergyStack(this).setMaxValue(100_000).setConsumes(true).onChange(this::markDirty);
     private final PropertyDelegate propertyDelegate;
     private double progress = 0;
+
     public ElectricFurnaceBE(BlockPos pos, BlockState state) {
         super(NTMBlockEntities.ELECTRIC_FURNACE_BE, pos, state, 4);
         this.propertyDelegate = new PropertyDelegate() {

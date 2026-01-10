@@ -32,6 +32,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
     public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty EXTENSION = NTMBlockProperties.EXTENSION;
+
     public AlloyFurnaceBlock(Settings settings) {
         super(settings);
         setDefaultState(this.getDefaultState()
@@ -52,7 +53,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        if (world.isClient) return null;
+        if (world.isClient()) return null;
         return validateTicker(type, NTMBlockEntities.ALLOY_FURNACE_BE, AlloyFurnaceBE::tick);
     }
 
@@ -61,7 +62,7 @@ public class AlloyFurnaceBlock extends BlockWithEntity {
         if (!(world.getBlockEntity(pos) instanceof AlloyFurnaceBE alloyFurnaceBE)) {
             return ActionResult.FAIL;
         }
-        if (world.isClient) {
+        if (world.isClient()) {
             return ActionResult.SUCCESS;
         }
 

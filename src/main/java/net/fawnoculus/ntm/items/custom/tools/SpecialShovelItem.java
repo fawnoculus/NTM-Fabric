@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.items.custom.tools;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.fawnoculus.ntm.api.tool.AbilityHandler;
 import net.fawnoculus.ntm.api.tool.ModifierHandler;
@@ -76,9 +77,9 @@ public class SpecialShovelItem extends ShovelItem implements SpecialTool {
             }
 
             if (this.ABILITIES.abilitiesDisabled(stack)) {
-                player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
+                NTM.getProxy().playSoundToPlayer(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
             } else {
-                player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
+                NTM.getProxy().playSoundToPlayer(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
             }
 
             ServerPlayNetworking.send(serverPlayer, new AdvancedMessagePayload(

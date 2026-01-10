@@ -3,8 +3,8 @@ package net.fawnoculus.ntm.api.tool;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
-import net.fawnoculus.ntm.util.ClientTransferUtil;
 import net.fawnoculus.ntm.util.WorldUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -172,9 +172,9 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
             for (Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : ABILITIES) {
                 tooltip.accept(Text.literal("  ").append(pair.getLeft().getFullName(pair.getRight())).formatted(Formatting.GOLD));
             }
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.end1", ClientTransferUtil.getBoundKey("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.end2", ClientTransferUtil.getBoundKey("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.end3", ClientTransferUtil.getBoundKey("key.ntm.open_tool_ability_gui").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
+            tooltip.accept(Text.translatable("tooltip.ntm.ability.end1", NTM.getProxy().getKeyText("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
+            tooltip.accept(Text.translatable("tooltip.ntm.ability.end2", NTM.getProxy().getKeyText("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
+            tooltip.accept(Text.translatable("tooltip.ntm.ability.end3", NTM.getProxy().getKeyText("key.ntm.open_tool_ability_gui").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
         }
     }
 

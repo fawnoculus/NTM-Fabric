@@ -99,12 +99,6 @@ public class WavefrontModelLoader {
 
     private static @NotNull TextureCoordinate getTextureCoordinate(String line) {
         float[] floats = parseFloats(2, line, OBJ_TEXTURE_COORDINATE.length());
-        if (floats[0] > 1 || floats[0] < -0.0) {
-            NTMClient.LOGGER.error("FUCK1");
-        }
-        if (floats[1] > 1 || floats[1] < -0.0) {
-            NTMClient.LOGGER.error("FUCK2");
-        }
         return new TextureCoordinate(floats[0], floats[1]);
     }
 

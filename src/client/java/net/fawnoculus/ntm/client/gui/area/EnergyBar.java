@@ -24,6 +24,7 @@ public class EnergyBar implements InfoBar {
     private final Supplier<Text>[] EXTRA_TEXT;
     private int OFFSET_X;
     private int OFFSET_Y;
+
     @SafeVarargs
     public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText) {
         this.X = x;

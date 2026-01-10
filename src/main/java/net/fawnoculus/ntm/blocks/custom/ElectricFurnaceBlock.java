@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 public class ElectricFurnaceBlock extends BlockWithEntity {
     public static final BooleanProperty LIT = Properties.LIT;
     public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+
     public ElectricFurnaceBlock(Settings settings) {
         super(settings);
         setDefaultState(this.getDefaultState()
@@ -64,7 +65,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
         if (!(world.getBlockEntity(pos) instanceof ElectricFurnaceBE electricFurnaceBE)) {
             return ActionResult.FAIL;
         }
-        if (world.isClient) {
+        if (world.isClient()) {
             return ActionResult.SUCCESS;
         }
 

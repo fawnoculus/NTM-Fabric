@@ -3,6 +3,7 @@ package net.fawnoculus.ntm.client.gui.widget;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.StorageMode;
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
@@ -18,6 +19,7 @@ public class StorageModeWidget extends ClickableWidget {
     private static final Identifier TEXTURE = NTM.id("textures/gui/generic/storage_mode.png");
     private final Supplier<StorageMode> STORAGE_MODE;
     private final Runnable ON_CLICKED;
+
     public StorageModeWidget(int x, int y, Text message, Supplier<StorageMode> storageMode, Runnable onClicked) {
         super(x, y, 18, 18, message);
         this.STORAGE_MODE = storageMode;
@@ -25,8 +27,8 @@ public class StorageModeWidget extends ClickableWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
-        super.onClick(mouseX, mouseY);
+    public void onClick(Click click, boolean doubled) {
+        super.onClick(click, doubled);
         this.ON_CLICKED.run();
     }
 

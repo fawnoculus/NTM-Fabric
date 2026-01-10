@@ -1,11 +1,12 @@
 package net.fawnoculus.ntm.client.misc;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.client.NTMClient;
 import net.fawnoculus.ntm.client.api.events.custom.ClientTickEvents;
 import net.fawnoculus.ntm.client.api.events.custom.OnKeyPressedEvent;
-import net.fawnoculus.ntm.client.api.events.custom.OnMousePressedEvent;
+import net.fawnoculus.ntm.client.api.events.custom.OnMouseClickEvent;
 import net.fawnoculus.ntm.client.api.qmaw.QmawManager;
 import net.fawnoculus.ntm.client.gui.screen.ToolAbilityCustomizationScreen;
 import net.fawnoculus.ntm.client.mixin.accessor.HandledScreenInvoker;
@@ -22,29 +23,31 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class NTMKeybinds {
+    public static final KeyBinding.Category NTM_CATEGORY = KeyBinding.Category.create(NTM.id("keys"));
+
     public static final KeyBinding DUCK = KeyBindingHelper.registerKeyBinding(new KeyBinding(
       "key.ntm.duck",
       InputUtil.Type.KEYSYM,
       GLFW.GLFW_KEY_O,
-      "key.category.ntm"
+      NTM_CATEGORY
     ));
     public static final KeyBinding DISPLAY_EXTRA_INFO = KeyBindingHelper.registerKeyBinding(new KeyBinding(
       "key.ntm.extra_info",
       InputUtil.Type.KEYSYM,
       GLFW.GLFW_KEY_LEFT_SHIFT,
-      "key.category.ntm"
+      NTM_CATEGORY
     ));
     public static final KeyBinding OPEN_QMAW_PAGE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
       "key.ntm.qmaw",
       InputUtil.Type.KEYSYM,
       GLFW.GLFW_KEY_F1,
-      "key.category.ntm"
+      NTM_CATEGORY
     ));
     public static final KeyBinding OPEN_TOOL_ABILITY_GUI = KeyBindingHelper.registerKeyBinding(new KeyBinding(
       "key.ntm.open_tool_ability_gui",
       InputUtil.Type.KEYSYM,
       GLFW.GLFW_KEY_LEFT_ALT,
-      "key.category.ntm"
+      NTM_CATEGORY
     ));
 
     // TODO: make key conflicts of keys that can only be used in certain situations (only in Guis or smth.) not be shown as regular key conflicts as to not be "That annoying mod who's default keybinds always have conflicts"
@@ -81,25 +84,24 @@ public class NTMKeybinds {
         });
     }
 
-    // This is more hacky than onKeyPressedTick(), so unless you need the keybinding to work in guis please just use onKeyPressedTick()
     public static void onKeyPressedEvery(KeyBinding keyBinding, Function<MinecraftClient, Boolean> onPressed) {
-        onKeyboardPressed(keyBinding, (client, ignored, ignored2, ignored3, ignored4) -> onPressed.apply(client));
-        onMousePressed(keyBinding, (client, ignored, ignored2, ignored3) -> onPressed.apply(client));
+        onKeyboardPressed(keyBinding, (client, ignored) -> onPressed.apply(client));
+        onMousePressed(keyBinding, (client, ignored) -> onPressed.apply(client));
     }
 
     public static void onKeyboardPressed(KeyBinding keyBinding, OnKeyPressedEvent onPressed) {
-        OnKeyPressedEvent.EVENT.register((client, key, scancode, action, modifiers) -> {
-            if (keyBinding.matchesKey(key, scancode)) {
-                return onPressed.onKeyPressed(client, key, scancode, action, modifiers);
+        OnKeyPressedEvent.EVENT.register((client, keyInput) -> {
+            if (keyBinding.matchesKey(keyInput)) {
+                return onPressed.onKeyPressed(client, keyInput);
             }
             return false;
         });
     }
 
-    public static void onMousePressed(KeyBinding keyBinding, OnMousePressedEvent onPressed) {
-        OnMousePressedEvent.EVENT.register((client, button, action, mods) -> {
-            if (keyBinding.matchesMouse(button)) {
-                return onPressed.onButtonPressed(client, button, action, mods);
+    public static void onMousePressed(KeyBinding keyBinding, OnMouseClickEvent onPressed) {
+        OnMouseClickEvent.EVENT.register((client, click) -> {
+            if (keyBinding.matchesMouse(click)) {
+                return onPressed.onClick(client, click);
             }
             return false;
         });

@@ -16,9 +16,11 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
     private final long MAX_ENERGY;
     private final long CHARGE;
     private final long DISCHARGE;
+
     public SimpleBatteryItem(Settings settings, long maxEnergy, long energyPerTick) {
         this(settings, maxEnergy, energyPerTick, energyPerTick);
     }
+
     public SimpleBatteryItem(Settings settings, long maxEnergy, long chargeRate, long dischargeRate) {
         super(settings.maxCount(1));
         this.MAX_ENERGY = maxEnergy;

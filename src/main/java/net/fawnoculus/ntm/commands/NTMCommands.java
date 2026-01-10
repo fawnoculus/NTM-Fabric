@@ -24,6 +24,7 @@ import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
 import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
 import net.minecraft.SharedConstants;
+import net.minecraft.command.DefaultPermissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.command.argument.TextArgumentType;
@@ -225,7 +226,7 @@ public class NTMCommands {
 
     public static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
         if (environment != null && environment.integrated) return true;
-        return source.hasPermissionLevel(NTMConfig.REQUIRED_COMMAND_PERMISSION.getValue());
+        return source.getPermissions().hasPermission(DefaultPermissions.MODERATORS);
     }
 
     private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment) {

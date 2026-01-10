@@ -22,7 +22,11 @@ public class NTMClientConfig {
     );
     public static final ConfigOption<Boolean> BLOCK_MODEL_AMBIENT_OCCLUSION = CLIENT_CONFIG_FILE.newOption(
       "block_model_ambient_occlusion", Codec.BOOL, false,
-      "makes the models lock a little better, sometimes looks a little wonky tho [default: false]"
+      "makes the models lock a little better, but looks weird when they are placed next to each other [default: false]"
+    );
+    public static final ConfigOption<Boolean> SHADE_MODELS = CLIENT_CONFIG_FILE.newOption(
+      "shade_models", Codec.BOOL, true,
+      "whether to shade the models [default: true]"
     );
 
     public static void initialize() {

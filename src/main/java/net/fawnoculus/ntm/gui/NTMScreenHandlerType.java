@@ -14,19 +14,22 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
+import org.jetbrains.annotations.NotNull;
 
 public class NTMScreenHandlerType {
-    public static <T extends ScreenHandler, D extends CustomPayload> ExtendedScreenHandlerType<T, D>
-    register(String name, ExtendedScreenHandlerType.ExtendedFactory<T, D> screenFactory, PacketCodec<? super RegistryByteBuf, D> packetCodec) {
+    public static <T extends ScreenHandler, D extends CustomPayload> ExtendedScreenHandlerType<@NotNull T, @NotNull D>
+    register(String name, ExtendedScreenHandlerType.ExtendedFactory<@NotNull T, @NotNull D> screenFactory, PacketCodec<? super RegistryByteBuf, D> packetCodec) {
         return Registry.register(Registries.SCREEN_HANDLER, NTM.id(name), new ExtendedScreenHandlerType<>(screenFactory, packetCodec));
-    }    public static final ScreenHandlerType<AlloyFurnaceScreenHandler> ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceScreenHandler::new, BlockPosPayload.PACKET_CODEC);
+    }
 
     public static void initialize() {
-    }    public static final ScreenHandlerType<ElectricFurnaceScreenHandler> ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceScreenHandler::new, BlockPosPayload.PACKET_CODEC);
+    }
+
+    public static final ScreenHandlerType<AlloyFurnaceScreenHandler> ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceScreenHandler::new, BlockPosPayload.PACKET_CODEC);
+
+
+    public static final ScreenHandlerType<ElectricFurnaceScreenHandler> ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceScreenHandler::new, BlockPosPayload.PACKET_CODEC);
     public static final ScreenHandlerType<EnergyStorageScreenHandler> ENERGY_STORAGE = register("energy_storage", EnergyStorageScreenHandler::new, BlockPosPayload.PACKET_CODEC);
-
-
-
 
 
 }

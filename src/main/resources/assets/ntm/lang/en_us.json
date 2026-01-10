@@ -1064,7 +1064,7 @@
 	"itemGroup.ntm.templates": "NTM Templates",
 	"itemGroup.ntm.tools": "NTM Tools",
 	"itemGroup.ntm.weapons_and_turrets": "NTM Weapons and Turrets",
-	"key.category.ntm": "NTM-Fabric",
+	"key.category.ntm.keys": "NTM-Fabric",
 	"key.ntm.duck": "Duck",
 	"key.ntm.extra_info": "Display Extra Info",
 	"key.ntm.open_tool_ability_gui": "Open Tool Ability GUI",

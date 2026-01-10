@@ -18,6 +18,7 @@ public class EnergyStorageScreen extends HandledScreen<EnergyStorageScreenHandle
     private static final Identifier TEXTURE = NTM.id("textures/gui/storage/energy_storage.png");
     private final SimpleEnergyStorageBE BE = this.handler.getBlockEntity();
     private final EnergyBar energyBar = new EnergyBar(62, 17, 52, 52, BE.energy, BE::getEnergyPerSec);
+
     public EnergyStorageScreen(EnergyStorageScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }

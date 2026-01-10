@@ -19,7 +19,7 @@ public class EnergyStorageScreenHandler extends ScreenHandler {
 
     // Client Constructor
     public EnergyStorageScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosPayload payload) {
-        this(syncId, playerInventory, (SimpleEnergyStorageBE) playerInventory.player.getWorld().getBlockEntity(payload.pos()));
+        this(syncId, playerInventory, (SimpleEnergyStorageBE) playerInventory.player.getEntityWorld().getBlockEntity(payload.pos()));
     }
 
     // Common Constructor

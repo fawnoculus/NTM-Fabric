@@ -1,16 +1,18 @@
 package net.fawnoculus.ntm.client.render.wavefront;
 
+import net.fawnoculus.ntm.client.NTMClientConfig;
+import net.fawnoculus.ntm.client.util.RenderUtil;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.Baker;
 import net.minecraft.client.render.model.SimpleModel;
 import net.minecraft.client.texture.MissingSprite;
-import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -25,25 +27,15 @@ public class Polygon {
     @SuppressWarnings("deprecation")
     private SpriteIdentifier texture = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, MissingSprite.getMissingSpriteId());
 
-    private static void packVertexData(int @NotNull [] vertices, int cornerIndex, @NotNull Vector3f pos, @NotNull Sprite sprite, float u, float v) {
-        int i = cornerIndex * 8;
-        vertices[i] = Float.floatToRawIntBits(pos.x());
-        vertices[i + 1] = Float.floatToRawIntBits(pos.y());
-        vertices[i + 2] = Float.floatToRawIntBits(pos.z());
-        vertices[i + 3] = -1;
-        vertices[i + 4] = Float.floatToRawIntBits(sprite.getFrameU(u));
-        vertices[i + 4 + 1] = Float.floatToRawIntBits(sprite.getFrameV(v));
-    }
-
-    private static Direction normalsToDirection(@NotNull List<VertexNormal> normals) {
+    private static Direction normalsToDirection(@NotNull List<Polygon.VertexNormal> normals) {
         double averageX = 0;
         double averageY = 0;
         double averageZ = 0;
 
-        for (VertexNormal normal : normals) {
-            averageX += normal.X();
-            averageY += normal.Y();
-            averageZ += normal.Z();
+        for (Polygon.VertexNormal normal : normals) {
+            averageX += normal.x();
+            averageY += normal.y();
+            averageZ += normal.z();
         }
 
         averageX /= normals.size();
@@ -109,20 +101,46 @@ public class Polygon {
     // Yes we are turning a triangle into a quad
     // Yes I also hate it
     public BakedQuad bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset) {
-        Sprite sprite = baker.getSpriteGetter().get(texture, simpleModel);
-
-        int[] vertexData = new int[32];
-
-        for (int i = 0; i < 3; i++) {
-            TextureCoordinate coordinate = coordinates.get(i);
-            packVertexData(vertexData, i, offset.apply(vertices.get(i).toVec3f()), sprite, 1 - coordinate.U(), 1 - coordinate.V());
+        Vector3f[] corners = new Vector3f[4];
+        if (vertices.size() == 3) {
+            corners[0] = offset.apply(vertices.get(0).toVec3f());
+            corners[1] = offset.apply(vertices.get(1).toVec3f());
+            corners[2] = offset.apply(vertices.get(2).toVec3f());
+            corners[3] = offset.apply(vertices.get(0).toVec3f());
+        } else if (vertices.size() == 4) {
+            corners[0] = offset.apply(vertices.get(0).toVec3f());
+            corners[1] = offset.apply(vertices.get(1).toVec3f());
+            corners[2] = offset.apply(vertices.get(2).toVec3f());
+            corners[3] = offset.apply(vertices.get(3).toVec3f());
+        } else {
+            throw new IllegalStateException("Can't bake Polygon to quad, vertex count must be either 3 or 4");
         }
 
-        // Set the fourth Quad Corner to the first polygon corner to make a triangle out of a square
-        TextureCoordinate coordinate = coordinates.getFirst();
-        packVertexData(vertexData, 3, offset.apply(vertices.getFirst().toVec3f()), sprite, coordinate.U(), coordinate.V());
+        Vector2f[] textureCords = new Vector2f[4];
+        if (coordinates.size() == 3) {
+            textureCords[0] = coordinates.get(0).toVec2f();
+            textureCords[1] = coordinates.get(1).toVec2f();
+            textureCords[2] = coordinates.get(2).toVec2f();
+            textureCords[3] = coordinates.get(0).toVec2f();
+        } else if (coordinates.size() == 4) {
+            textureCords[0] = coordinates.get(0).toVec2f();
+            textureCords[1] = coordinates.get(1).toVec2f();
+            textureCords[2] = coordinates.get(2).toVec2f();
+            textureCords[3] = coordinates.get(3).toVec2f();
+        } else {
+            throw new IllegalStateException("Can't bake Polygon to quad, texture coordinate count must be either 3 or 4");
+        }
 
-        return new BakedQuad(vertexData, -1, normalsToDirection(this.normals), sprite, true, 0);
+        return RenderUtil.makeQuad(
+          baker.getVec3fInterner(),
+          corners,
+          textureCords,
+          -1,
+          baker.getSpriteGetter().get(texture, simpleModel),
+          normalsToDirection(this.normals),
+          NTMClientConfig.SHADE_MODELS.getValue(),
+          0
+        );
     }
 
     public record Indexed(int[] vertexIndexes, int[] coordinateIndexes, int[] normalIndexes) {
@@ -155,7 +173,7 @@ public class Polygon {
         }
     }
 
-    public record GeometryVertex(float X, float Y, float Z) {
+    public record GeometryVertex(float x, float y, float z) {
         public GeometryVertex(float x, float y, float z, float w) {
             this(
               w != 0 ? x / w : x,
@@ -165,13 +183,16 @@ public class Polygon {
         }
 
         public Vector3f toVec3f() {
-            return new Vector3f(X, Y, Z);
+            return new Vector3f(x, y, z);
         }
     }
 
-    public record TextureCoordinate(float U, float V) {
+    public record TextureCoordinate(float u, float v) {
+        public Vector2f toVec2f() {
+            return new Vector2f(1 - u, 1 - v);
+        }
     }
 
-    public record VertexNormal(float X, float Y, float Z) {
+    public record VertexNormal(float x, float y, float z) {
     }
 }

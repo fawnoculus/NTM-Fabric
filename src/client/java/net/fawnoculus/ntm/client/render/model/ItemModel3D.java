@@ -6,19 +6,19 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.client.NTMClient;
 import net.fawnoculus.ntm.client.render.wavefront.model.Model3d;
 import net.minecraft.client.item.ItemModelManager;
-import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.item.ItemRenderState;
 import net.minecraft.client.render.item.ItemRenderState.LayerRenderState;
 import net.minecraft.client.render.item.model.BasicItemModel;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.HeldItemContext;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.List;
 import java.util.function.Function;
@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 
 public class ItemModel3D implements ItemModel {
     private final List<BakedQuad> quads;
-    private final Supplier<Vector3f[]> vector;
+    private final Supplier<Vector3fc[]> vector;
     private final ModelSettings settings;
 
     public ItemModel3D(List<BakedQuad> quads, ModelSettings settings) {
@@ -36,11 +36,11 @@ public class ItemModel3D implements ItemModel {
     }
 
     @Override
-    public void update(ItemRenderState state, ItemStack stack, ItemModelManager resolver, ItemDisplayContext displayContext, @Nullable ClientWorld world, @Nullable LivingEntity user, int seed) {
+    public void update(ItemRenderState state, ItemStack stack, ItemModelManager resolver, ItemDisplayContext displayContext, @org.jspecify.annotations.Nullable ClientWorld world, @org.jspecify.annotations.Nullable HeldItemContext heldItemContext, int seed) {
         LayerRenderState layer = state.newLayer();
 
         layer.setVertices(this.vector);
-        layer.setRenderLayer(RenderLayers.getItemLayer(stack));
+        layer.setRenderLayer(TexturedRenderLayers.getItemTranslucentCull());
         this.settings.addSettings(layer, displayContext);
         layer.getQuads().addAll(this.quads);
     }

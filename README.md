@@ -40,19 +40,19 @@ Building it from source should be unnecessary as you can download a jar of the l
 * Make sure you have [**JDK-21**](https://adoptium.net/temurin/releases/?variant=openjdk8&jvmVariant=hotspot&package=jdk&version=21) and [**git**](https://git-scm.com/downloads) installed
 * Open PowerShell (or Bash if you are using Linux)
 * Navigate to the Directory you wish to copy the Sources to
-```bash
+```shell
 cd $HOME/Downloads/
 ```
 * Download the Sources
-```bash
+```shell
 git clone https://github.com/fawnoculus/NTM-Fabric
 ```
 * enter the sources directory
-```bash
+```shell
 cd NTM-Fabric
 ```
 * build the Mod
-```bash
+```shell
 ./gradlew build
 ```
 If the Command Returns with saying **BUILD SUCCESSFUL** then you should be able to find the mod file at "Downloads/NTM-Fabric/build/libs/ntm-fabric-VERSION.jar"

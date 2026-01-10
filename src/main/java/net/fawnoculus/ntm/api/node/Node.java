@@ -136,7 +136,7 @@ public interface Node {
 
     default void onSetWorld() {
         this.setShouldAssignNetwork(true);
-        if (this.getWorld().isClient) {
+        if (this.getWorld().isClient()) {
             return;
         }
         if (this.getNetwork() == null) {

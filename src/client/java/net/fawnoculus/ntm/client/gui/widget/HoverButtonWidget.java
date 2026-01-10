@@ -1,6 +1,7 @@
 package net.fawnoculus.ntm.client.gui.widget;
 
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -54,11 +55,11 @@ public class HoverButtonWidget extends ClickableWidget {
 
     @Override
     public void playDownSound(SoundManager soundManager) {
-        soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 0.5F));
+        soundManager.play(PositionedSoundInstance.ui(SoundEvents.UI_BUTTON_CLICK, 0.5F));
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
+    public void onClick(Click click, boolean doubled) {
         ON_CLICKED.run();
     }
 }

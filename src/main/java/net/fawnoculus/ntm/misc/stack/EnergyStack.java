@@ -16,6 +16,7 @@ public class EnergyStack implements NodeValueContainer {
     protected boolean provides = false;
     protected Runnable onChange = () -> {
     };
+
     public EnergyStack(Node parent) {
         this.PARENT = parent;
     }

@@ -30,7 +30,7 @@ public abstract class Modifiers {
     public static final ItemModifier DECAPITATOR = new ItemModifier(NTM.id("decapitator")) {
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            if (target.getHealth() > 0 || !(target.getWorld() instanceof ServerWorld serverWorld)) {
+            if (target.getHealth() > 0 || !(target.getEntityWorld() instanceof ServerWorld serverWorld)) {
                 return;
             }
 
@@ -52,7 +52,7 @@ public abstract class Modifiers {
                 }
             } else if (target instanceof PlayerEntity targetPlayer) {
                 ItemStack head = new ItemStack(Items.PLAYER_HEAD);
-                head.set(DataComponentTypes.PROFILE, new ProfileComponent(targetPlayer.getGameProfile()));
+                head.set(DataComponentTypes.PROFILE, ProfileComponent.ofDynamic(targetPlayer.getGameProfile().id()));
                 target.dropStack(serverWorld, head);
             } else {
                 target.dropStack(serverWorld, new ItemStack(Items.ROTTEN_FLESH, 3));
@@ -136,7 +136,7 @@ public abstract class Modifiers {
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
             target.setHealth(target.getHealth() - level);
             if (target.getHealth() <= 0) {
-                target.onDeath(EntityUtil.newDamageSource(target.getWorld(), DamageTypes.MAGIC));
+                target.onDeath(EntityUtil.newDamageSource(target.getEntityWorld(), DamageTypes.MAGIC));
             }
             attacker.heal(level);
         }
@@ -169,21 +169,21 @@ public abstract class Modifiers {
 
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            if (!(target.getWorld() instanceof ServerWorld serverWorld)) return;
+            if (!(target.getEntityWorld() instanceof ServerWorld serverWorld)) return;
 
             if (target.getHealth() <= 0.0F) {
                 int count = Math.min((int) Math.ceil(target.getMaxHealth() / level), 250);
 
                 for (int i = 0; i < count; i++) {
                     target.dropItem(serverWorld, NTMItems.FOOD_ITEM);
-                    serverWorld.spawnEntity(new ExperienceOrbEntity(serverWorld, target.getPos(), Vec3d.ZERO, 1));
+                    serverWorld.spawnEntity(new ExperienceOrbEntity(serverWorld, target.getEntityPos(), Vec3d.ZERO, 1));
                 }
 
                 // TODO: Blood Particles
 
                 target.playSound(NTMSounds.PAIN_SAW);
             }
-            if (target.getWorld() instanceof ServerWorld world) {
+            if (target.getEntityWorld() instanceof ServerWorld world) {
                 int count = world.getRandom().nextBetween(1, level);
                 target.dropStack(world, new ItemStack(NTMItems.NITRA, count));
             }

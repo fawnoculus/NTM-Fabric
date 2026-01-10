@@ -41,8 +41,8 @@ public class RadiationManager {
         ServerPlayNetworking.send(player, new RadiationInformationPayload(new RadiationInformationPayload.RadiationInfo(
           getRadiationExposure(player),
           getInventoryRadiation(player),
-          getPassiveChunkRadiation(player.getWorld(), player.getPos()),
-          getActiveChunkRadiation(player.getWorld(), player.getPos())
+          getPassiveChunkRadiation(player.getEntityWorld(), player.getEntityPos()),
+          getActiveChunkRadiation(player.getEntityWorld(), player.getEntityPos())
         )));
     }
 
@@ -110,9 +110,9 @@ public class RadiationManager {
     }
 
     public static double getTotalRadiation(LivingEntity entity) {
-        if (entity == null || entity.getWorld() == null || entity.getPos() == null) return 0;
-        if (entity.getWorld() instanceof ServerWorld serverWorld) {
-            return getChunkRadiation(serverWorld, entity.getPos()) + getInventoryRadiation(entity);
+        if (entity == null || entity.getEntityWorld() == null || entity.getEntityPos() == null) return 0;
+        if (entity.getEntityWorld() instanceof ServerWorld serverWorld) {
+            return getChunkRadiation(serverWorld, entity.getEntityPos()) + getInventoryRadiation(entity);
         }
         return 0;
     }
@@ -140,7 +140,7 @@ public class RadiationManager {
     }
 
     public static void increaseRadiationExposure(LivingEntity entity, double amount) {
-        if (!(entity.getWorld() instanceof ServerWorld serverWorld)) return;
+        if (!(entity.getEntityWorld() instanceof ServerWorld serverWorld)) return;
 
         double radiationExposure = getRadiationExposure(entity);
         radiationExposure += amount;
@@ -171,7 +171,7 @@ public class RadiationManager {
     public static void processEntityRadiation(LivingEntity entity) {
         if (NTMConfig.DISABLE_ENTITY_RADIATION.getValue()) return;
         if (entity.isInvulnerable() || entity.isInCreativeMode()) return;
-        if (!(entity.getWorld() instanceof ServerWorld serverWorld)) return;
+        if (!(entity.getEntityWorld() instanceof ServerWorld serverWorld)) return;
         increaseRadiationExposure(entity, getTotalRadiation(entity) * getRadiationModifier(entity) / 20.0);
 
         Random random = serverWorld.getRandom();

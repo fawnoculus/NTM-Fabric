@@ -26,7 +26,14 @@ public class ExplosionStatusEffect extends StatusEffect {
     public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         // TODO: better explosion
         ExplosionBehavior explosionBehavior = new AdvancedExplosionBehavior(true, true, Optional.empty(), Optional.empty());
-        world.createExplosion(null, EntityUtil.newDamageSource(world, DamageTypes.EXPLOSION), explosionBehavior, entity.getPos(), amplifier, false, World.ExplosionSourceType.MOB);
+        world.createExplosion(
+          null,
+          EntityUtil.newDamageSource(world, DamageTypes.EXPLOSION),
+          explosionBehavior,
+          entity.getX(), entity.getY(), entity.getZ(),
+          amplifier, false,
+          World.ExplosionSourceType.MOB
+        );
 
 
         return super.applyUpdateEffect(world, entity, amplifier);
