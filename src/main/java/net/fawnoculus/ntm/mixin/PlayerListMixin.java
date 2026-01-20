@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerList.class)
 public abstract class PlayerListMixin {
-    @Inject(method = "placeNewPlayer", at = @At(value = "HEAD"))
+    @Inject(method = "placeNewPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Connection;setupInboundProtocol(Lnet/minecraft/network/ProtocolInfo;Lnet/minecraft/network/PacketListener;)V"))
     private void earlyJoin(Connection connection, ServerPlayer player, CommonListenerCookie clientData, CallbackInfo ci) {
         PlayerJoinEvent.PRE_JOIN.invoker().onJoin(connection, player, clientData);
     }

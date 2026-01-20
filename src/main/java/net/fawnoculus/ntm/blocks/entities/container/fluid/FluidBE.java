@@ -106,6 +106,16 @@ public abstract class FluidBE extends BlockEntity implements Node {
     }
 
     @Override
+    public Level getWorld() {
+        return this.getLevel();
+    }
+
+    @Override
+    public BlockPos getPos() {
+        return this.getBlockPos();
+    }
+
+    @Override
     public void setLevel(Level world) {
         super.setLevel(world);
         this.onSetWorld();
