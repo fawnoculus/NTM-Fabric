@@ -6,6 +6,6 @@ import net.minecraft.client.particle.EndRodParticle;
 
 public class NTMParticleRender {
     public static void initialize() {
-        ParticleFactoryRegistry.getInstance().register(NTMParticles.TEST, EndRodParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(NTMParticles.TEST, EndRodParticle.Provider::new);
     }
 }

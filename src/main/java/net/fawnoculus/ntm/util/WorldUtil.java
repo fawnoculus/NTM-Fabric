@@ -1,20 +1,20 @@
 package net.fawnoculus.ntm.util;
 
 import net.fawnoculus.ntm.NTMConfig;
-import net.fawnoculus.ntm.mixin.accessor.PersistentStateManagerAccessor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.fawnoculus.ntm.mixin.accessor.DimensionDataStorageAccessor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,10 +22,10 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 public class WorldUtil {
-    private static final HashMap<Path, NbtCompound> RegionNbtCache = new HashMap<>();
+    private static final HashMap<Path, CompoundTag> RegionNbtCache = new HashMap<>();
 
     @Contract(value = "_ -> new", pure = true)
-    public static @NotNull ChunkPos getChunkPos(@NotNull Vec3d pos) {
+    public static @NotNull ChunkPos getChunkPos(@NotNull Vec3 pos) {
         return new ChunkPos((int) (pos.x / 16), (int) (pos.z / 16));
     }
 
@@ -35,8 +35,8 @@ public class WorldUtil {
     }
 
     @Contract("_ -> new")
-    public static @NotNull Vec3d getVec3d(@NotNull Vec3i pos) {
-        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+    public static @NotNull Vec3 getVec3d(@NotNull Vec3i pos) {
+        return new Vec3(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static void flushCachedRegionNBT() {
@@ -47,14 +47,14 @@ public class WorldUtil {
         RegionNbtCache.clear();
     }
 
-    public static @NotNull NbtCompound getRegionNBT(Path regionFile) {
-        NbtCompound regionNBT = RegionNbtCache.computeIfAbsent(regionFile, longPos -> {
-              NbtCompound nbt = null;
+    public static @NotNull CompoundTag getRegionNBT(Path regionFile) {
+        CompoundTag regionNBT = RegionNbtCache.computeIfAbsent(regionFile, longPos -> {
+              CompoundTag nbt = null;
               try {
                   nbt = NbtIo.read(regionFile);
               } catch (Throwable ignored) {
               }
-              return nbt != null ? nbt : new NbtCompound();
+              return nbt != null ? nbt : new CompoundTag();
           }
         );
 
@@ -65,7 +65,7 @@ public class WorldUtil {
         return regionNBT;
     }
 
-    public static void writeRegionNBT(Path regionFile, NbtCompound nbt) {
+    public static void writeRegionNBT(Path regionFile, CompoundTag nbt) {
         try {
             boolean ignored = regionFile.getParent().toFile().mkdirs();
             NbtIo.write(nbt, regionFile);
@@ -73,49 +73,49 @@ public class WorldUtil {
         }
     }
 
-    public static NbtCompound getChunkNBT(@NotNull ChunkPos pos, @NotNull ServerWorld world) {
-        Path regionPath = ((PersistentStateManagerAccessor) world.getChunkManager().getPersistentStateManager())
-          .NTM$getDirectory()
+    public static CompoundTag getChunkNBT(@NotNull ChunkPos pos, @NotNull ServerLevel world) {
+        Path regionPath = ((DimensionDataStorageAccessor) world.getChunkSource().getDataStorage())
+          .NTM$getDataFolder()
           .resolve("ntm/chunk_data")
           .resolve("r." + pos.x / 32 + "." + pos.z / 32 + ".dat");
 
         return getRegionNBT(regionPath).getCompoundOrEmpty(pos.toString());
     }
 
-    public static void setChunkData(@NotNull ChunkPos pos, @NotNull ServerWorld world, NbtCompound nbt) {
-        Path regionPath = ((PersistentStateManagerAccessor) world.getChunkManager().getPersistentStateManager())
-          .NTM$getDirectory()
+    public static void setChunkData(@NotNull ChunkPos pos, @NotNull ServerLevel world, CompoundTag nbt) {
+        Path regionPath = ((DimensionDataStorageAccessor) world.getChunkSource().getDataStorage())
+          .NTM$getDataFolder()
           .resolve("ntm/chunk_data")
           .resolve("r." + pos.x / 32 + "." + pos.z / 32 + ".dat");
 
-        NbtCompound regionNBT = getRegionNBT(regionPath);
+        CompoundTag regionNBT = getRegionNBT(regionPath);
         regionNBT.put(pos.toString(), nbt);
         RegionNbtCache.put(regionPath, regionNBT);
     }
 
-    public static void removeBlock(World world, BlockPos pos, PlayerEntity player, boolean doBlockDrops) {
+    public static void removeBlock(Level world, BlockPos pos, Player player, boolean doBlockDrops) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         BlockState originalState = world.getBlockState(pos);
         Block block = originalState.getBlock();
-        BlockState newState = block.onBreak(world, pos, originalState, player);
+        BlockState newState = block.playerWillDestroy(world, pos, originalState, player);
         boolean bl = world.removeBlock(pos, false);
         if (bl) {
-            block.onBroken(world, pos, newState);
+            block.destroy(world, pos, newState);
         }
 
         if (doBlockDrops) {
-            ItemStack itemStack = player.getMainHandStack();
+            ItemStack itemStack = player.getMainHandItem();
             ItemStack itemStack2 = itemStack.copy();
-            boolean bl2 = player.canHarvest(newState);
-            itemStack.postMine(world, newState, pos, player);
+            boolean bl2 = player.hasCorrectToolForDrops(newState);
+            itemStack.mineBlock(world, newState, pos, player);
             if (bl && bl2) {
-                block.afterBreak(world, player, pos, newState, blockEntity, itemStack2);
+                block.playerDestroy(world, player, pos, newState, blockEntity, itemStack2);
             }
         }
     }
 
-    public static void dropItemsFromBlock(World world, BlockPos pos, PlayerEntity miner, ItemStack tool) {
+    public static void dropItemsFromBlock(Level world, BlockPos pos, Player miner, ItemStack tool) {
         BlockState state = world.getBlockState(pos);
-        Block.dropStacks(state, world, pos, world.getBlockEntity(pos), miner, tool);
+        Block.dropResources(state, world, pos, world.getBlockEntity(pos), miner, tool);
     }
 }

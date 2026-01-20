@@ -3,29 +3,29 @@ package net.fawnoculus.ntm.items;
 import com.mojang.serialization.Codec;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.tool.AbilityHandler;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.ComponentType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.UnaryOperator;
 
 public class NTMDataComponentTypes {
 
-    public static final ComponentType<AbilityHandler.StackData> ABILITY_COMPONENT_TYPE =
-      register("ability", stackDataBuilder -> stackDataBuilder.codec(AbilityHandler.StackData.CODEC));
-    public static final ComponentType<Integer> COOLDOWN_COMPONENT_TYPE =
-      register("cooldown", integerBuilder -> integerBuilder.codec(Codec.INT));
-    public static final ComponentType<Long> ENERGY_COMPONENT_TYPE =
-      register("energy", longBuilder -> longBuilder.codec(Codec.LONG));
-    public static final ComponentType<BlockPos> BLOCK_POS_COMPONENT_TYPE =
-      register("block_pos", blockPosBuilder -> blockPosBuilder.codec(BlockPos.CODEC));
-    public static final ComponentType<BlockState> BLOCK_STATE_COMPONENT_TYPE =
-      register("block", blockBuilder -> blockBuilder.codec(BlockState.CODEC));
+    public static final DataComponentType<AbilityHandler.StackData> ABILITY_COMPONENT_TYPE =
+      register("ability", stackDataBuilder -> stackDataBuilder.persistent(AbilityHandler.StackData.CODEC));
+    public static final DataComponentType<Integer> COOLDOWN_COMPONENT_TYPE =
+      register("cooldown", integerBuilder -> integerBuilder.persistent(Codec.INT));
+    public static final DataComponentType<Long> ENERGY_COMPONENT_TYPE =
+      register("energy", longBuilder -> longBuilder.persistent(Codec.LONG));
+    public static final DataComponentType<BlockPos> BLOCK_POS_COMPONENT_TYPE =
+      register("block_pos", blockPosBuilder -> blockPosBuilder.persistent(BlockPos.CODEC));
+    public static final DataComponentType<BlockState> BLOCK_STATE_COMPONENT_TYPE =
+      register("block", blockBuilder -> blockBuilder.persistent(BlockState.CODEC));
 
-    private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderUnaryOperator) {
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, NTM.id(name), builderUnaryOperator.apply(ComponentType.builder()).build());
+    private static <T> DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator) {
+        return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, NTM.id(name), builderUnaryOperator.apply(DataComponentType.builder()).build());
     }
 
     public static void initialize() {

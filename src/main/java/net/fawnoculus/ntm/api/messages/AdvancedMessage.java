@@ -2,31 +2,31 @@ package net.fawnoculus.ntm.api.messages;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 
 import java.util.Objects;
 
 public class AdvancedMessage {
-    public static final PacketCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new PacketCodec<>() {
+    public static final StreamCodec<ByteBuf, AdvancedMessage> PACKET_CODEC = new StreamCodec<>() {
         @Override
         public AdvancedMessage decode(ByteBuf byteBuf) {
-            return AdvancedMessage.decode(Objects.requireNonNull(RegistryByteBuf.readNbt(byteBuf)));
+            return AdvancedMessage.decode(Objects.requireNonNull(RegistryFriendlyByteBuf.readNbt(byteBuf)));
         }
 
         @Override
         public void encode(ByteBuf byteBuf, AdvancedMessage message) {
-            RegistryByteBuf.writeNbt(byteBuf, AdvancedMessage.encode(message));
+            RegistryFriendlyByteBuf.writeNbt(byteBuf, AdvancedMessage.encode(message));
         }
     };
     private static final float BLEND_TIME = 500.0f;
     private final Identifier IDENTIFIER;
-    private final Text TEXT;
+    private final Component TEXT;
     private float millisLeft;
 
     /**
@@ -34,27 +34,27 @@ public class AdvancedMessage {
      * @param text          Text to be displayed
      * @param millisSeconds Amount of Milliseconds the Message should be displayed for;
      */
-    public AdvancedMessage(Identifier identifier, Text text, float millisSeconds) {
+    public AdvancedMessage(Identifier identifier, Component text, float millisSeconds) {
         if (text.getStyle().getColor() == null) {
-            text = text.copy().formatted(Formatting.WHITE);
+            text = text.copy().withStyle(ChatFormatting.WHITE);
         }
         this.IDENTIFIER = identifier;
         this.TEXT = text;
         this.millisLeft = millisSeconds;
     }
 
-    public static NbtCompound encode(AdvancedMessage message) {
-        NbtCompound nbt = new NbtCompound();
-        nbt.put("identifier", Identifier.CODEC, message.IDENTIFIER);
-        nbt.put("millis_left", Codec.FLOAT, message.millisLeft);
-        nbt.put("text", TextCodecs.CODEC, message.TEXT);
+    public static CompoundTag encode(AdvancedMessage message) {
+        CompoundTag nbt = new CompoundTag();
+        nbt.store("identifier", Identifier.CODEC, message.IDENTIFIER);
+        nbt.store("millis_left", Codec.FLOAT, message.millisLeft);
+        nbt.store("text", ComponentSerialization.CODEC, message.TEXT);
         return nbt;
     }
 
-    public static AdvancedMessage decode(NbtCompound nbt) {
-        Identifier identifier = nbt.get("identifier", Identifier.CODEC).orElseThrow();
-        float millisLeft = nbt.get("millis_left", Codec.FLOAT).orElseThrow();
-        Text text = nbt.get("text", TextCodecs.CODEC).orElseThrow();
+    public static AdvancedMessage decode(CompoundTag nbt) {
+        Identifier identifier = nbt.read("identifier", Identifier.CODEC).orElseThrow();
+        float millisLeft = nbt.read("millis_left", Codec.FLOAT).orElseThrow();
+        Component text = nbt.read("text", ComponentSerialization.CODEC).orElseThrow();
         return new AdvancedMessage(identifier, text, millisLeft);
     }
 
@@ -62,7 +62,7 @@ public class AdvancedMessage {
         return IDENTIFIER;
     }
 
-    public Text getText() {
+    public Component getText() {
         return this.TEXT;
     }
 

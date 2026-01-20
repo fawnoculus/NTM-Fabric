@@ -1,17 +1,17 @@
 package net.fawnoculus.ntm.client.gui.area;
 
 import net.fawnoculus.ntm.client.util.ClientUtil;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Range;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface InfoArea extends Drawable {
+public interface InfoArea extends Renderable {
     int getX();
 
     int getY();
@@ -24,15 +24,15 @@ public interface InfoArea extends Drawable {
 
     int getOffsetY();
 
-    void appendTooltip(Consumer<Text> tooltip);
+    void appendTooltip(Consumer<Component> tooltip);
 
     Identifier getTexture();
 
     @Range(from = 0, to = 1)
     double getFillState();
 
-    default List<Text> getTooltip() {
-        List<Text> tooltip = new ArrayList<>();
+    default List<Component> getTooltip() {
+        List<Component> tooltip = new ArrayList<>();
         this.appendTooltip(tooltip::add);
         return tooltip;
     }
@@ -52,12 +52,12 @@ public interface InfoArea extends Drawable {
           && this.getRelativeMouseY(mouseY) < this.getY() + this.getHeigh();
     }
 
-    default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    default void render(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
         this.drawTooltip(context, mouseX, mouseY);
     }
 
-    default void drawTooltip(DrawContext context, int mouseX, int mouseY) {
+    default void drawTooltip(GuiGraphics context, int mouseX, int mouseY) {
         if (!isInBounds(mouseX, mouseY)) return;
-        context.drawTooltip(ClientUtil.getTextRenderer(), this.getTooltip(), mouseX, mouseY);
+        context.setComponentTooltipForNextFrame(ClientUtil.getTextRenderer(), this.getTooltip(), mouseX, mouseY);
     }
 }

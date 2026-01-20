@@ -5,23 +5,23 @@ import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.util.JsonUtil;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Range;
 
 import java.nio.charset.StandardCharsets;
 
-public record RadiationInformationPayload(RadiationInfo info) implements CustomPayload {
+public record RadiationInformationPayload(RadiationInfo info) implements CustomPacketPayload {
     public static final Identifier RADIATION_INFORMATION_PAYLOAD_ID = NTM.id("radiation_information");
-    public static final Id<RadiationInformationPayload> ID = new Id<>(RADIATION_INFORMATION_PAYLOAD_ID);
+    public static final Type<RadiationInformationPayload> ID = new Type<>(RADIATION_INFORMATION_PAYLOAD_ID);
 
-    public static final PacketCodec<RegistryByteBuf, RadiationInformationPayload> PACKET_CODEC = PacketCodec.tuple(RadiationInfo.PACKET_CODEC, RadiationInformationPayload::info, RadiationInformationPayload::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, RadiationInformationPayload> PACKET_CODEC = StreamCodec.composite(RadiationInfo.PACKET_CODEC, RadiationInformationPayload::info, RadiationInformationPayload::new);
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 
@@ -31,15 +31,15 @@ public record RadiationInformationPayload(RadiationInfo info) implements CustomP
       double passiveChunkRadiation,
       double activeChunkRadiation
     ) {
-        public static final PacketCodec<ByteBuf, RadiationInfo> PACKET_CODEC = new PacketCodec<>() {
+        public static final StreamCodec<ByteBuf, RadiationInfo> PACKET_CODEC = new StreamCodec<>() {
             public RadiationInfo decode(ByteBuf byteBuf) {
-                String string = new String(PacketByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
+                String string = new String(FriendlyByteBuf.readByteArray(byteBuf), StandardCharsets.UTF_8);
                 return RadiationInfo.decode(JsonUtil.jsonFromString(string));
             }
 
             public void encode(ByteBuf byteBuf, RadiationInfo message) {
                 JsonObject json = RadiationInfo.encode(message);
-                PacketByteBuf.writeByteArray(byteBuf, json.toString().getBytes(StandardCharsets.UTF_8));
+                FriendlyByteBuf.writeByteArray(byteBuf, json.toString().getBytes(StandardCharsets.UTF_8));
             }
         };
 

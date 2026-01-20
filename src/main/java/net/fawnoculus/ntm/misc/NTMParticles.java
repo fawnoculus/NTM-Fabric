@@ -2,9 +2,9 @@ package net.fawnoculus.ntm.misc;
 
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class NTMParticles {
     public static final SimpleParticleType TEST = register("test");
@@ -15,7 +15,7 @@ public class NTMParticles {
 
     private static SimpleParticleType register(String name, boolean alwaysShow) {
         SimpleParticleType particle = FabricParticleTypes.simple(alwaysShow);
-        Registry.register(Registries.PARTICLE_TYPE, NTM.id(name), particle);
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, NTM.id(name), particle);
         return particle;
     }
 

@@ -4,12 +4,12 @@ import net.fawnoculus.ntm.client.gui.handled.AlloyFurnaceScreen;
 import net.fawnoculus.ntm.client.gui.handled.ElectricFurnaceScreen;
 import net.fawnoculus.ntm.client.gui.handled.EnergyStorageScreen;
 import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.gui.screens.MenuScreens;
 
 public class NTMHandledScreens {
     public static void initialize() {
-        HandledScreens.register(NTMScreenHandlerType.ALLOY_FURNACE, AlloyFurnaceScreen::new);
-        HandledScreens.register(NTMScreenHandlerType.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
-        HandledScreens.register(NTMScreenHandlerType.ENERGY_STORAGE, EnergyStorageScreen::new);
+        MenuScreens.register(NTMScreenHandlerType.ALLOY_FURNACE, AlloyFurnaceScreen::new);
+        MenuScreens.register(NTMScreenHandlerType.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
+        MenuScreens.register(NTMScreenHandlerType.ENERGY_STORAGE, EnergyStorageScreen::new);
     }
 }

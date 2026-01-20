@@ -1,25 +1,25 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -27,15 +27,15 @@ import java.util.function.Consumer;
 public class StylishFlaskItem extends Item {
     private static final int COOLDOWN_PER_USAGE = 3600;
 
-    public StylishFlaskItem(Settings settings) {
+    public StylishFlaskItem(Properties settings) {
         super(settings
           .component(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, 0)
-          .component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK)
+          .component(DataComponents.CONSUMABLE, Consumables.DEFAULT_DRINK)
         );
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @Nullable EquipmentSlot slot) {
         int cooldown = stack.getOrDefault(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, 0);
         if (cooldown > 0) {
             stack.set(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, cooldown - 1);
@@ -43,53 +43,53 @@ public class StylishFlaskItem extends Item {
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient()) {
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (world.isClientSide()) {
             return super.use(world, user, hand);
         }
-        ItemStack stack = user.getStackInHand(hand);
+        ItemStack stack = user.getItemInHand(hand);
         int cooldown = stack.getOrDefault(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, 0);
         if (cooldown > 0) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
         return super.use(world, user, hand);
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 0, false, false, true));
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 2, false, false, true));
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+        user.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0, false, false, true));
+        user.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 600, 2, false, false, true));
         stack.set(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, COOLDOWN_PER_USAGE);
         ItemStack copy = stack.copy();
-        super.finishUsing(stack, world, user);
+        super.finishUsingItem(stack, world, user);
         return copy;
     }
 
     @Override
-    public boolean isItemBarVisible(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return stack.getOrDefault(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, 0) > 0;
     }
 
     @Override
-    public int getItemBarStep(ItemStack stack) {
+    public int getBarWidth(ItemStack stack) {
         int cooldown = stack.getOrDefault(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, 0);
-        return MathHelper.clamp(Math.round(13.0F - cooldown * 13.0F / COOLDOWN_PER_USAGE), 0, 13);
+        return Mth.clamp(Math.round(13.0F - cooldown * 13.0F / COOLDOWN_PER_USAGE), 0, 13);
     }
 
     @Override
-    public int getItemBarColor(ItemStack stack) {
+    public int getBarColor(ItemStack stack) {
         int cooldown = stack.getOrDefault(NTMDataComponentTypes.COOLDOWN_COMPONENT_TYPE, 0);
         float f = Math.max(0.0F, ((float) COOLDOWN_PER_USAGE - cooldown) / (float) COOLDOWN_PER_USAGE);
-        return MathHelper.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
+        return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-        tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + 1).formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + 2).formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + 3).formatted(Formatting.GRAY));
-        tooltip.accept(Text.literal(""));
-        tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + 4).formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
+        tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5) + 1).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5) + 2).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5) + 3).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.literal(""));
+        tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5) + 4).withStyle(ChatFormatting.GRAY));
     }
 }

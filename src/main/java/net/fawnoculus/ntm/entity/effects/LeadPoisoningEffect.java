@@ -2,27 +2,27 @@ package net.fawnoculus.ntm.entity.effects;
 
 import net.fawnoculus.ntm.entity.NTMDamageTypes;
 import net.fawnoculus.ntm.util.EntityUtil;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
-public class LeadPoisoningEffect extends StatusEffect {
-    public LeadPoisoningEffect(StatusEffectCategory category, int color) {
+public class LeadPoisoningEffect extends MobEffect {
+    public LeadPoisoningEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration % 60 == 0 || amplifier >= 255;
     }
 
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
         EntityUtil.applyDamage(entity, world, NTMDamageTypes.LEAD_POISONING, amplifier);
         if (amplifier >= 255) {
             EntityUtil.applyDamage(entity, world, NTMDamageTypes.LEAD_POISONING, Integer.MAX_VALUE);
         }
-        return super.applyUpdateEffect(world, entity, amplifier);
+        return super.applyEffectTick(world, entity, amplifier);
     }
 }

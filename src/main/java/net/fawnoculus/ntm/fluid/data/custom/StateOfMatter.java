@@ -2,19 +2,19 @@ package net.fawnoculus.ntm.fluid.data.custom;
 
 import com.mojang.serialization.Codec;
 import net.fawnoculus.ntm.misc.data.NTMCodecs;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 
 public enum StateOfMatter {
-    SOLID(Text.translatable("fluid_tooltip.ntm.state.solid").formatted(Formatting.BLUE)),
-    LIQUID(Text.translatable("fluid_tooltip.ntm.state.liquid").formatted(Formatting.BLUE)),
-    GASEOUS(Text.translatable("fluid_tooltip.ntm.state.gaseous").formatted(Formatting.BLUE)),
-    PLASMA(Text.translatable("fluid_tooltip.ntm.state.plasma").formatted(Formatting.LIGHT_PURPLE));
+    SOLID(Component.translatable("fluid_tooltip.ntm.state.solid").withStyle(ChatFormatting.BLUE)),
+    LIQUID(Component.translatable("fluid_tooltip.ntm.state.liquid").withStyle(ChatFormatting.BLUE)),
+    GASEOUS(Component.translatable("fluid_tooltip.ntm.state.gaseous").withStyle(ChatFormatting.BLUE)),
+    PLASMA(Component.translatable("fluid_tooltip.ntm.state.plasma").withStyle(ChatFormatting.LIGHT_PURPLE));
 
     public static final Codec<StateOfMatter> CODEC = NTMCodecs.getEnumCodec(StateOfMatter.class);
-    public final Text TOOLTIP;
+    public final Component TOOLTIP;
 
-    StateOfMatter(Text tooltip) {
+    StateOfMatter(Component tooltip) {
         this.TOOLTIP = tooltip;
     }
 }

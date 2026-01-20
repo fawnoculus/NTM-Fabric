@@ -3,40 +3,38 @@ package net.fawnoculus.ntm.recipe.custom;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fawnoculus.ntm.recipe.NTMRecipes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategories;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2,
                                  ItemStack output) implements Recipe<AlloyFurnaceRecipeInput> {
 
-    public DefaultedList<Ingredient> getIngredients() {
-        DefaultedList<Ingredient> list = DefaultedList.of();
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> list = NonNullList.create();
         list.add(this.ingredient1);
         list.add(this.ingredient2);
         return list;
     }
 
     @Override
-    public boolean matches(AlloyFurnaceRecipeInput input, World world) {
-        if (world.isClient()) {
+    public boolean matches(AlloyFurnaceRecipeInput input, Level world) {
+        if (world.isClientSide()) {
             return false;
         }
 
-        return ingredient1.test(input.getStackInSlot(1)) && ingredient2.test(input.getStackInSlot(0))
-          || ingredient1.test(input.getStackInSlot(0)) && ingredient2.test(input.getStackInSlot(1));
+        return ingredient1.test(input.getItem(1)) && ingredient2.test(input.getItem(0))
+          || ingredient1.test(input.getItem(0)) && ingredient2.test(input.getItem(1));
     }
 
     @Override
-    public ItemStack craft(AlloyFurnaceRecipeInput input, RegistryWrapper.WrapperLookup registries) {
+    public ItemStack assemble(AlloyFurnaceRecipeInput input, HolderLookup.Provider registries) {
         return output.copy();
     }
 
@@ -51,12 +49,12 @@ public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2,
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.forShapeless(List.of(ingredient1, ingredient2));
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(List.of(ingredient1, ingredient2));
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.CRAFTING_MISC;
     }
 
@@ -67,11 +65,11 @@ public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2,
           ItemStack.CODEC.fieldOf("result").forGetter(AlloyFurnaceRecipe::output)
         ).apply(inst, AlloyFurnaceRecipe::new));
 
-        public static final PacketCodec<RegistryByteBuf, AlloyFurnaceRecipe> STREAM_CODEC =
-          PacketCodec.tuple(
-            Ingredient.PACKET_CODEC, AlloyFurnaceRecipe::ingredient1,
-            Ingredient.PACKET_CODEC, AlloyFurnaceRecipe::ingredient2,
-            ItemStack.PACKET_CODEC, AlloyFurnaceRecipe::output,
+        public static final StreamCodec<RegistryFriendlyByteBuf, AlloyFurnaceRecipe> STREAM_CODEC =
+          StreamCodec.composite(
+            Ingredient.CONTENTS_STREAM_CODEC, AlloyFurnaceRecipe::ingredient1,
+            Ingredient.CONTENTS_STREAM_CODEC, AlloyFurnaceRecipe::ingredient2,
+            ItemStack.STREAM_CODEC, AlloyFurnaceRecipe::output,
             AlloyFurnaceRecipe::new
           );
 
@@ -81,7 +79,7 @@ public record AlloyFurnaceRecipe(Ingredient ingredient1, Ingredient ingredient2,
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, AlloyFurnaceRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, AlloyFurnaceRecipe> streamCodec() {
             return STREAM_CODEC;
         }
     }

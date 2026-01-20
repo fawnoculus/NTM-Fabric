@@ -18,8 +18,8 @@ import net.fawnoculus.ntm.client.datagen.tags.NTMEntityTypeTagProvider;
 import net.fawnoculus.ntm.client.datagen.tags.NTMItemTagProvider;
 import net.fawnoculus.ntm.world.NTMConfiguredFeatures;
 import net.fawnoculus.ntm.world.NTMPlacedFeatures;
-import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,9 +50,9 @@ public class NTMDataGen implements DataGeneratorEntrypoint {
     }
 
     @Override
-    public void buildRegistry(@NotNull RegistryBuilder registryBuilder) {
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NTMConfiguredFeatures::initialize);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NTMPlacedFeatures::initialize);
+    public void buildRegistry(@NotNull RegistrySetBuilder registryBuilder) {
+        registryBuilder.add(Registries.CONFIGURED_FEATURE, NTMConfiguredFeatures::initialize);
+        registryBuilder.add(Registries.PLACED_FEATURE, NTMPlacedFeatures::initialize);
     }
 
     @Override

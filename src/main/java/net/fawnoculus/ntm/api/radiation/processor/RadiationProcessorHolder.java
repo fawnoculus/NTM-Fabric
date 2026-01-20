@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.api.radiation.processor;
 
-import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.level.chunk.LevelChunk;
 
 public interface RadiationProcessorHolder {
-    static RadiationProcessorHolder from(WorldChunk chunk) {
+    static RadiationProcessorHolder from(LevelChunk chunk) {
         return (RadiationProcessorHolder) chunk;
     }
 

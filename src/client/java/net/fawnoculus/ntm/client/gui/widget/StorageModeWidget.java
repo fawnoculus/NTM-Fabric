@@ -2,39 +2,39 @@ package net.fawnoculus.ntm.client.gui.widget;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.StorageMode;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarratedElementType;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class StorageModeWidget extends ClickableWidget {
+public class StorageModeWidget extends AbstractWidget {
     private static final Identifier TEXTURE = NTM.id("textures/gui/generic/storage_mode.png");
     private final Supplier<StorageMode> STORAGE_MODE;
     private final Runnable ON_CLICKED;
 
-    public StorageModeWidget(int x, int y, Text message, Supplier<StorageMode> storageMode, Runnable onClicked) {
+    public StorageModeWidget(int x, int y, Component message, Supplier<StorageMode> storageMode, Runnable onClicked) {
         super(x, y, 18, 18, message);
         this.STORAGE_MODE = storageMode;
         this.ON_CLICKED = onClicked;
     }
 
     @Override
-    public void onClick(Click click, boolean doubled) {
+    public void onClick(MouseButtonEvent click, boolean doubled) {
         super.onClick(click, doubled);
         this.ON_CLICKED.run();
     }
 
     @Override
-    protected void renderWidget(@NotNull DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        context.drawTexture(RenderPipelines.GUI_TEXTURED,
+    protected void renderWidget(@NotNull GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
+        context.blit(RenderPipelines.GUI_TEXTURED,
           TEXTURE,
           this.getX(),
           this.getY(),
@@ -64,7 +64,7 @@ public class StorageModeWidget extends ClickableWidget {
     }
 
     @Override
-    protected void appendClickableNarrations(@NotNull NarrationMessageBuilder builder) {
-        builder.put(NarrationPart.HINT, Text.translatable(this.STORAGE_MODE.get().translationKey));
+    protected void updateWidgetNarration(@NotNull NarrationElementOutput builder) {
+        builder.add(NarratedElementType.HINT, Component.translatable(this.STORAGE_MODE.get().translationKey));
     }
 }

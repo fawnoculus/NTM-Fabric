@@ -4,11 +4,11 @@ import net.fawnoculus.ntm.api.tool.AbilityHandler;
 import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.client.NTMClientConfig;
 import net.fawnoculus.ntm.client.util.ClientUtil;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
 public class ToolAbilityRender {
     private static final int TEXTURE_WIDTH = 16;
@@ -20,9 +20,9 @@ public class ToolAbilityRender {
         return ClientUtil.getClient() != null && ClientUtil.getPlayer() != null;
     }
 
-    public static void drawToolAbility(DrawContext context, RenderTickCounter ignored) {
+    public static void drawToolAbility(GuiGraphics context, DeltaTracker ignored) {
         if (!shouldDraw()) return;
-        ItemStack stack = ClientUtil.getPlayer().getMainHandStack();
+        ItemStack stack = ClientUtil.getPlayer().getMainHandItem();
         if (!(stack.getItem() instanceof SpecialTool specialTool)) return;
 
         final int xOffset = NTMClientConfig.TOOL_ABILITY_DISPLAY_X_OFFSET.getValue();
@@ -30,12 +30,12 @@ public class ToolAbilityRender {
 
         AbilityHandler.Preset preset = specialTool.abilityHandler().getCurrentPreset(stack);
 
-        int centerX = context.getScaledWindowWidth() / 2;
-        int centerY = context.getScaledWindowHeight() / 2;
+        int centerX = context.guiWidth() / 2;
+        int centerY = context.guiHeight() / 2;
 
         Identifier top = preset.topAbility().getCrosshairExtension();
         if (top != null) {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.CROSSHAIR, top,
               centerX - WIDTH - xOffset,
               centerY + yOffset,
@@ -47,7 +47,7 @@ public class ToolAbilityRender {
 
         Identifier bottom = preset.bottomAbility().getCrosshairExtension();
         if (bottom != null) {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.CROSSHAIR, bottom,
               centerX + xOffset,
               centerY + yOffset,

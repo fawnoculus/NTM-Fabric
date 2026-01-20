@@ -1,20 +1,20 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
 import net.fawnoculus.ntm.util.TextUtil;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
 public class SelfChargingBatteryItem extends Item implements EnergyContainingItem {
     private final long ENERGY_PER_TICK;
 
-    public SelfChargingBatteryItem(Settings settings, long energyPerTick) {
-        super(settings.maxCount(1));
+    public SelfChargingBatteryItem(Properties settings, long energyPerTick) {
+        super(settings.stacksTo(1));
         this.ENERGY_PER_TICK = energyPerTick;
     }
 
@@ -44,7 +44,7 @@ public class SelfChargingBatteryItem extends Item implements EnergyContainingIte
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-        tooltip.accept(TextUtil.unit(this.ENERGY_PER_TICK, "generic.ntm.energy_t").formatted(Formatting.YELLOW));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
+        tooltip.accept(TextUtil.unit(this.ENERGY_PER_TICK, "generic.ntm.energy_t").withStyle(ChatFormatting.YELLOW));
     }
 }

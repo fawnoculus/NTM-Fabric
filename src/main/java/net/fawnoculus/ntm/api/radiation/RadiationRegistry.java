@@ -7,19 +7,19 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.JsonUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.io.File;
 import java.io.FileReader;
@@ -73,7 +73,7 @@ public class RadiationRegistry {
 
         for (String key : overrides.keySet()) {
             try {
-                Identifier identifier = Identifier.of(key);
+                Identifier identifier = Identifier.parse(key);
                 Double value = overrides.get(key).getAsDouble();
                 radioactivityOverrides.put(identifier, value);
             } catch (Exception e) {
@@ -92,9 +92,9 @@ public class RadiationRegistry {
             if (stack.getItem() == NTMItems.TUNGSTEN_REACHER) {
                 hasTungstenReacher = true;
             }
-            if (stack.contains(DataComponentTypes.CONTAINER)) {
+            if (stack.has(DataComponents.CONTAINER)) {
                 radioactivity += getRadioactivity(
-                  stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).stream().toList()
+                  stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).stream().toList()
                 );
             }
         }
@@ -104,9 +104,9 @@ public class RadiationRegistry {
         return radioactivity;
     }
 
-    public static double getRadioactivity(World world) {
+    public static double getRadioactivity(Level world) {
         try {
-            return getRadioactivity(world.getRegistryManager().getOrThrow(RegistryKeys.DIMENSION_TYPE).getId(world.getDimension()));
+            return getRadioactivity(world.registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).getKey(world.dimensionType()));
         } catch (Throwable throwable) {
             return 0;
         }
@@ -117,7 +117,7 @@ public class RadiationRegistry {
     }
 
     public static double getRadioactivity(Block block) {
-        return getRadioactivity(Registries.BLOCK.getId(block));
+        return getRadioactivity(BuiltInRegistries.BLOCK.getKey(block));
     }
 
     public static double getRadioactivity(ItemStack stack) {
@@ -125,7 +125,7 @@ public class RadiationRegistry {
     }
 
     public static double getRadioactivity(Item item) {
-        return getRadioactivity(Registries.ITEM.getId(item));
+        return getRadioactivity(BuiltInRegistries.ITEM.getKey(item));
     }
 
     public static double getRadioactivity(Identifier identifier) {
@@ -137,11 +137,11 @@ public class RadiationRegistry {
     }
 
     public static void register(Block block, double milliRads) {
-        register(Registries.BLOCK.getId(block), milliRads);
+        register(BuiltInRegistries.BLOCK.getKey(block), milliRads);
     }
 
     public static void register(Item item, double milliRads) {
-        register(Registries.ITEM.getId(item), milliRads);
+        register(BuiltInRegistries.ITEM.getKey(item), milliRads);
     }
 
     public static void register(Identifier identifier, double milliRads) {
@@ -158,53 +158,53 @@ public class RadiationRegistry {
 
     public record Serialized(HashMap<Identifier, Double> radioactivityGetter,
                              HashMap<Identifier, Double> radioactivityOverrides) {
-        public static final PacketCodec<ByteBuf, Serialized> PACKET_CODEC = new PacketCodec<>() {
+        public static final StreamCodec<ByteBuf, Serialized> PACKET_CODEC = new StreamCodec<>() {
             @Override
             public Serialized decode(ByteBuf byteBuf) {
-                NbtCompound nbt = PacketByteBuf.readNbt(byteBuf);
-                if (nbt == null) nbt = new NbtCompound();
+                CompoundTag nbt = FriendlyByteBuf.readNbt(byteBuf);
+                if (nbt == null) nbt = new CompoundTag();
                 return Serialized.decode(nbt);
             }
 
             @Override
             public void encode(ByteBuf byteBuf, Serialized registry) {
-                PacketByteBuf.writeNbt(byteBuf, Serialized.encode(registry));
+                FriendlyByteBuf.writeNbt(byteBuf, Serialized.encode(registry));
             }
         };
 
-        public static NbtCompound encode(Serialized registry) {
-            NbtCompound radioactivityGetter = new NbtCompound();
+        public static CompoundTag encode(Serialized registry) {
+            CompoundTag radioactivityGetter = new CompoundTag();
             for (Identifier key : registry.radioactivityGetter().keySet()) {
                 radioactivityGetter.putDouble(key.toString(), registry.radioactivityGetter().get(key));
             }
 
-            NbtCompound radioactivityOverrides = new NbtCompound();
+            CompoundTag radioactivityOverrides = new CompoundTag();
             for (Identifier key : registry.radioactivityOverrides().keySet()) {
                 radioactivityOverrides.putDouble(key.toString(), registry.radioactivityOverrides().get(key));
             }
 
-            NbtCompound nbt = new NbtCompound();
+            CompoundTag nbt = new CompoundTag();
             nbt.put("radioactivityGetter", radioactivityGetter);
             nbt.put("radioactivityOverrides", radioactivityOverrides);
             return nbt;
         }
 
-        public static Serialized decode(NbtCompound nbt) {
-            NbtCompound jsonRadioactivityGetter = nbt.getCompoundOrEmpty("radioactivityGetter");
-            NbtCompound jsonRadioactivityOverrides = nbt.getCompoundOrEmpty("radioactivityOverrides");
+        public static Serialized decode(CompoundTag nbt) {
+            CompoundTag jsonRadioactivityGetter = nbt.getCompoundOrEmpty("radioactivityGetter");
+            CompoundTag jsonRadioactivityOverrides = nbt.getCompoundOrEmpty("radioactivityOverrides");
 
             HashMap<Identifier, Double> radioactivityGetter = new HashMap<>();
-            for (String key : jsonRadioactivityGetter.getKeys()) {
-                Identifier identifier = Identifier.of(key);
-                double value = jsonRadioactivityGetter.getDouble(key, 0);
+            for (String key : jsonRadioactivityGetter.keySet()) {
+                Identifier identifier = Identifier.parse(key);
+                double value = jsonRadioactivityGetter.getDoubleOr(key, 0);
                 if (value == 0) continue;
                 radioactivityGetter.put(identifier, value);
             }
 
             HashMap<Identifier, Double> radioactivityOverrides = new HashMap<>();
-            for (String key : jsonRadioactivityOverrides.getKeys()) {
-                Identifier identifier = Identifier.of(key);
-                double value = jsonRadioactivityOverrides.getDouble(key, 0);
+            for (String key : jsonRadioactivityOverrides.keySet()) {
+                Identifier identifier = Identifier.parse(key);
+                double value = jsonRadioactivityOverrides.getDoubleOr(key, 0);
                 radioactivityOverrides.put(identifier, value);
             }
 

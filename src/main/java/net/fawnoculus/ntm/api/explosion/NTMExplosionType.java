@@ -1,71 +1,35 @@
 package net.fawnoculus.ntm.api.explosion;
 
-import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fawnoculus.ntm.network.s2c.NTMExplosionPayload;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
+import org.jetbrains.annotations.Range;
 
 /**
  * A type of Explosion
  *
- * @param <T> ExtraData used by this type (like explosion radius)
+ * @param <E> ExtraData used by this type (like explosion radius), should not change after an explosion has been created with it
+ * @param <S> Explosion State, Used by explosions that exist over multiple ticks to keep state over multiple method calls
  */
-public interface NTMExplosionType<T> {
-    Codec<NTMExplosionType<?>> CODEC = Identifier.CODEC.xmap(NTMExplosionTypeRegistry::typeFromId, NTMExplosionTypeRegistry::idFromType);
-    PacketCodec<ByteBuf, NTMExplosionType<?>> PACKET_CODEC = Identifier.PACKET_CODEC.xmap(NTMExplosionTypeRegistry::typeFromId, NTMExplosionTypeRegistry::idFromType);
+public interface NTMExplosionType<E, S> {
+    /**
+     * Create Explosion State
+     *
+     * @param explosionData the generic explosion data
+     * @param extraData     the extra data
+     * @return explosion State
+     */
+    S createExplosion(NTMExplosionData explosionData, final E extraData);
 
     /**
-     * Makes on explosion of this type in a given word
+     * Process the Explosion (calculate the full explosion for types explosions or process parts of it for complex types).
+     * Also send explosion information to players if necessary.
      *
-     * @param world     the World in which the explosion is taking place
-     * @param pos       the position at which the explosion is taking place
-     * @param extraData extra Data for this Explosion
+     * @param maxNanos the amount of nanoseconds to spend processing the explosion (simple explosion types may simply ignore this value)
      */
-    default void explode(ServerWorld world, BlockPos pos, T extraData) {
-        NTMExplosionPayload<T> payload = new NTMExplosionPayload<>(this, pos, extraData);
-
-        for (ServerPlayerEntity player : this.getAffectedPlayers(world, pos, extraData)) {
-            ServerPlayNetworking.send(player, payload);
-        }
-
-        this.onExplode(world, pos, extraData);
-    }
+    void processExplosion(@Range(from = 0, to = Long.MAX_VALUE) long maxNanos, NTMExplosionData explosionData, final E extraData, S explosionState);
 
     /**
-     * Get Players who will be sent a Packet so that the ClientExplosionHandler can do stuff like spawn particles
+     * check if the Explosion is done yet, the explosion will be removed from to Que once this returns true
      *
-     * @param world     the World in which the explosion is taking place
-     * @param pos       the position at which the explosion is taking place
-     * @param extraData extra Data for this Explosion
-     * @return A collection of all players that will be sent an Explosion Packet
+     * @return if the Explosion is done yet
      */
-    default Iterable<ServerPlayerEntity> getAffectedPlayers(ServerWorld world, BlockPos pos, T extraData) {
-        ArrayList<ServerPlayerEntity> players = new ArrayList<>();
-
-        for (ServerPlayerEntity player : world.getPlayers()) {
-            if (player.getBlockPos().isWithinDistance(pos, world.getServer().getPlayerManager().getViewDistance() * 16)) {
-                players.add(player);
-            }
-        }
-
-        return players;
-    }
-
-    /**
-     * Handle the explosion (break blocks and shit) does not send packets to the players, to do that use {@link NTMExplosionType#explode(ServerWorld, BlockPos, T)}
-     *
-     * @param world     the World in which the explosion is taking place
-     * @param pos       the position at which the explosion is taking place
-     * @param extraData extra Data for this Explosion
-     */
-    void onExplode(ServerWorld world, BlockPos pos, T extraData);
-
-    Codec<T> getExtraDataCodec();
+    boolean isDone(NTMExplosionData explosionData, final E extraData, S explosionState);
 }

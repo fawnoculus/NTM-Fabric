@@ -28,7 +28,7 @@ public class NodeNetwork {
     }
 
     public void addNode(@NotNull Node node) {
-        if (node.getWorld() != null && node.getWorld().isClient()) {
+        if (node.getWorld() != null && node.getWorld().isClientSide()) {
             return;
         }
 
@@ -47,7 +47,7 @@ public class NodeNetwork {
      * @param node the Node to be removed
      */
     public void removeNode(@NotNull Node node) {
-        if (node.getWorld() != null && node.getWorld().isClient()) {
+        if (node.getWorld() != null && node.getWorld().isClientSide()) {
             return;
         }
 
@@ -137,7 +137,7 @@ public class NodeNetwork {
                         NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while Removing Node at {} from Network {}",
                           NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
                           node.getPos().toShortString(),
-                          node.getWorld().getRegistryKey(),
+                          node.getWorld().dimension(),
                           originNode.getPos().toShortString(),
                           this.ID
                         );
@@ -197,7 +197,7 @@ public class NodeNetwork {
                         NTM.LOGGER.warn("Exceeded Max Node Scan Depth of {} at {} in {} while severing Connections Between {} Nodes in Network {}",
                           NTMConfig.MAX_NODE_SCAN_DEPTH.getValue(),
                           node.getPos().toShortString(),
-                          node.getWorld().getRegistryKey(),
+                          node.getWorld().dimension(),
                           providedNodes.size(),
                           this.ID
                         );
@@ -238,7 +238,7 @@ public class NodeNetwork {
                       this.ID,
                       connectedNode.getPos().toShortString(),
                       node.getPos().toShortString(),
-                      node.getWorld().getRegistryKey()
+                      node.getWorld().dimension()
                     );
                     continue;
                 }

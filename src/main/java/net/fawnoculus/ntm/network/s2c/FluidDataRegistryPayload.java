@@ -1,21 +1,21 @@
 package net.fawnoculus.ntm.network.s2c;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
-public record FluidDataRegistryPayload(NbtCompound registryNBT) implements CustomPayload {
+public record FluidDataRegistryPayload(CompoundTag registryNBT) implements CustomPacketPayload {
     public static final Identifier FLUID_DATA_REGISTRY_PAYLOAD_ID = NTM.id("fluid_data_registry");
-    public static final Id<FluidDataRegistryPayload> ID = new Id<>(FLUID_DATA_REGISTRY_PAYLOAD_ID);
+    public static final Type<FluidDataRegistryPayload> ID = new Type<>(FLUID_DATA_REGISTRY_PAYLOAD_ID);
 
-    public static final PacketCodec<RegistryByteBuf, FluidDataRegistryPayload> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.NBT_COMPOUND, FluidDataRegistryPayload::registryNBT, FluidDataRegistryPayload::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, FluidDataRegistryPayload> PACKET_CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, FluidDataRegistryPayload::registryNBT, FluidDataRegistryPayload::new);
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

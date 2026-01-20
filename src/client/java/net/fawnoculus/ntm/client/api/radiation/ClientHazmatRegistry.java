@@ -2,13 +2,13 @@ package net.fawnoculus.ntm.client.api.radiation;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.network.s2c.HazmatRegistryPayload;
-import net.minecraft.entity.EquipmentHolder;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentUser;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 
@@ -18,29 +18,29 @@ public class ClientHazmatRegistry {
 
     public static double getResistance(LivingEntity entity) {
         double resistance = 0;
-        if (entity instanceof EquipmentHolder equipmentHolder) {
+        if (entity instanceof EquipmentUser equipmentHolder) {
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.HEAD));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.HEAD));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.CHEST));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.CHEST));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.LEGS));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.LEGS));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.FEET));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.FEET));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.BODY));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.BODY));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.SADDLE));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.SADDLE));
             } catch (Throwable ignored) {
             }
         }
@@ -52,7 +52,7 @@ public class ClientHazmatRegistry {
     }
 
     public static double getResistance(Item item) {
-        return getResistance(Registries.ITEM.getId(item));
+        return getResistance(BuiltInRegistries.ITEM.getKey(item));
     }
 
     public static double getResistance(Identifier identifier) {

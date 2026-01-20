@@ -1,87 +1,87 @@
 package net.fawnoculus.ntm.items.custom;
 
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Consumer;
 
 public class ConstructionWandItem extends Item {
-    public ConstructionWandItem(Settings settings) {
+    public ConstructionWandItem(Properties settings) {
         super(settings
           .component(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null)
-          .component(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.getDefaultState()));
+          .component(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.defaultBlockState()));
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        if (context.getWorld().isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult useOn(UseOnContext context) {
+        if (context.getLevel().isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
         assert context.getPlayer() != null;
-        PlayerEntity player = context.getPlayer();
-        assert context.getStack() != null;
-        ItemStack stack = context.getStack();
-        assert context.getWorld() != null;
-        ServerWorld world = (ServerWorld) context.getWorld();
+        Player player = context.getPlayer();
+        assert context.getItemInHand() != null;
+        ItemStack stack = context.getItemInHand();
+        assert context.getLevel() != null;
+        ServerLevel world = (ServerLevel) context.getLevel();
 
-        if (player.isSneaking()) {
-            stack.set(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, world.getBlockState(context.getBlockPos()));
-            player.sendMessage(Text.translatable(
+        if (player.isShiftKeyDown()) {
+            stack.set(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, world.getBlockState(context.getClickedPos()));
+            player.displayClientMessage(Component.translatable(
               "message.ntm.construction_wand.set_block",
-              world.getBlockState(context.getBlockPos()).getBlock().getName()
+              world.getBlockState(context.getClickedPos()).getBlock().getName()
             ), false);
-            return ActionResult.SUCCESS_SERVER;
+            return InteractionResult.SUCCESS_SERVER;
         }
 
         BlockPos selectedPos = getBlockPos(stack);
         if (selectedPos == null) {
-            stack.set(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, context.getBlockPos());
-            player.sendMessage(Text.translatable(
+            stack.set(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, context.getClickedPos());
+            player.displayClientMessage(Component.translatable(
               "message.ntm.construction_wand.set_pos",
-              context.getBlockPos().getX(),
-              context.getBlockPos().getY(),
-              context.getBlockPos().getZ()
+              context.getClickedPos().getX(),
+              context.getClickedPos().getY(),
+              context.getClickedPos().getZ()
             ), false);
-            return ActionResult.SUCCESS_SERVER;
+            return InteractionResult.SUCCESS_SERVER;
         }
 
-        int greaterX = Math.max(selectedPos.getX(), context.getBlockPos().getX());
-        int lesserX = Math.min(selectedPos.getX(), context.getBlockPos().getX());
-        int greaterY = Math.max(selectedPos.getY(), context.getBlockPos().getY());
-        int lesserY = Math.min(selectedPos.getY(), context.getBlockPos().getY());
-        int greaterZ = Math.max(selectedPos.getZ(), context.getBlockPos().getZ());
-        int lesserZ = Math.min(selectedPos.getZ(), context.getBlockPos().getZ());
+        int greaterX = Math.max(selectedPos.getX(), context.getClickedPos().getX());
+        int lesserX = Math.min(selectedPos.getX(), context.getClickedPos().getX());
+        int greaterY = Math.max(selectedPos.getY(), context.getClickedPos().getY());
+        int lesserY = Math.min(selectedPos.getY(), context.getClickedPos().getY());
+        int greaterZ = Math.max(selectedPos.getZ(), context.getClickedPos().getZ());
+        int lesserZ = Math.min(selectedPos.getZ(), context.getClickedPos().getZ());
         int blocksToFill = (greaterX - lesserX) * (greaterY - lesserY) * (greaterZ - lesserZ);
 
-        player.sendMessage(Text.translatable("message.ntm.construction_wand.filling", blocksToFill), false);
+        player.displayClientMessage(Component.translatable("message.ntm.construction_wand.filling", blocksToFill), false);
 
         for (int x = lesserX; x <= greaterX; x++) {
             for (int y = lesserY; y <= greaterY; y++) {
                 for (int z = lesserZ; z <= greaterZ; z++) {
-                    world.setBlockState(new BlockPos(x, y, z), getBlockState(stack));
+                    world.setBlockAndUpdate(new BlockPos(x, y, z), getBlockState(stack));
                 }
             }
         }
         stack.set(NTMDataComponentTypes.BLOCK_POS_COMPONENT_TYPE, null);
-        player.sendMessage(Text.translatable("message.ntm.construction_wand.filled", blocksToFill), false);
-        return ActionResult.SUCCESS_SERVER;
+        player.displayClientMessage(Component.translatable("message.ntm.construction_wand.filled", blocksToFill), false);
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     private BlockState getBlockState(ItemStack stack) {
-        return stack.getOrDefault(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.getDefaultState());
+        return stack.getOrDefault(NTMDataComponentTypes.BLOCK_STATE_COMPONENT_TYPE, Blocks.AIR.defaultBlockState());
     }
 
     private BlockPos getBlockPos(ItemStack stack) {
@@ -90,18 +90,18 @@ public class ConstructionWandItem extends Item {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-        tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.construction_wand1").formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.construction_wand2").formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.construction_wand3").formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
+        tooltip.accept(Component.translatable("tooltip.ntm.creative_only").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.construction_wand1").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.construction_wand2").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.construction_wand3").withStyle(ChatFormatting.GRAY));
         BlockPos pos = getBlockPos(stack);
         if (pos != null) {
-            tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.pos", pos.getX(), pos.getY(), pos.getZ()).formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip.ntm.construction_wand.pos", pos.getX(), pos.getY(), pos.getZ()).withStyle(ChatFormatting.GRAY));
         } else {
-            tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.no_pos").formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip.ntm.construction_wand.no_pos").withStyle(ChatFormatting.GRAY));
         }
-        String blockIdentifier = Registries.BLOCK.getEntry(getBlockState(stack).getBlock()).getIdAsString();
-        tooltip.accept(Text.translatable("tooltip.ntm.construction_wand.block", blockIdentifier).formatted(Formatting.GRAY));
+        String blockIdentifier = BuiltInRegistries.BLOCK.wrapAsHolder(getBlockState(stack).getBlock()).getRegisteredName();
+        tooltip.accept(Component.translatable("tooltip.ntm.construction_wand.block", blockIdentifier).withStyle(ChatFormatting.GRAY));
     }
 }

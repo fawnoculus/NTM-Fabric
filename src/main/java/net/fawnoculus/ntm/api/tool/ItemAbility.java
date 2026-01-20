@@ -3,14 +3,14 @@ package net.fawnoculus.ntm.api.tool;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
@@ -56,11 +56,11 @@ public abstract class ItemAbility {
         this.MAX_LEVEL = maxLevel;
         this.IS_BOTTOM = isBottom;
         this.DISABLES_OTHER_ROW = disablesOtherRow;
-        this.ENABLED_TEXTURE = Identifier.of(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_enabled.png");
-        this.DISABLED_TEXTURE = Identifier.of(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_disabled.png");
+        this.ENABLED_TEXTURE = Identifier.fromNamespaceAndPath(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_enabled.png");
+        this.DISABLED_TEXTURE = Identifier.fromNamespaceAndPath(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_disabled.png");
 
         if (!isBottom && !isNone) {
-            this.CROSSHAIR_EXTENSION = Identifier.of(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_crosshair.png");
+            this.CROSSHAIR_EXTENSION = Identifier.fromNamespaceAndPath(id.getNamespace(), "textures/gui/ability/" + id.getPath() + "_crosshair.png");
         } else {
             this.CROSSHAIR_EXTENSION = null;
         }
@@ -120,19 +120,19 @@ public abstract class ItemAbility {
         return !Objects.equals(this.ID, NONE_ID);
     }
 
-    public MutableText getFullName(@Range(from = 0, to = 10) int level) {
+    public MutableComponent getFullName(@Range(from = 0, to = 10) int level) {
         if (this.MAX_LEVEL <= 1) {
             return this.getName();
         }
         return this.getName().append(" ").append(getLevelText(level));
     }
 
-    public MutableText getName() {
-        return Text.translatable("tooltip." + this.ID.getNamespace() + ".ability." + this.ID.getPath());
+    public MutableComponent getName() {
+        return Component.translatable("tooltip." + this.ID.getNamespace() + ".ability." + this.ID.getPath());
     }
 
-    public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
-        return Text.literal("(" + level + ")");
+    public MutableComponent getLevelText(@Range(from = 0, to = 10) int level) {
+        return Component.literal("(" + level + ")");
     }
 
     /**
@@ -140,21 +140,21 @@ public abstract class ItemAbility {
      *
      * @return whether to do regular block drops
      */
-    public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
-        return !miner.shouldSkipBlockDrops();
+    public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
+        return !miner.preventsBlockDrops();
     }
 
 
     /**
      * Add Extra Blocks to be broken
      */
-    public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
+    public void addExtraBlocks(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
     }
 
     /**
      * Called before braking any blocks
      */
-    public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+    public void preMine(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
     }
 
     @Override

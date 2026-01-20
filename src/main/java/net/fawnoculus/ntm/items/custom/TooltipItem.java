@@ -1,22 +1,22 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
 public class TooltipItem extends Item {
     private final int TOOLTIP_COUNT;
 
-    public TooltipItem(Settings settings) {
+    public TooltipItem(Properties settings) {
         this(settings, 1);
     }
 
-    public TooltipItem(Settings settings, int tooltipCount) {
+    public TooltipItem(Properties settings, int tooltipCount) {
         super(settings);
 
         this.TOOLTIP_COUNT = tooltipCount;
@@ -24,13 +24,13 @@ public class TooltipItem extends Item {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
         if (this.TOOLTIP_COUNT == 1) {
-            tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5)).withStyle(ChatFormatting.GRAY));
             return;
         }
         for (int i = 1; i <= this.TOOLTIP_COUNT; i++) {
-            tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + i).formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5) + i).withStyle(ChatFormatting.GRAY));
         }
     }
 }

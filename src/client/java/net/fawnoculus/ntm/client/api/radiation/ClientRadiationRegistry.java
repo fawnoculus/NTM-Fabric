@@ -3,16 +3,16 @@ package net.fawnoculus.ntm.client.api.radiation;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.network.s2c.RadiationRegistryPayload;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -29,9 +29,9 @@ public class ClientRadiationRegistry {
             if (stack.getItem() == NTMItems.TUNGSTEN_REACHER) {
                 hasTungstenReacher = true;
             }
-            if (stack.contains(DataComponentTypes.CONTAINER)) {
+            if (stack.has(DataComponents.CONTAINER)) {
                 radioactivity += getRadioactivity(
-                  stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).stream().toList()
+                  stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).stream().toList()
                 );
             }
         }
@@ -41,9 +41,9 @@ public class ClientRadiationRegistry {
         return radioactivity;
     }
 
-    public static double getRadioactivity(World world) {
+    public static double getRadioactivity(Level world) {
         try {
-            return getRadioactivity(world.getRegistryManager().getOrThrow(RegistryKeys.DIMENSION_TYPE).getId(world.getDimension()));
+            return getRadioactivity(world.registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).getKey(world.dimensionType()));
         } catch (Throwable throwable) {
             return 0;
         }
@@ -54,7 +54,7 @@ public class ClientRadiationRegistry {
     }
 
     public static double getRadioactivity(Block block) {
-        return getRadioactivity(Registries.BLOCK.getId(block));
+        return getRadioactivity(BuiltInRegistries.BLOCK.getKey(block));
     }
 
     public static double getRadioactivity(ItemStack stack) {
@@ -62,7 +62,7 @@ public class ClientRadiationRegistry {
     }
 
     public static double getRadioactivity(Item item) {
-        return getRadioactivity(Registries.ITEM.getId(item));
+        return getRadioactivity(BuiltInRegistries.ITEM.getKey(item));
     }
 
     public static double getRadioactivity(Identifier identifier) {

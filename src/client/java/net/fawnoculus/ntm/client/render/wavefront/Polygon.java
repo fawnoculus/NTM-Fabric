@@ -2,14 +2,14 @@ package net.fawnoculus.ntm.client.render.wavefront;
 
 import net.fawnoculus.ntm.client.NTMClientConfig;
 import net.fawnoculus.ntm.client.util.RenderUtil;
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.Baker;
-import net.minecraft.client.render.model.SimpleModel;
-import net.minecraft.client.texture.MissingSprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelDebugName;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2f;
@@ -25,7 +25,7 @@ public class Polygon {
     public final List<TextureCoordinate> coordinates = new ArrayList<>();
     public final List<@Nullable VertexNormal> normals = new ArrayList<>();
     @SuppressWarnings("deprecation")
-    private SpriteIdentifier texture = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, MissingSprite.getMissingSpriteId());
+    private Material texture = new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation());
 
     private static Direction normalsToDirection(@NotNull List<Polygon.VertexNormal> normals) {
         double averageX = 0;
@@ -81,10 +81,10 @@ public class Polygon {
 
     @SuppressWarnings("deprecation")
     public void setTexture(Identifier blockId) {
-        this.texture = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, blockId);
+        this.texture = new Material(TextureAtlas.LOCATION_BLOCKS, blockId);
     }
 
-    public void setTexture(SpriteIdentifier spriteIdentifier) {
+    public void setTexture(Material spriteIdentifier) {
         this.texture = spriteIdentifier;
     }
 
@@ -100,7 +100,7 @@ public class Polygon {
 
     // Yes we are turning a triangle into a quad
     // Yes I also hate it
-    public BakedQuad bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset) {
+    public BakedQuad bake(@NotNull ModelBaker baker, ModelDebugName simpleModel, Function<Vector3f, Vector3f> offset) {
         Vector3f[] corners = new Vector3f[4];
         if (vertices.size() == 3) {
             corners[0] = offset.apply(vertices.get(0).toVec3f());
@@ -132,11 +132,11 @@ public class Polygon {
         }
 
         return RenderUtil.makeQuad(
-          baker.getVec3fInterner(),
+          baker.parts(),
           corners,
           textureCords,
           -1,
-          baker.getSpriteGetter().get(texture, simpleModel),
+          baker.sprites().get(texture, simpleModel),
           normalsToDirection(this.normals),
           NTMClientConfig.SHADE_MODELS.getValue(),
           0

@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.api.tool;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -34,19 +34,19 @@ public abstract class ItemModifier {
         return ID;
     }
 
-    public MutableText getFullName(int level) {
+    public MutableComponent getFullName(int level) {
         if (level == 0) {
             return getName();
         }
         return getName().append(" ").append(getLevelText(level));
     }
 
-    public MutableText getName() {
-        return Text.translatable("tooltip." + getId().getNamespace() + ".modifier." + getId().getPath());
+    public MutableComponent getName() {
+        return Component.translatable("tooltip." + getId().getNamespace() + ".modifier." + getId().getPath());
     }
 
-    public MutableText getLevelText(int level) {
-        return Text.literal("(" + level + ")");
+    public MutableComponent getLevelText(int level) {
+        return Component.literal("(" + level + ")");
     }
 
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {

@@ -5,18 +5,19 @@ import com.mojang.serialization.MapCodec;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.client.NTMClient;
 import net.fawnoculus.ntm.client.render.wavefront.model.Model3d;
-import net.minecraft.client.item.ItemModelManager;
-import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.client.render.item.ItemRenderState.LayerRenderState;
-import net.minecraft.client.render.item.model.BasicItemModel;
-import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.client.render.model.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.HeldItemContext;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.TextureSlots;
+import net.minecraft.client.renderer.item.*;
+import net.minecraft.client.renderer.item.ItemStackRenderState.LayerRenderState;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ResolvableModel;
+import net.minecraft.client.resources.model.ResolvedModel;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ItemOwner;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
@@ -27,42 +28,42 @@ import java.util.function.Supplier;
 public class ItemModel3D implements ItemModel {
     private final List<BakedQuad> quads;
     private final Supplier<Vector3fc[]> vector;
-    private final ModelSettings settings;
+    private final ModelRenderProperties settings;
 
-    public ItemModel3D(List<BakedQuad> quads, ModelSettings settings) {
+    public ItemModel3D(List<BakedQuad> quads, ModelRenderProperties settings) {
         this.quads = quads;
         this.settings = settings;
-        this.vector = Suppliers.memoize(() -> BasicItemModel.bakeQuads(this.quads));
+        this.vector = Suppliers.memoize(() -> BlockModelWrapper.computeExtents(this.quads));
     }
 
     @Override
-    public void update(ItemRenderState state, ItemStack stack, ItemModelManager resolver, ItemDisplayContext displayContext, @org.jspecify.annotations.Nullable ClientWorld world, @org.jspecify.annotations.Nullable HeldItemContext heldItemContext, int seed) {
+    public void update(ItemStackRenderState state, ItemStack stack, ItemModelResolver resolver, ItemDisplayContext displayContext, @org.jspecify.annotations.Nullable ClientLevel world, @org.jspecify.annotations.Nullable ItemOwner heldItemContext, int seed) {
         LayerRenderState layer = state.newLayer();
 
-        layer.setVertices(this.vector);
-        layer.setRenderLayer(TexturedRenderLayers.getItemTranslucentCull());
-        this.settings.addSettings(layer, displayContext);
-        layer.getQuads().addAll(this.quads);
+        layer.setExtents(this.vector);
+        layer.setRenderType(Sheets.translucentItemSheet());
+        this.settings.applyToLayer(layer, displayContext);
+        layer.prepareQuadList().addAll(this.quads);
     }
 
     public record Unbaked(Model3d model3d, Identifier baseModelId,
-                          Function<Vector3f, Vector3f> offset) implements ItemModel.Unbaked {
+                          Function<Vector3f, Vector3f> offset) implements net.minecraft.client.renderer.item.ItemModel.Unbaked {
         public Unbaked(Model3d model3d, Identifier baseModelId) {
             this(model3d, baseModelId, model3d.defaultItemTransforms());
         }
 
         @Override
-        public void resolve(ResolvableModel.Resolver resolver) {
+        public void resolveDependencies(ResolvableModel.Resolver resolver) {
             resolver.markDependency(this.baseModelId);
         }
 
         @Override
-        public ItemModel bake(ItemModel.BakeContext context) {
+        public ItemModel bake(ItemModel.BakingContext context) {
 
-            Baker baker = context.blockModelBaker();
-            BakedSimpleModel bakedSimpleModel = baker.getModel(this.baseModelId);
-            ModelTextures modelTextures = bakedSimpleModel.getTextures();
-            ModelSettings modelSettings = ModelSettings.resolveSettings(baker, bakedSimpleModel, modelTextures);
+            ModelBaker baker = context.blockModelBaker();
+            ResolvedModel bakedSimpleModel = baker.getModel(this.baseModelId);
+            TextureSlots modelTextures = bakedSimpleModel.getTopTextureSlots();
+            ModelRenderProperties modelSettings = ModelRenderProperties.fromResolvedModel(baker, bakedSimpleModel, modelTextures);
 
             List<BakedQuad> quads = model3d.bake(baker, bakedSimpleModel, offset);
 
@@ -70,7 +71,7 @@ public class ItemModel3D implements ItemModel {
         }
 
         @Override
-        public MapCodec<ItemModel3D.Unbaked> getCodec() {
+        public MapCodec<ItemModel3D.Unbaked> type() {
             if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
                 NTMClient.LOGGER.warn("FUCK this is actually called somewhere");
                 NTMClient.LOGGER.warn("This is probably not good");

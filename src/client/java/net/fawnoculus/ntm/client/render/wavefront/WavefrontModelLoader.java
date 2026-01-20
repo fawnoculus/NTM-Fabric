@@ -6,9 +6,9 @@ import net.fawnoculus.ntm.client.render.wavefront.Polygon.TextureCoordinate;
 import net.fawnoculus.ntm.client.render.wavefront.Polygon.VertexNormal;
 import net.fawnoculus.ntm.client.render.wavefront.model.WavefrontModel;
 import net.fawnoculus.ntm.util.ExceptionUtil;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.Resource;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.Resource;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +25,7 @@ public class WavefrontModelLoader {
     private final static String OBJ_FACE = "f";
 
     public static WavefrontModel ofWavefrontObj(Identifier resourceIdentifier) {
-        Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(resourceIdentifier);
+        Optional<Resource> resource = Minecraft.getInstance().getResourceManager().getResource(resourceIdentifier);
         if (resource.isEmpty()) {
             NTMClient.LOGGER.warn("Could not load '{}' Wavefront File, because it does not exist", resourceIdentifier);
             return WavefrontModel.EMPTY;
@@ -33,7 +33,7 @@ public class WavefrontModelLoader {
 
         WavefrontModel toBeReturned = WavefrontModel.EMPTY;
         try {
-            toBeReturned = ofWavefrontObj(resource.get().getReader(), resourceIdentifier.toString());
+            toBeReturned = ofWavefrontObj(resource.get().openAsReader(), resourceIdentifier.toString());
         } catch (IOException e) {
             NTMClient.LOGGER.warn("Exception occurred while reading '{}' Wavefront File\nException: {}", resourceIdentifier, ExceptionUtil.makePretty(e));
         } catch (IndexOutOfBoundsException e) {

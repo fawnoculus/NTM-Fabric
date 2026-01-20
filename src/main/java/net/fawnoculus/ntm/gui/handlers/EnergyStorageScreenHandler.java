@@ -4,50 +4,50 @@ import net.fawnoculus.ntm.blocks.entities.container.energy.SimpleEnergyStorageBE
 import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import net.fawnoculus.ntm.gui.slots.BatterySlot;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class EnergyStorageScreenHandler extends ScreenHandler {
+public class EnergyStorageScreenHandler extends AbstractContainerMenu {
     private final SimpleEnergyStorageBE blockEntity;
-    private final ScreenHandlerContext screenContext;
+    private final ContainerLevelAccess screenContext;
 
     // Client Constructor
-    public EnergyStorageScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosPayload payload) {
-        this(syncId, playerInventory, (SimpleEnergyStorageBE) playerInventory.player.getEntityWorld().getBlockEntity(payload.pos()));
+    public EnergyStorageScreenHandler(int syncId, Inventory playerInventory, @NotNull BlockPosPayload payload) {
+        this(syncId, playerInventory, (SimpleEnergyStorageBE) playerInventory.player.level().getBlockEntity(payload.pos()));
     }
 
     // Common Constructor
-    public EnergyStorageScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, SimpleEnergyStorageBE blockEntity) {
+    public EnergyStorageScreenHandler(int syncId, @NotNull Inventory playerInventory, SimpleEnergyStorageBE blockEntity) {
         super(NTMScreenHandlerType.ENERGY_STORAGE, syncId);
 
         this.blockEntity = blockEntity;
-        this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
+        this.screenContext = ContainerLevelAccess.create(this.blockEntity.getLevel(), this.blockEntity.getBlockPos());
 
-        SimpleInventory blockInventory = this.blockEntity.getInventory();
-        blockInventory.onOpen(playerInventory.player);
-        checkSize(blockInventory, 2);
+        SimpleContainer blockInventory = this.blockEntity.getInventory();
+        blockInventory.startOpen(playerInventory.player);
+        checkContainerSize(blockInventory, 2);
 
         addPlayerInventory(playerInventory);
         addBlockInventory(blockInventory);
     }
 
-    private void addBlockInventory(SimpleInventory inventory) {
+    private void addBlockInventory(SimpleContainer inventory) {
         addSlot(new BatterySlot(inventory, SimpleEnergyStorageBE.DISCHARGE_SLOT_INDEX, 26, 17));
         addSlot(new BatterySlot(inventory, SimpleEnergyStorageBE.CHARGE_SLOT_INDEX, 26, 53));
     }
 
-    private void addPlayerInventory(PlayerInventory playerInventory) {
+    private void addPlayerInventory(Inventory playerInventory) {
         addPartialPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
     }
 
-    private void addPartialPlayerInventory(PlayerInventory playerInventory) {
+    private void addPartialPlayerInventory(Inventory playerInventory) {
         for (int row = 0; row < 3; row++) {
             for (int colum = 0; colum < 9; colum++) {
                 addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)), 8 + (colum * 18), 84 + (row * 18)));
@@ -55,27 +55,27 @@ public class EnergyStorageScreenHandler extends ScreenHandler {
         }
     }
 
-    private void addPlayerHotbar(PlayerInventory playerInventory) {
+    private void addPlayerHotbar(Inventory playerInventory) {
         for (int colum = 0; colum < 9; colum++) {
             addSlot(new Slot(playerInventory, colum, 8 + (colum * 18), 142));
         }
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.blockEntity.getInventory().onClose(player);
+    public void removed(Player player) {
+        super.removed(player);
+        this.blockEntity.getInventory().stopOpen(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         // TODO: fix this
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return screenContext.get((world, pos) -> player.canInteractWithBlockAt(pos, 4.0), true);
+    public boolean stillValid(Player player) {
+        return screenContext.evaluate((world, pos) -> player.isWithinBlockInteractionRange(pos, 4.0), true);
     }
 
     public SimpleEnergyStorageBE getBlockEntity() {

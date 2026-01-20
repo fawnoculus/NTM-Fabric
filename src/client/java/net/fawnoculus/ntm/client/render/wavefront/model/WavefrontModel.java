@@ -4,8 +4,8 @@ import net.fawnoculus.ntm.client.render.wavefront.Polygon;
 import net.fawnoculus.ntm.client.render.wavefront.Polygon.GeometryVertex;
 import net.fawnoculus.ntm.client.render.wavefront.Polygon.TextureCoordinate;
 import net.fawnoculus.ntm.client.render.wavefront.Polygon.VertexNormal;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.resources.Identifier;
 
 import java.util.*;
 
@@ -22,7 +22,7 @@ public record WavefrontModel(String name, HashMap<String, WavefrontModelGroup> m
         }
     }
 
-    public void setTexture(SpriteIdentifier spriteIdentifier) {
+    public void setTexture(Material spriteIdentifier) {
         for (WavefrontModelGroup wavefrontModelGroup : models.values()) {
             wavefrontModelGroup.setTexture(spriteIdentifier);
         }

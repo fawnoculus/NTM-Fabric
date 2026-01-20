@@ -1,6 +1,6 @@
 package net.fawnoculus.ntm.api.node.network;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

@@ -5,32 +5,28 @@ import net.fawnoculus.ntm.NTMConfig;
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.util.EnchantmentUtil;
 import net.fawnoculus.ntm.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ToolComponent;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootWorldContext;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.recipe.SmeltingRecipe;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.explosion.AdvancedExplosionBehavior;
-import net.minecraft.world.explosion.ExplosionBehavior;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.SimpleExplosionDamageCalculator;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Range;
 
 import java.util.ArrayList;
@@ -45,12 +41,12 @@ public abstract class Abilities {
      */
     public static final ItemAbility VEIN_MINER = new ItemAbility(NTM.id("vein_miner"), 10, false) {
         @Override
-        public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
-            return Text.literal("(" + (level + 2) + ")");
+        public MutableComponent getLevelText(@Range(from = 0, to = 10) int level) {
+            return Component.literal("(" + (level + 2) + ")");
         }
 
         @Override
-        public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
+        public void addExtraBlocks(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
             if (!isCorrectForDrops(stack, state)) {
                 return;
             }
@@ -68,19 +64,19 @@ public abstract class Abilities {
         }
 
         // These updates the List scannedBlocks
-        private void scanNeighbours(World world, Block compareBlock, BlockPos originPos, BlockPos scanningPos, List<BlockPos> scannedBlocks, @Range(from = 0, to = 10) int level) {
-            scanBlock(world, compareBlock, originPos, scanningPos.up(), scannedBlocks, level);
-            scanBlock(world, compareBlock, originPos, scanningPos.down(), scannedBlocks, level);
+        private void scanNeighbours(Level world, Block compareBlock, BlockPos originPos, BlockPos scanningPos, List<BlockPos> scannedBlocks, @Range(from = 0, to = 10) int level) {
+            scanBlock(world, compareBlock, originPos, scanningPos.above(), scannedBlocks, level);
+            scanBlock(world, compareBlock, originPos, scanningPos.below(), scannedBlocks, level);
             scanBlock(world, compareBlock, originPos, scanningPos.north(), scannedBlocks, level);
             scanBlock(world, compareBlock, originPos, scanningPos.east(), scannedBlocks, level);
             scanBlock(world, compareBlock, originPos, scanningPos.south(), scannedBlocks, level);
             scanBlock(world, compareBlock, originPos, scanningPos.west(), scannedBlocks, level);
         }
 
-        private void scanBlock(World world, Block compareBlock, BlockPos originPos, BlockPos scanningPos, List<BlockPos> scannedBlocks, @Range(from = 0, to = 10) int level) {
+        private void scanBlock(Level world, Block compareBlock, BlockPos originPos, BlockPos scanningPos, List<BlockPos> scannedBlocks, @Range(from = 0, to = 10) int level) {
             if (scannedBlocks.contains(scanningPos)) return;
             if (world.getBlockState(scanningPos).getBlock() != compareBlock) return;
-            if (!originPos.isWithinDistance(scanningPos, level + 2)) return;
+            if (!originPos.closerThan(scanningPos, level + 2)) return;
             scannedBlocks.add(scanningPos);
             scanNeighbours(world, compareBlock, originPos, scanningPos, scannedBlocks, level);
         }
@@ -93,7 +89,7 @@ public abstract class Abilities {
      */
     public static final ItemAbility AOE = new ItemAbility(NTM.id("aoe"), 10, false) {
         @Override
-        public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
+        public void addExtraBlocks(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
             if (!isCorrectForDrops(stack, state) || NTMConfig.AOE_ABILITY_EXCLUDE.getValue().contains(state.getBlock())) {
                 return;
             }
@@ -119,19 +115,19 @@ public abstract class Abilities {
      */
     public static final ItemAbility FLAT_AOE = new ItemAbility(NTM.id("flat_aoe"), 10, false) {
         @Override
-        public void addExtraBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
+        public void addExtraBlocks(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level, ArrayList<BlockPos> extraBlocks) {
             if (!isCorrectForDrops(stack, state) || NTMConfig.AOE_ABILITY_EXCLUDE.getValue().contains(state.getBlock())) {
                 return;
             }
 
-            if (!(miner.raycast(miner.getAttributeValue(EntityAttributes.BLOCK_INTERACTION_RANGE), 1, false) instanceof BlockHitResult hitResult))
+            if (!(miner.pick(miner.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE), 1, false) instanceof BlockHitResult hitResult))
                 return;
 
             int xRange = level;
             int yRange = level;
             int zRange = 0;
 
-            switch (hitResult.getSide()) {
+            switch (hitResult.getDirection()) {
                 case WEST, EAST -> {
                     xRange = 0;
                     zRange = level;
@@ -164,12 +160,12 @@ public abstract class Abilities {
      */
     public static final ItemAbility EXPLOSION = new ItemAbility(NTM.id("explosion"), 10, false, true) {
         @Override
-        public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
+        public MutableComponent getLevelText(@Range(from = 0, to = 10) int level) {
             if (level < 2) {
-                return Text.literal("(2.5)");
+                return Component.literal("(2.5)");
             }
 
-            return Text.literal("(" + 5 * (level - 1) + ".0)");
+            return Component.literal("(" + 5 * (level - 1) + ".0)");
         }
 
         private float fromLevel(int level) {
@@ -181,10 +177,10 @@ public abstract class Abilities {
         }
 
         @Override
-        public void preMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public void preMine(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             if (!isCorrectForDrops(stack, state)) return;
-            ExplosionBehavior explosionBehavior = new AdvancedExplosionBehavior(true, false, Optional.empty(), Optional.empty());
-            world.createExplosion(null, null, explosionBehavior, Vec3d.of(pos), this.fromLevel(level), false, World.ExplosionSourceType.TNT);
+            ExplosionDamageCalculator explosionBehavior = new SimpleExplosionDamageCalculator(true, false, Optional.empty(), Optional.empty());
+            world.explode(null, null, explosionBehavior, Vec3.atLowerCornerOf(pos), this.fromLevel(level), false, Level.ExplosionInteraction.TNT);
         }
     };
 
@@ -193,14 +189,14 @@ public abstract class Abilities {
      */
     public static final ItemAbility SILK_TOUCH = new ItemAbility(NTM.id("silk_touch"), true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
             if (!isCorrectForDrops(stack, state)) {
                 return true;
             }
 
-            if (miner.shouldSkipBlockDrops()) {
+            if (miner.preventsBlockDrops()) {
                 return false;
             }
 
@@ -218,14 +214,14 @@ public abstract class Abilities {
      */
     public static final ItemAbility FORTUNE = new ItemAbility(NTM.id("fortune"), 10, true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
             if (!isCorrectForDrops(stack, state)) {
                 return true;
             }
 
-            if (miner.shouldSkipBlockDrops()) {
+            if (miner.preventsBlockDrops()) {
                 return false;
             }
 
@@ -242,39 +238,39 @@ public abstract class Abilities {
      */
     public static final ItemAbility AUTO_SMELT = new ItemAbility(NTM.id("auto_smelt"), true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
-            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)) {
+            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerLevel serverWorld)) {
                 return true;
             }
 
-            if (miner.shouldSkipBlockDrops()) {
+            if (miner.preventsBlockDrops()) {
                 return false;
             }
 
-            LootWorldContext.Builder builder = new LootWorldContext.Builder(serverWorld)
-              .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
-              .add(LootContextParameters.BLOCK_STATE, state)
-              .addOptional(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos))
-              .addOptional(LootContextParameters.THIS_ENTITY, miner)
-              .add(LootContextParameters.TOOL, stack);
+            LootParams.Builder builder = new LootParams.Builder(serverWorld)
+              .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+              .withParameter(LootContextParams.BLOCK_STATE, state)
+              .withOptionalParameter(LootContextParams.BLOCK_ENTITY, world.getBlockEntity(pos))
+              .withOptionalParameter(LootContextParams.THIS_ENTITY, miner)
+              .withParameter(LootContextParams.TOOL, stack);
 
-            List<ItemStack> list = state.getDroppedStacks(builder);
+            List<ItemStack> list = state.getDrops(builder);
             for (ItemStack checkedStack : list) {
-                SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(checkedStack);
+                SingleRecipeInput recipeInput = new SingleRecipeInput(checkedStack);
 
-                Optional<RecipeEntry<SmeltingRecipe>> optional = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
+                Optional<RecipeHolder<SmeltingRecipe>> optional = RecipeManager.createCheck(RecipeType.SMELTING).getRecipeFor(recipeInput, serverWorld);
                 if (optional.isEmpty()) {
                     continue;
                 }
 
-                RecipeEntry<SmeltingRecipe> recipeEntry = optional.get();
+                RecipeHolder<SmeltingRecipe> recipeEntry = optional.get();
 
-                ItemStack output = recipeEntry.value().craft(recipeInput, serverWorld.getRegistryManager());
+                ItemStack output = recipeEntry.value().assemble(recipeInput, serverWorld.registryAccess());
                 output.setCount(checkedStack.getCount());
 
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), output);
+                Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), output);
             }
 
             return false;
@@ -287,14 +283,14 @@ public abstract class Abilities {
      */
     public static final ItemAbility AUTO_SHREADER = new ItemAbility(NTM.id("auto_shredder"), true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
-            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)) {
+            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerLevel serverWorld)) {
                 return true;
             }
 
-            if (miner.shouldSkipBlockDrops()) {
+            if (miner.preventsBlockDrops()) {
                 return false;
             }
 
@@ -309,14 +305,14 @@ public abstract class Abilities {
      */
     public static final ItemAbility AUTO_CENTRIFUGE = new ItemAbility(NTM.id("auto_centrifuge"), true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
-            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)) {
+            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerLevel serverWorld)) {
                 return true;
             }
 
-            if (miner.shouldSkipBlockDrops()) {
+            if (miner.preventsBlockDrops()) {
                 return false;
             }
 
@@ -331,14 +327,14 @@ public abstract class Abilities {
      */
     public static final ItemAbility AUTO_CRYSTALLIZER = new ItemAbility(NTM.id("auto_crystallizer"), true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
-            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerWorld serverWorld)) {
+            if (!isCorrectForDrops(stack, state) || !(world instanceof ServerLevel serverWorld)) {
                 return true;
             }
 
-            if (miner.shouldSkipBlockDrops()) {
+            if (miner.preventsBlockDrops()) {
                 return false;
             }
 
@@ -352,7 +348,7 @@ public abstract class Abilities {
      */
     public static final ItemAbility MERCURY_TOUCH = new ItemAbility(NTM.id("mercury_touch"), true) {
         @Override
-        public boolean onBreakBlock(ItemStack stack, World world, BlockPos pos, PlayerEntity miner, @Range(from = 0, to = 10) int level) {
+        public boolean onBreakBlock(ItemStack stack, Level world, BlockPos pos, Player miner, @Range(from = 0, to = 10) int level) {
             BlockState state = world.getBlockState(pos);
 
             int mercury = 0;
@@ -362,8 +358,8 @@ public abstract class Abilities {
                 mercury = miner.getRandom().nextInt(7) + 8;
 
             if (mercury > 0) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(NTMItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
-                stack.damage(1, miner);
+                Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(NTMItems.NULL, mercury)); //TODO: replace this with Mercury Drops once they exist
+                stack.hurtWithoutBreaking(1, miner);
 
                 return false;
             }
@@ -373,7 +369,7 @@ public abstract class Abilities {
     };
 
     private static boolean isCorrectForDrops(ItemStack stack, BlockState state) {
-        ToolComponent toolComponent = stack.get(DataComponentTypes.TOOL);
+        Tool toolComponent = stack.get(DataComponents.TOOL);
         return toolComponent != null && toolComponent.isCorrectForDrops(state);
     }
 }

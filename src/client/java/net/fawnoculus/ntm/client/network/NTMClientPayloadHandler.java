@@ -1,24 +1,22 @@
 package net.fawnoculus.ntm.client.network;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fawnoculus.ntm.client.api.explosion.NTMExplosionHandlerRegistry;
 import net.fawnoculus.ntm.client.api.messages.MessageSystem;
 import net.fawnoculus.ntm.client.api.radiation.ClientHazmatRegistry;
 import net.fawnoculus.ntm.client.api.radiation.ClientRadiationManager;
 import net.fawnoculus.ntm.client.api.radiation.ClientRadiationRegistry;
 import net.fawnoculus.ntm.client.data.ClientFluidDataRegistry;
 import net.fawnoculus.ntm.network.s2c.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class NTMClientPayloadHandler {
     public static void initialize() {
         ClientPlayNetworking.registerGlobalReceiver(AdvancedMessagePayload.ID, (payload, context) -> MessageSystem.addMessage(payload.message()));
-        ClientPlayNetworking.registerGlobalReceiver(NTMExplosionPayload.ID, NTMExplosionHandlerRegistry::handleExplosionPacket);
         ClientPlayNetworking.registerGlobalReceiver(RemoveMessagePayload.ID, (payload, context) -> MessageSystem.removeMessage(payload.identifier()));
         ClientPlayNetworking.registerGlobalReceiver(RemoveAllMessagesPayload.ID, (payload, context) -> MessageSystem.removeAllMessages());
         ClientPlayNetworking.registerGlobalReceiver(RadiationInformationPayload.ID, ClientRadiationManager::handlePacket);
@@ -30,19 +28,19 @@ public class NTMClientPayloadHandler {
     }
 
     private static void handleInventorySync(InventorySyncPayload payload, @NotNull ClientPlayNetworking.Context context) {
-        if (!(context.player().getEntityWorld() instanceof ClientWorld world)) {
+        if (!(context.player().level() instanceof ClientLevel world)) {
             return;
         }
 
         BlockEntity be = world.getBlockEntity(payload.pos());
-        if (be instanceof Inventory inventory) {
+        if (be instanceof Container inventory) {
             int i = 0;
             for (ItemStack stack : payload.inventory()) {
-                inventory.setStack(i, stack);
+                inventory.setItem(i, stack);
                 i++;
             }
 
-            world.updateListeners(payload.pos(), be.getCachedState(), be.getCachedState(), Block.NOTIFY_ALL);
+            world.sendBlockUpdated(payload.pos(), be.getBlockState(), be.getBlockState(), Block.UPDATE_ALL);
         }
     }
 

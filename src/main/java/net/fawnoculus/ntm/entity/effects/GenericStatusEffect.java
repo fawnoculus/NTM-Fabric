@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.entity.effects;
 
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
-public class GenericStatusEffect extends StatusEffect {
-    public GenericStatusEffect(StatusEffectCategory category, int color) {
+public class GenericStatusEffect extends MobEffect {
+    public GenericStatusEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 }

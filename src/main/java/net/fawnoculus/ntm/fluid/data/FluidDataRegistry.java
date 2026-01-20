@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.fluid.data;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class FluidDataRegistry {
     }
 
     public static @NotNull FluidDataContainer getOrCreate(Fluid fluid) {
-        return getOrCreate(Registries.FLUID.getId(fluid));
+        return getOrCreate(BuiltInRegistries.FLUID.getKey(fluid));
     }
 
     public static @NotNull FluidDataContainer getOrCreate(Identifier fluidID) {
@@ -37,8 +37,8 @@ public class FluidDataRegistry {
      *
      * @return NbtCompound containing all FluidData
      */
-    public static @NotNull NbtCompound encodeAllFluidData() {
-        NbtCompound registryNBT = new NbtCompound();
+    public static @NotNull CompoundTag encodeAllFluidData() {
+        CompoundTag registryNBT = new CompoundTag();
 
         for (Identifier fluidID : FLUID_DATA.keySet()) {
             registryNBT.put(fluidID.toString(), FluidDataContainer.encode(getOrCreate(fluidID)));
@@ -50,8 +50,8 @@ public class FluidDataRegistry {
     public static class FluidDataContainer {
         private final HashMap<Identifier, Object> DATA = new HashMap<>();
 
-        public static @NotNull NbtCompound encode(@NotNull FluidDataContainer container) {
-            NbtCompound nbt = new NbtCompound();
+        public static @NotNull CompoundTag encode(@NotNull FluidDataContainer container) {
+            CompoundTag nbt = new CompoundTag();
 
             for (Identifier typeID : container.DATA.keySet()) {
                 FluidDataType<?> type = FluidDataRegistry.getDataType(typeID);
@@ -65,7 +65,7 @@ public class FluidDataRegistry {
             return nbt;
         }
 
-        private static <T> void putInNBT(@NotNull FluidDataType<T> type, NbtCompound nbt, Object value) throws ClassCastException {
+        private static <T> void putInNBT(@NotNull FluidDataType<T> type, CompoundTag nbt, Object value) throws ClassCastException {
             type.encode(nbt, cast(value));
         }
 

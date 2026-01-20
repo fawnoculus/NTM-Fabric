@@ -1,17 +1,17 @@
 package net.fawnoculus.ntm.client.gui.widget;
 
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundManager;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
 
-public class HoverButtonWidget extends ClickableWidget {
+public class HoverButtonWidget extends AbstractWidget {
     private final Identifier TEXTURE;
     private final int U;
     private final int V;
@@ -22,7 +22,7 @@ public class HoverButtonWidget extends ClickableWidget {
     public HoverButtonWidget(
       int x, int y,
       int width, int height,
-      Text message, Identifier texture,
+      Component message, Identifier texture,
       int u, int v,
       int textureWidth, int textureHeight,
       Runnable onClicked
@@ -37,9 +37,9 @@ public class HoverButtonWidget extends ClickableWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    protected void renderWidget(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
         if (this.isHovered()) {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.GUI_TEXTURED, TEXTURE,
               this.getX(), this.getY(),
               this.U, this.V,
@@ -50,16 +50,16 @@ public class HoverButtonWidget extends ClickableWidget {
     }
 
     @Override
-    protected void appendClickableNarrations(NarrationMessageBuilder builder) {
+    protected void updateWidgetNarration(NarrationElementOutput builder) {
     }
 
     @Override
     public void playDownSound(SoundManager soundManager) {
-        soundManager.play(PositionedSoundInstance.ui(SoundEvents.UI_BUTTON_CLICK, 0.5F));
+        soundManager.play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 0.5F));
     }
 
     @Override
-    public void onClick(Click click, boolean doubled) {
+    public void onClick(MouseButtonEvent click, boolean doubled) {
         ON_CLICKED.run();
     }
 }

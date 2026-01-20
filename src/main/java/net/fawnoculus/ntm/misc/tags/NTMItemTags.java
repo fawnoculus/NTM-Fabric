@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.misc.tags;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public class NTMItemTags {
     // Tool Stuff
@@ -57,6 +57,6 @@ public class NTMItemTags {
     }
 
     private static TagKey<Item> of(Identifier identifier) {
-        return TagKey.of(RegistryKeys.ITEM, identifier);
+        return TagKey.create(Registries.ITEM, identifier);
     }
 }

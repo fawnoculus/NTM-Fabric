@@ -1,5 +1,6 @@
 package net.fawnoculus.ntm.client.misc;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.tool.SpecialTool;
@@ -9,43 +10,42 @@ import net.fawnoculus.ntm.client.api.events.custom.OnKeyPressedEvent;
 import net.fawnoculus.ntm.client.api.events.custom.OnMouseClickEvent;
 import net.fawnoculus.ntm.client.api.qmaw.QmawManager;
 import net.fawnoculus.ntm.client.gui.screen.ToolAbilityCustomizationScreen;
-import net.fawnoculus.ntm.client.mixin.accessor.HandledScreenInvoker;
+import net.fawnoculus.ntm.client.mixin.accessor.AbstractContainerScreenInvoker;
 import net.fawnoculus.ntm.client.util.ClientUtil;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class NTMKeybinds {
-    public static final KeyBinding.Category NTM_CATEGORY = KeyBinding.Category.create(NTM.id("keys"));
+    public static final KeyMapping.Category NTM_CATEGORY = KeyMapping.Category.register(NTM.id("keys"));
 
-    public static final KeyBinding DUCK = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    public static final KeyMapping DUCK = KeyBindingHelper.registerKeyBinding(new KeyMapping(
       "key.ntm.duck",
-      InputUtil.Type.KEYSYM,
+      InputConstants.Type.KEYSYM,
       GLFW.GLFW_KEY_O,
       NTM_CATEGORY
     ));
-    public static final KeyBinding DISPLAY_EXTRA_INFO = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    public static final KeyMapping DISPLAY_EXTRA_INFO = KeyBindingHelper.registerKeyBinding(new KeyMapping(
       "key.ntm.extra_info",
-      InputUtil.Type.KEYSYM,
+      InputConstants.Type.KEYSYM,
       GLFW.GLFW_KEY_LEFT_SHIFT,
       NTM_CATEGORY
     ));
-    public static final KeyBinding OPEN_QMAW_PAGE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    public static final KeyMapping OPEN_QMAW_PAGE = KeyBindingHelper.registerKeyBinding(new KeyMapping(
       "key.ntm.qmaw",
-      InputUtil.Type.KEYSYM,
+      InputConstants.Type.KEYSYM,
       GLFW.GLFW_KEY_F1,
       NTM_CATEGORY
     ));
-    public static final KeyBinding OPEN_TOOL_ABILITY_GUI = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    public static final KeyMapping OPEN_TOOL_ABILITY_GUI = KeyBindingHelper.registerKeyBinding(new KeyMapping(
       "key.ntm.open_tool_ability_gui",
-      InputUtil.Type.KEYSYM,
+      InputConstants.Type.KEYSYM,
       GLFW.GLFW_KEY_LEFT_ALT,
       NTM_CATEGORY
     ));
@@ -54,9 +54,9 @@ public class NTMKeybinds {
 
     public static void initialize() {
         onKeyPressedTick(OPEN_TOOL_ABILITY_GUI, client -> {
-            ItemStack stack = ClientUtil.getPlayer().getMainHandStack();
+            ItemStack stack = ClientUtil.getPlayer().getMainHandItem();
 
-            if (client.currentScreen == null
+            if (client.screen == null
               && stack.getItem() instanceof SpecialTool specialTool
               && !specialTool.abilityHandler().ABILITIES().isEmpty()
             ) {
@@ -68,37 +68,37 @@ public class NTMKeybinds {
         // And i have no idea whats wrong with it
         onKeyPressedEvery(OPEN_QMAW_PAGE, client -> {
             NTMClient.LOGGER.info("AAA");
-            if (client.currentScreen instanceof HandledScreen<?> handledScreen) {
-                Slot hoveredSlot = ((HandledScreenInvoker) handledScreen).NTM$getSlotAt(client.mouse.getX(), client.mouse.getY());
+            if (client.screen instanceof AbstractContainerScreen<?> handledScreen) {
+                Slot hoveredSlot = ((AbstractContainerScreenInvoker) handledScreen).NTM$getSlotAt(client.mouseHandler.xpos(), client.mouseHandler.ypos());
                 return QmawManager.openQmawPage(client, hoveredSlot);
             }
             return false;
         });
     }
 
-    public static void onKeyPressedTick(KeyBinding key, Consumer<MinecraftClient> onPressed) {
+    public static void onKeyPressedTick(KeyMapping key, Consumer<Minecraft> onPressed) {
         ClientTickEvents.EVENT.register(client -> {
-            while (key.wasPressed()) {
+            while (key.consumeClick()) {
                 onPressed.accept(client);
             }
         });
     }
 
-    public static void onKeyPressedEvery(KeyBinding keyBinding, Function<MinecraftClient, Boolean> onPressed) {
+    public static void onKeyPressedEvery(KeyMapping keyBinding, Function<Minecraft, Boolean> onPressed) {
         onKeyboardPressed(keyBinding, (client, ignored) -> onPressed.apply(client));
         onMousePressed(keyBinding, (client, ignored) -> onPressed.apply(client));
     }
 
-    public static void onKeyboardPressed(KeyBinding keyBinding, OnKeyPressedEvent onPressed) {
+    public static void onKeyboardPressed(KeyMapping keyBinding, OnKeyPressedEvent onPressed) {
         OnKeyPressedEvent.EVENT.register((client, keyInput) -> {
-            if (keyBinding.matchesKey(keyInput)) {
+            if (keyBinding.matches(keyInput)) {
                 return onPressed.onKeyPressed(client, keyInput);
             }
             return false;
         });
     }
 
-    public static void onMousePressed(KeyBinding keyBinding, OnMouseClickEvent onPressed) {
+    public static void onMousePressed(KeyMapping keyBinding, OnMouseClickEvent onPressed) {
         OnMouseClickEvent.EVENT.register((client, click) -> {
             if (keyBinding.matchesMouse(click)) {
                 return onPressed.onClick(client, click);

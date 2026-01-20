@@ -2,9 +2,9 @@ package net.fawnoculus.ntm.misc.stack;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class FluidStack extends SingleVariantStorage<FluidVariant> {
     private long maxDroplets = 0;
@@ -60,11 +60,11 @@ public class FluidStack extends SingleVariantStorage<FluidVariant> {
         this.onFinalCommit.run();
     }
 
-    public void readData(ReadView view) {
+    public void readData(ValueInput view) {
         SingleVariantStorage.readData(this, FluidVariant.CODEC, FluidVariant::blank, view);
     }
 
-    public void writeData(WriteView view) {
+    public void writeData(ValueOutput view) {
         SingleVariantStorage.writeData(this, FluidVariant.CODEC, view);
     }
 }

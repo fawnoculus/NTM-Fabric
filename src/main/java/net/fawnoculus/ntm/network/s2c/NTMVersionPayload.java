@@ -4,20 +4,20 @@ import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
 import net.fabricmc.loader.impl.util.version.VersionParser;
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
 import java.nio.charset.StandardCharsets;
 
-public record NTMVersionPayload(Version version) implements CustomPayload {
+public record NTMVersionPayload(Version version) implements CustomPacketPayload {
     public static final Identifier NTM_VERSION_PAYLOAD_ID = NTM.id("version");
-    public static final CustomPayload.Id<NTMVersionPayload> ID = new CustomPayload.Id<>(NTM_VERSION_PAYLOAD_ID);
+    public static final CustomPacketPayload.Type<NTMVersionPayload> ID = new CustomPacketPayload.Type<>(NTM_VERSION_PAYLOAD_ID);
 
-    private static final PacketCodec<RegistryByteBuf, Version> VERSION_PACKET_CODEC = new PacketCodec<>() {
+    private static final StreamCodec<RegistryFriendlyByteBuf, Version> VERSION_PACKET_CODEC = new StreamCodec<>() {
         @Override
-        public Version decode(RegistryByteBuf byteBuf) {
+        public Version decode(RegistryFriendlyByteBuf byteBuf) {
             String string = new String(byteBuf.readByteArray(), StandardCharsets.UTF_8);
             try {
                 return VersionParser.parse(string, false);
@@ -28,15 +28,15 @@ public record NTMVersionPayload(Version version) implements CustomPayload {
         }
 
         @Override
-        public void encode(RegistryByteBuf byteBuf, Version version) {
+        public void encode(RegistryFriendlyByteBuf byteBuf, Version version) {
             byteBuf.writeByteArray(version.getFriendlyString().getBytes(StandardCharsets.UTF_8));
         }
     };
 
-    public static final PacketCodec<RegistryByteBuf, NTMVersionPayload> PACKET_CODEC = PacketCodec.tuple(VERSION_PACKET_CODEC, NTMVersionPayload::version, NTMVersionPayload::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, NTMVersionPayload> PACKET_CODEC = StreamCodec.composite(VERSION_PACKET_CODEC, NTMVersionPayload::version, NTMVersionPayload::new);
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

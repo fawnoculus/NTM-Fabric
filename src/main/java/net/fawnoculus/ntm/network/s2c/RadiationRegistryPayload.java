@@ -2,19 +2,19 @@ package net.fawnoculus.ntm.network.s2c;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
-public record RadiationRegistryPayload(RadiationRegistry.Serialized serializedRegistry) implements CustomPayload {
+public record RadiationRegistryPayload(RadiationRegistry.Serialized serializedRegistry) implements CustomPacketPayload {
     public static final Identifier RADIATION_REGISTRY_PAYLOAD_ID = NTM.id("radiation_registry");
-    public static final Id<RadiationRegistryPayload> ID = new Id<>(RADIATION_REGISTRY_PAYLOAD_ID);
+    public static final Type<RadiationRegistryPayload> ID = new Type<>(RADIATION_REGISTRY_PAYLOAD_ID);
 
-    public static final PacketCodec<RegistryByteBuf, RadiationRegistryPayload> PACKET_CODEC = PacketCodec.tuple(RadiationRegistry.Serialized.PACKET_CODEC, RadiationRegistryPayload::serializedRegistry, RadiationRegistryPayload::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, RadiationRegistryPayload> PACKET_CODEC = StreamCodec.composite(RadiationRegistry.Serialized.PACKET_CODEC, RadiationRegistryPayload::serializedRegistry, RadiationRegistryPayload::new);
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

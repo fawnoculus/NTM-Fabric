@@ -22,7 +22,7 @@ import net.fawnoculus.ntm.network.NTMPayloads;
 import net.fawnoculus.ntm.network.NTMServerPayloadHandler;
 import net.fawnoculus.ntm.recipe.NTMRecipes;
 import net.fawnoculus.ntm.world.NTMWorldGeneration;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class NTM implements ModInitializer {
 
     @Contract("_ -> new")
     public static @NotNull Identifier id(String name) {
-        return Identifier.of(MOD_ID, name);
+        return Identifier.fromNamespaceAndPath(MOD_ID, name);
     }
 
     public static NTMProxy getProxy() {
@@ -52,7 +52,6 @@ public class NTM implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Initializing ...");
 
         NTMConfig.initialize();
         NTMApi.initialize();

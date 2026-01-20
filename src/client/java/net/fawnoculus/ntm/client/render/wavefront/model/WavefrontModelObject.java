@@ -1,11 +1,11 @@
 package net.fawnoculus.ntm.client.render.wavefront.model;
 
 import net.fawnoculus.ntm.client.render.wavefront.Polygon;
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.Baker;
-import net.minecraft.client.render.model.SimpleModel;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelDebugName;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
@@ -20,13 +20,13 @@ public record WavefrontModelObject(String name, List<Polygon> polygons) implemen
         }
     }
 
-    public void setTexture(SpriteIdentifier spriteIdentifier) {
+    public void setTexture(Material spriteIdentifier) {
         for (Polygon face : polygons) {
             face.setTexture(spriteIdentifier);
         }
     }
 
-    public @NotNull List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset) {
+    public @NotNull List<BakedQuad> bake(@NotNull ModelBaker baker, ModelDebugName simpleModel, Function<Vector3f, Vector3f> offset) {
         List<BakedQuad> quads = new ArrayList<>();
         for (Polygon face : polygons) {
             quads.add(face.bake(baker, simpleModel, offset));

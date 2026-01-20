@@ -1,13 +1,13 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * An Interface for Items to respond Clients to sending Interaction Packets
  */
 public interface InteractableItem {
-    void onInteraction(ServerPlayerEntity source, ItemStack heldStack, Identifier action, NbtCompound extraData);
+    void onInteraction(ServerPlayer source, ItemStack heldStack, Identifier action, CompoundTag extraData);
 }

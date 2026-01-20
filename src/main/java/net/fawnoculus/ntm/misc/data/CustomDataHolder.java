@@ -1,14 +1,14 @@
 package net.fawnoculus.ntm.misc.data;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import org.jetbrains.annotations.NotNull;
 
 public interface CustomDataHolder {
     String KEY = "ntm.custom_data";
 
-    static CustomDataHolder from(WorldChunk chunk) {
+    static CustomDataHolder from(LevelChunk chunk) {
         return (CustomDataHolder) chunk;
     }
 
@@ -16,7 +16,7 @@ public interface CustomDataHolder {
         return (CustomDataHolder) entity;
     }
 
-    @NotNull NbtCompound NTM$getCustomData();
+    @NotNull CompoundTag NTM$getCustomData();
 
-    void NTM$setCustomData(NbtCompound customData);
+    void NTM$setCustomData(CompoundTag customData);
 }

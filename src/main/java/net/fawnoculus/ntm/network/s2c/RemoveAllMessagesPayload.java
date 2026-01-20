@@ -1,19 +1,19 @@
 package net.fawnoculus.ntm.network.s2c;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
-public record RemoveAllMessagesPayload() implements CustomPayload {
+public record RemoveAllMessagesPayload() implements CustomPacketPayload {
     public static final Identifier CLEAR_ALL_MESSAGES_PAYLOAD_ID = NTM.id("remove_all_messages");
-    public static final Id<RemoveAllMessagesPayload> ID = new Id<>(CLEAR_ALL_MESSAGES_PAYLOAD_ID);
+    public static final Type<RemoveAllMessagesPayload> ID = new Type<>(CLEAR_ALL_MESSAGES_PAYLOAD_ID);
 
-    public static final PacketCodec<RegistryByteBuf, RemoveAllMessagesPayload> PACKET_CODEC = PacketCodec.unit(new RemoveAllMessagesPayload());
+    public static final StreamCodec<RegistryFriendlyByteBuf, RemoveAllMessagesPayload> PACKET_CODEC = StreamCodec.unit(new RemoveAllMessagesPayload());
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

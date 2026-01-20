@@ -2,13 +2,13 @@ package net.fawnoculus.ntm.items.custom.container.energy;
 
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.fawnoculus.ntm.util.TextUtil;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
@@ -17,12 +17,12 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
     private final long CHARGE;
     private final long DISCHARGE;
 
-    public SimpleBatteryItem(Settings settings, long maxEnergy, long energyPerTick) {
+    public SimpleBatteryItem(Properties settings, long maxEnergy, long energyPerTick) {
         this(settings, maxEnergy, energyPerTick, energyPerTick);
     }
 
-    public SimpleBatteryItem(Settings settings, long maxEnergy, long chargeRate, long dischargeRate) {
-        super(settings.maxCount(1));
+    public SimpleBatteryItem(Properties settings, long maxEnergy, long chargeRate, long dischargeRate) {
+        super(settings.stacksTo(1));
         this.MAX_ENERGY = maxEnergy;
         this.CHARGE = chargeRate;
         this.DISCHARGE = dischargeRate;
@@ -54,30 +54,30 @@ public class SimpleBatteryItem extends Item implements EnergyContainingItem {
     }
 
     @Override
-    public boolean isItemBarVisible(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return true;
     }
 
     @Override
-    public int getItemBarColor(ItemStack stack) {
+    public int getBarColor(ItemStack stack) {
         float f = Math.max(0.0F, (float) this.getEnergyPercentage(stack) / 100);
-        return MathHelper.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
+        return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
-    public int getItemBarStep(ItemStack stack) {
+    public int getBarWidth(ItemStack stack) {
         return (int) Math.clamp((double) this.getEnergy(stack) / (double) this.getMaxEnergy(stack) * 13, 0, 13);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-        Text energy = TextUtil.unit(getEnergy(stack));
-        Text maxEnergy = TextUtil.unit(getMaxEnergy(stack), "generic.ntm.energy");
-        Text chargeRate = TextUtil.unit(getChargeRate(stack), "generic.ntm.energy_t");
-        Text dischargeRate = TextUtil.unit(getDischargeRate(stack), "generic.ntm.energy_t");
-        tooltip.accept(Text.translatable("tooltip.ntm.energy.stored", energy, maxEnergy).formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.energy.charge", chargeRate).formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.energy.discharge", dischargeRate).formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
+        Component energy = TextUtil.unit(getEnergy(stack));
+        Component maxEnergy = TextUtil.unit(getMaxEnergy(stack), "generic.ntm.energy");
+        Component chargeRate = TextUtil.unit(getChargeRate(stack), "generic.ntm.energy_t");
+        Component dischargeRate = TextUtil.unit(getDischargeRate(stack), "generic.ntm.energy_t");
+        tooltip.accept(Component.translatable("tooltip.ntm.energy.stored", energy, maxEnergy).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.energy.charge", chargeRate).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.energy.discharge", dischargeRate).withStyle(ChatFormatting.GRAY));
     }
 }

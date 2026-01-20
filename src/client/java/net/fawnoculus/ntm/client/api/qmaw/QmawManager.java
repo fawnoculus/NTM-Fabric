@@ -1,14 +1,14 @@
 package net.fawnoculus.ntm.client.api.qmaw;
 
 import net.fawnoculus.ntm.client.NTMClient;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.Nullable;
 
 public class QmawManager {
-    public static boolean openQmawPage(MinecraftClient client, @Nullable Slot hoveredSlot) {
+    public static boolean openQmawPage(Minecraft client, @Nullable Slot hoveredSlot) {
         if (hoveredSlot != null) {
-            NTMClient.LOGGER.info("Hovered Item {}", hoveredSlot.getStack().getItem().getName());
+            NTMClient.LOGGER.info("Hovered Item {}", hoveredSlot.getItem().getItem().getName());
         } else {
             NTMClient.LOGGER.info("Hovered Slot == null");
         }

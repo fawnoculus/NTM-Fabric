@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.misc.tags;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 
 public class NTMEntityTypeTags {
 
@@ -13,6 +13,6 @@ public class NTMEntityTypeTags {
     }
 
     private static TagKey<EntityType<?>> of(Identifier identifier) {
-        return TagKey.of(RegistryKeys.ENTITY_TYPE, identifier);
+        return TagKey.create(Registries.ENTITY_TYPE, identifier);
     }
 }

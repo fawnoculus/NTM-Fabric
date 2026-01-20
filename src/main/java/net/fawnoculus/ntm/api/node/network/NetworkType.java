@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.api.node.network;
 
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,8 +45,8 @@ public class NetworkType {
         return this.networks().values();
     }
 
-    public MutableText getName() {
-        return Text.translatable("network_type." + this.getId().getNamespace() + "." + this.getId().getPath());
+    public MutableComponent getName() {
+        return Component.translatable("network_type." + this.getId().getNamespace() + "." + this.getId().getPath());
     }
 
     public NodeNetwork makeNewNetwork() {

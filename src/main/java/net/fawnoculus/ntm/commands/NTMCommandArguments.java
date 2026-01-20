@@ -5,15 +5,15 @@ import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.commands.arguments.ConfigOptionArgumentType;
 import net.fawnoculus.ntm.commands.arguments.serializer.ConfigOptionArgumentSerializer;
-import net.minecraft.command.argument.serialize.ArgumentSerializer;
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 
 public class NTMCommandArguments {
     public static void initialize() {
         register("config_option", ConfigOptionArgumentType.class, new ConfigOptionArgumentSerializer());
     }
 
-    private static <A extends ArgumentType<?>, T extends ArgumentSerializer.ArgumentTypeProperties<A>> void register(
-      String name, Class<? extends A> clazz, ArgumentSerializer<A, T> serializer
+    private static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>> void register(
+      String name, Class<? extends A> clazz, ArgumentTypeInfo<A, T> serializer
     ) {
         ArgumentTypeRegistry.registerArgumentType(NTM.id(name), clazz, serializer);
     }

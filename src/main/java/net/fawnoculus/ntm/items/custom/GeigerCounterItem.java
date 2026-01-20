@@ -1,86 +1,86 @@
 package net.fawnoculus.ntm.items.custom;
 
 import net.fawnoculus.ntm.api.radiation.RadiationManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public class GeigerCounterItem extends Item {
-    public GeigerCounterItem(Settings settings) {
+    public GeigerCounterItem(Properties settings) {
         super(settings);
     }
 
-    private Text getRadsText(double milliRads) {
+    private Component getRadsText(double milliRads) {
         if (milliRads > 1_000_000) {
-            return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_GRAY);
+            return Component.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).withStyle(ChatFormatting.DARK_GRAY);
         }
         if (milliRads > 100_000) {
-            return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.DARK_RED);
+            return Component.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).withStyle(ChatFormatting.DARK_RED);
         }
         if (milliRads > 10_000) {
-            return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.RED);
+            return Component.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).withStyle(ChatFormatting.RED);
         }
         if (milliRads > 1_000) {
-            return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GOLD);
+            return Component.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).withStyle(ChatFormatting.GOLD);
         }
         if (milliRads > 0) {
-            return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.YELLOW);
+            return Component.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).withStyle(ChatFormatting.YELLOW);
         }
-        return Text.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).formatted(Formatting.GREEN);
+        return Component.translatable("generic.ntm.radiation.rad_s", String.format("%.1f", milliRads / 1000)).withStyle(ChatFormatting.GREEN);
     }
 
-    private Text getRadText(double milliRad) {
+    private Component getRadText(double milliRad) {
         if (milliRad > 900_000) {
-            return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_GRAY);
+            return Component.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).withStyle(ChatFormatting.DARK_GRAY);
         }
         if (milliRad > 800_000) {
-            return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.DARK_RED);
+            return Component.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).withStyle(ChatFormatting.DARK_RED);
         }
         if (milliRad > 600_000) {
-            return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.RED);
+            return Component.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).withStyle(ChatFormatting.RED);
         }
         if (milliRad > 400_000) {
-            return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GOLD);
+            return Component.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).withStyle(ChatFormatting.GOLD);
         }
         if (milliRad > 200_000) {
-            return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.YELLOW);
+            return Component.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).withStyle(ChatFormatting.YELLOW);
         }
-        return Text.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).formatted(Formatting.GREEN);
+        return Component.translatable("generic.ntm.radiation.rad", String.format("%.1f", milliRad / 1000)).withStyle(ChatFormatting.GREEN);
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        if (!(world instanceof ServerWorld serverWorld)) {
-            return ActionResult.SUCCESS;
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (!(world instanceof ServerLevel serverWorld)) {
+            return InteractionResult.SUCCESS;
         }
 
-        double chunkRadiation = RadiationManager.getChunkRadiation(serverWorld, user.getEntityPos());
+        double chunkRadiation = RadiationManager.getChunkRadiation(serverWorld, user.position());
         double totalRadiation = RadiationManager.getTotalRadiation(user);
         double playerContamination = RadiationManager.getRadiationExposure(user);
         double playerResistance = RadiationManager.getRadiationResistance(user);
         double playerResistancePercentage = RadiationManager.getRadiationResistancePercentage(user);
 
-        Text player_resistance = Text.literal(String.format("%.1f%% (%.1f)", playerResistancePercentage, playerResistance)).formatted(Formatting.WHITE);
+        Component player_resistance = Component.literal(String.format("%.1f%% (%.1f)", playerResistancePercentage, playerResistance)).withStyle(ChatFormatting.WHITE);
 
-        user.sendMessage(Text.translatable("message.ntm.geiger_counter").formatted(Formatting.GOLD), false);
-        user.sendMessage(Text.translatable("message.ntm.radiation.chunk_radiation").append(getRadsText(chunkRadiation)).formatted(Formatting.YELLOW), false);
-        user.sendMessage(Text.translatable("message.ntm.radiation.environmental_radiation").append(getRadsText(totalRadiation)).formatted(Formatting.YELLOW), false);
-        user.sendMessage(Text.translatable("message.ntm.radiation.player_contamination").append(getRadText(playerContamination)).formatted(Formatting.YELLOW), false);
-        user.sendMessage(Text.translatable("message.ntm.radiation.player_resistance").append(player_resistance).formatted(Formatting.YELLOW), false);
-        return ActionResult.SUCCESS_SERVER;
+        user.displayClientMessage(Component.translatable("message.ntm.geiger_counter").withStyle(ChatFormatting.GOLD), false);
+        user.displayClientMessage(Component.translatable("message.ntm.radiation.chunk_radiation").append(getRadsText(chunkRadiation)).withStyle(ChatFormatting.YELLOW), false);
+        user.displayClientMessage(Component.translatable("message.ntm.radiation.environmental_radiation").append(getRadsText(totalRadiation)).withStyle(ChatFormatting.YELLOW), false);
+        user.displayClientMessage(Component.translatable("message.ntm.radiation.player_contamination").append(getRadText(playerContamination)).withStyle(ChatFormatting.YELLOW), false);
+        user.displayClientMessage(Component.translatable("message.ntm.radiation.player_resistance").append(player_resistance).withStyle(ChatFormatting.YELLOW), false);
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @Nullable EquipmentSlot slot) {
         // TODO: make it make noise
         super.inventoryTick(stack, world, entity, slot);
     }

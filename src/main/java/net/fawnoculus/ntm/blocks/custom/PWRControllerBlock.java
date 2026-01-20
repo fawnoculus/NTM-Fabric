@@ -1,49 +1,49 @@
 package net.fawnoculus.ntm.blocks.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.Nullable;
 
-public class PWRControllerBlock extends BlockWithEntity {
-    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+public class PWRControllerBlock extends BaseEntityBlock {
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     // TODO: this
     // this is currently only here as the icon for the Machine Tab
 
-    public PWRControllerBlock(Settings settings) {
+    public PWRControllerBlock(Properties settings) {
         super(settings);
-        setDefaultState(this.getDefaultState()
-          .with(FACING, Direction.NORTH));
+        registerDefaultState(this.defaultBlockState()
+          .setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(PWRControllerBlock::new);
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(PWRControllerBlock::new);
     }
 
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return null;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         if (context.getPlayer() != null) {
-            return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
+            return this.defaultBlockState().setValue(FACING, context.getPlayer().getDirection().getOpposite());
         }
-        return this.getDefaultState();
+        return this.defaultBlockState();
     }
 }

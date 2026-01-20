@@ -2,228 +2,228 @@ package net.fawnoculus.ntm.world.configured;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.structure.rule.RuleTest;
-import net.minecraft.structure.rule.TagMatchRuleTest;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class NTMOreConfiguredFeatures {
-    public static final RegistryKey<ConfiguredFeature<?, ?>> URANIUM_ORE_KEY = registryKey("uranium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> TITANIUM_ORE_KEY = registryKey("titanium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SULFUR_ORE_KEY = registryKey("sulfur_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> THORIUM_ORE_KEY = registryKey("thorium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NITER_ORE_KEY = registryKey("niter_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> TUNGSTEN_ORE_KEY = registryKey("tungsten_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> ALUMINIUM_BEARING_ORE_KEY = registryKey("aluminium_bearing_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> FLUORITE_ORE_KEY = registryKey("fluorite_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> LEAD_ORE_KEY = registryKey("lead_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SCHRABIDIUM_ORE_KEY = registryKey("schrabidium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> BERYLLIUM_ORE_KEY = registryKey("beryllium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> AUSTRALIUM_ORE_KEY = registryKey("australium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> RARE_EARTH_ORE_KEY = registryKey("rare_earth_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> COBALT_ORE_KEY = registryKey("cobalt_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> CINNEBAR_ORE_KEY = registryKey("cinnebar_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> COLTAN_ORE_KEY = registryKey("coltan_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> LIGNITE_ORE_KEY = registryKey("lignite_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> ASBESTOS_ORE_KEY = registryKey("asbestos_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> ALUMINIUM_ORE_CLUSTER_KEY = registryKey("aluminium_ore_cluster");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> COPPER_ORE_CLUSTER_KEY = registryKey("copper_ore_cluster");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> IRON_ORE_CLUSTER_KEY = registryKey("iron_ore_cluster");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> TITANIUM_ORE_CLUSTER_KEY = registryKey("titanium_ore_cluster");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> URANIUM_ORE_KEY = registryKey("uranium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TITANIUM_ORE_KEY = registryKey("titanium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SULFUR_ORE_KEY = registryKey("sulfur_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> THORIUM_ORE_KEY = registryKey("thorium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NITER_ORE_KEY = registryKey("niter_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TUNGSTEN_ORE_KEY = registryKey("tungsten_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ALUMINIUM_BEARING_ORE_KEY = registryKey("aluminium_bearing_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FLUORITE_ORE_KEY = registryKey("fluorite_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LEAD_ORE_KEY = registryKey("lead_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SCHRABIDIUM_ORE_KEY = registryKey("schrabidium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BERYLLIUM_ORE_KEY = registryKey("beryllium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> AUSTRALIUM_ORE_KEY = registryKey("australium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RARE_EARTH_ORE_KEY = registryKey("rare_earth_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> COBALT_ORE_KEY = registryKey("cobalt_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CINNEBAR_ORE_KEY = registryKey("cinnebar_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> COLTAN_ORE_KEY = registryKey("coltan_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LIGNITE_ORE_KEY = registryKey("lignite_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASBESTOS_ORE_KEY = registryKey("asbestos_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ALUMINIUM_ORE_CLUSTER_KEY = registryKey("aluminium_ore_cluster");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> COPPER_ORE_CLUSTER_KEY = registryKey("copper_ore_cluster");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> IRON_ORE_CLUSTER_KEY = registryKey("iron_ore_cluster");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TITANIUM_ORE_CLUSTER_KEY = registryKey("titanium_ore_cluster");
 
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SMOLDERING_NETHERRACK_KEY = registryKey("smoldering_netherrack");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_COAL_ORE_KEY = registryKey("nether_coal_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_URANIUM_ORE_KEY = registryKey("nether_uranium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_PLUTONIUM_ORE_KEY = registryKey("nether_plutonium_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_TUNGSTEN_ORE_KEY = registryKey("nether_tungsten_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_SULFUR_ORE_KEY = registryKey("nether_sulfur_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_PHOSPHORUS_ORE_KEY = registryKey("nether_phosphorus_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_COBALT_ORE_KEY = registryKey("nether_cobalt_ore");
-    public static final RegistryKey<ConfiguredFeature<?, ?>> NETHER_SCHRABIDIUM_ORE_KEY = registryKey("nether_schrabidium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SMOLDERING_NETHERRACK_KEY = registryKey("smoldering_netherrack");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_COAL_ORE_KEY = registryKey("nether_coal_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_URANIUM_ORE_KEY = registryKey("nether_uranium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_PLUTONIUM_ORE_KEY = registryKey("nether_plutonium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_TUNGSTEN_ORE_KEY = registryKey("nether_tungsten_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_SULFUR_ORE_KEY = registryKey("nether_sulfur_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_PHOSPHORUS_ORE_KEY = registryKey("nether_phosphorus_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_COBALT_ORE_KEY = registryKey("nether_cobalt_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_SCHRABIDIUM_ORE_KEY = registryKey("nether_schrabidium_ore");
 
-    public static final RegistryKey<ConfiguredFeature<?, ?>> TRIXITE_ORE_KEY = registryKey("trixite_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TRIXITE_ORE_KEY = registryKey("trixite_ore");
 
-    public static void initialize(Registerable<ConfiguredFeature<?, ?>> context) {
-        final RuleTest StoneReplaceable = new TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES);
-        final RuleTest DeepslateReplaceable = new TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
-        final RuleTest NetherrackReplaceable = new TagMatchRuleTest(BlockTags.BASE_STONE_NETHER);
-        final RuleTest EndStoneReplaceable = new BlockMatchRuleTest(Blocks.END_STONE);
+    public static void initialize(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        final RuleTest StoneReplaceable = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
+        final RuleTest DeepslateReplaceable = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+        final RuleTest NetherrackReplaceable = new TagMatchTest(BlockTags.BASE_STONE_NETHER);
+        final RuleTest EndStoneReplaceable = new BlockMatchTest(Blocks.END_STONE);
 
         // TODO: extract propper counts from original
-        List<OreFeatureConfig.Target> uraniumOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.URANIUM_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_URANIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> uraniumOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.URANIUM_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_URANIUM_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> titaniumOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.TITANIUM_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TITANIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> titaniumOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.TITANIUM_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TITANIUM_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> sulfurOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.SULFUR_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_SULFUR_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> sulfurOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.SULFUR_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_SULFUR_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> thoriumOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.THORIUM_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_THORIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> thoriumOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.THORIUM_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_THORIUM_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> niterOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.NITER_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_NITER_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> niterOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.NITER_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_NITER_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> tungstenOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.TUNGSTEN_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TUNGSTEN_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> tungstenOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.TUNGSTEN_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TUNGSTEN_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> aluminiumBearingOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.ALUMINIUM_BEARING_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_ALUMINIUM_BEARING_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> aluminiumBearingOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.ALUMINIUM_BEARING_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_ALUMINIUM_BEARING_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> fluoriteOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.FLUORITE_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_FLUORITE_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> fluoriteOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.FLUORITE_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_FLUORITE_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> leadOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.LEAD_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_LEAD_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> leadOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.LEAD_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_LEAD_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> schrabidiumOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.SCHRABIDIUM_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_SCHRABIDIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> schrabidiumOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.SCHRABIDIUM_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_SCHRABIDIUM_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> berylliumOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.BERYLLIUM_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_BERYLLIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> berylliumOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.BERYLLIUM_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_BERYLLIUM_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> australiumOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.AUSTRALIUM_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_AUSTRALIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> australiumOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.AUSTRALIUM_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_AUSTRALIUM_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> rareEarthOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.RARE_EARTH_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_RARE_EARTH_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> rareEarthOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.RARE_EARTH_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_RARE_EARTH_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> cobaltOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.COBALT_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_COBALT_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> cobaltOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.COBALT_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_COBALT_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> cinnebarOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.CINNEBAR_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_CINNEBAR_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> cinnebarOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.CINNEBAR_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_CINNEBAR_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> coltanOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.COLTAN_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_COLTAN_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> coltanOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.COLTAN_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_COLTAN_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> ligniteOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.LIGNITE_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_LIGNITE_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> ligniteOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.LIGNITE_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_LIGNITE_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> asbestosOres = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.ASBESTOS_ORE.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_ASBESTOS_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> asbestosOres = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.ASBESTOS_ORE.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_ASBESTOS_ORE.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> aluminiumOreClusters = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.ALUMINIUM_ORE_CLUSTER.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_ALUMINIUM_ORE_CLUSTER.getDefaultState())
+        List<OreConfiguration.TargetBlockState> aluminiumOreClusters = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.ALUMINIUM_ORE_CLUSTER.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_ALUMINIUM_ORE_CLUSTER.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> copperOreClusters = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.COPPER_ORE_CLUSTER.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_COPPER_ORE_CLUSTER.getDefaultState())
+        List<OreConfiguration.TargetBlockState> copperOreClusters = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.COPPER_ORE_CLUSTER.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_COPPER_ORE_CLUSTER.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> ironOreClusters = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.IRON_ORE_CLUSTER.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_IRON_ORE_CLUSTER.getDefaultState())
+        List<OreConfiguration.TargetBlockState> ironOreClusters = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.IRON_ORE_CLUSTER.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_IRON_ORE_CLUSTER.defaultBlockState())
         );
-        List<OreFeatureConfig.Target> titaniumOreClusters = List.of(
-          OreFeatureConfig.createTarget(StoneReplaceable, NTMBlocks.TITANIUM_ORE_CLUSTER.getDefaultState()),
-          OreFeatureConfig.createTarget(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TITANIUM_ORE_CLUSTER.getDefaultState())
-        );
-
-        List<OreFeatureConfig.Target> smolderingNetherrack = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.SMOLDERING_NETHERRACK.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherCoalOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_COAL_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherUraniumOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_URANIUM_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherPlutoniumOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_PLUTONIUM_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherTungstenOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_TUNGSTEN_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherSulfurOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_SULFUR_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherPhosphorusOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_PHOSPHORUS_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherCobaltOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_COBALT_ORE.getDefaultState())
-        );
-        List<OreFeatureConfig.Target> netherSchrabidiumOres = List.of(
-          OreFeatureConfig.createTarget(NetherrackReplaceable, NTMBlocks.NETHER_SCHRABIDIUM_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> titaniumOreClusters = List.of(
+          OreConfiguration.target(StoneReplaceable, NTMBlocks.TITANIUM_ORE_CLUSTER.defaultBlockState()),
+          OreConfiguration.target(DeepslateReplaceable, NTMBlocks.DEEPSLATE_TITANIUM_ORE_CLUSTER.defaultBlockState())
         );
 
-        List<OreFeatureConfig.Target> trixiteOres = List.of(
-          OreFeatureConfig.createTarget(EndStoneReplaceable, NTMBlocks.TRIXITE_ORE.getDefaultState())
+        List<OreConfiguration.TargetBlockState> smolderingNetherrack = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.SMOLDERING_NETHERRACK.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherCoalOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_COAL_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherUraniumOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_URANIUM_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherPlutoniumOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_PLUTONIUM_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherTungstenOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_TUNGSTEN_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherSulfurOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_SULFUR_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherPhosphorusOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_PHOSPHORUS_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherCobaltOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_COBALT_ORE.defaultBlockState())
+        );
+        List<OreConfiguration.TargetBlockState> netherSchrabidiumOres = List.of(
+          OreConfiguration.target(NetherrackReplaceable, NTMBlocks.NETHER_SCHRABIDIUM_ORE.defaultBlockState())
         );
 
-        register(context, URANIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(uraniumOres, 10));
-        register(context, TITANIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(titaniumOres, 10));
-        register(context, SULFUR_ORE_KEY, Feature.ORE, new OreFeatureConfig(sulfurOres, 10));
-        register(context, THORIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(thoriumOres, 10));
-        register(context, NITER_ORE_KEY, Feature.ORE, new OreFeatureConfig(niterOres, 10));
-        register(context, TUNGSTEN_ORE_KEY, Feature.ORE, new OreFeatureConfig(tungstenOres, 10));
-        register(context, ALUMINIUM_BEARING_ORE_KEY, Feature.ORE, new OreFeatureConfig(aluminiumBearingOres, 10));
-        register(context, FLUORITE_ORE_KEY, Feature.ORE, new OreFeatureConfig(fluoriteOres, 10));
-        register(context, LEAD_ORE_KEY, Feature.ORE, new OreFeatureConfig(leadOres, 10));
-        register(context, SCHRABIDIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(schrabidiumOres, 10));
-        register(context, BERYLLIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(berylliumOres, 10));
-        register(context, AUSTRALIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(australiumOres, 10));
-        register(context, RARE_EARTH_ORE_KEY, Feature.ORE, new OreFeatureConfig(rareEarthOres, 10));
-        register(context, COBALT_ORE_KEY, Feature.ORE, new OreFeatureConfig(cobaltOres, 10));
-        register(context, CINNEBAR_ORE_KEY, Feature.ORE, new OreFeatureConfig(cinnebarOres, 10));
-        register(context, COLTAN_ORE_KEY, Feature.ORE, new OreFeatureConfig(coltanOres, 10));
-        register(context, LIGNITE_ORE_KEY, Feature.ORE, new OreFeatureConfig(ligniteOres, 10));
-        register(context, ASBESTOS_ORE_KEY, Feature.ORE, new OreFeatureConfig(asbestosOres, 10));
-        register(context, ALUMINIUM_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(aluminiumOreClusters, 10));
-        register(context, COPPER_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(copperOreClusters, 10));
-        register(context, IRON_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(ironOreClusters, 10));
-        register(context, TITANIUM_ORE_CLUSTER_KEY, Feature.ORE, new OreFeatureConfig(titaniumOreClusters, 10));
+        List<OreConfiguration.TargetBlockState> trixiteOres = List.of(
+          OreConfiguration.target(EndStoneReplaceable, NTMBlocks.TRIXITE_ORE.defaultBlockState())
+        );
 
-        register(context, SMOLDERING_NETHERRACK_KEY, Feature.ORE, new OreFeatureConfig(smolderingNetherrack, 1));
-        register(context, NETHER_COAL_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherCoalOres, 1));
-        register(context, NETHER_URANIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherUraniumOres, 1));
-        register(context, NETHER_PLUTONIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherPlutoniumOres, 1));
-        register(context, NETHER_TUNGSTEN_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherTungstenOres, 1));
-        register(context, NETHER_SULFUR_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherSulfurOres, 1));
-        register(context, NETHER_PHOSPHORUS_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherPhosphorusOres, 1));
-        register(context, NETHER_COBALT_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherCobaltOres, 1));
-        register(context, NETHER_SCHRABIDIUM_ORE_KEY, Feature.ORE, new OreFeatureConfig(netherSchrabidiumOres, 1));
+        register(context, URANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(uraniumOres, 10));
+        register(context, TITANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(titaniumOres, 10));
+        register(context, SULFUR_ORE_KEY, Feature.ORE, new OreConfiguration(sulfurOres, 10));
+        register(context, THORIUM_ORE_KEY, Feature.ORE, new OreConfiguration(thoriumOres, 10));
+        register(context, NITER_ORE_KEY, Feature.ORE, new OreConfiguration(niterOres, 10));
+        register(context, TUNGSTEN_ORE_KEY, Feature.ORE, new OreConfiguration(tungstenOres, 10));
+        register(context, ALUMINIUM_BEARING_ORE_KEY, Feature.ORE, new OreConfiguration(aluminiumBearingOres, 10));
+        register(context, FLUORITE_ORE_KEY, Feature.ORE, new OreConfiguration(fluoriteOres, 10));
+        register(context, LEAD_ORE_KEY, Feature.ORE, new OreConfiguration(leadOres, 10));
+        register(context, SCHRABIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(schrabidiumOres, 10));
+        register(context, BERYLLIUM_ORE_KEY, Feature.ORE, new OreConfiguration(berylliumOres, 10));
+        register(context, AUSTRALIUM_ORE_KEY, Feature.ORE, new OreConfiguration(australiumOres, 10));
+        register(context, RARE_EARTH_ORE_KEY, Feature.ORE, new OreConfiguration(rareEarthOres, 10));
+        register(context, COBALT_ORE_KEY, Feature.ORE, new OreConfiguration(cobaltOres, 10));
+        register(context, CINNEBAR_ORE_KEY, Feature.ORE, new OreConfiguration(cinnebarOres, 10));
+        register(context, COLTAN_ORE_KEY, Feature.ORE, new OreConfiguration(coltanOres, 10));
+        register(context, LIGNITE_ORE_KEY, Feature.ORE, new OreConfiguration(ligniteOres, 10));
+        register(context, ASBESTOS_ORE_KEY, Feature.ORE, new OreConfiguration(asbestosOres, 10));
+        register(context, ALUMINIUM_ORE_CLUSTER_KEY, Feature.ORE, new OreConfiguration(aluminiumOreClusters, 10));
+        register(context, COPPER_ORE_CLUSTER_KEY, Feature.ORE, new OreConfiguration(copperOreClusters, 10));
+        register(context, IRON_ORE_CLUSTER_KEY, Feature.ORE, new OreConfiguration(ironOreClusters, 10));
+        register(context, TITANIUM_ORE_CLUSTER_KEY, Feature.ORE, new OreConfiguration(titaniumOreClusters, 10));
 
-        register(context, TRIXITE_ORE_KEY, Feature.ORE, new OreFeatureConfig(trixiteOres, 1));
+        register(context, SMOLDERING_NETHERRACK_KEY, Feature.ORE, new OreConfiguration(smolderingNetherrack, 1));
+        register(context, NETHER_COAL_ORE_KEY, Feature.ORE, new OreConfiguration(netherCoalOres, 1));
+        register(context, NETHER_URANIUM_ORE_KEY, Feature.ORE, new OreConfiguration(netherUraniumOres, 1));
+        register(context, NETHER_PLUTONIUM_ORE_KEY, Feature.ORE, new OreConfiguration(netherPlutoniumOres, 1));
+        register(context, NETHER_TUNGSTEN_ORE_KEY, Feature.ORE, new OreConfiguration(netherTungstenOres, 1));
+        register(context, NETHER_SULFUR_ORE_KEY, Feature.ORE, new OreConfiguration(netherSulfurOres, 1));
+        register(context, NETHER_PHOSPHORUS_ORE_KEY, Feature.ORE, new OreConfiguration(netherPhosphorusOres, 1));
+        register(context, NETHER_COBALT_ORE_KEY, Feature.ORE, new OreConfiguration(netherCobaltOres, 1));
+        register(context, NETHER_SCHRABIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(netherSchrabidiumOres, 1));
+
+        register(context, TRIXITE_ORE_KEY, Feature.ORE, new OreConfiguration(trixiteOres, 1));
     }
 
 
-    public static RegistryKey<ConfiguredFeature<?, ?>> registryKey(String name) {
-        return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, NTM.id(name));
+    public static ResourceKey<ConfiguredFeature<?, ?>> registryKey(String name) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, NTM.id(name));
     }
 
-    private static <FC extends FeatureConfig, F extends Feature<FC>> void register(@NotNull Registerable<ConfiguredFeature<?, ?>> context, RegistryKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(@NotNull BootstrapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
         context.register(key, new ConfiguredFeature<>(feature, config));
     }
 }

@@ -2,33 +2,33 @@ package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.misc.NTMSounds;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class ExperienceBagItem extends Item {
-    public ExperienceBagItem(Settings settings) {
+    public ExperienceBagItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
         if (!player.isCreative()) {
-            ItemStack stack = player.getStackInHand(hand);
-            stack.decrement(1);
+            ItemStack stack = player.getItemInHand(hand);
+            stack.shrink(1);
         }
-        world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), NTMSounds.IV_BAG_INJECTS, SoundCategory.PLAYERS);
-        player.getInventory().offerOrDrop(new ItemStack(NTMItems.EMPTY_EXPERIENCE_BAG));
-        player.addExperience(EmptyExperienceBagItem.XP_PER_BAG);
+        world.playSound(null, BlockPos.containing(player.position()).above(), NTMSounds.IV_BAG_INJECTS, SoundSource.PLAYERS);
+        player.getInventory().placeItemBackInInventory(new ItemStack(NTMItems.EMPTY_EXPERIENCE_BAG));
+        player.giveExperiencePoints(EmptyExperienceBagItem.XP_PER_BAG);
 
-        return ActionResult.SUCCESS_SERVER;
+        return InteractionResult.SUCCESS_SERVER;
     }
 }

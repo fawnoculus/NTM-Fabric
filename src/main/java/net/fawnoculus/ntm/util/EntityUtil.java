@@ -1,17 +1,17 @@
 package net.fawnoculus.ntm.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,59 +20,59 @@ import java.util.Collection;
 
 public class EntityUtil {
     @Contract("_, _ -> new")
-    public static @NotNull DamageSource newDamageSource(World world, RegistryKey<DamageType> damageTypeKey) {
+    public static @NotNull DamageSource newDamageSource(Level world, ResourceKey<DamageType> damageTypeKey) {
         return newDamageSource(world, damageTypeKey, null, null);
     }
 
     @Contract("_, _, _, _ -> new")
-    public static @NotNull DamageSource newDamageSource(@NotNull World world, RegistryKey<DamageType> damageTypeKey, @Nullable Entity source, @Nullable Entity attacker) {
-        DamageType damageType = world.getRegistryManager()
-          .getOrThrow(RegistryKeys.DAMAGE_TYPE)
-          .get(damageTypeKey);
+    public static @NotNull DamageSource newDamageSource(@NotNull Level world, ResourceKey<DamageType> damageTypeKey, @Nullable Entity source, @Nullable Entity attacker) {
+        DamageType damageType = world.registryAccess()
+          .lookupOrThrow(Registries.DAMAGE_TYPE)
+          .getValue(damageTypeKey);
         if (damageType == null) {
-            damageType = world.getRegistryManager()
-              .getOrThrow(RegistryKeys.DAMAGE_TYPE)
-              .get(DamageTypes.GENERIC);
+            damageType = world.registryAccess()
+              .lookupOrThrow(Registries.DAMAGE_TYPE)
+              .getValue(DamageTypes.GENERIC);
         }
-        RegistryEntry<DamageType> damageTypeEntry = world.getRegistryManager()
-          .getOrThrow(RegistryKeys.DAMAGE_TYPE)
-          .getEntry(damageType);
+        Holder<DamageType> damageTypeEntry = world.registryAccess()
+          .lookupOrThrow(Registries.DAMAGE_TYPE)
+          .wrapAsHolder(damageType);
         return new DamageSource(damageTypeEntry, source, attacker);
     }
 
-    public static void applyDamage(@NotNull Entity entity, ServerWorld serverWorld, RegistryKey<DamageType> damageTypeKey, float amount) {
-        entity.damage(serverWorld, newDamageSource(serverWorld, damageTypeKey), amount);
+    public static void applyDamage(@NotNull Entity entity, ServerLevel serverWorld, ResourceKey<DamageType> damageTypeKey, float amount) {
+        entity.hurtServer(serverWorld, newDamageSource(serverWorld, damageTypeKey), amount);
     }
 
     public static void removeNegativeEffects(@NotNull LivingEntity entity) {
-        Collection<StatusEffectInstance> effectInstances = entity.getStatusEffects();
-        for (StatusEffectInstance effectInstance : effectInstances) {
-            if (!effectInstance.getEffectType().value().isBeneficial()) {
-                entity.removeStatusEffect(effectInstance.getEffectType());
+        Collection<MobEffectInstance> effectInstances = entity.getActiveEffects();
+        for (MobEffectInstance effectInstance : effectInstances) {
+            if (!effectInstance.getEffect().value().isBeneficial()) {
+                entity.removeEffect(effectInstance.getEffect());
             }
         }
     }
 
-    public static void addEffectDuration(@NotNull LivingEntity entity, RegistryEntry<StatusEffect> effect, int ticksToAdd) {
-        Collection<StatusEffectInstance> effectInstances = entity.getStatusEffects();
+    public static void addEffectDuration(@NotNull LivingEntity entity, Holder<MobEffect> effect, int ticksToAdd) {
+        Collection<MobEffectInstance> effectInstances = entity.getActiveEffects();
         boolean hasEffect = false;
-        for (StatusEffectInstance effectInstance : effectInstances) {
-            if (effectInstance.getEffectType() == effect) {
-                entity.removeStatusEffect(effectInstance.getEffectType());
-                entity.addStatusEffect(new StatusEffectInstance(
+        for (MobEffectInstance effectInstance : effectInstances) {
+            if (effectInstance.getEffect() == effect) {
+                entity.removeEffect(effectInstance.getEffect());
+                entity.addEffect(new MobEffectInstance(
                   effect,
                   effectInstance.getDuration() + ticksToAdd,
                   effectInstance.getAmplifier(),
                   effectInstance.isAmbient(),
-                  effectInstance.shouldShowParticles(),
-                  effectInstance.shouldShowIcon())
+                  effectInstance.isVisible(),
+                  effectInstance.showIcon())
                 );
                 hasEffect = true;
             }
         }
 
         if (!hasEffect) {
-            entity.addStatusEffect(new StatusEffectInstance(effect, ticksToAdd, 0, false, false, true));
+            entity.addEffect(new MobEffectInstance(effect, ticksToAdd, 0, false, false, true));
         }
     }
 }

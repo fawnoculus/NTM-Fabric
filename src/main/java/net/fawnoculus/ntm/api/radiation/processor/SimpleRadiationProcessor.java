@@ -2,23 +2,23 @@ package net.fawnoculus.ntm.api.radiation.processor;
 
 import net.fawnoculus.ntm.api.radiation.RadiationManager;
 import net.fawnoculus.ntm.api.radiation.RadiationRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Simple Chunk Based Radiation Processor
  */
 public class SimpleRadiationProcessor implements RadiationProcessor {
-    private final ServerWorld WORLD;
+    private final ServerLevel WORLD;
     private final ChunkPos POS;
     private double passiveRadiation;
     private double activeRadiation;
 
-    public SimpleRadiationProcessor(ServerWorld world, ChunkPos pos) {
+    public SimpleRadiationProcessor(ServerLevel world, ChunkPos pos) {
         this.WORLD = world;
         this.POS = pos;
         this.passiveRadiation = RadiationRegistry.getRadioactivity(WORLD);
@@ -52,12 +52,12 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
     }
 
     @Override
-    public double getPassiveRadiation(Vec3d pos) {
+    public double getPassiveRadiation(Vec3 pos) {
         return this.passiveRadiation;
     }
 
     @Override
-    public double getActiveRadiation(Vec3d pos) {
+    public double getActiveRadiation(Vec3 pos) {
         return this.activeRadiation;
     }
 
@@ -70,18 +70,18 @@ public class SimpleRadiationProcessor implements RadiationProcessor {
     }
 
     @Override
-    public void writeData(NbtCompound data) {
+    public void writeData(CompoundTag data) {
         data.putString("radiation_processor_type", "simple");
         data.putDouble("active_radiation", this.activeRadiation);
         data.putDouble("passive_radiation", this.passiveRadiation);
     }
 
     @Override
-    public void readData(NbtCompound data) {
-        String type = data.getString("radiation_processor_type", "no_processor");
+    public void readData(CompoundTag data) {
+        String type = data.getStringOr("radiation_processor_type", "no_processor");
         if (type.equals("simple")) {
-            this.activeRadiation = data.getDouble("active_radiation", 0.0);
-            this.passiveRadiation = data.getDouble("passive_radiation", 0.0);
+            this.activeRadiation = data.getDoubleOr("active_radiation", 0.0);
+            this.passiveRadiation = data.getDoubleOr("passive_radiation", 0.0);
         }
     }
 }

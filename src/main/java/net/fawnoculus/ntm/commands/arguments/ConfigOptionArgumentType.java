@@ -9,9 +9,9 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.fawnoculus.ntm.api.config.ConfigFile;
 import net.fawnoculus.ntm.api.config.ConfigOption;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.ArgumentReaderUtils;
-import net.minecraft.text.Text;
+import net.minecraft.commands.ParserUtils;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 import java.util.Collection;
 import java.util.Set;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public record ConfigOptionArgumentType(Supplier<ConfigFile> configFile,
                                        Supplier<Set<String>> optionNames) implements ArgumentType<ConfigOption<?>> {
     private static final DynamicCommandExceptionType OPTION_NAME_INVALID = new DynamicCommandExceptionType(
-      name -> Text.stringifiedTranslatable("command.ntm.option_argument.name_invalid", name)
+      name -> Component.translatableEscape("command.ntm.option_argument.name_invalid", name)
     );
 
     public static ConfigOptionArgumentType file(ConfigFile file) {
@@ -38,7 +38,7 @@ public record ConfigOptionArgumentType(Supplier<ConfigFile> configFile,
 
     @Override
     public ConfigOption<?> parse(StringReader reader) throws CommandSyntaxException {
-        String name = ArgumentReaderUtils.readWhileMatching(reader, c -> c != ' ');
+        String name = ParserUtils.readWhile(reader, c -> c != ' ');
         ConfigOption<?> option = this.configFile.get().getOption(name);
         if (option == null && !this.optionNames.get().contains(name)) {
             throw OPTION_NAME_INVALID.create(name);
@@ -48,7 +48,7 @@ public record ConfigOptionArgumentType(Supplier<ConfigFile> configFile,
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(this.optionNames.get(), builder);
+        return SharedSuggestionProvider.suggest(this.optionNames.get(), builder);
     }
 
     @Override

@@ -3,23 +3,23 @@ package net.fawnoculus.ntm.items.custom;
 import net.fawnoculus.ntm.api.node.Node;
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.context.UseOnContext;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 public class NetworkDebuggingToolItem extends Item {
-    public NetworkDebuggingToolItem(Settings settings) {
+    public NetworkDebuggingToolItem(Properties settings) {
         super(settings);
     }
 
@@ -40,45 +40,45 @@ public class NetworkDebuggingToolItem extends Item {
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        if (context.getWorld().isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult useOn(UseOnContext context) {
+        if (context.getLevel().isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
-        ServerWorld world = (ServerWorld) context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        PlayerEntity player = context.getPlayer();
+        ServerLevel world = (ServerLevel) context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Player player = context.getPlayer();
 
         if (player == null) {
             // how
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         if (!(world.getBlockEntity(pos) instanceof Node clickedNode)) {
-            player.sendMessage(Text.translatable("message.ntm.network_debug.not_node").formatted(Formatting.RED), false);
-            return ActionResult.SUCCESS_SERVER;
+            player.displayClientMessage(Component.translatable("message.ntm.network_debug.not_node").withStyle(ChatFormatting.RED), false);
+            return InteractionResult.SUCCESS_SERVER;
         }
         NodeNetwork network = clickedNode.getNetwork();
         if (network == null) {
-            player.sendMessage(Text.translatable("message.ntm.network_debug.node_no_network").formatted(Formatting.RED), false);
-            return ActionResult.SUCCESS_SERVER;
+            player.displayClientMessage(Component.translatable("message.ntm.network_debug.node_no_network").withStyle(ChatFormatting.RED), false);
+            return InteractionResult.SUCCESS_SERVER;
         }
 
-        player.sendMessage(Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
-        player.sendMessage(Text.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-        player.sendMessage(Text.translatable("message.ntm.network_debug.node_count", Text.literal(String.valueOf(network.LOADED_NODES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-        player.sendMessage(Text.translatable("message.ntm.network_debug.provider_count", Text.literal(String.valueOf(getProviderCount(network))).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-        player.sendMessage(Text.translatable("message.ntm.network_debug.provider_priorities", Text.literal(network.REVERSED_PROVIDER_PRIORITIES.toString()).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-        player.sendMessage(Text.translatable("message.ntm.network_debug.consumer_count", Text.literal(String.valueOf(getConsumerCount(network))).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-        player.sendMessage(Text.translatable("message.ntm.network_debug.consumer_priorities", Text.literal(network.REVERSED_CONSUMER_PRIORITIES.toString()).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.network_name", Component.literal(network.ID.toString()).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.GOLD), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.node_count", Component.literal(String.valueOf(network.LOADED_NODES.size())).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.provider_count", Component.literal(String.valueOf(getProviderCount(network))).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.provider_priorities", Component.literal(network.REVERSED_PROVIDER_PRIORITIES.toString()).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.consumer_count", Component.literal(String.valueOf(getConsumerCount(network))).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
+        player.displayClientMessage(Component.translatable("message.ntm.network_debug.consumer_priorities", Component.literal(network.REVERSED_CONSUMER_PRIORITIES.toString()).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
 
-        return ActionResult.SUCCESS_SERVER;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-        tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool1").formatted(Formatting.RED));
-        tooltip.accept(Text.translatable("tooltip.ntm.network_debug_tool2").formatted(Formatting.RED));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
+        tooltip.accept(Component.translatable("tooltip.ntm.creative_only").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.network_debug_tool1").withStyle(ChatFormatting.RED));
+        tooltip.accept(Component.translatable("tooltip.ntm.network_debug_tool2").withStyle(ChatFormatting.RED));
     }
 }

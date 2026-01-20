@@ -6,17 +6,17 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.util.ExceptionUtil;
 import net.fawnoculus.ntm.util.JsonUtil;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EquipmentHolder;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentUser;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 import java.io.File;
 import java.io.FileReader;
@@ -66,7 +66,7 @@ public class HazmatRegistry {
 
         for (String key : overrides.keySet()) {
             try {
-                Identifier identifier = Identifier.of(key);
+                Identifier identifier = Identifier.parse(key);
                 Double value = overrides.get(key).getAsDouble();
                 hazmatOverrides.put(identifier, value);
             } catch (Exception e) {
@@ -79,29 +79,29 @@ public class HazmatRegistry {
 
     public static double getResistance(LivingEntity entity) {
         double resistance = 0;
-        if (entity instanceof EquipmentHolder equipmentHolder) {
+        if (entity instanceof EquipmentUser equipmentHolder) {
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.HEAD));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.HEAD));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.CHEST));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.CHEST));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.LEGS));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.LEGS));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.FEET));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.FEET));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.BODY));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.BODY));
             } catch (Throwable ignored) {
             }
             try {
-                resistance += getResistance(equipmentHolder.getEquippedStack(EquipmentSlot.SADDLE));
+                resistance += getResistance(equipmentHolder.getItemBySlot(EquipmentSlot.SADDLE));
             } catch (Throwable ignored) {
             }
         }
@@ -113,7 +113,7 @@ public class HazmatRegistry {
     }
 
     public static double getResistance(Item item) {
-        return getResistance(Registries.ITEM.getId(item));
+        return getResistance(BuiltInRegistries.ITEM.getKey(item));
     }
 
     public static double getResistance(Identifier identifier) {
@@ -125,11 +125,11 @@ public class HazmatRegistry {
     }
 
     public static void register(Block block, double resistance) {
-        register(Registries.BLOCK.getId(block), resistance);
+        register(BuiltInRegistries.BLOCK.getKey(block), resistance);
     }
 
     public static void register(Item item, double resistance) {
-        register(Registries.ITEM.getId(item), resistance);
+        register(BuiltInRegistries.ITEM.getKey(item), resistance);
     }
 
     public static void register(Identifier identifier, double resistance) {
@@ -145,55 +145,55 @@ public class HazmatRegistry {
     }
 
     public record Serialized(HashMap<Identifier, Double> hazmatGetter, HashMap<Identifier, Double> hazmatOverrides) {
-        public static final PacketCodec<ByteBuf, Serialized> PACKET_CODEC = new PacketCodec<>() {
+        public static final StreamCodec<ByteBuf, Serialized> PACKET_CODEC = new StreamCodec<>() {
             @Override
             public Serialized decode(ByteBuf byteBuf) {
-                NbtCompound nbt = PacketByteBuf.readNbt(byteBuf);
-                if (nbt == null) nbt = new NbtCompound();
+                CompoundTag nbt = FriendlyByteBuf.readNbt(byteBuf);
+                if (nbt == null) nbt = new CompoundTag();
                 return Serialized.decode(nbt);
             }
 
             @Override
             public void encode(ByteBuf byteBuf, Serialized registry) {
-                PacketByteBuf.writeNbt(byteBuf, Serialized.encode(registry));
+                FriendlyByteBuf.writeNbt(byteBuf, Serialized.encode(registry));
             }
         };
 
-        public static NbtCompound encode(HazmatRegistry.Serialized registry) {
-            NbtCompound hazmatGetter = new NbtCompound();
+        public static CompoundTag encode(HazmatRegistry.Serialized registry) {
+            CompoundTag hazmatGetter = new CompoundTag();
             for (Identifier key : registry.hazmatGetter().keySet()) {
                 Double value = registry.hazmatGetter().get(key);
                 hazmatGetter.putDouble(key.toString(), value);
             }
 
-            NbtCompound radioactivityOverrides = new NbtCompound();
+            CompoundTag radioactivityOverrides = new CompoundTag();
             for (Identifier key : registry.hazmatOverrides().keySet()) {
                 Double value = registry.hazmatOverrides().get(key);
                 radioactivityOverrides.putDouble(key.toString(), value);
             }
 
-            NbtCompound nbt = new NbtCompound();
+            CompoundTag nbt = new CompoundTag();
             nbt.put("hazmatGetter", hazmatGetter);
             nbt.put("hazmatOverrides", radioactivityOverrides);
             return nbt;
         }
 
-        public static HazmatRegistry.Serialized decode(NbtCompound json) {
-            NbtCompound jsonHazmatGetter = json.getCompoundOrEmpty("hazmatGetter");
-            NbtCompound jsonHazmatOverrides = json.getCompoundOrEmpty("hazmatOverrides");
+        public static HazmatRegistry.Serialized decode(CompoundTag json) {
+            CompoundTag jsonHazmatGetter = json.getCompoundOrEmpty("hazmatGetter");
+            CompoundTag jsonHazmatOverrides = json.getCompoundOrEmpty("hazmatOverrides");
 
             HashMap<Identifier, Double> hazmatGetter = new HashMap<>();
-            for (String key : jsonHazmatGetter.getKeys()) {
-                Identifier identifier = Identifier.of(key);
-                double value = jsonHazmatGetter.getDouble(key, 0);
+            for (String key : jsonHazmatGetter.keySet()) {
+                Identifier identifier = Identifier.parse(key);
+                double value = jsonHazmatGetter.getDoubleOr(key, 0);
                 if (value == 0) continue;
                 hazmatGetter.put(identifier, value);
             }
 
             HashMap<Identifier, Double> hazmatOverrides = new HashMap<>();
-            for (String key : jsonHazmatOverrides.getKeys()) {
-                Identifier identifier = Identifier.of(key);
-                double value = jsonHazmatOverrides.getDouble(key, 0);
+            for (String key : jsonHazmatOverrides.keySet()) {
+                Identifier identifier = Identifier.parse(key);
+                double value = jsonHazmatOverrides.getDoubleOr(key, 0);
                 hazmatOverrides.put(identifier, value);
             }
 

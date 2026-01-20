@@ -3,8 +3,8 @@ package net.fawnoculus.ntm.misc.stack;
 import net.fawnoculus.ntm.api.node.Node;
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.api.node.StorageMode;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Range;
 
 public class EnergyStack implements NodeValueContainer {
@@ -91,16 +91,16 @@ public class EnergyStack implements NodeValueContainer {
         return this;
     }
 
-    public void writeData(WriteView view) {
+    public void writeData(ValueOutput view) {
         view.putLong("energy_stack.stored_energy", this.value);
         view.putLong("energy_stack.max_energy", this.maxValue);
         view.putLong("energy_stack.priority", this.priority);
     }
 
-    public void readData(ReadView view) {
-        this.value = view.getLong("energy_stack.stored_energy", 0);
-        this.maxValue = view.getLong("energy_stack.max_energy", 0);
-        this.priority = view.getLong("energy_stack.priority", 0);
+    public void readData(ValueInput view) {
+        this.value = view.getLongOr("energy_stack.stored_energy", 0);
+        this.maxValue = view.getLongOr("energy_stack.max_energy", 0);
+        this.priority = view.getLongOr("energy_stack.priority", 0);
     }
 
     @Override
@@ -171,13 +171,13 @@ public class EnergyStack implements NodeValueContainer {
         }
 
         @Override
-        public void writeData(WriteView view) {
+        public void writeData(ValueOutput view) {
             super.writeData(view);
-            view.put("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
+            view.store("energy_stack.storage_mode", StorageMode.CODEC, this.mode);
         }
 
         @Override
-        public void readData(ReadView view) {
+        public void readData(ValueInput view) {
             super.readData(view);
             this.setStorageMode(
               view.read("energy_stack.storage_mode", StorageMode.CODEC).orElse(StorageMode.Consume)

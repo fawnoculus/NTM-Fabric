@@ -5,11 +5,11 @@ import net.fawnoculus.ntm.api.radiation.RadiationManager;
 import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessor;
 import net.fawnoculus.ntm.api.radiation.processor.RadiationProcessorMultiHolder;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.profiler.Profilers;
-import net.minecraft.world.EntityList;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.entity.EntityTickList;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,18 +22,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collection;
 import java.util.HashMap;
 
-@Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder {
+@Mixin(ServerLevel.class)
+public abstract class ServerLevelMixin implements RadiationProcessorMultiHolder {
     @Unique
     private final HashMap<ChunkPos, RadiationProcessor> radiationProcessors = new HashMap<>();
-    @Unique
-    private final HashMap<RadiationProcessor, ChunkPos> ChunkPositions = new HashMap<>();
     @Shadow
     @Final
-    EntityList entityList;
+    EntityTickList entityTickList;
 
     @Shadow
-    public abstract ServerWorld toServerWorld();
+    public abstract ServerLevel getLevel();
 
     @Shadow
     @NotNull
@@ -41,11 +39,11 @@ public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder 
 
     @Inject(at = @At("TAIL"), method = "tick")
     private void tickStuff(CallbackInfo ci) {
-        if (this.getServer().getTickManager().shouldTick()) {
-            Profiler profiler = Profilers.get();
+        if (this.getServer().tickRateManager().runsNormally()) {
+            ProfilerFiller profiler = Profiler.get();
 
             profiler.push("[NTM] radiationManager");
-            RadiationManager.tick(this.toServerWorld(), this.entityList);
+            RadiationManager.tick(this.getLevel(), this.entityTickList);
             profiler.pop();
 
             profiler.push("[NTM] nodeNetworks");
@@ -67,20 +65,10 @@ public abstract class ServerWorldMixin implements RadiationProcessorMultiHolder 
     @Override
     public void NTM$addRadiationProcessor(RadiationProcessor processor, ChunkPos chunkPos) {
         radiationProcessors.put(chunkPos, processor);
-        ChunkPositions.put(processor, chunkPos);
     }
 
     @Override
     public void NTM$removeRadiationProcessor(ChunkPos chunkPos) {
-        RadiationProcessor processor = radiationProcessors.get(chunkPos);
-        ChunkPositions.remove(processor);
-        radiationProcessors.remove(chunkPos);
-    }
-
-    @Override
-    public void NTM$removeRadiationProcessor(RadiationProcessor processor) {
-        ChunkPos chunkPos = ChunkPositions.get(processor);
-        ChunkPositions.remove(processor);
         radiationProcessors.remove(chunkPos);
     }
 }

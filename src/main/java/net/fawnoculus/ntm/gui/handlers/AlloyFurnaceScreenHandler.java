@@ -6,54 +6,54 @@ import net.fawnoculus.ntm.gui.NTMScreenHandlerType;
 import net.fawnoculus.ntm.gui.slots.ItemFuelSlot;
 import net.fawnoculus.ntm.gui.slots.OutputSlot;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class AlloyFurnaceScreenHandler extends ScreenHandler {
+public class AlloyFurnaceScreenHandler extends AbstractContainerMenu {
     private final AlloyFurnaceBE blockEntity;
-    private final ScreenHandlerContext screenContext;
+    private final ContainerLevelAccess screenContext;
 
     // Client Constructor
-    public AlloyFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosPayload payload) {
-        this(syncId, playerInventory, (AlloyFurnaceBE) playerInventory.player.getEntityWorld().getBlockEntity(payload.pos()));
+    public AlloyFurnaceScreenHandler(int syncId, Inventory playerInventory, @NotNull BlockPosPayload payload) {
+        this(syncId, playerInventory, (AlloyFurnaceBE) playerInventory.player.level().getBlockEntity(payload.pos()));
     }
 
     // Common Constructor
-    public AlloyFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, AlloyFurnaceBE blockEntity) {
+    public AlloyFurnaceScreenHandler(int syncId, @NotNull Inventory playerInventory, AlloyFurnaceBE blockEntity) {
         super(NTMScreenHandlerType.ALLOY_FURNACE, syncId);
 
         this.blockEntity = blockEntity;
-        this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
+        this.screenContext = ContainerLevelAccess.create(this.blockEntity.getLevel(), this.blockEntity.getBlockPos());
 
-        SimpleInventory blockInventory = this.blockEntity.getInventory();
-        blockInventory.onOpen(playerInventory.player);
-        checkSize(blockInventory, 4);
+        SimpleContainer blockInventory = this.blockEntity.getInventory();
+        blockInventory.startOpen(playerInventory.player);
+        checkContainerSize(blockInventory, 4);
 
         addPlayerInventory(playerInventory);
         addBlockInventory(blockInventory);
     }
 
-    private void addBlockInventory(SimpleInventory inventory) {
-        addSlot(new ItemFuelSlot(Objects.requireNonNull(blockEntity.getWorld()).getFuelRegistry(), inventory, AlloyFurnaceBE.FUEL_SLOT_INDEX, 8, 36));
+    private void addBlockInventory(SimpleContainer inventory) {
+        addSlot(new ItemFuelSlot(Objects.requireNonNull(blockEntity.getLevel()).fuelValues(), inventory, AlloyFurnaceBE.FUEL_SLOT_INDEX, 8, 36));
         addSlot(new Slot(inventory, AlloyFurnaceBE.INPUT_TOP_SLOT_INDEX, 80, 18));
         addSlot(new Slot(inventory, AlloyFurnaceBE.INPUT_BOTTOM_SLOT_INDEX, 80, 54));
         addSlot(new OutputSlot(inventory, AlloyFurnaceBE.OUTPUT_SLOT_INDEX, 134, 36));
     }
 
-    private void addPlayerInventory(PlayerInventory playerInventory) {
+    private void addPlayerInventory(Inventory playerInventory) {
         addPartialPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
     }
 
-    private void addPartialPlayerInventory(PlayerInventory playerInventory) {
+    private void addPartialPlayerInventory(Inventory playerInventory) {
         for (int row = 0; row < 3; row++) {
             for (int colum = 0; colum < 9; colum++) {
                 addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)), 8 + (colum * 18), 84 + (row * 18)));
@@ -61,20 +61,20 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
         }
     }
 
-    private void addPlayerHotbar(PlayerInventory playerInventory) {
+    private void addPlayerHotbar(Inventory playerInventory) {
         for (int colum = 0; colum < 9; colum++) {
             addSlot(new Slot(playerInventory, colum, 8 + (colum * 18), 142));
         }
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.blockEntity.getInventory().onClose(player);
+    public void removed(Player player) {
+        super.removed(player);
+        this.blockEntity.getInventory().stopOpen(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slotIndex) {
+    public ItemStack quickMoveStack(Player player, int slotIndex) {
         return ItemStack.EMPTY;
     /* TODO: fix this
     ItemStack stack = ItemStack.EMPTY;
@@ -105,8 +105,8 @@ public class AlloyFurnaceScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return canUse(screenContext, player, NTMBlocks.ALLOY_FURNACE);
+    public boolean stillValid(Player player) {
+        return stillValid(screenContext, player, NTMBlocks.ALLOY_FURNACE);
     }
 
     public AlloyFurnaceBE getBlockEntity() {

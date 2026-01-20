@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.misc.tags;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.block.Block;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 public class NTMBlockTags {
     public static final TagKey<Block> DEPTH_ROCK = of("depth_rock");
@@ -29,14 +29,14 @@ public class NTMBlockTags {
     public static final TagKey<Block> NEEDS_BISMUTH_TOOL = of("needs_bismuth_tool");
     public static final TagKey<Block> NEEDS_MESE_TOOL = of("needs_mese_tool");
 
-    public static final TagKey<Block> BIG_AXE_MINEABLE = of(Identifier.ofVanilla("mineable/big_axe"));
-    public static final TagKey<Block> BIG_PICKAXE_MINEABLE = of(Identifier.ofVanilla("mineable/big_pickaxe"));
+    public static final TagKey<Block> BIG_AXE_MINEABLE = of(Identifier.withDefaultNamespace("mineable/big_axe"));
+    public static final TagKey<Block> BIG_PICKAXE_MINEABLE = of(Identifier.withDefaultNamespace("mineable/big_pickaxe"));
 
     private static TagKey<Block> of(String name) {
         return of(NTM.id(name));
     }
 
     private static TagKey<Block> of(Identifier identifier) {
-        return TagKey.of(RegistryKeys.BLOCK, identifier);
+        return TagKey.create(Registries.BLOCK, identifier);
     }
 }

@@ -10,25 +10,21 @@ import net.fawnoculus.ntm.gui.handlers.ElectricFurnaceScreenHandler;
 import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.misc.stack.EnergyStack;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.recipe.SmeltingRecipe;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.data.registries.VanillaRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,19 +33,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<@NotNull BlockPosPayload> {
-    public static final Text NAME = Text.translatable("container.ntm.electric_furnace");
+    public static final Component NAME = Component.translatable("container.ntm.electric_furnace");
 
     public static final int OUTPUT_SLOT_INDEX = 0;
     public static final int INPUT_SLOT_INDEX = 1;
     public static final int BATTERY_SLOT_INDEX = 2;
     public static final int UPGRADE_SLOT_INDEX = 3;
-    public final EnergyStack energy = new EnergyStack(this).setMaxValue(100_000).setConsumes(true).onChange(this::markDirty);
-    private final PropertyDelegate propertyDelegate;
+    public final EnergyStack energy = new EnergyStack(this).setMaxValue(100_000).setConsumes(true).onChange(this::setChanged);
+    private final ContainerData propertyDelegate;
     private double progress = 0;
 
     public ElectricFurnaceBE(BlockPos pos, BlockState state) {
         super(NTMBlockEntities.ELECTRIC_FURNACE_BE, pos, state, 4);
-        this.propertyDelegate = new PropertyDelegate() {
+        this.propertyDelegate = new ContainerData() {
             @Override
             public int get(int index) {
                 return switch (index) {
@@ -67,13 +63,13 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
             }
 
             @Override
-            public int size() {
+            public int getCount() {
                 return 2;
             }
         };
     }
 
-    public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, ElectricFurnaceBE entity) {
+    public static void tick(Level ignored, BlockPos ignored2, BlockState ignored3, ElectricFurnaceBE entity) {
         entity.processBattery();
         if (entity.canCraft()) {
             entity.addProgress();
@@ -84,20 +80,20 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
         } else {
             entity.resetProgress();
         }
-        entity.markDirty();
+        entity.setChanged();
     }
 
-    private Optional<RecipeEntry<SmeltingRecipe>> getRecipe() {
-        if (!(this.world instanceof ServerWorld serverWorld)) {
+    private Optional<RecipeHolder<SmeltingRecipe>> getRecipe() {
+        if (!(this.level instanceof ServerLevel serverWorld)) {
             return Optional.empty();
         }
-        SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX));
-        return ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING).getFirstMatch(recipeInput, serverWorld);
+        SingleRecipeInput recipeInput = new SingleRecipeInput(getItem(INPUT_SLOT_INDEX));
+        return RecipeManager.createCheck(RecipeType.SMELTING).getRecipeFor(recipeInput, serverWorld);
     }
 
     private int getRequiredProgress() {
         return this.getRecipe()
-          .map(recipeEntry -> recipeEntry.value().getCookingTime())
+          .map(recipeEntry -> recipeEntry.value().cookingTime())
           .orElse(0);
     }
 
@@ -112,22 +108,22 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     }
 
     private void craftOutput() {
-        Optional<RecipeEntry<SmeltingRecipe>> optional = this.getRecipe();
+        Optional<RecipeHolder<SmeltingRecipe>> optional = this.getRecipe();
         if (optional.isEmpty()) return;
 
-        RecipeEntry<SmeltingRecipe> recipe = optional.get();
-        ItemStack output = recipe.value().craft(new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX)), BuiltinRegistries.createWrapperLookup());
+        RecipeHolder<SmeltingRecipe> recipe = optional.get();
+        ItemStack output = recipe.value().assemble(new SingleRecipeInput(getItem(INPUT_SLOT_INDEX)), VanillaRegistries.createLookup());
 
-        output.setCount(getStack(OUTPUT_SLOT_INDEX).getCount() + 1);
-        setStack(OUTPUT_SLOT_INDEX, output);
+        output.setCount(getItem(OUTPUT_SLOT_INDEX).getCount() + 1);
+        setItem(OUTPUT_SLOT_INDEX, output);
 
-        getStack(INPUT_SLOT_INDEX).decrement(1);
+        getItem(INPUT_SLOT_INDEX).shrink(1);
     }
 
     private boolean canCraft() {
         return this.energy.getValue() >= this.getEnergyPerTick()
           && this.getRecipe().isPresent()
-          && canInsertIntoSlot(OUTPUT_SLOT_INDEX, this.getRecipe().get().value().craft(new SingleStackRecipeInput(getStack(INPUT_SLOT_INDEX)), BuiltinRegistries.createWrapperLookup()));
+          && canInsertIntoSlot(OUTPUT_SLOT_INDEX, this.getRecipe().get().value().assemble(new SingleRecipeInput(getItem(INPUT_SLOT_INDEX)), VanillaRegistries.createLookup()));
     }
 
     private boolean progressFinished() {
@@ -138,23 +134,23 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
         this.progress += this.getProgressPerTick();
         this.energy.remove(this.getEnergyPerTick());
 
-        if (this.world != null) {
-            BlockState state = this.world.getBlockState(this.pos).with(AlloyFurnaceBlock.LIT, true);
-            this.world.setBlockState(this.pos, state);
+        if (this.level != null) {
+            BlockState state = this.level.getBlockState(this.worldPosition).setValue(AlloyFurnaceBlock.LIT, true);
+            this.level.setBlockAndUpdate(this.worldPosition, state);
         }
     }
 
     private void resetProgress() {
         this.progress = 0;
 
-        if (this.world != null && !this.canCraft()) {
-            BlockState state = this.world.getBlockState(this.pos).with(ElectricFurnaceBlock.LIT, false);
-            this.world.setBlockState(this.pos, state);
+        if (this.level != null && !this.canCraft()) {
+            BlockState state = this.level.getBlockState(this.worldPosition).setValue(ElectricFurnaceBlock.LIT, false);
+            this.level.setBlockAndUpdate(this.worldPosition, state);
         }
     }
 
     private void processBattery() {
-        ItemStack stack = getStack(BATTERY_SLOT_INDEX);
+        ItemStack stack = getItem(BATTERY_SLOT_INDEX);
         if (stack.getItem() instanceof EnergyContainingItem energyContainingItem) {
             energyContainingItem.discharge(stack, this.energy);
         }
@@ -167,17 +163,17 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
 
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         this.energy.readData(view);
-        this.progress = view.getDouble("progress", 0);
+        this.progress = view.getDoubleOr("progress", 0);
     }
 
     @Override
-    protected void writeData(WriteView view) {
+    protected void saveAdditional(ValueOutput view) {
         view.putDouble("progress", this.progress);
         this.energy.writeData(view);
-        super.writeData(view);
+        super.saveAdditional(view);
     }
 
     public double getProgress(int requiredProgress) {
@@ -185,22 +181,22 @@ public class ElectricFurnaceBE extends EnergyInventoryBE implements ExtendedScre
     }
 
     public boolean showFireInGUI() {
-        if (this.world == null) return false;
-        return this.world.getBlockState(this.pos).get(AlloyFurnaceBlock.LIT);
+        if (this.level == null) return false;
+        return this.level.getBlockState(this.worldPosition).getValue(AlloyFurnaceBlock.LIT);
     }
 
     @Override
-    public BlockPosPayload getScreenOpeningData(ServerPlayerEntity player) {
-        return new BlockPosPayload(this.pos);
+    public BlockPosPayload getScreenOpeningData(ServerPlayer player) {
+        return new BlockPosPayload(this.worldPosition);
     }
 
     @Override
-    public Text getDisplayName() {
+    public Component getDisplayName() {
         return NAME;
     }
 
     @Override
-    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory playerInventory, Player player) {
         return new ElectricFurnaceScreenHandler(syncId, playerInventory, this, propertyDelegate);
     }
 }

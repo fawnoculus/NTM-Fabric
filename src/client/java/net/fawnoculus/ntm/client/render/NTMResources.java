@@ -11,16 +11,16 @@ import net.fawnoculus.ntm.client.api.events.custom.LoadWavefrontModelTexturesEve
 import net.fawnoculus.ntm.client.api.events.custom.LoadWavefrontModelsEvent;
 import net.fawnoculus.ntm.client.render.model.BlockModel3D;
 import net.fawnoculus.ntm.client.render.model.ItemModel3D;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.client.render.model.BlockStateModel;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.Registries;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.profiler.Profilers;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
@@ -38,23 +38,23 @@ public class NTMResources {
     }
 
     private static Identifier blockID(Block block) {
-        return Registries.BLOCK.getId(block).withPrefixedPath("block/");
+        return BuiltInRegistries.BLOCK.getKey(block).withPrefix("block/");
     }
 
     public static class ModelLoadingOverrides {
-        private static final HashMap<Identifier, Function<BlockState, BlockStateModel.UnbakedGrouped>> BLOCK_MODEL_OVERRIDES = new HashMap<>();
+        private static final HashMap<Identifier, Function<BlockState, BlockStateModel.UnbakedRoot>> BLOCK_MODEL_OVERRIDES = new HashMap<>();
         private static final HashMap<Identifier, Function<Identifier, ItemModel.Unbaked>> ITEM_MODEL_OVERRIDES = new HashMap<>();
 
-        public static void addBlock(Block block, Function<BlockState, BlockStateModel.UnbakedGrouped> model) {
-            BLOCK_MODEL_OVERRIDES.put(Registries.BLOCK.getId(block), model);
+        public static void addBlock(Block block, Function<BlockState, BlockStateModel.UnbakedRoot> model) {
+            BLOCK_MODEL_OVERRIDES.put(BuiltInRegistries.BLOCK.getKey(block), model);
         }
 
-        public static void addItem(ItemConvertible itemConvertible, Function<Identifier, ItemModel.Unbaked> model) {
-            ITEM_MODEL_OVERRIDES.put(Registries.ITEM.getId(itemConvertible.asItem()), model);
+        public static void addItem(ItemLike itemConvertible, Function<Identifier, ItemModel.Unbaked> model) {
+            ITEM_MODEL_OVERRIDES.put(BuiltInRegistries.ITEM.getKey(itemConvertible.asItem()), model);
         }
 
-        private static BlockStateModel.UnbakedGrouped getBlockModel(BlockStateModel.UnbakedGrouped original, ModelModifier.BeforeBakeBlock.Context context) {
-            Function<BlockState, BlockStateModel.UnbakedGrouped> override = BLOCK_MODEL_OVERRIDES.get(Registries.BLOCK.getId(context.state().getBlock()));
+        private static BlockStateModel.UnbakedRoot getBlockModel(BlockStateModel.UnbakedRoot original, ModelModifier.BeforeBakeBlock.Context context) {
+            Function<BlockState, BlockStateModel.UnbakedRoot> override = BLOCK_MODEL_OVERRIDES.get(BuiltInRegistries.BLOCK.getKey(context.state().getBlock()));
             if (override == null) return original;
             return override.apply(context.state());
         }
@@ -74,11 +74,11 @@ public class NTMResources {
             }
 
             // Load 3d Models
-            ResourceLoader.get(ResourceType.CLIENT_RESOURCES).registerReloader(
+            ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(
               NTM.id("wavefront_models"),
               (store, prepareExecutor, reloadSynchronizer, applyExecutor) -> CompletableFuture
                 .runAsync(() -> {
-                      Profiler profiler = Profilers.get();
+                      ProfilerFiller profiler = Profiler.get();
                       profiler.push("[NTM] Loading Wavefront Models");
                       NTMClient.LOGGER.info("Loading Wavefront Models");
                       LoadWavefrontModelsEvent.EVENT.invoker().loadModels();
@@ -89,7 +89,7 @@ public class NTMResources {
                       profiler.pop();
                   }, prepareExecutor
                 )
-                .thenCompose(reloadSynchronizer::whenPrepared)
+                .thenCompose(reloadSynchronizer::wait)
                 .thenRunAsync(() -> {
                 }, applyExecutor)
             );

@@ -1,11 +1,10 @@
 package net.fawnoculus.ntm.client.gui.area;
 
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Range;
 
 public interface InfoBar extends InfoArea {
     int getU();
@@ -18,21 +17,20 @@ public interface InfoBar extends InfoArea {
 
     @Nullable Identifier getTexture();
 
-    @Range(from = 0, to = 1)
     double getFillState();
 
     @Override
-    default void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    default void render(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
         InfoArea.super.render(context, mouseX, mouseY, deltaTicks);
         this.drawBar(context);
     }
 
-    default void drawBar(DrawContext context) {
+    default void drawBar(GuiGraphics context) {
         if (this.getTexture() == null) return;
 
-        int barSize = MathHelper.ceil(this.getFillState() * this.getHeigh());
+        int barSize = Mth.ceil(this.getFillState() * this.getHeigh());
 
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, this.getTexture(),
+        context.blit(RenderPipelines.GUI_TEXTURED, this.getTexture(),
           this.getX() + this.getOffsetX(),
           this.getY() + this.getOffsetY() + this.getHeigh() - barSize,
           this.getU(),

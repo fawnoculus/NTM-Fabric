@@ -4,8 +4,8 @@ import net.fawnoculus.ntm.fluid.data.FireDiamond;
 import net.fawnoculus.ntm.fluid.data.FireDiamond.SpecialNotice;
 import net.fawnoculus.ntm.fluid.data.FluidDataRegistry;
 import net.fawnoculus.ntm.fluid.data.FluidDataTypes;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Range;
 
 public class FluidData {

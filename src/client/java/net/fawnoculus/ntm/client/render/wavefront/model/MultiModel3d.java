@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.client.render.wavefront.model;
 
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.Baker;
-import net.minecraft.client.render.model.SimpleModel;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelDebugName;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
@@ -15,7 +15,7 @@ public interface MultiModel3d extends Model3d {
     Collection<? extends Model3d> getModels();
 
     @Override
-    default List<BakedQuad> bake(@NotNull Baker baker, SimpleModel simpleModel, Function<Vector3f, Vector3f> offset) {
+    default List<BakedQuad> bake(@NotNull ModelBaker baker, ModelDebugName simpleModel, Function<Vector3f, Vector3f> offset) {
         List<BakedQuad> quads = new ArrayList<>();
         for (Model3d model3d : this.getModels()) {
             quads.addAll(model3d.bake(baker, simpleModel, offset));

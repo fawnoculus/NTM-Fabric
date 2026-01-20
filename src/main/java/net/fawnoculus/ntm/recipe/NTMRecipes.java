@@ -2,11 +2,11 @@ package net.fawnoculus.ntm.recipe;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.recipe.custom.AlloyFurnaceRecipe;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public class NTMRecipes {
     public static final RecipeSerializer<AlloyFurnaceRecipe> ALLOY_FURNACE_RECIPE_SERIALIZER = register("alloy_furnace", new AlloyFurnaceRecipe.Serializer());
@@ -14,7 +14,7 @@ public class NTMRecipes {
 
 
     private static <T extends Recipe<?>> RecipeType<T> register(String name) {
-        return Registry.register(Registries.RECIPE_TYPE, NTM.id(name), new RecipeType<T>() {
+        return Registry.register(BuiltInRegistries.RECIPE_TYPE, NTM.id(name), new RecipeType<T>() {
             public String toString() {
                 return name;
             }
@@ -22,7 +22,7 @@ public class NTMRecipes {
     }
 
     private static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String name, S serializer) {
-        return Registry.register(Registries.RECIPE_SERIALIZER, NTM.id(name), serializer);
+        return Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, NTM.id(name), serializer);
     }
 
     public static void initialize() {

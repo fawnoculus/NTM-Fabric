@@ -5,11 +5,10 @@ import net.fawnoculus.ntm.client.data.ClientFluidDataRegistry;
 import net.fawnoculus.ntm.client.misc.NTMKeybinds;
 import net.fawnoculus.ntm.fluid.FluidUnit;
 import net.fawnoculus.ntm.misc.stack.FluidStack;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Range;
 
 import java.util.function.Consumer;
 
@@ -77,41 +76,41 @@ public class FluidBar implements InfoBar {
 
     @Override
     public int getTextureHeight() {
-        Sprite sprite = this.getFluidSprite();
+        TextureAtlasSprite sprite = this.getFluidSprite();
         if (sprite == null) return 16;
-        return sprite.getContents().getHeight();
+        return sprite.contents().height();
     }
 
     @Override
     public int getTextureWidth() {
-        Sprite sprite = this.getFluidSprite();
+        TextureAtlasSprite sprite = this.getFluidSprite();
         if (sprite == null) return 16;
-        return sprite.getContents().getWidth();
+        return sprite.contents().width();
     }
 
     @Override
     public Identifier getTexture() {
-        Sprite sprite = this.getFluidSprite();
+        TextureAtlasSprite sprite = this.getFluidSprite();
         if (sprite == null) return null;
-        return sprite.getAtlasId();
+        return sprite.atlasLocation();
     }
 
-    private @Nullable Sprite getFluidSprite() {
+    private @Nullable TextureAtlasSprite getFluidSprite() {
         return FluidVariantRendering.getSprite(this.FLUID_STACK.variant);
     }
 
     @Override
-    public void appendTooltip(Consumer<Text> tooltip) {
-        Text amount = Text.literal(String.format("%,d", this.FLUID_STACK.amount));
-        Text capacity = FluidUnit.text(this.FLUID_STACK.getCapacity());
+    public void appendTooltip(Consumer<Component> tooltip) {
+        Component amount = Component.literal(String.format("%,d", this.FLUID_STACK.amount));
+        Component capacity = FluidUnit.text(this.FLUID_STACK.getCapacity());
 
-        tooltip.accept(Text.translatable("generic.ntm.amount_stored", amount, capacity));
+        tooltip.accept(Component.translatable("generic.ntm.amount_stored", amount, capacity));
 
-        ClientFluidDataRegistry.getOrCreate(this.FLUID_STACK.getFluid()).appendTooltip(NTMKeybinds.DISPLAY_EXTRA_INFO.isPressed(), tooltip);
+        ClientFluidDataRegistry.getOrCreate(this.FLUID_STACK.getFluid()).appendTooltip(NTMKeybinds.DISPLAY_EXTRA_INFO.isDown(), tooltip);
     }
 
     @Override
-    public @Range(from = 0, to = 1) double getFillState() {
+    public double getFillState() {
         return (double) this.FLUID_STACK.amount / (double) this.FLUID_STACK.getCapacity();
     }
 }

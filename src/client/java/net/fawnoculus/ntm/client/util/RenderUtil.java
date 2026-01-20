@@ -2,14 +2,14 @@ package net.fawnoculus.ntm.client.util;
 
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.NTMConfig;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.render.model.Baker;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.math.Vector2f;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.model.geom.builders.UVPair;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
 import org.joml.Vector2fc;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class RenderUtil {
     public static void drawVariableWidthRect(
-      DrawContext context, Identifier texture,
+      GuiGraphics context, Identifier texture,
       int x, int y,
       int u, int v,
       int height, int width,
@@ -29,14 +29,14 @@ public class RenderUtil {
         // Make sure the width is not some bullshit
         width = Math.max(leftWidth + rightWidth, width);
 
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, u, v, leftWidth, height, textureWidth, textureHeight);
+        context.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, u, v, leftWidth, height, textureWidth, textureHeight);
 
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x + width - rightWidth, y, trueWidth - rightWidth, v, rightWidth, height, textureWidth, textureHeight);
+        context.blit(RenderPipelines.GUI_TEXTURED, texture, x + width - rightWidth, y, trueWidth - rightWidth, v, rightWidth, height, textureWidth, textureHeight);
 
         int trueMiddleWith = trueWidth - (leftWidth + rightWidth);
         int wantedMiddleWith = width - (leftWidth + rightWidth);
         for (int i = 0; i < wantedMiddleWith; i += trueMiddleWith) {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.GUI_TEXTURED, texture,
               x + leftWidth + i, y,
               u + leftWidth, v,
@@ -47,11 +47,11 @@ public class RenderUtil {
     }
 
     public static BakedQuad makeQuad(
-      Baker.Vec3fInterner interner,
+      ModelBaker.PartCache interner,
       Vector3fc[] corners,
       Vector2fc[] textureCords,
       int tintIndex,
-      Sprite sprite,
+      TextureAtlasSprite sprite,
       @Nullable Direction direction,
       boolean shade,
       int lightEmission
@@ -71,14 +71,14 @@ public class RenderUtil {
         }
 
         return new BakedQuad(
-          interner.intern(corners[0]),
-          interner.intern(corners[1]),
-          interner.intern(corners[2]),
-          interner.intern(corners[3]),
-          Vector2f.toLong(sprite.getFrameU(textureCords[0].x()), sprite.getFrameV(textureCords[0].y())),
-          Vector2f.toLong(sprite.getFrameU(textureCords[1].x()), sprite.getFrameV(textureCords[1].y())),
-          Vector2f.toLong(sprite.getFrameU(textureCords[2].x()), sprite.getFrameV(textureCords[2].y())),
-          Vector2f.toLong(sprite.getFrameU(textureCords[3].x()), sprite.getFrameV(textureCords[3].y())),
+          interner.vector(corners[0]),
+          interner.vector(corners[1]),
+          interner.vector(corners[2]),
+          interner.vector(corners[3]),
+          UVPair.pack(sprite.getU(textureCords[0].x()), sprite.getV(textureCords[0].y())),
+          UVPair.pack(sprite.getU(textureCords[1].x()), sprite.getV(textureCords[1].y())),
+          UVPair.pack(sprite.getU(textureCords[2].x()), sprite.getV(textureCords[2].y())),
+          UVPair.pack(sprite.getU(textureCords[3].x()), sprite.getV(textureCords[3].y())),
           tintIndex,
           Objects.requireNonNullElse(direction, Direction.UP),
           sprite,

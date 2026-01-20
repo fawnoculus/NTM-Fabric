@@ -3,69 +3,69 @@ package net.fawnoculus.ntm.blocks.entities;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fawnoculus.ntm.network.s2c.InventorySyncPayload;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 
-public class AbstractInventoryBE extends BlockEntity implements Inventory {
-    private final SimpleInventory inventory;
+public class AbstractInventoryBE extends BlockEntity implements Container {
+    private final SimpleContainer inventory;
 
     public AbstractInventoryBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySlots) {
         super(type, pos, state);
 
         AbstractInventoryBE be = this;
-        this.inventory = new SimpleInventory(inventorySlots) {
+        this.inventory = new SimpleContainer(inventorySlots) {
             @Override
-            public void markDirty() {
-                super.markDirty();
-                be.markDirty();
+            public void setChanged() {
+                super.setChanged();
+                be.setChanged();
             }
         };
     }
 
-    public static void sendSyncInventoryPacket(World world, BlockPos pos, SimpleInventory inventory) {
-        if (!(world instanceof ServerWorld serverWorld)) return;
+    public static void sendSyncInventoryPacket(Level world, BlockPos pos, SimpleContainer inventory) {
+        if (!(world instanceof ServerLevel serverWorld)) return;
         InventorySyncPayload payload = new InventorySyncPayload(pos, inventory);
 
-        int viewDistance = serverWorld.getServer().getPlayerManager().getViewDistance();
-        for (ServerPlayerEntity player : PlayerLookup.around(serverWorld, pos, viewDistance)) {
+        int viewDistance = serverWorld.getServer().getPlayerList().getViewDistance();
+        for (ServerPlayer player : PlayerLookup.around(serverWorld, pos, viewDistance)) {
             ServerPlayNetworking.send(player, payload);
         }
     }
 
-    public SimpleInventory getInventory() {
+    public SimpleContainer getInventory() {
         return this.inventory;
     }
 
     public boolean canInsertIntoSlot(int slotIndex, ItemStack stack) {
-        ItemStack switchStack = this.getInventory().getStack(slotIndex);
+        ItemStack switchStack = this.getInventory().getItem(slotIndex);
         if (switchStack.isEmpty()) return true;
 
         if (switchStack.getItem() == stack.getItem()) {
-            return switchStack.getCount() + stack.getCount() <= switchStack.getMaxCount();
+            return switchStack.getCount() + stack.getCount() <= switchStack.getMaxStackSize();
         }
 
         return false;
     }
 
     @Override
-    public int size() {
-        return this.getInventory().size();
+    public int getContainerSize() {
+        return this.getInventory().getContainerSize();
     }
 
     @Override
@@ -74,59 +74,59 @@ public class AbstractInventoryBE extends BlockEntity implements Inventory {
     }
 
     @Override
-    public ItemStack getStack(int slot) {
-        return this.getInventory().getStack(slot);
+    public ItemStack getItem(int slot) {
+        return this.getInventory().getItem(slot);
     }
 
     @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return this.getInventory().removeStack(slot, amount);
+    public ItemStack removeItem(int slot, int amount) {
+        return this.getInventory().removeItem(slot, amount);
     }
 
     @Override
-    public ItemStack removeStack(int slot) {
-        return this.getInventory().removeStack(slot);
+    public ItemStack removeItemNoUpdate(int slot) {
+        return this.getInventory().removeItemNoUpdate(slot);
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
-        this.getInventory().setStack(slot, stack);
+    public void setItem(int slot, ItemStack stack) {
+        this.getInventory().setItem(slot, stack);
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return this.getInventory().canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.getInventory().stillValid(player);
     }
 
     @Override
-    public void clear() {
-        inventory.clear();
+    public void clearContent() {
+        inventory.clearContent();
     }
 
     @Override
-    public void markDirty() {
-        super.markDirty();
-        if (this.world != null)
-            this.world.updateListeners(this.pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-        if (this.world != null && !this.world.isClient()) {
-            sendSyncInventoryPacket(this.world, this.pos, this.getInventory());
+    public void setChanged() {
+        super.setChanged();
+        if (this.level != null)
+            this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        if (this.level != null && !this.level.isClientSide()) {
+            sendSyncInventoryPacket(this.level, this.worldPosition, this.getInventory());
         }
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-        Inventories.readData(view, this.inventory.getHeldStacks());
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        ContainerHelper.loadAllItems(view, this.inventory.getItems());
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        Inventories.writeData(view, this.getInventory().getHeldStacks());
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        ContainerHelper.saveAllItems(view, this.getInventory().getItems());
+        super.saveAdditional(view);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registryLookup) {
+        return saveWithoutMetadata(registryLookup);
     }
 }

@@ -1,11 +1,11 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class InfiniteBatteryItem extends Item implements EnergyContainingItem {
-    public InfiniteBatteryItem(Settings settings) {
-        super(settings.maxCount(1));
+    public InfiniteBatteryItem(Properties settings) {
+        super(settings.stacksTo(1));
     }
 
     @Override

@@ -1,16 +1,16 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.function.BiConsumer;
 public class InjectionItem extends Item {
     private final @Nullable SoundEvent SOUND;
     private final List<Item> RETURN_ITEMS;
-    private final BiConsumer<ServerWorld, LivingEntity> SERVER_USE;
+    private final BiConsumer<ServerLevel, LivingEntity> SERVER_USE;
 
-    public InjectionItem(Settings settings, @Nullable SoundEvent sound, @Nullable Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+    public InjectionItem(Properties settings, @Nullable SoundEvent sound, @Nullable Item returnItem, BiConsumer<ServerLevel, LivingEntity> serverUse) {
         this(settings, sound, returnItem != null ? List.of(returnItem) : List.of(), serverUse);
     }
 
-    public InjectionItem(Settings settings, @Nullable SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+    public InjectionItem(Properties settings, @Nullable SoundEvent sound, List<Item> returnItems, BiConsumer<ServerLevel, LivingEntity> serverUse) {
         super(settings);
 
         this.SOUND = sound;
@@ -34,40 +34,40 @@ public class InjectionItem extends Item {
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
         if (!player.isCreative()) {
-            ItemStack stack = player.getStackInHand(hand);
-            stack.decrement(1);
+            ItemStack stack = player.getItemInHand(hand);
+            stack.shrink(1);
         }
         if (this.SOUND != null) {
-            world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), this.SOUND, SoundCategory.PLAYERS);
+            world.playSound(null, BlockPos.containing(player.position()).above(), this.SOUND, SoundSource.PLAYERS);
         }
         for (Item returnItem : RETURN_ITEMS) {
-            player.getInventory().offerOrDrop(new ItemStack(returnItem));
+            player.getInventory().placeItemBackInInventory(new ItemStack(returnItem));
         }
 
-        this.SERVER_USE.accept((ServerWorld) world, player);
+        this.SERVER_USE.accept((ServerLevel) world, player);
 
-        return ActionResult.SUCCESS_SERVER;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
-    public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target.getEntityWorld().isClient() || !(attacker instanceof PlayerEntity player)) {
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (target.level().isClientSide() || !(attacker instanceof Player player)) {
             return;
         }
-        ServerWorld world = (ServerWorld) target.getEntityWorld();
+        ServerLevel world = (ServerLevel) target.level();
         if (!player.isCreative()) {
-            stack.decrement(1);
+            stack.shrink(1);
         }
         if (this.SOUND != null) {
-            world.playSound(null, BlockPos.ofFloored(player.getEntityPos()).up(), this.SOUND, SoundCategory.PLAYERS);
+            world.playSound(null, BlockPos.containing(player.position()).above(), this.SOUND, SoundSource.PLAYERS);
         }
         for (Item returnItem : RETURN_ITEMS) {
-            player.getInventory().offerOrDrop(new ItemStack(returnItem));
+            player.getInventory().placeItemBackInInventory(new ItemStack(returnItem));
         }
 
         this.SERVER_USE.accept(world, target);

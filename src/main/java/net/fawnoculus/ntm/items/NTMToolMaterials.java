@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.items;
 
 import net.fawnoculus.ntm.misc.tags.NTMBlockTags;
 import net.fawnoculus.ntm.misc.tags.NTMItemTags;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.world.item.ToolMaterial;
 
 public class NTMToolMaterials {
     // TODO: rebalance tools to fit into the Post Combat update era

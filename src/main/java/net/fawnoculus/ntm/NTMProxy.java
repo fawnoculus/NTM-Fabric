@@ -1,42 +1,42 @@
 package net.fawnoculus.ntm;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.text.MutableText;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 
 public interface NTMProxy {
-    MutableText getKeyText(String keybindTranslationKey);
+    MutableComponent getKeyText(String keybindTranslationKey);
 
-    default void playSoundToPlayer(PlayerEntity player, SoundEvent sound, SoundCategory category) {
-        playSoundToPlayer(player, Registries.SOUND_EVENT.getEntry(sound), category, player.getX(), player.getY(), player.getZ(), 0f, 0f, player.getRandom().nextLong());
+    default void playSoundToPlayer(Player player, SoundEvent sound, SoundSource category) {
+        playSoundToPlayer(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), category, player.getX(), player.getY(), player.getZ(), 0f, 0f, player.getRandom().nextLong());
     }
 
-    default void playSoundToPlayer(PlayerEntity player, SoundEvent sound, SoundCategory category, float volume, float pitch) {
-        playSoundToPlayer(player, Registries.SOUND_EVENT.getEntry(sound), category, player.getX(), player.getY(), player.getZ(), volume, pitch, player.getRandom().nextLong());
+    default void playSoundToPlayer(Player player, SoundEvent sound, SoundSource category, float volume, float pitch) {
+        playSoundToPlayer(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), category, player.getX(), player.getY(), player.getZ(), volume, pitch, player.getRandom().nextLong());
     }
 
-    default void playSoundToPlayer(PlayerEntity player, SoundEvent sound, SoundCategory category, double x, double y, double z, float volume, float pitch) {
-        playSoundToPlayer(player, Registries.SOUND_EVENT.getEntry(sound), category, x, y, z, volume, pitch, player.getRandom().nextLong());
+    default void playSoundToPlayer(Player player, SoundEvent sound, SoundSource category, double x, double y, double z, float volume, float pitch) {
+        playSoundToPlayer(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), category, x, y, z, volume, pitch, player.getRandom().nextLong());
     }
 
-    default void playSoundToPlayer(PlayerEntity player, SoundEvent sound, SoundCategory category, double x, double y, double z, float volume, float pitch, long seed) {
-        playSoundToPlayer(player, Registries.SOUND_EVENT.getEntry(sound), category, x, y, z, volume, pitch, seed);
+    default void playSoundToPlayer(Player player, SoundEvent sound, SoundSource category, double x, double y, double z, float volume, float pitch, long seed) {
+        playSoundToPlayer(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), category, x, y, z, volume, pitch, seed);
     }
 
-    default void playSoundToPlayer(PlayerEntity player, RegistryEntry<SoundEvent> sound, SoundCategory category) {
+    default void playSoundToPlayer(Player player, Holder<SoundEvent> sound, SoundSource category) {
         playSoundToPlayer(player, sound, category, player.getX(), player.getY(), player.getZ(), 0f, 0f, player.getRandom().nextLong());
     }
 
-    default void playSoundToPlayer(PlayerEntity player, RegistryEntry<SoundEvent> sound, SoundCategory category, float volume, float pitch) {
+    default void playSoundToPlayer(Player player, Holder<SoundEvent> sound, SoundSource category, float volume, float pitch) {
         playSoundToPlayer(player, sound, category, player.getX(), player.getY(), player.getZ(), volume, pitch, player.getRandom().nextLong());
     }
 
-    default void playSoundToPlayer(PlayerEntity player, RegistryEntry<SoundEvent> sound, SoundCategory category, double x, double y, double z, float volume, float pitch) {
+    default void playSoundToPlayer(Player player, Holder<SoundEvent> sound, SoundSource category, double x, double y, double z, float volume, float pitch) {
         playSoundToPlayer(player, sound, category, x, y, z, volume, pitch, player.getRandom().nextLong());
     }
 
-    void playSoundToPlayer(PlayerEntity player, RegistryEntry<SoundEvent> sound, SoundCategory category, double x, double y, double z, float volume, float pitch, long seed);
+    void playSoundToPlayer(Player player, Holder<SoundEvent> sound, SoundSource category, double x, double y, double z, float volume, float pitch, long seed);
 }

@@ -7,58 +7,54 @@ import net.fawnoculus.ntm.gui.slots.BatterySlot;
 import net.fawnoculus.ntm.gui.slots.OutputSlot;
 import net.fawnoculus.ntm.gui.slots.UpgradeSlot;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ArrayPropertyDelegate;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricFurnaceScreenHandler extends ScreenHandler {
+public class ElectricFurnaceScreenHandler extends AbstractContainerMenu {
     private final ElectricFurnaceBE blockEntity;
-    private final ScreenHandlerContext screenContext;
-    private final PropertyDelegate propertyDelegate;
+    private final ContainerLevelAccess screenContext;
+    private final ContainerData propertyDelegate;
 
     // Client Constructor
-    public ElectricFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull BlockPosPayload payload) {
-        this(syncId, playerInventory, (ElectricFurnaceBE) playerInventory.player.getEntityWorld().getBlockEntity(payload.pos()), new ArrayPropertyDelegate(2));
+    public ElectricFurnaceScreenHandler(int syncId, Inventory playerInventory, @NotNull BlockPosPayload payload) {
+        this(syncId, playerInventory, (ElectricFurnaceBE) playerInventory.player.level().getBlockEntity(payload.pos()), new SimpleContainerData(2));
     }
 
     // Common Constructor
-    public ElectricFurnaceScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, ElectricFurnaceBE blockEntity, PropertyDelegate propertyDelegate) {
+    public ElectricFurnaceScreenHandler(int syncId, @NotNull Inventory playerInventory, ElectricFurnaceBE blockEntity, ContainerData propertyDelegate) {
         super(NTMScreenHandlerType.ELECTRIC_FURNACE, syncId);
 
         this.blockEntity = blockEntity;
-        this.screenContext = ScreenHandlerContext.create(this.blockEntity.getWorld(), this.blockEntity.getPos());
-        checkDataCount(propertyDelegate, 2);
+        this.screenContext = ContainerLevelAccess.create(this.blockEntity.getLevel(), this.blockEntity.getBlockPos());
+        checkContainerDataCount(propertyDelegate, 2);
         this.propertyDelegate = propertyDelegate;
-        addProperties(this.propertyDelegate);
+        addDataSlots(this.propertyDelegate);
 
-        SimpleInventory blockInventory = this.blockEntity.getInventory();
-        blockInventory.onOpen(playerInventory.player);
-        checkSize(blockInventory, 4);
+        SimpleContainer blockInventory = this.blockEntity.getInventory();
+        blockInventory.startOpen(playerInventory.player);
+        checkContainerSize(blockInventory, 4);
 
         addPlayerInventory(playerInventory);
         addBlockInventory(blockInventory);
     }
 
-    private void addBlockInventory(SimpleInventory inventory) {
+    private void addBlockInventory(SimpleContainer inventory) {
         addSlot(new BatterySlot(inventory, ElectricFurnaceBE.BATTERY_SLOT_INDEX, 56, 53));
         addSlot(new Slot(inventory, ElectricFurnaceBE.INPUT_SLOT_INDEX, 56, 17));
         addSlot(new OutputSlot(inventory, ElectricFurnaceBE.OUTPUT_SLOT_INDEX, 116, 35));
         addSlot(new UpgradeSlot(inventory, ElectricFurnaceBE.UPGRADE_SLOT_INDEX, 147, 34));
     }
 
-    private void addPlayerInventory(PlayerInventory playerInventory) {
+    private void addPlayerInventory(Inventory playerInventory) {
         addPartialPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
     }
 
-    private void addPartialPlayerInventory(PlayerInventory playerInventory) {
+    private void addPartialPlayerInventory(Inventory playerInventory) {
         for (int row = 0; row < 3; row++) {
             for (int colum = 0; colum < 9; colum++) {
                 addSlot(new Slot(playerInventory, 9 + (colum + (row * 9)), 8 + (colum * 18), 84 + (row * 18)));
@@ -66,34 +62,34 @@ public class ElectricFurnaceScreenHandler extends ScreenHandler {
         }
     }
 
-    private void addPlayerHotbar(PlayerInventory playerInventory) {
+    private void addPlayerHotbar(Inventory playerInventory) {
         for (int colum = 0; colum < 9; colum++) {
             addSlot(new Slot(playerInventory, colum, 8 + (colum * 18), 142));
         }
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.blockEntity.getInventory().onClose(player);
+    public void removed(Player player) {
+        super.removed(player);
+        this.blockEntity.getInventory().stopOpen(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         // TODO: fix this
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return canUse(screenContext, player, NTMBlocks.ELECTRIC_FURNACE);
+    public boolean stillValid(Player player) {
+        return stillValid(screenContext, player, NTMBlocks.ELECTRIC_FURNACE);
     }
 
     public ElectricFurnaceBE getBlockEntity() {
         return this.blockEntity;
     }
 
-    public PropertyDelegate getPropertyDelegate() {
+    public ContainerData getPropertyDelegate() {
         return this.propertyDelegate;
     }
 }

@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.blocks.entities.container.energy;
 
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
 import net.fawnoculus.ntm.blocks.NTMBlockEntities;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Collection;
 import java.util.List;

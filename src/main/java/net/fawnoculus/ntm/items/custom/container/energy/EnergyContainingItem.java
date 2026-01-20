@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.items.custom.container.energy;
 
 import net.fawnoculus.ntm.api.node.NodeValueContainer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface EnergyContainingItem {
 

@@ -2,7 +2,7 @@ package net.fawnoculus.ntm.client.api.events.custom;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 /**
  * This Event is called every time the Client draws a new Frame
@@ -18,5 +18,5 @@ public interface ClientTickEvents {
     );
 
 
-    void onTick(MinecraftClient client);
+    void onTick(Minecraft client);
 }

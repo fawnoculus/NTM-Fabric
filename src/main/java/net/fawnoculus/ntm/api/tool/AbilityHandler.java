@@ -6,18 +6,18 @@ import io.netty.buffer.ByteBuf;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.items.NTMDataComponentTypes;
 import net.fawnoculus.ntm.util.WorldUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
@@ -27,16 +27,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to = 10) Integer>> ABILITIES,
+public record AbilityHandler(List<Tuple<ItemAbility, @NotNull @Range(from = 1, to = 10) Integer>> ABILITIES,
                              StackData DEFAULT_STACK_DATA) {
     public static Builder builder() {
         return new Builder();
     }
 
     public @Range(from = 0, to = 10) int getMaxLevel(ItemAbility abilityType) {
-        for (Pair<ItemAbility, Integer> pair : ABILITIES) {
-            if (Objects.equals(pair.getLeft(), abilityType)) {
-                return pair.getRight();
+        for (Tuple<ItemAbility, Integer> pair : ABILITIES) {
+            if (Objects.equals(pair.getA(), abilityType)) {
+                return pair.getB();
             }
         }
         return 0;
@@ -81,9 +81,9 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
 
         stack.set(NTMDataComponentTypes.ABILITY_COMPONENT_TYPE, stackData);
         if (this.abilitiesDisabled(stack)) {
-            stack.remove(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
+            stack.remove(DataComponents.ENCHANTMENT_GLINT_OVERRIDE);
         } else {
-            stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
         }
     }
 
@@ -129,27 +129,27 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
         return Objects.requireNonNullElse(stackData.getPreset(stackData.selectedPreset), stackData.presets.getFirst());
     }
 
-    public Text changeMessage(ItemStack stack) {
+    public Component changeMessage(ItemStack stack) {
         Preset preset = getCurrentPreset(stack);
         ItemAbility top = preset.topAbility;
         ItemAbility bottom = preset.bottomAbility;
 
         if (top.isNotNone() && bottom.isNotNone()) {
-            return Text.translatable("message.ntm.ability.enable_2", top.getFullName(preset.topAbilityLevel), bottom.getFullName(preset.bottomAbilityLevel)).formatted(Formatting.YELLOW);
+            return Component.translatable("message.ntm.ability.enable_2", top.getFullName(preset.topAbilityLevel), bottom.getFullName(preset.bottomAbilityLevel)).withStyle(ChatFormatting.YELLOW);
         }
 
         if (top.isNotNone()) {
-            return Text.translatable("message.ntm.ability.enable_1", top.getFullName(preset.topAbilityLevel)).formatted(Formatting.YELLOW);
+            return Component.translatable("message.ntm.ability.enable_1", top.getFullName(preset.topAbilityLevel)).withStyle(ChatFormatting.YELLOW);
         }
 
         if (bottom.isNotNone()) {
-            return Text.translatable("message.ntm.ability.enable_1", bottom.getFullName(preset.bottomAbilityLevel)).formatted(Formatting.YELLOW);
+            return Component.translatable("message.ntm.ability.enable_1", bottom.getFullName(preset.bottomAbilityLevel)).withStyle(ChatFormatting.YELLOW);
         }
 
-        return Text.translatable("message.ntm.ability.deactivate").formatted(Formatting.GOLD);
+        return Component.translatable("message.ntm.ability.deactivate").withStyle(ChatFormatting.GOLD);
     }
 
-    public void preBreak(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
+    public void preBreak(ItemStack stack, Level world, BlockState state, BlockPos pos, Player miner) {
         Preset currentPreset = this.getCurrentPreset(stack);
         currentPreset.bottomAbility.preMine(stack, world, state, pos, miner, currentPreset.bottomAbilityLevel);
         currentPreset.topAbility.preMine(stack, world, state, pos, miner, currentPreset.topAbilityLevel);
@@ -166,20 +166,20 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
         }
     }
 
-    public void appendTooltip(Consumer<Text> tooltip) {
+    public void appendTooltip(Consumer<Component> tooltip) {
         if (!this.ABILITIES().isEmpty()) {
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.start").formatted(Formatting.GRAY));
-            for (Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : ABILITIES) {
-                tooltip.accept(Text.literal("  ").append(pair.getLeft().getFullName(pair.getRight())).formatted(Formatting.GOLD));
+            tooltip.accept(Component.translatable("tooltip.ntm.ability.start").withStyle(ChatFormatting.GRAY));
+            for (Tuple<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : ABILITIES) {
+                tooltip.accept(Component.literal("  ").append(pair.getA().getFullName(pair.getB())).withStyle(ChatFormatting.GOLD));
             }
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.end1", NTM.getProxy().getKeyText("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.end2", NTM.getProxy().getKeyText("key.ntm.cycle_tool_ability").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
-            tooltip.accept(Text.translatable("tooltip.ntm.ability.end3", NTM.getProxy().getKeyText("key.ntm.open_tool_ability_gui").formatted(Formatting.YELLOW)).formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip.ntm.ability.end1", NTM.getProxy().getKeyText("key.ntm.cycle_tool_ability").withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip.ntm.ability.end2", NTM.getProxy().getKeyText("key.ntm.cycle_tool_ability").withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip.ntm.ability.end3", NTM.getProxy().getKeyText("key.ntm.open_tool_ability_gui").withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY));
         }
     }
 
     public static class Builder {
-        private final List<Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer>> abilities = new ArrayList<>();
+        private final List<Tuple<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer>> abilities = new ArrayList<>();
 
         /**
          * Use this one if the ability doesn't support levels
@@ -187,7 +187,7 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
          * @param ability the ability to add
          */
         public Builder addAbility(ItemAbility ability) {
-            abilities.add(new Pair<>(ability, 1));
+            abilities.add(new Tuple<>(ability, 1));
             return this;
         }
 
@@ -202,7 +202,7 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
                 throw new IllegalArgumentException("Max Level " + maxLevel + " is not valid for ability " + ability.getId());
             }
 
-            abilities.add(new Pair<>(ability, maxLevel));
+            abilities.add(new Tuple<>(ability, maxLevel));
             return this;
         }
 
@@ -210,15 +210,15 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
             List<Preset> presets = new ArrayList<>(abilities.size());
             presets.add(new Preset(ItemAbility.NONE, 1, ItemAbility.NONE, 1));
 
-            for (Pair<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : abilities) {
-                if (pair.getRight() < 1) {
+            for (Tuple<ItemAbility, @NotNull @Range(from = 0, to = 10) Integer> pair : abilities) {
+                if (pair.getB() < 1) {
                     continue;
                 }
 
-                if (pair.getLeft().isBottom()) {
-                    presets.add(new Preset(ItemAbility.NONE, 1, pair.getLeft(), pair.getRight()));
+                if (pair.getA().isBottom()) {
+                    presets.add(new Preset(ItemAbility.NONE, 1, pair.getA(), pair.getB()));
                 } else {
-                    presets.add(new Preset(pair.getLeft(), pair.getRight(), ItemAbility.NONE, 1));
+                    presets.add(new Preset(pair.getA(), pair.getB(), ItemAbility.NONE, 1));
                 }
             }
 
@@ -266,22 +266,22 @@ public record AbilityHandler(List<Pair<ItemAbility, @NotNull @Range(from = 1, to
             Codec.INT.fieldOf("selectedPreset").forGetter(StackData::selectedPreset)
           ).apply(instance, StackData::new)
         );
-        public static final PacketCodec<ByteBuf, StackData> PACKET_CODEC = new PacketCodec<>() {
+        public static final StreamCodec<ByteBuf, StackData> PACKET_CODEC = new StreamCodec<>() {
             @Override
             public StackData decode(ByteBuf buf) {
-                NbtCompound nbt = Objects.requireNonNull(PacketByteBuf.readNbt(buf));
+                CompoundTag nbt = Objects.requireNonNull(FriendlyByteBuf.readNbt(buf));
                 return new StackData(
-                  nbt.get("presets", Preset.CODEC.listOf()).orElseThrow(),
+                  nbt.read("presets", Preset.CODEC.listOf()).orElseThrow(),
                   nbt.getInt("selectedPreset").orElseThrow()
                 );
             }
 
             @Override
             public void encode(ByteBuf buf, StackData value) {
-                NbtCompound nbt = new NbtCompound();
-                nbt.put("presets", Preset.CODEC.listOf(), value.presets);
+                CompoundTag nbt = new CompoundTag();
+                nbt.store("presets", Preset.CODEC.listOf(), value.presets);
                 nbt.putInt("selectedPreset", value.selectedPreset);
-                PacketByteBuf.writeNbt(buf, nbt);
+                FriendlyByteBuf.writeNbt(buf, nbt);
             }
         };
 

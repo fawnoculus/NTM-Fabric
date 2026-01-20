@@ -8,11 +8,11 @@ import net.fawnoculus.ntm.api.config.PerWorldConfigFile;
 import net.fawnoculus.ntm.api.config.PerWorldConfigOption;
 import net.fawnoculus.ntm.api.config.encoder.JsonConfigEncoder;
 import net.fawnoculus.ntm.misc.data.NTMCodecs;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 import java.util.function.Function;
@@ -22,9 +22,17 @@ public class NTMConfig {
       JsonConfigEncoder.getInstance(),
       "ntm/common.json"
     );
+    public static final ConfigOption<Integer> MAX_EXPLOSIONS = COMMON_CONFIG_FILE.newOption(
+      "max_explosions", Codec.INT, 10_000,
+      "The maximum amount of explosions that can happen at once, any explosions that happens after the limit is reached will be ignored (values below 1 will disable non vanilla explosions) [default: 10000]"
+    );
+    public static final ConfigOption<Integer> MIN_EXPLOSION_NANOS = COMMON_CONFIG_FILE.newOption(
+      "min_explosion_nanos", Codec.INT, 10_000_000,
+      "The minimum amount of nanoseconds to spend processing explosions in one tick [default: 10000000]"
+    );
     public static final ConfigOption<List<Block>> VEIN_MINER_ABILITY_EXCLUDE = COMMON_CONFIG_FILE.newOption(
       "vein_miner_ability_exclude",
-      Registries.BLOCK.getCodec().listOf(),
+      BuiltInRegistries.BLOCK.byNameCodec().listOf(),
       List.of(
         Blocks.STONE,
         Blocks.COBBLESTONE,
@@ -36,7 +44,7 @@ public class NTMConfig {
     );
     public static final ConfigOption<List<Block>> AOE_ABILITY_EXCLUDE = COMMON_CONFIG_FILE.newOption(
       "aoe_ability_exclude",
-      Registries.BLOCK.getCodec().listOf(),
+      BuiltInRegistries.BLOCK.byNameCodec().listOf(),
       List.of(
         Blocks.BARRIER,
         Blocks.BEDROCK
@@ -60,11 +68,11 @@ public class NTMConfig {
     );
     public static final ConfigOption<Integer> MAX_REGION_DATA_CACHE = COMMON_CONFIG_FILE.newOption(
       "max_region_data_cache", Codec.INT, 512,
-      "The amount of custom chunk data regions to keep in cache (large values may led to large memory consumption, small values may led to bad performance)"
+      "The amount of custom chunk data regions to keep in cache (large values may led to high memory usage, small values may led to bad performance) [default: 512]"
     );
     public static final ConfigOption<Integer> MAX_NODE_SCAN_DEPTH = COMMON_CONFIG_FILE.newOption(
       "max_node_scan_depth", Codec.INT, 100_000,
-      "The maximum amount of nodes (cables and pipes) to scan when reconstructing node-networks (use anything lower that 1 to disable)"
+      "The maximum amount of nodes (cables and pipes) to scan when reconstructing node-networks (use anything lower that 1 to disable) [default: 100000]"
     );
 
     public static final PerWorldConfigFile WORLD_CONFIG = new PerWorldConfigFile(
@@ -87,15 +95,15 @@ public class NTMConfig {
     }
 
     public enum TempUnit {
-        Celsius(celsius -> Text.literal(String.format("%,.1f", celsius)).append(Text.translatable("generic.ntm.temp.c"))),
-        Fahrenheit(celsius -> Text.literal(String.format("%,.1f", (celsius * 9 / 5) + 32)).append(Text.translatable("generic.ntm.temp.f"))),
-        Kelvin(celsius -> Text.literal(String.format("%,.1f", celsius - 273.15)).append(Text.translatable("generic.ntm.temp.k")));
+        Celsius(celsius -> Component.literal(String.format("%,.1f", celsius)).append(Component.translatable("generic.ntm.temp.c"))),
+        Fahrenheit(celsius -> Component.literal(String.format("%,.1f", (celsius * 9 / 5) + 32)).append(Component.translatable("generic.ntm.temp.f"))),
+        Kelvin(celsius -> Component.literal(String.format("%,.1f", celsius - 273.15)).append(Component.translatable("generic.ntm.temp.k")));
 
         public static final Codec<TempUnit> CODEC = NTMCodecs.getEnumCodec(TempUnit.class);
-        public final Function<Double, MutableText> CELSIUS_TO_TEXT;
+        public final Function<Double, MutableComponent> CELSIUS_TO_TEXT;
 
 
-        TempUnit(Function<Double, MutableText> celsiusToText) {
+        TempUnit(Function<Double, MutableComponent> celsiusToText) {
             this.CELSIUS_TO_TEXT = celsiusToText;
         }
     }

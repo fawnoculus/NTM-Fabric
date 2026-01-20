@@ -1,10 +1,10 @@
 package net.fawnoculus.ntm.misc;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
 
 public class NTMSounds {
     public static final SoundEvent SYRINGE_INJECTS = register("item.syringe_injects");
@@ -16,7 +16,7 @@ public class NTMSounds {
 
     private static SoundEvent register(String id) {
         Identifier identifier = NTM.id(id);
-        return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
+        return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
     }
 
     public static void initialize() {

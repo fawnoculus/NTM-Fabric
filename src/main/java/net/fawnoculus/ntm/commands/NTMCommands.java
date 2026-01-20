@@ -23,25 +23,25 @@ import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.network.s2c.RemoveAllMessagesPayload;
 import net.fawnoculus.ntm.network.s2c.RemoveMessagePayload;
+import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
-import net.minecraft.command.DefaultPermissions;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.IdentifierArgumentType;
-import net.minecraft.command.argument.TextArgumentType;
-import net.minecraft.command.argument.UuidArgumentType;
-import net.minecraft.component.Component;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.ComponentArgument;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.commands.arguments.UuidArgument;
+import net.minecraft.core.component.TypedDataComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.permissions.Permissions;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -53,25 +53,25 @@ import java.util.UUID;
 public class NTMCommands {
     public static void initialize() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-          CommandManager.literal("ntm")
-            .then(CommandManager.literal("version")
+          Commands.literal("ntm")
+            .then(Commands.literal("version")
               .executes(context -> version(context, environment)
               )
             )
-            .then(CommandManager.literal("config")
+            .then(Commands.literal("config")
               .requires(source -> allowCommands(source, environment))
-              .then(CommandManager.literal("common")
-                .then(CommandManager.literal("reload")
+              .then(Commands.literal("common")
+                .then(Commands.literal("reload")
                   .executes(context -> reloadConfig(context, NTMConfig.COMMON_CONFIG_FILE))
                 )
-                .then(CommandManager.literal("get")
-                  .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.COMMON_CONFIG_FILE))
+                .then(Commands.literal("get")
+                  .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMConfig.COMMON_CONFIG_FILE))
                     .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
                   )
                 )
-                .then(CommandManager.literal("set")
-                  .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.COMMON_CONFIG_FILE))
-                    .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                .then(Commands.literal("set")
+                  .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMConfig.COMMON_CONFIG_FILE))
+                    .then(Commands.argument("value", StringArgumentType.greedyString())
                       .executes(context -> trySetOption(context,
                           NTMConfig.COMMON_CONFIG_FILE,
                           ConfigOptionArgumentType.getOption(context, "option"),
@@ -82,18 +82,18 @@ public class NTMCommands {
                   )
                 )
               )
-              .then(CommandManager.literal("world-default")
-                .then(CommandManager.literal("reload")
+              .then(Commands.literal("world-default")
+                .then(Commands.literal("reload")
                   .executes(context -> reloadConfig(context, NTMConfig.WORLD_CONFIG.defaultConfig()))
                 )
-                .then(CommandManager.literal("get")
-                  .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::defaultConfig))
+                .then(Commands.literal("get")
+                  .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::defaultConfig))
                     .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
                   )
                 )
-                .then(CommandManager.literal("set")
-                  .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::defaultConfig))
-                    .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                .then(Commands.literal("set")
+                  .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::defaultConfig))
+                    .then(Commands.argument("value", StringArgumentType.greedyString())
                       .executes(context -> trySetOption(context,
                           NTMConfig.WORLD_CONFIG.defaultConfig(),
                           ConfigOptionArgumentType.getOption(context, "option"),
@@ -104,18 +104,18 @@ public class NTMCommands {
                   )
                 )
               )
-              .then(CommandManager.literal("world")
-                .then(CommandManager.literal("reload")
+              .then(Commands.literal("world")
+                .then(Commands.literal("reload")
                   .executes(context -> reloadConfig(context, Objects.requireNonNull(NTMConfig.WORLD_CONFIG.worldConfig())))
                 )
-                .then(CommandManager.literal("get")
-                  .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::worldConfig))
+                .then(Commands.literal("get")
+                  .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::worldConfig))
                     .executes(context -> getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
                   )
                 )
-                .then(CommandManager.literal("set")
-                  .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::worldConfig))
-                    .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                .then(Commands.literal("set")
+                  .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMConfig.WORLD_CONFIG::worldConfig))
+                    .then(Commands.argument("value", StringArgumentType.greedyString())
                       .executes(context -> trySetOption(context,
                           NTMConfig.WORLD_CONFIG.worldConfig(),
                           ConfigOptionArgumentType.getOption(context, "option"),
@@ -127,45 +127,45 @@ public class NTMCommands {
                 )
               )
             )
-            .then(CommandManager.literal("message")
+            .then(Commands.literal("message")
               .requires(source -> allowCommands(source, environment))
-              .then(CommandManager.argument("targets", EntityArgumentType.players())
-                .then(CommandManager.literal("send")
-                  .then(CommandManager.argument("text", TextArgumentType.text(registryAccess))
+              .then(Commands.argument("targets", EntityArgument.players())
+                .then(Commands.literal("send")
+                  .then(Commands.argument("text", ComponentArgument.textComponent(registryAccess))
                     .executes(context ->
                       sendMessage(context,
-                        EntityArgumentType.getPlayers(context, "targets"),
+                        EntityArgument.getPlayers(context, "targets"),
                         NTM.id("command_server"),
-                        context.getArgument("text", Text.class),
+                        context.getArgument("text", Component.class),
                         2000.0f))
-                    .then(CommandManager.argument("milliSeconds", FloatArgumentType.floatArg(0f, 10000f))
+                    .then(Commands.argument("milliSeconds", FloatArgumentType.floatArg(0f, 10000f))
                       .executes(context ->
                         sendMessage(context,
-                          EntityArgumentType.getPlayers(context, "targets"),
+                          EntityArgument.getPlayers(context, "targets"),
                           NTM.id("command_server"),
-                          context.getArgument("text", Text.class),
+                          context.getArgument("text", Component.class),
                           context.getArgument("milliSeconds", Float.class)
                         ))
-                      .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                      .then(Commands.argument("identifier", IdentifierArgument.id())
                         .executes(context ->
                           sendMessage(
                             context,
-                            EntityArgumentType.getPlayers(context, "targets"),
+                            EntityArgument.getPlayers(context, "targets"),
                             context.getArgument("identifier", Identifier.class),
-                            context.getArgument("text", Text.class),
+                            context.getArgument("text", Component.class),
                             context.getArgument("milliSeconds", Float.class)
                           ))
                       )
                     )
                   )
                 )
-                .then(CommandManager.literal("remove")
-                  .then(CommandManager.argument("identifier", IdentifierArgumentType.identifier())
-                    .executes(context -> removeMessage(context, EntityArgumentType.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
+                .then(Commands.literal("remove")
+                  .then(Commands.argument("identifier", IdentifierArgument.id())
+                    .executes(context -> removeMessage(context, EntityArgument.getPlayers(context, "targets"), context.getArgument("identifier", Identifier.class)))
                   )
                 )
-                .then(CommandManager.literal("remove_all")
-                  .executes(context -> removeAllMessages(context, EntityArgumentType.getPlayers(context, "targets")))
+                .then(Commands.literal("remove_all")
+                  .executes(context -> removeAllMessages(context, EntityArgument.getPlayers(context, "targets")))
                 )
               )
             )
@@ -173,48 +173,48 @@ public class NTMCommands {
 
         if (NTMConfig.DEV_MODE.getValue()) {
             CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-                CommandManager.literal("ntm")
-                  .then(CommandManager.literal("dev")
+                Commands.literal("ntm")
+                  .then(Commands.literal("dev")
                     .requires(source -> allowCommands(source, null)
                     )
-                    .then(CommandManager.literal("list_components")
+                    .then(Commands.literal("list_components")
                       .executes(context -> getDataComponents(context, 100))
-                      .then(CommandManager.argument("max_length", IntegerArgumentType.integer())
+                      .then(Commands.argument("max_length", IntegerArgumentType.integer())
                         .executes(context -> getDataComponents(context, context.getArgument("max_length", Integer.class)))
                       )
                     )
-                    .then(CommandManager.literal("clean_logs")
+                    .then(Commands.literal("clean_logs")
                       .executes(NTMCommands::deleteLogs)
                     )
-                    .then(CommandManager.literal("funny")
+                    .then(Commands.literal("funny")
                       .executes(NTMCommands::funny)
                     )
-                    .then(CommandManager.literal("set_dev_constant")
-                      .then(CommandManager.argument("bool", BoolArgumentType.bool())
+                    .then(Commands.literal("set_dev_constant")
+                      .then(Commands.argument("bool", BoolArgumentType.bool())
                         .executes(context -> setDevConstant(context, context.getArgument("bool", Boolean.class)))
                       )
                     )
-                    .then(CommandManager.literal("get_node_networks")
+                    .then(Commands.literal("get_node_networks")
                       .executes(NTMCommands::getNodeNetworks)
-                      .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
+                      .then(Commands.argument("type", IdentifierArgument.id())
                         .executes(context -> getNodeNetworks(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class))))
                       )
                     )
-                    .then(CommandManager.literal("node_network_info")
-                      .then(CommandManager.argument("type", IdentifierArgumentType.identifier())
-                        .then(CommandManager.argument("uuid", UuidArgumentType.uuid())
+                    .then(Commands.literal("node_network_info")
+                      .then(Commands.argument("type", IdentifierArgument.id())
+                        .then(Commands.argument("uuid", UuidArgument.uuid())
                           .executes(context -> getNodeNetworkInfo(context, NodeNetworkManager.getType(context.getArgument("type", Identifier.class)), context.getArgument("uuid", UUID.class)))
                         )
                       )
                     )
-                    .then(CommandManager.literal("give_all_effects")
+                    .then(Commands.literal("give_all_effects")
                       .executes(context -> giveAllEffects(context, List.of(Objects.requireNonNull(context.getSource().getEntity()))))
-                      .then(CommandManager.argument("target", EntityArgumentType.entities())
-                        .executes(context -> giveAllEffects(context, EntityArgumentType.getEntities(context, "target")))
+                      .then(Commands.argument("target", EntityArgument.entities())
+                        .executes(context -> giveAllEffects(context, EntityArgument.getEntities(context, "target")))
                       )
                     )
-                    .then(CommandManager.literal("set_energy")
-                      .then(CommandManager.argument("energy", LongArgumentType.longArg())
+                    .then(Commands.literal("set_energy")
+                      .then(Commands.argument("energy", LongArgumentType.longArg())
                         .executes(context -> setEnergy(context, context.getArgument("energy", Long.class)))
                       )
                     )
@@ -224,189 +224,189 @@ public class NTMCommands {
         }
     }
 
-    public static boolean allowCommands(ServerCommandSource source, @Nullable CommandManager.RegistrationEnvironment environment) {
-        if (environment != null && environment.integrated) return true;
-        return source.getPermissions().hasPermission(DefaultPermissions.MODERATORS);
+    public static boolean allowCommands(CommandSourceStack source, @Nullable Commands.CommandSelection environment) {
+        if (environment != null && environment.includeIntegrated) return true;
+        return source.permissions().hasPermission(Permissions.COMMANDS_MODERATOR);
     }
 
-    private static int version(CommandContext<ServerCommandSource> context, CommandManager.RegistrationEnvironment environment) {
-        if (environment.dedicated) {
-            context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version.server", NTM.METADATA.getVersion()), false);
+    private static int version(CommandContext<CommandSourceStack> context, Commands.CommandSelection environment) {
+        if (environment.includeDedicated) {
+            context.getSource().sendSuccess(() -> Component.translatableEscape("message.ntm.version.server", NTM.METADATA.getVersion()), false);
         }
-        if (environment.integrated) {
-            context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.version", NTM.METADATA.getVersion()), false);
+        if (environment.includeIntegrated) {
+            context.getSource().sendSuccess(() -> Component.translatableEscape("message.ntm.version", NTM.METADATA.getVersion()), false);
         }
         return 1;
     }
 
-    public static int reloadConfig(CommandContext<ServerCommandSource> context, ConfigFile file) {
-        context.getSource().sendFeedback(() -> Text.translatable("command.ntm.reload_configs", file.getSubPath()), true);
+    public static int reloadConfig(CommandContext<CommandSourceStack> context, ConfigFile file) {
+        context.getSource().sendSuccess(() -> Component.translatable("command.ntm.reload_configs", file.getSubPath()), true);
         file.readFile();
         return 1;
     }
 
-    public static <T> int getOptionInfo(CommandContext<ServerCommandSource> context, ConfigOption<T> option) {
+    public static <T> int getOptionInfo(CommandContext<CommandSourceStack> context, ConfigOption<T> option) {
         Codec<T> codec = option.getCodec();
         T defaultValue = option.getDefaultValue();
         T currentValue = option.getValue();
 
-        Text nameText = Text.translatable("command.ntm.get_option_info.name").formatted(Formatting.BLUE)
-          .append(Text.literal(option.getName()).formatted(Formatting.WHITE));
-        context.getSource().sendFeedback(() -> nameText, false);
+        Component nameText = Component.translatable("command.ntm.get_option_info.name").withStyle(ChatFormatting.BLUE)
+          .append(Component.literal(option.getName()).withStyle(ChatFormatting.WHITE));
+        context.getSource().sendSuccess(() -> nameText, false);
 
         if (option.getComment() != null) {
-            Text commentText = Text.translatable("command.ntm.get_option_info.comment").formatted(Formatting.YELLOW)
-              .append(Text.literal(option.getComment()).formatted(Formatting.WHITE));
-            context.getSource().sendFeedback(() -> commentText, false);
+            Component commentText = Component.translatable("command.ntm.get_option_info.comment").withStyle(ChatFormatting.YELLOW)
+              .append(Component.literal(option.getComment()).withStyle(ChatFormatting.WHITE));
+            context.getSource().sendSuccess(() -> commentText, false);
         }
 
-        Text defaultValueText = Text.translatable("command.ntm.get_option_info.default").formatted(Formatting.YELLOW)
-          .append(Text.literal(codec.encodeStart(JsonOps.INSTANCE, defaultValue).getOrThrow().toString()).formatted(Formatting.WHITE));
-        context.getSource().sendFeedback(() -> defaultValueText, false);
+        Component defaultValueText = Component.translatable("command.ntm.get_option_info.default").withStyle(ChatFormatting.YELLOW)
+          .append(Component.literal(codec.encodeStart(JsonOps.INSTANCE, defaultValue).getOrThrow().toString()).withStyle(ChatFormatting.WHITE));
+        context.getSource().sendSuccess(() -> defaultValueText, false);
 
-        Text currentValueText = Text.translatable("command.ntm.get_option_info.current_value").formatted(Formatting.YELLOW)
-          .append(Text.literal(codec.encodeStart(JsonOps.INSTANCE, currentValue).getOrThrow().toString()).formatted(Formatting.WHITE));
-        context.getSource().sendFeedback(() -> currentValueText, false);
+        Component currentValueText = Component.translatable("command.ntm.get_option_info.current_value").withStyle(ChatFormatting.YELLOW)
+          .append(Component.literal(codec.encodeStart(JsonOps.INSTANCE, currentValue).getOrThrow().toString()).withStyle(ChatFormatting.WHITE));
+        context.getSource().sendSuccess(() -> currentValueText, false);
         return 1;
     }
 
-    public static int trySetOption(CommandContext<ServerCommandSource> context, ConfigFile file, ConfigOption<?> option, String value) {
+    public static int trySetOption(CommandContext<CommandSourceStack> context, ConfigFile file, ConfigOption<?> option, String value) {
         JsonElement element;
         try {
             element = JsonParser.parseString(value);
         } catch (JsonSyntaxException exception) {
-            context.getSource().sendError(Text.translatable("command.ntm.set_config_value.invalid_json", value));
+            context.getSource().sendFailure(Component.translatable("command.ntm.set_config_value.invalid_json", value));
             return -2;
         }
 
         if (option.setValueFrom(element, JsonOps.INSTANCE)) {
-            context.getSource().sendFeedback(() -> Text.translatable("command.ntm.set_config_value", option.getName(), value), true);
+            context.getSource().sendSuccess(() -> Component.translatable("command.ntm.set_config_value", option.getName(), value), true);
             file.writeFile();
             return 1;
         }
 
-        context.getSource().sendError(Text.translatable("command.ntm.set_config_value.failed", option.getName(), value));
+        context.getSource().sendFailure(Component.translatable("command.ntm.set_config_value.failed", option.getName(), value));
         return -1;
     }
 
-    private static int removeMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier) {
-        for (ServerPlayerEntity player : targets) {
+    private static int removeMessage(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> targets, Identifier identifier) {
+        for (ServerPlayer player : targets) {
             ServerPlayNetworking.send(player, new RemoveMessagePayload(identifier));
         }
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.message.cleared_specific", identifier.toString(), targets.size()), true);
         return 1;
     }
 
-    private static int removeAllMessages(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets) {
-        for (ServerPlayerEntity player : targets) {
+    private static int removeAllMessages(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> targets) {
+        for (ServerPlayer player : targets) {
             ServerPlayNetworking.send(player, new RemoveAllMessagesPayload());
         }
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.cleared_all", targets.size()), true);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.message.cleared_all", targets.size()), true);
         return 1;
     }
 
-    private static int sendMessage(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, Identifier identifier, Text text, float millis) {
-        for (ServerPlayerEntity player : targets) {
+    private static int sendMessage(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> targets, Identifier identifier, Component text, float millis) {
+        for (ServerPlayer player : targets) {
             ServerPlayNetworking.send(player, new AdvancedMessagePayload(new AdvancedMessage(identifier, text, millis)));
         }
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.message.sent", targets.size()), true);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.message.sent", targets.size()), true);
         return 1;
     }
 
-    private static int funny(CommandContext<ServerCommandSource> context) {
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.the_funny"), false);
+    private static int funny(CommandContext<CommandSourceStack> context) {
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.the_funny"), false);
         // This doesn't actually do anything
         return 1;
     }
 
-    private static int setDevConstant(CommandContext<ServerCommandSource> context, boolean value) {
-        SharedConstants.isDevelopment = value;
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_dev_constant", value), false);
+    private static int setDevConstant(CommandContext<CommandSourceStack> context, boolean value) {
+        SharedConstants.IS_RUNNING_IN_IDE = value;
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.set_dev_constant", value), false);
         return 1;
     }
 
-    private static int giveAllEffects(CommandContext<ServerCommandSource> context, Collection<? extends Entity> targets) {
+    private static int giveAllEffects(CommandContext<CommandSourceStack> context, Collection<? extends Entity> targets) {
         int affectedTargets = 0;
         int immuneTargets = 0;
 
         for (Entity entity : targets) {
             if (entity instanceof LivingEntity livingEntity) {
                 affectedTargets++;
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.CONTAMINATED, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.EXPLOSION, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.LEAD_POISONING, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.PHOSPHORUS_BURNS, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.POTION_SICKNESS, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.RAD_AWAY, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.RAD_X, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.STABILITY, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINT, 30 * 20, 0, false, false, true));
-                livingEntity.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.TAINTED_HEART, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.ASTOLFIZATION, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.CONTAMINATED, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.EXPLOSION, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.LEAD_POISONING, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.PHOSPHORUS_BURNS, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.POTION_SICKNESS, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.RAD_AWAY, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.RAD_X, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.STABILITY, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.TAINT, 30 * 20, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(NTMStatusEffects.TAINTED_HEART, 30 * 20, 0, false, false, true));
             } else {
                 immuneTargets++;
             }
         }
 
         final int finalAffectedTargets = affectedTargets;
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.all_effects.affected_targets", finalAffectedTargets), true);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.all_effects.affected_targets", finalAffectedTargets), true);
         if (immuneTargets > 0) {
             final int finalImmuneTargets = immuneTargets;
-            context.getSource().sendFeedback(() -> Text.translatable("message.ntm.all_effects.immune_targets", finalImmuneTargets), true);
+            context.getSource().sendSuccess(() -> Component.translatable("message.ntm.all_effects.immune_targets", finalImmuneTargets), true);
         }
 
         return 1;
     }
 
-    private static int setEnergy(CommandContext<ServerCommandSource> context, long energy) {
-        if (!context.getSource().isExecutedByPlayer()) {
-            context.getSource().sendError(Text.literal("message.ntm.must_be_executed_by_player"));
+    private static int setEnergy(CommandContext<CommandSourceStack> context, long energy) {
+        if (!context.getSource().isPlayer()) {
+            context.getSource().sendFailure(Component.literal("message.ntm.must_be_executed_by_player"));
             return -2;
         }
-        ItemStack stack = Objects.requireNonNull(context.getSource().getPlayer()).getMainHandStack();
+        ItemStack stack = Objects.requireNonNull(context.getSource().getPlayer()).getMainHandItem();
 
         if (stack.getItem() instanceof EnergyContainingItem energyContainingItem) {
             energyContainingItem.setEnergy(stack, energy);
-            context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_energy.success", stack.getItem().getName(), energy), true);
+            context.getSource().sendSuccess(() -> Component.translatable("message.ntm.set_energy.success", stack.getItem().getName(), energy), true);
             return 1;
         } else {
-            context.getSource().sendFeedback(() -> Text.translatable("message.ntm.set_energy.fail", stack.getItem().getName()), true);
+            context.getSource().sendSuccess(() -> Component.translatable("message.ntm.set_energy.fail", stack.getItem().getName()), true);
             return -1;
         }
     }
 
-    private static int getNodeNetworkInfo(CommandContext<ServerCommandSource> context, NetworkType type, UUID networkID) {
+    private static int getNodeNetworkInfo(CommandContext<CommandSourceStack> context, NetworkType type, UUID networkID) {
         NodeNetwork network = type.getNetwork(networkID);
         if (network == null) {
-            context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.no_network").formatted(Formatting.RED), false);
+            context.getSource().sendSuccess(() -> Component.translatable("message.ntm.network_debug.no_network").withStyle(ChatFormatting.RED), false);
             return -1;
         }
 
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_name", Text.literal(network.ID.toString()).formatted(Formatting.WHITE)).formatted(Formatting.GOLD), false);
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.network_debug.node_count", Text.literal(String.valueOf(network.LOADED_NODES.size())).formatted(Formatting.WHITE)).formatted(Formatting.YELLOW), false);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.network_debug.network_name", Component.literal(network.ID.toString()).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.GOLD), false);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.network_debug.network_type", network.TYPE.getName().withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.network_debug.node_count", Component.literal(String.valueOf(network.LOADED_NODES.size())).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.YELLOW), false);
 
         return 1;
     }
 
-    private static int getNodeNetworks(CommandContext<ServerCommandSource> context) {
+    private static int getNodeNetworks(CommandContext<CommandSourceStack> context) {
         for (NetworkType type : NodeNetworkManager.getAllTypes()) {
-            context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.get_node_networks", type.getName(), type.getId()).append(Text.literal(" " + type.getAllNetworks().size())), false);
+            context.getSource().sendSuccess(() -> Component.translatableEscape("message.ntm.get_node_networks", type.getName(), type.getId()).append(Component.literal(" " + type.getAllNetworks().size())), false);
         }
         return 1;
     }
 
-    private static int getNodeNetworks(CommandContext<ServerCommandSource> context, NetworkType type) {
-        context.getSource().sendFeedback(() -> Text.stringifiedTranslatable("message.ntm.get_node_networks", type.getName(), type.getId()), false);
+    private static int getNodeNetworks(CommandContext<CommandSourceStack> context, NetworkType type) {
+        context.getSource().sendSuccess(() -> Component.translatableEscape("message.ntm.get_node_networks", type.getName(), type.getId()), false);
         for (NodeNetwork network : type.getAllNetworks()) {
-            context.getSource().sendFeedback(() -> Text.literal(network.ID.toString()), false);
+            context.getSource().sendSuccess(() -> Component.literal(network.ID.toString()), false);
         }
         return 1;
     }
 
-    private static int deleteLogs(CommandContext<ServerCommandSource> context) {
-        File[] logs = context.getSource().getServer().getPath("logs").toFile().listFiles();
+    private static int deleteLogs(CommandContext<CommandSourceStack> context) {
+        File[] logs = context.getSource().getServer().getFile("logs").toFile().listFiles();
         long files = 0;
         long data = 0;
         assert logs != null;
@@ -421,29 +421,29 @@ public class NTMCommands {
         }
         long finalFiles = files;
         long finalData = data;
-        context.getSource().sendFeedback(() -> Text.translatable("message.ntm.clean_logs", finalFiles, finalData), true);
+        context.getSource().sendSuccess(() -> Component.translatable("message.ntm.clean_logs", finalFiles, finalData), true);
         return 1;
     }
 
-    private static int getDataComponents(CommandContext<ServerCommandSource> context, int maxSize) {
-        PlayerEntity player = context.getSource().getPlayer();
-        if (player == null || player.getMainHandStack() == ItemStack.EMPTY) {
-            context.getSource().sendError(Text.translatable("message.ntm.get_components.could_not_get_item"));
+    private static int getDataComponents(CommandContext<CommandSourceStack> context, int maxSize) {
+        Player player = context.getSource().getPlayer();
+        if (player == null || player.getMainHandItem() == ItemStack.EMPTY) {
+            context.getSource().sendFailure(Component.translatable("message.ntm.get_components.could_not_get_item"));
             return -1;
         }
 
-        for (Component<?> component : player.getMainHandStack().getComponents()) {
+        for (TypedDataComponent<?> component : player.getMainHandItem().getComponents()) {
             String type = component.type().toString();
             String value = component.value().toString();
-            MutableText feedback = Text.literal("");
-            feedback.append(Text.literal(type + ": ").formatted(Formatting.YELLOW));
+            MutableComponent feedback = Component.literal("");
+            feedback.append(Component.literal(type + ": ").withStyle(ChatFormatting.YELLOW));
             if (value.length() > maxSize) {
-                feedback.append(Text.translatable("message.ntm.get_components.value_max_length").formatted(Formatting.GRAY));
-                context.getSource().sendFeedback(() -> feedback, false);
+                feedback.append(Component.translatable("message.ntm.get_components.value_max_length").withStyle(ChatFormatting.GRAY));
+                context.getSource().sendSuccess(() -> feedback, false);
                 continue;
             }
-            feedback.append(Text.literal(value).formatted(Formatting.WHITE));
-            context.getSource().sendFeedback(() -> feedback, false);
+            feedback.append(Component.literal(value).withStyle(ChatFormatting.WHITE));
+            context.getSource().sendSuccess(() -> feedback, false);
         }
         return 1;
     }

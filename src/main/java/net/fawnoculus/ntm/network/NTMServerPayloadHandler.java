@@ -12,9 +12,9 @@ import net.fawnoculus.ntm.network.c2s.ItemInteractionPayload;
 import net.fawnoculus.ntm.network.c2s.ToolAbilityPresetPayload;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
 import net.fawnoculus.ntm.util.WorldUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 public class NTMServerPayloadHandler {
     public static void initialize() {
@@ -24,32 +24,32 @@ public class NTMServerPayloadHandler {
     }
 
     private static void handleBEInteractionPayload(BEInteractionPayload payload, ServerPlayNetworking.Context context) {
-        ServerPlayerEntity player = context.player();
+        ServerPlayer player = context.player();
 
-        if (player.getEyePos().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.getBlockInteractionRange() + 1) {
+        if (player.getEyePosition().distanceTo(WorldUtil.getVec3d(payload.pos())) > player.blockInteractionRange() + 1) {
             if (NTMConfig.DEV_MODE.getValue()) {
-                NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away", player.getName().getLiteralString(), payload.action().toString(), payload.pos().toShortString());
+                NTM.LOGGER.warn("Player '{}' tried to use action '{}' on BE at '{}' but was to far away", player.getName().tryCollapseToString(), payload.action().toString(), payload.pos().toShortString());
             }
             return;
         }
 
-        ServerWorld world = player.getEntityWorld();
+        ServerLevel world = player.level();
         if (world.getBlockEntity(payload.pos()) instanceof InteractableBE interactableBE) {
             interactableBE.onInteraction(player, payload.action(), payload.extraData());
         }
     }
 
     private static void handleItemInteractionPayload(ItemInteractionPayload payload, ServerPlayNetworking.Context context) {
-        ServerPlayerEntity player = context.player();
+        ServerPlayer player = context.player();
 
-        if (player.getMainHandStack().getItem() instanceof InteractableItem interactableItem) {
-            interactableItem.onInteraction(player, player.getMainHandStack(), payload.action(), payload.extraData());
+        if (player.getMainHandItem().getItem() instanceof InteractableItem interactableItem) {
+            interactableItem.onInteraction(player, player.getMainHandItem(), payload.action(), payload.extraData());
         }
     }
 
     private static void handleToolAbilityPresetPayload(ToolAbilityPresetPayload payload, ServerPlayNetworking.Context context) {
-        ServerPlayerEntity player = context.player();
-        ItemStack stack = player.getMainHandStack();
+        ServerPlayer player = context.player();
+        ItemStack stack = player.getMainHandItem();
 
         if (stack.getItem() instanceof SpecialTool specialTool
           && specialTool.abilityHandler().verifyPresets(payload.stackData().presets())

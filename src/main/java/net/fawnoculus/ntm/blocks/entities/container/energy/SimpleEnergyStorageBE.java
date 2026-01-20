@@ -11,33 +11,33 @@ import net.fawnoculus.ntm.items.custom.container.energy.EnergyContainingItem;
 import net.fawnoculus.ntm.misc.stack.EnergyStack;
 import net.fawnoculus.ntm.network.s2c.BlockPosPayload;
 import net.fawnoculus.ntm.util.TextUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class SimpleEnergyStorageBE extends EnergyInventoryBE implements ExtendedScreenHandlerFactory<@NotNull BlockPosPayload>, InteractableBE {
-    public static final Text NAME = Text.translatable("container.ntm.energy_storage");
+    public static final Component NAME = Component.translatable("container.ntm.energy_storage");
 
     public static final int DISCHARGE_SLOT_INDEX = 0;
     public static final int CHARGE_SLOT_INDEX = 1;
     public static final Identifier CYCLE_POWERED_MODE = NTM.id("cycle_powered_mode");
     public static final Identifier CYCLE_UNPOWERED_MODE = NTM.id("cycle_unpowered_mode");
-    public final EnergyStack.Storage energy = new EnergyStack.Storage(this).setStorageMode(StorageMode.Consume).onChange(this::markDirty);
+    public final EnergyStack.Storage energy = new EnergyStack.Storage(this).setStorageMode(StorageMode.Consume).onChange(this::setChanged);
     public boolean isPowered = false;
     public StorageMode poweredMode = StorageMode.Provide;
     public StorageMode unpoweredMode = StorageMode.Consume;
@@ -49,18 +49,18 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
         super(NTMBlockEntities.SIMPLE_ENERGY_STORAGE_BE, pos, state, 2);
     }
 
-    public static void tick(World ignored, BlockPos ignored2, BlockState ignored3, @NotNull SimpleEnergyStorageBE entity) {
+    public static void tick(Level ignored, BlockPos ignored2, BlockState ignored3, @NotNull SimpleEnergyStorageBE entity) {
         entity.processBatteries();
         entity.updateEnergyChange();
-        entity.markDirty();
+        entity.setChanged();
     }
 
     private void processBatteries() {
-        ItemStack dischargeStack = getStack(DISCHARGE_SLOT_INDEX);
+        ItemStack dischargeStack = getItem(DISCHARGE_SLOT_INDEX);
         if (dischargeStack.getItem() instanceof EnergyContainingItem energyContainingItem) {
             energyContainingItem.discharge(dischargeStack, this.energy);
         }
-        ItemStack chargeStack = getStack(CHARGE_SLOT_INDEX);
+        ItemStack chargeStack = getItem(CHARGE_SLOT_INDEX);
         if (chargeStack.getItem() instanceof EnergyContainingItem energyContainingItem) {
             energyContainingItem.charge(chargeStack, this.energy);
         }
@@ -77,8 +77,8 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     }
 
     public void onBlockUpdate() {
-        if (this.world != null) {
-            boolean isNowPowered = this.world.getReceivedRedstonePower(this.pos) > 0;
+        if (this.level != null) {
+            boolean isNowPowered = this.level.getBestNeighborSignal(this.worldPosition) > 0;
             if (isNowPowered == isPowered) return;
 
             if (isNowPowered) {
@@ -91,17 +91,17 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
         }
     }
 
-    public Text getEnergyPerSec() {
+    public Component getEnergyPerSec() {
         OptionalDouble optional = Arrays.stream(energyChange).average();
         long energyPerSec = (long) optional.orElse(0);
         if (energyPerSec < 0) {
-            return TextUtil.unit(energyPerSec, "generic.ntm.energy_s").formatted(Formatting.RED);
+            return TextUtil.unit(energyPerSec, "generic.ntm.energy_s").withStyle(ChatFormatting.RED);
         }
 
-        Formatting formatting = Formatting.YELLOW;
-        if (energyPerSec > 0) formatting = Formatting.GREEN;
+        ChatFormatting formatting = ChatFormatting.YELLOW;
+        if (energyPerSec > 0) formatting = ChatFormatting.GREEN;
 
-        return Text.literal("+").append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).formatted(formatting);
+        return Component.literal("+").append(TextUtil.unit(energyPerSec, "generic.ntm.energy_s")).withStyle(formatting);
     }
 
     @Override
@@ -110,15 +110,15 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         this.energy.readData(view);
 
         view.read("powered_mode", StorageMode.CODEC).ifPresent(mode -> this.poweredMode = mode);
         view.read("unpowered_mode", StorageMode.CODEC).ifPresent(mode -> this.unpoweredMode = mode);
-        this.isPowered = view.getBoolean("is_powered", false);
+        this.isPowered = view.getBooleanOr("is_powered", false);
         this.energyChangeIndex = Math.clamp(
-          view.getInt("energy_change_index", 0), 0, energyChange.length - 1
+          view.getIntOr("energy_change_index", 0), 0, energyChange.length - 1
         );
 
         Optional<long[]> optional = view.getOptionalLongArray("energy_change");
@@ -128,35 +128,35 @@ public class SimpleEnergyStorageBE extends EnergyInventoryBE implements Extended
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        view.put("powered_mode", StorageMode.CODEC, this.poweredMode);
-        view.put("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
+    protected void saveAdditional(ValueOutput view) {
+        view.store("powered_mode", StorageMode.CODEC, this.poweredMode);
+        view.store("unpowered_mode", StorageMode.CODEC, this.unpoweredMode);
         view.putBoolean("is_powered", this.isPowered);
         view.putInt("energy_change_index", this.energyChangeIndex);
         view.putLongArray("energy_change", energyChange);
 
         this.energy.writeData(view);
 
-        super.writeData(view);
+        super.saveAdditional(view);
     }
 
     @Override
-    public BlockPosPayload getScreenOpeningData(@NotNull ServerPlayerEntity player) {
-        return new BlockPosPayload(this.pos);
+    public BlockPosPayload getScreenOpeningData(@NotNull ServerPlayer player) {
+        return new BlockPosPayload(this.worldPosition);
     }
 
     @Override
-    public Text getDisplayName() {
+    public Component getDisplayName() {
         return NAME;
     }
 
     @Override
-    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory playerInventory, Player player) {
         return new EnergyStorageScreenHandler(syncId, playerInventory, this);
     }
 
     @Override
-    public void onInteraction(ServerPlayerEntity source, Identifier action, NbtCompound extraData) {
+    public void onInteraction(ServerPlayer source, Identifier action, CompoundTag extraData) {
         if (action.equals(CYCLE_POWERED_MODE)) {
             if (this.isPowered) {
                 this.energy.setStorageMode(this.poweredMode.cycle());

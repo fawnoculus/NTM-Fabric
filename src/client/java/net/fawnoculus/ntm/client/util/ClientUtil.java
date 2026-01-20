@@ -1,26 +1,26 @@
 package net.fawnoculus.ntm.client.util;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SoundInstance;
 
 public class ClientUtil {
-    public static MinecraftClient getClient() {
-        return MinecraftClient.getInstance();
+    public static Minecraft getClient() {
+        return Minecraft.getInstance();
     }
 
-    public static ClientPlayerEntity getPlayer() {
+    public static LocalPlayer getPlayer() {
         return getClient().player;
     }
 
-    public static ClientWorld getWorld() {
-        return getClient().world;
+    public static ClientLevel getWorld() {
+        return getClient().level;
     }
 
-    public static TextRenderer getTextRenderer() {
-        return getClient().textRenderer;
+    public static Font getTextRenderer() {
+        return getClient().font;
     }
 
     public static void playSound(SoundInstance sound) {

@@ -1,30 +1,30 @@
 package net.fawnoculus.ntm.gui.slots;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.FuelRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.FuelValues;
 
 public class ItemFuelSlot extends Slot {
-    final FuelRegistry FUEL_REGISTRY;
+    final FuelValues FUEL_REGISTRY;
 
-    public ItemFuelSlot(FuelRegistry fuelRegistry, Inventory inventory, int index, int x, int y) {
+    public ItemFuelSlot(FuelValues fuelRegistry, Container inventory, int index, int x, int y) {
         super(inventory, index, x, y);
         this.FUEL_REGISTRY = fuelRegistry;
     }
 
     public static boolean isBucket(ItemStack stack) {
-        return stack.isOf(Items.BUCKET);
+        return stack.is(Items.BUCKET);
     }
 
     @Override
-    public boolean canInsert(ItemStack stack) {
+    public boolean mayPlace(ItemStack stack) {
         return this.FUEL_REGISTRY.isFuel(stack) || isBucket(stack);
     }
 
     @Override
-    public int getMaxItemCount(ItemStack stack) {
-        return isBucket(stack) ? 1 : super.getMaxItemCount(stack);
+    public int getMaxStackSize(ItemStack stack) {
+        return isBucket(stack) ? 1 : super.getMaxStackSize(stack);
     }
 }

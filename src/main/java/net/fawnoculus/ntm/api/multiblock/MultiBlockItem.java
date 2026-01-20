@@ -1,14 +1,14 @@
 package net.fawnoculus.ntm.api.multiblock;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class MultiBlockItem extends BlockItem {
     private final MultiBlock MULTI_BLOCK;
 
-    public MultiBlockItem(Block block, Settings settings) {
+    public MultiBlockItem(Block block, Properties settings) {
         super(block, settings);
 
         if (block instanceof MultiBlockOrigin origin) {
@@ -18,21 +18,21 @@ public class MultiBlockItem extends BlockItem {
         }
     }
 
-    public MultiBlockItem(Block block, Settings settings, MultiBlock multiBlock) {
+    public MultiBlockItem(Block block, Properties settings, MultiBlock multiBlock) {
         super(block, settings);
 
         this.MULTI_BLOCK = multiBlock;
     }
 
     @Override
-    protected boolean canPlace(ItemPlacementContext context, BlockState state) {
+    protected boolean canPlace(BlockPlaceContext context, BlockState state) {
         return super.canPlace(context, state)
-          && MULTI_BLOCK.canPlaceAt(context.getWorld(), context.getBlockPos(), context.getHorizontalPlayerFacing());
+          && MULTI_BLOCK.canPlaceAt(context.getLevel(), context.getClickedPos(), context.getHorizontalDirection());
     }
 
     @Override
-    protected boolean place(ItemPlacementContext context, BlockState state) {
-        MULTI_BLOCK.placeAt(context.getWorld(), context.getBlockPos(), context.getHorizontalPlayerFacing());
-        return super.place(context, state);
+    protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
+        MULTI_BLOCK.placeAt(context.getLevel(), context.getClickedPos(), context.getHorizontalDirection());
+        return super.placeBlock(context, state);
     }
 }

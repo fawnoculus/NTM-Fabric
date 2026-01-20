@@ -5,20 +5,20 @@ import net.fawnoculus.ntm.api.tool.ItemAbility;
 import net.fawnoculus.ntm.client.gui.screen.ToolAbilityCustomizationScreen.ModifiablePreset;
 import net.fawnoculus.ntm.client.util.ClientUtil;
 import net.fawnoculus.ntm.misc.NTMSounds;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundManager;
-import net.minecraft.util.Colors;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.CommonColors;
 import org.jetbrains.annotations.Range;
 
 import java.util.List;
 
-public class ToolAbilityWidget extends ClickableWidget {
+public class ToolAbilityWidget extends AbstractWidget {
     private static final int WIDTH = 16;
     private static final int HEIGHT = 16;
     private static final int TEXTURE_WIDTH = 16;
@@ -50,17 +50,17 @@ public class ToolAbilityWidget extends ClickableWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    protected void renderWidget(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
         if (this.isHovered()) {
-            context.drawStrokedRectangle(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.GRAY);
+            context.renderOutline(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, CommonColors.GRAY);
         }
 
         if (this.currentLevel >= 0) {
-            context.drawStrokedRectangle(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, Colors.WHITE);
+            context.renderOutline(this.getX() - 1, this.getY() - 1, this.getWidth() + 2, this.getHeight() + 2, CommonColors.WHITE);
         }
 
         if (this.ABILITY.maxLevel() > 1) {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.GUI_TEXTURED,
               LEVEL_TEXTURE,
               this.getX() + WIDTH + 1, this.getY() + 1,
@@ -71,7 +71,7 @@ public class ToolAbilityWidget extends ClickableWidget {
         }
 
         if (this.isDisabled) {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.GUI_TEXTURED,
               this.ABILITY.getDisabledTexture(),
               this.getX(), this.getY(),
@@ -80,7 +80,7 @@ public class ToolAbilityWidget extends ClickableWidget {
               TEXTURE_WIDTH, TEXTURE_HEIGHT
             );
         } else {
-            context.drawTexture(
+            context.blit(
               RenderPipelines.GUI_TEXTURED,
               this.ABILITY.getEnabledTexture(),
               this.getX(), this.getY(),
@@ -92,7 +92,7 @@ public class ToolAbilityWidget extends ClickableWidget {
     }
 
     @Override
-    protected void appendClickableNarrations(NarrationMessageBuilder builder) {
+    protected void updateWidgetNarration(NarrationElementOutput builder) {
     }
 
     public void setLevel(int level) {
@@ -153,7 +153,7 @@ public class ToolAbilityWidget extends ClickableWidget {
     }
 
     @Override
-    public void onClick(Click click, boolean doubled) {
+    public void onClick(MouseButtonEvent click, boolean doubled) {
         if (this.isDisabled) return;
 
         int previousLevel = currentLevel;
@@ -167,7 +167,7 @@ public class ToolAbilityWidget extends ClickableWidget {
         }
 
         if (previousLevel != currentLevel) {
-            ClientUtil.playSound(PositionedSoundInstance.ui(NTMSounds.TECH_BOOP, 2));
+            ClientUtil.playSound(SimpleSoundInstance.forUI(NTMSounds.TECH_BOOP, 2));
         }
     }
 }

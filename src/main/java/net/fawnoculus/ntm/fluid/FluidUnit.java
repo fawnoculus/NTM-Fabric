@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.fluid;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fawnoculus.ntm.NTMConfig;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public enum FluidUnit {
     BUCKET(FluidConstants.BUCKET),
@@ -43,18 +43,18 @@ public enum FluidUnit {
         return droplets / MILLI_BUCKET.DROPLETS;
     }
 
-    public static MutableText text(long droplets) {
+    public static MutableComponent text(long droplets) {
         if (NTMConfig.FLUID_UNIT.getValue() == NTMConfig.FluidUnit.Droplets) {
             return textDroplets(droplets);
         }
         return textMB(droplets);
     }
 
-    public static MutableText textMB(long droplets) {
-        return Text.translatable("generic.ntm.fluid.mb", String.format("%,d", droplets));
+    public static MutableComponent textMB(long droplets) {
+        return Component.translatable("generic.ntm.fluid.mb", String.format("%,d", droplets));
     }
 
-    public static MutableText textDroplets(long droplets) {
-        return Text.translatable("generic.ntm.fluid.droplets", String.format("%,d", droplets));
+    public static MutableComponent textDroplets(long droplets) {
+        return Component.translatable("generic.ntm.fluid.droplets", String.format("%,d", droplets));
     }
 }

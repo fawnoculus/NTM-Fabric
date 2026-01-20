@@ -1,18 +1,18 @@
 package net.fawnoculus.ntm.entity;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageType;
 
 public class NTMDamageTypes {
-    public static final RegistryKey<DamageType> EUTHANIZED = of("euthanized");
-    public static final RegistryKey<DamageType> BLOOD_LOSS = of("blood_loss");
-    public static final RegistryKey<DamageType> LEAD_POISONING = of("lead_poisoning");
-    public static final RegistryKey<DamageType> RADIATION = of("radiation");
+    public static final ResourceKey<DamageType> EUTHANIZED = of("euthanized");
+    public static final ResourceKey<DamageType> BLOOD_LOSS = of("blood_loss");
+    public static final ResourceKey<DamageType> LEAD_POISONING = of("lead_poisoning");
+    public static final ResourceKey<DamageType> RADIATION = of("radiation");
 
-    private static RegistryKey<DamageType> of(String name) {
-        return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, NTM.id(name));
+    private static ResourceKey<DamageType> of(String name) {
+        return ResourceKey.create(Registries.DAMAGE_TYPE, NTM.id(name));
     }
 
     public static void initialize() {

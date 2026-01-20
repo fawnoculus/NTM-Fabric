@@ -3,13 +3,13 @@ package net.fawnoculus.ntm.client.datagen.loot;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider;
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
 public class NTMEntityLootProvider extends FabricEntityLootTableProvider {
-    public NTMEntityLootProvider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public NTMEntityLootProvider(FabricDataOutput output, @NotNull CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup);
     }
 

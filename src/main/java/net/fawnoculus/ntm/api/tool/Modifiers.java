@@ -6,21 +6,21 @@ import net.fawnoculus.ntm.entity.NTMStatusEffects;
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.misc.NTMSounds;
 import net.fawnoculus.ntm.util.EntityUtil;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ProfileComponent;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ResolvableProfile;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Range;
 
 public abstract class Modifiers {
@@ -30,33 +30,33 @@ public abstract class Modifiers {
     public static final ItemModifier DECAPITATOR = new ItemModifier(NTM.id("decapitator")) {
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            if (target.getHealth() > 0 || !(target.getEntityWorld() instanceof ServerWorld serverWorld)) {
+            if (target.getHealth() > 0 || !(target.level() instanceof ServerLevel serverWorld)) {
                 return;
             }
 
             if (target.getType() == EntityType.ZOMBIE) {
-                target.dropStack(serverWorld, new ItemStack(Items.ZOMBIE_HEAD));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.ZOMBIE_HEAD));
             } else if (target.getType() == EntityType.SKELETON) {
-                target.dropStack(serverWorld, new ItemStack(Items.SKELETON_SKULL));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.SKELETON_SKULL));
             } else if (target.getType() == EntityType.CREEPER) {
-                target.dropStack(serverWorld, new ItemStack(Items.CREEPER_HEAD));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.CREEPER_HEAD));
             } else if (target.getType() == EntityType.MAGMA_CUBE) {
-                target.dropStack(serverWorld, new ItemStack(Items.MAGMA_CREAM, 3));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.MAGMA_CREAM, 3));
             } else if (target.getType() == EntityType.SLIME) {
-                target.dropStack(serverWorld, new ItemStack(Items.SLIME_BALL, 3));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.SLIME_BALL, 3));
             } else if (target.getType() == EntityType.WITHER_SKELETON) {
                 if (target.getRandom().nextInt(20) == 0) {
-                    target.dropStack(serverWorld, new ItemStack(Items.WITHER_SKELETON_SKULL));
+                    target.spawnAtLocation(serverWorld, new ItemStack(Items.WITHER_SKELETON_SKULL));
                 } else {
-                    target.dropStack(serverWorld, new ItemStack(Items.COAL, 3));
+                    target.spawnAtLocation(serverWorld, new ItemStack(Items.COAL, 3));
                 }
-            } else if (target instanceof PlayerEntity targetPlayer) {
+            } else if (target instanceof Player targetPlayer) {
                 ItemStack head = new ItemStack(Items.PLAYER_HEAD);
-                head.set(DataComponentTypes.PROFILE, ProfileComponent.ofDynamic(targetPlayer.getGameProfile().id()));
-                target.dropStack(serverWorld, head);
+                head.set(DataComponents.PROFILE, ResolvableProfile.createUnresolved(targetPlayer.getGameProfile().id()));
+                target.spawnAtLocation(serverWorld, head);
             } else {
-                target.dropStack(serverWorld, new ItemStack(Items.ROTTEN_FLESH, 3));
-                target.dropStack(serverWorld, new ItemStack(Items.BONE, 2));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.ROTTEN_FLESH, 3));
+                target.spawnAtLocation(serverWorld, new ItemStack(Items.BONE, 2));
             }
         }
     };
@@ -92,8 +92,8 @@ public abstract class Modifiers {
     public static final ItemModifier STUNNING = new ItemModifier(NTM.id("stunning")) {
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, level * 20, 4, false, false), attacker);
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, level * 20, 4, false, false), attacker);
+            target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, level * 20, 4, false, false), attacker);
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, level * 20, 4, false, false), attacker);
         }
     };
 
@@ -105,8 +105,8 @@ public abstract class Modifiers {
     public static final ItemModifier FLAMING = new ItemModifier(NTM.id("flaming")) {
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            if (target.getFireTicks() < level * 20) {
-                target.setFireTicks(level * 20);
+            if (target.getRemainingFireTicks() < level * 20) {
+                target.setRemainingFireTicks(level * 20);
             }
         }
     };
@@ -119,7 +119,7 @@ public abstract class Modifiers {
     public static final ItemModifier PHOSPHORUS_TIP = new ItemModifier(NTM.id("phosphorus_tip")) {
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            target.addStatusEffect(new StatusEffectInstance(NTMStatusEffects.PHOSPHORUS_BURNS, level * 20, 0, false, false, true));
+            target.addEffect(new MobEffectInstance(NTMStatusEffects.PHOSPHORUS_BURNS, level * 20, 0, false, false, true));
         }
     };
 
@@ -128,15 +128,15 @@ public abstract class Modifiers {
      */
     public static final ItemModifier VAMPIRE = new ItemModifier(NTM.id("vampire")) {
         @Override
-        public MutableText getLevelText(int level) {
-            return Text.literal("(" + level + ".0)");
+        public MutableComponent getLevelText(int level) {
+            return Component.literal("(" + level + ".0)");
         }
 
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
             target.setHealth(target.getHealth() - level);
             if (target.getHealth() <= 0) {
-                target.onDeath(EntityUtil.newDamageSource(target.getEntityWorld(), DamageTypes.MAGIC));
+                target.die(EntityUtil.newDamageSource(target.level(), DamageTypes.MAGIC));
             }
             attacker.heal(level);
         }
@@ -147,8 +147,8 @@ public abstract class Modifiers {
      */
     public static final ItemModifier RADIOACTIVE_BLADE = new ItemModifier(NTM.id("radioactive_blade")) {
         @Override
-        public MutableText getLevelText(int level) {
-            return Text.literal("(" + level + ".0)");
+        public MutableComponent getLevelText(int level) {
+            return Component.literal("(" + level + ".0)");
         }
 
         @Override
@@ -163,29 +163,29 @@ public abstract class Modifiers {
     public static ItemModifier PAIN_SAW = new ItemModifier(NTM.id("pain_saw")) {
 
         @Override
-        public MutableText getLevelText(@Range(from = 0, to = 10) int level) {
-            return Text.literal("(1:" + level + ")");
+        public MutableComponent getLevelText(@Range(from = 0, to = 10) int level) {
+            return Component.literal("(1:" + level + ")");
         }
 
         @Override
         public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker, int level) {
-            if (!(target.getEntityWorld() instanceof ServerWorld serverWorld)) return;
+            if (!(target.level() instanceof ServerLevel serverWorld)) return;
 
             if (target.getHealth() <= 0.0F) {
                 int count = Math.min((int) Math.ceil(target.getMaxHealth() / level), 250);
 
                 for (int i = 0; i < count; i++) {
-                    target.dropItem(serverWorld, NTMItems.FOOD_ITEM);
-                    serverWorld.spawnEntity(new ExperienceOrbEntity(serverWorld, target.getEntityPos(), Vec3d.ZERO, 1));
+                    target.spawnAtLocation(serverWorld, NTMItems.FOOD_ITEM);
+                    serverWorld.addFreshEntity(new ExperienceOrb(serverWorld, target.position(), Vec3.ZERO, 1));
                 }
 
                 // TODO: Blood Particles
 
-                target.playSound(NTMSounds.PAIN_SAW);
+                target.makeSound(NTMSounds.PAIN_SAW);
             }
-            if (target.getEntityWorld() instanceof ServerWorld world) {
-                int count = world.getRandom().nextBetween(1, level);
-                target.dropStack(world, new ItemStack(NTMItems.NITRA, count));
+            if (target.level() instanceof ServerLevel world) {
+                int count = world.getRandom().nextIntBetweenInclusive(1, level);
+                target.spawnAtLocation(world, new ItemStack(NTMItems.NITRA, count));
             }
         }
     };

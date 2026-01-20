@@ -4,10 +4,10 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.node.network.NetworkType;
 import net.fawnoculus.ntm.api.node.network.NodeNetwork;
 import net.fawnoculus.ntm.util.ExceptionUtil;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -30,7 +30,7 @@ public interface Node {
 
     BlockPos getPos();
 
-    World getWorld();
+    Level getWorld();
 
     /**
      * this can be overwritten to allow a node to connect to things that are not directly next to itself
@@ -38,12 +38,12 @@ public interface Node {
      * @return a List of all Nodes this Node is connected to
      */
     default List<Node> getConnectedNodes() {
-        World world = this.getWorld();
+        Level world = this.getWorld();
         assert world != null;
         BlockPos pos = this.getPos();
         List<Node> nodes = new ArrayList<>();
-        nodes.addAll(this.checkForNode(world.getBlockEntity(pos.up())));
-        nodes.addAll(this.checkForNode(world.getBlockEntity(pos.down())));
+        nodes.addAll(this.checkForNode(world.getBlockEntity(pos.above())));
+        nodes.addAll(this.checkForNode(world.getBlockEntity(pos.below())));
         nodes.addAll(this.checkForNode(world.getBlockEntity(pos.north())));
         nodes.addAll(this.checkForNode(world.getBlockEntity(pos.east())));
         nodes.addAll(this.checkForNode(world.getBlockEntity(pos.south())));
@@ -111,20 +111,20 @@ public interface Node {
         return node.getNetworkType() == this.getNetworkType();
     }
 
-    default void writeNodeData(WriteView view) {
+    default void writeNodeData(ValueOutput view) {
         if (this.getNetwork() != null) {
             view.putString("network", this.getNetwork().ID.toString());
         }
     }
 
-    default void readNodeData(ReadView view) {
-        if (this.getWorld() != null && this.getWorld().isClient()) {
+    default void readNodeData(ValueInput view) {
+        if (this.getWorld() != null && this.getWorld().isClientSide()) {
             return;
         }
 
 
         try {
-            UUID uuid = UUID.fromString(view.getString("network", null));
+            UUID uuid = UUID.fromString(view.getStringOr("network", null));
             NodeNetwork network = this.getNetworkType().getNetwork(uuid);
             this.setNetwork(network);
             if (!network.containsNode(this)) {
@@ -136,7 +136,7 @@ public interface Node {
 
     default void onSetWorld() {
         this.setShouldAssignNetwork(true);
-        if (this.getWorld().isClient()) {
+        if (this.getWorld().isClientSide()) {
             return;
         }
         if (this.getNetwork() == null) {

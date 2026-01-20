@@ -10,16 +10,16 @@ import net.fawnoculus.ntm.client.gui.widget.ToolAbilityWidget;
 import net.fawnoculus.ntm.client.util.ClientUtil;
 import net.fawnoculus.ntm.client.util.RenderUtil;
 import net.fawnoculus.ntm.network.c2s.ToolAbilityPresetPayload;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.input.KeyInput;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Colors;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.CommonColors;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Range;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
     private int y = 0;
 
     public ToolAbilityCustomizationScreen(SpecialTool specialTool, ItemStack stack) {
-        super(Text.translatable("screen.ntm.tool_abilities"));
+        super(Component.translatable("screen.ntm.tool_abilities"));
 
         this.TOOL = specialTool;
         this.ABILITY_HANDLER = specialTool.abilityHandler();
@@ -53,26 +53,26 @@ public class ToolAbilityCustomizationScreen extends Screen {
         this.presetIndex = stackData.selectedPreset();
 
 
-        if (ClientUtil.getPlayer().getMainHandStack() != stack || stack.getItem() != TOOL) {
-            this.close();
+        if (ClientUtil.getPlayer().getMainHandItem() != stack || stack.getItem() != TOOL) {
+            this.onClose();
         }
     }
 
     @Override
-    protected void clearChildren() {
-        super.clearChildren();
+    protected void clearWidgets() {
+        super.clearWidgets();
         this.TOP_ABILITIES.clear();
         this.BOTTOM_ABILITIES.clear();
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
     @Override
-    public void close() {
-        super.close();
+    public void onClose() {
+        super.onClose();
         if (this.sendPacketOnClose) {
             ClientPlayNetworking.send(new ToolAbilityPresetPayload(
               new AbilityHandler.StackData(this.PRESETS.stream().map(ModifiablePreset::toRegularPreset).toList(), this.presetIndex)
@@ -93,14 +93,14 @@ public class ToolAbilityCustomizationScreen extends Screen {
         this.x = (this.width - BACKGROUND_WIDTH) / 2;
         this.y = (this.height - BACKGROUND_HEIGHT) / 2;
 
-        List<Text> names = List.of(
-          Text.translatable("tooltip.ntm.ability.gui.reset_presets"),
-          Text.translatable("tooltip.ntm.ability.gui.delete_current"),
-          Text.translatable("tooltip.ntm.ability.gui.add_new"),
-          Text.translatable("tooltip.ntm.ability.gui.select_first"),
-          Text.translatable("tooltip.ntm.ability.gui.next"),
-          Text.translatable("tooltip.ntm.ability.gui.previous"),
-          Text.translatable("tooltip.ntm.ability.gui.close_gui")
+        List<Component> names = List.of(
+          Component.translatable("tooltip.ntm.ability.gui.reset_presets"),
+          Component.translatable("tooltip.ntm.ability.gui.delete_current"),
+          Component.translatable("tooltip.ntm.ability.gui.add_new"),
+          Component.translatable("tooltip.ntm.ability.gui.select_first"),
+          Component.translatable("tooltip.ntm.ability.gui.next"),
+          Component.translatable("tooltip.ntm.ability.gui.previous"),
+          Component.translatable("tooltip.ntm.ability.gui.close_gui")
         );
         List<Runnable> onPressed = List.of(
           this::resetPresets,
@@ -109,7 +109,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
           this::selectFirst,
           this::selectNext,
           this::selectPrevious,
-          this::close
+          this::onClose
         );
 
         int widgetX = this.x + BACKGROUND_WIDTH - 86;
@@ -117,7 +117,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
         int widgetU = 100;
         int widgetV = 91;
         for (int i = 0; i < names.size(); i++) {
-            this.addDrawableChild(
+            this.addRenderableWidget(
               new HoverButtonWidget(
                 widgetX, widgetY,
                 9, 9,
@@ -137,7 +137,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
         for (ItemAbility ability : ItemAbility.TOP_ABILITIES) {
             ToolAbilityWidget widget = new ToolAbilityWidget(widgetX, widgetY, ability, TOOL.abilityHandler().getMaxLevel(ability), false, TOP_ABILITIES, BOTTOM_ABILITIES);
             this.TOP_ABILITIES.add(widget);
-            this.addDrawableChild(widget);
+            this.addRenderableWidget(widget);
             widgetX += 20;
         }
 
@@ -146,7 +146,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
         for (ItemAbility ability : ItemAbility.BOTTOM_ABILITIES) {
             ToolAbilityWidget widget = new ToolAbilityWidget(widgetX, widgetY, ability, TOOL.abilityHandler().getMaxLevel(ability), true, BOTTOM_ABILITIES, TOP_ABILITIES);
             this.BOTTOM_ABILITIES.add(widget);
-            this.addDrawableChild(widget);
+            this.addRenderableWidget(widget);
             widgetX += 20;
         }
 
@@ -174,24 +174,24 @@ public class ToolAbilityCustomizationScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(KeyInput input) {
-        if (this.client != null) {
-            if (this.client.options.inventoryKey.matchesKey(input)) {
-                this.close();
+    public boolean keyPressed(KeyEvent input) {
+        if (this.minecraft != null) {
+            if (this.minecraft.options.keyInventory.matches(input)) {
+                this.onClose();
             }
         }
         return super.keyPressed(input);
     }
 
     @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    public void renderBackground(GuiGraphics context, int mouseX, int mouseY, float deltaTicks) {
         super.renderBackground(context, mouseX, mouseY, deltaTicks);
-        if (this.client == null
-          || this.client.player == null
-          || this.client.player.getMainHandStack().getItem() != TOOL
+        if (this.minecraft == null
+          || this.minecraft.player == null
+          || this.minecraft.player.getMainHandItem().getItem() != TOOL
         ) {
             this.sendPacketOnClose = false;
-            this.close();
+            this.onClose();
             return;
         }
 
@@ -204,10 +204,10 @@ public class ToolAbilityCustomizationScreen extends Screen {
           TEXTURE_WIDTH, TEXTURE_HEIGHT
         );
 
-        Optional<Element> optional = this.hoveredElement(mouseX, mouseY);
-        if (optional.isPresent() && optional.get() instanceof ClickableWidget widget) {
-            Text message = widget.getMessage();
-            int messageWidth = Math.max(6, this.textRenderer.getWidth(message));
+        Optional<GuiEventListener> optional = this.getChildAt(mouseX, mouseY);
+        if (optional.isPresent() && optional.get() instanceof AbstractWidget widget) {
+            Component message = widget.getMessage();
+            int messageWidth = Math.max(6, this.font.width(message));
             int messageX = this.x + (this.BACKGROUND_WIDTH / 2) - (messageWidth / 2);
             int messageY = this.y + this.BACKGROUND_HEIGHT + 5;
             RenderUtil.drawVariableWidthRect(
@@ -218,7 +218,7 @@ public class ToolAbilityCustomizationScreen extends Screen {
               186, 3, 3,
               TEXTURE_WIDTH, TEXTURE_HEIGHT
             );
-            context.drawText(this.textRenderer, message, messageX, messageY, Colors.WHITE, false);
+            context.drawString(this.font, message, messageX, messageY, CommonColors.WHITE, false);
         }
 
         renderDigit(context, this.x + BACKGROUND_WIDTH - 71, this.y + 25, ((this.presetIndex + 1) / 10) % 10);
@@ -227,8 +227,8 @@ public class ToolAbilityCustomizationScreen extends Screen {
         renderDigit(context, this.x + BACKGROUND_WIDTH - 25, this.y + 25, this.PRESETS.size() % 10);
     }
 
-    public void renderDigit(DrawContext context, int x, int y, @Range(from = 0, to = 9) int digit) {
-        context.drawTexture(
+    public void renderDigit(GuiGraphics context, int x, int y, @Range(from = 0, to = 9) int digit) {
+        context.blit(
           RenderPipelines.GUI_TEXTURED, TEXTURE,
           x, y,
           digit * 10, 91,

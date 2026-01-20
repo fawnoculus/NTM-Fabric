@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.client.render.hud.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class NTMHudRender {
     public static final Identifier HUD_WIGGLER = NTM.id("hud_wiggler");

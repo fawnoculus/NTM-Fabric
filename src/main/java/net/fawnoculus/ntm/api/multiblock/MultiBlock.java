@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.api.multiblock;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -66,10 +66,10 @@ public record MultiBlock(Map<BlockPos, BlockState> states) {
         return new BlockPos(originPos.getX() + offsetX, originPos.getY() + offsetY, originPos.getZ() + offsetZ);
     }
 
-    public boolean canPlaceAt(World world, BlockPos originPos, Direction rotation) {
+    public boolean canPlaceAt(Level world, BlockPos originPos, Direction rotation) {
         for (BlockPos structurePos : states.keySet()) {
             BlockPos offsetPos = getOffsetPos(originPos, structurePos, rotation);
-            if (!world.getBlockState(offsetPos).isReplaceable()) {
+            if (!world.getBlockState(offsetPos).canBeReplaced()) {
                 return false;
             }
         }
@@ -77,10 +77,10 @@ public record MultiBlock(Map<BlockPos, BlockState> states) {
         return true;
     }
 
-    public void placeAt(World world, BlockPos originPos, Direction rotation) {
+    public void placeAt(Level world, BlockPos originPos, Direction rotation) {
         for (BlockPos structurePos : states.keySet()) {
             BlockPos offsetPos = getOffsetPos(originPos, structurePos, rotation);
-            world.setBlockState(offsetPos, states.get(structurePos));
+            world.setBlockAndUpdate(offsetPos, states.get(structurePos));
             if (world.getBlockEntity(offsetPos) instanceof MultiBlockBE multiBlockBE) {
                 multiBlockBE.setMultiblockOrigin(originPos);
             }

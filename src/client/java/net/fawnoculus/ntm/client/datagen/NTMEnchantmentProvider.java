@@ -4,22 +4,22 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition;
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.CompletableFuture;
 
 public class NTMEnchantmentProvider extends FabricDynamicRegistryProvider {
-    public NTMEnchantmentProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public NTMEnchantmentProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-        RegistryWrapper<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
+    protected void configure(HolderLookup.Provider registries, Entries entries) {
+        HolderLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
 
     /*
     register(entries, NTMEnchantmentEffects.THUNDERING_KEY, Enchantment.builder(
@@ -41,8 +41,8 @@ public class NTMEnchantmentProvider extends FabricDynamicRegistryProvider {
      */
     }
 
-    private void register(Entries entries, RegistryKey<Enchantment> key, Enchantment.Builder builder, ResourceCondition... resourceConditions) {
-        entries.add(key, builder.build(key.getValue()), resourceConditions);
+    private void register(Entries entries, ResourceKey<Enchantment> key, Enchantment.Builder builder, ResourceCondition... resourceConditions) {
+        entries.add(key, builder.build(key.identifier()), resourceConditions);
     }
 
     @Override

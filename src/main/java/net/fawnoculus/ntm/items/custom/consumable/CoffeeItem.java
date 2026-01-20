@@ -1,23 +1,23 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.level.Level;
 
 public class CoffeeItem extends Item {
-    public CoffeeItem(Settings settings) {
-        super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK));
+    public CoffeeItem(Properties settings) {
+        super(settings.component(DataComponents.CONSUMABLE, Consumables.DEFAULT_DRINK));
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
         user.heal(10);
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1200, 2, false, false, true));
-        return super.finishUsing(stack, world, user);
+        user.addEffect(new MobEffectInstance(MobEffects.SPEED, 1200, 2, false, false, true));
+        return super.finishUsingItem(stack, world, user);
     }
 }

@@ -1,12 +1,12 @@
 package net.fawnoculus.ntm.api.radiation.processor;
 
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 
 import java.util.Collection;
 
 public interface RadiationProcessorMultiHolder {
-    static RadiationProcessorMultiHolder from(ServerWorld world) {
+    static RadiationProcessorMultiHolder from(ServerLevel world) {
         return (RadiationProcessorMultiHolder) world;
     }
 
@@ -17,6 +17,4 @@ public interface RadiationProcessorMultiHolder {
     void NTM$addRadiationProcessor(RadiationProcessor processor, ChunkPos chunkPos);
 
     void NTM$removeRadiationProcessor(ChunkPos chunkPos);
-
-    void NTM$removeRadiationProcessor(RadiationProcessor processor);
 }

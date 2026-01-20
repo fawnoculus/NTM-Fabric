@@ -1,11 +1,11 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.phys.Vec3;
 
 public interface DangerousDrop {
-    void onDropped(ServerWorld world, Vec3d pos, ItemEntity entity);
+    void onDropped(ServerLevel world, Vec3 pos, ItemEntity entity);
 
-    void onTouchBlock(ServerWorld world, Vec3d pos, ItemEntity entity);
+    void onTouchBlock(ServerLevel world, Vec3 pos, ItemEntity entity);
 }

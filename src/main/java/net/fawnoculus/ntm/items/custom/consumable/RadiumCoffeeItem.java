@@ -1,20 +1,20 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.api.radiation.RadiationManager;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class RadiumCoffeeItem extends CoffeeItem {
-    public RadiumCoffeeItem(Settings settings) {
+    public RadiumCoffeeItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        if (!world.isClient() && !user.isInvulnerable() && !user.isInCreativeMode()) {
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+        if (!world.isClientSide() && !user.isInvulnerable() && !user.hasInfiniteMaterials()) {
             RadiationManager.increaseRadiationExposure(user, 500_000);
         }
-        return super.finishUsing(stack, world, user);
+        return super.finishUsingItem(stack, world, user);
     }
 }

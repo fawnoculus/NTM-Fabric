@@ -5,35 +5,35 @@ import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.fawnoculus.ntm.items.components.NTMFoodComponents;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class ScrapPancakeItem extends Item {
-    public ScrapPancakeItem(Settings settings) {
+    public ScrapPancakeItem(Properties settings) {
         super(settings.food(NTMFoodComponents.SCRAP_PANCAKE));
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         // TODO: this, once we have lunar cybernetic armor
-        ServerPlayNetworking.send((ServerPlayerEntity) player, new AdvancedMessagePayload(new AdvancedMessage(
+        ServerPlayNetworking.send((ServerPlayer) player, new AdvancedMessagePayload(new AdvancedMessage(
           NTM.id("scrap_pancake"),
-          Text.translatable("message.ntm.teeth_to_soft").formatted(Formatting.YELLOW),
+          Component.translatable("message.ntm.teeth_to_soft").withStyle(ChatFormatting.YELLOW),
           1000.0f)));
-        return ActionResult.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
         // TODO: this, once we have lunar cybernetic armor
-        return super.finishUsing(stack, world, user);
+        return super.finishUsingItem(stack, world, user);
     }
 }

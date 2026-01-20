@@ -24,33 +24,33 @@ import net.fawnoculus.ntm.client.render.hud.FlashBangRender;
 import net.fawnoculus.ntm.client.render.hud.HudWigglerRender;
 import net.fawnoculus.ntm.commands.NTMCommands;
 import net.fawnoculus.ntm.commands.arguments.ConfigOptionArgumentType;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.command.argument.IdentifierArgumentType;
-import net.minecraft.command.argument.TextArgumentType;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.ComponentArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class NTMClientCommands {
 
     public static void initialize() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-            CommandManager.literal("ntm")
-              .then(CommandManager.literal("config")
+            Commands.literal("ntm")
+              .then(Commands.literal("config")
                 .requires(source -> NTMCommands.allowCommands(source, environment))
-                .then(CommandManager.literal("client")
-                  .then(CommandManager.literal("reload")
+                .then(Commands.literal("client")
+                  .then(Commands.literal("reload")
                     .executes(context -> NTMCommands.reloadConfig(context, NTMClientConfig.CLIENT_CONFIG_FILE))
                   )
-                  .then(CommandManager.literal("get")
-                    .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMClientConfig.CLIENT_CONFIG_FILE))
+                  .then(Commands.literal("get")
+                    .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMClientConfig.CLIENT_CONFIG_FILE))
                       .executes(context -> NTMCommands.getOptionInfo(context, ConfigOptionArgumentType.getOption(context, "option")))
                     )
                   )
-                  .then(CommandManager.literal("set")
-                    .then(CommandManager.argument("option", ConfigOptionArgumentType.file(NTMClientConfig.CLIENT_CONFIG_FILE))
-                      .then(CommandManager.argument("value", StringArgumentType.greedyString())
+                  .then(Commands.literal("set")
+                    .then(Commands.argument("option", ConfigOptionArgumentType.file(NTMClientConfig.CLIENT_CONFIG_FILE))
+                      .then(Commands.argument("value", StringArgumentType.greedyString())
                         .executes(context -> NTMCommands.trySetOption(context,
                             NTMClientConfig.CLIENT_CONFIG_FILE,
                             ConfigOptionArgumentType.getOption(context, "option"),
@@ -140,10 +140,10 @@ public class NTMClientCommands {
             )
             .then(ClientCommandManager.literal("messages")
               .then(ClientCommandManager.literal("add_message")
-                .then(ClientCommandManager.argument("text", TextArgumentType.text(registryAccess))
+                .then(ClientCommandManager.argument("text", ComponentArgument.textComponent(registryAccess))
                   .executes(context -> addMessage(
                       context,
-                      context.getArgument("text", Text.class),
+                      context.getArgument("text", Component.class),
                       2000.0f,
                       NTM.id("command_client")
                     )
@@ -151,15 +151,15 @@ public class NTMClientCommands {
                   .then(ClientCommandManager.argument("millis", FloatArgumentType.floatArg(0.0f, 1000000.0f))
                     .executes(context -> addMessage(
                         context,
-                        context.getArgument("text", Text.class),
+                        context.getArgument("text", Component.class),
                         context.getArgument("millis", Float.class),
                         NTM.id("command_client")
                       )
                     )
-                    .then(ClientCommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                    .then(ClientCommandManager.argument("identifier", IdentifierArgument.id())
                       .executes(context -> addMessage(
                           context,
-                          context.getArgument("text", Text.class),
+                          context.getArgument("text", Component.class),
                           context.getArgument("millis", Float.class),
                           context.getArgument("identifier", Identifier.class)
                         )
@@ -169,7 +169,7 @@ public class NTMClientCommands {
                 )
               )
               .then(ClientCommandManager.literal("remove_message")
-                .then(ClientCommandManager.argument("identifier", IdentifierArgumentType.identifier())
+                .then(ClientCommandManager.argument("identifier", IdentifierArgument.id())
                   .executes(context -> removeMessage(context, context.getArgument("identifier", Identifier.class)))
                 )
               )
@@ -204,7 +204,7 @@ public class NTMClientCommands {
     }
 
     private static int version(CommandContext<FabricClientCommandSource> context) {
-        context.getSource().sendFeedback(Text.translatable("message.ntm.version.client", NTM.METADATA.getVersion()));
+        context.getSource().sendFeedback(Component.translatable("message.ntm.version.client", NTM.METADATA.getVersion()));
         return 1;
     }
 
@@ -222,41 +222,41 @@ public class NTMClientCommands {
     }
 
     private static int forceQuit(CommandContext<FabricClientCommandSource> context) {
-        context.getSource().getClient().scheduleStop();
+        context.getSource().getClient().stop();
         return 1;
     }
 
     private static int forceDisconnect(CommandContext<FabricClientCommandSource> context) {
-        context.getSource().getWorld().disconnect(Text.translatable("message.ntm.force_disconnect"));
+        context.getSource().getWorld().disconnect(Component.translatable("message.ntm.force_disconnect"));
         context.getSource().getClient().disconnectWithSavingScreen();
         context.getSource().getClient().setScreen(new TitleScreen());
         return 1;
     }
 
     private static int clearMessages(CommandContext<FabricClientCommandSource> context) {
-        context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.cleared", MessageSystem.getAllMessages().size()));
+        context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.cleared", MessageSystem.getAllMessages().size()));
         MessageSystem.removeAllMessages();
         return 1;
     }
 
     private static int removeMessage(CommandContext<FabricClientCommandSource> context, Identifier identifier) {
-        context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.removed", identifier.toString()));
+        context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.removed", identifier.toString()));
         MessageSystem.removeAllMessages();
         return 1;
     }
 
-    private static int addMessage(CommandContext<FabricClientCommandSource> context, Text text, float millis, Identifier identifier) {
+    private static int addMessage(CommandContext<FabricClientCommandSource> context, Component text, float millis, Identifier identifier) {
         MessageSystem.addMessage(new AdvancedMessage(identifier, text, millis));
-        context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.added"));
+        context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.added"));
         return 1;
     }
 
     private static int getMessagesEnabled(CommandContext<FabricClientCommandSource> context) {
         boolean enabled = MessageSystem.getIsEnabled();
         if (enabled) {
-            context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.is_enabled"));
+            context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.is_enabled"));
         } else {
-            context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.is_disabled"));
+            context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.is_disabled"));
         }
         return 1;
     }
@@ -264,16 +264,16 @@ public class NTMClientCommands {
     private static int setMessagesEnabled(CommandContext<FabricClientCommandSource> context, Boolean enabled) {
         MessageSystem.setIsEnabled(enabled);
         if (enabled) {
-            context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.set_enabled"));
+            context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.set_enabled"));
         } else {
-            context.getSource().sendFeedback(Text.translatable("message.ntm.message_client.set_disabled"));
+            context.getSource().sendFeedback(Component.translatable("message.ntm.message_client.set_disabled"));
         }
         return 1;
     }
 
 
     private static int reloadConfig(CommandContext<FabricClientCommandSource> context, ConfigFile file) {
-        context.getSource().sendFeedback(Text.translatable("command.ntm.reload_configs", file.getSubPath()));
+        context.getSource().sendFeedback(Component.translatable("command.ntm.reload_configs", file.getSubPath()));
         file.readFile();
         return 1;
     }
@@ -283,22 +283,22 @@ public class NTMClientCommands {
         T defaultValue = option.getDefaultValue();
         T currentValue = option.getValue();
 
-        Text nameText = Text.translatable("command.ntm.get_option_info.name").formatted(Formatting.BLUE)
-          .append(Text.literal(option.getName()).formatted(Formatting.WHITE));
+        Component nameText = Component.translatable("command.ntm.get_option_info.name").withStyle(ChatFormatting.BLUE)
+          .append(Component.literal(option.getName()).withStyle(ChatFormatting.WHITE));
         context.getSource().sendFeedback(nameText);
 
         if (option.getComment() != null) {
-            Text commentText = Text.translatable("command.ntm.get_option_info.comment").formatted(Formatting.YELLOW)
-              .append(Text.literal(option.getComment()).formatted(Formatting.WHITE));
+            Component commentText = Component.translatable("command.ntm.get_option_info.comment").withStyle(ChatFormatting.YELLOW)
+              .append(Component.literal(option.getComment()).withStyle(ChatFormatting.WHITE));
             context.getSource().sendFeedback(commentText);
         }
 
-        Text defaultValueText = Text.translatable("command.ntm.get_option_info.default").formatted(Formatting.YELLOW)
-          .append(Text.literal(codec.encodeStart(JsonOps.INSTANCE, defaultValue).getOrThrow().toString()).formatted(Formatting.WHITE));
+        Component defaultValueText = Component.translatable("command.ntm.get_option_info.default").withStyle(ChatFormatting.YELLOW)
+          .append(Component.literal(codec.encodeStart(JsonOps.INSTANCE, defaultValue).getOrThrow().toString()).withStyle(ChatFormatting.WHITE));
         context.getSource().sendFeedback(defaultValueText);
 
-        Text currentValueText = Text.translatable("command.ntm.get_option_info.current_value").formatted(Formatting.YELLOW)
-          .append(Text.literal(codec.encodeStart(JsonOps.INSTANCE, currentValue).getOrThrow().toString()).formatted(Formatting.WHITE));
+        Component currentValueText = Component.translatable("command.ntm.get_option_info.current_value").withStyle(ChatFormatting.YELLOW)
+          .append(Component.literal(codec.encodeStart(JsonOps.INSTANCE, currentValue).getOrThrow().toString()).withStyle(ChatFormatting.WHITE));
         context.getSource().sendFeedback(currentValueText);
         return 1;
     }
@@ -308,17 +308,17 @@ public class NTMClientCommands {
         try {
             element = JsonParser.parseString(value);
         } catch (JsonSyntaxException exception) {
-            context.getSource().sendError(Text.translatable("command.ntm.set_config_value.invalid_json", value));
+            context.getSource().sendError(Component.translatable("command.ntm.set_config_value.invalid_json", value));
             return -2;
         }
 
         if (option.setValueFrom(element, JsonOps.INSTANCE)) {
-            context.getSource().sendFeedback(Text.translatable("command.ntm.set_config_value", option.getName(), value));
+            context.getSource().sendFeedback(Component.translatable("command.ntm.set_config_value", option.getName(), value));
             file.writeFile();
             return 1;
         }
 
-        context.getSource().sendError(Text.translatable("command.ntm.set_config_value.failed", option.getName(), value));
+        context.getSource().sendError(Component.translatable("command.ntm.set_config_value.failed", option.getName(), value));
         return -1;
     }
 }

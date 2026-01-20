@@ -5,25 +5,25 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.NTMBlocks;
 import net.fawnoculus.ntm.items.NTMItems;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class NTMSmeltingRecipeProvider extends FabricRecipeProvider {
-    public NTMSmeltingRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public NTMSmeltingRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    public RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
-        return new RecipeGenerator(registryLookup, exporter) {
+    public RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+        return new RecipeProvider(registryLookup, exporter) {
             @Override
-            public void generate() {
+            public void buildRecipes() {
                 float xp = 1.0f;
                 int time = 300;
                 ore(this, xp, time, "uranium", NTMItems.URANIUM_INGOT, List.of(NTMItems.RAW_URANIUM, NTMBlocks.URANIUM_ORE, NTMBlocks.DEEPSLATE_URANIUM_ORE, NTMBlocks.NETHER_URANIUM_ORE, NTMBlocks.SCHIST_URANIUM_ORE));
@@ -36,8 +36,8 @@ public class NTMSmeltingRecipeProvider extends FabricRecipeProvider {
         };
     }
 
-    private void ore(RecipeGenerator generator, float xp, int time, String group, ItemConvertible result, List<ItemConvertible> ores) {
-        generator.offerSmelting(
+    private void ore(RecipeProvider generator, float xp, int time, String group, ItemLike result, List<ItemLike> ores) {
+        generator.oreSmelting(
           ores,
           RecipeCategory.MISC,
           result,
@@ -45,7 +45,7 @@ public class NTMSmeltingRecipeProvider extends FabricRecipeProvider {
           time,
           group
         );
-        generator.offerBlasting(
+        generator.oreBlasting(
           ores,
           RecipeCategory.MISC,
           result,

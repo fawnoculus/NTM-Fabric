@@ -3,7 +3,7 @@ package net.fawnoculus.ntm.compat;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 @JeiPlugin

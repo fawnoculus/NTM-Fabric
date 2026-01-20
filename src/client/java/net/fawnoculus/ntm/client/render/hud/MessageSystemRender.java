@@ -2,44 +2,44 @@ package net.fawnoculus.ntm.client.render.hud;
 
 import net.fawnoculus.ntm.api.messages.AdvancedMessage;
 import net.fawnoculus.ntm.client.api.messages.MessageSystem;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 
 import java.util.List;
 
 public class MessageSystemRender {
-    private static final int backgroundColor = ColorHelper.getArgb(150, 100, 100, 100);
+    private static final int backgroundColor = ARGB.color(150, 100, 100, 100);
     private static final int marginSide = 10;
     private static final int marginTop = 10;
     private static final int paddingSide = 5;
     private static final int paddingTop = 5;
 
 
-    public static void drawMessageSystem(DrawContext context, RenderTickCounter ignored) {
+    public static void drawMessageSystem(GuiGraphics context, DeltaTracker ignored) {
         List<AdvancedMessage> messages = MessageSystem.getAllMessages();
         if (messages.isEmpty()) {
             return;
         }
 
-        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+        Font textRenderer = Minecraft.getInstance().font;
 
         int width = 0;
         for (AdvancedMessage message : messages) {
-            if (textRenderer.getWidth(message.getText()) > width) {
-                width = textRenderer.getWidth(message.getText());
+            if (textRenderer.width(message.getText()) > width) {
+                width = textRenderer.width(message.getText());
             }
         }
-        int height = textRenderer.fontHeight * messages.size();
+        int height = textRenderer.lineHeight * messages.size();
 
         context.fill(marginSide, marginTop, marginSide + (paddingSide * 2) + width, marginTop + (paddingTop * 2) + height, backgroundColor);
 
         for (int i = 0; i < messages.size(); i++) {
-            Text text = messages.get(i).getText();
-            context.drawText(textRenderer, text, marginSide + paddingSide, marginTop + paddingTop + (textRenderer.fontHeight * i), ColorHelper.getArgb(messages.get(i).getOpacity(), 256, 256, 256), true);
+            Component text = messages.get(i).getText();
+            context.drawString(textRenderer, text, marginSide + paddingSide, marginTop + paddingTop + (textRenderer.lineHeight * i), ARGB.color(messages.get(i).getOpacity(), 256, 256, 256), true);
         }
     }
 }

@@ -1,14 +1,14 @@
 package net.fawnoculus.ntm.items.custom.consumable;
 
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -17,17 +17,17 @@ import java.util.function.Consumer;
 public class InjectionWithTooltipItem extends InjectionItem {
     private final int TOOLTIP_COUNT;
 
-    public InjectionWithTooltipItem(Settings settings, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+    public InjectionWithTooltipItem(Properties settings, SoundEvent sound, Item returnItem, BiConsumer<ServerLevel, LivingEntity> serverUse) {
         this(settings, 1, sound, returnItem, serverUse);
     }
 
-    public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, Item returnItem, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+    public InjectionWithTooltipItem(Properties settings, int tooltipCount, SoundEvent sound, Item returnItem, BiConsumer<ServerLevel, LivingEntity> serverUse) {
         super(settings, sound, returnItem, serverUse);
 
         this.TOOLTIP_COUNT = tooltipCount;
     }
 
-    public InjectionWithTooltipItem(Settings settings, int tooltipCount, SoundEvent sound, List<Item> returnItems, BiConsumer<ServerWorld, LivingEntity> serverUse) {
+    public InjectionWithTooltipItem(Properties settings, int tooltipCount, SoundEvent sound, List<Item> returnItems, BiConsumer<ServerLevel, LivingEntity> serverUse) {
         super(settings, sound, returnItems, serverUse);
 
         this.TOOLTIP_COUNT = tooltipCount;
@@ -35,13 +35,13 @@ public class InjectionWithTooltipItem extends InjectionItem {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
         if (this.TOOLTIP_COUNT == 1) {
-            tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5)).withStyle(ChatFormatting.GRAY));
             return;
         }
         for (int i = 1; i <= this.TOOLTIP_COUNT; i++) {
-            tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5) + i).formatted(Formatting.GRAY));
+            tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5) + i).withStyle(ChatFormatting.GRAY));
         }
     }
 }

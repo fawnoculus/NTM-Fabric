@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.client.api.events.custom;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.protocol.game.ClientboundLoginPacket;
 
 public interface ConnectToServerEvent {
     Event<ConnectToServerEvent> EVENT = EventFactory.createArrayBacked(ConnectToServerEvent.class,
@@ -15,5 +15,5 @@ public interface ConnectToServerEvent {
     );
 
 
-    void onJoin(ClientPlayNetworkHandler handler, GameJoinS2CPacket packet);
+    void onJoin(ClientPacketListener handler, ClientboundLoginPacket packet);
 }

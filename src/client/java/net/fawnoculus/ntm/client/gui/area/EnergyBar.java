@@ -3,9 +3,8 @@ package net.fawnoculus.ntm.client.gui.area;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.misc.stack.EnergyStack;
 import net.fawnoculus.ntm.util.TextUtil;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Range;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -21,12 +20,12 @@ public class EnergyBar implements InfoBar {
     private final int WIDTH;
     private final int HEIGHT;
     private final EnergyStack STACK;
-    private final Supplier<Text>[] EXTRA_TEXT;
+    private final Supplier<Component>[] EXTRA_TEXT;
     private int OFFSET_X;
     private int OFFSET_Y;
 
     @SafeVarargs
-    public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Text>... extraText) {
+    public EnergyBar(int x, int y, int width, int height, EnergyStack stack, Supplier<Component>... extraText) {
         this.X = x;
         this.Y = y;
         this.WIDTH = width;
@@ -91,13 +90,13 @@ public class EnergyBar implements InfoBar {
     }
 
     @Override
-    public void appendTooltip(Consumer<Text> tooltip) {
-        Text energyStored = TextUtil.unit(this.STACK.getValue());
-        Text maxEnergy = TextUtil.unit(this.STACK.getMaxValue(), "generic.ntm.energy");
+    public void appendTooltip(Consumer<Component> tooltip) {
+        Component energyStored = TextUtil.unit(this.STACK.getValue());
+        Component maxEnergy = TextUtil.unit(this.STACK.getMaxValue(), "generic.ntm.energy");
 
-        tooltip.accept(Text.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
+        tooltip.accept(Component.translatable("generic.ntm.amount_stored", energyStored, maxEnergy));
 
-        for (Supplier<Text> supplier : EXTRA_TEXT) {
+        for (Supplier<Component> supplier : EXTRA_TEXT) {
             tooltip.accept(supplier.get());
         }
     }
@@ -108,7 +107,7 @@ public class EnergyBar implements InfoBar {
     }
 
     @Override
-    public @Range(from = 0, to = 1) double getFillState() {
+    public double getFillState() {
         return (double) this.STACK.getValue() / (double) this.STACK.getMaxValue();
     }
 }

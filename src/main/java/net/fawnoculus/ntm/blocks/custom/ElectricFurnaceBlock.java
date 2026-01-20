@@ -3,98 +3,98 @@ package net.fawnoculus.ntm.blocks.custom;
 import com.mojang.serialization.MapCodec;
 import net.fawnoculus.ntm.blocks.NTMBlockEntities;
 import net.fawnoculus.ntm.blocks.entities.ElectricFurnaceBE;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ElectricFurnaceBlock extends BlockWithEntity {
-    public static final BooleanProperty LIT = Properties.LIT;
-    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
+public class ElectricFurnaceBlock extends BaseEntityBlock {
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
-    public ElectricFurnaceBlock(Settings settings) {
+    public ElectricFurnaceBlock(Properties settings) {
         super(settings);
-        setDefaultState(this.getDefaultState()
-          .with(LIT, false)
-          .with(FACING, Direction.NORTH));
+        registerDefaultState(this.defaultBlockState()
+          .setValue(LIT, false)
+          .setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(ElectricFurnaceBlock::new);
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(ElectricFurnaceBlock::new);
     }
 
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ElectricFurnaceBE(pos, state);
     }
 
     @Override
-    protected void onStateReplaced(@NotNull BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-        world.updateComparators(pos, this);
-        super.onStateReplaced(state, world, pos, moved);
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
+        world.updateNeighbourForOutputSignal(pos, this);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
     @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
-        if (world.isClient()) return null;
-        return validateTicker(type, NTMBlockEntities.ELECTRIC_FURNACE_BE, ElectricFurnaceBE::tick);
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, BlockState state, BlockEntityType<T> type) {
+        if (world.isClientSide()) return null;
+        return createTickerHelper(type, NTMBlockEntities.ELECTRIC_FURNACE_BE, ElectricFurnaceBE::tick);
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, @NotNull Level world, BlockPos pos, Player player, BlockHitResult hit) {
         if (!(world.getBlockEntity(pos) instanceof ElectricFurnaceBE electricFurnaceBE)) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
-        player.openHandledScreen(electricFurnaceBE);
+        player.openMenu(electricFurnaceBE);
 
-        return ActionResult.SUCCESS_SERVER;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(LIT);
         builder.add(FACING);
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         if (context.getPlayer() != null) {
-            return this.getDefaultState().with(FACING, context.getPlayer().getHorizontalFacing().getOpposite());
+            return this.defaultBlockState().setValue(FACING, context.getPlayer().getDirection().getOpposite());
         }
-        return this.getDefaultState();
+        return this.defaultBlockState();
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (!world.isClient()) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
+        if (!world.isClientSide()) {
             return;
         }
 
-        if (!state.get(LIT)) {
+        if (!state.getValue(LIT)) {
             return;
         }
 
@@ -102,7 +102,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
         double x = pos.getX();
         double y = pos.getY() + 0.1 + random.nextDouble() * 0.4;
         double z = pos.getZ();
-        switch (state.get(AlloyFurnaceBlock.FACING)) {
+        switch (state.getValue(AlloyFurnaceBlock.FACING)) {
             case Direction.NORTH -> {
                 x += 0.3 + random.nextDouble() * 0.4;
                 z -= 0.1;
@@ -120,7 +120,7 @@ public class ElectricFurnaceBlock extends BlockWithEntity {
                 z += 1.1;
             }
         }
-        world.addParticleClient(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
-        world.addParticleClient(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+        world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
+        world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
     }
 }

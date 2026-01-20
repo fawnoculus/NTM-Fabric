@@ -9,7 +9,6 @@ import net.fawnoculus.ntm.network.s2c.*;
 public class NTMPayloads {
     public static void initialize() {
         PayloadTypeRegistry.playS2C().register(AdvancedMessagePayload.ID, AdvancedMessagePayload.PACKET_CODEC);
-        PayloadTypeRegistry.playS2C().register(NTMExplosionPayload.ID, NTMExplosionPayload.PACKET_CODEC);
         PayloadTypeRegistry.playS2C().register(RemoveMessagePayload.ID, RemoveMessagePayload.PACKET_CODEC);
         PayloadTypeRegistry.playS2C().register(RemoveAllMessagesPayload.ID, RemoveAllMessagesPayload.PACKET_CODEC);
         PayloadTypeRegistry.playS2C().register(RadiationInformationPayload.ID, RadiationInformationPayload.PACKET_CODEC);

@@ -1,9 +1,9 @@
 package net.fawnoculus.ntm.fluid.data;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,17 +16,17 @@ public record FluidDataType<T>(
   @Nullable TooltipProvider<T> tooltip,
   boolean hasExtraInfo
 ) {
-    public void encode(@NotNull NbtCompound nbt, @Nullable T value) {
+    public void encode(@NotNull CompoundTag nbt, @Nullable T value) {
         if (value != null) {
-            nbt.put(this.identifier.toString(), this.codec, value);
+            nbt.store(this.identifier.toString(), this.codec, value);
         }
     }
 
-    public T decode(@NotNull NbtCompound nbt) {
-        return nbt.get(this.identifier.toString(), this.codec).orElse(this.defaultValue);
+    public T decode(@NotNull CompoundTag nbt) {
+        return nbt.read(this.identifier.toString(), this.codec).orElse(this.defaultValue);
     }
 
-    public void appendTooltip(T value, boolean showExtraInfo, Consumer<Text> tooltip) {
+    public void appendTooltip(T value, boolean showExtraInfo, Consumer<Component> tooltip) {
         if (this.tooltip != null) {
             this.tooltip.appendTooltip(value, showExtraInfo, tooltip);
         }
@@ -39,6 +39,6 @@ public record FluidDataType<T>(
 
     @FunctionalInterface
     public interface TooltipProvider<T> {
-        void appendTooltip(T value, boolean showExtraInfo, Consumer<Text> tooltip);
+        void appendTooltip(T value, boolean showExtraInfo, Consumer<Component> tooltip);
     }
 }

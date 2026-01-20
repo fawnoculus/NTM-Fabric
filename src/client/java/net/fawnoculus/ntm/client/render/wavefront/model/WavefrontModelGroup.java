@@ -1,8 +1,8 @@
 package net.fawnoculus.ntm.client.render.wavefront.model;
 
 
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.resources.Identifier;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public record WavefrontModelGroup(String name, HashMap<String, WavefrontModelObj
         }
     }
 
-    public void setTexture(SpriteIdentifier spriteIdentifier) {
+    public void setTexture(Material spriteIdentifier) {
         for (WavefrontModelObject model3d : models.values()) {
             model3d.setTexture(spriteIdentifier);
         }

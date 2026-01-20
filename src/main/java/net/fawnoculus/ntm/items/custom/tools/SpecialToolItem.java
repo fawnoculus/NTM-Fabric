@@ -7,20 +7,20 @@ import net.fawnoculus.ntm.api.tool.AbilityHandler;
 import net.fawnoculus.ntm.api.tool.ModifierHandler;
 import net.fawnoculus.ntm.api.tool.SpecialTool;
 import net.fawnoculus.ntm.network.s2c.AdvancedMessagePayload;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
@@ -29,7 +29,7 @@ public class SpecialToolItem extends Item implements SpecialTool {
     private final ModifierHandler MODIFIERS;
     private final boolean CAN_BREAK_DEPTH_ROCK;
 
-    public SpecialToolItem(Settings settings, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
+    public SpecialToolItem(Properties settings, AbilityHandler abilities, ModifierHandler modifiers, boolean canBreakDepthRock) {
         super(settings);
 
         this.ABILITIES = abilities;
@@ -53,32 +53,32 @@ public class SpecialToolItem extends Item implements SpecialTool {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+    public int getUseDuration(ItemStack stack, LivingEntity user) {
         return -1;
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
         if (this.ABILITIES.canNotSwitch(stack)) {
             return super.use(world, player, hand);
         }
 
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
-        if (player instanceof ServerPlayerEntity serverPlayer) {
-            if (player.isSneaking()) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (player.isShiftKeyDown()) {
                 this.ABILITIES.setSelectedPreset(stack, 0);
             } else {
                 this.ABILITIES.incrementPresetSelection(stack, 1);
             }
 
             if (this.ABILITIES.abilitiesDisabled(stack)) {
-                NTM.getProxy().playSoundToPlayer(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 0.75f);
+                NTM.getProxy().playSoundToPlayer(player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.25f, 0.75f);
             } else {
-                NTM.getProxy().playSoundToPlayer(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.25f);
+                NTM.getProxy().playSoundToPlayer(player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.25f, 1.25f);
             }
 
             ServerPlayNetworking.send(serverPlayer, new AdvancedMessagePayload(
@@ -86,24 +86,24 @@ public class SpecialToolItem extends Item implements SpecialTool {
             ));
         }
 
-        return ActionResult.SUCCESS_SERVER;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
-    public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         this.MODIFIERS.postHit(stack, target, attacker);
-        super.postHit(stack, target, attacker);
+        super.hurtEnemy(stack, target, attacker);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
         this.ABILITIES.appendTooltip(tooltip);
         this.MODIFIERS.appendTooltip(tooltip);
 
         if (this.CAN_BREAK_DEPTH_ROCK) {
-            tooltip.accept(Text.empty());
-            tooltip.accept(Text.translatable("tooltip.ntm.can_break_depth_rock").formatted(Formatting.RED));
+            tooltip.accept(Component.empty());
+            tooltip.accept(Component.translatable("tooltip.ntm.can_break_depth_rock").withStyle(ChatFormatting.RED));
         }
     }
 }

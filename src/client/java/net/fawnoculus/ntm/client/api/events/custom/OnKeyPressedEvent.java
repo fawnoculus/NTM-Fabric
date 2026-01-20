@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.client.api.events.custom;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.input.KeyInput;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.input.KeyEvent;
 import org.jetbrains.annotations.NotNull;
 
 public interface OnKeyPressedEvent {
@@ -21,5 +21,5 @@ public interface OnKeyPressedEvent {
     /**
      * @return if the following actions should be canceled or not
      */
-    boolean onKeyPressed(MinecraftClient client, KeyInput keyInput);
+    boolean onKeyPressed(Minecraft client, KeyEvent keyInput);
 }

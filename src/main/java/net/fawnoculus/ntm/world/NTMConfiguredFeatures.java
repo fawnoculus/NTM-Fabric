@@ -1,11 +1,11 @@
 package net.fawnoculus.ntm.world;
 
 import net.fawnoculus.ntm.world.configured.NTMOreConfiguredFeatures;
-import net.minecraft.registry.Registerable;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
 public class NTMConfiguredFeatures {
-    public static void initialize(Registerable<ConfiguredFeature<?, ?>> context) {
+    public static void initialize(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         NTMOreConfiguredFeatures.initialize(context);
     }
 }

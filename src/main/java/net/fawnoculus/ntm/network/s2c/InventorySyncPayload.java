@@ -1,49 +1,49 @@
 package net.fawnoculus.ntm.network.s2c;
 
 import net.fawnoculus.ntm.NTM;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
 
-public record InventorySyncPayload(BlockPos pos, SimpleInventory inventory) implements CustomPayload {
+public record InventorySyncPayload(BlockPos pos, SimpleContainer inventory) implements CustomPacketPayload {
     public static final Identifier GENERIC_INVENTORY_PAYLOAD_ID = NTM.id("inventory_sync");
-    public static final Id<InventorySyncPayload> ID = new Id<>(GENERIC_INVENTORY_PAYLOAD_ID);
+    public static final Type<InventorySyncPayload> ID = new Type<>(GENERIC_INVENTORY_PAYLOAD_ID);
 
-    public static final PacketCodec<RegistryByteBuf, SimpleInventory> INVENTORY_CODEC = new PacketCodec<>() {
+    public static final StreamCodec<RegistryFriendlyByteBuf, SimpleContainer> INVENTORY_CODEC = new StreamCodec<>() {
         @Override
-        public SimpleInventory decode(RegistryByteBuf buf) {
+        public SimpleContainer decode(RegistryFriendlyByteBuf buf) {
             int size = buf.readVarInt();
 
-            SimpleInventory inventory = new SimpleInventory(size);
+            SimpleContainer inventory = new SimpleContainer(size);
             for (int i = 0; i < size; i++) {
-                inventory.setStack(i, ItemStack.OPTIONAL_PACKET_CODEC.decode(buf));
+                inventory.setItem(i, ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
             }
 
             return inventory;
         }
 
         @Override
-        public void encode(RegistryByteBuf buf, SimpleInventory inventory) {
-            buf.writeVarInt(inventory.size());
+        public void encode(RegistryFriendlyByteBuf buf, SimpleContainer inventory) {
+            buf.writeVarInt(inventory.getContainerSize());
 
             for (ItemStack stack : inventory) {
-                ItemStack.OPTIONAL_PACKET_CODEC.encode(buf, stack);
+                ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, stack);
             }
         }
     };
 
-    public static final PacketCodec<RegistryByteBuf, InventorySyncPayload> PACKET_CODEC = PacketCodec.tuple(
-      BlockPos.PACKET_CODEC, InventorySyncPayload::pos,
+    public static final StreamCodec<RegistryFriendlyByteBuf, InventorySyncPayload> PACKET_CODEC = StreamCodec.composite(
+      BlockPos.STREAM_CODEC, InventorySyncPayload::pos,
       INVENTORY_CODEC, InventorySyncPayload::inventory,
       InventorySyncPayload::new
     );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

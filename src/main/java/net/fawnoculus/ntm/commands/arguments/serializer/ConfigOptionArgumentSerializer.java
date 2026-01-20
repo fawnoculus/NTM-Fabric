@@ -4,42 +4,42 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fawnoculus.ntm.api.config.ConfigFile;
 import net.fawnoculus.ntm.commands.arguments.ConfigOptionArgumentType;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.serialize.ArgumentSerializer;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-public class ConfigOptionArgumentSerializer implements ArgumentSerializer<ConfigOptionArgumentType, ConfigOptionArgumentSerializer.ConfigOptionArgumentProperties> {
+public class ConfigOptionArgumentSerializer implements ArgumentTypeInfo<ConfigOptionArgumentType, ConfigOptionArgumentSerializer.ConfigOptionArgumentProperties> {
     private static final String ENDING = "THIS IS THE FUCKING END";
 
     @Override
-    public void writePacket(ConfigOptionArgumentProperties properties, PacketByteBuf buf) {
-        buf.writeString(properties.CONFIG_SUB_PATH);
+    public void serializeToNetwork(ConfigOptionArgumentProperties properties, FriendlyByteBuf buf) {
+        buf.writeUtf(properties.CONFIG_SUB_PATH);
         for (String optionName : properties.OPTION_NAMES) {
-            buf.writeString(optionName);
+            buf.writeUtf(optionName);
         }
-        buf.writeString(ENDING);
+        buf.writeUtf(ENDING);
     }
 
     @Override
-    public ConfigOptionArgumentProperties fromPacket(PacketByteBuf buf) {
-        String configFileSubPath = buf.readString();
+    public ConfigOptionArgumentProperties deserializeFromNetwork(FriendlyByteBuf buf) {
+        String configFileSubPath = buf.readUtf();
         List<String> optionNames = new ArrayList<>();
-        String optionName = buf.readString();
+        String optionName = buf.readUtf();
         while (!optionName.equals(ENDING)) {
             optionNames.add(optionName);
-            optionName = buf.readString();
+            optionName = buf.readUtf();
         }
 
         return new ConfigOptionArgumentProperties(configFileSubPath, optionNames);
     }
 
     @Override
-    public void writeJson(ConfigOptionArgumentProperties properties, JsonObject json) {
+    public void serializeToJson(ConfigOptionArgumentProperties properties, JsonObject json) {
         json.addProperty("sub_path", properties.CONFIG_SUB_PATH);
         JsonArray optionNames = new JsonArray();
         for (String optionName : properties.OPTION_NAMES) {
@@ -49,11 +49,11 @@ public class ConfigOptionArgumentSerializer implements ArgumentSerializer<Config
     }
 
     @Override
-    public ConfigOptionArgumentProperties getArgumentTypeProperties(ConfigOptionArgumentType argumentType) {
+    public ConfigOptionArgumentProperties unpack(ConfigOptionArgumentType argumentType) {
         return new ConfigOptionArgumentProperties(argumentType.configFile().get());
     }
 
-    public final class ConfigOptionArgumentProperties implements ArgumentSerializer.ArgumentTypeProperties<ConfigOptionArgumentType> {
+    public final class ConfigOptionArgumentProperties implements ArgumentTypeInfo.Template<ConfigOptionArgumentType> {
         private final String CONFIG_SUB_PATH;
         private final List<String> OPTION_NAMES;
 
@@ -67,14 +67,14 @@ public class ConfigOptionArgumentSerializer implements ArgumentSerializer<Config
         }
 
         @Override
-        public ConfigOptionArgumentType createType(CommandRegistryAccess commandRegistryAccess) {
+        public ConfigOptionArgumentType instantiate(CommandBuildContext commandRegistryAccess) {
             HashSet<String> optionNames = new HashSet<>(this.OPTION_NAMES);
 
             return new ConfigOptionArgumentType(() -> ConfigFile.getFile(this.CONFIG_SUB_PATH), () -> optionNames);
         }
 
         @Override
-        public ArgumentSerializer<ConfigOptionArgumentType, ?> getSerializer() {
+        public ArgumentTypeInfo<ConfigOptionArgumentType, ?> type() {
             return ConfigOptionArgumentSerializer.this;
         }
     }

@@ -1,38 +1,38 @@
 package net.fawnoculus.ntm.api.tool;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Pair;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public record ModifierHandler(List<Pair<ItemModifier, @NotNull Integer>> MODIFIERS) {
+public record ModifierHandler(List<Tuple<ItemModifier, @NotNull Integer>> MODIFIERS) {
     public static Builder builder() {
         return new Builder();
     }
 
-    public void appendTooltip(Consumer<Text> tooltip) {
+    public void appendTooltip(Consumer<Component> tooltip) {
         if (!MODIFIERS.isEmpty()) {
-            tooltip.accept(Text.translatable("tooltip.ntm.modifier.start").formatted(Formatting.GRAY));
-            for (Pair<ItemModifier, @NotNull Integer> pair : MODIFIERS) {
-                tooltip.accept(Text.literal("  ").append(pair.getLeft().getFullName(pair.getRight()).formatted(Formatting.RED)));
+            tooltip.accept(Component.translatable("tooltip.ntm.modifier.start").withStyle(ChatFormatting.GRAY));
+            for (Tuple<ItemModifier, @NotNull Integer> pair : MODIFIERS) {
+                tooltip.accept(Component.literal("  ").append(pair.getA().getFullName(pair.getB()).withStyle(ChatFormatting.RED)));
             }
         }
     }
 
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        for (Pair<ItemModifier, @NotNull Integer> pair : MODIFIERS) {
-            pair.getLeft().postHit(stack, target, attacker, pair.getRight());
+        for (Tuple<ItemModifier, @NotNull Integer> pair : MODIFIERS) {
+            pair.getA().postHit(stack, target, attacker, pair.getB());
         }
     }
 
     public static class Builder {
-        private final List<Pair<ItemModifier, @NotNull Integer>> modifiers = new ArrayList<>();
+        private final List<Tuple<ItemModifier, @NotNull Integer>> modifiers = new ArrayList<>();
 
         /**
          * Use this one if the Modifier doesn't support levels
@@ -40,7 +40,7 @@ public record ModifierHandler(List<Pair<ItemModifier, @NotNull Integer>> MODIFIE
          * @param modifier The Modifier to add
          */
         public Builder addModifier(ItemModifier modifier) {
-            modifiers.add(new Pair<>(modifier, 0));
+            modifiers.add(new Tuple<>(modifier, 0));
             return this;
         }
 
@@ -51,7 +51,7 @@ public record ModifierHandler(List<Pair<ItemModifier, @NotNull Integer>> MODIFIE
          * @param level    the level of the modifier
          */
         public Builder addModifier(ItemModifier modifier, int level) {
-            modifiers.add(new Pair<>(modifier, level));
+            modifiers.add(new Tuple<>(modifier, level));
             return this;
         }
 

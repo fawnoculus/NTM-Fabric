@@ -1,7 +1,7 @@
 package net.fawnoculus.ntm.client.render.hud;
 
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class HudWigglerRender {
     private static final float MOMENTUM_LOSS = 0.1F;
@@ -21,8 +21,8 @@ public class HudWigglerRender {
         yOffset = y;
     }
 
-    public static void renderFlashBang(DrawContext context, RenderTickCounter tickCounter) {
-        float deltaTick = tickCounter.getTickProgress(true);
+    public static void renderFlashBang(GuiGraphics context, DeltaTracker tickCounter) {
+        float deltaTick = tickCounter.getGameTimeDeltaPartialTick(true);
 
         xOffset += xVelocity * deltaTick;
         yOffset += yVelocity * deltaTick;
@@ -31,6 +31,6 @@ public class HudWigglerRender {
         xVelocity *= 1f - Math.clamp(MOMENTUM_LOSS * deltaTick, 0f, 1f);
         yVelocity *= 1f - Math.clamp(MOMENTUM_LOSS * deltaTick, 0f, 1f);
 
-        context.getMatrices().translate(xOffset, yOffset);
+        context.pose().translate(xOffset, yOffset);
     }
 }

@@ -6,13 +6,13 @@
     "client": [
         "ClientPlayNetworkingHandlerMixin",
         "ClientsideItemStackMixin",
-        "KeyboardMixin",
-        "MinecraftClientMixin",
-        "MouseMixin",
-        "StatusEffectsDisplayMixin",
-        "accessor.HandledScreenInvoker"
+        "EffectsInInventoryMixin",
+        "KeyboardHandlerMixin",
+        "MinecraftMixin",
+        "MouseHandlerMixin",
+        "accessor.AbstractContainerScreenInvoker"
     ],
     "injectors": {
         "defaultRequire": 1
-	}
+    }
 }

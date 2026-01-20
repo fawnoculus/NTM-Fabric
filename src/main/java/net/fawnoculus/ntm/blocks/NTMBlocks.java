@@ -3,59 +3,59 @@ package net.fawnoculus.ntm.blocks;
 import net.fawnoculus.ntm.NTM;
 import net.fawnoculus.ntm.blocks.custom.*;
 import net.fawnoculus.ntm.blocks.custom.container.energy.SimpleEnergyStorageBlock;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.enums.NoteBlockInstrument;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
 public class NTMBlocks {
-    public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, AbstractBlock.Settings.copy(Blocks.BEDROCK));
-    public static final Block BEDROCK_OIL_DEPOSIT = register("bedrock_oil_deposit", Block::new, AbstractBlock.Settings.copy(Blocks.BEDROCK));
-    public static final Block BEDROCK_ORE = register("bedrock_ore", Block::new, AbstractBlock.Settings.copy(Blocks.BEDROCK));
+    public static final Block GEOTHERMAL_VENT = register("geothermal_vent", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK));
+    public static final Block BEDROCK_OIL_DEPOSIT = register("bedrock_oil_deposit", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK));
+    public static final Block BEDROCK_ORE = register("bedrock_ore", Block::new, BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK));
     public static final Block ALLOY_FURNACE = register("alloy_furnace", AlloyFurnaceBlock::new,
-      machineSettings(AbstractBlock.Settings.create())
+      machineSettings(BlockBehaviour.Properties.of())
         .strength(1.5F, 6.0F)
-        .sounds(BlockSoundGroup.STONE)
+        .sound(SoundType.STONE)
         .mapColor(MapColor.TERRACOTTA_ORANGE));
     public static final Block ALLOY_FURNACE_EXTENSION = register("alloy_furnace_extension", AlloyFurnaceExtensionBlock::new,
-      advancedModel(machineSettings(AbstractBlock.Settings.create()))
+      advancedModel(machineSettings(BlockBehaviour.Properties.of()))
         .strength(1.5F, 6.0F)
-        .sounds(BlockSoundGroup.STONE)
+        .sound(SoundType.STONE)
         .mapColor(MapColor.TERRACOTTA_ORANGE)
     );
-    public static final Block ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlock::new, machineSettings(AbstractBlock.Settings.create()));
+    public static final Block ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlock::new, machineSettings(BlockBehaviour.Properties.of()));
     // This one is currently only here for the item group icon
-    public static final Block PWR_CONTROLLER = register("pwr_controller", PWRControllerBlock::new, machineSettings(AbstractBlock.Settings.create()));
+    public static final Block PWR_CONTROLLER = register("pwr_controller", PWRControllerBlock::new, machineSettings(BlockBehaviour.Properties.of()));
     // Energy Stuff
-    public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, AbstractBlock.Settings.create());
+    public static final Block TEMP_CABLE = register("temp_cable", TempCableBlock::new, BlockBehaviour.Properties.of());
     public static final Block POTATO_BATTERY_BLOCK = register("potato_battery_block",
-      settings -> new SimpleEnergyStorageBlock(settings, 10_000L), machineSettings(AbstractBlock.Settings.create()));
+      settings -> new SimpleEnergyStorageBlock(settings, 10_000L), machineSettings(BlockBehaviour.Properties.of()));
     public static final Block ENERGY_STORAGE_BLOCK = register("energy_storage_block",
-      settings -> new SimpleEnergyStorageBlock(settings, 1_000_000L), machineSettings(AbstractBlock.Settings.create()));
+      settings -> new SimpleEnergyStorageBlock(settings, 1_000_000L), machineSettings(BlockBehaviour.Properties.of()));
     public static final Block LITHIUM_ION_ENERGY_STORAGE_BLOCK = register("lithium_ion_energy_storage_block",
-      settings -> new SimpleEnergyStorageBlock(settings, 50_000_000L), machineSettings(AbstractBlock.Settings.create()));
+      settings -> new SimpleEnergyStorageBlock(settings, 50_000_000L), machineSettings(BlockBehaviour.Properties.of()));
     public static final Block SCHRABIDIUM_ENERGY_STORAGE_BLOCK = register("schrabidium_energy_storage_block",
-      settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), machineSettings(AbstractBlock.Settings.create()));
+      settings -> new SimpleEnergyStorageBlock(settings, 25_000_000_000L), machineSettings(BlockBehaviour.Properties.of()));
     public static final Block SPARK_ENERGY_STORAGE_BLOCK = register("spark_energy_storage_block",
-      settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), machineSettings(AbstractBlock.Settings.create()));
+      settings -> new SimpleEnergyStorageBlock(settings, 1_000_000_000_000L), machineSettings(BlockBehaviour.Properties.of()));
     // Block Settings
-    private static final AbstractBlock.Settings STONE_ORE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.STONE)
-      .mapColor(MapColor.GRAY)
-      .requiresTool()
+    private static final BlockBehaviour.Properties STONE_ORE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.STONE)
+      .mapColor(MapColor.COLOR_GRAY)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     // Ore Blocks
     public static final Block URANIUM_ORE = register("uranium_ore", Block::new, STONE_ORE_SETTINGS);
     public static final Block SCORCHED_URANIUM_ORE = register("scorched_uranium_ore", Block::new, STONE_ORE_SETTINGS);
@@ -158,12 +158,12 @@ public class NTMBlocks {
     public static final Block WHITE_PHOSPHORUS_BLOCK = register("white_phosphorus_block", Block::new, STONE_ORE_SETTINGS);
     public static final Block YELLOWCAKE_BLOCK = register("yellowcake_block", Block::new, STONE_ORE_SETTINGS);
     public static final Block ZIRCONIUM_BLOCK = register("zirconium_block", Block::new, STONE_ORE_SETTINGS);
-    private static final AbstractBlock.Settings SCHIST_ORE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.STONE)
-      .mapColor(MapColor.LIGHT_BLUE_GRAY)
-      .requiresTool()
+    private static final BlockBehaviour.Properties SCHIST_ORE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.STONE)
+      .mapColor(MapColor.CLAY)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block GRAPHITIC_SCHIST = register("graphitic_schist", Block::new, SCHIST_ORE_SETTINGS);
     public static final Block SCHIST_IRON_ORE = register("schist_iron_ore", Block::new, SCHIST_ORE_SETTINGS);
     public static final Block SCHIST_GOLD_ORE = register("schist_gold_ore", Block::new, SCHIST_ORE_SETTINGS);
@@ -175,12 +175,12 @@ public class NTMBlocks {
     public static final Block SCHIST_SCHRABIDIUM_ORE = register("schist_schrabidium_ore", Block::new, SCHIST_ORE_SETTINGS);
     public static final Block SCHIST_RARE_EARTH_ORE = register("schist_rare_earth_ore", Block::new, SCHIST_ORE_SETTINGS);
     public static final Block GAS_SHALE = register("gas_shale", Block::new, SCHIST_ORE_SETTINGS);
-    private static final AbstractBlock.Settings DEEPSLATE_ORE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.DEEPSLATE)
-      .mapColor(MapColor.DEEPSLATE_GRAY)
-      .requiresTool()
+    private static final BlockBehaviour.Properties DEEPSLATE_ORE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.DEEPSLATE)
+      .mapColor(MapColor.DEEPSLATE)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block DEEPSLATE_URANIUM_ORE = register("deepslate_uranium_ore", Block::new, DEEPSLATE_ORE_SETTINGS);
     public static final Block DEEPSLATE_SCORCHED_URANIUM_ORE = register("deepslate_scorched_uranium_ore", Block::new, DEEPSLATE_ORE_SETTINGS);
     public static final Block DEEPSLATE_TITANIUM_ORE = register("deepslate_titanium_ore", Block::new, DEEPSLATE_ORE_SETTINGS);
@@ -206,24 +206,24 @@ public class NTMBlocks {
     public static final Block DEEPSLATE_COPPER_ORE_CLUSTER = register("deepslate_copper_ore_cluster", Block::new, DEEPSLATE_ORE_SETTINGS);
     public static final Block DEEPSLATE_IRON_ORE_CLUSTER = register("deepslate_iron_ore_cluster", Block::new, DEEPSLATE_ORE_SETTINGS);
     public static final Block DEEPSLATE_TITANIUM_ORE_CLUSTER = register("deepslate_titanium_ore_cluster", Block::new, DEEPSLATE_ORE_SETTINGS);
-    private static final AbstractBlock.Settings VOLCANIC_BASALT_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.BASALT)
-      .mapColor(MapColor.BLACK)
-      .requiresTool()
+    private static final BlockBehaviour.Properties VOLCANIC_BASALT_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.BASALT)
+      .mapColor(MapColor.COLOR_BLACK)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block VOLCANIC_BASALT = register("volcanic_basalt", Block::new, VOLCANIC_BASALT_SETTINGS);
     public static final Block SULFUR_RICH_VOLCANIC_BASALT = register("sulfur_rich_volcanic_basalt", Block::new, VOLCANIC_BASALT_SETTINGS);
     public static final Block FLUORITE_RICH_VOLCANIC_BASALT = register("fluorite_rich_volcanic_basalt", Block::new, VOLCANIC_BASALT_SETTINGS);
     public static final Block ASBESTOS_RICH_VOLCANIC_BASALT = register("asbestos_rich_volcanic_basalt", Block::new, VOLCANIC_BASALT_SETTINGS);
     public static final Block GEM_RICH_VOLCANIC_BASALT = register("gem_rich_volcanic_basalt", Block::new, VOLCANIC_BASALT_SETTINGS);
     public static final Block MOLYSITE_RICH_VOLCANIC_BASALT = register("molysite_rich_volcanic_basalt", Block::new, VOLCANIC_BASALT_SETTINGS);
-    private static final AbstractBlock.Settings NETHER_ORE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.NETHER_ORE)
-      .mapColor(MapColor.RED)
-      .requiresTool()
+    private static final BlockBehaviour.Properties NETHER_ORE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.NETHER_ORE)
+      .mapColor(MapColor.COLOR_RED)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block NETHER_URANIUM_ORE = register("nether_uranium_ore", Block::new, NETHER_ORE_SETTINGS);
     public static final Block SCORCHED_NETHER_URANIUM_ORE = register("scorched_nether_uranium_ore", Block::new, NETHER_ORE_SETTINGS);
     public static final Block NETHER_PLUTONIUM_ORE = register("nether_plutonium_ore", Block::new, NETHER_ORE_SETTINGS);
@@ -232,21 +232,21 @@ public class NTMBlocks {
     public static final Block NETHER_PHOSPHORUS_ORE = register("nether_phosphorus_ore", Block::new, NETHER_ORE_SETTINGS);
     public static final Block NETHER_COBALT_ORE = register("nether_cobalt_ore", Block::new, NETHER_ORE_SETTINGS);
     public static final Block NETHER_SCHRABIDIUM_ORE = register("nether_schrabidium_ore", Block::new, NETHER_ORE_SETTINGS);
-    private static final AbstractBlock.Settings GLOWING_NETHER_ORE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.NETHER_ORE)
-      .mapColor(MapColor.RED)
-      .luminance(ignored -> 15)
-      .requiresTool()
+    private static final BlockBehaviour.Properties GLOWING_NETHER_ORE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.NETHER_ORE)
+      .mapColor(MapColor.COLOR_RED)
+      .lightLevel(ignored -> 15)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block SMOLDERING_NETHERRACK = register("smoldering_netherrack", Block::new, GLOWING_NETHER_ORE_SETTINGS);
     public static final Block NETHER_COAL_ORE = register("nether_coal_ore", Block::new, GLOWING_NETHER_ORE_SETTINGS);
-    private static final AbstractBlock.Settings METEOR_STONE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.STONE)
-      .mapColor(MapColor.BLACK)
-      .requiresTool()
+    private static final BlockBehaviour.Properties METEOR_STONE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.STONE)
+      .mapColor(MapColor.COLOR_BLACK)
+      .requiresCorrectToolForDrops()
       .strength(2f, 2f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block METEORITE_BLOCK = register("meteorite_block", Block::new, METEOR_STONE_SETTINGS);
     public static final Block BROKEN_METEORITE_BLOCK = register("broken_meteorite_block", Block::new, METEOR_STONE_SETTINGS);
     public static final Block METEORITE_COBBLESTONE = register("meteorite_cobblestone", Block::new, METEOR_STONE_SETTINGS);
@@ -257,11 +257,11 @@ public class NTMBlocks {
     public static final Block METEOR_ALUMINIUM_ORE = register("meteor_aluminium_ore", Block::new, METEOR_STONE_SETTINGS);
     public static final Block METEOR_RARE_EARTH_ORE = register("meteor_rare_earth_ore", Block::new, METEOR_STONE_SETTINGS);
     public static final Block METEOR_COBALT_ORE = register("meteor_cobalt_ore", Block::new, METEOR_STONE_SETTINGS);
-    private static final AbstractBlock.Settings DEPTH_STONE_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.STONE)
-      .mapColor(MapColor.GRAY)
+    private static final BlockBehaviour.Properties DEPTH_STONE_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.STONE)
+      .mapColor(MapColor.COLOR_GRAY)
       .strength(Float.MAX_VALUE, 3600000.0f)
-      .requiresTool();
+      .requiresCorrectToolForDrops();
     public static final Block DEPTH_ROCK = register("depth_rock", Block::new, DEPTH_STONE_SETTINGS);
     public static final Block DEPTH_CINNABAR_ORE = register("depth_cinnabar_ore", Block::new, DEPTH_STONE_SETTINGS);
     public static final Block DEPTH_ZIRCONIUM_ORE = register("depth_zirconium", Block::new, DEPTH_STONE_SETTINGS);
@@ -273,23 +273,23 @@ public class NTMBlocks {
     public static final Block DEEPSLATE_ALEXANDRITE_ORE = register("deepslate_alexandrite_ore", Block::new, DEPTH_STONE_SETTINGS);
     public static final Block NETHER_DEPTH_ROCK = register("nether_depth_rock", Block::new, DEPTH_STONE_SETTINGS);
     public static final Block NETHER_DEPTH_NEODYMIUM_ORE = register("nether_depth_neodymium_ore", Block::new, DEPTH_STONE_SETTINGS);
-    private static final AbstractBlock.Settings DIRT_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.GRAVEL)
-      .mapColor(MapColor.DIRT_BROWN);
-    public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
-    public static final Block OILY_DIRT = register("oily_dirt", Block::new, DIRT_SETTINGS.hardness(2f));
-    private static final AbstractBlock.Settings SAND_SETTINGS = AbstractBlock.Settings.create()
-      .sounds(BlockSoundGroup.SAND)
-      .mapColor(MapColor.PALE_YELLOW)
+    private static final BlockBehaviour.Properties DIRT_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.GRAVEL)
+      .mapColor(MapColor.DIRT);
+    public static final Block DEAD_DIRT = register("dead_dirt", Block::new, DIRT_SETTINGS.destroyTime(2f));
+    public static final Block OILY_DIRT = register("oily_dirt", Block::new, DIRT_SETTINGS.destroyTime(2f));
+    private static final BlockBehaviour.Properties SAND_SETTINGS = BlockBehaviour.Properties.of()
+      .sound(SoundType.SAND)
+      .mapColor(MapColor.SAND)
       .instrument(NoteBlockInstrument.SNARE);
-    public static final Block OILY_SAND = register("oily_sand", Block::new, SAND_SETTINGS.hardness(2f));
+    public static final Block OILY_SAND = register("oily_sand", Block::new, SAND_SETTINGS.destroyTime(2f));
 
-    private static AbstractBlock.Settings advancedModel(AbstractBlock.@NotNull Settings settings) {
-        return settings.nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never);
+    private static BlockBehaviour.Properties advancedModel(BlockBehaviour.@NotNull Properties settings) {
+        return settings.noOcclusion().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never).isSuffocating(Blocks::never).isViewBlocking(Blocks::never);
     }
 
-    private static AbstractBlock.Settings machineSettings(AbstractBlock.@NotNull Settings settings) {
-        return settings.sounds(BlockSoundGroup.STONE).mapColor(MapColor.GRAY).strength(2f, 6.0f).requiresTool();
+    private static BlockBehaviour.Properties machineSettings(BlockBehaviour.@NotNull Properties settings) {
+        return settings.sound(SoundType.STONE).mapColor(MapColor.COLOR_GRAY).strength(2f, 6.0f).requiresCorrectToolForDrops();
     }
 
     // Special Effect Barrels
@@ -312,29 +312,29 @@ public class NTMBlocks {
   public static final Block MAGNETIC_BARREL = register("magnetic_barrel", settings -> new SimpleFluidStorageBlock(settings, 12_000), AbstractBlock.Settings.create());
    */
 
-    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
+    private static Block register(String name, Function<BlockBehaviour.Properties, Block> blockFactory, BlockBehaviour.Properties settings) {
         return register(name, blockFactory, settings, true);
     }
 
-    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean registerItem) {
-        RegistryKey<Block> blockKey = keyOfBlock(name);
-        Block block = blockFactory.apply(settings.registryKey(blockKey));
+    private static Block register(String name, Function<BlockBehaviour.Properties, Block> blockFactory, BlockBehaviour.Properties settings, boolean registerItem) {
+        ResourceKey<Block> blockKey = keyOfBlock(name);
+        Block block = blockFactory.apply(settings.setId(blockKey));
 
         if (registerItem) {
-            RegistryKey<Item> itemKey = keyOfItem(name);
-            BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
-            Registry.register(Registries.ITEM, itemKey, blockItem);
+            ResourceKey<Item> itemKey = keyOfItem(name);
+            BlockItem blockItem = new BlockItem(block, new net.minecraft.world.item.Item.Properties().setId(itemKey));
+            Registry.register(BuiltInRegistries.ITEM, itemKey, blockItem);
         }
 
-        return Registry.register(Registries.BLOCK, blockKey, block);
+        return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
     }
 
-    private static RegistryKey<Block> keyOfBlock(String name) {
-        return RegistryKey.of(RegistryKeys.BLOCK, NTM.id(name));
+    private static ResourceKey<Block> keyOfBlock(String name) {
+        return ResourceKey.create(Registries.BLOCK, NTM.id(name));
     }
 
-    private static RegistryKey<Item> keyOfItem(String name) {
-        return RegistryKey.of(RegistryKeys.ITEM, NTM.id(name));
+    private static ResourceKey<Item> keyOfItem(String name) {
+        return ResourceKey.create(Registries.ITEM, NTM.id(name));
     }
 
     public static void initialize() {

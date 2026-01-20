@@ -2,8 +2,8 @@ package net.fawnoculus.ntm.client.api.events.custom;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Click;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.input.MouseButtonEvent;
 import org.jetbrains.annotations.NotNull;
 
 public interface OnMouseClickEvent {
@@ -21,5 +21,5 @@ public interface OnMouseClickEvent {
     /**
      * @return if the following actions should be canceled or not
      */
-    boolean onClick(MinecraftClient client, Click click);
+    boolean onClick(Minecraft client, MouseButtonEvent click);
 }

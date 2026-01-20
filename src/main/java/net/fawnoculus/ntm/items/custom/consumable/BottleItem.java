@@ -2,58 +2,58 @@ package net.fawnoculus.ntm.items.custom.consumable;
 
 import net.fawnoculus.ntm.items.NTMItems;
 import net.fawnoculus.ntm.util.PlayerUtil;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 public class BottleItem extends Item {
-    public final List<StatusEffectInstance> EFFECTS;
+    public final List<MobEffectInstance> EFFECTS;
     public final List<Item> RETURN_ITEMS;
 
-    public BottleItem(Settings settings, List<StatusEffectInstance> effects, List<Item> returnItems) {
-        super(settings.component(DataComponentTypes.CONSUMABLE, ConsumableComponents.DRINK));
+    public BottleItem(Properties settings, List<MobEffectInstance> effects, List<Item> returnItems) {
+        super(settings.component(DataComponents.CONSUMABLE, Consumables.DEFAULT_DRINK));
         this.EFFECTS = effects;
         this.RETURN_ITEMS = returnItems;
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
-        tooltip.accept(Text.translatable("tooltip." + this.getTranslationKey().substring(5)).formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.needs_bottle_opener").formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, net.minecraft.world.item.TooltipFlag type) {
+        tooltip.accept(Component.translatable("tooltip." + this.getDescriptionId().substring(5)).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.needs_bottle_opener").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity playerEntity, Hand hand) {
+    public InteractionResult use(Level world, Player playerEntity, InteractionHand hand) {
         if (!PlayerUtil.hasItem(playerEntity, NTMItems.BOTTLE_OPENER)) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
         return super.use(world, playerEntity, hand);
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
-        if (!world.isClient() && entity instanceof PlayerEntity player) {
-            for (StatusEffectInstance effect : this.EFFECTS) {
-                player.addStatusEffect(new StatusEffectInstance(effect));
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
+        if (!world.isClientSide() && entity instanceof Player player) {
+            for (MobEffectInstance effect : this.EFFECTS) {
+                player.addEffect(new MobEffectInstance(effect));
             }
             for (Item returnItem : this.RETURN_ITEMS) {
-                player.getInventory().offerOrDrop(new ItemStack(returnItem));
+                player.getInventory().placeItemBackInInventory(new ItemStack(returnItem));
             }
         }
-        return super.finishUsing(stack, world, entity);
+        return super.finishUsingItem(stack, world, entity);
     }
 }

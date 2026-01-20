@@ -1,45 +1,45 @@
 package net.fawnoculus.ntm.items.custom;
 
-import net.fawnoculus.ntm.api.explosion.NTMExplosionTypes;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Consumer;
 
 public class DebugWandItem extends Item {
-    public DebugWandItem(Settings settings) {
+    public DebugWandItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient()) {
-            return ActionResult.SUCCESS;
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
-        BlockHitResult hitResult = (BlockHitResult) user.raycast(256, 0, false);
+        BlockHitResult hitResult = (BlockHitResult) user.pick(256, 0, false);
         if (hitResult.getType() == HitResult.Type.BLOCK) {
-            NTMExplosionTypes.SIMPLE.explode((ServerWorld) world, hitResult.getBlockPos(), 10f);
+            /*
+            NTMExplosionTypes.SIMPLE.explode((ServerLevel) world, hitResult.getBlockPos(), 10f);
+             */
         }
 
-        return ActionResult.SUCCESS_SERVER;
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> tooltip, TooltipType type) {
-        tooltip.accept(Text.translatable("tooltip.ntm.creative_only").formatted(Formatting.GRAY));
-        tooltip.accept(Text.translatable("tooltip.ntm.debug_wand").formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> tooltip, TooltipFlag type) {
+        tooltip.accept(Component.translatable("tooltip.ntm.creative_only").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.ntm.debug_wand").withStyle(ChatFormatting.GRAY));
     }
 }
