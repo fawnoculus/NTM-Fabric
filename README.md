@@ -1,3 +1,13 @@
+# We moved to codeberg!
+You can find the new repository [here](https://codeberg.org/fawnoculus/NTM-Revamped)
+
+## Why?
+GitHub sucks.
+It really all comes down to steeling data for training AI, not being open source, the uptime issues & being owned by Microsoft.
+Considering the current state of GitHub, I don't think I have to elaborate further.
+
+# ---Old README bellow---
+
 ![NTM-Modernized Icon](https://raw.githubusercontent.com/fawnoculus/NTM-Modernized/refs/heads/master/.idea/icon.png)
 # NTM-Modernized
 [![Available on Fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3.3.1/assets/cozy/supported/fabric_64h.png)](https://fabricmc.net/)
